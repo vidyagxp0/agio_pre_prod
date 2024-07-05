@@ -61,7 +61,7 @@
             }
         }
     </script>
-  
+
 
     <script>
         $(document).ready(function() {
@@ -356,8 +356,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="date_initiation">Date of Initiation</label>
-                                                    <div class="static"><input disabled type="text"
-                                                            value="{{ date('d-M-Y') }}"></div>
+                                                    <div class="static"><input disabled type="text" value="{{ Helpers::getdateFormat($data->intiation_date) }}"></div>
                                                 </div>
                                             </div>
 
@@ -741,7 +740,9 @@
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -882,10 +883,11 @@
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
-                                            <button type="button" class="backButton"
-                                                onclick="previousStep()">Back</button>
-                                            <button type="button" class="nextButton"
-                                                onclick="nextStep()">Next</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -942,9 +944,11 @@
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
-                                            <button type="button" class="backButton"
-                                                onclick="previousStep()">Back</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -1064,12 +1068,15 @@
                                                     <span class="sr-only">Loading...</span>
                                                 </div>
                                                 Save
-                                            </button>
+                                            </button>                                            
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 class="nextButton" onclick="nextStep()">Next</button>
-                                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
-                                                    class="text-white"> Exit </a>
-                                                </button>
+                                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                                    Exit
+                                                </a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -1200,9 +1207,11 @@
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
-                                            <button type="button" class="backButton"
-                                                onclick="previousStep()">Back</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -7787,6 +7796,8 @@
                                         </button>
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                             id="ChangeNextButton" class="nextButton">Next</button>
+                                            
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                                 Exit </a> </button>
                                     </div>
@@ -7833,9 +7844,11 @@
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
-                                            <button type="button" class="backButton"
-                                                onclick="previousStep()">Back</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>                                
@@ -7881,10 +7894,11 @@
 
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
-                                            <button type="button" class="backButton"
-                                                onclick="previousStep()">Back</button>
-                                            <button type="button" class="nextButton"
-                                                onclick="nextStep()">Next</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -7964,38 +7978,38 @@
                                                     @endif
                                                 </tbody>
                                             </table>
-                            </div>
-                            <div class="group-input">
-                                <label for="qa-closure-comments">QA Closure Comments</label>
-                                <textarea name="qa_closure_comments">{{ $closure->qa_closure_comments }}</textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="attach-list">List Of Attachments</label>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="tran_attach">
-                                        @if ($closure->attach_list)
-                                            @foreach (json_decode($closure->attach_list) as $file)
-                                                <h6 type="button" class="file-container text-dark"
-                                                    style="background-color: rgb(243, 242, 240);">
-                                                    <b>{{ $file }}</b>
-                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                            class="fa fa-eye text-primary"
-                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                    <a type="button" class="remove-file"
-                                                        data-file-name="{{ $file }}"><i
-                                                            class="fa-solid fa-circle-xmark"
-                                                            style="color:red; font-size:20px;"></i></a>
-                                                </h6>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="attach_list[]"
-                                            oninput="addMultipleFiles(this, 'attach_list')" multiple>
+                                </div>
+                                <div class="group-input">
+                                    <label for="qa-closure-comments">QA Closure Comments</label>
+                                    <textarea name="qa_closure_comments">{{ $closure->qa_closure_comments }}</textarea>
+                                </div>
+                                <div class="group-input">
+                                    <label for="attach-list">List Of Attachments</label>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="tran_attach">
+                                            @if ($closure->attach_list)
+                                                @foreach (json_decode($closure->attach_list) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="attach_list[]"
+                                                oninput="addMultipleFiles(this, 'attach_list')" multiple>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             <!-- <div class="sub-head">
                                                     Effectiveness Check Information
                                                 </div>
@@ -8058,6 +8072,9 @@
                         <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                            <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -8299,7 +8316,9 @@
                     <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="submit">Submit</button>
+                        <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                            <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                        </button>
                     </div>
                 </div>
             </div>

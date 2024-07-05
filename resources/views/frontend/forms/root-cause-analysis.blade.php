@@ -56,7 +56,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/{{ $record_number }}">
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/{{ $record }}">
 
                                     </div>
                                 </div>
@@ -188,10 +188,10 @@
                                         <label for="Due Date"> Due Date </label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
-                                        <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDate123(null, false, 'd-M-Y') }}" />
                                         <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                         class="hide-input"
-                                        oninput="handleDateInput(this, 'due_date')"/>
+                                        oninput="handleDateInput(this, 'due_date')"  value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}"/>
                                         </div>
 
                                         {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
@@ -226,23 +226,23 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Type">Type</label>
-                                        <select name="Type">
-                                            <option value="0">-- Select --</option>
-                                            <option value="1">Facillties</option>
-                                            <option value="2">Other</option>
-                                            <option value="3">Stabillity</option>
-                                            <option value="4">Raw Material</option>
-                                            <option value="5">Clinical Production</option>
-                                            <option value="6">Commercial Production</option>
-                                            <option value="7">Labellling</option>
-                                            <option value="8">laboratory</option>
-                                            <option value="9">Utillities</option>
-                                            <option value="10">Validation</option>
-                                        </select>
-                                    </div>
+                                <div class="group-input">
+                                    <label for="Type">Type</label>
+                                    <select name="Type" id="Type">
+                                        <option value="">-- Select --</option>
+                                        <option value="Facilities">Facilities</option>
+                                        <option value="Other">Other</option>
+                                        <option value="Stability">Stability</option>
+                                        <option value="Raw Material">Raw Material</option>
+                                        <option value="Clinical Production">Clinical Production</option>
+                                        <option value="Commercial Production">Commercial Production</option>
+                                        <option value="Labeling">Labeling</option>
+                                        <option value="Laboratory">Laboratory</option>
+                                        <option value="Utilities">Utilities</option>
+                                        <option value="Validation">Validation</option>
+                                    </select>
                                 </div>
+                            </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="priority_level">Priority Level</label>
@@ -270,18 +270,17 @@
                                         </select>
                                     </div> --}}
                                 {{-- </div> --}}
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="department">Department(s)</label>
-                                        <select multiple name="department" placeholder="Select Department(s)"
-                                            data-search="false" data-silent-initial-value-set="true" id="department">
-                                            <option value="1">Work Instruction</option>
-                                            <option value="2">Quality Assurance</option>
-                                            <option value="3">Specifications</option>
-                                            <option value="4">Production</option>
-                                        </select>
-                                    </div>
+                               <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="department">Department(s)</label>
+                                    <select multiple name="departments[]" placeholder="Select Department(s)" data-search="false" data-silent-initial-value-set="true" id="department">
+                                        <option value="Work Instruction">Work Instruction</option>
+                                        <option value="Quality Assurance">Quality Assurance</option>
+                                        <option value="Specifications">Specifications</option>
+                                        <option value="Production">Production</option>
+                                    </select>
                                 </div>
+                            </div>
                                 <div class="col-12">
                                     <div class="sub-head">Investigatiom details</div>
                                 </div>
@@ -345,19 +344,18 @@
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="root-cause-methodology">Root Cause Methodology</label>
-                                        <select name="root_cause_methodology[]" multiple placeholder="-- Select --"
-                                            data-search="false" data-silent-initial-value-set="true"
-                                            id="root-cause-methodology">
-                                            <option value="1">Why-Why Chart</option>
-                                            <option value="2">Failure Mode and Efect Analysis</option>
-                                            <option value="3">Fishbone or Ishikawa Diagram</option>
-                                            <option value="4">Is/Is Not Analysis</option>
-                                        </select>
-                                    </div>
-                                </div>
+
+                               <div class="col-12">
+        <div class="group-input">
+            <label for="root-cause-methodology">Root Cause Methodology</label>
+            <select name="root_cause_methodology[]" multiple data-search="false" data-silent-initial-value-set="true" id="root-cause-methodology">
+                <option value="Why-Why Chart">Why-Why Chart</option>
+                <option value="Failure Mode and Effect Analysis">Failure Mode and Effect Analysis</option>
+                <option value="Fishbone or Ishikawa Diagram">Fishbone or Ishikawa Diagram</option>
+                <option value="Is/Is Not Analysis">Is/Is Not Analysis</option>
+            </select>
+        </div>
+    </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">

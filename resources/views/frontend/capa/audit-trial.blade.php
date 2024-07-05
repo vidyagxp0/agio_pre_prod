@@ -176,7 +176,14 @@
             </style>
 
             <body>
-
+                <div style="display: flex; justify-content: flex-end;">
+                   
+                    <button  class="button_theme1" style="margin-right: 10px"> <a class="text-white" href="{{ route('capashow',$data->id) }}"> Back </a> </button>
+                     
+                
+                    <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                </a> </button></div>
+                </div>
                 <header>
                     <table>
                         <tr>
@@ -191,7 +198,13 @@
 
                     <table>
                         <div class="heading">
+                           
 
+                                <div class="division-bar" style="color: black">
+                                    <strong>Site Division/Project</strong> :
+                                    {{ $document->division_code }} / CAPA
+                                </div>
+                           
                             <div class="heading-new">
                                 Audit Trail
                             </div>
@@ -200,8 +213,11 @@
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ $document->initiator ? $document->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
-                                {{ $document->description_gi }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date_gi }}</div>
+                                {{ $document->short_description }}</div>
+                                @php
+                                use Carbon\Carbon;
+                                @endphp
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Carbon::parse($document->due_date)->format('j F Y') }}</div>
 
                         </div>
         </div>
@@ -248,7 +264,7 @@
                                     @if($dataDemo->activity_type == "Activity Log")
                                         <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
                                     @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
                                     @endif
                                 </div>
                                 <br>
@@ -274,9 +290,11 @@
                                 <div><strong> Peformed By
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
-                                <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at : 'Not Applicable' }}
+                                <div style="margin-top: 5px;">
+                                    <strong>Performed On:</strong>
+                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('j F Y H:i') : 'Not Applicable' }}
                                 </div>
+                                
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
 

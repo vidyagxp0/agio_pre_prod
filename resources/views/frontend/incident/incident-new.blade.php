@@ -319,7 +319,7 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td> <select name="facility_name[]" id="facility_name">  <option value="">-- Select --</option>  <option value="1">Facility</option>  <option value="2"> Equipment</option> <option value="3">Instrument</option></select> </td>' +
+                        '<td> <input type="text" name="facility_name[]" id="facility_name"> </td>' +
                         '<td><input type="text" name="IDnumber[]"></td>' +
                         '<td><input type="text" name="Remarks[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
@@ -397,7 +397,7 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="product_name[]"></td>' +
-                        '<td> <select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' +
+                        '<td> <input type= "text" name="product_stage[]" id=""> </td>' +
                         '<td><input type="text" name="batch_no[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
 
@@ -761,7 +761,7 @@
                                     document.getElementById('due_date').value = dueDateFormatted;
                                 </script>
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Department</b><span
                                                 class="text-danger">*</span></label>
@@ -810,6 +810,39 @@
                                         @error('Initiator_Group')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="initiator-group">Initiation Department <span
+                                                class="text-danger">*</span></label>
+                                                <select name="Initiator_Group" id="initiator_group">
+                                                        <optio value="">Select Initiation Department</option>
+                                                        <option value="CQA" >Corporate Quality Assurance</option>
+                                                        <option value="QA" >Quality Assurance</option>
+                                                        <option value="QC" >Quality Control</option>
+                                                        <option value="QM" >Quality Control (Microbiology department)</option>
+                                                        <option value="PG" >Production General</option>
+                                                        <option value="PL" >Production Liquid Orals</option>
+                                                        <option value="PT" >Production Tablet and Powder</option>
+                                                        <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                        <option value="PC" >Production Capsules</option>
+                                                        <option value="PI" >Production Injectable</option>
+                                                        <option value="EN" >Engineering</option>
+                                                        <option value="HR" >Human Resource</option>
+                                                        <option value="ST" >Store</option>
+                                                        <option value="IT" >Electronic Data Processing</option>
+                                                        <option value="FD" >Formulation  Development</option>
+                                                        <option value="AL" >Analytical research and Development Laboratory</option>
+                                                        <option value="PD">Packaging Development</option>
+                                                        <option value="PU">Purchase Department</option>
+                                                        <option value="DC">Document Cell</option>
+                                                        <option value="RA">Regulatory Affairs</option>
+                                                        <option value="PV">Pharmacovigilance</option>
+                                                    </select>
+                                        {{-- @error('Initiator_Group')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror --}}
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-6">
@@ -870,7 +903,6 @@
                                         for (var i = 0; i < facilityNameInputs.length; i++) {
                                             inputsToToggle.push(facilityNameInputs[i]);
                                         }
-
 
                                         selectField.addEventListener('change', function() {
                                             var isRequired = this.value === 'Recurring';
@@ -935,15 +967,15 @@
                                         enableTime: true,
                                         noCalendar: true,
                                         dateFormat: "H:i", // 24-hour format without AM/PM
-                                        minuteIncrement: 1 // Set minute increment to 1
-
+                                        minuteIncrement: 1, // Set minute increment to 1
+                                        time_24hr: true // Force 24-hour format in the time picker
                                     });
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="facility">Incident Observed By</label>
                                         <input type="text" name="Facility" id="incident_observed_by"
-                                            placeholder="Enter Facility Name">
+                                            placeholder="Enter Person Name">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
@@ -1012,6 +1044,7 @@
                                             <option value="SOP Instruction">SOP Instruction</option>
                                             <option value="BMR/ECR Instruction">BMR/ECR Instruction</option>
                                             <option value="Water System">Water System</option>
+                                            <option value="process">Process</option>
                                             <option value="Anyother(specify)">Any other (specify) </option>
                                         </select>
                                     </div>
@@ -1078,6 +1111,38 @@
                                         });
                                     });
                                 </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="search"> Department Head <span class="text-danger"></span> </label>
+                                        <select id="select-state" placeholder="Select..." name="department_head">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('inv_head_designee')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="search"> QA Reviewer <span class="text-danger"></span> </label>
+                                        <select id="select-state" placeholder="Select..." name="qa_reviewer">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('inv_head_designee')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+
+                                    </div>
+                                </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Facility/Equipment"> Facility/ Equipment/ Instrument/ System Details
@@ -1117,13 +1182,15 @@
                                             </thead>
                                             <tbody>
                                                 <td><input disabled type="text" name="serial[]" value="1"></td>
-                                                <td> <select name="facility_name[]" id="facility_name"
+                                                {{-- <td> <select name="facility_name[]" id="facility_name"
                                                         class="facility-name">
                                                         <option value="">-- Select --</option>
                                                         <option value="Facility">Facility</option>
                                                         <option value="Equipment"> Equipment</option>
                                                         <option value="Instrument">Instrument</option>
-                                                    </select> </td>
+                                                    </select> </td> --}}
+                                                <td><input type="text" name="facility_name[]" class="facilityName"></td>
+
                                                 <td><input type="text" name="IDnumber[]" class="id-number"></td>
                                                 <td><input type="text" name="Remarks[]" class="remarks"></td>
                                                 <td><input type="text" name="Action[]" class="action" readonly></td>
@@ -1314,23 +1381,7 @@
                                                     </td>
                                                     <td><input type="text" class="productName" name="product_name[]">
                                                     </td>
-                                                    <td>
-
-                                                        <select name="product_stage[]" id="product_stage"
-                                                            class="productStage">
-                                                            <option value="">-- Select --</option>
-                                                            <option value="">1</option>
-                                                            <option value="">2</option>
-                                                            <option value="">3</option>
-                                                            <option value="">4</option>
-                                                            <option value="">5</option>
-                                                            <option value="">6</option>
-                                                            <option value="">7</option>
-                                                            <option value="">8</option>
-                                                            <option value="">9</option>
-                                                            <option value="">Final</option>
-                                                        </select>
-                                                    </td>
+                                                    <td><input type="text" name="product_stage[]" id="product_stage"> </td>
                                                     <td><input type="text" class="productBatchNo" name="batch_no[]">
                                                     </td>
                                                     <td><input type="text" class="Removebtn" name="Action[]" readonly>
@@ -4046,143 +4097,6 @@
                                 </div>
 
 
-                                <div class="col-lg-12">
-                                    <div class="group-input" id="documentsRowname">
-                                        <label for="audit-agenda-grid">
-                                            Root Cause
-                                            <button type="button" name="audit-agenda-grid"
-                                                id="rootCauseAdd">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#root-cause"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="rootCauseAddTable"
-                                                style="width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 4%">Row#</th>
-                                                        <th id="Root_Cause_Category" style="width: 12%">Root Cause
-                                                            Category</th>
-                                                        <th style="width: 16%" id="Root_Cause_Sub_Category">Root Cause
-                                                            Sub-Category</th>
-                                                        <th style="width: 16%">If Others</th>
-                                                        <th style="width: 16%"> Probability</th>
-                                                        <th style="width: 16%"> Remarks</th>
-                                                        <th style="width: 8%">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <td><input disabled type="text" name="serial[]" value="1">
-                                                    </td>
-                                                    <td>
-                                                        <select name="rootCauseData[0][rootCauseCategory]"
-                                                            id="Root_Cause_Category_Select">
-                                                            <option value="">-- Select --</option>
-                                                            <option value="M-Machine(Equipment)">M-Machine(Equipment)
-                                                            </option>
-                                                            <option value="M-Maintenance">M-Maintenance</option>
-                                                            <option value="M-Man Power (physical work)">M-Man Power
-                                                                (physical work)</option>
-                                                            <option value="">M-Management</option>
-                                                            <option value="">M-Material (Raw,Consumables etc.)
-                                                            </option>
-                                                            <option value="">M-Method (Process/Inspection)</option>
-                                                            <option value="">M-Mother Nature (Environment)</option>
-                                                            <option value="">P-Place/Plant</option>
-                                                            <option value="">P-Policies</option>
-                                                            <option value="">P-Price </option>
-                                                            <option value="">P-Procedures</option>
-                                                            <option value="">P-Process </option>
-                                                            <option value="">P-Product</option>
-                                                            <option value="">S-Suppliers</option>
-                                                            <option value="">S-Surroundings</option>
-                                                            <option value="">S-Systems</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="rootCauseData[0][rooCauseSubCategory]"
-                                                            id="Root_Cause_Sub_Category_Select">
-                                                            <option value="">-- Select --</option>
-
-                                                            <option value="Poor_Maintenance_or_Design">Infrequent Audits
-                                                            </option>
-                                                            <option value="No_Preventive_Maintenance">No Preventive
-                                                                Maintenance </option>
-                                                            <option value="Other">Other</option>
-                                                            <option value="Poor_Maintenance_or_Design">Poor Maintenance or
-                                                                Design </option>
-                                                            <option value="Maintenance_Needs_Improvement">Maintenance
-                                                                Needs Improvement </option>
-                                                            <option value="Scheduling_Problem">Scheduling Problem
-                                                            </option>
-                                                            <option value="system_deficiency">System Deficiency </option>
-                                                            <option value="">Technical Error </option>
-                                                            <option value="">Tolerable Failure </option>
-                                                            <option value="">Calibration Issues </option>
-
-                                                            <option value="Infrequent_Audits">Infrequent Audits</option>
-                                                            <option value="No_Preventive_Maintenance">No Preventive
-                                                                Maintenance </option>
-                                                            <option value="Other">Other</option>
-                                                            <option value="Maintenance_Needs_Improvement">Maintenance
-                                                                Needs Improvement</option>
-                                                            <option value="">Scheduling Problem </option>
-                                                            <option value="">System Deficiency </option>
-                                                            <option value="">Technical Error </option>
-                                                            <option value="">Tolerable Failure </option>
-
-
-                                                            <option value="Failure_to_Follow_SOP">Failure to Follow SOP
-                                                            </option>
-                                                            <option value="Human_Machine_Interface">Human-Machine
-                                                                Interface</option>
-                                                            <option value="Misunderstood_Verbal_Communication">
-                                                                Misunderstood Verbal Communication </option>
-                                                            <option value="Other">Other</option>
-                                                            <option value="">Personnel Error</option>
-                                                            <option value="">Personnel not Qualified</option>
-                                                            <option value="">Practice Needed</option>
-                                                            <option value="">Teamwork Needs Improvement</option>
-                                                            <option value="">Attention</option>
-                                                            <option value="">Understanding</option>
-                                                            <option value="">Procedural</option>
-                                                            <option value="">Behavioral</option>
-                                                            <option value="">Skill</option>
-
-                                                            <option value="">Inattention to task</option>
-                                                            <option value="">Lack of Process</option>
-                                                            <option value="">Methods</option>
-                                                            <option value="">No or poor management involvement
-                                                            </option>
-                                                            <option value="">Other</option>
-                                                            <option value="">Personnel not Qualified</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="ifOthers"
-                                                            name="rootCauseData[0][ifOthers]">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="Document_Remarks"
-                                                            name="rootCauseData[0][probability]">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="Document_Remarks"
-                                                            name="rootCauseData[0][remarks]">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="Removebtn" name="Action[]">
-                                                    </td>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-
-
                                 <div class="col-12 sub-head"></div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -4580,6 +4494,151 @@
                                             </table>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="sub-head">Root Cause</div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input" id="documentsRowname">
+                                    <label for="audit-agenda-grid">
+                                        Root Cause
+                                        <button type="button" name="audit-agenda-grid"
+                                            id="rootCauseAdd">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#root-cause"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="rootCauseAddTable"
+                                            style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 4%">Row#</th>
+                                                    <th id="Root_Cause_Category" style="width: 12%">Root Cause
+                                                        Category</th>
+                                                    <th style="width: 16%" id="Root_Cause_Sub_Category">Root Cause
+                                                        Sub-Category</th>
+                                                    <th style="width: 16%">If Others</th>
+                                                    <th style="width: 16%"> Probability</th>
+                                                    <th style="width: 16%"> Remarks</th>
+                                                    <th style="width: 8%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="serial[]" value="1">
+                                                </td>
+                                                <td>
+                                                    <select name="rootCauseData[0][rootCauseCategory]"
+                                                        id="Root_Cause_Category_Select">
+                                                        <option value="">-- Select --</option>
+                                                        <option value="M-Machine(Equipment)">M-Machine(Equipment)
+                                                        </option>
+                                                        <option value="M-Maintenance">M-Maintenance</option>
+                                                        <option value="M-Man Power (physical work)">M-Man Power
+                                                            (physical work)</option>
+                                                        <option value="">M-Management</option>
+                                                        <option value="">M-Material (Raw,Consumables etc.)
+                                                        </option>
+                                                        <option value="">M-Method (Process/Inspection)</option>
+                                                        <option value="">M-Mother Nature (Environment)</option>
+                                                        <option value="">P-Place/Plant</option>
+                                                        <option value="">P-Policies</option>
+                                                        <option value="">P-Price </option>
+                                                        <option value="">P-Procedures</option>
+                                                        <option value="">P-Process </option>
+                                                        <option value="">P-Product</option>
+                                                        <option value="">S-Suppliers</option>
+                                                        <option value="">S-Surroundings</option>
+                                                        <option value="">S-Systems</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="rootCauseData[0][rooCauseSubCategory]"
+                                                        id="Root_Cause_Sub_Category_Select">
+                                                        <option value="">-- Select --</option>
+
+                                                        <option value="Poor_Maintenance_or_Design">Infrequent Audits
+                                                        </option>
+                                                        <option value="No_Preventive_Maintenance">No Preventive
+                                                            Maintenance </option>
+                                                        <option value="Other">Other</option>
+                                                        <option value="Poor_Maintenance_or_Design">Poor Maintenance or
+                                                            Design </option>
+                                                        <option value="Maintenance_Needs_Improvement">Maintenance
+                                                            Needs Improvement </option>
+                                                        <option value="Scheduling_Problem">Scheduling Problem
+                                                        </option>
+                                                        <option value="system_deficiency">System Deficiency </option>
+                                                        <option value="">Technical Error </option>
+                                                        <option value="">Tolerable Failure </option>
+                                                        <option value="">Calibration Issues </option>
+
+                                                        <option value="Infrequent_Audits">Infrequent Audits</option>
+                                                        <option value="No_Preventive_Maintenance">No Preventive
+                                                            Maintenance </option>
+                                                        <option value="Other">Other</option>
+                                                        <option value="Maintenance_Needs_Improvement">Maintenance
+                                                            Needs Improvement</option>
+                                                        <option value="">Scheduling Problem </option>
+                                                        <option value="">System Deficiency </option>
+                                                        <option value="">Technical Error </option>
+                                                        <option value="">Tolerable Failure </option>
+
+
+                                                        <option value="Failure_to_Follow_SOP">Failure to Follow SOP
+                                                        </option>
+                                                        <option value="Human_Machine_Interface">Human-Machine
+                                                            Interface</option>
+                                                        <option value="Misunderstood_Verbal_Communication">
+                                                            Misunderstood Verbal Communication </option>
+                                                        <option value="Other">Other</option>
+                                                        <option value="">Personnel Error</option>
+                                                        <option value="">Personnel not Qualified</option>
+                                                        <option value="">Practice Needed</option>
+                                                        <option value="">Teamwork Needs Improvement</option>
+                                                        <option value="">Attention</option>
+                                                        <option value="">Understanding</option>
+                                                        <option value="">Procedural</option>
+                                                        <option value="">Behavioral</option>
+                                                        <option value="">Skill</option>
+
+                                                        <option value="">Inattention to task</option>
+                                                        <option value="">Lack of Process</option>
+                                                        <option value="">Methods</option>
+                                                        <option value="">No or poor management involvement
+                                                        </option>
+                                                        <option value="">Other</option>
+                                                        <option value="">Personnel not Qualified</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="ifOthers"
+                                                        name="rootCauseData[0][ifOthers]">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="Document_Remarks"
+                                                        name="rootCauseData[0][probability]">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="Document_Remarks"
+                                                        name="rootCauseData[0][remarks]">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="Removebtn" name="Action[]">
+                                                </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Immediate_Action_Take">Detail Of Root Cause </label>
+                                    <textarea class="tiny" name="detail_of_root" id="detail_of_root"></textarea>
                                 </div>
                             </div>
 

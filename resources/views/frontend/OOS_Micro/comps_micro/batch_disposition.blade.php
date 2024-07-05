@@ -8,7 +8,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">OOS Category</label>
-                    <select name="oos_category_BI">
+                    <select name="oos_category_BI" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="analyst-error" @if ($micro_data->oos_category_BI == 'analyst-error') selected @endif>Analyst Error</option>
                         <option value="instrument-error" @if ($micro_data->oos_category_BI == 'instrument-error') selected @endif>Instrument Error</option>
@@ -22,13 +22,13 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Recores">Other's</label>
-                    <input type="string" name="others_BI" value="{{ $micro_data->others_BI }}">
+                    <input type="string" name="others_BI" value="{{ $micro_data->others_BI }}" {{Helpers::isOOSMicro($micro_data->stage)}}>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
                     <label for="Reference Recores">Material/Batch Release</label>
-                    <select name="material_batch_release_BI">
+                    <select name="material_batch_release_BI" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="to-be-release" @if ($micro_data->material_batch_release_BI == 'to-be-release') selected @endif>To Be Release</option>
                         <option value="to-be-rejected" @if ($micro_data->material_batch_release_BI == 'to-be-rejected') selected @endif>To Be Rejected</option>
@@ -42,7 +42,8 @@
                 <div class="group-input">
                     <label for="Description Deviation">Other Action (Specify)</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="other_action_BI" id="summernote-1">{{ $micro_data->other_action_BI }}
+                    <textarea class="summernote" name="other_action_BI" id="summernote-1"
+                    >{{ $micro_data->other_action_BI }}
                             </textarea>
                 </div>
             </div>
@@ -50,7 +51,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Recores">Field alert reference</label>
-                    <select multiple id="reference_record" name="field_alert_reference_BI[]" id="">
+                    <select multiple id="reference_record" name="field_alert_reference_BI[]" id="" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option value="">--Select---</option>
                         <option value="1" {{ (!empty($micro_data->field_alert_reference_BI) && in_array('1', explode(',', $micro_data->field_alert_reference_BI[0]))) ? 'selected' : '' }}>1</option>
                         <option value="2" {{ (!empty($micro_data->field_alert_reference_BI) && in_array('2', explode(',', $micro_data->field_alert_reference_BI[0]))) ? 'selected' : '' }}>2</option>
@@ -128,7 +129,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Recores">Phase-III Inves. Required?</label>
-                    <select name="phase_III_inves_required_BI">
+                    <select name="phase_III_inves_required_BI" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option>Enter Your Selection Here</option>
                         <option value="1" {{ (!empty($micro_data->phase_III_inves_required_BI) && in_array('1', explode(',', $micro_data->phase_III_inves_required_BI[0]))) ? 'selected' : '' }}>1</option>
                         <option value="2" {{ (!empty($micro_data->phase_III_inves_required_BI) && in_array('2', explode(',', $micro_data->phase_III_inves_required_BI[0]))) ? 'selected' : '' }}>2</option>
@@ -138,7 +139,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Recores">Phase-III Inves. Reference</label>
-                    <select multiple id="reference_record" name="phase_III_inves_reference_BI[]" id="">
+                    <select multiple id="reference_record" name="phase_III_inves_reference_BI[]" id="" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option value="">--Select---</option>
                         <option value="1" {{ (!empty($micro_data->phase_III_inves_reference_BI) && in_array('1', explode(',', $micro_data->phase_III_inves_reference_BI[0]))) ? 'selected' : '' }}>1</option>
                         <option value="2" {{ (!empty($micro_data->phase_III_inves_reference_BI) && in_array('2', explode(',', $micro_data->phase_III_inves_reference_BI[0]))) ? 'selected' : '' }}>2</option>
@@ -149,7 +150,8 @@
                 <div class="group-input">
                     <label for="Description Deviation">Justify for Delay in Activity</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="justify_for_delay_BI" id="summernote-1">
+                    <textarea class="summernote" name="justify_for_delay_BI" id="summernote-1"
+                     {{Helpers::isOOSMicro($micro_data->stage)}}>
                         {{ $micro_data->justify_for_delay_BI }}</textarea>
                 </div>
 
@@ -180,18 +182,24 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input type="file" id="myfile" name="disposition_attachment_BI[]"
-                                oninput="addMultipleFiles(this, 'disposition_attachment_BI')" multiple>
+                            <input type="file" id="myfile" name="disposition_attachment_BI[]" oninput="addMultipleFiles(this, 'disposition_attachment_BI')"
+                             multiple {{Helpers::isOOSMicro($micro_data->stage)}}>
                         </div>
                     </div>
 
                 </div>
             </div>
             <div class="button-block">
-                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" id="ChangeNextButton" class="nextButton"
-                    onclick="nextStep()">Next</button>
+            @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                <div class="progress-bars">
+                        <div class="bg-danger">Workflow is already Closed-Done</div>
+                    </div>
+            @else
+            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" id="ChangeNextButton" class="nextButton"
+                onclick="nextStep()">Next</button>
+            @endif
                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>
             </div>

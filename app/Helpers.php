@@ -495,21 +495,21 @@ class Helpers
     }
 
 
-     public static function getDueDate123($date, $addDays = false, $format = null)
-        {
-            try {
-                if ($date) {
-                    $format = $format ? $format : 'd M Y';
-                    $dateInstance = Carbon::parse($date);
-                    if ($addDays) {
-                        $dateInstance->addDays(30);
-                    }
-                    return $dateInstance->format($format);
-            }
-            } catch (\Exception $e) {
-                return 'NA';
-            }
-        }
+    //  public static function getDueDate123($date, $addDays = false, $format = null)
+    //     {
+    //         try {
+    //             if ($date) {
+    //                 $format = $format ? $format : 'd M Y';
+    //                 $dateInstance = Carbon::parse($date);
+    //                 if ($addDays) {
+    //                     $dateInstance->addDays(30);
+    //                 }
+    //                 return $dateInstance->format($format);
+    //         }
+    //         } catch (\Exception $e) {
+    //             return 'NA';
+    //         }
+    //     }
 
 
     public static function getDepartmentWithString($id)
@@ -764,5 +764,41 @@ class Helpers
 
         return $status;
     }
+
+    // Kuldeep Patel
+    public static function getDueDate123($date = null, $addDays = false, $format = 'd M Y')
+    {
+        try {
+            $dateInstance = $date ? Carbon::parse($date) : Carbon::now();
+            if ($addDays) {
+                $dateInstance->addDays(30);
+            }
+            return $dateInstance->format($format);
+        } catch (\Exception $e) {
+            return 'NA';
+        }
+    }
+
+    // SONALI SHARMA
+    public static function isOOSChemical($data)
+    {   
+        if($data == 0 || $data  >= 15){
+            return 'disabled';
+        }else{
+            return  '';
+        }
+         
+    }
+
+    public static function isOOSMicro($micro_data)
+    {   
+        if($micro_data == 0 || $micro_data  >= 14){
+            return 'disabled';
+        }else{
+            return  '';
+        }
+         
+    }
+
 
 }

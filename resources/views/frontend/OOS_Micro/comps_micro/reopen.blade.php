@@ -7,7 +7,7 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Other Action (Specify)</label>
-                    <textarea class="summernote" name="reopen_request" id="summernote-1">{{ $micro_data->reopen_request }}
+                    <textarea class="summernote" name="reopen_request" id="summernote-1" {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->reopen_request }}
                     </textarea>
                 </div>
             </div>
@@ -38,17 +38,23 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="reopen_attachment[]"
-                                oninput="addMultipleFiles(this, 'reopen_attachment')" multiple>
+                                oninput="addMultipleFiles(this, 'reopen_attachment')" multiple {{Helpers::isOOSMicro($micro_data->stage)}}>
                         </div>
                     </div>
 
                 </div>
             </div>
             <div class="button-block">
-                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" id="ChangeNextButton" class="nextButton"
-                    onclick="nextStep()">Next</button>
+            @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                <div class="progress-bars">
+                        <div class="bg-danger">Workflow is already Closed-Done</div>
+                    </div>
+            @else
+            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" id="ChangeNextButton" class="nextButton"
+                onclick="nextStep()">Next</button>
+            @endif
                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>
             </div>

@@ -47,6 +47,12 @@ function addMultipleFiles(input, block_id) {
     }
 }
     </script>
+
+     <script>
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    })
+</script>
   <script>
     $(document).ready(function() {
         $('#ObservationAdd').click(function(e) {
@@ -102,6 +108,8 @@ function addMultipleFiles(input, block_id) {
 
                     // '<td><input type="text" name="status_Observation[]"></td>' +
                     // '<td><input type="text" name="remark_observation[]"></td>' +
+
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>'+
                     '</tr>';
 
                 return html;
@@ -176,6 +184,11 @@ function addMultipleFiles(input, block_id) {
 
             var cell9 = newRow.insertCell(8);
             cell9.innerHTML = "<input type='text'name='remark[]'>";
+
+
+                let cell10 = newRow.insertCell(9);
+            cell10.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
             for (var i = 1; i < currentRowCount; i++) {
                 var row = table.rows[i];
                 row.cells[0].innerHTML = i;
@@ -667,7 +680,7 @@ function addMultipleFiles(input, block_id) {
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="inv_attachment[]"
-                                                            oninput="addMultipleFiles(this, 'inv_attachment1')"
+                                                            oninput="addMultipleFiles(this, 'inv_attachment')"
                                                             multiple>
                                                     </div>
                                                 </div>
@@ -731,6 +744,7 @@ function addMultipleFiles(input, block_id) {
                                                             <th>Auditor</th>
                                                             <th>Auditee</th>
                                                             <th>Remarks</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -793,7 +807,7 @@ function addMultipleFiles(input, block_id) {
                                                             <td><input type="text" name="remark[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}">
                                                         </td>
-
+                                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                         </tr>
                                                     @endforeach
                                                         @endif
@@ -915,6 +929,7 @@ function addMultipleFiles(input, block_id) {
                                                                 <th>CAPA Completion Date</th>
                                                                 <th>Status</th>
                                                                 <th>Remarks</th>
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="observationDetail">
@@ -1188,6 +1203,7 @@ function addMultipleFiles(input, block_id) {
                                                                 <th>CAPA Completion Date</th>
                                                                 <th>Status</th>
                                                                 <th>Remarks</th>   --}}
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="observationDetail">
@@ -1264,6 +1280,7 @@ function addMultipleFiles(input, block_id) {
                                                                         oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>
                                                                     <td><input type="text" name="status_Observation[]" value="{{unserialize($grid_data1->status)[$key] ? unserialize($grid_data1->status)[$key]: "" }}"></td>
                                                                     <td><input type="text" name="remark_observation[]" value="{{unserialize($grid_data1->remark)[$key] ? unserialize($grid_data1->remark)[$key]: "" }}"></td> --}} 
+                                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                          </tr>
                                                             @endforeach
                                                             @endif

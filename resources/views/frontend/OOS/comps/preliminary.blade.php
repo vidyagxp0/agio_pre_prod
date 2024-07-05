@@ -9,20 +9,19 @@
                     <div class="col-md-12 4">
                         <div class="group-input">
                             <textarea class="summernote" name="Comments_plidata" value=""
-                                id="summernote-1">{{ $data->Comments_plidata ? $data->Comments_plidata : '' }}</textarea>
-                            </textarea>
+                                id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}> 
+                                {{ $data->Comments_plidata ? $data->Comments_plidata : '' }}
+                             </textarea>
                         </div>
                     </div>
                 </div>
             </div>
-          
-
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if no Field Alert</label>
 
                     <textarea class="summernote" name="justify_if_no_field_alert_pli" value=""
-                        id="summernote-1">
+                        id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
               {{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : '' }} </textarea>
                 </div>
             </div>
@@ -33,7 +32,7 @@
                     <!-- <label for="Description Deviation">Description of Deviation</label> -->
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="justify_if_no_analyst_int_pli" value=""
-                        id="summernote-1">
+                        id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                   {{$data && $data->justify_if_no_analyst_int_pli ? $data->justify_if_no_analyst_int_pli : ''}}  </textarea>
 
                 </div>
@@ -42,8 +41,8 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">Phase I Investigation</label>
-                    <select name="phase_i_investigation_pli">
-                        <option value="0">Enter Your Selection Here</option>
+                    <select name="phase_i_investigation_pli" {{Helpers::isOOSChemical($data->stage)}}>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Phase I Micro"{{ $data->phase_i_investigation_pli ==
                             'Phase I Micro' ? 'selected' : '' }}>Phase I Micro</option>
                         <option value="Phase I Chemical"{{ $data->phase_i_investigation_pli ==
@@ -86,17 +85,23 @@
                             <div>Add</div>
                             <input type="file" id="myfile" name="file_attachments_pli[]" 
                             oninput="addMultipleFiles(this, 'file_attachments_pli')"
-                                multiple>
+                                multiple {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
                     </div>
                 </div>
             </div>
             
             <div class="button-block">
-                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" id="ChangeNextButton" class="nextButton"
-                    onclick="nextStep()">Next</button>
+            @if ($data->stage == 0  || $data->stage >= 15)
+            <div class="progress-bars">
+                    <div class="bg-danger">Workflow is already Closed-Done</div>
+                </div>
+            @else
+            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" id="ChangeNextButton" class="nextButton"
+                onclick="nextStep()">Next</button>
+            @endif
                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>
             </div>

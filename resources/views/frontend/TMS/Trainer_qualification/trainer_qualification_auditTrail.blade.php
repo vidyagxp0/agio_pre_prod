@@ -196,6 +196,10 @@
                         </div>
                         <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
 
+                        <div class="" style="display:flex; justify-content:flex-end">
+                            <button type="button"> <a class="text-white" href="{{ route('trainer_qualification.show', $trainer->id) }}">
+                                    Exit </a> </button>
+                        </div>
                     </div>
     </div>
     </table>

@@ -228,11 +228,10 @@
     </script>
     <!-- ======GRID END  =============-->
     <div class="form-field-head">
-
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
             {{ Helpers::getDivisionName(session()->get('division')) }} / OOS Micro
-        </div>
+        </div> 
     </div>
     {{-- ======================================
                     DATA FIELDS
@@ -485,4 +484,5 @@
             $(this).closest('tr').remove();
         })
     </script>
+   
 @endsection

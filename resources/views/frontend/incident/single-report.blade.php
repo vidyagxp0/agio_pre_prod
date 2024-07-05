@@ -3281,11 +3281,11 @@
                                     </tr>
 
                                     <tbody>
-                                        @if ($grid_data_qrms && is_array($grid_data_qrms->data))
+                                        @if ($grid_data_qrms && is_array($grid_data_qrms))
                                              @php
                                                 $serialNumber = 1;
                                             @endphp
-                                            @foreach ($grid_data_qrms->data as $grid_item)
+                                            @foreach ($grid_data_qrms as $grid_item)
                                             <tr>
                                                 <td>{{$serialNumber++}}</td>
                                                 <td>{{$grid_item['risk_factor']}}</td>
@@ -3319,11 +3319,11 @@
                                         <th>Proposed Additional Risk control measure</th>
                                     </tr>
                                     <tbody>
-                                        @if ($grid_data_qrms && is_array($grid_data_qrms->data))
+                                        @if ($grid_data_qrms && is_array($grid_data_qrms))
                                             @php
                                                 $serialNumber = 1;
                                             @endphp
-                                            @foreach ($grid_data_qrms->data as $grid_item)
+                                            @foreach ($grid_data_qrms as $grid_item)
                                                 <tr>
                                                     <td>{{$serialNumber++}}</td>
                                                     <td>{{$grid_item['initial_probability']}}</td>
@@ -3357,11 +3357,11 @@
                                     </tr>
 
                                     <tbody>
-                                        @if ($grid_data_qrms && is_array($grid_data_qrms->data))
+                                        @if ($grid_data_qrms && is_array($grid_data_qrms))
                                             @php
                                                 $serialNumber = 1;
                                             @endphp
-                                            @foreach ($grid_data_qrms->data as $grid_item)
+                                            @foreach ($grid_data_qrms as $grid_item)
                                                 <tr>
                                                     <td>{{$serialNumber++}}</td>
                                                     <td>{{$grid_item['residual_severity']}}</td>
@@ -3403,11 +3403,11 @@
                                         <th class="w-60">Remark</th>
                                     </tr>
                                     <tbody>
-                                        @if($grid_data_matrix_qrms && is_array($grid_data_matrix_qrms->data))
+                                        @if($grid_data_matrix_qrms && is_array($grid_data_matrix_qrms))
                                             @php
                                                 $serialNumber = 1;
                                             @endphp
-                                            @foreach($grid_data_matrix_qrms->data as $matrix_grid_data)
+                                            @foreach($grid_data_matrix_qrms as $matrix_grid_data)
                                                 <tr>
                                                     <td>{{ $serialNumber }}</td>
                                                     <td>{{ $matrix_grid_data['risk_Assesment'] }}</td>
@@ -3488,7 +3488,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                                        <th class="w-20">Immediate Action Taken</th>
+                                    <th class="w-20">Immediate Action Taken</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data->Immediate_Action_Take) {{ strip_tags($data->Immediate_Action_Take) }} @else Not Applicable @endif
@@ -3559,14 +3559,12 @@
                                         </div>
                                     </td>
                                 </tr>
-
                             </table>
                             <div class="border-table">
                                 <div class="block-head">
                                     Capa Closure Attachment
                                 </div>
                                 <table>
-
                                     <tr class="table_bg">
                                         <th class="w-20">S.N.</th>
                                         <th class="w-60">Attachment</th>
@@ -3585,7 +3583,6 @@
                                             <td class="w-20">Not Applicable</td>
                                         </tr>
                                     @endif
-
                                 </table>
                             </div>
 

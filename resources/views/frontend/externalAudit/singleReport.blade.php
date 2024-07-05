@@ -232,7 +232,7 @@
                         <th class="w-20">Short Description</th>
                         <td class="w-30"> @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
-                        <td class="w-30"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
+                        <td class="w-30"> @if($data->due_date){{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit type</th>
@@ -484,7 +484,7 @@
                         <th class="w-20">S.N.</th>
                         <th class="w-60">Batch No</th>
                     </tr>
-                        @if($data->file_attachment)
+                        @if($data->file_attachment && is_array(json_decode($data->file_attachment_guideline)))
                         @foreach(json_decode($data->file_attachment_guideline) as $key => $file)
                             <tr>
                                 <td class="w-20">{{ $key + 1 }}</td>

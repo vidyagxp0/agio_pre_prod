@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Auditee extends Model
 {
     use HasFactory;
+
+    public function record_initiator()
+    {
+        return $this->belongsTo(User::class, 'initiator_id');
+    }
+    
 }
