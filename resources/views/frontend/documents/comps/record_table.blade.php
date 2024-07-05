@@ -44,12 +44,10 @@
                         000{{ $doc->id }}
                     </a>
                 </td>
-                <td class="doc-type">
-                    {{ Helpers::getDocumentTypeById($doc->document_type_id) }}
-
-                    <!-- {{ $doc->document_type_name}} -->
+                <td class="division">
+                    {{-- {{ $doc->document_type_name }} --}}
+                    {{ $doc->document_type_id }}
                 </td>
-
                 <td class="division">
                     {{ Helpers::getDivisionName($doc->division_id) }}
                 </td>

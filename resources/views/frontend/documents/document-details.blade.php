@@ -62,9 +62,8 @@
                     </div> --}}
                     <div>
                         <div class="head">Document Type</div>
-                        <div>{{ Helpers::getDocumentTypeById($document->document_type_id) }}
-                        </div>
-                        <!-- <div>{{ $document->document_type_id }}</div> -->
+
+                        <div>{{ $document->document_type_id }}</div>
                     </div>
                     <div>
                         <div class="head">Working Status</div>
