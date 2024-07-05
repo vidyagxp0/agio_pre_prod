@@ -18,4 +18,10 @@ class Errata extends Model
     {
         return $this->belongsTo(QMSDivision::class,'division_id');
     }
+
+    public function newChanges()
+    {
+        return $this->hasOne(AddColumnErrataNew::class, 'erratanew_id','id');
+    }
 }
+

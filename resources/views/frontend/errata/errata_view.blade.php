@@ -413,14 +413,16 @@
                                         </select>
                                     </div>
                                 </div> -->
+
                                 <div class="">
                                     <div class="group-input">
                                         <label for="reference_record">Reference Documents</label>
-                                        <input  type="text" name="reference" maxlength="255" value="{{ $showdata->reference }}">
+                                        <input  type="text" name="reference" maxlength="255" value="{{ $showdatas->reference }}">
                                         
 
                                     </div>
                                 </div>
+
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -439,13 +441,13 @@
                                     </div>
                                 </div>
 
-
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Document title">Document title</label>
-                                        <input type="text" name="document_title" maxlength="255"  value="{{$showdata->document_title}}">
+                                        <input type="text" name="document_title" maxlength="255"  value="{{$showdatas->document_title}}">
                                     </div>
                                 </div>
+
 @php
 $users = DB::table('users')->get();
 @endphp
@@ -493,9 +495,9 @@ $users = DB::table('users')->get();
                                         Department Head <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="department_head_to">
+                                            <option value="">Select a Value</option>
                                             @foreach ($users as $value)
-                                                <option value="">Select a Value</option>
-                                                <option @if ($showdata->department_head_to == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option @if ($showdatas->department_head_to == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('department_head_to')
@@ -528,7 +530,7 @@ $users = DB::table('users')->get();
                                     <select id="select-state" placeholder="Select..." name="qa_reviewer">
                                         <option value="">Select a value</option> 
                                         @foreach ($users as $key=> $value)
-                                            <option  @if ($showdata->qa_reviewer == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                            <option  @if ($showdatas->qa_reviewer == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('qa_reviewer')
@@ -601,69 +603,8 @@ $users = DB::table('users')->get();
                                     </div>
                                 </div>
 
-                                {{-- <div class="">
-                                    <div class="group-input">
-                                        <label for="Date And Time of Correction"><b>Date And Time of Correction
-                                            </b></label>
-                                        <input type="datetime-local" name="Date_and_time_of_correction"
-                                            value="{{ $showdata->Date_and_time_of_correction }}"
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                
 
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Errata_date">Date And Time of Correction</label>
-                                        <div class="calenderauditee">
-
-                                            <input type="text" id="displayErrataDate" nmae="Date_and_time_of_correction" readonly placeholder="DD-MM-YYYY HH:MM" value="{{ $showdata->Date_and_time_of_correction }}"/>
-
-                                            <input type="datetime-local" id="Errata_date" name="Date_and_time_of_correction" max="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}" onchange="updateDisplayDateTime(this)" class="hide-input" />
-                                        </div>
-                                    </div>
-                                    @error('Errata_date')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div> --}}
-
-                                <!-- <div class="new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Errata_date">Date And Time of Correction</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="displayErrataDate" name="Date_and_time_of_correction" readonly placeholder="DD-MM-YYYY HH:MM" value="{{ old('Date_and_time_of_correction', $showdata->Date_and_time_of_correction) }}"/>
-                                            <input type="datetime-local" id="Errata_date" name="Date_and_time_of_correction" onchange="updateDisplayDateTime(this)" class="hide-input" />
-                                        </div>
-                                    </div>
-                                    @error('Errata_date')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <script>
-                                    function updateDisplayDateTime(input) {
-                                        const selectedDateTime = new Date(input.value);
-                                        const formattedDateTime = formatDate(selectedDateTime);
-                                        document.getElementById('displayErrataDate').value = formattedDateTime;
-                                    }
-
-                                    function formatDate(date) {
-                                        const day = String(date.getDate()).padStart(2, '0');
-                                        const monthIndex = date.getMonth();
-                                        const monthNames = ["Jan", "Feb", "March", "April", "May", "June",
-                                            "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                                        const month = monthNames[monthIndex];
-                                        const year = date.getFullYear();
-                                        let hours = date.getHours();
-                                        let minutes = date.getMinutes();
-
-                                        hours = String(hours).padStart(2, '0');
-                                        minutes = String(minutes).padStart(2, '0');
-
-                                        const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}`;
-
-                                        return formattedDateTime;
-                                    }
-                                </script> -->
 
 
 

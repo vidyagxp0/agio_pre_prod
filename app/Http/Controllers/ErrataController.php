@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\RecordNumber;
+use App\Models\AddColumnErrataNew;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use App\Models\QMSDivision;
@@ -39,13 +40,9 @@ class ErrataController extends Controller
         $data->initiator_id = Auth::user()->id;
         $data->intiation_date = $request->intiation_date;
         $data->initiated_by = $request->initiated_by;
-        if($request->has('department_head_to')&& $request->department_head_to!==null){
 
-            $data->department_head_to = $request->department_head_to;
-        }
         // dd($data->department_head_to);
-        $data->document_title =$request->document_title;
-        $data->qa_reviewer =$request->qa_reviewer;
+        // $data->document_title =$request->document_title;
         $data->type = "ERRATA";
         $data->Department = $request->Department;
         $data->department_code = $request->department_code;
@@ -62,7 +59,6 @@ class ErrataController extends Controller
 
         // $data->reference_document = !empty($request->reference_document) ? implode(',', $request->reference_document) : '';
 
-        $data->reference = $request->reference;
         $data->Observation_on_Page_No = $request->Observation_on_Page_No;
         $data->brief_description = $request->brief_description;
         $data->type_of_error = $request->type_of_error;
@@ -151,8 +147,23 @@ class ErrataController extends Controller
 
         $data->status = 'Opened';
         $data->stage = 1;
+        
         $data->save();
-// dd($data);
+
+
+        $newdata =New AddColumnErrataNew();
+        $newdata->department_head_to = $request->department_head_to;
+        $newdata->document_title =$request->document_title;
+        $newdata->qa_reviewer =$request->qa_reviewer;
+        $newdata->reference = $request->reference;
+       
+        $newdata->save();
+
+    
+
+        
+
+// dd($newdata);
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -481,13 +492,16 @@ class ErrataController extends Controller
     public function show($id)
     {
         $showdata = errata::find($id);
-
-        // dd($showdata);
+        
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $errata_id = $id;
+        $errata_ids = $showdata->$id;
+          // Assuming you want to create a new record if not exists
+    $showdatas = AddColumnErrataNew::firstOrCreate(['erratanew_id' => $showdata->$id]); 
+    
         $grid_Data = ErrataGrid::where(['e_id' => $errata_id, 'identifier' => 'details'])->first();
-        return view('frontend.errata.errata_view', compact('showdata', 'grid_Data', 'errata_id', 'record_number'));
+        return view('frontend.errata.errata_view', compact('showdata', 'grid_Data', 'errata_id', 'record_number','showdatas'));
     }
 
     public function stageChange(Request $request, $id)
@@ -886,8 +900,7 @@ class ErrataController extends Controller
         $data->department_code = $request->department_code;
         $data->document_type = $request->document_type;
         $data->short_description = $request->short_description;
-        $data->document_title =$request->document_title;
-        $data->department_head_to =$request->department_head_to;
+        
         if ($request->input('type_of_error') == 'Other') {
             $data->otherFieldsUser = $request->input('otherFieldsUser');
         } else {
@@ -950,6 +963,15 @@ class ErrataController extends Controller
             $data->Closure_Attachments = json_encode($files);
         }
         $data->update();
+
+
+
+        $newdata =New AddColumnErrataNew();
+        $newdata->department_head_to = $request->department_head_to;
+        $newdata->document_title =$request->document_title;
+        $newdata->qa_reviewer =$request->qa_reviewer;
+        $newdata->reference = $request->reference;
+        $newdata->update();
 
         if ($lastData->initiated_by != $data->initiated_by || !empty($request->comment)) {
             // return 'history';
