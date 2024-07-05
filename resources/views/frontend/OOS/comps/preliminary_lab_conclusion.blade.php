@@ -17,7 +17,7 @@
                     <label for="Lead Auditor">Root Cause Identified</label>
                     <!-- <div class="text-primary">Please Choose the relevent units</div> -->
                     <select name="root_cause_identified_plic"  {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="0" {{ $data->root_cause_identified_plic == '0' ? 'selected' : ''
+                        <option value="" {{ $data->root_cause_identified_plic == '0' ? 'selected' : ''
                             }}>Enter Your Selection Here</option>
                         <option value="yes" {{ $data->root_cause_identified_plic == 'yes' ? 'selected' :
                             '' }}>yes</option>
@@ -31,7 +31,7 @@
                 <div class="group-input">
                     <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
                     <select name="oos_category_root_cause_ident_plic"  {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="0">Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Analyst Error"{{ $data->oos_category_root_cause_ident_plic ==
                             'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
                         <option value="Instrument Error"{{ $data->oos_category_root_cause_ident_plic ==
@@ -77,7 +77,7 @@
                 <div class="group-input">
                     <label for="Product/Material Name">CAPA Required</label>
                     <select name="capa_required_plic"  {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="0" {{ $data->capa_required_plic == '0' ? 'selected' : ''
+                        <option value="" {{ $data->capa_required_plic == '0' ? 'selected' : ''
                             }}>--Select---</option>
                         <option value="yes" {{ $data->capa_required_plic == 'yes' ? 'selected' : ''
                             }}>Yes</option>

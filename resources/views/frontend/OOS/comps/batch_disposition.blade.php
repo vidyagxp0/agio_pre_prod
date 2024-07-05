@@ -8,8 +8,7 @@
                 <div class="group-input">
                     <label for="Audit Attachments">OOS Category</label>
                     <select name="oos_category_bd" {{Helpers::isOOSChemical($data->stage)}} >
-                        <option value="default" {{ $data->oos_category_bd == 'default' ? 'selected' : '' }}>Enter
-                            Your Selection Here</option>
+                        <option value="" >Enter Your Selection Here</option>
                         <option value="analyst_error" {{ $data->oos_category_bd == 'analyst_error' ? 'selected' : ''
                             }}>Analyst Error</option>
                         <option value="instrument_error" {{ $data->oos_category_bd == 'instrument_error' ?

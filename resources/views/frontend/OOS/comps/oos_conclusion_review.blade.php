@@ -77,7 +77,7 @@
                 <div class="group-input">
                     <label for="Reference Records">CAPA Reference</label>
                     <select multiple id="reference_record" name="capa_refer_ocr[]" {{Helpers::isOOSChemical($data->stage)}}>
-                    <option value="o">Enter Your Selection Here</option>
+                    <option value="">Enter Your Selection Here</option>
                     <option value="1" {{ (!empty($data->capa_refer_ocr) && in_array('1', explode(',', $data->capa_refer_ocr[0]))) ? 'selected' : '' }}>1</option>
                     <option value="2" {{ (!empty($data->capa_refer_ocr) && in_array('2', explode(',', $data->capa_refer_ocr[0]))) ? 'selected' : '' }}>2</option>
                   </select>

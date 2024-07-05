@@ -24,8 +24,7 @@
                 <div class="group-input">
                     <label for="Cancelled By"> Root Casue Identified. </label>
                     <select name="root_casue_identified_piiqcr" {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="0" {{ $data->oos_category_reason_identified_piiqcr === '0' ?
-                            'selected' : '' }}>Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data->root_casue_identified_piiqcr === 'yes' ? 'selected' :
                             '' }}>Yes</option>
                         <option value="no" {{ $data->root_casue_identified_piiqcr === 'no' ? 'selected' : ''
@@ -38,8 +37,7 @@
                 <div class="group-input">
                     <label for="Cancelled By">OOS Category-Reason identified </label>
                     <select name="oos_category_reason_identified_piiqcr" {{Helpers::isOOSChemical($data->stage)}} >
-                        <option value="0" {{ $data->oos_category_reason_identified_piiqcr === '0' ?
-                            'selected' : '' }}>Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Analyst Error"{{ $data->oos_category_reason_identified_piiqcr ===
                             'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
                         <option value="Instrument Error"{{ $data->oos_category_reason_identified_piiqcr ===

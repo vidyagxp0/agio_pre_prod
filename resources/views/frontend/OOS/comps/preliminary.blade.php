@@ -42,7 +42,7 @@
                 <div class="group-input">
                     <label for="Product/Material Name">Phase I Investigation</label>
                     <select name="phase_i_investigation_pli" {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="0">Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Phase I Micro"{{ $data->phase_i_investigation_pli ==
                             'Phase I Micro' ? 'selected' : '' }}>Phase I Micro</option>
                         <option value="Phase I Chemical"{{ $data->phase_i_investigation_pli ==

@@ -17,7 +17,7 @@
                 <div class="group-input">
                     <label for="Report Attachments"> Manufact. Invest. Required? </label>
                     <select name="manufact_invest_required_piii" {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="0">Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->manufact_invest_required_piii === 'Yes' ? 'selected' :
                                 '' }}>Yes</option>
                         <option value="No" {{ $data->manufact_invest_required_piii === 'No' ? 'selected' : ''
@@ -31,7 +31,7 @@
                     <label for="Auditee"> Manufacturing Invest. Type </label>
                     <select  name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
                         data-search="false" data-silent-initial-value-set="true" id="auditee" {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="0">Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Chemical"{{ $data->manufacturing_invest_type_piii === 'Chemical' ? 'selected' :
                             '' }}>Chemical</option>
                         <option value="Microbiology"{{ $data->manufacturing_invest_type_piii === 'Microbiology' ? 'selected' :
@@ -51,7 +51,7 @@
                 <div class="group-input">
                     <label for="Audit Attachments"> Hypo/Exp. Required</label>
                     <select name="hypo_exp_required_piii" {{Helpers::isOOSChemical($data->stage)}}>
-                       <option value="0" {{ $data->hypo_exp_required_piii == '0' ? 'selected' : ''
+                       <option value="" {{ $data->hypo_exp_required_piii == '0' ? 'selected' : ''
                             }}>Enter Your Selection Here</option>
                         <option value="yes" {{ $data->hypo_exp_required_piii == 'yes' ?
                             'selected' : '' }}>yes</option>

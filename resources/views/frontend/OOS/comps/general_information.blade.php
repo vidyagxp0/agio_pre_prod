@@ -49,8 +49,8 @@
                     <input type="hidden" value="{{ $data->intiation_date }}" name="intiation_date">
                 </div>
             </div>
-
-                <div class="col-lg-6 new-date-data-field">
+                
+            <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
                     <label for="Date Due"> Due Date </label>
                     <div><small class="text-primary">If revising Due Date, kindly mention revision
@@ -61,6 +61,7 @@
                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                             oninput="handleDateInput(this, 'due_date')" />
                     </div>
+                    
                 </div>
             </div>
                                                                                               
@@ -68,7 +69,7 @@
                 <div class="group-input">
                     <label for="Short Description"> Severity Level</label>
                     <select name="severity_level_gi"  {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="o">Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Major" {{ $data->severity_level_gi == 'Major' ? 'selected' :
                             '' }}>Major</option>
                         <option value="Minor" {{ $data->severity_level_gi == 'Minor' ? 'selected' :
@@ -121,8 +122,7 @@
                 <div class="group-input">
                     <label for="Initiator Group Code">Is Repeat?</label>
                         <select name="is_repeat_gi" {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="" {{ $data->is_repeat_gi == 'o' ? 'selected' : '' }}>Enter Your
-                            Selection Here</option>
+                        <option value="" >Enter Your Selection Here</option>
                         <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>yes</option>
                         <option value="No" {{ $data->is_repeat_gi == '2' ? 'selected' : '' }}>No</option>
                     </select>
@@ -199,7 +199,7 @@
                 <div class="group-input">
                     <label for="Source Document Type">Source Document Type</label>
                     <select name="source_document_type_gi" {{Helpers::isOOSChemical($data->stage)}} >
-                        <option>Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="OOT"{{ $data->source_document_type_gi == 'OOT' ? 'selected' : ''
                         }}>OOT</option>
                         <option value="Lab Incident"{{ $data->source_document_type_gi == 'Lab Incident' ? 'selected' : ''
@@ -231,7 +231,7 @@
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Sample Type</label>
                     <select name="sample_type_gi"  {{Helpers::isOOSChemical($data->stage)}} >
-                        <option>Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Raw Material"{{ $data->sample_type_gi == 'Raw Materia' ?
                             'selected' : '' }}>Raw Material</option>
                         <option value="Packing Material"{{ $data->sample_type_gi == 'Packing Material' ?
@@ -262,7 +262,7 @@
                 <div class="group-input">
                     <label for="Initiator Group">Customer*</label>
                     <select name="customer_gi"  {{Helpers::isOOSChemical($data->stage)}} >
-                        <option value="0">Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data->customer_gi == 'yes' ? 'selected' : '' }}>Yes
                         </option>
                         <option value="no" {{ $data->customer_gi == 'no' ? 'selected' : '' }}>No

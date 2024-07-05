@@ -94,8 +94,7 @@
                 <div class="group-input">
                     <label for="Audit Start Date">Phase II Inv. Required?</label>
                     <select name="phase_ii_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="0" {{ $data && $data->phase_ii_inv_required_plir == '0' ?
-                            'selected' : '' }}>Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data && $data->phase_ii_inv_required_plir == 'yes' ?
                             'selected' : '' }}>Yes</option>
                         <option value="no" {{ $data && $data->phase_ii_inv_required_plir == 'no' ?
