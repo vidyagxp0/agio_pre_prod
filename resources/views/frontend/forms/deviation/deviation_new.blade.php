@@ -858,7 +858,7 @@
                                 </div>
 
 
-                                                <div class="col-lg-6 new-time-data-field">
+                     <div class="col-lg-6 new-time-data-field">
                         <div class="group-input input-time">
                             <label for="deviation_time">Deviation Observed On (Time)</label>
                             <input type="text" name="deviation_time" id="deviation_time">

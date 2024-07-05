@@ -458,6 +458,21 @@ class NonConformaceController extends Controller
         $newDataGridFishbone->data = $request->fishbone;
         $newDataGridFishbone->save();
 
+
+        $newDataGridqrms = NonConformanceGridModes::where(['non_conformances_id' => $NonConformance->id, 'identifier' => 'failure_mode_qrms'])->firstOrCreate();
+        $newDataGridqrms->non_conformances_id = $NonConformance->id;
+        $newDataGridqrms->identifier = 'failure_mode_qrms';
+        $newDataGridqrms->data = $request->failure_mode_qrms;
+        // dd($newDataGridqrms->data);
+        $newDataGridqrms->save();
+
+
+        $matrixDataGridqrms = NonConformanceGridModes::where(['non_conformances_id' => $NonConformance->id, 'identifier' => 'matrix_qrms'])->firstOrCreate();
+        $matrixDataGridqrms->non_conformances_id = $NonConformance->id;
+        $matrixDataGridqrms->identifier = 'matrix_qrms';
+        $matrixDataGridqrms->data = $request->matrix_qrms;
+        $matrixDataGridqrms->save();
+
         $data3 = new NonConformanceGrid();
         $data3->non_conformances_grid_id = $NonConformance->id;
         $data3->type = "NonConformance";

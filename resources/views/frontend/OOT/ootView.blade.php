@@ -1161,7 +1161,6 @@
                                     <label for="search">
                                         Analyst Name <span class="text-danger"></span>
                                     </label>
-
                                     <select id="select-state" placeholder="Select..." name="sta_bat_analyst_name">
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key => $value)
@@ -1176,7 +1175,6 @@
                                     <label for="search">
                                         QC/QA Head/Designee <span class="text-danger"></span>
                                     </label>
-
                                     <select id="select-state" placeholder="Select..." name="qa_head_designee">
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key => $value)

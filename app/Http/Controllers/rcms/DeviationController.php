@@ -1559,7 +1559,6 @@ class DeviationController extends Controller
         $newDataGridqrms->deviation_id = $id;
         $newDataGridqrms->identifier = 'failure_mode_qrms';
         $newDataGridqrms->data = $request->failure_mode_qrms;
-        dd($newDataGridqrms->data);
         $newDataGridqrms->save();
 
         $matrixDataGridqrms = DeviationGridQrms::where(['deviation_id' => $id, 'identifier' => 'matrix_qrms'])->firstOrCreate();
