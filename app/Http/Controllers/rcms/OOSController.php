@@ -918,6 +918,7 @@ class OOSController extends Controller
         $parent_created_at = OOS::where('id', $id)->value('created_at');
         $parent_short_description = OOS::where('id', $id)->value('description_gi');
         $hod = User::where('role', 4)->get();
+        $record = $record_number;
         // dd($record_number);
         $old_record = OOS::select('id', 'division_id', 'record_number')->get();
 
@@ -927,7 +928,7 @@ class OOSController extends Controller
             $Capachild->Capachild = $record_number;
             $Capachild->save();
 
-            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_record', 'cft'));
+            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_record', 'cft'));
         } elseif ($request->child_type == "Action_Item")
          {
             $parent_name = "CAPA";
@@ -936,14 +937,14 @@ class OOSController extends Controller
             $parent_id = $id;
             $actionchild->save();
 
-            return view('frontend.forms.action-item', compact('parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.forms.action-item', compact('parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
         }
         else {
             $parent_name = "Root";
             $Rootchild = OOS::find($id);
             $Rootchild->Rootchild = $record_number;
             $Rootchild->save();
-            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
+            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
         }
     }
 
