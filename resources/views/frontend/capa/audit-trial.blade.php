@@ -177,12 +177,12 @@
 
             <body>
                 <div style="display: flex; justify-content: flex-end;">
-                    {{-- <button type="button" style="background-color: #007bff; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; font-size: 16px; margin: 4px 2px; cursor: pointer;">
-                        <a href="{{ route('capashow', ['id' => $data->id]) }}" style="color: white; text-decoration: none;">Exit</a>
-                        
-                    </button> --}}
-                    <button type="button"> <a class="text-white"
-                                                href="{{ route('capashow',$data->id) }}"> Exit </a> </button>
+                   
+                    <button  class="button_theme1" style="margin-right: 10px"> <a class="text-white" href="{{ route('capashow',$data->id) }}"> Back </a> </button>
+                     
+                
+                    <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                </a> </button></div>
                 </div>
                 <header>
                     <table>
@@ -198,7 +198,13 @@
 
                     <table>
                         <div class="heading">
+                           
 
+                                <div class="division-bar" style="color: black">
+                                    <strong>Site Division/Project</strong> :
+                                    {{ $document->division_code }} / CAPA
+                                </div>
+                           
                             <div class="heading-new">
                                 Audit Trail
                             </div>
