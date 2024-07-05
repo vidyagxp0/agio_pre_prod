@@ -654,17 +654,17 @@ class OOSMicroController extends Controller
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
             $history->previous = "Null";
+            $history->activity_type = 'Phase II Inv. Required';
+            $history->current = $request->phase_ii_inv_required_plir;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $OOSmicro->status;
-            $history->stage = $OOSmicro->stage;
-            $history->change_to =   "Opened";
+            // $history->stage = $OOSmicro->stage;
             $history->change_from = "Initiation";
+            $history->change_to =   "Opened";
             $history->action_name = 'Create';
-            $history->activity_type = 'Phase II Inv. Required';
-            $history->current = $request->phase_ii_inv_required_plir;
             $history->save();
         }
        
