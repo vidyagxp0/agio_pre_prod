@@ -7670,6 +7670,8 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where(['q_m_s_divisions_id' => $data->division_id])
+                                                    ->select('user_id')
+                                                    ->distinct()
                                                     ->get();
                                                 $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                                 $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs

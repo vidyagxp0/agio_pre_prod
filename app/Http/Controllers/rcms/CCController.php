@@ -6455,6 +6455,7 @@ class CCController extends Controller
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
             $evaluation = Evaluation::where('cc_id', $id)->first();
+            $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
             if ($changeControl->stage == 1) {
                     $changeControl->stage = "2";
                     $changeControl->status = "HOD Review";
@@ -6703,7 +6704,7 @@ class CCController extends Controller
                 toastr()->success('Pending CFT Review');
                 return back();
             }
-            if ($failureInvestigation->stage == 5) {
+            if ($changeControl->stage == 5) {
                 $IsCFTRequired = ChangeControlCftResponse::withoutTrashed()->where(['is_required' => 1, 'cc_id' => $id])->latest()->first();
                 $cftUsers = DB::table('cc_cfts')->where(['cc_id' => $id])->first();
 

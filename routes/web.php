@@ -67,6 +67,7 @@ Route::get('/login', [UserLoginController::class, 'userlogin'])->name('login');
 Route::post('/logincheck', [UserLoginController::class, 'logincheck']);
 Route::get('/logout', [UserLoginController::class, 'logout'])->name('logout');
 Route::post('/rcms_check', [UserLoginController::class, 'rcmscheck']);
+Route::post('CC-effectiveness-check/{id}', [CCController::class, 'changeControlEffectivenessCheck'])->name('CC-effectiveness-check');
 //Route::get('/', [UserLoginController::class, 'userlogin']);
 Route::get('/error', function () {
     return view('error');
