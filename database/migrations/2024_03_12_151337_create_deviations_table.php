@@ -32,7 +32,7 @@ return new class extends Migration
             $table->longText('Detail_Of_Root_Cause')->nullable();
             $table->integer('Reviewer_to')->nullable();
             $table->string('initiator_group_code')->nullable();
-            $table->date('intiation_date')->nullable();
+            $table->text('intiation_date')->nullable();
             $table->string('form_type')->nullable();
             $table->integer('record_number')->nullable();
             //$table->string('text')->nullable();
