@@ -417,7 +417,7 @@
                                 <div class="">
                                     <div class="group-input">
                                         <label for="reference_record">Reference Documents</label>
-                                        <input  type="text" name="reference" maxlength="255" value="{{ $showdatas->reference }}">
+                                        <input  type="text" name="reference" maxlength="255" value="{{ $showdata->reference }}">
                                         
 
                                     </div>
@@ -444,7 +444,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Document title">Document title</label>
-                                        <input type="text" name="document_title" maxlength="255"  value="{{$showdatas->document_title}}">
+                                        <input type="text" name="document_title" maxlength="255"  value="{{$showdata->document_title}}">
                                     </div>
                                 </div>
 
@@ -497,7 +497,7 @@ $users = DB::table('users')->get();
                                         <select id="select-state" placeholder="Select..." name="department_head_to">
                                             <option value="">Select a Value</option>
                                             @foreach ($users as $value)
-                                                <option @if ($showdatas->department_head_to == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option @if ($showdata->department_head_to == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('department_head_to')
@@ -530,7 +530,7 @@ $users = DB::table('users')->get();
                                     <select id="select-state" placeholder="Select..." name="qa_reviewer">
                                         <option value="">Select a value</option> 
                                         @foreach ($users as $key=> $value)
-                                            <option  @if ($showdatas->qa_reviewer == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                            <option  @if ($showdata->qa_reviewer == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('qa_reviewer')
