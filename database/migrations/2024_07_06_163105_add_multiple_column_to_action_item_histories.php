@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::table('action_item_histories', function (Blueprint $table) {
-            $table->integer('doc_id')->nullable();
-            $table->integer('doc_id')->nullable();
-            $table->integer('doc_id')->nullable();
-            $table->integer('doc_id')->nullable();
-            $table->integer('doc_id')->nullable();
+            // $table->integer('doc_id')->nullable();
+            // $table->integer('doc_id')->nullable();
+            // $table->integer('doc_id')->nullable();
+            // $table->integer('doc_id')->nullable();
+            // $table->integer('doc_id')->nullable();
 
         });
     }
