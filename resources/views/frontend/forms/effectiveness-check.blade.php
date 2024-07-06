@@ -34,7 +34,7 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Effectiveness check Results</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Comments</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Closure Comments</button>
                  <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button> 
             </div>
 
@@ -268,7 +268,7 @@
                             <div class="row">
                                 <!-- Reference Info comments -->
                                 <div class="col-12 sub-head">
-                                    QA comments
+                                    Closure comments
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -284,7 +284,7 @@
                                 </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Attachments">QA Attachment</label>
+                                        <label for="Attachments">Closure Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
