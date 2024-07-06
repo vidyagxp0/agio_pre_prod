@@ -149,6 +149,18 @@ class IncidentController extends Controller
         $incident->Facility_Equipment = $request->Facility_Equipment;
         $incident->detail_of_root = $request->detail_of_root;
         $incident->Document_Details_Required = $request->Document_Details_Required;
+        $incident->equipment_name = $request->equipment_name;
+        $incident->instrument_name = $request->instrument_name;
+        $incident->inc_facility_name = $request->inc_facility_name;
+        $incident->product_quality_imapct = $request->product_quality_imapct;
+        $incident->process_performance_impact = $request->process_performance_impact;
+        $incident->yield_impact = $request->yield_impact;
+        $incident->gmp_impact = $request->gmp_impact;
+        $incident->additionl_testing_required = $request->additionl_testing_required;
+        $incident->any_similar_incident_in_past = $request->any_similar_incident_in_past;
+        $incident->classification_by_qa = $request->classification_by_qa;
+        $incident->capa_require = $request->capa_require;
+        $incident->deviation_required = $request->deviation_required;
 
         if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
             $list = Helpers::getHeadoperationsUserList();
@@ -1466,6 +1478,19 @@ if ($incident->Initial_attachment) {
         $incident->Occurrence = $request->Occurrence ? $request->Occurrence : $incident->Occurrence;
         $incident->detection = $request->detection ? $request->detection: $incident->detection;
 
+        $incident->equipment_name = $request->equipment_name;
+        $incident->instrument_name = $request->instrument_name;
+        $incident->inc_facility_name = $request->inc_facility_name;
+        $incident->product_quality_imapct = $request->product_quality_imapct;
+        $incident->process_performance_impact = $request->process_performance_impact;
+        $incident->yield_impact = $request->yield_impact;
+        $incident->gmp_impact = $request->gmp_impact;
+        $incident->additionl_testing_required = $request->additionl_testing_required;
+        $incident->any_similar_incident_in_past = $request->any_similar_incident_in_past;
+        $incident->classification_by_qa = $request->classification_by_qa;
+        $incident->capa_require = $request->capa_require;
+        $incident->deviation_required = $request->deviation_required;
+
         $newDataGridqrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' =>
         'failure_mode_qrms'])->firstOrCreate();
         $newDataGridqrms->incident_id = $id;
@@ -1722,7 +1747,6 @@ if ($incident->Initial_attachment) {
                     }
                 }
 
-
                 $Cft->Kilo_Lab_attachment = json_encode($files);
             }
             if (!empty ($request->Technology_transfer_attachment)) {
@@ -1734,7 +1758,6 @@ if ($incident->Initial_attachment) {
                         $files[] = $name;
                     }
                 }
-
 
                 $Cft->Technology_transfer_attachment = json_encode($files);
             }
@@ -1912,8 +1935,6 @@ if ($incident->Initial_attachment) {
 
             }
 
-
-
         }
 
 
@@ -2069,7 +2090,6 @@ if ($incident->Initial_attachment) {
                     $files[] = $name;
                 }
             }
-
 
             $incident->QA_attachments = json_encode($files);
         }

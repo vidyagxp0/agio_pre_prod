@@ -414,13 +414,13 @@
                                 @foreach (unserialize($grid_data->IDnumber) as $key => $dataDemo)
                                     <tr>
                                         <td class="w-15">{{ $loop->index + 1 }}</td>
-                                        <td class="w-15">
+                                        <td class="w-80">
                                             {{ unserialize($grid_data->facility_name)[$key] ? unserialize($grid_data->facility_name)[$key] : 'Not Applicable' }}
                                         </td>
-                                        <td class="w-15">
+                                        <td class="w-80">
                                             {{ unserialize($grid_data->IDnumber)[$key] ? unserialize($grid_data->IDnumber)[$key] : 'Not Applicable' }}
                                         </td>
-                                        <td class="w-15">
+                                        <td class="w-80">
                                             {{ unserialize($grid_data->Remarks)[$key] ? unserialize($grid_data->Remarks)[$key] : 'Not Applicable' }}
                                         </td>
 
@@ -2746,10 +2746,10 @@
                                             <tr>
                                                 <td class="w-80">{{ $serialNumber++ }}</td>
                                                 @foreach ($users as $user)
-                                                <option value="{{ $user->id }}"
-                                                    {{ $investigation_item['teamMember'] == $user->id ? 'selected' : '' }}>
-                                                    {{ $user->name }}</option>
-                                            @endforeach
+                                                <td>
+                                                    {{ $users[$investigation_item['teamMember']]->name ?? 'User not found' }}
+                                                </td>
+                                                @endforeach
                                                 <td class="w-80">{{ $investigation_item['responsibility'] }}</td>
                                                 <td class="w-80">{{ $investigation_item['remarks'] }}</td>
                                             </tr>

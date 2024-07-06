@@ -918,8 +918,8 @@
                                         enableTime: true,
                                         noCalendar: true,
                                         dateFormat: "H:i", // 24-hour format without AM/PM
-                                        minuteIncrement: 1 // Set minute increment to 1
-
+                                        minuteIncrement: 1, // Set minute increment to 1
+                                        time_24hr: true // Force 24-hour format in the time picker
                                     });
                                 </script>
                                 <div class="col-lg-6">
