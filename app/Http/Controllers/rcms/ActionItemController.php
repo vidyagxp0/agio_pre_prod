@@ -76,7 +76,9 @@ class ActionItemController extends Controller
         $openState->intiation_date = $request->intiation_date;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
-         $openState->Reference_Recores1 = implode(',', $request->related_records);
+        //  $openState->Reference_Recores1 = implode(',', $request->related_records);
+         $openState->related_records = $request->related_records;
+
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
        // $openState->hod_preson = json_encode($request->hod_preson);
@@ -118,6 +120,19 @@ class ActionItemController extends Controller
                 }
             
             $openState->Support_doc = json_encode($files);
+            }
+        }
+        if (!empty($request->final_attach)) {
+            $files = [];
+            if ($request->hasfile('final_attach')) {
+                foreach ($request->file('final_attach') as $file) {
+                    
+                    $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            
+            $openState->final_attach = json_encode($files);
             }
         }
 
@@ -165,6 +180,9 @@ class ActionItemController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = "Create";
         $history->save();
         }
 
@@ -179,13 +197,49 @@ class ActionItemController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = "Create";
         $history->save();
         }
+        if (!empty($openState->due_date)) {
+            $history = new ActionItemHistory();
+            $history->cc_id =  $openState->id;
+            $history->activity_type = 'Due Date';
+            $history->previous = "Null";
+            $history->current =  $openState->due_date;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+            }
+
+            if (!empty($openState->related_records)) {
+                $history = new ActionItemHistory();
+                $history->cc_id =  $openState->id;
+                $history->activity_type = 'Action Item Related Records';
+                $history->previous = "Null";
+                $history->current =  $openState->related_records;
+                $history->comment = "NA";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $openState->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+                $history->save();
+                }
         
         if (!empty($openState->Reference_Recores1)) {
         $history = new ActionItemHistory();
         $history->cc_id =   $openState->id;
-        $history->activity_type = 'Action Item Related Records';
+        $history->activity_type = 'Reference_Recores1';
         $history->previous = "Null";
         $history->current =  $openState->Reference_Recores1;
         $history->comment = "NA";
@@ -193,6 +247,9 @@ class ActionItemController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = "Create";
         $history->save();
         }
         
@@ -209,8 +266,8 @@ class ActionItemController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->change_to = "Opened";
-         $history->change_from = "Initiator";
-         $history->action_name = "store";
+        $history->change_from = "Initiation";
+        $history->action_name = "Create";
 
         $history->save();
         }
@@ -227,8 +284,8 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
    
             $history->save();
             }
@@ -246,8 +303,8 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
    
             $history->save();
             }
@@ -264,8 +321,8 @@ class ActionItemController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $openState->status;
                 $history->change_to = "Opened";
-                $history->change_from = "Initiator";
-                $history->action_name = "store";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
        
                 $history->save();
                 }
@@ -282,8 +339,8 @@ class ActionItemController extends Controller
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $openState->status;
                     $history->change_to = "Opened";
-                    $history->change_from = "Initiator";
-                    $history->action_name = "store";
+                    $history->change_from = "Initiation";
+                    $history->action_name = "Create";
            
                     $history->save();
                     }
@@ -299,8 +356,8 @@ class ActionItemController extends Controller
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $openState->status;
                     $history->change_to = "Opened";
-                    $history->change_from = "Initiator";
-                    $history->action_name = "store";
+                    $history->change_from = "Initiation";
+                    $history->action_name = "Create";
            
                     $history->save();
                }
@@ -316,8 +373,8 @@ class ActionItemController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $openState->status;
                 $history->change_to = "Opened";
-                $history->change_from = "Initiator";
-                $history->action_name = "store";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
        
                 $history->save();
            }
@@ -333,8 +390,8 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
    
             $history->save();
        }
@@ -350,8 +407,8 @@ class ActionItemController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->change_to = "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = "store";
+        $history->change_from = "Initiation";
+        $history->action_name = "Create";
 
         $history->save();
    }
@@ -367,8 +424,8 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
    
             $history->save();
         }
@@ -385,8 +442,8 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
    
             $history->save();
         }
@@ -403,15 +460,15 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
    
             $history->save();
         }
         if (!empty($openState->Support_doc)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'Supporting Documents';
+            $history->activity_type = ' Completion Attachments';
             $history->previous = "Null";
             $history->current =  $openState->Support_doc;
             $history->comment = "NA";
@@ -420,11 +477,47 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
    
             $history->save();
         }
+        if (!empty($openState->final_attach)) {
+            $history = new ActionItemHistory();
+            $history->cc_id =   $openState->id;
+            $history->activity_type = 'Action ApprovalAttachments';
+            $history->previous = "Null";
+            $history->current =  $openState->final_attach;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+   
+            $history->save();
+        }
+
+        if (!empty($openState->departments)) {
+            $history = new ActionItemHistory();
+            $history->cc_id =   $openState->id;
+            $history->activity_type = 'Departments';
+            $history->previous = "Null";
+            $history->current =  $openState->departments;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+   
+            $history->save();
+        }
+   
    
    
                              
@@ -460,8 +553,8 @@ class ActionItemController extends Controller
         }
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
-        // $openState->related_records = $request->related_records;
-        $openState->Reference_Recores1 = implode(',', $request->related_records);
+        $openState->related_records = $request->related_records;
+        // $openState->Reference_Recores1 = implode(',', $request->related_records);
         $openState->description = $request->description;
         $openState->title = $request->title;
         //$openState->hod_preson = json_encode($request->hod_preson);
@@ -484,17 +577,29 @@ class ActionItemController extends Controller
 
         // $openState->status = 'Opened';
         // $openState->stage = 1;
-             $files = [];
-            if ($request->hasfile('file_attach')) {
-                foreach ($request->file('file_attach') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
-                    $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
+        if ($request->hasFile('file_attach')) {
+            $files = [];
+            foreach ($request->file('file_attach') as $file) {
+                $name = $request->name . '_file_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
             }
             $openState->file_attach = json_encode($files);
+        }
+    
+        $openState->fill($request->except('file_attach'));
+
+            //  $files = [];
+            // if ($request->hasfile('file_attach')) {
+            //     foreach ($request->file('file_attach') as $file) {
+            //         if ($file instanceof \Illuminate\Http\UploadedFile) {  
+            //         $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+            //         $file->move('upload/', $name);
+            //         $files[] = $name;
+            //     }
+            // }
+            // }
+            // $openState->file_attach = json_encode($files);
         
 
         if (!empty($request->Support_doc)) {
@@ -509,6 +614,19 @@ class ActionItemController extends Controller
             }
             }
             $openState->Support_doc = json_encode($files);
+        }
+        if (!empty($request->final_attach)) {
+            $files = [];
+            if ($request->hasfile('final_attach')) {
+                foreach ($request->file('final_attach') as $file) {
+                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
+                    $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            }
+            $openState->final_attach = json_encode($files);
         }
 
         
@@ -528,9 +646,13 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->title)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
    
             $history->save();
         }
@@ -546,9 +668,99 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->dept)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+   
+            $history->save();
+        }  
+
+        //  if ($lastopenState->dept != $openState->dept || !empty($request->dept_comment)) {
+        //     $history = new ActionItemHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Responsible Department';
+        //     $history->previous = $lastopenState->dept;
+        //     $history->current = $openState->dept;
+        //     $history->comment = $request->dept_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastopenState->status;
+        //     $history->change_to = "Not Applicable";
+        //    $history->change_from = $lastopenState->status;
+        //      if (is_null($lastopenState->dept)) {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+   
+        //     $history->save();
+        // }  
+
+        if ($lastopenState->related_records != $openState->related_records) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Action Item Related Records';
+            $history->previous = $lastopenState->related_records;
+            $history->current = $openState->related_records;
+            $history->comment = $request->related_records_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->related_records)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+   
+            $history->save();
+        }  
+        if ($lastopenState->departments != $openState->departments) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Responsible Department';
+            $history->previous = $lastopenState->departments;
+            $history->current = $openState->departments;
+            $history->comment = $request->departments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->departments)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+   
+            $history->save();
+        }  
+        if ($lastopenState->due_date != $openState->due_date ) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Due Date';
+            $history->previous = $lastopenState->due_date;
+            $history->current = $openState->due_date;
+            $history->comment = $request->due_date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->due_date)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
    
             $history->save();
         }  
@@ -563,9 +775,13 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->assign_to)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
    
             $history->save();
         }  
@@ -573,7 +789,7 @@ class ActionItemController extends Controller
         if ($lastopenState->Reference_Recores1 != $openState->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Action Item Related Records';
+            $history->activity_type = 'Reference_Recores1';
             $history->previous = $lastopenState->Reference_Recores1;
             $history->current = $openState->Reference_Recores1;
             $history->comment = $request->Reference_Recores1_comment;
@@ -581,30 +797,56 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->Reference_Recores1)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
    
             $history->save();
         }
 
-        if ($lastopenState->short_description != $openState->short_description || !empty($request->short_description_comment)) {
-            $history = new ActionItemHistory;
-            $history->cc_id = $id;
+        // if ($lastopenState->short_description != $openState->short_description) {
+        //     $history = new ActionItemHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Short Description';
+        //     $history->previous = $lastopenState->short_description;
+        //     $history->current = $openState->short_description;
+        //     $history->comment = $request->short_description_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastopenState->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $openState->status;
+        //     $history->action_name = "Update";
+   
+        //     $history->save();
+        // }
+        // if (!empty($openState->short_description)) {
+            if ($lastopenState->short_description != $openState->short_description) {
+                $history = new ActionItemHistory();
+            $history->cc_id =   $openState->id;
             $history->activity_type = 'Short Description';
             $history->previous = $lastopenState->short_description;
-            $history->current = $openState->short_description;
-            $history->comment = $request->short_description_comment;
+            $history->current =  $openState->short_description;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
-   
+             $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->short_description)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+    
             $history->save();
-        }
+            }
         if ($lastopenState->description != $openState->description || !empty($request->description_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
@@ -616,9 +858,13 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->description)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
    
             $history->save();
         }
@@ -633,9 +879,13 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->hod_preson)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
    
             $history->save();
         }
@@ -651,9 +901,13 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->initiatorGroup)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
    
             $history->save();
         }
@@ -668,6 +922,13 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->action_taken)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastopenState->start_date != $openState->start_date || !empty($request->start_date_comment)) {
@@ -681,9 +942,13 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->start_date)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
 
             $history->save();
         }
@@ -698,9 +963,13 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->end_date)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
    
             $history->save();
         }
@@ -715,9 +984,13 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->comments)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
    
             $history->save();
         }
@@ -732,16 +1005,19 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
-   
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->qa_comments)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastopenState->due_date_extension != $openState->due_date_extension || !empty($request->due_date_extension_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA Review Comments';
+            $history->activity_type = 'Due Date Extension';
             $history->previous = $lastopenState->due_date_extension;
             $history->current = $openState->due_date_extension;
             $history->comment = $request->due_date_extension_comment;
@@ -749,9 +1025,13 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->due_date_extension)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
    
             $history->save();
         }
@@ -766,12 +1046,40 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->file_attach)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastopenState->final_attach != $openState->final_attach || !empty($request->final_attach_comment)) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Completion Attachments';
+            $history->previous = $lastopenState->final_attach;
+            $history->current = $openState->final_attach;
+            $history->comment = $request->final_attach_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->final_attach)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+   
             $history->save();
         }
         if ($lastopenState->Support_doc != $openState->Support_doc || !empty($request->Support_doc_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Supporting Documents';
+            $history->activity_type = 'Completion Attachments';
             $history->previous = $lastopenState->Support_doc;
             $history->current = $openState->Support_doc;
             $history->comment = $request->Support_doc_comment;
@@ -779,9 +1087,13 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->Support_doc)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
    
             $history->save();
         }
@@ -834,12 +1146,13 @@ class ActionItemController extends Controller
                     
                 // } else {
                     $changeControl->stage = '2';
-                    $changeControl->status = 'Work In Progress';
+                    $changeControl->status = 'HOD Review';
                     $changeControl->submitted_by = Auth::user()->name;
                     $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
                     $changeControl->submitted_comment = $request->comment;
-
+                   
                         $history = new ActionItemHistory;
+                        $history->action = "submit";
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
                         $history->current = $changeControl->submitted_by;
@@ -848,17 +1161,20 @@ class ActionItemController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status;
-                        $history->stage = "Submitted";
-                        $history->save();
+                        $history->stage = "HOD Review";
+                       
                     $changeControl->update();
-                    $history = new CCStageHistory();
-                    $history->type = "Action-Item";
-                    $history->doc_id = $id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->stage_id = $changeControl->stage;
-                    $history->status = $changeControl->status;
+                    $history->change_to = "HOD Review";
+                    $history->change_from = $lastopenState->status;
                     $history->save();
+                    // $history = new CCStageHistory();
+                    // $history->type = "Action-Item";
+                    // $history->doc_id = $id;
+                    // $history->user_id = Auth::user()->id;
+                    // $history->user_name = Auth::user()->name;
+                    // $history->stage_id = $changeControl->stage;
+                    // $history->status = $lastopenState->status;
+                  
                 //     $list = Helpers::getActionOwnerUserList();
                 //     foreach ($list as $u) {
                 //         if($u->q_m_s_divisions_id == $openState->division_id){
@@ -883,14 +1199,16 @@ class ActionItemController extends Controller
             
             if ($changeControl->stage == 2) {
                 $changeControl->stage = '3';
-                $changeControl->status = 'Closed-Done';
-                $changeControl->completed_by = Auth::user()->name;
-                $changeControl->completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->completed_comment = $request->comment;
+                $changeControl->status = 'Acknowledge';
+                $changeControl->work_completion_by = Auth::user()->name;
+                $changeControl->work_completion_on = Carbon::now()->format('d-M-Y');
+                $changeControl->work_completion_comment = $request->comment;
+                
 
                       $history = new ActionItemHistory;
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
+                        $history->action = "HOD Review Complete";
                         $history->previous = $lastopenState->completed_by;
                         $history->current = $changeControl->completed_by;
                         $history->comment = $request->comment;
@@ -898,17 +1216,23 @@ class ActionItemController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status;
-                        $history->stage = "Completed";
+                        $history->stage = "Acknowledge";
+                        $history->change_to = "Acknowledge";
+                        $history->change_from = $lastopenState->status;
                         $history->save();
                 $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Action-Item";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
+                // $history = new CCStageHistory();
+                $history = new ActionItemHistory;
+
+                // $history->type = "Action-Item";
+                // $history->doc_id = $id;
+                // $history->user_id = Auth::user()->id;
+                // $history->user_name = Auth::user()->name;
+                // $history->stage_id = $changeControl->stage;
+                // $history->status = $lastopenState->status;
+                // $history->change_to = "Acknowledge";
+                // $history->change_from = $lastopenState->status;
+                // $history->save();
             //     $list = Helpers::getInitiatorUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $openState->division_id){
@@ -930,6 +1254,81 @@ class ActionItemController extends Controller
 
                 return back();
             }
+
+            if ($changeControl->stage == 3) {
+                $changeControl->stage = '4';
+                $changeControl->status = 'Work Completion';
+                $changeControl->acknowledgement_by = Auth::user()->name;
+                $changeControl->acknowledgement_on = Carbon::now()->format('d-M-Y');
+                $changeControl->acknowledgement_comment = $request->comment;
+                $history = new ActionItemHistory;
+                $history->action = "Acknowledgement Complete";
+
+                     
+                        $history->cc_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = $lastopenState->completed_by;
+                        $history->current = $changeControl->completed_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastopenState->status;
+                        $history->stage = "Work Completion";
+                        $history->save();
+                $changeControl->update();
+                // $history = new CCStageHistory();
+                //  $history->type = "Action-Item";
+                // $history->doc_id = $id;
+                // $history->user_id = Auth::user()->id;
+                // $history->user_name = Auth::user()->name;
+                // $history->stage_id = $changeControl->stage;
+                // $history->status = $lastopenState->status;
+                $history->change_to = "Work Completion";
+                $history->change_from = $lastopenState->status;
+                $history->save();
+            //   
+                toastr()->success('Document Sent');
+
+                return back();
+            }
+
+            if ($changeControl->stage == 4) {
+                $changeControl->stage = '5';
+                $changeControl->status = 'Closed - Done';
+                $changeControl->completed_by = Auth::user()->name;
+                $changeControl->completed_on = Carbon::now()->format('d-M-Y');
+                $changeControl->completed_comment = $request->comment;
+                $history = new ActionItemHistory;
+                $history->action = "Complete";
+                $history->cc_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastopenState->completed_by;
+                $history->current = $changeControl->completed_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastopenState->status;
+                $history->stage = "Closed - Done";
+                $history->save();
+                $changeControl->update();
+                // $history = new CCStageHistory();
+                // $history->type = "Action-Item";
+                // $history->doc_id = $id;
+                // $history->user_id = Auth::user()->id;
+                // $history->user_name = Auth::user()->name;
+                // $history->stage_id = $changeControl->stage;
+                // $history->status = $lastopenState->status;
+                $history->change_to = "Closed - Done";
+                $history->change_from = $lastopenState->status;
+                $history->save();
+            //   
+                toastr()->success('Document Sent');
+
+                return back();
+            }
+            
         } else {
             toastr()->error('E-signature Not match');
 
@@ -976,26 +1375,29 @@ public function actionStageCancel(Request $request, $id)
             $changeControl->cancelled_by = Auth::user()->name;
             $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
             $changeControl->cancelled_comment =$request->comment;
-
-                        $history = new ActionItemHistory;
-                        $history->cc_id = $id;
-                        $history->activity_type = 'Activity Log';
-                        $history->current = $changeControl->cancelled_by;
-                        $history->comment = $request->comment;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastopenState->status;
-                        $history->stage = "Cancelled";
-                        $history->save();
-            $changeControl->update();
-            $history = new CCStageHistory();
-            $history->type = "Action Item";
-            $history->doc_id = $id;
+            $history = new ActionItemHistory;
+            $history->action = "Cancel";
+            $history->cc_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->current = $changeControl->cancelled_by;
+            $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->stage_id = $changeControl->stage;
-            $history->status = $changeControl->status;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Cancelled";
+            $history->change_from = $lastopenState->status;
+            $history->stage = "Cancelled";
+            $history->save();
+            $changeControl->update();
+            // $history = new CCStageHistory();
+            // $history->type = "Action Item";
+            // $history->doc_id = $id;
+            // $history->user_id = Auth::user()->id;
+            // $history->user_name = Auth::user()->name;
+            // $history->stage_id = $changeControl->stage;
+            // $history->status = $changeControl->status;
+            
             $history->save();
             // $list = Helpers::getActionOwnerUserList();
             //         foreach ($list as $u) {
@@ -1024,26 +1426,29 @@ public function actionStageCancel(Request $request, $id)
             $changeControl->more_information_required_by = (string)Auth::user()->name;
             $changeControl->more_information_required_on = Carbon::now()->format('d-M-Y');
             $changeControl->more_info_requ_comment =$request->comment;
-
-                        $history = new ActionItemHistory;
-                        $history->cc_id = $id;
-                        $history->activity_type = 'Activity Log';
-                        $history->current = $changeControl->more_information_required_by;
-                        $history->comment = $request->comment;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastopenState->status;
-                        $history->stage = "More Information Required";
-                        $history->save();
-            $changeControl->update();
-            $history = new CCStageHistory();
-            $history->type = "Action Item";
-            $history->doc_id = $id;
+        
+            $history = new ActionItemHistory;
+            $history->action = "More Information Required";
+            $history->cc_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->current = $changeControl->more_information_required_by;
+            $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->stage_id = $changeControl->stage;
-            $history->status = "More-information Required";
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->stage = "More Information Required";
+            $history->save();
+            $changeControl->update();
+           
+            // $history->type = "Action Item";
+            // $history->doc_id = $id;
+            // $history->user_id = Auth::user()->id;
+            // $history->user_name = Auth::user()->name;
+            // $history->stage_id = $changeControl->stage;
+            // $history->status = "More-information Required";
+            $history->change_to = "Opened";
+            $history->change_from = $lastopenState->status;
             $history->save();
         //     $list = Helpers::getInitiatorUserList();
         //     foreach ($list as $u) {
@@ -1065,6 +1470,125 @@ public function actionStageCancel(Request $request, $id)
             toastr()->success('Document Sent');
             return redirect('rcms/actionItem/'.$id);
         }
+        if ($changeControl->stage == 3) {
+            $changeControl->stage = "2";
+            $changeControl->status = "HOD Review";
+            $changeControl->more_information_required_by = (string)Auth::user()->name;
+            $changeControl->more_information_required_on = Carbon::now()->format('d-M-Y');
+            $changeControl->more_info_requ_comment =$request->comment;
+            $history = new ActionItemHistory;
+            $history->action = "More Information Required";
+            $history->cc_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->current = $changeControl->more_information_required_by;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->stage = "HOD Review";
+            $history->save();
+            $changeControl->update();
+            // $history = new CCStageHistory();
+            // $history->type = "Action Item";
+            // $history->doc_id = $id;
+            // $history->user_id = Auth::user()->id;
+            // $history->user_name = Auth::user()->name;
+            // $history->stage_id = $changeControl->stage;
+            // $history->status = "HOD Review";
+            $history->change_to = "HOD Review";
+            $history->change_from = $lastopenState->status;
+            $history->save();
+      
+            toastr()->success('Document Sent');
+            return redirect('rcms/actionItem/'.$id);
+        }
+        if ($changeControl->stage == 4) {
+            $changeControl->stage = "3";
+            $changeControl->status = "Acknowledge";
+            $changeControl->more_information_required_by = (string)Auth::user()->name;
+            $changeControl->more_information_required_on = Carbon::now()->format('d-M-Y');
+            $changeControl->more_info_requ_comment =$request->comment;
+            $history = new ActionItemHistory;
+            $history->action = "More Information Required";
+            $history->cc_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->current = $changeControl->more_information_required_by;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->stage = "Acknowledge";
+            $history->save();
+            $changeControl->update();
+            // $history = new CCStageHistory();
+            // $history->type = "Action Item";
+            // $history->doc_id = $id;
+            // $history->user_id = Auth::user()->id;
+            // $history->user_name = Auth::user()->name;
+            // $history->stage_id = $changeControl->stage;
+            // $history->status = "Acknowledge";
+            $history->change_to = "Acknowledge";
+            $history->change_from = $lastopenState->status;
+            $history->save();
+      
+            toastr()->success('Document Sent');
+            return redirect('rcms/actionItem/'.$id);
+        }
+
+// ==============================cancel steg =================
+        if ($changeControl->stage == 2) {
+            $changeControl->stage = "0";
+            $changeControl->status = "Closed-Cancelled";
+            $changeControl->cancelled_by = Auth::user()->name;
+            $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+            $changeControl->cancelled_comment =$request->comment; 
+            $history = new ActionItemHistory;
+            $history->action = "Cancel";
+            $history->cc_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->current = $changeControl->cancelled_by;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->stage = "Cancelled";
+            $history->save();
+            $changeControl->update();
+            // $history = new CCStageHistory();
+            // $history->type = "Action Item";
+            // $history->doc_id = $id;
+            // $history->user_id = Auth::user()->id;
+            // $history->user_name = Auth::user()->name;
+            // $history->stage_id = $changeControl->stage;
+            // $history->status = "Cancelled";
+            $history->change_to = "Cancelled";
+            $history->change_from = $lastopenState->status;
+            $history->save();
+            // $list = Helpers::getActionOwnerUserList();
+            //         foreach ($list as $u) {
+            //             if($u->q_m_s_divisions_id == $openState->division_id){
+            //                 $email = Helpers::getInitiatorEmail($u->user_id);
+            //                  if ($email !== null) {
+                          
+            //                   Mail::send(
+            //                       'mail.view-mail',
+            //                        ['data' => $openState],
+            //                     function ($message) use ($email) {
+            //                         $message->to($email)
+            //                             ->subject("Document is Cancel By ".Auth::user()->name);
+            //                     }
+            //                   );
+            //                 }
+            //          } 
+            //       }
+            toastr()->success('Document Sent');
+            return redirect('rcms/actionItem/'.$id);
+        }
+
+       
     } else {
         toastr()->error('E-signature Not match');
         return back();

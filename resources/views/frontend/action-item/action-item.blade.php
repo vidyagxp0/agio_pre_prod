@@ -160,17 +160,17 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Related Records">Action Item Related Records</label>
-                                        <select multiple id="related_records" name="related_records[]"
+                                        {{-- <select multiple id="related_records" name="related_records[]"
                                             placeholder="Select Reference Records">
-                                            {{-- <option value="">--select record--</option> --}}
-                                            <!-- @if (!empty($old_record)) -->
+                                      @if (!empty($old_record)) 
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
-                                            <!-- @endif -->
-                                        </select>
+                                         @endif
+                                        </select> --}}
+                                        <input type="longText" name="related_records" >
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -178,8 +178,11 @@
                                         <label for="HOD Persons">HOD Persons</label>
                                         <select   name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
                                             data-silent-initial-value-set="true" id="hod" >
+                                            <option value="">select person</option>
                                             @foreach ($users as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                
+                                                <option value="{{ $value->name }}">{{ $value->name }}</option>
+
                                             @endforeach
                                         </select>
                                     </div>
@@ -322,7 +325,7 @@
                                 </div>
                                  <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="end_date">Actual End Date</lable>
+                                        <label for="end_date">Actual End Date</label>
                                         <div class="calenderauditee">
                                         <input type="text" id="end_date"                             
                                                 placeholder="DD-MMM-YYYY" />
@@ -339,9 +342,9 @@
                                         <textarea name="comments"></textarea>
                                     </div>
                                 </div>
-                                {{-- <div class="col-12">
+                                <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Support_doc">Supporting Documents</label>
+                                        <label for="Support_doc">Completion Attachment</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Support_doc"></div>
                                             <div class="add-btn">
@@ -352,7 +355,7 @@
                                         </div>
 
                                     </div>
-                                </div> --}}
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -374,10 +377,21 @@
                                         <textarea name="qa_comments"></textarea>
                                     </div>
                                 </div>
-                                {{--
+                                
+                                <div class="col-12 sub-head">
+                                    Extension Justification
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="due-dateextension">Due Date Extension Justification</label>
+                                        <textarea name="due_date_extension"></textarea>
+                                    </div>
+                                </div>
+                                
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="file_attach">Final Attachments</label>
+                                        <label for="file_attach">Action Approval</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach"></div>
                                             <div class="add-btn">
@@ -387,16 +401,6 @@
                                             </div>
                                         </div>
 
-                                    </div>
-                                </div> --}}
-                                <div class="col-12 sub-head">
-                                    Extension Justification
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="due-dateextension">Due Date Extension Justification</label>
-                                        <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>
                             </div>
