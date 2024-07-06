@@ -1991,8 +1991,9 @@ if($lastDocument->$key != $request->$key){
             $Capachild = OOS_MICRO::find($id);
             $Capachild->Capachild = $record;
             $Capachild->save();
-
-            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_record', 'cft'));
+         return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record',
+          'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date',
+           'parent_name', 'parent_division_id', 'parent_record', 'old_record', 'cft'));
         } elseif ($request->child_type == "Action_Item")
          {
             $parent_name = "CAPA";
@@ -2025,7 +2026,6 @@ if($lastDocument->$key != $request->$key){
     public function auditDetails($id)
     {
         $detail = OOSmicroAuditTrail::find($id);
-        
         $detail_data = OOSmicroAuditTrail::where('activity_type', $detail->activity_type)->where('id', $detail->id)->latest()->get();
         $doc = OOS_MICRO::where('id', $detail->OOS_micro_id)->first();
         $doc->origiator_name = User::find($doc->initiator_id);
