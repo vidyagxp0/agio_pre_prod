@@ -8,6 +8,7 @@ use App\Models\CCStageHistory;
 use App\Models\EffectivenessCheck;
 use App\Models\RecordNumber;
 use App\Models\User;
+use App\Models\EffectivenessCheckAuditTrail;
 use App\Models\RoleGroup;
 use Carbon\Carbon;
 use PDF;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
 
 class EffectivenessCheckController extends Controller
 {
@@ -163,188 +165,214 @@ class EffectivenessCheckController extends Controller
         $newCounter = $counter + 1;
         DB::table('record_numbers')->update(['counter' => $newCounter]);
 
-        if (!empty($openState->assign_to)) {
-            $historyAssigned = EffectivenessCheck::find($openState->id);
-            $historyAssigned->parent_id =   $openState->id;
-            $historyAssigned->activity_type = 'Assigned To';
-            $historyAssigned->previous = "Null";
-            $historyAssigned->current =  $openState->assign_to;
-            $historyAssigned->comment = "NA";
-            $historyAssigned->user_id = Auth::user()->id;
-            $historyAssigned->user_name = Auth::user()->name;
-            $historyAssigned->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $historyAssigned->origin_state = $openState->status;
-            $historyAssigned->update();
+        if (!empty ($request->assign_to)){
+            $history = new EffectivenessCheckAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Assigned To';
+            $history->previous = "Null";
+            $history->current = $openState->assign_to;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
         }
-         if (!empty($openState->short_description)) {
-            $historyShort = EffectivenessCheck::find($openState->id);
-            $historyShort->parent_id =   $openState->id;
-            $historyShort->activity_type = 'Short Description';
-            $historyShort->previous = "Null";
-            $historyShort->current =  $openState->short_description;
-            $historyShort->comment = "NA";
-            $historyShort->user_id = Auth::user()->id;
-            $historyShort->user_name = Auth::user()->name;
-            $historyShort->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $historyShort->origin_state = $openState->status;
-            $historyShort->update();
-            }
-            
-        if (!empty($openState->Effectiveness_check_Plan)) {
-            $historyEffectiveness = EffectivenessCheck::find($openState->id);
-            $historyEffectiveness->parent_id =   $openState->id;
-            $historyEffectiveness->activity_type = 'Effectiveness Check Plan';
-            $historyEffectiveness->previous = "Null";
-            $historyEffectiveness->current =  $openState->Effectiveness_check_Plan;
-            $historyEffectiveness->comment = "NA";
-            $historyEffectiveness->user_id = Auth::user()->id;
-            $historyEffectiveness->user_name = Auth::user()->name;
-            $historyEffectiveness->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $historyEffectiveness->origin_state = $openState->status;
-            $historyEffectiveness->update();
-            }
-
-            if (!empty($openState->Effectiveness_Summary)) {
-                $historyEffectiveness = EffectivenessCheck::find($openState->id);
-                $$historyEffectiveness->parent_id =   $openState->id;
-                $$historyEffectiveness->activity_type = 'Effectiveness Summary';
-                $$historyEffectiveness->previous = "Null";
-                $$historyEffectiveness->current =  $openState->Effectiveness_Summary;
-                $$historyEffectiveness->comment = "NA";
-                $$historyEffectiveness->user_id = Auth::user()->id;
-                $$historyEffectiveness->user_name = Auth::user()->name;
-                $$historyEffectiveness->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $$historyEffectiveness->origin_state = $openState->status;
-                $$historyEffectiveness->update();
-                }
-            
-             if (!empty($openState->effect_summary)) {
-                $historyEffect = EffectivenessCheck::find($openState->id);
-                $historyEffect->parent_id =   $openState->id;
-                $historyEffect->activity_type = 'Effect Summary';
-                $historyEffect->previous = "Null";
-                $historyEffect->current =  $openState->effect_summary;
-                $historyEffect->comment = "NA";
-                $historyEffect->user_id = Auth::user()->id;
-                $historyEffect->user_name = Auth::user()->name;
-                $historyEffect->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $historyEffect->origin_state = $openState->status;
-                $historyEffect->update();
-                }
-
-            if (!empty($openState->Quality_Reviewer)) {
-                $historyQuality = EffectivenessCheck::find($openState->id);
-                $historyQuality->parent_id =   $openState->id;
-                $historyQuality->activity_type = 'Quality Reviewer';
-                $historyQuality->previous = "Null";
-                $historyQuality->current =  $openState->Quality_Reviewer;
-                $historyQuality->comment = "NA";
-                $historyQuality->user_id = Auth::user()->id;
-                $historyQuality->user_name = Auth::user()->name;
-                $historyQuality->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $historyQuality->origin_state = $openState->status;
-                $historyQuality->update();
-                }
-
-            if (!empty($openState->Effectiveness_Results)) {
-                $historyEffectiveness = EffectivenessCheck::find($openState->id);
-                $historyEffectiveness->parent_id =   $openState->id;
-                $historyEffectiveness->activity_type = 'Effectiveness Results';
-                $historyEffectiveness->previous = "Null";
-                $historyEffectiveness->current =  $openState->Effectiveness_Results;
-                $historyEffectiveness->comment = "NA";
-                $historyEffectiveness->user_id = Auth::user()->id;
-                $historyEffectiveness->user_name = Auth::user()->name;
-                $historyEffectiveness->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $historyEffectiveness->origin_state = $openState->status;
-                $historyEffectiveness->update();
-                }
-
-            if (!empty($openState->Addendum_Comments)) {
-                $historyAddendum = EffectivenessCheck::find($openState->id);
-                $historyAddendum->parent_id =   $openState->id;
-                $historyAddendum->activity_type = 'Addendum Comments';
-                $historyAddendum->previous = "Null";
-                $historyAddendum->current =  $openState->Addendum_Comments;
-                $historyAddendum->comment = "NA";
-                $historyAddendum->user_id = Auth::user()->id;
-                $historyAddendum->user_name = Auth::user()->name;
-                $historyAddendum->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $historyAddendum->origin_state = $openState->status;
-                $historyAddendum->update();
-                }
-
-         if (!empty($openState->Effectiveness_check_Attachment)) {
-                $historyEffectiveness = EffectivenessCheck::find($openState->id);
-                $historyEffectiveness->parent_id =   $openState->id;
-                $historyEffectiveness->activity_type = 'Effectiveness Check Attachment';
-                $historyEffectiveness->previous = "Null";
-                $historyEffectiveness->current =  $openState->Effectiveness_check_Attachment;
-                $historyEffectiveness->comment = "NA";
-                $historyEffectiveness->user_id = Auth::user()->id;
-                $historyEffectiveness->user_name = Auth::user()->name;
-                $historyEffectiveness->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $historyEffectiveness->origin_state = $openState->status;
-                $historyEffectiveness->update();
-                }
-         if (!empty($openState->Addendum_Attachment)) {
-                $historyAddendum = EffectivenessCheck::find($openState->id);
-                $historyAddendum->parent_id =   $openState->id;
-                $historyAddendum->activity_type = 'Addendum Attachment';
-                $historyAddendum->previous = "Null";
-                $historyAddendum->current =  $openState->Addendum_Attachment;
-                $historyAddendum->comment = "NA";
-                $historyAddendum->user_id = Auth::user()->id;
-                $historyAddendum->user_name = Auth::user()->name;
-                $historyAddendum->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $historyAddendum->origin_state = $openState->status;
-                $historyAddendum->update();
-                }
-
-          if (!empty($openState->Attachment)) {
-                $historyAttachment = EffectivenessCheck::find($openState->id);
-                $historyAttachment->parent_id =   $openState->id;
-                $historyAttachment->activity_type = 'Attachment';
-                $historyAttachment->previous = "Null";
-                $historyAttachment->current =  $openState->Attachment;
-                $historyAttachment->comment = "NA";
-                $historyAttachment->user_id = Auth::user()->id;
-                $historyAttachment->user_name = Auth::user()->name;
-                $historyAttachment->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $historyAttachment->origin_state = $openState->status;
-                $historyAttachment->update();
-                }
-         if (!empty($openState->Attachments)) {
-                $historyAttachments = EffectivenessCheck::find($openState->id);
-                $historyAttachments->parent_id =   $openState->id;
-                $historyAttachments->activity_type = 'Attachments';
-                $historyAttachments->previous = "Null";
-                $historyAttachments->current =  $openState->Attachments;
-                $historyAttachments->comment = "NA";
-                $historyAttachments->user_id = Auth::user()->id;
-                $historyAttachments->user_name = Auth::user()->name;
-                $historyAttachments->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $historyAttachments->origin_state = $openState->status;
-                $historyAttachments->update();
-                }
-
-         if (!empty($openState->refer_record)) {
-                $history = EffectivenessCheck::find($openState->id);;
-                $history->parent_id =   $openState->id;
-                $history->activity_type = 'Refer Record';
-                $history->previous = "Null";
-                $history->current =  $openState->refer_record;
-                $history->comment = "NA";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $openState->status;
-                $history->update();
-                }
-
-
-
-
+       if (!empty ($request->short_description)){
+            $history = new EffectivenessCheckAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Short Description';
+            $history->previous = "Null";
+            $history->current = $openState->short_description;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->Effectiveness_check_Plan)){
+            $history = new EffectivenessCheckAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Effectiveness check Plan';
+            $history->previous = "Null";
+            $history->current = $openState->Effectiveness_check_Plan;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->Effectiveness_Summary)){
+            $history = new EffectivenessCheckAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Effectiveness Summary';
+            $history->previous = "Null";
+            $history->current = $openState->Effectiveness_Summary;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->effect_summary)){
+            $history = new EffectivenessCheckAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Effectiveness Summary';
+            $history->previous = "Null";
+            $history->current = $openState->effect_summary;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->Quality_Reviewer)){
+            $history = new EffectivenessCheckAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Quality Reviewer';
+            $history->previous = "Null";
+            $history->current = $openState->Quality_Reviewer;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->Effectiveness_Results)){
+            $history = new EffectivenessCheckAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Effectiveness Results';
+            $history->previous = "Null";
+            $history->current = $openState->Effectiveness_Results;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->Addendum_Comments)){
+            $history = new EffectivenessCheckAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Addendum Comments';
+            $history->previous = "Null";
+            $history->current = $openState->Addendum_Comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->Effectiveness_check_Attachment)){
+            $history = new EffectivenessCheckAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Effectiveness check Attachment';
+            $history->previous = "Null";
+            $history->current = $openState->Effectiveness_check_Attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->Addendum_Attachment)){
+            $history = new EffectivenessCheckAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Addendum Attachment';
+            $history->previous = "Null";
+            $history->current = $openState->Addendum_Attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->Attachment)){
+            $history = new EffectivenessCheckAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Attachment';
+            $history->previous = "Null";
+            $history->current = $openState->Attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->Attachments)){
+            $history = new EffectivenessCheckAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Attachments';
+            $history->previous = "Null";
+            $history->current = $openState->Attachments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->refer_record)){
+            $history = new EffectivenessCheckAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Reference Records';
+            $history->previous = "Null";
+            $history->current = $openState->refer_record;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
         toastr()->success('Record created succesfully');
         return redirect('rcms/qms-dashboard');
     }
@@ -441,176 +469,227 @@ class EffectivenessCheckController extends Controller
         $openState->Comments = $request->Comments;
         $openState->update();
 
-        if ($lastopenState->assign_to != $openState->assign_to || !empty($request->assign_to_comment)) {
-            $history = EffectivenessCheck::find($id);
-            $history->parent_id = $id;
+        if ($lastopenState->assign_to != $openState->assign_to || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
             $history->activity_type = 'Assigned To';
-            $history->previous = $lastopenState->assign_to;
+             $history->previous = $lastopenState->assign_to;
             $history->current = $openState->assign_to;
-            $history->comment = $request->assign_to_comment;
+            $history->comment = $openState->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->update();
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = "Update";
+            $history->save();
         }
-        if ($lastopenState->short_description != $openState->short_description || !empty($request->short_description_comment)) {
-            $history = EffectivenessCheck::find($id);
-            $history->parent_id = $id;
+        if ($lastopenState->short_description != $openState->short_description || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
             $history->activity_type = 'Short Description';
-            $history->previous = $lastopenState->short_description;
+             $history->previous = $lastopenState->short_description;
             $history->current = $openState->short_description;
-            $history->comment = $request->short_description_comment;
+            $history->comment = $openState->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->update();
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = "Update";
+            $history->save();
         }
-        if ($lastopenState->Effectiveness_check_Plan != $openState->Effectiveness_check_Plan || !empty($request->Effectiveness_check_Plan_comment)) {
-            $history = EffectivenessCheck::find($id);
-            $history->parent_id = $id;
-            $history->activity_type = 'Effectiveness Check Plan';
-            $history->previous = $lastopenState->Effectiveness_check_Plan;
+        if ($lastopenState->Effectiveness_check_Plan != $openState->Effectiveness_check_Plan || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
+            $history->activity_type = 'Effectiveness check Plan';
+             $history->previous = $lastopenState->Effectiveness_check_Plan;
             $history->current = $openState->Effectiveness_check_Plan;
-            $history->comment = $request->Effectiveness_check_Plan_comment;
+            $history->comment = $openState->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->update();
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = "Update";
+            $history->save();
         }
-        if ($lastopenState->Effectiveness_Summary != $openState->Effectiveness_Summary || !empty($request->Effectiveness_Summary_comment)) {
-            $history = EffectivenessCheck::find($id);
-            $history->parent_id = $id;
+        if ($lastopenState->Effectiveness_Summary != $openState->Effectiveness_Summary || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
             $history->activity_type = 'Effectiveness Summary';
-            $history->previous = $lastopenState->Effectiveness_Summary;
+             $history->previous = $lastopenState->Effectiveness_Summary;
             $history->current = $openState->Effectiveness_Summary;
-            $history->comment = $request->Effectiveness_Summary_comment;
+            $history->comment = $openState->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->update();
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = "Update";
+            $history->save();
         }
-        if ($lastopenState->effect_summary != $openState->effect_summary || !empty($request->effect_summary_comment)) {
-            $history = EffectivenessCheck::find($id);
-            $history->parent_id = $id;
-            $history->activity_type = 'Effect Summary';
-            $history->previous = $lastopenState->effect_summary;
+        if ($lastopenState->effect_summary != $openState->effect_summary || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
+            $history->activity_type = 'Effectiveness Summary';
+             $history->previous = $lastopenState->effect_summary;
             $history->current = $openState->effect_summary;
-            $history->comment = $request->effect_summary_comment;
+            $history->comment = $openState->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->update();
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = "Update";
+            $history->save();
         }
-        if ($lastopenState->Quality_Reviewer != $openState->Quality_Reviewer || !empty($request->Quality_Reviewer_comment)) {
-            $history = EffectivenessCheck::find($id);
-            $history->parent_id = $id;
+        if ($lastopenState->Quality_Reviewer != $openState->Quality_Reviewer || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
             $history->activity_type = 'Quality Reviewer';
-            $history->previous = $lastopenState->Quality_Reviewer;
+             $history->previous = $lastopenState->Quality_Reviewer;
             $history->current = $openState->Quality_Reviewer;
-            $history->comment = $request->Quality_Reviewer_comment;
+            $history->comment = $openState->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->update();
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = "Update";
+            $history->save();
         }
-        if ($lastopenState->Effectiveness_Results != $openState->Effectiveness_Results || !empty($request->Effectiveness_Results_comment)) {
-            $history = EffectivenessCheck::find($id);
-            $history->parent_id = $id;
+        if ($lastopenState->Effectiveness_Results != $openState->Effectiveness_Results || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
             $history->activity_type = 'Effectiveness Results';
-            $history->previous = $lastopenState->Effectiveness_Results;
+             $history->previous = $lastopenState->Effectiveness_Results;
             $history->current = $openState->Effectiveness_Results;
-            $history->comment = $request->Effectiveness_Results_comment;
+            $history->comment = $openState->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->update();
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = "Update";
+            $history->save();
         }
-        if ($lastopenState->Addendum_Comments != $openState->Addendum_Comments || !empty($request->Addendum_Comments_comment)) {
-            $history = EffectivenessCheck::find($id);
-            $history->parent_id = $id;
+        if ($lastopenState->Addendum_Comments != $openState->Addendum_Comments || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
             $history->activity_type = 'Addendum Comments';
-            $history->previous = $lastopenState->Addendum_Comments;
+             $history->previous = $lastopenState->Addendum_Comments;
             $history->current = $openState->Addendum_Comments;
-            $history->comment = $request->Addendum_Comments_comment;
+            $history->comment = $openState->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->update();
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = "Update";
+            $history->save();
         }
-        if ($lastopenState->Effectiveness_check_Attachment != $openState->Effectiveness_check_Attachment || !empty($request->Effectiveness_check_Attachment_comment)) {
-            $history = EffectivenessCheck::find($id);
-            $history->parent_id = $id;
-            $history->activity_type = 'Effectiveness Check Attachment';
-            $history->previous = $lastopenState->Effectiveness_check_Attachment;
+        if ($lastopenState->Effectiveness_check_Attachment != $openState->Effectiveness_check_Attachment || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
+            $history->activity_type = 'Effectiveness check Attachment';
+             $history->previous = $lastopenState->Effectiveness_check_Attachment;
             $history->current = $openState->Effectiveness_check_Attachment;
-            $history->comment = $request->Effectiveness_check_Attachment_comment;
+            $history->comment = $openState->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->update();
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = "Update";
+            $history->save();
         }
-        if ($lastopenState->Addendum_Attachment != $openState->Addendum_Attachment || !empty($request->Addendum_Attachment_comment)) {
-            $history = EffectivenessCheck::find($id);
-            $history->parent_id = $id;
+        if ($lastopenState->Addendum_Attachment != $openState->Addendum_Attachment || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
             $history->activity_type = 'Addendum Attachment';
-            $history->previous = $lastopenState->Addendum_Attachment;
+             $history->previous = $lastopenState->Addendum_Attachment;
             $history->current = $openState->Addendum_Attachment;
-            $history->comment = $request->Addendum_Attachment_comment;
+            $history->comment = $openState->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->update();
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = "Update";
+            $history->save();
         }
-        if ($lastopenState->Attachment != $openState->Attachment || !empty($request->Attachment_comment)) {
-            $history = EffectivenessCheck::find($id);
-            $history->parent_id = $id;
+        if ($lastopenState->Attachment != $openState->Attachment || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
             $history->activity_type = 'Attachment';
-            $history->previous = $lastopenState->Attachment;
+             $history->previous = $lastopenState->Attachment;
             $history->current = $openState->Attachment;
-            $history->comment = $request->Attachment_comment;
+            $history->comment = $openState->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->update();
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = "Update";
+            $history->save();
         }
-        if ($lastopenState->Attachments != $openState->Attachments || !empty($request->Attachments_comment)) {
-            $history = EffectivenessCheck::find($id);
-            $history->parent_id = $id;
+        if ($lastopenState->Attachments != $openState->Attachments || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
             $history->activity_type = 'Attachments';
-            $history->previous = $lastopenState->Attachments;
+             $history->previous = $lastopenState->Attachments;
             $history->current = $openState->Attachments;
-            $history->comment = $request->Attachments_comment;
+            $history->comment = $openState->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->update();
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = "Update";
+            $history->save();
         }
-        if ($lastopenState->refer_record != $openState->refer_record || !empty($request->refer_record_comment)) {
-            $history = EffectivenessCheck::find($id);
-            $history->parent_id = $id;
-            $history->activity_type = 'Refer Record';
-            $history->previous = $lastopenState->refer_record;
+        if ($lastopenState->refer_record != $openState->refer_record || !empty ($request->comment)) {
+            // return 'history';
+            $history = new EffectivenessCheckAuditTrail;
+            $history->extension_id = $id;
+            $history->activity_type = 'Reference Records';
+             $history->previous = $lastopenState->refer_record;
             $history->current = $openState->refer_record;
-            $history->comment = $request->refer_record_comment;
+            $history->comment = $openState->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->update();
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = "Update";
+            $history->save();
         }
-
         toastr()->success('Record Updated succesfully');
         return back();
     }
@@ -628,13 +707,11 @@ class EffectivenessCheckController extends Controller
             if ($changeControl->stage == 1) {
                 // $rules = [
                 //     'Addendum_Comments' => 'required|max:255',
-
                 // ];
                 // $customMessages = [
                 //     'Addendum_Comments.required' => 'The Addendum Comments field is required.',
-
                 // ];
-                // $validator = Validator::make($changeControl->toArray(), $rules, $customMessages);
+                // $validator = Validator::make($request->all(), $rules, $customMessages); // Corrected to use $request->all()
                 // if ($validator->fails()) {
                 //     $errorMessages = implode('<br>', $validator->errors()->all());
                 //     session()->put('errorMessages', $errorMessages);
@@ -642,40 +719,43 @@ class EffectivenessCheckController extends Controller
                 // } else {
                     $changeControl->stage = '2';
                     $changeControl->status = 'Pending Effectiveness Check';
-                    $changeControl->submit_by =  Auth::user()->name;
+                    $changeControl->submit_by = Auth::user()->name;
                     $changeControl->submit_on = Carbon::now()->format('d-M-Y');
-                            // $history = new EffectivenessCheck();
-                            // $history->parent_id = $id;
-                            // $history->activity_type = 'Activity Log';
-                            // $history->previous = "";
-                            // $history->current = $changeControl->submit_by;
-                            // $history->comment = $request->comment;
-                            // $history->user_id = Auth::user()->id;
-                            // $history->user_name = Auth::user()->name;
-                            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            // $history->origin_state = $lastopenState->status;
-                            // $history->step = 'Submit';
-                            // $history->save();
-                            
-                //     $list = Helpers:: getSupervisorUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                          
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Submitted By ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      } 
-                //   }
-           
-
+            
+                    $history = new EffectivenessCheckAuditTrail();
+                    $history->extension_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->current = $changeControl->submit_by; // Corrected variable name here
+                    $history->comment = $request->comment;
+                    $history->action = 'Submit'; // Corrected typo
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastopenState->status; // Corrected variable name here
+                    $history->change_to = "Pending Effectiveness Check";
+                    $history->change_from = $lastopenState->status; // Corrected variable name here
+                    $history->action_name = 'Not Applicable';
+                    $history->stage = '2';
+                    $history->save();
+            
+                    // $list = Helpers::getQAUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $changeControl->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             Mail::send(
+                    //                 'mail.view-mail',
+                    //                 ['data' => $changeControl],
+                    //                 function ($message) use ($email) {
+                    //                     $message->to($email)
+                    //                         ->subject("Document is Submitted By " . Auth::user()->name);
+                    //                 }
+                    //             );
+                    //         }
+                    //     }
+                    // }
+            
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Effectiveness-Check";
@@ -686,10 +766,11 @@ class EffectivenessCheckController extends Controller
                     $history->status = $changeControl->status;
                     $history->save();
                     toastr()->success('Document Sent');
-
+            
                     return back();
-                
+                // }
             }
+            
             if ($changeControl->stage == 2) {
                 // $rules = [
                 //     'Comments' => 'required|max:255',
@@ -709,7 +790,7 @@ class EffectivenessCheckController extends Controller
                     $changeControl->status = 'QA Approval-Effective';
                     $changeControl->effective_by =  Auth::user()->name;
                     $changeControl->effective_on = Carbon::now()->format('d-M-Y');
-                            // $history = new EffectivenessCheck();
+                            // $history = new EffectivenessCheckAuditTrail();
                             // $history->parent_id = $id;
                             // $history->activity_type = 'Activity Log';
                             // $history->previous = "";
@@ -721,6 +802,23 @@ class EffectivenessCheckController extends Controller
                             // $history->origin_state = $lastopenState->status;
                             // $history->step = 'Effective';
                             // $history->save();
+
+                            $history = new EffectivenessCheckAuditTrail();
+                            $history->extension_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = $changeControl->submitted_by;
+                            $history->comment = $request->comment;
+                            $history->action = 'Effective';
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastopenState->status;
+                            $history->change_to =   "QA Approval-Effective";
+                            $history->change_from = $lastopenState->status;
+                            $history->action_name = 'Not Applicable';
+                            $history->stage = '3';
+                            $history->save();
                             
                 //     $list = Helpers:: getQAUserList();
                 //     foreach ($list as $u) {
@@ -753,13 +851,14 @@ class EffectivenessCheckController extends Controller
 
                     return back();
                 
+                // }
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = '4';
                 $changeControl->status = 'Closed – Effective';
                 $changeControl->effective_approval_complete_by =  Auth::user()->name;
                 $changeControl->effective_approval_complete_on = Carbon::now()->format('d-M-Y');
-                            // $history = new EffectivenessCheck();
+                            // $history = new EffectivenessCheckAuditTrail();
                             // $history->parent_id = $id;
                             // $history->activity_type = 'Activity Log';
                             // $history->previous = "";
@@ -771,6 +870,24 @@ class EffectivenessCheckController extends Controller
                             // $history->origin_state = $lastopenState->status;
                             // $history->step = 'Effective Approval Complete';
                             // $history->save();
+
+                            $history = new EffectivenessCheckAuditTrail();
+                            $history->extension_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = $changeControl->submit_by; // Corrected variable name here
+                            $history->comment = $request->comment;
+                            $history->action = 'Effective Approval Completed'; // Corrected typo
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastopenState->status; // Corrected variable name here
+                            $history->change_to = "Closed – Effective";
+                            $history->change_from = $lastopenState->status; // Corrected variable name here
+                            $history->action_name = 'Not Applicable';
+                            $history->stage = '2';
+                            $history->save();
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -784,12 +901,13 @@ class EffectivenessCheckController extends Controller
 
                 return back();
             }
+            
         } else {
             toastr()->error('E-signature Not match');
 
             return back();
         }
-    }
+    } 
 
     public function reject(Request $request, $id)
     {
@@ -813,6 +931,23 @@ class EffectivenessCheckController extends Controller
                             // $history->origin_state = $lastopenState->status;
                             // $history->step = 'Not Effective';
                             // $history->save();
+                            
+                            $history = new EffectivenessCheckAuditTrail();
+                            $history->extension_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = $changeControl->submit_by; // Corrected variable name here
+                            $history->comment = $request->comment;
+                            $history->action = 'Not Effective'; // Corrected typo
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastopenState->status; // Corrected variable name here
+                            $history->change_to = "QA Approval-Not Effective";
+                            $history->change_from = $lastopenState->status; // Corrected variable name here
+                            $history->action_name = 'Not Applicable';
+                            $history->stage = '2';
+                            $history->save();
                             
                 //     $list = Helpers:: getQAUserList();
                 //     foreach ($list as $u) {
@@ -851,18 +986,36 @@ class EffectivenessCheckController extends Controller
                 $changeControl->status = 'Closed – Not Effective';
                 $changeControl->not_effective_approval_complete_by =  Auth::user()->name;
                 $changeControl->not_effective_approval_complete_on = Carbon::now()->format('d-M-Y');
-                        $history = new EffectivenessCheck();
-                        $history->parent_id = $id;
+                        // $history = new EffectivenessCheck();
+                        // $history->parent_id = $id;
+                        // $history->activity_type = 'Activity Log';
+                        // $history->previous = "";
+                        // $history->current = $changeControl->not_effective_approval_complete_by;
+                        // $history->comment = $request->comment;
+                        // $history->user_id = Auth::user()->id;
+                        // $history->user_name = Auth::user()->name;
+                        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        // $history->origin_state = $lastopenState->status;
+                        // $history->step = 'Not Effective Approval Complete';
+                        // $history->save();
+                        
+                        $history = new EffectivenessCheckAuditTrail();
+                        $history->extension_id = $id;
                         $history->activity_type = 'Activity Log';
                         $history->previous = "";
-                        $history->current = $changeControl->not_effective_approval_complete_by;
+                        $history->current = $changeControl->submit_by; // Corrected variable name here
                         $history->comment = $request->comment;
+                        $history->action = 'Not Effective Approval Completed'; // Corrected typo
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastopenState->status;
-                        $history->step = 'Not Effective Approval Complete';
+                        $history->origin_state = $lastopenState->status; // Corrected variable name here
+                        $history->change_to = "Closed – Not Effective";
+                        $history->change_from = $lastopenState->status; // Corrected variable name here
+                        $history->action_name = 'Not Applicable';
+                        $history->stage = '6';
                         $history->save();
+                        
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -886,9 +1039,30 @@ class EffectivenessCheckController extends Controller
     public function cancel(Request $request, $id) {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = EffectivenessCheck::find($id);
+            $lastopenState = EffectivenessCheck::find($id);
+
             if ($changeControl->stage == 3) {
                 $changeControl->stage = '2';
                 $changeControl->status = 'Check Effectiveness';
+
+
+                $history = new EffectivenessCheckAuditTrail();
+                $history->extension_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->current = $changeControl->submit_by; // Corrected variable name here
+                $history->comment = $request->comment;
+                $history->action = 'More Information Required'; // Corrected typo
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastopenState->status; // Corrected variable name here
+                $history->change_to = "Check Effectiveness";
+                $history->change_from = $lastopenState->status; // Corrected variable name here
+                $history->action_name = 'Not Applicable';
+                $history->stage = '6';
+                $history->save();
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -906,6 +1080,25 @@ class EffectivenessCheckController extends Controller
             if ($changeControl->stage == 5) {
                 $changeControl->stage = '2';
                 $changeControl->status = 'Check Effectiveness';
+
+                $history = new EffectivenessCheckAuditTrail();
+                $history->extension_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->current = $changeControl->submit_by; // Corrected variable name here
+                $history->comment = $request->comment;
+                $history->action = 'More Information Required'; // Corrected typo
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastopenState->status; // Corrected variable name here
+                $history->change_to = "Check Effectiveness";
+                $history->change_from = $lastopenState->status; // Corrected variable name here
+                $history->action_name = 'Not Applicable';
+                $history->stage = '6';
+                $history->save();
+
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -927,7 +1120,7 @@ class EffectivenessCheckController extends Controller
     }
     public function effectiveAuditTrialShow($id)
     {
-        $audit = EffectivenessCheck::where('parent_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+        $audit = EffectivenessCheckAuditTrail::where('extension_id', $id)->orderByDESC('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = EffectivenessCheck::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');

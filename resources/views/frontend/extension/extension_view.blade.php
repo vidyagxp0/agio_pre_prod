@@ -104,9 +104,7 @@
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Submit
                         </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                More Info Required
-                            </button>
+                           
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
@@ -218,14 +216,14 @@
                             <div class="group-input">
                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                 <input disabled type="text" name="record_number"
-                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/Ext/{{ Helpers::year($extensionNew->created_at) }}/{{ str_pad($extensionNew->record_number, 4, '0', STR_PAD_LEFT) }}">
+                                value="{{ Helpers::getDivisionName($extensionNew->site_location_code) }}/Ext/{{ Helpers::year($extensionNew->created_at) }}/{{ str_pad($extensionNew->record_number, 4, '0', STR_PAD_LEFT) }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Division Code"><b>Site/Location Code</b></label>
                                 <input disabled type="text" name="site_location"   id="site_location" 
-                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                    value="{{ Helpers::getDivisionName($extensionNew->site_location_code) }}">
                                 <input type="hidden" name="site_location_code"  id="site_location_code" value="{{ session()->get('division') }}">
                                 {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                             </div>
@@ -248,10 +246,10 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                <input readonly type="text" value="{{ date('d-M-Y') }}" name="initiation_date"
+                                <input readonly type="text" value="{{Helpers::getdateFormat($extensionNew->initiation_date) }}" name="initiation_date"
                                     id="initiation_date"
                                     style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden">
+                                {{-- <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden"> --}}
                             </div>
                         </div>
                             

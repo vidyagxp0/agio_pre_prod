@@ -154,8 +154,7 @@
                             Information</button>
                         <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm2')">Effectiveness check
                             Results</button>
-                        <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm3')">Reference
-                            Info/Comments</button>
+                        <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm3')">Closure Comments</button>
                          <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button> 
                     </div>
 
@@ -199,7 +198,7 @@
                                 <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="search">
-                                                    Assigned To
+                                                    Acknowledge EC
                                                 </label>
                                                 <select id="select-state" placeholder="Select..." name="assign_to"{{ $data->stage == 0 || $data->stage == 6 ||  $data->stage == 4 ? 'disabled' : ''}} >
                                                     <option value="">Select a value</option>
@@ -349,15 +348,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- Effectiveness check Results -->
-                                <div class="col-12 sub-head">
-                                    Effectiveness Summary
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <textarea type="text" name="effect_summary" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} > {{ $data->effect_summary }}</textarea>
-                                    </div>
-                                </div>
+                               
                                 <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description</label>
@@ -367,7 +358,7 @@
                                 <div class="col-12 sub-head">
                                     Effectiveness Check Results
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
                                         <textarea type="text" name="Effectiveness_Results"{{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}
@@ -382,7 +373,7 @@
                                             value="{{ $data->Effectiveness_check_Attachment }}">
                                     </div>
                                 </div> -->
-                                <div class="col-6">
+                                <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -407,17 +398,26 @@
                                                 </div>
                                             </div>
                                   </div>
-                                <div class="col-12 sub-head">
+                                  <div class="col-12 sub-head">
+                                    Effectiveness Summary
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness Summary">Effectiveness Summary</label>
+                                        <textarea type="text" name="effect_summary" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} > {{ $data->effect_summary }}</textarea>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-12 sub-head">
                                     Reopen
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Addendum Comments"><b>Addendum Comments</b>
                                                         </label>
                                         <textarea type="text" name="Addendum_Comments" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}
                                             >{{ $data->Addendum_Comments }}</textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
@@ -425,7 +425,7 @@
                                             value="{{ $data->Addendum_Attachment }}">
                                     </div>
                                 </div> -->
-                                <div class="col-6">
+                                {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Addendum Attachments">Addendum Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -449,7 +449,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                             </div>
                             <div class="button-block">
                                         @if ($data->stage != 0)
@@ -469,11 +469,11 @@
                             <div class="row">
                                 <!-- Reference Info comments -->
                                 <div class="col-12 sub-head">
-                                    Reference Info comments
+                                   Closure comments
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"><b>Comments</b></label>
+                                        <label for="Comments"><b>Closure Comments</b></label>
                                         <textarea name="Comments" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} >{{ $data->Comments }}</textarea>
                                     </div>
                                 </div>
@@ -485,7 +485,7 @@
                                 </div> -->
                                 <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Attachments">Attachment</label>
+                                                <label for="Attachments"> Closure Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="Attachment">
@@ -516,7 +516,7 @@
                                          <div class="static">Ref.Record</div>
                                     </div>
                                 </div> -->
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Reference Records">Reference Records</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -540,7 +540,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                  </div>
+                                  </div> --}}
                             </div>
                             <div class="button-block">
                                         @if ($data->stage != 0)

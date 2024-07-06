@@ -34,7 +34,7 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Effectiveness check Results</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Reference Info/Comments</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Comments</button>
                  <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button> 
             </div>
 
@@ -91,7 +91,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Assigned To <span class="text-danger"></span>
+                                            Acknowledge EC <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
@@ -182,19 +182,11 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- Effectiveness check Results -->
-                                <div class="col-12 sub-head">
-                                    Effectiveness Summary
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <textarea type="text" name="effect_summary"></textarea>
-                                    </div>
-                                </div>
+                                
                                 <div class="col-12 sub-head">
                                     Effectiveness Check Results
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
                                         <textarea type="text" name="Effectiveness_Results"></textarea>
@@ -207,7 +199,7 @@
                                         <input type="file" id="myfile" name="Effectiveness_check_Attachment">
                                     </div>
                                 </div> -->
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -222,21 +214,30 @@
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
+                                    Effectiveness Summary
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness Summary">Effectiveness Summary</label>
+                                        <textarea type="text" name="effect_summary"></textarea>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-12 sub-head">
                                     Reopen
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Addendum Comments"><b>Addendum Comments</b></label>
                                         <textarea type="text" name="Addendum_Comments"></textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
                                         <input type="file" id="myfile" name="Addendum_Attachment">
                                     </div>
                                 </div> -->
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Addendum Attachments">Addendum Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -251,7 +252,7 @@
                                         </div>
 
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -267,11 +268,11 @@
                             <div class="row">
                                 <!-- Reference Info comments -->
                                 <div class="col-12 sub-head">
-                                    Reference Info comments
+                                    QA comments
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"><b>Comments</b></label>
+                                        <label for="Comments"><b> QA Comments</b></label>
                                         <textarea name="Comments"></textarea>
                                     </div>
                                 </div>
@@ -283,7 +284,7 @@
                                 </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Attachments">Attachment</label>
+                                        <label for="Attachments">QA Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -304,7 +305,7 @@
                                         <input type="file" id="myfile" name="refer_record">
                                     </div>
                                 </div> -->
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Records</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -318,7 +319,7 @@
                                         </div>
 
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
