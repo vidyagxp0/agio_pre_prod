@@ -95,6 +95,7 @@ class Helpers
         }
          
     }
+    
     // public static function getHodUserList(){
 
     //     return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
