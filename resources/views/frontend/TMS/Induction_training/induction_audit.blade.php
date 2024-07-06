@@ -236,7 +236,7 @@
                     </td>
                     <td>
                         <div>
-                            <strong> Data Field Name :</strong><a href="{{ url('rcms/auditDetailsTrainer',$document->id)}}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                            <strong> Data Field Name :</strong><a href="">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                         </div>
                         <div style="margin-top: 5px;">
                             @if($dataDemo->activity_type == "Activity Log")

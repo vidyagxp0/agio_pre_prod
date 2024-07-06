@@ -209,6 +209,7 @@
 
         .text-right {
             text-align: right;
+
         }
 
         .text-justify {
@@ -450,7 +451,7 @@
 
                         <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;">
                     </td>
-                    <td class="title w-60" style="height: 100px; padding: 0px;  margin: 0px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
+                    <td class="title w-60" style="height: 90px; padding: 0px;  margin: 0px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
                         <p style="margin-top: -0.1rem; border-bottom: 0px solid rgb(104, 104, 104);">{{ config('site.pdf_title') }}</p>
                         <hr style="border: 0; border-top: 1px solid rgb(104, 104, 104); margin: 0;">
                         <p style="margin-top: -2rem; margin-bottom: 0px;">
@@ -466,7 +467,7 @@
                 </tr>
             </tbody>
         </table>
-        <table class="border border-top-none p-8">
+        <table class="border border-top-none p-7">
             <tbody>
                 <tr>
                     <td class="doc-num w-30">
@@ -474,12 +475,12 @@
 
                     </td>
                     <td class="doc-num w-40">
-                        <!-- @php
+                        {{-- @php
                         $temp = DB::table('document_types')
                         ->where('name', $data->document_type_name)
                         ->value('typecode');
-                        @endphp -->
-                        <!-- @if($data->revised === 'Yes')
+                        @endphp 
+                        @if($data->revised === 'Yes')
 
                         {{ Helpers::getDivisionName($data->division_id) }}
                         /@if($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
@@ -489,7 +490,7 @@
                         {{ Helpers::getDivisionName($data->division_id) }}
                         /@if($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
                         /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
-                        @endif -->
+                        @endif --}}
 
                         @if($data->revised === 'Yes')
 
@@ -515,14 +516,12 @@
                     <td class="doc-num w-60">
                         Address : 82, M.I.D.C, Bhosari, Maharashtra 411026
                     </td>
-                    <!-- <td class="w-60">
-                        Address : 82, M.I.D.C, Bhosari, Maharashtra 411026
-                    </td> -->
+
                 </tr>
             </tbody>
         </table>
 
-        <table class="border border-top-none p-7">
+        <table class="border border-top-none p-6">
             <tbody>
                 <tr>
                     <td class="doc-num w-50">
@@ -537,7 +536,7 @@
         </table>
     </header>
     <footer class="footer">
-        <table class="border p-20">
+        <table class="border p-10">
             <tbody>
                 <tr>
                     <td class="text-left w-30">
@@ -565,7 +564,7 @@
 
     <section class="main-section" id="pdf-page" style="margin-top: 15px;">
         <section style="page-break-after: never;">
-            <div class="other-container" style="margin-bottom: 10px;">
+            <div class="other-container" style="margin-bottom: 15px;">
                 <table>
                     <thead>
                         <tr>

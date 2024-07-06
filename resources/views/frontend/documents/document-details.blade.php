@@ -62,9 +62,7 @@
                     </div> --}}
                     <div>
                         <div class="head">Document Type</div>
-                        <div>{{ Helpers::getDocumentTypeById($document->document_type_id) }}
-                        </div>
-                        <!-- <div>{{ $document->document_type_id }}</div> -->
+                        <div>{{ $document->document_type_id}}</div>
                     </div>
                     <div>
                         <div class="head">Working Status</div>
@@ -81,10 +79,9 @@
                     <div>
                         <div class="head">Last Modified On</div>
                         @if ($document->last_modify)
-                        <!-- <div>{{ $document->last_modify_date->created_at }}</div> -->
-                        <div>{{ \Carbon\Carbon::parse($document->last_modify_date->created_at)->format('d-M-Y h:i A') }}</div>
+                        <div>{{ $document->last_modify_date->created_at }}</div>
                         @else
-                        <div>{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y h:i A') }}</div>
+                        <div>{{ $document->created_at }}</div>
                         @endif
                     </div>
                 </div>
@@ -188,7 +185,7 @@
                         <div class="">For-Approval</div>
                         @endif
                         {{-- @if ($document->stage == 10)
-                                            <div class="active">Rejected</div>
+                                        <div class="active">Rejected</div>
                                         @endif --}}
                         @if ($document->stage >= 7)
                         <div class="active">Approved</div>
@@ -1049,6 +1046,9 @@
                 @if ($document->stage == 3)
                 <input type="hidden" name="stage_id" value="4" />
                 @endif
+                @if ($document->stage == 5)
+                <input type="hidden" name="stage_id" value="6" />
+                @endif
                 @if ($document->training_required == 'yes')
                 @if ($document->stage == 7)
                 <input type="hidden" name="stage_id" value="8" />
@@ -1056,14 +1056,19 @@
                 @if ($document->stage == 8)
                 <input type="hidden" name="stage_id" value="9" />
                 @endif
+                @if ($document->stage == 9)
+                <input type="hidden" name="stage_id" value="10" />
+                @endif
+                @if ($document->stage == 10)
+                <input type="hidden" name="stage_id" value="13" />
+                @endif
                 @else
                 @if ($document->stage == 7)
                 <input type="hidden" name="stage_id" value="10" />
                 @endif
+                @if ($document->stage == 10)
+                <input type="hidden" name="stage_id" value="13" />
                 @endif
-
-                @if ($document->stage == 5)
-                <input type="hidden" name="stage_id" value="6" />
                 @endif
 
                 <!-- Modal footer -->
