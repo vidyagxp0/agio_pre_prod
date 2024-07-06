@@ -115,7 +115,7 @@
                                     <div class="group-input" id="repeat_nature">
                                         <label for="repeat_nature">Experience (if any)<span
                                                 class="text-danger d-none">*</span></label>
-                                       <input type="text" name="experience_if_any">
+                                       <input type="text" name="experience_if_any" maxlength="255">
                                     </div>
                                 </div>
                                 

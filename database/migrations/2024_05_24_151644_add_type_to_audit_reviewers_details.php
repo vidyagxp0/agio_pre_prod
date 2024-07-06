@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('audit_reviewers_details', function (Blueprint $table) {
-            $table->text('type')->nullable();
+            // $table->text('type')->nullable();
         });
     }
 
