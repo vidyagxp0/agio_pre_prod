@@ -329,6 +329,7 @@
                             <th class="w-20">Actual End Date</th>
                             <td class="w-80">@if($data->end_date){{ Helpers::getdateFormat($data->end_date) }}@else Not Applicable @endif</td>
                        </tr>
+                    </table>
                        <div class="block">
 
                            <table>
@@ -348,7 +349,7 @@
                          </tr>
                      </table>
                        </div>
-                   </table>
+                   {{-- </table> --}}
                      <div class="block-head">
                          Action Approval
                     </div>
@@ -407,6 +408,16 @@
                         More information required On</th>
                         <td class="w-30">{{ $data->more_information_required_on }}</td>
                     </tr>
+                    <tr>
+                        <th class="w-20">Acknowledge By
+                        </th>
+                        <td class="w-30">{{ $data->work_completion_by }}</td>
+                        <th class="w-20">
+                        Acknowledge On</th>
+                        <td class="w-30">{{ $data->work_completion_on }}</td>
+                    </tr>
+                   
+
                     <tr>
                         <th class="w-20">Completed By
                         </th>

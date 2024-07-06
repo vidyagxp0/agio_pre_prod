@@ -178,6 +178,10 @@
             </style>
 
             <body>
+                <div style="display: flex; justify-content: flex-end;">
+                   
+                    <button  class="button_theme1" style="margin-right: 10px"> <a class="text-white" href="{{ route('actionItem.update', $document->id) }}"> Back </a> </button>
+                    <button type="button"> <a class="text-white"  href="{{ url('rcms/qms-dashboard') }}">Exit </a> </button></div>
 
                 <header>
                     <table>
@@ -203,7 +207,10 @@
                                 :{{ $document->initiator ? $document->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->description }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
+                                @php
+                                use Carbon\Carbon;
+                                @endphp
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Carbon::parse($document->due_date)->format('j F Y') }}</div>
 
                         </div>
         </div>
@@ -244,7 +251,7 @@
                             <td>
                                 <div>
                                     <strong> Data Field Name :</strong><a
-                                        href="{{ url('rcms/action-item-audittrialshow/',$document->id)}}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")
@@ -277,7 +284,7 @@
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at : 'Not Applicable' }}
+                                        :</strong> {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('j F Y H:i') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>

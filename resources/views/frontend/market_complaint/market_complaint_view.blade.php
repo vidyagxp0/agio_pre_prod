@@ -2618,6 +2618,46 @@
                     </div>
                 </div>
 
+                <div class="col-lg-4">
+                    <div class="group-input">
+                        <label for="Initiator Group">More Information Required By: </label>
+                        <div class="static">{{ $data->more_information_required_by}}</div>
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="group-input">
+                        <label for="Initiator Group">More Information Required On: </label>
+                        <div class="date">{{ $data->more_information_required_on}}</div>
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="group-input">
+                        <label for="Comment">Comment</label>
+                        <div class="static">{{ $data->more_information_required_comment }}</div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="group-input">
+                        <label for="Initiator Group">Cancel By: </label>
+                        <div class="static">{{ $data->cancelled_by}}</div>
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="group-input">
+                        <label for="Initiator Group">Cancel On: </label>
+                        <div class="date">{{ $data->cancelled_on}}</div>
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="group-input">
+                        <label for="Comment">Comment</label>
+                        <div class="static">{{ $data->cancelled_comment }}</div>
+                    </div>
+                </div>
 
 
 
@@ -2693,6 +2733,31 @@
                         <div class="static">{{ $data->propose_plan_comment }}</div>
                     </div>
                 </div>
+                <div class="col-lg-4">
+                    <div class="group-input">
+                        <label for="Initiator Group">Reject By : </label>
+                        <div class="static">{{ $data->reject_by }}</div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 new-date-data-field">
+                    <div class="group-input input-date">
+                        <label for="OOC Logged On">Reject On : </label>
+
+                        <div class="date">{{ $data->reject_on}}</div>
+
+
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="group-input">
+                        <label for="Comment">Comment</label>
+                        <div class="static">{{ $data->reject_comment}}</div>
+                    </div>
+                </div>
+
 
                 <div class="col-lg-4">
                     <div class="group-input">
