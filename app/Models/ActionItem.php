@@ -11,7 +11,7 @@ class ActionItem extends Model
     protected $table='action_items';
     protected $fillable = [
    
-        'file_attach'       
+        'file_attach', 'Support_doc','final_attach'      
     ];
 
 
