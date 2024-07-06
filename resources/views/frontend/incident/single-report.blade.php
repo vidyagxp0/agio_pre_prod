@@ -226,6 +226,47 @@
                             @endif
                         </td>
                     </tr>
+                    <table>
+                        <tr>
+                            <th class="w-20">Equipment Name</th>
+                            <td class="w-30">
+                                @if ($data->equipment_name)
+                                    {{ $data->equipment_name }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <th class="w-20">Instrument Name</th>
+                            <td class="w-30">
+                                @if ($data->instrument_name)
+                                    {{ $data->instrument_name }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <th class="w-20">facility_name </th>
+                            <td class="w-30">
+                                @if ($data->inc_facility_name)
+                                    {{ $data->inc_facility_name }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <th class="w-20"> Incident Observed On (Time)</th>
+                            <td class="w-30">
+                                @if ($data->incident_time)
+                                    {{ $data->incident_time }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+
+                        </tr>
+                    </table>
+
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">
@@ -387,6 +428,8 @@
                     </tr>
 
                 </table>
+
+
                 <div class="block">
                     <div class="block-head">
                         Facility/ Equipment/ Instrument/ System Details
@@ -395,8 +438,8 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-10">Sr. No.</th>
-                                <th class="w-25">Name</th>
-                                <th class="w-25">ID Number</th>
+                                <th class="w-25">Number</th>
+                                <th class="w-25">Reference Document Name</th>
                                 <th class="w-25">Remarks</th>
 
                             </tr>
@@ -988,7 +1031,6 @@
                                 Quality Control Attachments
                             </div>
                             <table>
-
                                 <tr class="table_bg">
                                     <th class="w-20">S.N.</th>
                                     <th class="w-60">Attachment</th>
@@ -1019,9 +1061,7 @@
                                 Quality Assurance
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Quality Assurance Review Required ?
                                     </th>
                                     <td class="w-30">
@@ -1046,7 +1086,6 @@
                                 </tr>
 
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Quality Assurance)</th>
                                     <td class="w-30">
                                         <div>
@@ -1127,9 +1166,7 @@
                                 Engineering
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Engineering Review Required ?
                                     </th>
                                     <td class="w-30">
@@ -1237,7 +1274,6 @@
                             <table>
 
                                 <tr>
-
                                     <th class="w-20">Analytical Development Laboratory Review Required ?
                                     </th>
                                     <td class="w-30">
@@ -1345,7 +1381,6 @@
                             <table>
 
                                 <tr>
-
                                     <th class="w-20">Process Development Laboratory / Kilo Lab Review Required ?
                                     </th>
                                     <td class="w-30">
@@ -1566,7 +1601,6 @@
                             <table>
 
                                 <tr>
-
                                     <th class="w-20">Environment, Health & Safety Review Required ?
                                     </th>
                                     <td class="w-30">
@@ -2719,9 +2753,12 @@
 
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    @foreach ($users as $user)
-                                                        <td {{ $investigation_item['teamMember'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</td>
+                                                     @foreach ($users as $user)
+                                                    <td>
+                                                        {{ $users[$investigation_item['teamMember']]->name ?? 'User not found' }}
+                                                    </td>
                                                     @endforeach
+
                                                     <td class="w-15">
                                                         {{ isset($investigation_item['responsibility']) ? $investigation_item['responsibility'] : 'Not Applicable' }}
                                                     </td>
@@ -3087,6 +3124,187 @@
                                 </table>
                             </div>
                         </div>
+
+
+                        <table>
+                            <tr>
+                                <th class="w-20"> Detail Of Root Cause
+                                </th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->detail_of_root)
+                                            {{ strip_tags($data->detail_of_root) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <tr>
+                                <th class="w-20">Equipment Name    </th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->equipment_name)
+                                            {{ strip_tags($data->equipment_name) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Instrument Name    </th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->instrument_name)
+                                            {{ strip_tags($data->instrument_name) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Facility  Name    </th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->inc_facility_name)
+                                            {{ strip_tags($data->inc_facility_name) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <tr>
+                                <th class="w-20">Product Quality Imapct</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->product_quality_imapct)
+                                            {{ strip_tags($data->product_quality_imapct) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="w-20">Process Performance Impact</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->process_performance_impact)
+                                            {{ strip_tags($data->process_performance_impact) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="w-20">Yield Impact</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->yield_impact)
+                                            {{ strip_tags($data->yield_impact) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <tr>
+                                <th class="w-20"> GMP Impact</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->gmp_impact)
+                                            {{ strip_tags($data->gmp_impact) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20"> Additionl Testing Required</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->additionl_testing_required)
+                                            {{ strip_tags($data->additionl_testing_required) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20"> Any Similar Incident In Past</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->any_similar_incident_in_past)
+                                            {{ strip_tags($data->any_similar_incident_in_past) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <tr>
+                                <th class="w-20">Classifiction By QA</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->classification_by_qa)
+                                            {{ strip_tags($data->classification_by_qa) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">CAPA Require</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->capa_require)
+                                            {{ strip_tags($data->capa_require) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Deviation Require</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->deviation_required)
+                                            {{ strip_tags($data->deviation_required) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+
                         <div class="border-table">
                             <div class="block-head">
                                 Investigation Attachment

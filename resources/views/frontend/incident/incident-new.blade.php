@@ -27,16 +27,16 @@
         }
 
         /* .sub-head {
-                margin-left: 280px;
-                margin-right: 280px;
-                color: #4274da;
-                border-bottom: 2px solid #4274da;
-                padding-bottom: 5px;
-                margin-bottom: 20px;
-                font-weight: bold;
-                font-size: 1.2rem;
+                    margin-left: 280px;
+                    margin-right: 280px;
+                    color: #4274da;
+                    border-bottom: 2px solid #4274da;
+                    padding-bottom: 5px;
+                    margin-bottom: 20px;
+                    font-weight: bold;
+                    font-size: 1.2rem;
 
-            } */
+                } */
 
         .create-entity {
             background: #323c50;
@@ -70,8 +70,8 @@
         }
 
         /* .modal-header{
-                background: gainsboro !important;
-            } */
+                    background: gainsboro !important;
+                } */
         .main_head_modal li {
             margin-bottom: 10px;
         }
@@ -115,10 +115,10 @@
         }
 
         /* .saveButton:disabled{
-                    background: black!important;
-                    border:  black!important;
+                        background: black!important;
+                        border:  black!important;
 
-                } */
+                    } */
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -550,81 +550,81 @@
         });
     </script>
 
-<script>
-    $(document).ready(function() {
-        let rootCauseIndex = 1;
-        $('#rootCauseAdd').click(function(e) {
-            function generateTableRow(serialNumber) {
-                var users = @json($users);
+    <script>
+        $(document).ready(function() {
+            let rootCauseIndex = 1;
+            $('#rootCauseAdd').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
 
-                var html =
-                    '<tr>' +
-                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                    '"></td>' +
-                    '<td> <select name="rootCauseData[' + rootCauseIndex +
-                    '][rootCauseCategory]" id=""> <option value="">-- Select --</option><option value="">name   </option> </select></td>' +
-                    '<td><select name="rootCauseData[' + rootCauseIndex +
-                    '][rooCauseSubCategory]" id=""><option value="">-- Select --</option><option value="">name</option>  </select></td>' +
-                    '<td><input type="text" class="Document_Remarks" name="rootCauseData[' +
-                    rootCauseIndex + '][ifOthers]"></td>' +
-                    '<td><input type="text" class="Document_Remarks" name="rootCauseData[' +
-                    rootCauseIndex + '][probability]"></td>' +
-                    '<td><input type="text" class="Document_Remarks" name="rootCauseData[' +
-                    rootCauseIndex + '][remarks]"></td>' +
-                    '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td> <select name="rootCauseData[' + rootCauseIndex +
+                        '][rootCauseCategory]" id=""> <option value="">-- Select --</option><option value="">name   </option> </select></td>' +
+                        '<td><select name="rootCauseData[' + rootCauseIndex +
+                        '][rooCauseSubCategory]" id=""><option value="">-- Select --</option><option value="">name</option>  </select></td>' +
+                        '<td><input type="text" class="Document_Remarks" name="rootCauseData[' +
+                        rootCauseIndex + '][ifOthers]"></td>' +
+                        '<td><input type="text" class="Document_Remarks" name="rootCauseData[' +
+                        rootCauseIndex + '][probability]"></td>' +
+                        '<td><input type="text" class="Document_Remarks" name="rootCauseData[' +
+                        rootCauseIndex + '][remarks]"></td>' +
+                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
 
+                        '</tr>';
+
+                    rootCauseIndex++;
+                    return html;
+                }
+
+                var tableBody = $('#rootCauseAddTable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            let investigationTeamIndex = 1;
+            $('#addInvestigationTeam').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+                    var userOptionsHtml = '';
+                    users.forEach(user => {
+                        userOptionsHtml = userOptionsHtml.concat(
+                            `<option value="${user.id}">${user.name}</option>`)
+                    });
+
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td> <select name="investigationTeam[' + investigationTeamIndex +
+                        '][teamMember]" > <option value="">-- Select --</option>' + userOptionsHtml +
+                        ' </select> </td>' +
+                        ' <td><input type="text" name="investigationTeam[' + investigationTeamIndex +
+                        '][responsibility]"></td>' +
+                        '<td><input type="text" name="investigationTeam[' + investigationTeamIndex +
+                        '][remarks]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
                     '</tr>';
 
-                rootCauseIndex++;
-                return html;
-            }
-
-            var tableBody = $('#rootCauseAddTable tbody');
-            var rowCount = tableBody.children('tr').length;
-            var newRow = generateTableRow(rowCount + 1);
-            tableBody.append(newRow);
+                    docIndex++;
+                    return html;
+                }
+                var tableBody = $('#investigationDetailAddTable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
         });
-    });
-</script>
-
-
-<script>
-    $(document).ready(function() {
-        let investigationTeamIndex = 1;
-        $('#addInvestigationTeam').click(function(e) {
-            function generateTableRow(serialNumber) {
-                var users = @json($users);
-                var userOptionsHtml = '';
-                users.forEach(user => {
-                    userOptionsHtml = userOptionsHtml.concat(
-                        `<option value="${user.id}">${user.name}</option>`)
-                });
-
-                var html =
-                    '<tr>' +
-                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                    '"></td>' +
-                    '<td> <select name="investigationTeam[' + investigationTeamIndex +
-                    '][teamMember]" > <option value="">-- Select --</option>' + userOptionsHtml +
-                    ' </select> </td>' +
-                    ' <td><input type="text" name="investigationTeam[' + investigationTeamIndex +
-                    '][responsibility]"></td>' +
-                    '<td><input type="text" name="investigationTeam[' + investigationTeamIndex +
-                    '][remarks]"></td>' +
-                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                    '</tr>';
-                '</tr>';
-
-                docIndex++;
-                return html;
-            }
-            var tableBody = $('#investigationDetailAddTable tbody');
-            var rowCount = tableBody.children('tr').length;
-            var newRow = generateTableRow(rowCount + 1);
-            tableBody.append(newRow);
-        });
-    });
-</script>
+    </script>
 
     <div class="form-field-head">
 
@@ -643,7 +643,8 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Initial Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
-                <button class="cctablinks " id="Investigation_button" style="display: none" onclick="openCity(event, 'CCForm9')">Investigation</button>
+                <button class="cctablinks " id="Investigation_button" style="display: none"
+                    onclick="openCity(event, 'CCForm9')">Investigation</button>
                 <button id="QRM_button" class="cctablinks" style="display: none"
                     onclick="openCity(event, 'CCForm11')">QRM</button>
 
@@ -682,7 +683,7 @@
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         {{-- <input disabled type="text" name="record_number"> --}}
                                         <input disabled type="text" name="record" id="record"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/INC/{{date('y')}}/{{$data}}">
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/INC/{{ date('y') }}/{{ $data }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -816,30 +817,32 @@
                                     <div class="group-input">
                                         <label for="initiator-group">Initiation Department <span
                                                 class="text-danger">*</span></label>
-                                                <select name="Initiator_Group" id="initiator_group">
-                                                        <optio value="">Select Initiation Department</option>
-                                                        <option value="CQA" >Corporate Quality Assurance</option>
-                                                        <option value="QA" >Quality Assurance</option>
-                                                        <option value="QC" >Quality Control</option>
-                                                        <option value="QM" >Quality Control (Microbiology department)</option>
-                                                        <option value="PG" >Production General</option>
-                                                        <option value="PL" >Production Liquid Orals</option>
-                                                        <option value="PT" >Production Tablet and Powder</option>
-                                                        <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                        <option value="PC" >Production Capsules</option>
-                                                        <option value="PI" >Production Injectable</option>
-                                                        <option value="EN" >Engineering</option>
-                                                        <option value="HR" >Human Resource</option>
-                                                        <option value="ST" >Store</option>
-                                                        <option value="IT" >Electronic Data Processing</option>
-                                                        <option value="FD" >Formulation  Development</option>
-                                                        <option value="AL" >Analytical research and Development Laboratory</option>
-                                                        <option value="PD">Packaging Development</option>
-                                                        <option value="PU">Purchase Department</option>
-                                                        <option value="DC">Document Cell</option>
-                                                        <option value="RA">Regulatory Affairs</option>
-                                                        <option value="PV">Pharmacovigilance</option>
-                                                    </select>
+                                        <select name="Initiator_Group" id="initiator_group">
+                                            <optio value="">Select Initiation Department</option>
+                                                <option value="CQA">Corporate Quality Assurance</option>
+                                                <option value="QA">Quality Assurance</option>
+                                                <option value="QC">Quality Control</option>
+                                                <option value="QM">Quality Control (Microbiology department)</option>
+                                                <option value="PG">Production General</option>
+                                                <option value="PL">Production Liquid Orals</option>
+                                                <option value="PT">Production Tablet and Powder</option>
+                                                <option value="PE">Production External (Ointment, Gels, Creams and
+                                                    Liquid)</option>
+                                                <option value="PC">Production Capsules</option>
+                                                <option value="PI">Production Injectable</option>
+                                                <option value="EN">Engineering</option>
+                                                <option value="HR">Human Resource</option>
+                                                <option value="ST">Store</option>
+                                                <option value="IT">Electronic Data Processing</option>
+                                                <option value="FD">Formulation Development</option>
+                                                <option value="AL">Analytical research and Development Laboratory
+                                                </option>
+                                                <option value="PD">Packaging Development</option>
+                                                <option value="PU">Purchase Department</option>
+                                                <option value="DC">Document Cell</option>
+                                                <option value="RA">Regulatory Affairs</option>
+                                                <option value="PV">Pharmacovigilance</option>
+                                        </select>
                                         {{-- @error('Initiator_Group')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror --}}
@@ -852,6 +855,54 @@
                                             value="" readonly>
                                     </div>
                                 </div> --}}
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="short_description_required">Equipment Name</label>
+                                        <select name="equipment_name" id="equipment_name" required>
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no"> No</option>
+                                            <option value="na">NA</option>
+                                        </select>
+                                    </div>
+                                    @error('equipment_name')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="instrument_name">Instrument Name</label>
+                                        <select name="instrument_name" id="instrument_name" required>
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no"> No</option>
+                                            <option value="na">NA</option>
+                                        </select>
+                                    </div>
+                                    @error('instrument_name')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="facility_name">Facility Name</label>
+                                        <select name="inc_facility_name" id="inc_facility_name" required>
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no"> No</option>
+                                            <option value="na">NA</option>
+                                        </select>
+                                    </div>
+                                    @error('inc_facility_name')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+
+
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1189,7 +1240,8 @@
                                                         <option value="Equipment"> Equipment</option>
                                                         <option value="Instrument">Instrument</option>
                                                     </select> </td> --}}
-                                                <td><input type="text" name="facility_name[]" class="facilityName"></td>
+                                                <td><input type="text" name="facility_name[]" class="facilityName">
+                                                </td>
 
                                                 <td><input type="text" name="IDnumber[]" class="id-number"></td>
                                                 <td><input type="text" name="Remarks[]" class="remarks"></td>
@@ -1381,7 +1433,8 @@
                                                     </td>
                                                     <td><input type="text" class="productName" name="product_name[]">
                                                     </td>
-                                                    <td><input type="text" name="product_stage[]" id="product_stage"> </td>
+                                                    <td><input type="text" name="product_stage[]" id="product_stage">
+                                                    </td>
                                                     <td><input type="text" class="productBatchNo" name="batch_no[]">
                                                     </td>
                                                     <td><input type="text" class="Removebtn" name="Action[]" readonly>
@@ -1442,55 +1495,55 @@
                                     });
                                 </script>
                                 <!-- <div class="col-lg-6">
-                                            <div class="group-input" id="external_agencies_req">
-                                                <label for="others">HOD / Designee<span class="text-danger d-none">*</span></label>
-                                              <select name="hod_designee" id="">
-                                                <option value="">-- Select --</option>
-                                                <option value="person1">person 1</option>
-                                                <option value="person2">person 2</option>
-                                              </select>
+                                                <div class="group-input" id="external_agencies_req">
+                                                    <label for="others">HOD / Designee<span class="text-danger d-none">*</span></label>
+                                                  <select name="hod_designee" id="">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="person1">person 1</option>
+                                                    <option value="person2">person 2</option>
+                                                  </select>
 
 
 
-                                            </div>
-                              </div> -->
+                                                </div>
+                                  </div> -->
                                 <!-- <div class="col-lg-6">
-                                            <div class="group-input" id="external_agencies_req">
-                                                <label for="others">Head QA / Designee<span class="text-danger d-none">*</span></label>
-                                              <select name="hod_designee" id="">
-                                                <option value="">-- Select --</option>
-                                                <option value="person1">person 1</option>
-                                                <option value="person2">person 2</option>
-                                              </select>
+                                                <div class="group-input" id="external_agencies_req">
+                                                    <label for="others">Head QA / Designee<span class="text-danger d-none">*</span></label>
+                                                  <select name="hod_designee" id="">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="person1">person 1</option>
+                                                    <option value="person2">person 2</option>
+                                                  </select>
 
 
 
-                                            </div>
-                              </div> -->
+                                                </div>
+                                  </div> -->
                                 <!-- <div class="col-lg-6">
-                                            <div class="group-input" id="external_agencies_req">
-                                                <label for="others">QA<span class="text-danger d-none">*</span></label>
-                                              <select name="hod_designee" id="">
-                                                <option value="">-- Select --</option>
-                                                <option value="person1">person 1</option>
-                                                <option value="person2">person 2</option>
-                                              </select>
+                                                <div class="group-input" id="external_agencies_req">
+                                                    <label for="others">QA<span class="text-danger d-none">*</span></label>
+                                                  <select name="hod_designee" id="">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="person1">person 1</option>
+                                                    <option value="person2">person 2</option>
+                                                  </select>
 
 
-                                            </div>
-                              </div> -->
+                                                </div>
+                                  </div> -->
                                 <!-- <div class="col-6">
-                                            <div class="group-input">
-                                                <label for="Facility Name">Notify To</label>
-                                                <select multiple name="Facility[]" placeholder="Select Facility Name"
-                                                    data-search="false" data-silent-initial-value-set="true" id="Facility">
-                                                    <option value="Plant 1"> 1</option>
-                                                    <option value="Plant 1"> 2</option>
-                                                    <option value="Plant 1"> 3</option>
+                                                <div class="group-input">
+                                                    <label for="Facility Name">Notify To</label>
+                                                    <select multiple name="Facility[]" placeholder="Select Facility Name"
+                                                        data-search="false" data-silent-initial-value-set="true" id="Facility">
+                                                        <option value="Plant 1"> 1</option>
+                                                        <option value="Plant 1"> 2</option>
+                                                        <option value="Plant 1"> 3</option>
 
-                                                </select>
-                                            </div>
-                                        </div> -->
+                                                    </select>
+                                                </div>
+                                            </div> -->
 
                                 {{-- <div class="col-6">
                                     <div class="group-input">
@@ -1617,17 +1670,19 @@
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="saveButton">Save </button>
 
-                                <button type="button"  style=" justify-content: center; width: 4rem; margin-left: 1px;" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    class="backButton" onclick="previousStep()">Back</button>
 
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"   class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                            class="button  launch_extension" data-bs-toggle="modal"
-                                            data-bs-target="#launch_extension">
-                                            Launch Extension
-                                        </a> -->
+                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                data-bs-target="#launch_extension">
+                                                Launch Extension
+                                            </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -1817,7 +1872,7 @@
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="saveButton">Save</button>
 
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
 
 
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
@@ -1826,10 +1881,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                            class="button  launch_extension" data-bs-toggle="modal"
-                                            data-bs-target="#launch_extension">
-                                            Launch Extension
-                                        </a> -->
+                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                data-bs-target="#launch_extension">
+                                                Launch Extension
+                                            </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -3967,7 +4022,7 @@
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="saveButton">Save</button>
 
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
 
 
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
@@ -3976,10 +4031,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                            class="button  launch_extension" data-bs-toggle="modal"
-                                            data-bs-target="#launch_extension">
-                                            Launch Extension
-                                        </a> -->
+                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                data-bs-target="#launch_extension">
+                                                Launch Extension
+                                            </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -4503,10 +4558,8 @@
                                 <div class="group-input" id="documentsRowname">
                                     <label for="audit-agenda-grid">
                                         Root Cause
-                                        <button type="button" name="audit-agenda-grid"
-                                            id="rootCauseAdd">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#root-cause"
+                                        <button type="button" name="audit-agenda-grid" id="rootCauseAdd">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#root-cause"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
@@ -4556,7 +4609,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select name="rootCauseData[0][rooCauseSubCategory]"
+                                                    <select name="rootCauseData[0][rootCauseSubCategory]"
                                                         id="Root_Cause_Sub_Category_Select">
                                                         <option value="">-- Select --</option>
 
@@ -4642,10 +4695,130 @@
                                 </div>
                             </div>
 
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="short_description_required">Product Quality Impact</label>
+                                    <select name="product_quality_imapct" id="product_quality_imapct" required>
+                                        <option value="0">-- Select --</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no"> No</option>
+                                        <option value="na">NA</option>
+                                    </select>
+                                </div>
+                                @error('product_quality_imapct')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="process_performance_impact">Process Performance Impact</label>
+                                    <select name="process_performance_impact" id="process_performance_impact" required>
+                                        <option value="0">-- Select --</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no"> No</option>
+                                        <option value="na">NA</option>
+                                    </select>
+                                </div>
+                                @error('process_performance_impact')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="process_performance_impact">Yield Impact</label>
+                                    <select name="yield_impact" id="yield_impact" required>
+                                        <option value="0">-- Select --</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no"> No</option>
+                                        <option value="na">NA</option>
+                                    </select>
+                                </div>
+                                @error('process_performance_impact')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="process_performance_impact">GMP Impact</label>
+                                    <select name="gmp_impact" id="gmp_impact" required>
+                                        <option value="0">-- Select --</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no"> No</option>
+                                        <option value="na">NA</option>
+                                    </select>
+                                </div>
+                                @error('gmp_impact')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="process_performance_impact">Additionl Testing Required</label>
+                                    <select name="additionl_testing_required" id="additionl_testing_required" required>
+                                        <option value="0">-- Select --</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no"> No</option>
+                                        <option value="na">NA</option>
+                                    </select>
+                                </div>
+                                @error('additionl_testing_required')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="process_performance_impact">Any Similar Incident In Past</label>
+                                    <select name="any_similar_incident_in_past" id="any_similar_incident_in_past"
+                                        required>
+                                        <option value="0">-- Select --</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no"> No</option>
+                                        <option value="na">NA</option>
+                                    </select>
+                                </div>
+                                @error('any_similar_incident_in_past')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="process_performance_impact">Classification By QA</label>
+                                    <select name="classification_by_qa" id="classification_by_qa" required>
+                                        <option value="0">-- Select --</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no"> No</option>
+                                        <option value="na">NA</option>
+                                    </select>
+                                </div>
+                                @error('classification_by_qa')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="process_performance_impact">Classification By QA</label>
+                                    <select name="classification_by_qa" id="classification_by_qa" required>
+                                        <option value="0">-- Select --</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no"> No</option>
+                                        <option value="na">NA</option>
+                                    </select>
+                                </div>
+                                @error('classification_by_qa')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="button-block">
                                 <button type="submit" class="saveButton"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">Save</button>
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
 
                                 <button type="button" class="nextButton"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;"
@@ -4654,10 +4827,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                            class="button  launch_extension" data-bs-toggle="modal"
-                                            data-bs-target="#launch_extension">
-                                            Launch Extension
-                                        </a> -->
+                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                data-bs-target="#launch_extension">
+                                                Launch Extension
+                                            </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -4830,6 +5003,21 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="process_performance_impact">CAPA Required ?</label>
+                                        <select name="capa_require" id="capa_require" required>
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no"> No</option>
+                                            <option value="na">NA</option>
+                                        </select>
+                                    </div>
+                                    @error('capa_require')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
                             </div>
                             <script>
                                 function calculateRiskAnalysis(selectElement) {
@@ -4863,10 +5051,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                            class="button  launch_extension" data-bs-toggle="modal"
-                                            data-bs-target="#launch_extension">
-                                            Launch Extension
-                                        </a> -->
+                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                data-bs-target="#launch_extension">
+                                                Launch Extension
+                                            </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -4892,6 +5080,21 @@
                                         <input disabled type="text" name="capa_number">
                                     </div>
                                 </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="process_performance_impact">Deviation Required ? </label>
+                                        <select name="deviation_required" id="deviation_required"
+                                            required>
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no"> No</option>
+                                            <option value="na">NA</option>
+                                        </select>
+                                    </div>
+                                    @error('deviation_required')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -5102,7 +5305,7 @@
                                     <button type="submit"
                                         style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                         class="saveButton">Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
 
                                     <button type="button"
                                         style=" justify-content: center; width: 4rem; margin-left: 1px;"
@@ -5112,10 +5315,10 @@
                                             href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                             Exit </a> </button>
                                     <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                data-bs-target="#launch_extension">
-                                                Launch Extension
-                                            </a> -->
+                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                    data-bs-target="#launch_extension">
+                                                    Launch Extension
+                                                </a> -->
                                     {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
@@ -5310,10 +5513,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                data-bs-target="#launch_extension">
-                                                Launch Extension
-                                            </a> -->
+                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                    data-bs-target="#launch_extension">
+                                                    Launch Extension
+                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -5393,10 +5596,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                            class="button  launch_extension" data-bs-toggle="modal"
-                                            data-bs-target="#launch_extension">
-                                            Launch Extension
-                                        </a> -->
+                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                data-bs-target="#launch_extension">
+                                                Launch Extension
+                                            </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -6085,10 +6288,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                data-bs-target="#launch_extension">
-                                                Launch Extension
-                                            </a> -->
+                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                    data-bs-target="#launch_extension">
+                                                    Launch Extension
+                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
@@ -6246,11 +6449,6 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-
-
-
-
-
 
                         </div>
                         <div class="button-block">

@@ -1,0 +1,253 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('root_cause_analyses', function (Blueprint $table) {
+            // Drop the columns
+            $table->dropColumn([
+                'severity_level', 
+                'short_description', 
+                'assigned_to', 
+                'due_date', 
+                'initiator_group_code', 
+                'priority_level', 
+                'root_cause_description', 
+                'cft_comments_new', 
+                'qa_comments_new', 
+                'cft_attchament_new', 
+                'Type', 
+                'investigators', 
+                'department', 
+                'description', 
+                'comments', 
+                'root_cause_initial_attachment', 
+                'related_url', 
+                'root_cause_methodology', 
+                'measurement', 
+                'materials', 
+                'methods', 
+                'environment', 
+                'manpower', 
+                'machine', 
+                'problem_statement', 
+                'why_problem_statement', 
+                'why_1', 
+                'why_2', 
+                'why_3', 
+                'why_4', 
+                'Root_Cause_Category', 
+                'Root_Cause_Sub_Category', 
+                'Probability', 
+                'Remarks', 
+                'why_5', 
+                'why_root_cause', 
+                'what_will_be', 
+                'what_will_not_be', 
+                'what_rationable', 
+                'where_will_be', 
+                'where_will_not_be', 
+                'where_rationable', 
+                'when_will_be', 
+                'when_will_not_be', 
+                'when_rationable', 
+                'coverage_will_be', 
+                'coverage_will_not_be', 
+                'coverage_rationable', 
+                'who_will_be', 
+                'who_will_not_be', 
+                'who_rationable', 
+                'investigation_summary'
+            ]);
+        });
+
+        Schema::table('root_cause_analyses', function (Blueprint $table) {
+            // Re-add the columns with the desired types
+            $table->string('severity_level')->nullable();
+            $table->longText('short_description')->nullable();
+            $table->string('assigned_to')->nullable();
+            $table->string('due_date')->nullable();
+            $table->text('initiator_group_code')->nullable();
+            $table->string('priority_level')->nullable();
+            $table->longText('root_cause_description')->nullable();
+            $table->longText('cft_comments_new')->nullable();
+            $table->text('qa_comments_new')->nullable();
+            $table->string('cft_attchament_new')->nullable();
+            $table->string('Type')->nullable();
+            $table->string('investigators')->nullable();
+            $table->string('department')->nullable();
+            $table->longText('description')->nullable();
+            $table->longText('comments')->nullable();
+            $table->string('root_cause_initial_attachment')->nullable();
+            $table->string('related_url')->nullable();
+            $table->string('root_cause_methodology')->nullable();
+            $table->longText('measurement')->nullable();
+            $table->longText('materials')->nullable();
+            $table->longText('methods')->nullable();
+            $table->longText('environment')->nullable();
+            $table->longText('manpower')->nullable();
+            $table->longText('machine')->nullable();
+            $table->longText('problem_statement')->nullable();
+            $table->longText('why_problem_statement')->nullable();
+            $table->longText('why_1')->nullable();
+            $table->longText('why_2')->nullable();
+            $table->longText('why_3')->nullable();
+            $table->longText('why_4')->nullable();
+            $table->longText('Root_Cause_Category')->nullable();
+            $table->longText('Root_Cause_Sub_Category')->nullable();
+            $table->longText('Probability')->nullable();
+            $table->longText('Remarks')->nullable();
+            $table->longText('why_5')->nullable();
+            $table->longText('why_root_cause')->nullable();
+            $table->longText('what_will_be')->nullable();
+            $table->longText('what_will_not_be')->nullable();
+            $table->longText('what_rationable')->nullable();
+            $table->longText('where_will_be')->nullable();
+            $table->longText('where_will_not_be')->nullable();
+            $table->longText('where_rationable')->nullable();
+            $table->longText('when_will_be')->nullable();
+            $table->longText('when_will_not_be')->nullable();
+            $table->longText('when_rationable')->nullable();
+            $table->longText('coverage_will_be')->nullable();
+            $table->longText('coverage_will_not_be')->nullable();
+            $table->longText('coverage_rationable')->nullable();
+            $table->longText('who_will_be')->nullable();
+            $table->longText('who_will_not_be')->nullable();
+            $table->longText('who_rationable')->nullable();
+            $table->longText('investigation_summary')->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+     
+        Schema::table('root_cause_analyses', function (Blueprint $table) {
+            // Drop the newly added columns
+            $table->dropColumn([
+                'severity_level', 
+                'short_description', 
+                'assigned_to', 
+                'due_date', 
+                'initiator_group_code', 
+                'priority_level', 
+                'root_cause_description', 
+                'cft_comments_new', 
+                'qa_comments_new', 
+                'cft_attchament_new', 
+                'Type', 
+                'investigators', 
+                'department', 
+                'description', 
+                'comments', 
+                'root_cause_initial_attachment', 
+                'related_url', 
+                'root_cause_methodology', 
+                'measurement', 
+                'materials', 
+                'methods', 
+                'environment', 
+                'manpower', 
+                'machine', 
+                'problem_statement', 
+                'why_problem_statement', 
+                'why_1', 
+                'why_2', 
+                'why_3', 
+                'why_4', 
+                'Root_Cause_Category', 
+                'Root_Cause_Sub_Category', 
+                'Probability', 
+                'Remarks', 
+                'why_5', 
+                'why_root_cause', 
+                'what_will_be', 
+                'what_will_not_be', 
+                'what_rationable', 
+                'where_will_be', 
+                'where_will_not_be', 
+                'where_rationable', 
+                'when_will_be', 
+                'when_will_not_be', 
+                'when_rationable', 
+                'coverage_will_be', 
+                'coverage_will_not_be', 
+                'coverage_rationable', 
+                'who_will_be', 
+                'who_will_not_be', 
+                'who_rationable', 
+                'investigation_summary'
+            ]);
+        });
+
+        Schema::table('root_cause_analyses', function (Blueprint $table) {
+            // Re-add the columns with the original types
+            $table->string('severity_level')->nullable();
+            $table->longText('short_description')->nullable();
+            $table->string('assigned_to')->nullable();
+            $table->string('due_date')->nullable();
+            $table->text('initiator_group_code')->nullable();
+            $table->string('priority_level')->nullable();
+            $table->longText('root_cause_description')->nullable();
+            $table->longText('cft_comments_new')->nullable();
+            $table->text('qa_comments_new')->nullable();
+            $table->longtext('cft_attchament_new')->nullable();
+            $table->string('Type')->nullable();
+            $table->string('investigators')->nullable();
+            $table->string('department')->nullable();
+            $table->longText('description')->nullable();
+            $table->longText('comments')->nullable();
+            $table->string('root_cause_initial_attachment')->nullable();
+            $table->string('related_url')->nullable();
+            $table->string('root_cause_methodology')->nullable();
+            $table->longText('measurement')->nullable();
+            $table->longText('materials')->nullable();
+            $table->longText('methods')->nullable();
+            $table->longText('environment')->nullable();
+            $table->longText('manpower')->nullable();
+            $table->longText('machine')->nullable();
+            $table->longText('problem_statement')->nullable();
+            $table->longText('why_problem_statement')->nullable();
+            $table->longText('why_1')->nullable();
+            $table->longText('why_2')->nullable();
+            $table->longText('why_3')->nullable();
+            $table->longText('why_4')->nullable();
+            $table->longText('Root_Cause_Category')->nullable();
+            $table->longText('Root_Cause_Sub_Category')->nullable();
+            $table->longText('Probability')->nullable();
+            $table->longText('Remarks')->nullable();
+            $table->longText('why_5')->nullable();
+            $table->longText('why_root_cause')->nullable();
+            $table->longText('what_will_be')->nullable();
+            $table->longText('what_will_not_be')->nullable();
+            $table->longText('what_rationable')->nullable();
+            $table->longText('where_will_be')->nullable();
+            $table->longText('where_will_not_be')->nullable();
+            $table->longText('where_rationable')->nullable();
+            $table->longText('when_will_be')->nullable();
+            $table->longText('when_will_not_be')->nullable();
+            $table->longText('when_rationable')->nullable();
+            $table->longText('coverage_will_be')->nullable();
+            $table->longText('coverage_will_not_be')->nullable();
+            $table->longText('coverage_rationable')->nullable();
+            $table->longText('who_will_be')->nullable();
+            $table->longText('who_will_not_be')->nullable();
+            $table->longText('who_rationable')->nullable();
+            $table->longText('investigation_summary')->nullable();
+        });
+    }
+};

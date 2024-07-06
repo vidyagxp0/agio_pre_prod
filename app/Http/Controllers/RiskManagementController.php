@@ -62,7 +62,10 @@ class RiskManagementController extends Controller
         $data->due_date = $request->due_date;
         $data->Initiator_Group = $request->Initiator_Group;
         $data->initiator_group_code = $request->initiator_group_code;
-        $data->departments = implode(',', $request->departments);
+       // $data->departments = implode(',', $request->departments);
+
+       $data->departments = is_array($request->departments) ? implode(',', $request->departments) : '';
+
         // $data->team_members = implode(',', $request->team_members);
         $data->source_of_risk = $request->source_of_risk;
         $data->source_of_risk2 = $request->source_of_risk2;
@@ -75,8 +78,10 @@ class RiskManagementController extends Controller
         $data->description = $request->description;
         $data->severity2_level = $request->severity2_level;
         $data->comments = $request->comments;
-        $data->departments2 = implode(',', $request->departments2);
-        $data->site_name = $request->site_name;
+       // $data->departments2 = implode(',', $request->departments2);
+       $data->departments2 = is_array($request->departments2) ? implode(',', $request->departments2) : '';
+ 
+       $data->site_name = $request->site_name;
         $data->building = $request->building;
         $data->floor = $request->floor;
         $data->room = $request->room;
@@ -92,8 +97,8 @@ class RiskManagementController extends Controller
         $data->schedule_end_date1 = $request->schedule_end_date1;
         $data->estimated_cost = $request->estimated_cost;
         $data->currency = $request->currency;
-
-        $data->root_cause_methodology = implode(',', $request->root_cause_methodology);
+        $data->root_cause_methodology = is_array($request->root_cause_methodology) ? implode(',', $request->root_cause_methodology) : '';
+       // $data->root_cause_methodology = implode(',', $request->root_cause_methodology);
         // $data->measurement = json_encode($request->measurement);
         // $data->materials = json_encode($request->materials);
         // $data->methods = json_encode($request->methods);
@@ -158,7 +163,8 @@ class RiskManagementController extends Controller
         // $data->initial_rpn = $request->initial_rpn;
         //$data->severity = $request->severity;
         //$data->occurance = $request->occurance;
-        $data->refrence_record =  implode(',', $request->refrence_record);
+       // $data->refrence_record =  implode(',', $request->refrence_record);
+       $data->refrence_record = is_array($request->refrence_record) ? implode(',', $request->refrence_record) : '';
 
 
 
@@ -1745,7 +1751,10 @@ class RiskManagementController extends Controller
         $data->due_date = $request->due_date;
         $data->Initiator_Group = $request->Initiator_Group;
         $data->initiator_group_code = $request->initiator_group_code;
-        $data->departments = implode(',', $request->departments);
+      //  $data->departments = implode(',', $request->departments);
+
+       $data->departments = is_array($request->departments) ? implode(',', $request->departments) : '';
+
         // $data->team_members = implode(',', $request->team_members);
         $data->source_of_risk = $request->source_of_risk;
         $data->source_of_risk2 = $request->source_of_risk2;
@@ -1758,8 +1767,12 @@ class RiskManagementController extends Controller
         $data->description = $request->description;
         $data->severity2_level = $request->severity2_level;
         $data->comments = $request->comments;
-        $data->departments2 = implode(',', $request->departments2);
-        $data->site_name = $request->site_name;
+        
+       // $data->departments2 = implode(',', $request->departments2);
+       $data->departments2 = is_array($request->departments2) ? implode(',', $request->departments2) : '';
+ 
+       
+       $data->site_name = $request->site_name;
         $data->building = $request->building;
         $data->floor = $request->floor;
         $data->room = $request->room;
@@ -1775,8 +1788,9 @@ class RiskManagementController extends Controller
         $data->schedule_end_date1 = $request->schedule_end_date1;
         $data->estimated_cost = $request->estimated_cost;
         $data->currency = $request->currency;
+        $data->root_cause_methodology = is_array($request->root_cause_methodology) ? implode(',', $request->root_cause_methodology) : '';
 
-        $data->root_cause_methodology = implode(',', $request->root_cause_methodology);
+        //$data->root_cause_methodology = implode(',', $request->root_cause_methodology);
         //$data->training_require = $request->training_require;
         $data->justification = $request->justification;
         $data->cost_of_risk = $request->cost_of_risk;
@@ -1810,7 +1824,8 @@ class RiskManagementController extends Controller
         $data->due_date_extension = $request->due_date_extension;
         //$data->severity = $request->severity;
         //$data->occurance = $request->occurance;
-        $data->refrence_record =  implode(',', $request->refrence_record);
+        //$data->refrence_record =  implode(',', $request->refrence_record);
+        $data->refrence_record = is_array($request->refrence_record) ? implode(',', $request->refrence_record) : '';
 
 
         if (!empty($request->reference)) {
