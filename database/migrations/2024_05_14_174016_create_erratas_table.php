@@ -18,6 +18,11 @@ return new class extends Migration
             $table->integer('record')->nullable();
             $table->string('division_id')->nullable();
             $table->longText('initiator_id')->nullable();
+            // $table->text('department_head_to')->nullable();
+            // $table->text('document_title')->nullable();
+            // $table->text('custom_value')->nullable();
+            // $table->text('qa_reviewer')->nullable();
+            // $table->text('reference')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('initiated_by')->nullable();
             $table->string('Department')->nullable();

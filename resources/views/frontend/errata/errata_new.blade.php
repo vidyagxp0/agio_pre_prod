@@ -474,7 +474,7 @@
                                     </div>
                                 </div>
 
-                                <div class="new-date-data-field">
+                                <!-- <div class="new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Errata_date">Date And Time of Correction</label>
                                         <div class="calenderauditee">
@@ -489,7 +489,7 @@
                                     @error('Errata_date')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> -->
 
                                 <script>
                                     function updateDisplayDateTime(input) {

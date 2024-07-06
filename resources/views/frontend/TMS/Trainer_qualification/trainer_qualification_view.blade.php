@@ -268,11 +268,11 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-        $(document).ready(function() {
-            $('.removeRowBtn').on('click', function() {
-                $(this).closest('tr').remove();
-            });
+    $(document).ready(function() {
+        $('.removeRowBtn').on('click', function() {
+            $(this).closest('tr').remove();
         });
+    });
 </script>
 
 <style>
@@ -360,10 +360,9 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                     $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                     @endphp
 
-                    <button class="button_theme1"> 
-                        <a class="text-white"
-                            href="{{ route('audittrail', $trainer->id) }}"> Audit Trail
-                        </a> 
+                    <button class="button_theme1">
+                        <a class="text-white" href="{{ route('trainer.audittrail', $trainer->id) }}"> Audit Trail
+                        </a>
                     </button>
 
                     @if ($trainer->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -632,7 +631,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 
 
                     <!-- <div class="col-lg-6">
-                                    <div class="group-input">
+                                   <div class="group-input">
                                         <label for="external_agencies">External Agencies</label>
                                         <select name="external_agencies"
                                             onchange="otherController(this.value, 'others', 'external_agencies_req')">
@@ -648,7 +647,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                                             <option value="others" @if ($trainer->external_agencies == "others") selected @endif>Others</option>
                                         </select>
                                     </div>
-                                </div> -->
+                    </div> -->
 
 
                     <div class="col-lg-6">
@@ -688,8 +687,10 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                                         </td>
                                         <td><input type="text" name="trainer_skill[{{ $loop->index }}][Trainer_skill_set]" value=" {{ array_key_exists('Trainer_skill_set', $skill) ? $skill['Trainer_skill_set'] : '' }}"></td>
                                         <td><input type="text" name="trainer_skill[{{ $loop->index }}][remarks]" value=" {{ array_key_exists('remarks', $skill) ? $skill['remarks'] : '' }}"></td>
-                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
-
+                                        <!-- <td><button type="button" class="removeRowBtn">Remove</button></td> -->
+                                        <td>
+                                            <button type="button" onclick="removeRow(this)">Remove</button>
+                                        </td>
                                     </tr>
                                     @endforeach
                                     @else
@@ -703,6 +704,12 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                                 </tbody>
                             </table>
                         </div>
+                        <script>
+                            function removeRow(button) {
+                                var row = button.closest('tr');
+                                row.parentNode.removeChild(row);
+                            }
+                        </script>
 
                         <div class="group-input">
                             <label for="audit-agenda-grid">
@@ -754,6 +761,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             </select>
                         </div>
                     </div>
+
                     <div class="sub-head">Evaluation Criteria</div>
 
                     <div class="col-12">
@@ -777,10 +785,8 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                                                     <option value="1" @if ($trainer->evaluation_criteria_1 == "1") selected @endif> 1</option>
                                                     <option value="2" @if ($trainer->evaluation_criteria_1 == "2") selected @endif> 2</option>
                                                     <option value="3" @if ($trainer->evaluation_criteria_1 == "3") selected @endif> 3</option>
-
                                                 </select>
                                             </td>
-
                                         </tr>
                                         <tr>
                                             <td>2</td>
@@ -794,8 +800,6 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 
                                                 </select>
                                             </td>
-
-
                                         </tr>
                                         <tr>
                                             <td>3</td>
@@ -810,8 +814,6 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 
                                                 </select>
                                             </td>
-
-
                                         </tr>
                                         <tr>
                                             <td>4</td>
@@ -825,8 +827,6 @@ $departments = DB::table('departments')->select('id', 'name')->get();
 
                                                 </select>
                                             </td>
-
-
                                         </tr>
                                         <tr>
                                             <td>5</td>
