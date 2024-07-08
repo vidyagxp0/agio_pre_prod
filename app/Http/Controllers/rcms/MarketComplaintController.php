@@ -64,7 +64,15 @@ class MarketComplaintController extends Controller
         $marketComplaint->description_gi = $request->description_gi;
         // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
         $marketComplaint->complainant_gi = $request->complainant_gi;
-        $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
+        // dd( $marketComplaint->complainant_gi);
+        // $request->validate([
+        //     'complaint_reported_on_gi' => 'nullable|date_format:Y-m-d',
+        // ]);
+        if ($request->filled('complaint_reported_on_gi')) {
+            $complaintDate = Carbon::createFromFormat('Y-m-d', $request->complaint_reported_on_gi)->format('j F Y');
+            $marketComplaint->complaint_reported_on_gi = $complaintDate;
+        }
+        // dd($marketComplaint->complaint_reported_on_gi);
         $marketComplaint->details_of_nature_market_complaint_gi = $request->details_of_nature_market_complaint_gi;
         $marketComplaint->categorization_of_complaint_gi = $request->categorization_of_complaint_gi;
         $marketComplaint->review_of_complaint_sample_gi = $request->review_of_complaint_sample_gi;
@@ -1123,7 +1131,14 @@ public function update(Request $request,$id)
     $marketComplaint->description_gi = $request->description_gi;
     // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
     $marketComplaint->complainant_gi = $request->complainant_gi;
-    $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
+    // $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
+    // $compalintDate = Carbon::createFromFormat('Y-m-d', $request->complaint_reported_on_gi)->format('j-F-Y');
+    // $marketComplaint->complaint_reported_on_gi = $compalintDate;
+    if ($request->filled('complaint_reported_on_gi')) {
+        $complaintDate = Carbon::createFromFormat('Y-m-d', $request->complaint_reported_on_gi)->format('j F Y');
+        $marketComplaint->complaint_reported_on_gi = $complaintDate;
+    }
+
     $marketComplaint->details_of_nature_market_complaint_gi = $request->details_of_nature_market_complaint_gi;
     $marketComplaint->categorization_of_complaint_gi = $request->categorization_of_complaint_gi;
     $marketComplaint->review_of_complaint_sample_gi = $request->review_of_complaint_sample_gi;
@@ -2612,6 +2627,9 @@ public function marketComplaintStateChange(Request $request,$id)
             if ($marketstat->stage == 2) {
                 $marketstat->stage = "1";
                 $marketstat->status = "Opened";
+                $marketstat->more_information_required_by = Auth::user()->name;
+                $marketstat->more_information_required_on = Carbon::now()->format('d-M-Y');
+                $marketstat->more_information_required_comment = $request->comment;
                     $history = new MarketComplaintAuditTrial();
                     $history->market_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -2635,6 +2653,9 @@ public function marketComplaintStateChange(Request $request,$id)
             if ($marketstat->stage == 3) {
                 $marketstat->stage = "1";
                 $marketstat->status = "Opened";
+                $marketstat->more_information_required_by = Auth::user()->name;
+                $marketstat->more_information_required_on = Carbon::now()->format('d-M-Y');
+                $marketstat->more_information_required_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -2658,6 +2679,9 @@ public function marketComplaintStateChange(Request $request,$id)
             if ($marketstat->stage == 5) {
                 $marketstat->stage = "4";
                 $marketstat->status = "CAPA Plan";
+                $marketstat->reject_by = Auth::user()->name;
+                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
+                $marketstat->reject_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -2693,6 +2717,9 @@ public function marketComplaintStateChange(Request $request,$id)
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
+                $changeControl->cancelled_by = Auth::user()->name;
+                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->cancelled_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -2753,6 +2780,7 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
    
     if ($request->revision == "rca-child") {
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+        // $record_number = $record;
         return view('frontend.forms.root-cause-analysis', compact('record', 'due_date', 'parent_id','old_records', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
 
     }
@@ -2834,7 +2862,9 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
             if ($request->revision == "Effectiveness-child") {
                 // return "test";
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.forms.effectiveness-check', compact('record', 'due_date', 'parent_id','old_records', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                  $record_number = $record;
+
+                return view('frontend.forms.effectiveness-check', compact('record_number', 'due_date', 'parent_id','old_records', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
             

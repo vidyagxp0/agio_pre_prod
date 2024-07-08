@@ -1163,6 +1163,17 @@ class CapaController extends Controller
 
 
 
+           if (!empty($request->capa_attachment)) {
+            $files = [];
+            if ($request->hasfile('capa_attachment')) {
+                foreach ($request->file('capa_attachment') as $file) {
+                    $name = $request->name . 'capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->capa_attachment = json_encode($files);
+        }
 
            if (!empty($request->hod_attachment)) {
             $files = [];
@@ -2753,7 +2764,6 @@ class CapaController extends Controller
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
         $data = Capa::find($id);
 
-
         // return $audit;
 
         return view('frontend.capa.audit-trial', compact('audit', 'document', 'today','data'));
@@ -2821,8 +2831,8 @@ class CapaController extends Controller
         // }
         if ($request->child_type == "rca") {
             // $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            $record_number = $record;
-            return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
+            // $record_number = $record;
+            return view('frontend.forms.root-cause-analysis', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
     
         }
     }
@@ -2842,6 +2852,7 @@ class CapaController extends Controller
     public static function singleReport($id)
     {
         $data = Capa::find($id);
+        
         if (!empty($data))
          {
             $data->Product_Details = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();

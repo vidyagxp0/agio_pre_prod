@@ -249,11 +249,11 @@
             <body>
                 <div style="display: flex; justify-content: flex-end;">
                     
-                    <button  class="button_theme1" style="margin-right: 10px"> <a class="text-white" href="{{ route('marketcomplaint.marketcomplaint_view',$document->id) }}"> Back </a> </button>
+                     <a class="text-white" href="{{ route('marketcomplaint.marketcomplaint_view',$document->id) }}"><button  class="button_theme1" style="margin-right: 10px"> Back  </button></a>
                      
                 
-                    <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                </a> </button></div>
+                     <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">Exit</button>
+                </a> </div>
                 <header>
                     <table>
                         <tr>

@@ -259,8 +259,7 @@
                             <th class="w-20">Due Date</th>
                             <td class="w-80">{{  Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
                         
-                    </tr>
-                    <tr>
+                   
                         <th class="w-20">Repeat Nature</th>
                         <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td>
                     </tr>
@@ -484,10 +483,6 @@
                     Complaint Acknowledgement
                 </div>
                 <table>
-
-
-
-
                     <tr>
                         <th class="w-20">Manufacturer Name Address</th>
                         <td class="w-80">{!! $data->manufacturer_name_address_ca ?? 'Not Applicable' !!}</td>
