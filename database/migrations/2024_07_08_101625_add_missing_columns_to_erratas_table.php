@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('add_column_errata_news', function (Blueprint $table) {
-            $table->id();
-            $table->integer('erratanew_id')->nullable();
+        Schema::table('erratas', function (Blueprint $table) {
             $table->text('department_head_to')->nullable();
             $table->text('document_title')->nullable();
             $table->text('qa_reviewer')->nullable();
             $table->text('reference')->nullable();
-            $table->timestamps();
         });
     }
 
@@ -31,6 +28,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('add_column_errata_news');
+        Schema::table('erratas', function (Blueprint $table) {
+            $table->dropColumn(['department_head_to', 'document_title', 'qa_reviewer', 'reference']);
+        });
     }
 };
