@@ -16,6 +16,14 @@
         .remove-file :hover {
             color: white;
         }
+        #change-control-view > div > div > div.status > div.progress-bars > div.active.bg-danger{
+            border-radius: 0px 20px 20px 0px;
+        }
+        /* #change-control-view > div > div > div.status > div.progress-bars > div:nth-child(5){
+            border-radius: 0px 20px 20px 0px;
+
+        } */
+       
     </style>
     {{-- ======================================
                 CHANGE CONTROL VIEW
@@ -48,38 +56,72 @@
 
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/effective-audit-trial-show', $data->id) }}"> Audit Trail </a> </button>
-                        @if ($data->stage == 1  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Submit
-                            </button>
-                        @elseif($data->stage == 2 && (in_array(14, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Effective
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Not Effective
-                            </button>
-                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Effective Approval Completed
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                More Information Required
-                            </button>
-                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Not Effective Approval Completed
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                More Information Required
-                            </button>
-                        @endif
+                                @if ($data->stage == 1  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Submit
+                                </button>
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#closed-modal">
+                                    Cancel
+                                </button>
+                            @elseif($data->stage == 2 && (in_array(14, $userRoleIds) || in_array(18, $userRoleIds)))
+                                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Effective
+                                </button>
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                    Not Effective
+                                </button> --}}
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Acknowledge Complete
+                                </button>
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                    More Info Required
+                                </button>
+                                @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                  HOD Review Complete
+                                </button>
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                    More Information Required
+                                </button>
+                            @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Effective Approval Completed
+                                </button> --}}
+                                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                    More Information Required
+                                </button> --}}
+                                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Effective
+                                </button>
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-modal">
+                                    Not Effective
+                                </button> 
+                            @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Effective Approval Completed
+                                </button>
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                    More Information Required
+                                </button>
+                            @elseif($data->stage == 7 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-modal">
+                                    Not Effective Approval Completed
+                                </button>
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                    More Information Required
+                                </button>
+                            @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                     </div>
 
                 </div>
                 <div class="status">
                     <div class="head">Current Status</div>
+                    @if ($data->stage == 0)
+                    <div class="progress-bars">
+                        <div class="bg-danger">Closed-Cancelled</div>
+                    </div>
+                @else
                     <div class="progress-bars">
                         @if ($data->stage >= 1)
                             <div class="active">Open State</div>
@@ -87,51 +129,54 @@
                             <div class="">Open State</div>
                         @endif
                         @if ($data->stage >= 2)
-                            <div class="active">Pending Effectiveness Check</div>
+                            <div class="active">Acknowledge</div>
                         @else
-                            <div class="">Pending Effectiveness Check</div>
+                            <div class="">Acknowledge</div>
                         @endif
-                        {{-- @if ($data->stage >= 3)
-                            <div class="active">QA Approval-Effective</div>
+                        @if ($data->stage >= 3)
+                            <div class="active">HOD Review</div>
                         @else
-                            <div class="">QA Approval-Effective</div>
-                        @endif --}}
-                        {{-- ---------------------------------- --}}
-                        @if ($data->stage == 3 && $data->status == 'QA Approval-Effective')
-                            <div class="active">QA Approval-Effective</div>
-                            @elseif ($data->stage <= 4 && $data->status =='Closed – Effective')
-                                <div class="active">QA Approval-Effective</div>
-
+                            <div class="">HOD Review</div>
+                        @endif
+                        @if ($data->stage >= 4)
+                            <div class="active">QA Review</div>
+                        @else
+                            <div class="">QA Review</div>
                         @endif
 
-
-                        {{-- -------------------------------------------------- --}}
-                        @if ($data->stage == 5 && $data->status == 'QA Approval-Not Effective')
-                            <div class="active">QA Approval-Not Effective</div>
-                            @elseif ($data->stage == 6)
-                            <div class="active">QA Approval-Not Effective</div>
-
+                        @if ($data->stage >= 5)
+                            <div class="active">QA Approval Effective</div>
+                            <div style="display: none">QA Approval Not-Effective</div>
+                            <div style="display: none">Closed Not-Effective</div>
+                        @else
+                            <div class="" style="display: none">QA Approval Effective</div>
                         @endif
 
-
-                        {{-- ----------------------------------------------- --}}
-                        @if ($data->stage <= 4)
-                            @if ($data->stage >= 4)
-                                <div style="background-color: red">Closed – Effective
-                                </div>
-                            @else
-                                <div class="">Closed – Effective
-                                </div>
-                            @endif
+                        @if ($data->stage == 6)
+                            <div class="active bg-danger">Closed - Effective</div>
+                            <div style="display: none">QA Approval Not-Effective</div>
+                            <div style="display: none">Closed Not-Effective</div>
                         @else
-                            @if ($data->stage >= 6)
-                                <div style="background-color:rgb(163, 47, 47);">Closed-Not Effective</div>
-                            @else
-                                <div class="">Closed-Not Effective</div>
-                            @endif
+                            <div class="" style="display: none">Closed - Effective</div>
+                        @endif
+
+                        @if ($data->stage >= 7)
+                            <div class="active">QA Approval Not-Effective</div>
+                            <div style="display: none">QA Approval Effective</div>
+                            <div style="display: none">Closed -Effective</div>
+                        @else
+                            <div class="" style="display: none">QA Approval Not-Effective</div>
+                        @endif
+
+                        @if ($data->stage == 8)
+                            <div class="active bg-danger">Closed Not-Effective</div>
+                            <div style="display: none">QA Approval Effective</div>
+                            <div style="display: none">Closed -Effective</div>
                         @endif
 
                     </div>
+                    @endif
+
                 </div>
             </div>
 
@@ -198,7 +243,7 @@
                                 <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="search">
-                                                    Acknowledge EC
+                                                    Assigned To 
                                                 </label>
                                                 <select id="select-state" placeholder="Select..." name="assign_to"{{ $data->stage == 0 || $data->stage == 6 ||  $data->stage == 4 ? 'disabled' : ''}} >
                                                     <option value="">Select a value</option>
@@ -895,7 +940,52 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="closed-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
 
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <form action="{{ route('closed-cancelled', $data->id) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment <span class="text-danger">*</span></label>
+                            <input type="comment" name="comment" required>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <!-- <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <style>
         #step-form>div {
@@ -999,6 +1089,44 @@
                               <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="not-effective-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ url('rcms/send-not-effective', $data->id) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </form>
             </div>
         </div>

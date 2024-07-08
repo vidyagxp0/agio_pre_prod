@@ -192,8 +192,8 @@
             <div class="cctab">
 
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks " onclick="openCity(event, 'CCForm2')">Reviewer Feedbacks</button>
-                <button class="cctablinks " onclick="openCity(event, 'CCForm3')">Approver  Feedbacks</button>
+                <button class="cctablinks " onclick="openCity(event, 'CCForm2')">HOD review </button>
+                <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Approval</button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
 
@@ -273,7 +273,7 @@
                             </script>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Assigned To">Reviewer </label>
+                                    <label for="Assigned To">HOD review  </label>
                                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                         name="reviewers" placeholder="Select Reviewers" >
                                         <option value="">-- Select --</option>
@@ -292,7 +292,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Assigned To">Approver </label>
+                                    <label for="Assigned To">QA approval </label>
                                     <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
                                         name="approvers" placeholder="Select Approvers" >
                                         <option value="">-- Select --</option>
@@ -339,6 +339,16 @@
                                     <label for="Short Description"> Description</label>
                                  
                                     <textarea id="docname" type="text" name="description" value="" >{{$extensionNew->description}}</textarea>
+                                </div>
+                                {{-- @error('short_description')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror --}}
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Short Description"> Justification / Reason </label>
+                                 
+                                    <textarea id="docname" type="text" name="justification_reason" value="" >{{$extensionNew->justification_reason}}</textarea>
                                 </div>
                                 {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
@@ -396,8 +406,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Assigned To">Reviewer Remarks</label>
-                               <input type="text" name="reviewer_remarks" id="reviewer_remarks" value="{{$extensionNew->reviewer_remarks}}" >
+                                <label for="Assigned To">HOD Remarks</label>
+                               <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30" >{{$extensionNew->reviewer_remarks}}</textarea>
                             </div>
                         </div>
                        
@@ -418,7 +428,7 @@
                         </div> --}}
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Inv Attachments">Reviewer Attachment </label>
+                                <label for="Inv Attachments">HOD Attachment </label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">
@@ -463,15 +473,15 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Assigned To">Approver Remarks</label>
-                               <input type="text" name="approver_remarks" id="approver_remarks" value="{{$extensionNew->approver_remarks}}">
+                                <label for="Assigned To">QA Remarks</label>
+                               <textarea name="approver_remarks" id="approver_remarks" cols="30" >{{$extensionNew->approver_remarks}}</textarea>
                             </div>
                         </div>
                        
                     
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Inv Attachments"> Approver Attachment</label>
+                                <label for="Inv Attachments"> QA Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">

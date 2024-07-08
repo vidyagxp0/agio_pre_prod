@@ -87,6 +87,9 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('effective-audit-trial-details/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialDetails'])->name('show_audittrial_effective');
             Route::get('effectiveSingleReport/{id}', [EffectivenessCheckController::class, 'singleReport'])->name('effectiveSingleReport');
             Route::get('effectiveAuditReport/{id}', [EffectivenessCheckController::class, 'auditReport'])->name('effectiveAuditReport');
+            Route::post('send-not-effective/{id}', [EffectivenessCheckController::class, 'sendToNotEffective'])->name('send-not-effective');
+            Route::post('closed-cancelled/{id}', [EffectivenessCheckController::class, 'closedCancelled'])->name('closed-cancelled');
+
 
 
             // ------------------extension _child---------------------------

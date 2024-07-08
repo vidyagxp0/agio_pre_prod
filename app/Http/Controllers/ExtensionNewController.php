@@ -65,7 +65,7 @@ class ExtensionNewController extends Controller
         $extensionNew = new extension_new();
         $extensionNew->type = "Extension";
         $extensionNew->stage = "1";
-        $extensionNew->status = "Initiator";
+        $extensionNew->status = "Opened";
 
         $extensionNew->record_number = DB::table('record_numbers')->value('counter') + 1;
 //   dd($extensionNew->record_number);
@@ -80,6 +80,7 @@ class ExtensionNewController extends Controller
         $extensionNew->current_due_date = $request->current_due_date;
         $extensionNew->proposed_due_date = $request->proposed_due_date;
         $extensionNew->description = $request->description;
+        $extensionNew->justification_reason = $request->justification_reason;
         $extensionNew->file_attachment_extension = $request->file_attachment_extension;
         $extensionNew->reviewer_remarks = $request->reviewer_remarks;
         $extensionNew->file_attachment_reviewer = $request->file_attachment_reviewer;
@@ -307,6 +308,7 @@ class ExtensionNewController extends Controller
         $extensionNew->current_due_date = $request->current_due_date;
         $extensionNew->proposed_due_date = $request->proposed_due_date;
         $extensionNew->description = $request->description;
+        $extensionNew->justification_reason = $request->justification_reason;
         $extensionNew->file_attachment_extension = $request->file_attachment_extension;
         $extensionNew->reviewer_remarks = $request->reviewer_remarks;
         $extensionNew->file_attachment_reviewer = $request->file_attachment_reviewer;
