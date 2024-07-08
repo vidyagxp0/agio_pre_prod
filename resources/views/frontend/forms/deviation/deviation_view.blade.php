@@ -898,12 +898,11 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="record_number"><b>Record Number</b></label>
-                                            @if ($data->stage >= 3)
-                                                <input disabled type="text"
+                                           
+                                                <input disabled type="text" name="record"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
-                                            @else
-                                                <input disabled type="text" name="record">
-                                            @endif
+                                            
+                                         
                                         </div>
                                     </div>
 
@@ -1316,9 +1315,9 @@
                                             <label for="others">Others <span id="asteriskInOther"
                                                     style="display: {{ $data->audit_type == 'Anyother(specify)' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
-                                            <input type="text" class="otherrr" name="others"
+                                            <input type="text" class="otherrr" name="others" value="{{ $data->others }}"
                                                 {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                id="others" value="{{ $data->others }}">
+                                                id="others" >
                                             @error('others')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -1761,19 +1760,7 @@
                                     </div>
 
 
-                                    <!-- <div class="col-md-12">
-                                        <div class="group-input">
-                                            <label for="Description Deviation">Description of Deviation <span
-                                                    class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea class="tiny"
-                                                name="Description_Deviation"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-1">{{ $data->Description_Deviation }}</textarea>
-                                        </div>
-                                        @error('Description_Deviation')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div> -->
+                                    
 
                                         <div class="col-md-12">
                                         <div class="group-input">
@@ -1822,7 +1809,9 @@
                                             HOD To <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="Hod_person_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
-                                            @foreach ($users as $value)
+                                        <option value="">Select Option</option>
+                                           
+                                        @foreach ($users as $value)
                                                 <option @if ($data->Hod_person_to == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
@@ -1838,7 +1827,9 @@
                                         Reviewer To <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="Reviewer_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
-                                            @foreach ($users as $value)
+                                        <option value="">Select Option</option>
+  
+                                        @foreach ($users as $value)
                                                 <option @if ($data->Reviewer_to == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
@@ -1853,7 +1844,8 @@
                                         Approver To <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="Approver_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
-                                            @foreach ($users as $value)
+                                        <option value="">Select Option</option>
+                                        @foreach ($users as $value)
                                                 <option @if ($data->Approver_to == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
@@ -8159,22 +8151,22 @@
         <div id="CCForm9" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="row">
-                @if($investigationExtension && $investigationExtension->investigation_proposed_due_date)
+                <!-- @if($investigationExtension && $investigationExtension->investigation_proposed_due_date)
                 <div class="col-lg-6">
                 <div class="group-input">
                                 <label for="Proposed Due Date">Proposed Due Date</label>
                                 <input type="date" name="investigation_proposed_due_date" id="investigation_proposed_due_date" value="{{ Helpers::getdateFormat($investigationExtension->investigation_proposed_due_date) }}">
                 </div>
                 </div>
-                @else
-                
+                @else -->
+<!--                 
                 <div class="col-lg-6">
                 <div class="group-input">
                                 <label for="Proposed Due Date">Proposed Due Date</label>
                                 <input type="date" name="investigation_proposed_due_date" id="investigation_proposed_due_date" placeholder="Deviation Proposed Due Date">
                 </div>
                 </div>
-                @endif
+                @endif -->
 
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
@@ -9314,7 +9306,7 @@
             <div class="inner-block-content">
                 <div class="row">
                     <div class="col-12 sub-head"></div>
-                    @if($qrmExtension && $qrmExtension->qrm_proposed_due_date)
+                    <!-- @if($qrmExtension && $qrmExtension->qrm_proposed_due_date)
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Proposed Due Date">Proposed Due Date</label>
@@ -9328,7 +9320,7 @@
                                 <input name="qrm_proposed_due_date" id="qrm_proposed_due_date" disabled>
                             </div>
                         </div>
-                    @endif
+                    @endif -->
 
                     <div class="col-12 mb-4">
                         <div class="group-input">
@@ -9860,7 +9852,7 @@
     <div id="CCForm10" class="inner-block cctabcontent">
         <div class="inner-block-content">
             <div class="row">
-                @if($capaExtension && $capaExtension->capa_proposed_due_date)
+                <!-- @if($capaExtension && $capaExtension->capa_proposed_due_date)
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="capa_proposed_due_date"><b>Proposed Due Date</b></label>
@@ -9874,7 +9866,7 @@
                             <input disabled type="text" name="capa_proposed_due_date" id="capa_proposed_due_date" >
                         </div>
                     </div>
-                @endif
+                @endif -->
                     <!-- <div class="col-lg-6">
                         <div class="group-input">
                             <label for="CAPA_Number"><b>CAPA No</b></label>

@@ -1261,6 +1261,11 @@ class DeviationController extends Controller
         $deviation->how = $request->how;
         $deviation->how_much = $request->how_much;
         $deviation->Detail_Of_Root_Cause=$request->Detail_Of_Root_Cause;
+        $deviation->Hod_person_to = $request->Hod_person_to;
+        $deviation->Approver_to = $request->Approver_to;
+        $deviation->Reviewer_to = $request->Reviewer_to;
+
+
 
 
         if ($request->Deviation_category == 'major' || $request->Deviation_category == 'critical')
@@ -1524,6 +1529,7 @@ class DeviationController extends Controller
         $deviation->short_description_required = $request->short_description_required;
         $deviation->nature_of_repeat = $request->nature_of_repeat;
         $deviation->others = $request->others;
+        // dd($deviation->others);
         $deviation->Product_Batch = $request->Product_Batch;
 
         $deviation->Description_Deviation = $request->Description_Deviation;
@@ -2333,7 +2339,7 @@ class DeviationController extends Controller
 
         $deviation->form_progress = isset($form_progress) ? $form_progress : null;
         $deviation->update();
-        // grid
+   
          $data3=DeviationGrid::where('deviation_grid_id', $deviation->id)->where('type', "Deviation")->first();
                 if (!empty($request->IDnumber)) {
                     $data3->IDnumber = serialize($request->IDnumber);

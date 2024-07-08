@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('division_id')->nullable();
             //$table->string('division_code')->nullable();
             $table->string('initiator_group_code')->nullable();
-            $table->date('intiation_date')->nullable();
+            $table->text('intiation_date')->nullable();
             $table->string('form_type')->nullable();
             $table->integer('record_number')->nullable();
             //$table->string('text')->nullable();
