@@ -474,7 +474,7 @@
                                             required>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
                                         <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
@@ -487,7 +487,7 @@
                                             <option value="critical">Critical</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -617,7 +617,7 @@
                             <div class="row">
                                 <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
+                                        <label for="Audit Schedule Start Date">Audit  Start </label>
                                         {{-- <input type="date" name="start_date"> --}}
                                         <div class="calenderauditee">
                                             <input type="text" id="audit_schedule_start_date" readonly
@@ -640,7 +640,7 @@
                                 </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule End Date">Audit Schedule End Date</label>
+                                        <label for="Audit Schedule End Date"> End Date</label>
                                         {{-- <input type="date" name="end_date"> --}}
                                         <div class="calenderauditee">
                                             <input type="text" id="audit_schedule_end_date" readonly

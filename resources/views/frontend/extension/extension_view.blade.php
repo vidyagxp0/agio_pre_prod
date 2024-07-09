@@ -56,32 +56,25 @@
             border-radius: 20px 0px 0px 20px;
         }
 
-        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(5) {
+        /* #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(4) {
             border-radius: 0px 20px 20px 0px;
 
-        }
+        } */
         .new-moreinfo{
             width: 100%;
             border-radius: 5px;
-
+            margin-bottom: 13px;
         }
     </style>
     </style>
 
-    
     <div class="form-field-head">
-
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
             {{ Helpers::getDivisionName($extensionNew->site_location_code) }} /
             Extension
         </div>
     </div>
-
-
-
-
-
     {{-- ======================================
                     DATA FIELDS
     ======================================= --}}
@@ -105,32 +98,39 @@
                             Submit
                         </button>
                            
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-required-modal">
                                 Cancel
                             </button>
                            
-                        @elseif($extensionNew->stage == 2 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) || in_array(13, $userRoleIds)))
+                        @elseif($extensionNew->stage == 2 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                               Review
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-required-modal">
+                           
+                        @elseif($extensionNew->stage == 3 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) ))
+
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                               Approved
+                            </button> --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
+                                Approved
+                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                              Send for CQA
+                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Reject
                             </button>
-                        @elseif($extensionNew->stage == 3 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) || in_array(13, $userRoleIds)))
-
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                               Approve
-                            </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
-                            </button> --}}
-                        @elseif($extensionNew->stage == 4 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) || in_array(13, $userRoleIds)))
+                            </button>
+                        @elseif($extensionNew->stage == 5 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
 
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                               Approved
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                             CQA Approval Complete
                             </button>
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
@@ -138,10 +138,7 @@
                         @endif
                          <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"><button class="button_theme1"> Exit
                         </button>  </a> 
-
-
                     </div>
-
                 </div>
                 <div class="status">
                     <div class="head">Current Status</div>
@@ -154,6 +151,7 @@
                         <div class="progress-bars d-flex">
                             @if ($extensionNew->stage >= 1)
                                 <div class="active">Opened</div>
+                                
                             @else
                                 <div class="">Opened</div>
                             @endif
@@ -166,24 +164,34 @@
 
                             @if ($extensionNew->stage >= 3)
                                 <div class="active">In Approved</div>
+                                
                             @else
                                 <div class="">In Approved</div>
                             @endif
-                             @if ($extensionNew->stage >= 4)
-                                <div class="active"> Approved</div>
+                            <div style="display: none" class=""> In CQA Approval</div>
+
+                            @if ($extensionNew->stage == 4)
+                                <div class="bg-danger">Closed - Reject</div>
+                                <div style="display: none" class="">Closed - Done</div>
+                                <div style="display: none" class=""> In CQA Approval</div>
+                            @elseif($extensionNew->stage == 1 || $extensionNew->stage == 2 || $extensionNew->stage == 3)
+                                <div class=""> Closed - Reject</div>
                             @else
-                            <div class=""> Approved</div>
+                                <div class="" style="display: none"> Closed - Reject</div>
                             @endif
 
-                            @if ($extensionNew->stage >= 5)
+                            @if ($extensionNew->stage == 5)
+                                <div class="bg-danger" style="display: none">Closed - Reject</div>
+                                <div class="active"> In CQA Approval</div>
+                            @endif
+                            @if ($extensionNew->stage >= 6)
+                            <div class="bg-danger" style="display: none">Closed - Reject</div>
+                            <div style="display: none" class=""> In CQA Approval</div>
+
                                 <div class="bg-danger">Closed - Done</div>
-                            @else
-                                <div class="">Closed - Done</div>
                             @endif
                         </div>
                     @endif
-
-
                 </div>
                 {{-- @endif --}}
                 {{-- ---------------------------------------------------------------------------------------- --}}
@@ -194,7 +202,6 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm2')">HOD review </button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Approval</button>
-
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
 
             </div>
@@ -235,14 +242,11 @@
                                 <input disabled type="text" name="initiator" id="initiator" value="{{ Auth::user()->name }}">
                             </div>
                         </div>
-
-
                         @php
                             // Calculate the due date (30 days from the initiation date)
                             $initiationDate = date('Y-m-d'); // Current date as initiation date
                             $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
                         @endphp
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Date of Initiation"><b>Date of Initiation</b></label>
@@ -252,7 +256,6 @@
                                 {{-- <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden"> --}}
                             </div>
                         </div>
-                            
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Short Description">Short Description<span
@@ -296,7 +299,6 @@
                                     <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
                                         name="approvers" placeholder="Select Approvers" >
                                         <option value="">-- Select --</option>
-
                                         @if (!empty($approvers))
                                             @foreach ($approvers as $lan)
                                                 @if(Helpers::checkUserRolesApprovers($lan))
@@ -309,7 +311,6 @@
                                     </select>
                                 </div>
                             </div>
-                           
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Actual Start Date">Current Due Date (Parent)</label>
@@ -387,8 +388,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
                             <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
@@ -619,6 +618,92 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="signature-cqa-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('send-cqa', $extensionNew->id) }}" method="POST"
+                    id="signatureModalForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="new-moreinfo" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="new-moreinfo" type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input class="new-moreinfo" type="comment" name="comment">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="signature-approved-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('send-approved', $extensionNew->id) }}" method="POST"
+                    id="signatureModalForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="new-moreinfo" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="new-moreinfo" type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input class="new-moreinfo" type="comment" name="comment">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="more-info-required-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -688,7 +773,7 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input class="new-moreinfo" type="text" name="username" required>
+                            <input  class="new-moreinfo" type="text" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>

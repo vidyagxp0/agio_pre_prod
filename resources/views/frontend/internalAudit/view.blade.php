@@ -585,7 +585,7 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                                   {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
                                      </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
                                                 <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
@@ -599,7 +599,7 @@ function addMultipleFiles(input, block_id) {
                                                                 value="critical">Critical</option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
@@ -777,7 +777,7 @@ function addMultipleFiles(input, block_id) {
                                                 <div class="row">
                                                     <div class="col-lg-6 new-date-data-field">
                                                         <div class="group-input input-date">
-                                                            <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
+                                                            <label for="Audit Schedule Start Date">Audit  Start </label>
                                                             {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} --}}
 
                                                             <div class="calenderauditee">
@@ -790,7 +790,7 @@ function addMultipleFiles(input, block_id) {
                                                     </div>
                                          <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Audit Schedule End Date">Audit Schedule End Date</label>
+                                                <label for="Audit Schedule End Date"> End Date</label>
                                                 {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --}}
                                                 <div class="calenderauditee">
                                                     <input type="text"
