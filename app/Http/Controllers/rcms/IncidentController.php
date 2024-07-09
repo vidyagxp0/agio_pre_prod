@@ -1129,6 +1129,7 @@ if ($incident->Initial_attachment) {
     {
         $old_record = Incident::select('id', 'division_id', 'record')->get();
         $data = Incident::find($id);
+
         $userData = User::all();
         $data1 = IncidentCft::where('incident_id', $id)->latest()->first();
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
@@ -1427,6 +1428,7 @@ if ($incident->Initial_attachment) {
 
         $incident->assign_to = $request->assign_to;
         $incident->Initiator_Group = $request->Initiator_Group;
+
 
         if ($incident->stage < 3) {
             $incident->short_description = $request->short_description;
@@ -2246,7 +2248,7 @@ if ($incident->Initial_attachment) {
             $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastIncident->status;
-            $history->action_name = "Update";
+            $history->action_name = $lastIncident ? "Update": "new" ;
             $history->save();
         }
         if ($lastIncident->Initiator_Group != $incident->Initiator_Group || !empty ($request->comment)) {
@@ -2285,13 +2287,13 @@ if ($incident->Initial_attachment) {
             $history->save();
         }
 
-        if ($lastIncident->Observed_by != $incident->Observed_by || !empty ($request->comment)) {
+        if ($lastIncident->Facility != $incident->Facility || !empty ($request->comment)) {
             // return 'history';
             $history = new IncidentAuditTrail;
             $history->incident_id = $id;
             $history->activity_type = 'Observed by';
-            $history->previous = $lastIncident->Observed_by;
-            $history->current = $incident->Observed_by;
+            $history->previous = $lastIncident->Facility;
+            $history->current = $incident->Facility;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2299,7 +2301,7 @@ if ($incident->Initial_attachment) {
             $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastIncident->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastIncident ? "Update": "new";
             $history->save();
         }
 
@@ -2479,7 +2481,7 @@ if ($incident->Initial_attachment) {
             $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastIncident->status;
-            $history->action_name = 'Update';
+            $history->action_name = $lastIncident ? "Update" : "New";
             $history->save();
         }
 

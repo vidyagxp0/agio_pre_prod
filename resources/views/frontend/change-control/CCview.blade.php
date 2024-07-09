@@ -61,7 +61,7 @@
             }
         }
     </script>
-  
+
 
     <script>
         $(document).ready(function() {
@@ -99,7 +99,7 @@
 
 
                 <div class="slogan">
-                    @php 
+                    @php
                         $name = DB::table('q_m_s_divisions')->where('id', $data->id)->value('name');
                     @endphp
                     <strong>Site Division / Project </strong>:
@@ -391,7 +391,7 @@
                                                 </div>
                                             </div> -->
 
-                                            
+
                                             <div class="col-md-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -583,7 +583,7 @@
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
 
                                             </div>
-                                            
+
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator Group">Initiated Through</label>
@@ -755,7 +755,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="risk_assessment_related_record">Related Records</label>
-                                                <select  multiple id="risk_assessment_related_record" name="risk_assessment_related_record[]" placeholder="Select Reference Records" 
+                                                <select  multiple id="risk_assessment_related_record" name="risk_assessment_related_record[]" placeholder="Select Reference Records"
                                                         data-search="false" data-silent-initial-value-set="true">
                                                     @foreach ($preRiskAssessment as $prix)
                                                         <option value="{{ $prix->id }}"
@@ -896,8 +896,8 @@
                                             Change Details
                                         </div>
                                         <div class="row">
-                                            
-                                           
+
+
 
                                             <div class="col-12">
                                                 <div class="group-input">
@@ -1602,7 +1602,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote QualityAssurance_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->QualityAssurance_Person) && Auth::user()->id != $data1->QualityAssurance_Person)) readonly @endif 
+                                                    @if ($data->stage == 3 || (isset($data1->QualityAssurance_Person) && Auth::user()->id != $data1->QualityAssurance_Person)) readonly @endif
                                                         name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
                                                 </div>
                                             </div>
@@ -1825,7 +1825,7 @@
                                                     <input readonly type="date" id="QualityAssurance_on" name="QualityAssurance_on"
                                                         value="{{ $data1->QualityAssurance_on }}">
                                                 </div>
-                                            </div>  
+                                            </div>
                                         @endif
 
 
@@ -2447,8 +2447,6 @@
                                                 </div>
                                             </div>
                                         @endif
-
-
 
 
                                         <div class="sub-head">
@@ -5197,7 +5195,7 @@
                                                         value="{{ $data1->CorporateQualityAssurance_on }}">
                                                 </div>
                                             </div>
-                                        @endif 
+                                        @endif
 
 
 
@@ -7773,7 +7771,7 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        
+
                                     </div>
                                     <div class="button-block">
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
@@ -7791,7 +7789,7 @@
                                                 Exit </a> </button>
                                     </div>
                                 </div>
-                                </div>                                
+                                </div>
 
                                 <div id="CCForm4" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -7838,7 +7836,7 @@
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
 
                                 <div id="CCForm8" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -7951,7 +7949,7 @@
                                                                 <td><input type="text" class="Removebtn" name="Action[]" readonly></td>
                                                             </tr>
                                                         @endforeach
-                                                        @else                                                        
+                                                        @else
                                                             <td><input type="text" name="affectedDocuments[0][serial]" value="1" readonly></td>
                                                             <td><input type="text" name="affectedDocuments[0][afftectedDoc]"></td>
                                                             <td><input type="text" name="affectedDocuments[0][documentName]"></td>
@@ -8304,7 +8302,7 @@
                 </div>
             </div>
 
-                    
+
 
         </div>
         </form>
@@ -8840,7 +8838,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const currentStage = document.getElementById('stage').value;
-            
+
             if (currentStage > 2)
             {
                 const RA_Review = document.getElementById('RA_Review').value;
@@ -9121,7 +9119,7 @@
                                             });
                                         });
                                     </script>
-                                    
+
     <script>
 
         document.addEventListener('DOMContentLoaded', function() {

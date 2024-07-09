@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Incident Report
+                    Incident Single Report
                 </td>
 
                     <td class="w-30">
@@ -226,6 +226,9 @@
                             @endif
                         </td>
                     </tr>
+
+                </table>
+
                     <table>
                         <tr>
                             <th class="w-20">Equipment Name</th>
@@ -236,6 +239,7 @@
                                     Not Applicable
                                 @endif
                             </td>
+
                             <th class="w-20">Instrument Name</th>
                             <td class="w-30">
                                 @if ($data->instrument_name)
@@ -255,6 +259,7 @@
                                     Not Applicable
                                 @endif
                             </td>
+
                             <th class="w-20"> Incident Observed On (Time)</th>
                             <td class="w-30">
                                 @if ($data->incident_time)
@@ -267,6 +272,7 @@
                         </tr>
                     </table>
 
+                <table>
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">

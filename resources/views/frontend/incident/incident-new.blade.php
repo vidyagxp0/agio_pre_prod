@@ -715,10 +715,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="initiation_date"
-                                            id="initiation_date"
+                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="intiation_date"
+                                            id="intiation_date"
                                             style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date_hidden">
                                     </div>
                                 </div>
 
@@ -1233,22 +1233,11 @@
                                             </thead>
                                             <tbody>
                                                 <td><input disabled type="text" name="serial[]" value="1"></td>
-                                                {{-- <td> <select name="facility_name[]" id="facility_name"
-                                                        class="facility-name">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="Facility">Facility</option>
-                                                        <option value="Equipment"> Equipment</option>
-                                                        <option value="Instrument">Instrument</option>
-                                                    </select> </td> --}}
-                                                <td><input type="text" name="facility_name[]" class="facilityName">
-                                                </td>
-
+                                                <td><input type="text" name="facility_name[]" class="facilityName"></td>
                                                 <td><input type="text" name="IDnumber[]" class="id-number"></td>
                                                 <td><input type="text" name="Remarks[]" class="remarks"></td>
                                                 <td><input type="text" name="Action[]" class="action" readonly></td>
-
                                             </tbody>
-
                                         </table>
                                     </div>
                                 </div>
@@ -1323,9 +1312,7 @@
                                                     <th style="width: 12%">Document Number</th>
                                                     <th style="width: 16%"> Reference Document Name</th>
                                                     <th style="width: 16%"> Remarks</th>
-
                                                     <th style="width: 8%"> Action</th>
-
 
                                                 </tr>
                                             </thead>
@@ -1423,9 +1410,6 @@
                                                         <th style="width: 16%"> Stage</th>
                                                         <th style="width: 16%">Batch No</th>
                                                         <th style="width: 8%">Action</th>
-
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
