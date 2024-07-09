@@ -10,6 +10,7 @@ use App\Models\errata;
 use App\Models\FailureInvestigation;
 use App\Models\lab_incidents_grid;
 use App\Models\MarketComplaintGrids;
+use App\Models\NonConformance;
 use App\Models\LabIncident;
 use App\Models\Ootc;
 use App\Models\MarketComplaint;
@@ -120,9 +121,14 @@ class LogController extends Controller
                 $internal_audi = InternalAudit::get();
                 
                 return view('frontend.forms.logs.Internal_audit_Log',compact('internal_audi'));
-                
-            default:
+         
+            case 'non-conformance':
+                $nonconformance = NonConformance::get();
+
+                return view('frontend.forms.Logs.non_conformance_log',compact('nonconformance'));
             return $slug;
+                   
+            default:
 
                 break;
         }
