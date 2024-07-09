@@ -8,13 +8,13 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::table('o_o_s__micro', function (Blueprint $table) {
+        Schema::table('o_o_s__micros', function (Blueprint $table) {
             // Drop the column
             $table->dropColumn('reopen_request');
             
         });
 
-        Schema::table('o_o_s__micro', function (Blueprint $table) {
+        Schema::table('o_o_s__micros', function (Blueprint $table) {
             // Add the column with the new type
             $table->longText('reopen_request')->nullable();
             
@@ -29,13 +29,13 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('o_o_s__micro_audit_trials', function (Blueprint $table) {
+        Schema::table('o_o_s__micros', function (Blueprint $table) {
            
             $table->dropColumn('reopen_request');
            
         });
 
-        Schema::table('o_o_s__micro_audit_trials', function (Blueprint $table) {
+        Schema::table('o_o_s__micros', function (Blueprint $table) {
            
             $table->string('reopen_request')->nullable();
             

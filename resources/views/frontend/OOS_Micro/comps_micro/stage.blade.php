@@ -58,22 +58,16 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">No Assignable Cause Found (No Manufacturing Defect)</button>
             @elseif($micro_data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Correction Completed</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Phase II Correction Complete</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A Correction Inconclusive</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
             @elseif($micro_data->stage == 11 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Retesting/resampling</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IIB Correction Inconclusive</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Correction Inconclusive</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-
             @elseif($micro_data->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause"> Final Approval </button>
-            {{-- @elseif($micro_data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II Manufacturing Investigation</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-                --}}
             @elseif($micro_data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Approval Completed</button>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dropColumn('change_from')->nullable();
             $table->dropColumn('change_to')->nullable();
             $table->dropColumn('action_name')->nullable();
-            $table->dropColumn('action')->nullable();
+            // $table->dropColumn('action')->nullable();
         });
 
         Schema::table('o_o_s__micro_audit_trials', function (Blueprint $table) {
@@ -50,7 +50,7 @@ return new class extends Migration
             $table->dropColumn('change_from');
             $table->dropColumn('change_to');
             $table->dropColumn('action_name');
-            $table->dropColumn('action');
+            // $table->dropColumn('action');
 
         });
 
