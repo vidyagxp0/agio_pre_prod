@@ -1671,7 +1671,7 @@ public function auditTrailPdf($id)
         $doc = ActionItem::find($id);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
         $data = ActionItemHistory::where('cc_id', $doc->id)->orderByDesc('id')->paginate();
-       
+        $data = $data->sortBy('created_at');
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
         $pdf = PDF::loadview('frontend.action-item.actionItem_audit_trail_pdf', compact('data', 'doc'))

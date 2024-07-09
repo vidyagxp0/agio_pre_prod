@@ -2887,6 +2887,7 @@ class CapaController extends Controller
             $data = CapaAuditTrial::where('capa_id', $id)->get();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
+            $data = $data->sortBy('created_at');
             $pdf = PDF::loadview('frontend.capa.auditReport', compact('data', 'doc'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',

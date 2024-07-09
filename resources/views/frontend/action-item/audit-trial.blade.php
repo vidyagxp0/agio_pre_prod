@@ -180,8 +180,9 @@
             <body>
                 <div style="display: flex; justify-content: flex-end;">
                    
-                    <button  class="button_theme1" style="margin-right: 10px"> <a class="text-white" href="{{ route('actionItem.update', $document->id) }}"> Back </a> </button>
-                    <button type="button"> <a class="text-white"  href="{{ url('rcms/qms-dashboard') }}">Exit </a> </button></div>
+                    <a  class="button_theme1 text-white" style="margin-right: 10px" href="{{ route('actionItem.update', $document->id) }}"> Back </a>
+                     <a class="button_theme1 text-white"  href="{{ url('rcms/qms-dashboard') }}">Exit </a> 
+                    </div>
 
                 <header>
                     <table>

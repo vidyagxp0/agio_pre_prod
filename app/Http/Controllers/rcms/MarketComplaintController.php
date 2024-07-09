@@ -1123,7 +1123,7 @@ public function update(Request $request,$id)
     $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
     // $marketComplaint->record =((RecordNumber::first()->value('counter')) + 1);
     $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
-    $marketComplaint->due_date_gi = $request->due_date_gi;
+    // $marketComplaint->due_date_gi = $request->due_date_gi;
 
     $marketComplaint->if_other_gi = $request->if_other_gi;
     $marketComplaint->is_repeat_gi = $request->is_repeat_gi;
@@ -1205,6 +1205,10 @@ public function update(Request $request,$id)
         // }
         // // Encode the file names array to JSON and assign it to the model
         // $marketComplaint->initial_attachment_gi = json_encode($files);
+
+
+        
+        // ===============================work code attachement ==========
         if ($request->hasFile('initial_attachment_gi')) {
             $files = [];
             foreach ($request->file('initial_attachment_gi') as $file) {
@@ -2978,6 +2982,7 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         $data = MarketComplaintAuditTrial::where('market_id', $doc->id)->orderByDesc('id')->paginate();
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
+        $data = $data->sortBy('created_at');
         $pdf = PDF::loadview('frontend.market_complaint.marketcomplaint_audit_trail_pdf', compact('data', 'doc'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
