@@ -249,7 +249,7 @@ class Helpers
     public static function checkRoles_check_hods($document)
     {
         if ($document->hods) {
-            $datauser = explode(',', $document->approvers);
+            $datauser = explode(',', $document->hods);
             for ($i = 0; $i < count($datauser); $i++) {
                 if ($datauser[$i] == Auth::user()->id) {
                     if($document->stage >= 2){
@@ -259,9 +259,8 @@ class Helpers
                     }
                 }
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     public static function checkUserRolesApprovers($data)
@@ -375,45 +374,66 @@ class Helpers
             case 'CQA':
                 $full_department_name = "Corporate Quality Assurance";
                 break;
-            case 'QAB':
-                $full_department_name = "Quality Assurance Biopharma";
+            case 'QA':
+                $full_department_name = "Quality Assurance";
                 break;
-            case 'CQC':
-                $full_department_name = "Central Quality Control";
+            case 'QC':
+                $full_department_name = "Quality Control";
                 break;
-            case 'MANU':
-                $full_department_name = "Manufacturing";
+            case 'QM':
+                $full_department_name = "Quality Control (Microbiology department)";
                 break;
-            case 'PSG':
-                $full_department_name = "Plasma Sourcing Group";
+            case 'PG':
+                $full_department_name = "Production General";
                 break;
-            case 'CS':
-                $full_department_name = "Central Stores";
+            case 'PL':
+                $full_department_name = "Production Liquid Orals";
                 break;
-            case 'ITG':
-                $full_department_name = "Information Technology Group";
+            case 'PT':
+                $full_department_name = "Production Tablet and Powder";
                 break;
-            case 'MM':
-                $full_department_name = "Molecular Medicine";
+            case 'PE':
+                $full_department_name = "Production External (Ointment, Gels, Creams and Liquid)";
                 break;
-            case 'CL':
-                $full_department_name = "Central Laboratory";
+            case 'PC':
+                $full_department_name = "Production Capsules";
                 break;
-            case 'TT':
-                $full_department_name = "Tech team";
+            case 'PI':
+                $full_department_name = "Production Injectable";
                 break;
-            case 'ACC':
-                $full_department_name = "Accounting";
+            case 'EN':
+                $full_department_name = "Engineering";
                 break;
-            case 'LOG':
-                $full_department_name = "Logistics";
+            case 'HR':
+                $full_department_name = "Human Resource";
                 break;
-            case 'SM':
-                $full_department_name = "Senior Management";
+            case 'ST':
+                $full_department_name = "Store";
                 break;
-            case 'BA':
-                $full_department_name = "Business Administration";
+            case 'IT':
+                $full_department_name = "Electronic Data Processing";
                 break;
+            case 'FD':
+                $full_department_name = "Formulation  Development";
+                break;
+            case 'AL':
+                $full_department_name = "Analytical research and Development Laboratory";
+                break;
+            case 'PD':
+                $full_department_name = "Packaging Development";
+                break;
+            case 'PU':
+                $full_department_name = "Purchase Department";
+                break;
+            case 'DC':
+                $full_department_name = "Document Cell";
+                break;
+            case 'RA':
+                $full_department_name = "Regulatory Affairs";
+                break; 
+            case 'PV':
+                $full_department_name = "Pharmacovigilance";
+                break;         
 
             default:
                 break;
@@ -423,22 +443,73 @@ class Helpers
 
     }
 
+    static function getDepartments()
+    {
+        $departments = [
+            'CQA' => 'Corporate Quality Assurance',
+            'QA' => 'Quality Assurance',
+            'QC' => 'Quality Control',
+            'QM' => 'Quality Control (Microbiology department)',
+            'PG' => 'Production General',
+            'PL' => 'Production Liquid Orals',
+            'PT' => 'Production Tablet and Powder',
+            'PE' => 'Production External (Ointment, Gels, Creams and Liquid)',
+            'PC' => 'Production Capsules',
+            'PI' => 'Production Injectable',
+            'EN' => 'Engineering',
+            'HR' => 'Human Resource',
+            'ST' => 'Store',
+            'IT' => 'Electronic Data Processing',
+            'FD' => 'Formulation Development',
+            'AL' => 'Analytical research and Development Laboratory',
+            'PD' => 'Packaging Development',
+            'PU' => 'Purchase Department',
+            'DC' => 'Document Cell',
+            'RA' => 'Regulatory Affairs',
+            'PV' => 'Pharmacovigilance',
+        ];
+        
+        return $departments;
+    }
 
-     public static function getDueDate123($date, $addDays = false, $format = null)
-        {
-            try {
-                if ($date) {
-                    $format = $format ? $format : 'd M Y';
-                    $dateInstance = Carbon::parse($date);
-                    if ($addDays) {
-                        $dateInstance->addDays(30);
-                    }
-                    return $dateInstance->format($format);
-            }
-            } catch (\Exception $e) {
-                return 'NA';
-            }
-        }
+
+    static function getDocumentTypes()
+    {
+        $document_types = [
+            'SOP' => 'SOP’s (All types)',
+            'BOM' => 'Bill of Material',
+            'BMR' => 'Batch Manufacturing Record',
+            'BPR' => 'Batch Packing Record',
+            'SPEC' => 'Specification (All types)',
+            'STP' => 'Standard Testing Procedure (All types)',
+            'TDS' => 'Test Data Sheet',
+            'GTP' => 'General Testing Procedure',
+            'PROTO' => 'Protocols (All types)',
+            'REPORT' => 'Reports (All types)',
+            'SMF' => 'Site Master File',
+            'VMP' => 'Validation Master Plan',
+            'QM' => 'Quality Manual',
+        ];
+        
+        return $document_types;
+    }
+
+
+    //  public static function getDueDate123($date, $addDays = false, $format = null)
+    //     {
+    //         try {
+    //             if ($date) {
+    //                 $format = $format ? $format : 'd M Y';
+    //                 $dateInstance = Carbon::parse($date);
+    //                 if ($addDays) {
+    //                     $dateInstance->addDays(30);
+    //                 }
+    //                 return $dateInstance->format($format);
+    //         }
+    //         } catch (\Exception $e) {
+    //             return 'NA';
+    //         }
+    //     }
 
 
     public static function getDepartmentWithString($id)
@@ -693,5 +764,61 @@ class Helpers
 
         return $status;
     }
+
+    // Kuldeep Patel
+    public static function getDueDate123($date = null, $addDays = false, $format = 'd M Y')
+    {
+        try {
+            $dateInstance = $date ? Carbon::parse($date) : Carbon::now();
+            if ($addDays) {
+                $dateInstance->addDays(30);
+            }
+            return $dateInstance->format($format);
+        } catch (\Exception $e) {
+            return 'NA';
+        }
+    }
+
+
+    public static function getDueDatemonthly($date = null, $addDays = false, $format = null)
+    {
+        try {
+            $format = $format ? $format : 'd-M-Y';
+            $dateInstance = $date ? Carbon::parse($date) : Carbon::now();
+            
+            if ($addDays) {
+                $dateInstance->addDays($addDays);
+            } else {
+                // Add 30 days instead of adding a month
+                $dateInstance->addDays(30);
+            }
+
+            return $dateInstance->format($format);
+        } catch (\Exception $e) {
+            return 'NA';
+        }
+    }
+    
+    // SONALI SHARMA
+    public static function isOOSChemical($data)
+    {   
+        if($data == 0 || $data  >= 15){
+            return 'disabled';
+        }else{
+            return  '';
+        }
+         
+    }
+
+    public static function isOOSMicro($micro_data)
+    {   
+        if($micro_data == 0 || $micro_data  >= 14){
+            return 'disabled';
+        }else{
+            return  '';
+        }
+         
+    }
+
 
 }

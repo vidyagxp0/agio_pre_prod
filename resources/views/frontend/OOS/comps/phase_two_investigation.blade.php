@@ -16,8 +16,8 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Report Attachments"> Manufact. Invest. Required? </label>
-                    <select name="manufact_invest_required_piii">
-                        <option value="0">Enter Your Selection Here</option>
+                    <select name="manufact_invest_required_piii" {{Helpers::isOOSChemical($data->stage)}}>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->manufact_invest_required_piii === 'Yes' ? 'selected' :
                                 '' }}>Yes</option>
                         <option value="No" {{ $data->manufact_invest_required_piii === 'No' ? 'selected' : ''
@@ -30,12 +30,12 @@
                 <div class="group-input">
                     <label for="Auditee"> Manufacturing Invest. Type </label>
                     <select  name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
-                        data-search="false" data-silent-initial-value-set="true" id="auditee">
-                        <option value="0">Enter Your Selection Here</option>
-                        <option value="1" {{ $data->root_casue_identified_piiqcr === '1' ? 'selected' :
-                                '' }}>Chemical</option>
-                        <option value="2" {{ $data->root_casue_identified_piiqcr === '2' ? 'selected' : ''
-                                }}>Microbiology</option>
+                        data-search="false" data-silent-initial-value-set="true" id="auditee" {{Helpers::isOOSChemical($data->stage)}}>
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="Chemical"{{ $data->manufacturing_invest_type_piii === 'Chemical' ? 'selected' :
+                            '' }}>Chemical</option>
+                        <option value="Microbiology"{{ $data->manufacturing_invest_type_piii === 'Microbiology' ? 'selected' :
+                            '' }}>Microbiology</option>
                     </select>
                 </div>
             </div>
@@ -50,8 +50,8 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments"> Hypo/Exp. Required</label>
-                    <select name="hypo_exp_required_piii">
-                       <option value="0" {{ $data->hypo_exp_required_piii == '0' ? 'selected' : ''
+                    <select name="hypo_exp_required_piii" {{Helpers::isOOSChemical($data->stage)}}>
+                       <option value="" {{ $data->hypo_exp_required_piii == '0' ? 'selected' : ''
                             }}>Enter Your Selection Here</option>
                         <option value="yes" {{ $data->hypo_exp_required_piii == 'yes' ?
                             'selected' : '' }}>yes</option>
@@ -104,10 +104,16 @@
                 </div>
             </div>
             <div class="button-block">
-                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" id="ChangeNextButton" class="nextButton"
-                    onclick="nextStep()">Next</button>
+            @if ($data->stage == 0  || $data->stage >= 15)
+            <div class="progress-bars">
+                    <div class="bg-danger">Workflow is already Closed-Done</div>
+                </div>
+            @else
+            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" id="ChangeNextButton" class="nextButton"
+                onclick="nextStep()">Next</button>
+            @endif
                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>
             </div>

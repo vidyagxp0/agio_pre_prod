@@ -21,7 +21,7 @@ return new class extends Migration
             $table->longText('reviewer_comment')->nullable();
             $table->longText('reviewer_comment_by')->nullable();
             $table->text('reviewer_comment_on')->nullable();
-            $table->text('type')->nullable();
+         //   $table->text('type')->nullable();
 
 
             $table->timestamps();

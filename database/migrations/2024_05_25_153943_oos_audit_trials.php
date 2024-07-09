@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('oos_audit_trials', function (Blueprint $table) {
             $table->id();
             $table->integer('oos_id')->nullable();
-            $table->string('activity_type')->nullable();
-            $table->string('previous')->nullable();
-            $table->string('current')->nullable();
+            $table->longtext('activity_type')->nullable();
+            $table->longtext('previous')->nullable();
+            $table->longtext('current')->nullable();
             $table->string('comment')->nullable();
             $table->string('user_id')->nullable();
             $table->string('user_name')->nullable();

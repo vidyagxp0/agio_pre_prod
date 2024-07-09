@@ -27,10 +27,6 @@ return new class extends Migration
             $table->string('origin_state');
             $table->string('user_role');
             $table->string('stage')->nullable();
-            $table->string('change_to')->nullable();
-            $table->string('change_from')->nullable();
-            $table->string('action_name')->nullable();
-            $table->string('action')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

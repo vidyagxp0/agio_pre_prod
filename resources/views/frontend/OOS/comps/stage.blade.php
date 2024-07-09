@@ -43,7 +43,7 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Proposed Hypothesis Experiment</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
             @elseif($data->stage == 6 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>  
+                <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>   -->
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Obvious Error Found</button> 
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">No Assignable Cause Found</button> 
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button> 
@@ -67,9 +67,8 @@
             @elseif($data->stage == 11 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>  
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Retesting/resampling</button> 
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IIB Correction Inconclusive</button> 
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Correction Inconclusive</button> 
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button> 
-            
             @elseif($data->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Batch Disposition</button>  
             @elseif($data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -106,11 +105,11 @@
                 which is legally binding equivalent of a hand written signature.
             </div>
             <div class="group-input">
-                <label for="username">Username</label>
+                <label for="username">Username <span class="text-danger">*</span> </label>
                 <input type="text" name="username" required>
             </div>
             <div class="group-input">
-                <label for="password">Password</label>
+                <label for="password">Password <span class="text-danger">*</span> </label>
                 <input type="password" name="password" required>
             </div>
             <div class="group-input">
@@ -147,16 +146,16 @@
                 which is legally binding equivalent of a hand written signature.
             </div>
             <div class="group-input">
-                <label for="username">Username</label>
+                <label for="username">Username <span class="text-danger">*</span> </label>
                 <input type="text" name="username" required>
             </div>
             <div class="group-input">
-                <label for="password">Password</label>
+                <label for="password">Password <span class="text-danger">*</span> </label>
                 <input type="password" name="password" required>
             </div>
             <div class="group-input">
-                <label for="comment">Comment</label>
-                <input type="comment" name="comment">
+                <label for="comment">Comment <span class="text-danger">*</span> </label>
+                <input type="comment" name="comment" required>
             </div>
             </div>
             <div class="modal-footer">
@@ -188,15 +187,15 @@
                 which is legally binding equivalent of a hand written signature.
             </div>
             <div class="group-input">
-                <label for="username">Username</label>
+                <label for="username">Username <span class="text-danger">*</span> </label>
                 <input type="text" name="username" required>
             </div>
             <div class="group-input">
-                <label for="password">Password</label>
+                <label for="password">Password <span class="text-danger">*</span> </label>
                 <input type="password" name="password" required>
             </div>
             <div class="group-input">
-                <label for="comment">Comment</label>
+                <label for="comment">Comment </label>
                 <input type="comment" name="comment">
             </div>
             </div>
@@ -229,16 +228,16 @@
                         which is legally binding equivalent of a hand written signature.
                     </div>
                     <div class="group-input">
-                        <label for="username">Username</label>
+                        <label for="username">Username <span class="text-danger">*</span> </label>
                         <input type="text" name="username" required>
                     </div>
                     <div class="group-input">
-                        <label for="password">Password</label>
+                        <label for="password">Password <span class="text-danger">*</span> </label>
                         <input type="password" name="password" required>
                     </div>
                     <div class="group-input">
-                        <label for="comment">Comment</label>
-                        <input type="comment" name="comment">
+                        <label for="comment">Comment <span class="text-danger">*</span> </label>
+                        <input type="comment" name="comment" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -257,7 +256,7 @@
             <div class="modal-header">
                 <h4 class="modal-title">Child</h4>
             </div>
-            <form action="{{ route('oos.capa_child_changecontrol', $data->id) }}" method="POST">
+            <form action="{{ route('oos.child', $data->id) }}" method="POST">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -307,7 +306,7 @@
                 <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase I Investigation</div>
                 @endif
 
-                @if ($data->stage >= 4 && $data->stage != 5)
+                @if ($data->stage >= 4 )
                     <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase I Correction</div>
                 @else
                     <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase I Correction</div>

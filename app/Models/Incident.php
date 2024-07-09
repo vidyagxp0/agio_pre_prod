@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Incident extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'non_conformances_date' => 'datetime',
+    ];
 }

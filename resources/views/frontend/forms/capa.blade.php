@@ -27,48 +27,7 @@
             }
         }
     </script>
-    <!-- <script>
-        $(document).ready(function() {
-            $('#material').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    console.log(users);
-                    var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="material_name[]"></td>' +
-                        '<td><input type="text" name="material_batch_no[]"></td>' +
-
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_mfg_date[]" id="material_mfg_date' + serialNumber +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`);checkDate(`material_mfg_date1' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
-
-
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_expiry_date[]" id="material_expiry_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`);checkDate(`material_mfg_date' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
-
-                        '<td><input type="text" name="material_batch_desposition[]"></td>' +
-                        '<td><input type="text" name="material_remark[]"></td>' +
-                        '<td><select name="material_batch_status[]">' +
-                        '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-
-
-                        '</tr>';
-
-                    return html;
-                }
-
-                var tableBody = $('#material tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
-        });
-    </script> -->
+    
 
     <div class="form-field-head">
 
@@ -92,9 +51,9 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Project/Study</button> --}}
+                <button class="cctablinks" onclick="openCity(event, 'CCForm11')">HOD Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional Information</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CAPA Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button>
@@ -112,12 +71,31 @@
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                {{-- <div class="col-lg-6">
+                                    {{-- <div class="group-input">
                                         <label for="RLS Record Number">Record Number</label>
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                    {{-- </div> --}}
+                                    {{-- <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="RLS Record Number"><b>Record Number</b></label>
+                                            {{-- <input disabled type="text" name="record" value=""> --}}
+                                            {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record }}">
+                                            <input disabled type="text" name="record_number" id="record" 
+                                                   value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('y') }}/{{ $record_number }}">
+                                        </div>
+                                    </div>
+                                    
+                                </div> --}} 
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RLS Record Number"><b>Record Number</b></label>
+                                        {{-- <input disabled type="text" name="record" value=""> --}}
+                                        {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record}}"> --}}
+                                        <input disabled type="text" name="record" id="record" 
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('y') }}/{{ $record }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -152,7 +130,7 @@
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->name }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -173,7 +151,7 @@
                                                 </div>
                                             </div>
                                         </div> -->
-                                <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due"> Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
@@ -185,10 +163,42 @@
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
+                                </div> --}}
+
+                                
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
+                                        <div class="calenderauditee">
+                                            <!-- Display the formatted date in a readonly input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                           
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                        </div>
+                                    </div>
                                 </div>
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+                                    
+                                    // Call this function initially to ensure the correct format is shown on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        handleDateInput(dateInput, 'due_date_display');
+                                    });
+                                    </script>
+                                    
+                                    <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                    </style>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group">Initiator Group</label>
+                                        <label for="Initiator Group">Department Group</label>
                                         <select name="initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
@@ -234,9 +244,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <label for="Initiator Group Code">Department Group Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="">
+                                            value="" readonly >
                                     </div>
                                 </div>
                                 {{-- <div class="col-12">
@@ -257,20 +267,7 @@
                                     </div>
                                 </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="severity-level">Severity Level</label>
-                                        <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
-                                            guiding priority for corrective actions. Ranging from low to high, they ensure
-                                            quality standards and mitigate critical risks.</span>
-                                        <select name="severity_level_form">
-                                            <option value="0">-- Select --</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                            <option value="critical">Critical</option>
-                                        </select>
-                                    </div>
-                                </div>
+                               
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -284,9 +281,18 @@
                                             <option value="return">Return</option>
                                             <option value="deviation">Deviation</option>
                                             <option value="complaint">Complaint</option>
-                                            <option value="regulatory">Regulatory</option>
+                                            <option value="regulatory_inspection">Regulatory Inspection</option>
                                             <option value="lab-incident">Lab Incident</option>
                                             <option value="improvement">Improvement</option>
+                                            <option value="process_product">Process/Product</option>
+                                            <option value="supplier">Supplier</option>
+                                            <option value="gmp_invastigation">GMP Investigation</option>
+                                            <option value="discreoancy_nc">Discrepancy/NC</option>
+                                            <option value="change_control">Change Control</option>
+                                            <option value="utility_quipment_system">Utility/Equipment/System</option>
+                                            <option value="oos">OOS</option>
+                                            <option value="product_failure">Product Failure</option>
+                                            <option value="apqr">APQR</option>
                                             <option value="others">Others</option>
                                         </select>
                                     </div>
@@ -369,7 +375,7 @@
                                         <select multiple id="capa_related_record" name="capa_related_record[]"
                                             id="">
                                             <option value="">--Select---</option>
-                                            @foreach ($old_record as $new)
+                                            @foreach ($old_records as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                 </option>
@@ -425,16 +431,28 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-12 sub-head">
+                                    Other type Details
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"> CAPA QA Comments </label>
-                                        <textarea name="capa_qa_comments"></textarea>
+                                        <label for="Details">Investigation </label>
+                                        {{-- <input type="text" name="investigation"> --}}
+                                    <textarea name="investigation" ></textarea>
+                                    </div>
+                                    <div class="group-input">
+                                        <label for="Details">Root Cause Analysis  </label>
+                                        {{-- <input type="text" name="rcadetails"> --}}
+                                    <textarea name="rcadetails" ></textarea>
+
                                     </div>
                                 </div>
+                              
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                                {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
 
@@ -540,53 +558,59 @@
                                 </table>
                             </div>
                             {{-- </div> --}}
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="severity-level">Severity Level</label>
+                                    <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
+                                        guiding priority for corrective actions. Ranging from low to high, they ensure
+                                        quality standards and mitigate critical risks.</span>
+                                    <select name="severity_level_form">
+                                        <option value="">-- Select --</option>
+                                        <option value="minor">Minor</option>
+                                        <option value="major">Major</option>
+                                        <option value="critical">Critical</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-12 sub-head">
-                                Material Details
+                                Product Material Details
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Material Details">
-                                        Material Details<button type="button" name="ann" id="material">+</button>
+                                        Product Material Details
+                                        <button type="button" name="ann" id="material">+</button>
                                     </label>
-                                    <table class="table table-bordered" id="material_details">
+                                    <table class="table table-bordered" id="productmaterial">
                                         <thead>
                                             <tr>
                                                 <th>Row #</th>
-                                                <th>Material Name</th>
-                                                <th>Batch No./Lot No./AR No.</th>
-                                                <th>Manufacturing Date</th>
-                                                <th>Date Of Expiry</th>
-                                                <th>Batch Disposition Decision</th>
-                                                <th>Remark</th>
-                                                <th>Batch Status</th>
+                                                <th>Product Material Name</th>
+                                                <th>Product Batch No./Lot No./AR No.</th>
+                                                <th>Product Manufacturing Date</th>
+                                                <th>Product Date Of Expiry</th>
+                                                <th>Product Batch Disposition Decision</th>
+                                                <th>Product Remark</th>
+                                                <th>Product Batch Status</th>
+                                                <th>Action</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
-
-                                        </tbody>
-                                        {{-- <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td> <select name="material_name[]" id="material_name">
-                                                        <option value="">-- Select value --</option>
-                                                        <option value="PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/">
-                                                            PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/
-                                                        </option>
-                                                        <option value="BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION">
-                                                            BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION
-                                                        </option>
-                                                        <option value="CAFFEINECITRATEORALSOLUTION USP 60MG/3ML">
-                                                            CAFFEINECITRATEORALSOLUTION USP 60MG/3ML
-                                                        </option>
-                                                        <option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)">BRIMONIDINE
-                                                            TART. OPH SOL 0.1%W/V (CB)
-                                                        </option>
-                                                        <option value="DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO">
-                                                            DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO
-                                                        </option>
-                                                    </select></td>
+                                            <tr>
+                                                <td><input disabled type="text" name="serial_number[]" value="1"></td>
                                                 <td>
-                                                    <select name="material_batch_no[]" id="batch_no">
+                                                    <select name="material_name[]" class="material_name">
+                                                        <option value="">-- Select value --</option>
+                                                        <option value="PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/">PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/</option>
+                                                        <option value="BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION">BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION</option>
+                                                        <option value="CAFFEINECITRATEORALSOLUTION USP 60MG/3ML">CAFFEINECITRATEORALSOLUTION USP 60MG/3ML</option>
+                                                        <option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)">BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)</option>
+                                                        <option value="DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO">DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="material_batch_no[]" class="batch_no">
                                                         <option value="">select value</option>
                                                         <option value="DCAU0030">DCAU0030</option>
                                                         <option value="BDZH0007">BDZH0007</option>
@@ -595,45 +619,65 @@
                                                         <option value="DCAU0036">DCAU0036</option>
                                                     </select>
                                                 </td>
-                                                <!-- <td><input type="date" name="material_mfg_date[]"></td>
-                                                <td><input type="date" name="material_expiry_date[]"></td> -->
                                                 <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div class="calenderauditee">
-                                                                <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input"
-                                                                oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <input type="month" name="material_mfg_date[]" class="material_mfg_date" />
                                                 </td>
                                                 <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div  class="calenderauditee">
-                                                                <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                 oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <input type="month" name="material_expiry_date[]" class="material_expiry_date" />
                                                 </td>
-
                                                 <td><input type="text" name="material_batch_desposition[]"></td>
                                                 <td><input type="text" name="material_remark[]"></td>
                                                 <td>
-                                                    <select name="material_batch_status[]" id="batch_status">
+                                                    <select name="material_batch_status[]" class="batch_status">
                                                         <option value="">-- Select value --</option>
                                                         <option value="Hold">Hold</option>
                                                         <option value="Release">Release</option>
                                                         <option value="quarantine">Quarantine</option>
                                                     </select>
                                                 </td>
-                                            </tbody> --}}
-                                        </table>
-                                    </div>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
+                            </div>
+                            <script>
+                                $(document).on('click', '.removeRowBtn', function() {
+                                    $(this).closest('tr').remove();
+                                })
+                            </script>
+                            <script>
+                                $(document).ready(function () {
+                                    $('#material').click(function (e) {
+                                        e.preventDefault();
+                                        
+                                        // Clone the first row
+                                        var newRow = $('#productmaterial tbody tr:first').clone();
+                                        
+                                        // Update the serial number
+                                        var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
+                                        newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
+                                        
+                                        // Clear inputs in the new row
+                                        newRow.find('select.material_name').val('');
+                                        newRow.find('select.batch_no').val('');
+                                        newRow.find('input.material_mfg_date').val('');
+                                        newRow.find('input.material_expiry_date').val('');
+                                        newRow.find('input[name="material_batch_desposition[]"]').val('');
+                                        newRow.find('input[name="material_remark[]"]').val('');
+                                        newRow.find('select.batch_status').val('');
+                                        
+                                        // Append the new row to the table body
+                                        $('#productmaterial tbody').append(newRow);
+                                        
+                                    });
+                                });
+                            </script>
+                            
+                            
+
+                            
+                            
                                 <div class="col-12 sub-head">
                                     Equipment/Instruments Details
                                 </div>
@@ -641,15 +685,16 @@
                                     <div class="group-input">
                                         <label for="Material Details">
                                             Equipment/Instruments Details<button type="button" name="ann"
-                                                id="equipment">+</button>
+                                                id="addequipment">+</button>
                                         </label>
-                                        <table class="table table-bordered" id="equipment_details">
+                                        <table class="table table-bordered" id="equipment_de">
                                             <thead>
                                                 <tr>
                                                     <th>Row #</th>
                                                     <th>Equipment/Instruments Name</th>
                                                     <th>Equipment/Instruments ID</th>
                                                     <th>Equipment/Instruments Comments</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
 
@@ -661,101 +706,245 @@
                                                 <td><input type="text" name="equipment[]"></td>
                                                 <td><input type="text" name="equipment_instruments[]"></td>
                                                 <td><input type="text" name="equipment_comments[]"></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
+                                <script>
+                                    document.getElementById('addequipment').addEventListener('click', function() {
+                                        const tableBody = document.querySelector('#equipment_de tbody');
+                                        const newRow = document.createElement('tr');
+                            
+                                        const rowCount = tableBody.rows.length + 1;
+                            
+                                        newRow.innerHTML = `
+                                            <td><input disabled type="text" name="serial_number[]" value="${rowCount}"></td>
+                                            <td><input type="text" name="equipment[]"></td>
+                                            <td><input type="text" name="equipment_instruments[]"></td>
+                                            <td><input type="text" name="equipment_comments[]"></td>
+                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                        `;
+                            
+                                        tableBody.appendChild(newRow);
+                            
+                                        updateRemoveRowListeners();
+                                    });
+                            
+                                    function updateRemoveRowListeners() {
+                                        document.querySelectorAll('.removeRowBtn').forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                this.closest('tr').remove();
+                                                updateRowNumbers();
+                                            });
+                                        });
+                                    }
+                            
+                                    function updateRowNumbers() {
+                                        document.querySelectorAll('#equipment_de tbody tr').forEach((row, index) => {
+                                            row.querySelector('input[name="serial_number[]"]').value = index + 1;
+                                        });
+                                    }
+                            
+                                    // Initial call to set up the listeners for the existing row
+                                    updateRemoveRowListeners();
+                                </script>
                                 <div class="col-12 sub-head">
                                     Other type CAPA Details
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Details">Details</label>
-                                        <input type="text" name="details_new">
+                                        {{-- <input type="text" name="details_new"> --}}
+                                        <textarea name="details_new" ></textarea>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Comments"> CAPA QA Comments </label>
-                                        <textarea name="capa_qa_comments2"></textarea>
-                                    </div>
-                                </div>
+                               
+                                
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
                                 </a> </button>
                         </div>
                     </div>
                 </div>
+{{-- ===========================================HOd reviwe tab ============= tab --}}
+
+<div id="CCForm11" class="inner-block cctabcontent">
+    <div class="inner-block-content">
+        <div class="row">
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="QA Head Review & Closure">HOD Remark</label>
+                    <textarea name="hod_remarks"></textarea>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Closure Attachments">HOD Attachment</label>
+                    <div><small class="text-primary">Please Attach all relevant or supporting
+                            documents</small></div>
+                    {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                    <div class="file-attachment-field">
+                        <div class="file-attachment-list" id="closure_attachment"></div>
+                        <div class="add-btn">
+                            <div>Add</div>
+                            <input type="file" id="hodfile" name="hod_attachment[]"
+                                oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12 sub-head">
+                Effectiveness Check Details
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="Effectiveness Check Required">Effectiveness Check
+                        Required?</label>
+                    <select name="effect_check" onChange="setCurrentDate(this.value)">
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
+                    {{-- <input type="date" name="effect_check_date"> --}}
+                    <div class="calenderauditee">
+                        <input type="text" name="effect_check_date" id="effect_check_date" readonly
+                            placeholder="DD-MMM-YYYY" />
+                        <input type="date" name="effect_check_date" class="hide-input"
+                            oninput="handleDateInput(this, 'effect_check_date')" />
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="col-6">
+                <div class="group-input">
+                    <label for="Effectiveness_checker">Effectiveness Checker</label>
+                    <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
+                        <option value="">Select a person</option>
+                        @foreach ($users as $value)
+                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="effective_check_plan">Effectiveness Check Plan</label>
+                    <textarea name="effective_check_plan"></textarea>
+                </div>
+            </div> -->
+           
+          
+        </div>
+        <div class="button-block">
+            <button type="submit" class="saveButton">Save</button>
+             <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+        </div>
+    </div>
+</div>
+
+
+
+{{-- ==========================QA review tab ================ --}}
+
+<div id="CCForm12" class="inner-block cctabcontent">
+    <div class="inner-block-content">
+        <div class="row">
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Comments"> CAPA QA Review </label>
+                    <textarea name="capa_qa_comments"></textarea>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Closure Attachments">QA Attachment</label>
+                    <div><small class="text-primary">Please Attach all relevant or supporting
+                            documents</small></div>
+                    {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                    <div class="file-attachment-field">
+                        <div class="file-attachment-list" id="qa_attachment"></div>
+                        <div class="add-btn">
+                            <div>Add</div>
+                            <input type="file" id="myfile" name="qa_attachment[]"
+                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12 sub-head">
+                Effectiveness Check Details
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="Effectiveness Check Required">Effectiveness Check
+                        Required?</label>
+                    <select name="effect_check" onChange="setCurrentDate(this.value)">
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
+                    {{-- <input type="date" name="effect_check_date"> --}}
+                    <div class="calenderauditee">
+                        <input type="text" name="effect_check_date" id="effect_check_date" readonly
+                            placeholder="DD-MMM-YYYY" />
+                        <input type="date" name="effect_check_date" class="hide-input"
+                            oninput="handleDateInput(this, 'effect_check_date')" />
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="col-6">
+                <div class="group-input">
+                    <label for="Effectiveness_checker">Effectiveness Checker</label>
+                    <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
+                        <option value="">Select a person</option>
+                        @foreach ($users as $value)
+                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="effective_check_plan">Effectiveness Check Plan</label>
+                    <textarea name="effective_check_plan"></textarea>
+                </div>
+            </div> -->
+           
+          
+        </div>
+        <div class="button-block">
+            <button type="submit" class="saveButton">Save</button>
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
+            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 
                 <!-- Project Study content****************************** -->
-                <div id="CCForm3" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Project Datails Application">Project Datails Application</label>
-                                    <select name="project_details_application">
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Protocol/Study Number">Initiator Group</label>
-                                        <select name="project_initiator_group">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Site Number">Site Number</label>
-                                        <input type="text" name="site_number">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Subject Number">Subject Number</label>
-                                        <input type="text" name="subject_number">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Subject Initials">Subject Initials</label>
-                                        <input type="text" name="subject_initials">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Sponsor">Sponsor</label>
-                                        <input type="text" name="sponsor">
-                                    </div>
-                                </div>
-                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="General Deviation">General Deviation</label>
-                                        <textarea name="general_deviation"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- CAPA Details content ****************************-->
                 <div id="CCForm4" class="inner-block cctabcontent">
@@ -790,263 +979,42 @@
                                     <textarea name="preventive_action"></textarea>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            {{-- <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Supervisor Review Comments">Supervisor Review Comments</label>
+                                    <label for="Supervisor Review Comments">QA Review Comments</label>
                                     <textarea name="supervisor_review_comments"></textarea>
                                 </div>
+                            </div> --}}
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Closure Attachments">File Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="capafileattachement"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="qafile" name="capafileattachement[]"
+                                                oninput="addMultipleFiles(this, 'capafileattachement')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
-                            {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
                                 </a> </button>
                         </div>
                     </div>
                 </div>
-                <div id="CCForm5" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="sub-head">
-                            CFT Information
-                        </div>
-                        <div class="row">
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Microbiology">CFT Reviewer</label>
-                                    <select name="Microbiology_new">
-                                        <option value="0">-- Select --</option>
-                                        <option value="yes" selected>Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Microbiology-Person">CFT Reviewer Person</label>
-                                    <select name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
-                                        data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
-                                        <option value="0">-- Select --</option>
-                                        @foreach ($cft as $data)
-                                            <option value="{{ $data->id }}" selected>{{ $data->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sub-head">
-                            Concerned Information
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="group_review">Is Concerned Group Review Required?</label>
-                                    <select name="goup_review">
-                                        <option value="0">-- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Production">Production</label>
-                                    <select name="Production_new">
-                                        <option value="0">-- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Production-Person">Production Person</label>
-                                    <select name="Production_Person">
-                                        <option value="0">-- Select --</option>
-                                        @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Quality-Approver">Quality Approver</label>
-                                    <select name="Quality_Approver">
-                                        <option value="0">-- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Quality-Approver-Person">Quality Approver Person</label>
-                                    <select name="Quality_Approver_Person">
-                                        <option value="0">-- Select --</option>
-                                        @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="bd_domestic">Others</label>
-                                    <select name="bd_domestic">
-                                        <option value="0">-- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="bd_domestic-Person">Others Person</label>
-                                    <select name="Bd_Person">
-                                        <option value="0">-- Select --</option>
-                                        @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Additional Attachments">Additional Attachments</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="additional_attachments"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="additional_attachments[]"
-                                                oninput="addMultipleFiles(this, 'additional_attachments')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                    Exit </a> </button>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div id="CCForm6" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="sub-head">
-                                CFT Feedback
-                            </div>
-                            <div class="row">
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="comments">CFT Comments</label>
-                                        <textarea name="cft_comments_form"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="comments">CFT Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="cft_attchament_new"> </div>
-
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="cft_attchament_new[]"
-                                                    oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="sub-head">
-                                    Concerned Group Feedback
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">QA Comments</label>
-                                        <textarea name="qa_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">QA Head Designee Comments</label>
-                                        <textarea name="designee_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Warehouse Comments</label>
-                                        <textarea name="Warehouse_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Engineering Comments</label>
-                                        <textarea name="Engineering_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Instrumentation Comments</label>
-                                        <textarea name="Instrumentation_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Validation Comments</label>
-                                        <textarea name="Validation_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Others Comments</label>
-                                        <textarea name="Others_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Group Comments</label>
-                                        <textarea name="Group_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="group-attachments">Group Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="group_attachments_new"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="group_attachments_new[]"
-                                                    oninput="addMultipleFiles(this, 'group_attachments_new')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                        Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
+               
+                    
                     <!-- CAPA Closure content -->
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1130,8 +1098,8 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> -->
+                               <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
@@ -1242,8 +1210,8 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <!-- <button type="submit" class="saveButton">Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
+                             <button type="submit" class="saveButton">Save</button>
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button> 
                             <button type="submit">Submit</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"
                                     href="#"> Exit </a> </button>
@@ -1392,4 +1360,54 @@
             $('#rchars').text(textlen);
         });
     </script>
+
+    {{-- =======================================================record number ============================================ --}}
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        var originalRecordNumber = document.getElementById('record').value;
+        var initialPlaceholder = '---';
+        
+            document.getElementById('initiator_group').addEventListener('change', function() {
+            var selectedValue = this.value;
+            var recordNumberElement = document.getElementById('record');
+            var initiatorGroupCodeElement = document.getElementById('initiator_group_code');
+        
+            // Update the initiator group code
+            initiatorGroupCodeElement.value = selectedValue;
+        
+            // Update the record number by replacing the initial placeholder with the selected initiator group code
+            var newRecordNumber = originalRecordNumber.replace(initialPlaceholder, selectedValue);
+            recordNumberElement.value = newRecordNumber;
+        
+            // Update the original record number to keep track of changes
+            originalRecordNumber = newRecordNumber;
+            initialPlaceholder = selectedValue;
+        });
+        });
+    
+    </script> --}}
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var originalRecordNumber = document.getElementById('record').value;
+            var initialPlaceholder = '---';
+    
+            document.getElementById('initiator_group').addEventListener('change', function() {
+                var selectedValue = this.value;
+                var recordNumberElement = document.getElementById('record');
+                var initiatorGroupCodeElement = document.getElementById('initiator_group_code');
+    
+                // Update the initiator group code
+                initiatorGroupCodeElement.value = selectedValue;
+    
+                // Update the record number by replacing the initial placeholder with the selected initiator group code
+                var newRecordNumber = originalRecordNumber.replace(initialPlaceholder, selectedValue);
+                recordNumberElement.value = newRecordNumber;
+    
+                // Update the original record number to keep track of changes
+                originalRecordNumber = newRecordNumber;
+                initialPlaceholder = selectedValue;
+            });
+        });
+    </script> --}}
+    
 @endsection

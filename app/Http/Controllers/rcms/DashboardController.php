@@ -94,7 +94,7 @@ class DashboardController extends Controller
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
-                "parent" => $data->parent_record ? $data->parent_record : "-",
+                // "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "due_date" => $data->due_date,
                 "type" => "Change-Control",
@@ -171,6 +171,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas4 as $data) {
@@ -191,6 +192,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas5 as $data) {
@@ -212,6 +214,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas6 as $data) {
@@ -221,7 +224,6 @@ class DashboardController extends Controller
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
-                'due_date'=>$data->due_date,
                 "type" => "Risk-Assesment",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
@@ -233,6 +235,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas7 as $data) {
@@ -253,6 +256,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas8 as $data) {
@@ -272,6 +276,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas9 as $data) {
@@ -282,7 +287,6 @@ class DashboardController extends Controller
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "type" => "External-Audit",
-                'due_date'=>$data->due_date,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -293,6 +297,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas10 as $data) {
@@ -313,6 +318,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas11 as $data) {
@@ -353,6 +359,8 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
+
             ]);
         }
         foreach ($datas13 as $data) {
@@ -372,6 +380,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas14 as $data) {
@@ -390,7 +399,6 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through_gi,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
@@ -429,7 +437,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_by,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-
+                "due_date" => $data->due_date,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
@@ -451,6 +459,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($deviation as $data) {
@@ -761,7 +770,6 @@ class DashboardController extends Controller
                         "id" => $data2->id,
                         "parent" => $data2->parent_record ? $data2->parent_record : "-",
                         "record" => $data2->record,
-                       
                         "type" => "External-Audit",
                         "parent_id" => $data2->parent_id,
                         "parent_type" => $data2->parent_type,
@@ -951,7 +959,7 @@ class DashboardController extends Controller
             $audit = "riskAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-        } elseif ($type == "Out_Of_Calibration") {
+        } elseif ($type == "Out Of Calibration") {
             $data = OutOfCalibration::find($id);
             $recordno = ((RecordNumber::first()->value('counter')) + 1);
             $single = "OOCSingleReport/" . $data->id;
@@ -1056,6 +1064,13 @@ class DashboardController extends Controller
             $data = Incident::find($id);
             $single = "incident-single-report/" . $data->id;
             $audit = "incident-audit-pdf/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        }
+        elseif ($type == "Non Conformance") {
+            $data = NonConformance::find($id);
+            $single = "non-conformance-single-report/" . $data->id;
+            $audit = "non-conformance-audit-pdf/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }

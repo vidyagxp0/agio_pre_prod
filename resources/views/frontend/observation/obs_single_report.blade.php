@@ -176,7 +176,7 @@
                     <strong>Observation No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($data->division_code) }}/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
+                    {{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -213,7 +213,7 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
                             @if ($data->record)
-                                {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                            {{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                             @else
                                 Not Applicable
                             @endif
@@ -262,7 +262,7 @@
                     <td class="w-80">{{ $data->short_description }}</td>
 
                     <th class="w-20">Attached Files</th>
-                    <td class="w-80">{{ $data->attach_files1 }}</td>
+                    <td class="w-80">{{ str_replace(',', ', ', $data->attach_files_gi) }}</td>
 
                 </tr>
                 <tr>
@@ -275,20 +275,34 @@
                         @endif
                     </td>
 
-                    <th class="w-20">Non Compliance</th>
-                    <td class="w-80">{{ $data->non_compliance }}</td>
+                    {{-- <th class="w-20">Non Compliance</th>
+                    <td class="w-80">{{ $data->non_compliance }}</td> --}}
 
                 </tr>
-                <tr>
-                    <th class="w-20">Recommended Action</th>
+                </table>
+
+                <h5>Non Compliance</h5>
+                <div style="font-size: 12px;">
+                    {{ $data->non_compliance }}
+                </div>
+
+                <h5>Recommended Action</h5>
+                <div style="font-size: 12px;">
+                    {{ str_replace(',', ', ', $data->recommend_action) }}
+                </div>
+
+                    {{-- <th class="w-20">Recommended Action</th>
                     <td class="w-30">
                         @if ($data->recommend_action)
                             {!! $data->recommend_action !!}
                         @else
                             Not Applicable
                         @endif
-                    </td>
+                    </td> --}}
 
+
+                <table>
+                    <tr>
                     <th class="w-20">Related Obsevations</th>
                     <td class="w-80">
                         @if ($data->related_observations)
@@ -344,7 +358,7 @@
                 @if (!$matched)
                     <td>Not Applicable</td>
                 @endif
-                <th class="w-20">Commnets
+                {{-- <th class="w-20">Commnets
                 </th>
                 <td class="w-80">
                     @if ($data->comments)
@@ -352,17 +366,22 @@
                     @else
                         Not Applicable
                     @endif
-                </td>
+                </td> --}}
             </tr>
-
         </table>
+
+        <h5>Commnets</h5>
+        <div style="font-size: 12px;">
+            {{ $data->comments }}
+        </div>
+
     </div>
 
     <div style="font-weight: 200">Action Plan</div>
     <div class="border-table">
         <table>
             <tr class="table_bg">
-                <th class="w-20" style="width: 25px;">Row #</th>
+                <th class="w-20" style="width: 25px;">S.No.</th>
                 <th class="w-20">Action</th>
                 <th class="w-20">Responsible</th>
                 <th class="w-20">Deadline</th>
@@ -381,7 +400,7 @@
                                 {{ $value->name }}
                             </td>
                             @else
-                                Applicable
+                                Not Applicable
                         @endif
 
                     @endforeach
@@ -418,17 +437,24 @@
                     @endif
                 </td>
 
-                <th class="w-20">Impact Analysis
+                {{-- <th class="w-20">Impact Analysis
                 </th>
                 <td class="w-80">
                     @if ($data->impact_analysis)
                         {{ $data->impact_analysis }}
-                        {{-- {{ $datas[$data->impact_analysis]??'Undefined Data' }} --}}
                     @else
                         Not Applicable
                     @endif
-                </td>
+                </td> --}}
             </tr>
+            </table>
+
+            <h5>Impact Analysis</h5>
+            <div style="font-size: 12px;">
+                {{ $data->impact_analysis }}
+            </div>
+
+            <table>
             <tr>
 
                 @php
@@ -530,20 +556,30 @@
                     @endif
                 </td>
             </tr>
+        </table>
+
+
+        <h5>Action Taken</h5>
+        <div style="font-size: 12px;">
+            {{ $data->action_taken }}
+        </div>
+
+            <table>
+
             <tr>
-                <th class="w-20">Action Taken</th>
+                {{-- <th class="w-20">Action Taken</th>
                 <td class="w-80">
                     @if ($data->action_taken)
                         {!! $data->action_taken !!}
                     @else
                         Not Applicable
                     @endif
-                </td>
+                </td> --}}
 
                 <th class="w-20">Attached Files</th>
                 <td class="w-80">
                     @if ($data->attach_files2)
-                        {{ $data->attach_files2 }}
+                        {{ str_replace(',', ', ', $data->attach_files2) }}
                     @else
                         Not Applicable
                     @endif
@@ -559,17 +595,25 @@
                     @endif
                 </td>
 
-                <th class="w-20">Response Summary</th>
+                {{-- <th class="w-20">Response Summary</th>
                 <td class="w-80">
                     @if ($data->response_summary)
                         {{ $data->response_summary }}
                     @else
                         Not Applicable
                     @endif
-                </td>
+                </td> --}}
             </tr>
 
         </table>
+
+
+        <h5>Response Summary</h5>
+        <div style="font-size: 12px;">
+            {{ $data->response_summary }}
+        </div>
+
+
     </div>
 
 

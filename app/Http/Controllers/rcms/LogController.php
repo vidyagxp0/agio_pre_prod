@@ -17,6 +17,10 @@ use App\Models\OutOfCalibration;
 use App\Models\RiskManagement;
 use App\Models\InternalAudit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+
+
 
 class LogController extends Controller
 {
@@ -59,28 +63,32 @@ class LogController extends Controller
 
                 case 'lab-incident':
                 
-                $labincident = LabIncident::get();
+                    $labincident =LabIncident::with('incidentInvestigationReports')->get();
                 
         
-                $labgrid = lab_incidents_grid::where('identifier', 'incident report')->get()->keyBy('labincident_id');
+                
                                             
                                         
-                    return view('frontend.forms.logs.laboratoryincidentLog',compact('labincident','labgrid'));
+                    return view('frontend.forms.logs.laboratoryincidentLog',compact('labincident'));
                     break;        
                 
 
              case 'market-complaint':
                 
-             $marketcomplaint = MarketComplaint::get();
-
+                $marketcomplaint = MarketComplaint::with('product_details')->get();
+                
                     return view('frontend.forms.logs.Market-complaint-registerLog',compact('marketcomplaint'));
                         
                     break;        
                         
             case 'ooc':
             
-            $oocs = OutOfCalibration::get();
-                    return view('frontend.forms.logs.OOC_log' , compact('oocs'));
+                $oocs = OutOfCalibration::with('InstrumentDetails', 'assignedUser')->get();
+                
+                $users = User::all();
+                
+        
+                    return view('frontend.forms.logs.OOC_log' , compact('oocs','users'));
               
                                               
             case 'oot':
@@ -91,7 +99,18 @@ class LogController extends Controller
 
 
             case 'risk-management':
-                $riskmlog = RiskManagement::get();
+
+                $riskmlog = RiskManagement::with(['Action' => function ($query) {
+                    $query->where('type', 'Action_Plan')->take(5); // Limit to 5 records
+                }])->get();
+                
+                // foreach ($riskmlogs as $risk) {
+                //     foreach ($risk->Action as $action) {
+                //         return $action->action; // Return each action record
+                //     }
+                // }
+                
+
                 
                 return view('frontend.forms.Logs.riskmanagementLog',compact('riskmlog'));
 

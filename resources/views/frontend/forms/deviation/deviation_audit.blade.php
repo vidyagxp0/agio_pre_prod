@@ -224,7 +224,6 @@
                                         margin-left: 100px
                                     }
                                 </style>
-                                      
 
                                 <!-- Modal Header -->
                                 <div class="modal-header">
@@ -327,7 +326,7 @@
                             <div class="heading-new">
                                 Audit Trail
                             </div>
-                               {{--  {{dd($document)}}  --}}
+
                             <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
@@ -366,6 +365,7 @@
                         @endphp
 
                         @foreach ($audit as $audits => $dataDemo)
+                                    
                             <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
                             </td>
 

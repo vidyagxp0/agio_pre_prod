@@ -163,12 +163,13 @@
                 <td class="w-70 head">
                     Incident Report
                 </td>
-                <td class="w-30">
-                    <div class="logo">
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt=""
-                            class="w-100">
-                    </div>
-                </td>
+
+                    <td class="w-30">
+                        <div class="logo">
+                            <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100">
+                        </div>
+                    </td>
+
             </tr>
         </table>
         <table>
@@ -213,17 +214,21 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Department</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->Initiator_Group)
                                 {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Short Description</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->short_description)
                                 {{ $data->short_description }}
                             @else
@@ -231,6 +236,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>
                     <tr>
                         <th class="w-20"> Repeat Incident?</th>
                         <td class="w-30">
@@ -269,6 +276,8 @@
                         </td>
 
                     </tr>
+                </table>
+                <table>
                     <tr>
                         <th class="w-20"> Delay Justification</th>
                         <td class="w-30"></td>
@@ -288,6 +297,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Incident Reported On </th>
                         <td class="w-30">
@@ -306,6 +317,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>
                     <tr>
 
                         <th class="w-20"> Others</th>
@@ -316,6 +329,8 @@
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Facility/ Equipment/ Instrument/ System Details Required?</th>
                         <td class="w-30">
                             @if ($data->Facility_Equipment)
@@ -326,8 +341,9 @@
                         </td>
 
                     </tr>
+                </table>
+                <table>
                     <tr>
-
                         <th class="w-20">Document Details Required?</th>
                         <td class="w-30">
                             @if ($data->Document_Details_Required)
@@ -336,8 +352,10 @@
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Description of Incident</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->Description_incident)
                                 {{ strip_tags($data->Description_incident) }}
                             @else
@@ -345,18 +363,21 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Immediate Action (if any)</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->Immediate_Action)
                                 {{ strip_tags($data->Immediate_Action) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Preliminary Impact of Incident</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->Preliminary_Impact)
                                 {{ strip_tags($data->Preliminary_Impact) }}
                             @else
@@ -527,7 +548,7 @@
                     <table>
                         <tr>
                             <th class="w-30">HOD Remarks</th>
-                            <td class="w-20">
+                            <td class="w-80">
                                 @if ($data->HOD_Remarks)
                                     {{ strip_tags($data->HOD_Remarks) }}
                                 @else
@@ -575,16 +596,17 @@
                 QA Initial Review
             </div>
             <table>
-
                 <tr>
                     <th class="w-20">Initial Incident category</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         @if ($data->incident_category)
                             {{ $data->incident_category }}
                         @else
                             Not Applicable
                         @endif
                     </td>
+                </tr>
+                <tr>
                     <th class="w-20">Justification for categorization</th>
                     <td class="w-30">
                         @if ($data->Justification_for_categorization)
@@ -594,17 +616,21 @@
                         @endif
                     </td>
                 </tr>
+            </table>
+            <table>
                 <tr>
                     <th class="w-20">Investigation Required?</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         @if ($data->Investigation_required)
                             {{ $data->Investigation_required }}
                         @else
                             Not Applicable
                         @endif
                     </td>
+                </tr>
+                <tr>
                     <th class="w-20">Investigation Details</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         @if ($data->Investigation_Details)
                             {{ $data->Investigation_Details }}
                         @else
@@ -612,12 +638,11 @@
                         @endif
                     </td>
                 </tr>
-                <tr>
-                </tr>
-
+            </table>
+            <table>
                 <tr>
                     <th class="w-20">QA Initial Remarks</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         @if ($data->QAInitialRemark)
                             {{ strip_tags($data->QAInitialRemark) }}
                         @else
@@ -2577,21 +2602,27 @@
                                         </div>
                                     </td>
                                 </tr>
+                            </table>
+                            <table>
                                 <tr>
                                     <th class="w-20">Description of Event
                                     </th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data->Discription_Event) {{ strip_tags($data->Discription_Event) }} @else Not Applicable @endif
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <th class="w-20">Objective</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data->objective) {{ strip_tags($data->objective) }} @else Not Applicable @endif
                                         </div>
                                     </td>
                                 </tr>
+                            </table>
+                            <table>
                                 <tr>
                                     <th class="w-20">Scope</th>
                                     <td class="w-80">
@@ -2599,17 +2630,21 @@
                                             @if ($data->scope) {{ strip_tags($data->scope) }} @else Not Applicable @endif
                                         </div>
                                     </td>
+                                    </tr>
+                                 <tr>
                                     <th class="w-20">Immediate Action</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data->imidiate_action) {{ strip_tags($data->imidiate_action) }} @else Not Applicable @endif
                                         </div>
                                     </td>
                                 </tr>
+                            </table>
+                            {{-- <table>
                                 <tr>
 
                                     <th class="w-20">CAPA Description</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data->CAPA_Description)
                                                 {{ $data->CAPA_Description }}
@@ -2618,8 +2653,10 @@
                                             @endif
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <th class="w-20">Post Categorization Of Incident</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data->Post_Categorization)
                                                 {{ $data->Post_Categorization }}
@@ -2629,10 +2666,12 @@
                                         </div>
                                     </td>
                                 </tr>
+                            </table> --}}
+                            <table>
                                 <tr>
                                     <th class="w-20"> Justification For Revised category
                                     </th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data->Investigation_Of_Review)
                                                 {{ strip_tags($data->Investigation_Of_Review) }}
@@ -2645,13 +2684,13 @@
 
                                 <tr>
                                     <th class="w-20">Investigation Approach</th>
-                                    <td class="w-30">
+                                    <td class="w-380">
                                         <div>
-                                            <!-- @if ($data->Investigation_Of_Review)
+                                             @if ($data->Investigation_Of_Review)
                                             {{ $data->Investigation_Of_Review }}
                                             @else
                                             Not Applicable
-                                            @endif -->
+                                            @endif
                                         </div>
                                     </td>
 
@@ -2671,19 +2710,24 @@
                                         <th class="w-60">Remarks</th>
                                     </tr>
                                     <tbody>
-                                        @if($investigation_data && is_array($investigation_data->data))
+                                        @if($investigation_data && is_array($investigation_data))
                                         @php
                                             $serialNumber = 1;
                                             $users = DB::table('users')->select('id', 'name')->get();
                                         @endphp
-                                            @foreach($investigation_data->data as $investigation_item)
+                                            @foreach($investigation_data as $investigation_item)
+
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
                                                     @foreach ($users as $user)
-                                                        <td {{ $investigation_data['investioncation_team'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</td>
+                                                        <td {{ $investigation_item['teamMember'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</td>
                                                     @endforeach
-                                                    <td class="w-20">{{$investigation_item['responsibility']}}</td>
-                                                    <td class="w-20">{{$investigation_item['remarks']}}</td>
+                                                    <td class="w-15">
+                                                        {{ isset($investigation_item['responsibility']) ? $investigation_item['responsibility'] : 'Not Applicable' }}
+                                                    </td>
+                                                    <td class="w-15">
+                                                        {{ isset($investigation_item['remarks']) ? $investigation_item['remarks'] : 'Not Applicable' }}
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         @else
@@ -2713,16 +2757,16 @@
                                     </tr>
 
                                     <tbody>
-                                    @if($root_cause_data && is_array($root_cause_data->data))
+                                    @if($root_cause_data && is_array($root_cause_data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                        @foreach($root_cause_data->data as $rootCause_data)
+                                        @foreach($root_cause_data as $rootCause_data)
                                             <tr>
                                                 <td class="w-20">{{ $serialNumber++ }}</td>
-                                                <td class="w-20">{{ $rootCause_data['Root_Cause_Category'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['Root_Cause_Sub_Category'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['ifother'] }}</td>
+                                                <td class="w-20">{{ $rootCause_data['rootCauseCategory'] }}</td>
+                                                <td class="w-20">{{ $rootCause_data['rootCauseSubCategory'] }}</td>
+                                                <td class="w-20">{{ $rootCause_data['ifOthers'] }}</td>
                                                 <td class="w-20">{{ $rootCause_data['probability'] }}</td>
                                                 <td class="w-20">{{ $rootCause_data['remarks'] }}</td>
                                             </tr>
@@ -2742,6 +2786,8 @@
                             </div>
 
 
+
+
                             <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head">
                                     Why Why Chart
@@ -2757,8 +2803,8 @@
                                         <th class="w-20">Problem Statement</th>
                                         <td class="w-30">
                                             <div>
-                                                @if ($why_data && is_array($why_data->data))
-                                                    {{ $why_data->data['problem_statement'] }}
+                                                @if ($why_data && is_array($why_data))
+                                                    {{ $why_data['problem_statement'] }}
                                                 @else
                                                     Not Applicable
                                                 @endif
@@ -2767,8 +2813,8 @@
                                         <th class="w-20">Root Cause</th>
                                         <td class="w-30">
                                             <div>
-                                                @if ($why_data && is_array($why_data->data))
-                                                    {{ $why_data->data['root-cause'] }}
+                                                @if ($why_data && is_array($why_data))
+                                                    {{ $why_data['root-cause'] }}
                                                 @else
                                                     Not Applicable
                                                 @endif
@@ -2782,11 +2828,11 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data))
+                                        @if($why_data && is_array($why_data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                            @foreach($why_data->data as $whyData)
+                                            @foreach($why_data as $whyData)
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
                                                     {{-- <td class="w-20">{{ $whyData }}</td> --}}
@@ -2799,7 +2845,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
 
@@ -2814,16 +2860,16 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data))
+                                        @if($why_data && is_array($why_data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                            @foreach($why_data->data as $whyData)
+                                            @foreach($why_data as $whyData)
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
                                                     {{-- <td class="w-20">{{ $whyData }}</td> --}}
                                                     <td class="w-15">{{ isset($whyData['why_2']) ? $whyData['why_2'] : 'Not Applicable' }}</td>
- 
+
                                                 </tr>
                                             @endforeach
                                         @else
@@ -2831,7 +2877,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
 
@@ -2846,11 +2892,11 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data))
+                                        @if($why_data && is_array($why_data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                            @foreach($why_data->data as $whyData)
+                                            @foreach($why_data as $whyData)
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
                                                     {{-- <td class="w-20">{{ $whyData }}</td> --}}
@@ -2863,7 +2909,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
 
@@ -2878,11 +2924,11 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data))
+                                        @if($why_data && is_array($why_data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                            @foreach($why_data->data as $whyData)
+                                            @foreach($why_data as $whyData)
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
                                                     {{-- <td class="w-20">{{ $whyData }}</td> --}}
@@ -2895,7 +2941,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
 
@@ -2910,11 +2956,11 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data))
+                                        @if($why_data && is_array($why_data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                            @foreach($why_data->data as $whyData)
+                                            @foreach($why_data as $whyData)
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
                                                     {{-- <td class="w-20">{{ $whyData }}</td> --}}
@@ -2927,7 +2973,7 @@
                                                 <td class="w-20">1</td>
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
-                                        @endif                                        
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -2985,7 +3031,7 @@
                                             <td>{{ $data->skill_issues}}</td>
                                             <td>{{ $data->skill_actions}}</td>
                                             <td>{{ $data->skill_remarks}}</td>
-                                        </tr>                                        
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -3036,7 +3082,7 @@
                                             <td>{{ $data->who_will_be}}</td>
                                             <td>{{ $data->who_will_not_be}}</td>
                                             <td>{{ $data->who_rationable}}</td>
-                                        </tr>                                        
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -3163,13 +3209,17 @@
                                             @if ($qrmExtension && $qrmExtension->qrm_proposed_due_date) {{ Helpers::getdateFormat($qrmExtension->qrm_proposed_due_date) }} @else Not Applicable @endif
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <th class="w-20">Conclusion</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data->Conclusion) {{ strip_tags($data->Conclusion) }} @else Not Applicable @endif
                                         </div>
                                     </td>
                                 </tr>
+                            </table>
+                            <table>
                                 <tr>
                                     <th class="w-20">Identified Risk</th>
                                     <td class="w-80">
@@ -3177,6 +3227,8 @@
                                             @if ($data->Identified_Risk) {{ strip_tags($data->Identified_Risk) }} @else Not Applicable @endif
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <th class="w-20">Severity Rate</th>
                                     <td class="w-30">
                                         <div>
@@ -3184,7 +3236,8 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                            </table>
+                            <table>
                                 <tr>
                                     <th class="w-20">Occurrence</th>
                                     <td class="w-80">
@@ -3192,6 +3245,8 @@
                                             @if ($data->Occurrence) {{ $data->Occurrence }} @else Not Applicable @endif
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <th class="w-20">Detection</th>
                                     <td class="w-30">
                                         <div>
@@ -3199,7 +3254,8 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                            </table>
+                            <table>
                                 <tr>
                                     <th class="w-20">RPN</th>
                                     <td class="w-80">
@@ -3225,11 +3281,11 @@
                                     </tr>
 
                                     <tbody>
-                                        @if ($grid_data_qrms && is_array($grid_data_qrms->data))
+                                        @if ($grid_data_qrms && is_array($grid_data_qrms))
                                              @php
                                                 $serialNumber = 1;
                                             @endphp
-                                            @foreach ($grid_data_qrms->data as $grid_item)
+                                            @foreach ($grid_data_qrms as $grid_item)
                                             <tr>
                                                 <td>{{$serialNumber++}}</td>
                                                 <td>{{$grid_item['risk_factor']}}</td>
@@ -3263,11 +3319,11 @@
                                         <th>Proposed Additional Risk control measure</th>
                                     </tr>
                                     <tbody>
-                                        @if ($grid_data_qrms && is_array($grid_data_qrms->data))
+                                        @if ($grid_data_qrms && is_array($grid_data_qrms))
                                             @php
                                                 $serialNumber = 1;
                                             @endphp
-                                            @foreach ($grid_data_qrms->data as $grid_item)
+                                            @foreach ($grid_data_qrms as $grid_item)
                                                 <tr>
                                                     <td>{{$serialNumber++}}</td>
                                                     <td>{{$grid_item['initial_probability']}}</td>
@@ -3275,7 +3331,7 @@
                                                     <td>{{$grid_item['initial_rpn']}}</td>
                                                     <td>{{$grid_item['risk_acceptance']}}</td>
                                                     <td>{{$grid_item['proposed_additional_risk_control']}}</td>
-                                                </tr>                                                
+                                                </tr>
                                             @endforeach
                                         @else
                                             <tr>
@@ -3298,14 +3354,14 @@
                                         <th>Residual RPN</th>
                                         <th>Risk Acceptance (Y/N)</th>
                                         <th>Mitigation proposal</th>
-                                    </tr> 
+                                    </tr>
 
                                     <tbody>
-                                        @if ($grid_data_qrms && is_array($grid_data_qrms->data))
+                                        @if ($grid_data_qrms && is_array($grid_data_qrms))
                                             @php
                                                 $serialNumber = 1;
                                             @endphp
-                                            @foreach ($grid_data_qrms->data as $grid_item)
+                                            @foreach ($grid_data_qrms as $grid_item)
                                                 <tr>
                                                     <td>{{$serialNumber++}}</td>
                                                     <td>{{$grid_item['residual_severity']}}</td>
@@ -3329,7 +3385,7 @@
                                     </tbody>
                                 </table>
 
-                               
+
                             </div>
 
                             <div class="border-table">
@@ -3347,11 +3403,11 @@
                                         <th class="w-60">Remark</th>
                                     </tr>
                                     <tbody>
-                                        @if($grid_data_matrix_qrms && is_array($grid_data_matrix_qrms->data))
+                                        @if($grid_data_matrix_qrms && is_array($grid_data_matrix_qrms))
                                             @php
                                                 $serialNumber = 1;
                                             @endphp
-                                            @foreach($grid_data_matrix_qrms->data as $matrix_grid_data)
+                                            @foreach($grid_data_matrix_qrms as $matrix_grid_data)
                                                 <tr>
                                                     <td>{{ $serialNumber }}</td>
                                                     <td>{{ $matrix_grid_data['risk_Assesment'] }}</td>
@@ -3403,6 +3459,8 @@
                                         </div>
                                     </td>
                                 </tr>
+                            </table>
+                            <table>
                                 <tr>
                                     <th class="w-20">Source of CAPA</th>
                                     <td class="w-80">
@@ -3410,14 +3468,17 @@
                                             @if ($data->source_of_capa) {{ $data->source_of_capa }} @else Not Applicable @endif
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <th class="w-20">Description of Discrepancy</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data->Description_of_Discrepancy) {{ strip_tags($data->Description_of_Discrepancy) }} @else Not Applicable @endif
                                         </div>
                                     </td>
                                 </tr>
-
+                            </table>
+                            <table>
                                 <tr>
                                     <th class="w-20">Root Cause</th>
                                     <td class="w-80">
@@ -3425,6 +3486,8 @@
                                             @if ($data->capa_root_cause) {{ strip_tags($data->capa_root_cause) }} @else Not Applicable @endif
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <th class="w-20">Immediate Action Taken</th>
                                     <td class="w-30">
                                         <div>
@@ -3432,7 +3495,8 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                            </table>
+                            <table>
                                 <tr>
                                     <th class="w-20">Corrective Action Details</th>
                                     <td class="w-80">
@@ -3440,7 +3504,8 @@
                                             @if ($data->Corrective_Action_Details) {{ strip_tags($data->Corrective_Action_Details) }} @else Not Applicable @endif
                                         </div>
                                     </td>
-
+                                </tr>
+                                <tr>
                                     <th class="w-20">Preventive Action Details</th>
                                     <td class="w-80">
                                         <div>
@@ -3448,7 +3513,8 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                            </table>
+                            <table>
                                 <tr>
                                     <th class="w-20">Target Completion Date</th>
                                     <td class="w-80">
@@ -3456,7 +3522,8 @@
                                             @if ($data->capa_completed_date) {{ $data->capa_completed_date }} @else Not Applicable @endif
                                         </div>
                                     </td>
-
+                                </tr>
+                                <tr>
                                     <th class="w-20">Interim Control</th>
                                     <td class="w-80">
                                         <div>
@@ -3464,7 +3531,8 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                            </table>
+                            <table>
                                 <tr>
                                     <th class="w-20">Corrective Action Taken</th>
                                     <td class="w-80">
@@ -3472,7 +3540,8 @@
                                             @if ($data->Corrective_Action_Taken) {{ strip_tags($data->Corrective_Action_Taken) }} @else Not Applicable @endif
                                         </div>
                                     </td>
-
+                                </tr>
+                                <tr>
                                     <th class="w-20">Preventive Action Taken</th>
                                     <td class="w-80">
                                         <div>
@@ -3480,7 +3549,8 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                            </table>
+                            <table>
                                 <tr>
                                     <th class="w-20">CAPA Closure Comments</th>
                                     <td class="w-80">
@@ -3488,15 +3558,35 @@
                                             @if ($data->CAPA_Closure_Comments) {{ strip_tags($data->CAPA_Closure_Comments) }} @else Not Applicable @endif
                                         </div>
                                     </td>
-
-                                    <th class="w-20">CAPA Closure Attachment</th>
-                                    <td class="w-80">
-                                        <div>
-                                            @if ($data->CAPA_Closure_attachment) {{ $data->CAPA_Closure_attachment }} @else Not Applicable @endif
-                                        </div>
-                                    </td>
                                 </tr>
+                            </table>
+                            <div class="border-table">
+                                <div class="block-head">
+                                    Capa Closure Attachment
+                                </div>
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-20">S.N.</th>
+                                        <th class="w-60">Attachment</th>
+                                    </tr>
+                                    @if ($data->CAPA_Closure_attachment)
+                                        @foreach (json_decode($data->CAPA_Closure_attachment) as $key => $file)
+                                            <tr>
+                                                <td class="w-20">{{ $key + 1 }}</td>
+                                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                        target="_blank"><b>{{ $file }}</b></a> </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td class="w-20">1</td>
+                                            <td class="w-20">Not Applicable</td>
+                                        </tr>
+                                    @endif
+                                </table>
+                            </div>
 
+                            <table>
                                 <tr>
                                     <th class="w-20">Source Document</th>
                                     <td class="w-80">
@@ -3567,8 +3657,7 @@
                                 </tr>
 
                                 <tr>
-
-                                    <th class="w-20">CAPA Description</th>
+                                    {{-- <th class="w-20">CAPA Description</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data->CAPA_Description)
@@ -3577,7 +3666,7 @@
                                                 Not Applicable
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                     <th class="w-20">Post Categorization Of Incident</th>
                                     <td class="w-30">
                                         <div>

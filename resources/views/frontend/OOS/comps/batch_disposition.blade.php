@@ -7,9 +7,8 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">OOS Category</label>
-                    <select name="oos_category_bd">
-                        <option value="default" {{ $data->oos_category_bd == 'default' ? 'selected' : '' }}>Enter
-                            Your Selection Here</option>
+                    <select name="oos_category_bd" {{Helpers::isOOSChemical($data->stage)}} >
+                        <option value="" >Enter Your Selection Here</option>
                         <option value="analyst_error" {{ $data->oos_category_bd == 'analyst_error' ? 'selected' : ''
                             }}>Analyst Error</option>
                         <option value="instrument_error" {{ $data->oos_category_bd == 'instrument_error' ?
@@ -30,14 +29,14 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">Other's</label>
-                    <input type="text" name="others_bd" value="{{ $data->others_bd ?? '' }}">
+                    <input type="text" name="others_bd" value="{{ $data->others_bd ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
                 </div>
             </div>
             <!-- Material/Batch Release Selection -->
             <div class="col-12">
                 <div class="group-input">
                     <label for="Reference Records">Material/Batch Release</label>
-                    <select name="material_batch_release_bd">
+                    <select name="material_batch_release_bd" {{Helpers::isOOSChemical($data->stage)}}>
                         <option value="default" {{ $data->material_batch_release_bd == 'default' ? 'selected' : ''
                             }}>Enter Your Selection Here</option>
                         <option value="release" {{ $data->material_batch_release_bd == 'release' ? 'selected' : ''
@@ -53,7 +52,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Other Action (Specify)</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="other_action_bd" id="summernote-1">
+                    <textarea class="summernote" name="other_action_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                             {{$data->other_action_bd ??  ''}}
                                 </textarea>
                 </div>
@@ -62,7 +61,7 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Other Parameters Results</label>
-                    <textarea class="summernote" name="other_parameters_results_bd" id="summernote-1">
+                    <textarea class="summernote" name="other_parameters_results_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                             {{ $data->other_parameters_results_bd ?? '' }}
                         </textarea>
                 </div>
@@ -72,7 +71,7 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Trend of Previous Batches</label>
-                    <textarea class="summernote" name="trend_of_previous_batches_bd" id="summernote-1">
+                    <textarea class="summernote" name="trend_of_previous_batches_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                             {{ $data->trend_of_previous_batches_bd ?? '' }}
                         </textarea>
                 </div>
@@ -82,7 +81,7 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Stability Data</label>
-                    <textarea class="summernote" name="stability_data_bd" id="summernote-1">
+                    <textarea class="summernote" name="stability_data_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                             {{ $data->stability_data_bd ?? '' }}
                         </textarea>
                 </div>
@@ -92,7 +91,7 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Process Validation Data</label>
-                    <textarea class="summernote" name="process_validation_data_bd" id="summernote-1">
+                    <textarea class="summernote" name="process_validation_data_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                             {{ $data->process_validation_data_bd ?? '' }}
                         </textarea>
                 </div>
@@ -101,7 +100,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Method Validation </label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="method_validation_bd" id="summernote-1">
+                    <textarea class="summernote" name="method_validation_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                                         {{ $data->method_validation_bd ?? '' }}
                                 </textarea>
                 </div>
@@ -110,7 +109,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Any Market Complaints </label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="any_market_complaints_bd" id="summernote-1">
+                    <textarea class="summernote" name="any_market_complaints_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                                 {{ $data->any_market_complaints_bd ?? '' }}
                                 </textarea>
                 </div>
@@ -121,7 +120,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Statistical Evaluation </label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="statistical_evaluation_bd" id="summernote-1">
+                    <textarea class="summernote" name="statistical_evaluation_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                         {{ $data->statistical_evaluation_bd ?? '' }}
                         </textarea>
                 </div>
@@ -131,7 +130,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Risk Analysis for Disposition </label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="risk_analysis_disposition_bd" id="summernote-1">
+                    <textarea class="summernote" name="risk_analysis_disposition_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                                 {{ $data->risk_analysis_disposition_bd ?? '' }}
                                 </textarea>
                 </div>
@@ -141,7 +140,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Conclusion </label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="conclusion_bd" id="summernote-1">
+                    <textarea class="summernote" name="conclusion_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                                     {{ $data->conclusion_bd ?? '' }}
                                 </textarea>
                 </div>
@@ -151,7 +150,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Justify for Delay in Activity</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="justify_for_delay_in_activity_bd" id="summernote-1">
+                    <textarea class="summernote" name="justify_for_delay_in_activity_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                                     {{ $data->justify_for_delay_in_activity_bd ?? '' }}
                                 </textarea>
                 </div>
@@ -183,7 +182,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="disposition_attachment_bd[]"
-                                oninput="addMultipleFiles(this, 'disposition_attachment_bd')" multiple>
+                                oninput="addMultipleFiles(this, 'disposition_attachment_bd')" multiple {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
                     </div>
 
@@ -191,11 +190,17 @@
             </div>
 
             <div class="button-block">
-                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                
+            @if ($data->stage == 0  || $data->stage >= 15)
+            <div class="progress-bars">
+                    <div class="bg-danger">Workflow is already Closed-Done</div>
+                </div>
+            @else
+                <button type="submit" class="saveButton">Save</button>
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
-                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                        Exit </a> </button>
+                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+            @endif
+            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
             </div>
         </div>
     </div>

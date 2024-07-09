@@ -22,10 +22,10 @@ return new class extends Migration
             $table->string('initiator')->nullable();
             $table->string('initiator_group')->nullable();
             $table->string('initiator_group_code')->nullable();
-            $table->string('due_date')->nullable();
-            $table->string('severity_level_gi')->nullable();
-            $table->text('initiated_through_gi')->nullable();
-            $table->text('if_others_gi')->nullable();
+            $table->date('due_date')->nullable();
+            $table->longtext('severity_level_gi')->nullable();
+            $table->longtext('initiated_through_gi')->nullable();
+            $table->longtext('if_others_gi')->nullable();
             $table->longText('is_repeat_gi')->nullable();
             $table->longText('repeat_nature_gi')->nullable();
             $table->string('nature_of_change_gi')->nullable();
@@ -173,6 +173,9 @@ return new class extends Migration
             $table->longtext('required_attachment_uar')->nullable();
             $table->longtext('verification_comments_uav')->nullable();
             $table->longtext('verification_attachment_uar')->nullable();
+            $table->longtext('actionchild')->nullable();
+            $table->longtext('Capachild')->nullable();
+            
             
             $table->text('stage')->nullable();
             $table->text('status')->nullable();

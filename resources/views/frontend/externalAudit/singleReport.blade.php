@@ -212,9 +212,11 @@
                     </tr>
                     <tr>
                         <th class="w-20">Others</th>
-                        <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">External Agencies </th>
-                        <td class="w-30">@if($data->external_agencies){{ $data->external_agencies }} @else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->external_agencies){{ $data->external_agencies }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Description</th>
@@ -232,7 +234,7 @@
                         <th class="w-20">Short Description</th>
                         <td class="w-30"> @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
-                        <td class="w-30"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
+                        <td class="w-30"> @if($data->due_date){{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit type</th>
@@ -285,7 +287,7 @@
                         </tr>
                         <tr>
                             <th class="w-20">Comments (If Any)</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 @if($data->if_comments)
                                     @foreach (explode(',', $data->if_comments) as $Key => $value)
 
@@ -294,6 +296,8 @@
                                 @else
                                   Not Applicable
                                 @endif</td>
+                        </tr>
+                        <tr>        
                                 <th class="w-20">Product/Material Name</th>
                                 <td class="w-80">
                                     @if($data->material_name)
@@ -484,7 +488,7 @@
                         <th class="w-20">S.N.</th>
                         <th class="w-60">Batch No</th>
                     </tr>
-                        @if($data->file_attachment)
+                        @if($data->file_attachment && is_array(json_decode($data->file_attachment_guideline)))
                         @foreach(json_decode($data->file_attachment_guideline) as $key => $file)
                             <tr>
                                 <td class="w-20">{{ $key + 1 }}</td>

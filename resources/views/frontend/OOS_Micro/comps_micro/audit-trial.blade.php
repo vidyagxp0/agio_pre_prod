@@ -198,16 +198,9 @@
                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                         @endif
                         <div class="buttons-new">
-                            @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
-                                    Review
-                                </button>
-                            @endif
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
-                                View
-                            </button>
+                           
                             <button class="button_theme1"><a class="text-white"
-                                    href="{{ route('oos.oos_view', $document->id) }}"> Back
+                                    href="{{ route('oos_micro.edit', $document->id) }}"> Back
                                 </a>
                             </button>
                             <button class="button_theme1" onclick="window.print();">
@@ -285,7 +278,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- <form action="" method="POST"> -->
-                                    <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
+                                    <form action="{{ route('oos_micro.store_audit_review', $document->id) }}" method="POST">
                                         @csrf
                                         <!-- Modal body -->
                                         <div class="modal-body">
@@ -332,7 +325,13 @@
                                 :{{  $document->initiator  ? $document->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->description_gi }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">
+                            @php
+                                use Carbon\Carbon;
+                            @endphp
+                            <p>Due Date: 
+                                {{ $document->due_date ? Carbon::parse($document->due_date)->format('d-M-Y') : 'Not Applicable' }}</p>
+                            </div>
 
                         </div>
         </div>
@@ -379,7 +378,7 @@
                             <td>
                                 <div>
                                     <strong> Data Field Name :</strong><a
-                                        href="{{ route('audit_details', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                        href="{{ route('oos_micro.audit_details', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                                 </div>
                                 <div style="margin-top: 5px;">
                                     {{-- {{dd($dataDemo)}} --}}
@@ -414,7 +413,8 @@
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at : 'Not Applicable' }}
+                                        :</strong>
+                                        {{ $dataDemo->created_at ? $dataDemo->created_at->format('d-M-Y H:i:s') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>

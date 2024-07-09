@@ -214,6 +214,9 @@
                                             {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                         </div>
                                     </div>
+
+
+                                    
                                     <div class="col-md-6">
                                         <div class="group-input">
                                             <label for="search">
@@ -230,7 +233,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 new-date-data-field">
+                                    {{--  <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Date Due">Date Due</label>
                                             <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
@@ -240,6 +243,17 @@
                                                     placeholder="DD-MMM-YYYY" />
                                                 <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'due_date')" />
+                                            </div>
+                                        </div>
+                                    </div>  --}}
+
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Date Due">Date Due</label>
+                                            <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}" />
+                                                <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
                                             </div>
                                         </div>
                                     </div>

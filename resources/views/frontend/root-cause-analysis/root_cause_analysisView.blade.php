@@ -231,8 +231,10 @@
 
                 <!-- Tab links -->
                 <div class="cctab">
-                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
+                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
+                    
+                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Investigation</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                     <!-- {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Environmental Monitoring</button> --}}
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Lab Investigation Remark</button> --}}
@@ -280,76 +282,75 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Initiator Group"><b>Initiator Group</b></label>
-                                            <select name="initiator_Group"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                 id="initiator_group">
+                              <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator Group">Initiator Department </label>
+                                                <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                     id="initiator_group">
+                                                    <option value="CQA"
+                                                        @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
+                                                        Quality Assurance</option>
+                                                    <option value="QAB"
+                                                        @if ($data->initiator_Group== 'QAB') selected @endif>Quality
+                                                        Assurance Biopharma</option>
+                                                    <option value="CQC"
+                                                        @if ($data->initiator_Group== 'CQC') selected @endif>Central
+                                                        Quality Control</option>
+                                                    <option value="CQC"
+                                                        @if ($data->initiator_Group== 'CQC') selected @endif>Manufacturing
+                                                    </option>
+                                                    <option value="PSG"
+                                                        @if ($data->initiator_Group== 'PSG') selected @endif>Plasma
+                                                        Sourcing Group</option>
+                                                    <option value="CS"
+                                                        @if ($data->initiator_Group== 'CS') selected @endif>Central
+                                                        Stores</option>
+                                                    <option value="ITG"
+                                                        @if ($data->initiator_Group== 'ITG') selected @endif>Information
+                                                        Technology Group</option>
+                                                    <option value="MM"
+                                                        @if ($data->initiator_Group== 'MM') selected @endif>Molecular
+                                                        Medicine</option>
+                                                    <option value="CL"
+                                                        @if ($data->initiator_Group== 'CL') selected @endif>Central
+                                                        Laboratory</option>
+                                                    <option value="TT"
+                                                        @if ($data->initiator_Group== 'TT') selected @endif>Tech
+                                                        Team</option>
+                                                    <option value="QA"
+                                                        @if ($data->initiator_Group== 'QA') selected @endif>Quality
+                                                        Assurance</option>
+                                                    <option value="QM"
+                                                        @if ($data->initiator_Group== 'QM') selected @endif>Quality
+                                                        Management</option>
+                                                    <option value="IA"
+                                                        @if ($data->initiator_Group== 'IA') selected @endif>IT
+                                                        Administration</option>
+                                                    <option value="ACC"
+                                                        @if ($data->initiator_Group== 'ACC') selected @endif>Accounting
+                                                    </option>
+                                                    <option value="LOG"
+                                                        @if ($data->initiator_Group== 'LOG') selected @endif>Logistics
+                                                    </option>
+                                                    <option value="SM"
+                                                        @if ($data->initiator_Group== 'SM') selected @endif>Senior
+                                                        Management</option>
+                                                    <option value="BA"
+                                                        @if ($data->initiator_Group== 'BA') selected @endif>Business
+                                                        Administration</option>
 
-                                                <option value="CQA"
-                                                    @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
-                                                    Quality Assurance</option>
-                                                <option value="QAB"
-                                                    @if ($data->initiator_Group== 'QAB') selected @endif>Quality
-                                                    Assurance Biopharma</option>
-                                                <option value="CQC"
-                                                    @if ($data->initiator_Group== 'CQC') selected @endif>Central
-                                                    Quality Control</option>
-                                                <option value="MANU"
-                                                    @if ($data->initiator_Group== 'MANU') selected @endif>Manufacturing
-                                                </option>
-                                                <option value="PSG"
-                                                    @if ($data->initiator_Group== 'PSG') selected @endif>Plasma
-                                                    Sourcing Group</option>
-                                                <option value="CS"
-                                                    @if ($data->initiator_Group== 'CS') selected @endif>Central
-                                                    Stores</option>
-                                                <option value="ITG"
-                                                    @if ($data->initiator_Group== 'ITG') selected @endif>Information
-                                                    Technology Group</option>
-                                                <option value="MM"
-                                                    @if ($data->initiator_Group== 'MM') selected @endif>Molecular
-                                                    Medicine</option>
-                                                <option value="CL"
-                                                    @if ($data->initiator_Group== 'CL') selected @endif>Central
-                                                    Laboratory</option>
-                                                <option value="TT"
-                                                    @if ($data->initiator_Group== 'TT') selected @endif>Tech
-                                                    team</option>
-                                                <option value="QA"
-                                                    @if ($data->initiator_Group== 'QA') selected @endif>Quality
-                                                    Assurance</option>
-                                                <option value="QM"
-                                                    @if ($data->initiator_Group== 'QM') selected @endif>Quality
-                                                    Management</option>
-                                                <option value="IA"
-                                                    @if ($data->initiator_Group== 'IA') selected @endif>IT
-                                                    Administration</option>
-                                                <option value="ACC"
-                                                    @if ($data->initiator_Group== 'ACC') selected @endif>Accounting
-                                                </option>
-                                                <option value="LOG"
-                                                    @if ($data->initiator_Group== 'LOG') selected @endif>Logistics
-                                                </option>
-                                                <option value="SM"
-                                                    @if ($data->initiator_Group== 'SM') selected @endif>Senior
-                                                    Management</option>
-                                                <option value="BA"
-                                                    @if ($data->initiator_Group== 'BA') selected @endif>Business
-                                                    Administration</option>
-
-                                            </select>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Initiator Group Code">Initiator Group Code</label>
-                                            <input type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                value="{{ $data->initiator_Group}}" id="initiator_group_code"
-                                                readonly>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator Group Code">Initiator Department Code</label>
+                                                <input readonly type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    value="{{ $data->initiator_Group}}" id="initiator_group_code"
+                                                    readonly>
+                                                {{-- <div class="static"></div> --}}
+                                            </div>
                                         </div>
-                                    </div>
-
                                     <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Short Description">Short Description<span
@@ -380,13 +381,13 @@
                                             </select> --}}
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    {{--  <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="search">
                                                 Assigned To <span class="text-danger"></span>
                                             </label>
                                             <select id="select-state" placeholder="Select..." name="assign_to"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  required>
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $key => $value)
                                                     <option value="{{ $value->id }}"
@@ -398,7 +399,47 @@
                                                 <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div>  --}}
+
+
+
+                             <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="select-state">Department Head <span class="text-danger">*</span></label>
+                                    <select id="select-state" placeholder="Select..." name="assign_to"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} required>
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $key => $value)
+                                            <option value="{{ $value->id }}" @if ($data->assign_to == $value->id) selected @endif>
+                                                {{ $value->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('assign_to')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="select-state">QA Reviewer <span class="text-danger">*</span></label>
+                                    <select id="select-state" placeholder="Select..." name="qa_reviewer"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} required>
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $key => $value)
+                                            <option value="{{ $value->id }}" @if ($data->qa_reviewer == $value->id) selected @endif>
+                                                {{ $value->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('qa_reviewer')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+
+
                                     <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date"> Due Date</label>
@@ -415,7 +456,19 @@
                                             <!-- <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --> --}}
 
                                     </div>
-                                 </div>                                  <!-- <div class="col-lg-6">
+                                 </div>   
+                                 
+
+
+
+
+
+
+
+
+
+                                 
+                              <!-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Initiator Group</b></label>
                                             <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -491,6 +544,20 @@
                                             <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                         </div>
                                     </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group">Initiated Through</label>
@@ -525,29 +592,36 @@
                                         </div>
                                     </div>
 
-  <div class="col-lg-6">
-        <div class="group-input">
-            <label for="Type">Type</label>
-            <select name="Type" id="Type" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                <option value="">-- Select --</option>
-                <option value="Facilities" @if ($data->Type == 'Facilities') selected @endif>Facilities</option>
-                <option value="Other" @if ($data->Type == 'Other') selected @endif>Other</option>
-                <option value="Stability" @if ($data->Type == 'Stability') selected @endif>Stability</option>
-                <option value="Raw Material" @if ($data->Type == 'Raw Material') selected @endif>Raw Material</option>
-                <option value="Clinical Production" @if ($data->Type == 'Clinical Production') selected @endif>Clinical Production</option>
-                <option value="Commercial Production" @if ($data->Type == 'Commercial Production') selected @endif>Commercial Production</option>
-                <option value="Labeling" @if ($data->Type == 'Labeling') selected @endif>Labeling</option>
-                <option value="Laboratory" @if ($data->Type == 'Laboratory') selected @endif>Laboratory</option>
-                <option value="Utilities" @if ($data->Type == 'Utilities') selected @endif>Utilities</option>
-                <option value="Validation" @if ($data->Type == 'Validation') selected @endif>Validation</option>
-            </select>
-        </div>
-    </div>
+                    <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Type">Type</label>
+                                <select name="Type" id="Type" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                    <option value="">-- Select --</option>
+
+                                    <option value="Process" @if ($data->Type == 'Process') selected @endif>Process</option>
+                                    <option value="Document" @if ($data->Type == 'Document') selected @endif>Document</option>
+                                    <option value="Equipment" @if ($data->Type == 'Equipment') selected @endif>Equipment</option>
+                                    <option value="Instrument" @if ($data->Type == 'Instrument') selected @endif>Instrument</option>
+                                    
+
+                                    <option value="Facilities" @if ($data->Type == 'Facilities') selected @endif>Facilities</option>
+                                    <option value="Other" @if ($data->Type == 'Other') selected @endif>Other</option>
+                                    <option value="Stability" @if ($data->Type == 'Stability') selected @endif>Stability</option>
+                                    <option value="Raw Material" @if ($data->Type == 'Raw Material') selected @endif>Raw Material</option>
+                                    <option value="Clinical Production" @if ($data->Type == 'Clinical Production') selected @endif>Clinical Production</option>
+                                    <option value="Commercial Production" @if ($data->Type == 'Commercial Production') selected @endif>Commercial Production</option>
+                                    <option value="Labeling" @if ($data->Type == 'Labeling') selected @endif>Labeling</option>
+                                    <option value="Laboratory" @if ($data->Type == 'Laboratory') selected @endif>Laboratory</option>
+                                    <option value="Utilities" @if ($data->Type == 'Utilities') selected @endif>Utilities</option>
+                                    <option value="Validation" @if ($data->Type == 'Validation') selected @endif>Validation</option>
+                                </select>
+                            </div>
+                        </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="priority_level">Priority Level</label>
                                             <div><small class="text-primary">Choose high if Immidiate actions are
-                                                    required</small></div>
+                                                    </small></div>
 
                                             <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="priority_level">
                                                 <!-- {{-- <option value="0">-- Select --</option>
@@ -582,7 +656,7 @@
 
                                  <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="department">Department(s)</label>
+                                        <label for="department">Responsible Department</label>
                                         @php
                                             $storedDepartments = $data->department; // Ensure this field name matches your database column
                                             $selectedDepartments = explode(',', $storedDepartments);
@@ -676,22 +750,17 @@
                             </div>
                         </div>
 
+
+
+
+
+
+
+
                         <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                                 <div class="row">
-                                    {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="root-cause-methodology">Root Cause Methodology</label>
-                                            <select name="root_cause_methodology[]"  placeholder="-- Select --"
-                                                data-search="false" data-silent-initial-value-set="true"
-                                                id="root-cause-methodology">
-                                                <option @if ($data->root_cause_methodology== '1') selected @endif value="1">Why-Why Chart</option>
-                                                <option @if ($data->root_cause_methodology== '2') selected @endif value="2">Failure Mode and Efect Analysis</option>
-                                                <option @if ($data->root_cause_methodology== '3') selected @endif value="3">Fishbone or Ishikawa Diagram</option>
-                                                <option @if ($data->root_cause_methodology== '4') selected @endif value="4">Is/Is Not Analysis</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
+                                   
                               <div class="col-12">
                                 <div class="group-input">
                                     <label for="root-cause-methodology">Root Cause Methodology</label>
@@ -745,8 +814,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 sub-head"></div>
-                                    <div class="col-12 mb-4">
+                                    {{--  <div class="col-12 sub-head"></div>  --}}
+                                  <div class="col-12 mb-4" id="fmea-section" style="display:none;">
+                              
                                         <div class="group-input">
                                             <label for="agenda">
                                                 Failure Mode and Effect Analysis<button type="button" name="agenda"
@@ -786,6 +856,8 @@
                                                     <tbody>
                                                         @if (!empty($data->risk_factor))
                                                             @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
+                                                                 {{--  @dd($key, $riskFactor)  --}}
+                                                           
                                                                 <tr>
                                                                     <td>{{ $key + 1 }}</td>
                                                                     <td><input name="risk_factor[]" type="text" value="{{ $riskFactor }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></td>
@@ -876,8 +948,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 sub-head"></div>
-                                    <div class="col-12">
+                                    {{--  <div class="col-12 sub-head"></div>  --}}
+                                <div class="col-12" id="fishbone-section" style="display:none;">
                                         <div class="group-input">
                                             <label for="fishbone">
                                                 Fishbone or Ishikawa Diagram
@@ -954,9 +1026,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 sub-head"></div>
-                                    <div class="col-12">
-                                        <div class="group-input">
+                                    {{--  <div class="col-12 sub-head"></div>  --}}
+                                     <div class="col-12" id="why-why-chart-section" style="display:none;">
+                                   <div class="group-input">
                                             <label for="why-why-chart">
                                                 Why-Why Chart
                                                 <span class="text-primary" data-bs-toggle="modal"
@@ -1149,8 +1221,8 @@
                                             </div>
                                         </div>
                                     </div> --}}
-                                    <div class="col-12">
-                                        <div class="group-input">
+                                       <div class="col-12" id="is-is-not-section" style="display:none;">
+                                 <div class="group-input">
                                             <label for="why-why-chart">
                                                 Is/Is Not Analysis
                                                 <span class="text-primary" data-bs-toggle="modal"
@@ -1235,7 +1307,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 sub-head"></div>
+                                    {{--  <div class="col-12 sub-head"></div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="root_cause_description">Root Cause Description</label>
@@ -1247,7 +1319,7 @@
                                             <label for="investigation_summary">Investigation Summary</label>
                                             <textarea name="investigation_summary"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->investigation_summary }}</textarea>
                                         </div>
-                                    </div>
+                                    </div>  --}}
                                  {{-- <div class="col-12">
                                         <div class="sub-head">Geographic Information</div>
                                     </div> --}}
@@ -1307,6 +1379,150 @@
                         </div>
 
 
+
+
+
+
+                    <div id="CCForm5" class="inner-block cctabcontent">
+                                    <div class="inner-block-content">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="objective">Objective</label>
+                                                    <textarea name="objective"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->objective }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="scope">Scope</label>
+                                                    <textarea name="scope"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->scope }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="problem_statement">Problem Statement</label>
+                                                    <textarea name="problem_statement_rca"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->problem_statement_rca }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="requirement">Requirement</label>
+                                                    <textarea name="requirement"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->requirement }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="immediate_action">Immediate Action</label>
+                                                    <textarea name="immediate_action"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->immediate_action }}</textarea>
+                                                </div>
+                                            </div>
+                                          <div class="col-lg-12">
+    <div class="group-input">
+        <label for="investigation_team">Investigation Team</label>
+        <select id="investigation_team" name="investigation_team" class="form-control">
+            <option value="">Select a member of the Investigation Team</option>
+            @foreach ($users as $user)
+                <option value="{{ $user->id }}"
+                    @if ($data->investigation_team == $user->id) selected @endif>
+                    {{ $user->name }}
+                </option>
+            @endforeach
+        </select>
+        @error('investigation_team')
+            <p class="text-danger">{{ $message }}</p>
+        @enderror
+    </div>
+</div>
+
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="investigation_tool">Investigation Tool</label>
+                                                    <textarea name="investigation_tool"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->investigation_tool }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="root_cause">Root Cause</label>
+                                                    <textarea name="root_cause"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->root_cause }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="impact_risk_assessment">Impact / Risk Assessment</label>
+                                                    <textarea name="impact_risk_assessment"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->impact_risk_assessment }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="capa">CAPA</label>
+                                                    <textarea name="capa"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->capa }}</textarea>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-12">
+                                                <div class="group-input">
+                                                    <label for="root_cause_description">Root Cause Description</label>
+                                                    <textarea name="root_cause_description_rca"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->root_cause_description_rca }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="group-input">
+                                                    <label for="investigation_summary">Investigation Summary</label>
+                                                    <textarea name="investigation_summary_rca"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->investigation_summary_rca }}</textarea>
+                                                </div>
+                                            </div>
+
+                                            {{--  <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="investigation_summary">Investigation Summary</label>
+                                                    <textarea name="investigation_summary"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>  --}}
+
+                                   <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="comments">Investigation Attachment/label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div  class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="root_cause_initial_attachment_rca">
+                                                    {{-- @if(!is_null($data->cft_attchament_new) && is_array(json_decode($data->cft_attchament_new))) --}}
+                                                    @if ($data->root_cause_initial_attachment_rca)
+                                                        @foreach(json_decode($data->root_cause_initial_attachment_rca) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                   {{-- @endif --}}
+                                                   @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile" name="root_cause_initial_attachment_rca[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'root_cause_initial_attachment_rca')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton"
+                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">
+                                            Exit </a> </button>
+                                </div>
+                            </div>
+                        </div>
+                     
+                        
+
                         <div id="CCForm4" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                              <!-- <div class="sub-head">
@@ -1363,54 +1579,106 @@
                         <div id="CCForm7" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Acknowledge_By">Acknowledge By</label>
-                                            <div class="static">{{ $data->acknowledge_by }}</div>
+                                            <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Acknowledge_On">Acknowledge On</label>
-                                            <div class="static">{{ $data->acknowledge_on }}</div>
+                                            <div class="static">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+
+                                    
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static">{{ $data->comments }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Submit_By">Submited By</label>
                                             <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Submit_On">Submited On</label>
                                             <div class="static">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+
+
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static">{{ $data->qa_comments_new }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Mgr.more Info Reqd By">Root Cause more Info Req.
+                                                    By</label>
+                                                <div class="static">{{ $data->submitted_by }}</div>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Mgr.more Info Reqd On">Root Cause more Info Req.
+                                                    On</label>
+                                                <div class="static">{{ $data->submitted_on }}</div>
+                                            </div>
+                                    </div>
+
+                                    
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static">{{ $data->cft_comments_new }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="QA_Review_Complete_By">QA Review Completed By</label>
-                                            <div class="static">{{ $data->qA_review_complete_by }}</div>
+                                            <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="QA_Review_Complete_On">QA Review Completed On</label>
-                                            <div class="static">{{ $data->qA_review_complete_on }}</div>
+                                            <div class="static">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static">{{ $data->comment_3 }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancelled By</label>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancelled On">Cancelled On</label>
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
+                                        
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static">{{ $data->cancel_comment }}</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="button-block">
                                     <button type="submit" class="saveButton"
@@ -1862,4 +2130,64 @@ function addRootCauseAnalysisRiskAssessment1(tableId) {
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);});
     </script>
+
+
+    {{--  <script>
+    $(document).ready(function() {
+        $('#root-cause-methodology').on('change', function() {
+            var selectedValues = $(this).val();
+            $('#why-why-chart-section').hide();
+            $('#fmea-section').hide();
+            $('#fishbone-section').hide();
+            $('#is-is-not-section').hide();
+
+            if (selectedValues.includes('Why-Why Chart')) {
+                $('#why-why-chart-section').show();
+            }
+            if (selectedValues.includes('Failure Mode and Effect Analysis')) {
+                $('#fmea-section').show();
+            }
+            if (selectedValues.includes('Fishbone or Ishikawa Diagram')) {
+                $('#fishbone-section').show();
+            }
+            if (selectedValues.includes('Is/Is Not Analysis')) {
+                $('#is-is-not-section').show();
+            }
+        });
+    });
+</script>    --}}
+
+
+<script>
+    $(document).ready(function() {
+        $('#root-cause-methodology').on('change', function() {
+            var selectedValues = $(this).val() || [];
+
+            // Hide all sections initially
+            $('#why-why-chart-section').hide();
+            $('#fmea-section').hide();
+            $('#fishbone-section').hide();
+            $('#is-is-not-section').hide();
+
+            // Show sections based on the selected values
+            selectedValues.forEach(function(value) {
+                if (value === 'Why-Why Chart') {
+                    $('#why-why-chart-section').show();
+                }
+                if (value === 'Failure Mode and Effect Analysis') {
+                    $('#fmea-section').show();
+                }
+                if (value === 'Fishbone or Ishikawa Diagram') {
+                    $('#fishbone-section').show();
+                }
+                if (value === 'Is/Is Not Analysis') {
+                    $('#is-is-not-section').show();
+                }
+            });
+        });
+
+        // Trigger the change event on page load to show the correct sections based on initial values
+        $('#root-cause-methodology').trigger('change');
+    });
+</script>
     @endsection

@@ -191,6 +191,7 @@
                 <div class="block-head">
                     Investigation
                 </div>
+            <div style="max-width: 700px!important; overflow: hidden;">
                 <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
@@ -217,17 +218,22 @@
                         <td class="w-80" colspan="3">
                             @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
                         </td>
+                    </tr>
+                    <tr>    
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Due Date</th>
-                        <td class="w-80" colspan="3"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
+                        <td class="w-80" colspan="3"> @if($data->due_date)  {{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }} @else Not Applicable @endif</td>
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>r>
+                    </tr>
                     <tr>
                         <th class="w-20">Others</th>
                         <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr> 
                         <th class="w-20">Priority Level</th>
                         <td class="w-30">@if($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>
                     </tr>
@@ -239,9 +245,14 @@
                     </tr>
                     <tr>
                         <th class="w-20">Description</th>
-                        <td class="w-30">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
+                    </tr> 
+                    
+                    
+                    <tr>  
+                       
                         <th class="w-20">Comments</th>
-                        <td class="w-30">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
                     </tr>                       
                     <tr>
                         <th class="w-20">Initiated Through
@@ -252,6 +263,8 @@
                     </tr>
                     
                 </table>
+            </div>
+
                 <div class="border-table">
                     <div class="block-head">
                         File Attachment, if any
@@ -293,6 +306,9 @@
                         <tr>
                             <th class="w-20">Root Cause Description</th>
                             <td class="w-80">@if($data->root_cause_description){{ $data->root_cause_description }}@else Not Applicable @endif</td>
+                           </tr>
+                        <tr>
+                           
                             <th class="w-20">Investigation Summary</th>
                             <td class="w-80">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
                         </tr>
@@ -426,6 +442,9 @@
             - <tr>
                 <th class="w-20">Problem Statement</th>
                 <td class="w-80">@if($data->why_problem_statement){{ $data->why_problem_statement }}@else Not Applicable @endif</td>
+              </tr>
+               <tr>
+              
                 <th class="w-20">Why 1 </th>
                 {{-- <td class="w-80">@if($data->why_1){{ $data->why_1 }}@else Not Applicable @endif</td> --}}
                 <td class="w-80">
@@ -462,6 +481,9 @@
                         Not Applicable
                     @endif
                       </td>
+
+            </tr>
+                 <tr>
                 <th class="w-20">Why 3</th>
                 {{-- <td class="w-80">@if($data->why_3){{ $data->why_3 }}@else Not Applicable @endif</td> --}}
                 <td class="w-80">
@@ -498,6 +520,9 @@
                         Not Applicable
                     @endif
                       </td>
+
+             </tr>
+             <tr>
                 <th class="w-20">Why5</th>
                 {{-- <td class="w-80">@if($data->why_4){{ $data->why_4 }}@else Not Applicable @endif</td> --}}
                 <td class="w-80">
@@ -530,32 +555,39 @@
         <tr>
             <th class="20">What Will Be</th>
             <td class="80">@if($data->what_will_be){{ $data->what_will_be }}@else Not Applicable @endif</td>
-          
+        </tr>
+        <tr>
             <th class="20">What Will Not Be </th>
             <td class="80">@if($data->what_will_not_be){{ $data->what_will_not_be }}@else Not Applicable @endif</td>   
         </tr>
         <tr>   
             <th class="20">What Will Rationale </th>
             <td class="80">@if($data->what_rationable){{ $data->what_rationable }}@else Not Applicable @endif</td>
-        
+        </tr>
+        <tr>
             <th class="w-20">Where Will Be</th>
             <td class="w-80">@if($data->where_will_be){{ $data->where_will_be }}@else Not Applicable @endif</td>
         </tr>  
             <th class="w-20">Where Will Not Be </th>
             <td class="w-80">@if($data->where_will_not_be){{ $data->where_will_not_be }}@else Not Applicable @endif</td>
+        </tr>
+        <tr> 
             <th class="w-20">Where Will Rationale </th>
             <td class="w-80">@if($data->where_rationable){{ $data->where_rationable }}@else Not Applicable @endif</td>
         </tr>
         <tr>
             <th class="w-20">When Will Be</th>
             <td class="w-80">@if($data->when_will_be){{ $data->when_will_be }}@else Not Applicable @endif</td>
+        </tr>
+        <tr>
             <th class="w-20">When Will Not Be </th>
             <td class="w-80">@if($data->when_will_not_be){{ $data->when_will_not_be }}@else Not Applicable @endif</td>
         </tr>
         <tr>  
             <th class="w-20">When Will Rationale </th>
             <td class="w-80">@if($data->when_rationable){{ $data->when_rationable }}@else Not Applicable @endif</td>
-       
+        </tr>
+        <tr>       
             <th class="w-20">Coverage Will Be</th>
             <td class="w-80">@if($data->coverage_will_be){{ $data->coverage_will_be }}@else Not Applicable @endif</td>
         </tr>
@@ -563,6 +595,8 @@
 
             <th class="w-20">Coverage Will Not Be </th>
             <td class="w-80">@if($data->coverage_will_not_be){{ $data->coverage_will_not_be }}@else Not Applicable @endif</td>
+        </tr>
+        <tr>
             <th class="w-20">Coverage Will Rationale </th>
             <td class="w-80">@if($data->coverage_rationable){{ $data->coverage_rationable }}@else Not Applicable @endif</td>
         
@@ -570,6 +604,8 @@
         <tr>
             <th class="w-20">Who Will Be</th>
             <td class="w-80">@if($data->who_will_be){{ $data->who_will_be }}@else Not Applicable @endif</td>
+        </tr>
+        <tr>
             <th class="w-20">Who Will Not Be </th>
             <td class="w-80">@if($data->who_will_not_be){{ $data->who_will_not_be }}@else Not Applicable @endif</td>
         </tr>

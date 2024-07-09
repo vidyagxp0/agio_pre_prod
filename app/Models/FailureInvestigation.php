@@ -27,4 +27,12 @@ class FailureInvestigation extends Model
     {
         return $this->belongsTo(User::class, 'initiator_id');
     }
+    public function division()
+    {
+        return $this->belongsTo(QMSDivision::class,'division_id');
+    }
+    public function initiator()
+    {
+        return $this->belongsTo(User::class,'initiator_id');
+    }
 }

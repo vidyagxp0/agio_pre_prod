@@ -64,6 +64,10 @@
 
             var cell9 = newRow.insertCell(8);
             cell9.innerHTML = "<input type='text'>";
+
+             let cell10 = newRow.insertCell(5);
+            cell6.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
             for (var i = 1; i < currentRowCount; i++) {
                 var row = table.rows[i];
                 row.cells[0].innerHTML = i;
@@ -104,6 +108,7 @@
                     }
                     html += '</select></td>' +
                         '<td><input type="text" name="remarks[]"></td>' +
+                         '<td><button type="button" class="removeRowBtn">Remove</button></td>'+
                         '</tr>';
 
                     return html;
@@ -169,6 +174,7 @@
                         // +
                         // '<td><input type="text" name="status_Observation[]"></td>' +
                         // '<td><input type="text" name="remark_observation[]"></td>' +
+                         '<td><button type="button" class="removeRowBtn">Remove</button></td>'+
                         '</tr>';
 
                     return html;
@@ -292,9 +298,9 @@
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}"  />
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                                oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
                                         </div>
                                     </div>
                                 </div>
@@ -365,7 +371,7 @@
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
                                 </div>  
-                                <div class="col-12">
+                                {{--  <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
                                         <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
@@ -376,7 +382,7 @@
                                             <option value="critical">Critical</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>  --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -539,7 +545,7 @@
                                 </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
+                                        <label for="Audit Schedule Start Date">Audit Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
@@ -551,7 +557,7 @@
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule End Date">Audit Schedule End Date</label>
+                                        <label for="Audit Schedule End Date">Audit Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
@@ -579,6 +585,7 @@
                                                     <th>Auditor</th>
                                                     <th>Auditee</th>
                                                     <th>Remarks</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -629,6 +636,7 @@
                                                         @endforeach
                                                     </select></td>
                                                 <td><input type="text" name="remarks[]"></td>
+                                               <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -893,6 +901,7 @@
                                                         <th>CAPA Completion Date</th>
                                                         <th>Status</th>
                                                         <th>Remarks</th> --}}
+                                                          <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -904,6 +913,21 @@
                                         </div>
                                     </div> 
                                 
+
+
+
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="severity-level">Observation Category/label>
+                                        <select name="severity_level">
+                                            <option value="0">-- Select --</option>
+                                            <option value="minor">Minor</option>
+                                            <option value="major">Major</option>
+                                            <option value="critical">Critical</option>
+                                        </select>
+                                    </div>
+                                </div> 
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments">Audit Attachments</label>
@@ -1303,6 +1327,12 @@
             document.getElementById('initiator_group_code').value = selectedValue;
         });
     </script>
+
+    <script>
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    })
+</script>
      <script>
         var maxLength = 255;
         $('#docname').keyup(function() {

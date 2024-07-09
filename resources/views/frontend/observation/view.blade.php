@@ -342,22 +342,45 @@
                                         {{-- </div>
                                     </div>
                                 </div> --}}
-                                        <div class="col-md-6">
+
+
+                                <div class="col-lg-6  new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="actual_end_date">Due Date</lable>
+                                            <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                reason in "Due Date Extension Justification" data field.</small>
+                                        </div>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="due_date"
+                                                    placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->due_date) }}" />
+                                                <input type="date"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                    value="{{ $data->due_date }}"
+                                                    id="actual_end_date_checkdate"
+                                                    name="due_date" class="hide-input"
+                                                    oninput="handleDateInput(this, 'due_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
+                                            </div>
+
+
+                                    </div>
+                                </div>
+                                        {{-- <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date"> Date Due <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">If revising Due Date, kindly mention
                                                         revision reason in "Due Date Extension Justification" data
-                                                        field.</small></div>
-                                            <input disabled type="text" name="due_date" id="due_date" value="{{ \Carbon\Carbon::now()->addDays(30)->format('d-M-Y') }}" />
+                                                        field.</small></div> --}}
+
+                                            {{-- <input disabled type="text" name="due_date" id="due_date" value="{{ \Carbon\Carbon::now()->addDays(30)->format('d-M-Y') }}" /> --}}
 
                                                 {{-- <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                     name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
                                                 {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
                                                 {{-- <div class="static"> {{ $due_date }}</div> --}}
-
+{{--
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
@@ -498,44 +521,108 @@
                                 </div> --}}
                                         {{-- <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="attach_files1">Attached Files</label>
+                                        <label for="__files1">Attached Files</label>
                                         <input type="file" name="attach_files1" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{ $data->attach_files1 }}"/>
                                     </div>
                                 </div> --}}
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="attach_files1">Attached Files</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                                        documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="attach_files1">
-                                                        @if ($data->attach_files1)
-                                                            @foreach (json_decode($data->attach_files1) as $file)
-                                                                <h6 type="button" class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
-                                                        @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input
-                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            value="{{ $data->attach_files1 }}" type="file"
-                                                            id="myfile" name="attach_files1[]"
-                                                            oninput="addMultipleFiles(this, 'attach_files1')" multiple>
-                                                    </div>
-                                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="related_observations">Attached files</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="attach_files_gi">
+                                                @if ($data->attach_files_gi)
+                                                    @foreach (json_decode($data->attach_files_gi) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}"
+                                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    value="{{ $data->attach_files_gi }}" type="file"
+                                                    id="myfile" name="attach_files_gi[]"
+                                                    oninput="addMultipleFiles(this, 'attach_files_gi')" multiple>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+
+
+{{-- <script>
+    function removeFile(element) {
+        const fileName = element.getAttribute('data-file-name');
+        let attachFiles = document.getElementById('attach_files_gi');
+        let currentFiles = JSON.parse(attachFiles.getAttribute('data-current-files'));
+
+        currentFiles = currentFiles.filter(file => file !== fileName);
+        attachFiles.setAttribute('data-current-files', JSON.stringify(currentFiles));
+
+        element.parentElement.remove();
+    }
+
+    function addMultipleFiles(input, fieldId) {
+        const attachFiles = document.getElementById(fieldId);
+        const currentFiles = input.files;
+        let filesList = [];
+
+        for (let i = 0; i < currentFiles.length; i++) {
+            filesList.push(currentFiles[i].name);
+        }
+
+        attachFiles.setAttribute('data-current-files', JSON.stringify(filesList));
+    }
+</script> --}}
+
+
+
+                                {{-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="attach_files1">Attached Files</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="attach_files1">
+                                                @if ($data->attach_files1)
+                                                    @foreach (json_decode($data->attach_files1) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}"
+                                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    value="{{ $data->attach_files1 }}" type="file"
+                                                    id="myfile" name="attach_files1[]"
+                                                    oninput="addMultipleFiles(this, 'attach_files1')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> --}}
+
                                         {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="capa_date_due">Recomendation Date Due for CAPA</label>
@@ -654,7 +741,7 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" name="date_Response_due2"
                                                         id="date_Response_due" readonly placeholder="DD-MMM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data->date_response_due1) }}" />
+                                                        value="{{ Helpers::getdateFormat($data->date_Response_due2) }}" />
                                                     <input type="date" id="date_Response_due_checkdate"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         value="{{ $data->date_response_due1 }}" class="hide-input"
@@ -751,7 +838,7 @@
                                                 <table class="table table-bordered" id="observation">
                                                     <thead>
                                                         <tr>
-                                                            <th>Row #</th>
+                                                            <th style="width: 20px;">S.No.</th>
                                                             <th>Action</th>
                                                             <th>Responsible</th>
                                                             <th>Deadline</th>
@@ -895,19 +982,14 @@
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     onchange='calculateRiskAnalysis(this)'>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option value="1"
-                                                        {{ $data->severity_rate == '1' ? 'selected' : '' }}>Negligible
-                                                    </option>
-                                                    <option value="2"
-                                                        {{ $data->severity_rate == '2' ? 'selected' : '' }}>Moderate
-                                                    </option>
-                                                    <option value="3"
-                                                        {{ $data->severity_rate == '3' ? 'selected' : '' }}>Major</option>
-                                                    <option value="4"
-                                                        {{ $data->severity_rate == '4' ? 'selected' : '' }}>Fatal</option>
+                                                    <option value="1" {{ $data->severity_rate == 'Negligible' ? 'selected' : '' }}>Negligible</option>
+                                                    <option value="2" {{ $data->severity_rate == 'Moderate' ? 'selected' : '' }}>Moderate</option>
+                                                    <option value="3" {{ $data->severity_rate == 'Major' ? 'selected' : '' }}>Major</option>
+                                                    <option value="4" {{ $data->severity_rate == 'Fatal' ? 'selected' : '' }}>Fatal</option>
                                                 </select>
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Occurrence">Occurrence</label>
@@ -916,16 +998,16 @@
                                                     onchange='calculateRiskAnalysis(this)'>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option value="5"
-                                                        {{ $data->occurrence == '5' ? 'selected' : '' }}>Extremely Unlikely
+                                                        {{ $data->occurrence == 'Extremely Unlikely' ? 'selected' : '' }}>Extremely Unlikely
                                                     </option>
                                                     <option value="4"
-                                                        {{ $data->occurrence == '4' ? 'selected' : '' }}>Rare</option>
+                                                        {{ $data->occurrence == 'Rare' ? 'selected' : '' }}>Rare</option>
                                                     <option value="3"
-                                                        {{ $data->occurrence == '3' ? 'selected' : '' }}>Unlikely</option>
+                                                        {{ $data->occurrence == 'Unlikely' ? 'selected' : '' }}>Unlikely</option>
                                                     <option value="2"
-                                                        {{ $data->occurrence == '2' ? 'selected' : '' }}>Likely</option>
+                                                        {{ $data->occurrence == 'Likely' ? 'selected' : '' }}>Likely</option>
                                                     <option value="1"
-                                                        {{ $data->occurrence == '1' ? 'selected' : '' }}>Very Likely
+                                                        {{ $data->occurrence == 'Very Likely' ? 'selected' : '' }}>Very Likely
                                                     </option>
                                                 </select>
                                             </div>
@@ -938,15 +1020,15 @@
                                                     onchange='calculateRiskAnalysis(this)'>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option value="5"
-                                                        {{ $data->detection == '5' ? 'selected' : '' }}>Impossible</option>
+                                                        {{ $data->detection == 'Impossible' ? 'selected' : '' }}>Impossible</option>
                                                     <option value="4"
-                                                        {{ $data->detection == '4' ? 'selected' : '' }}>Rare</option>
+                                                        {{ $data->detection == 'Rare' ? 'selected' : '' }}>Rare</option>
                                                     <option value="3"
-                                                        {{ $data->detection == '3' ? 'selected' : '' }}>Unlikely</option>
+                                                        {{ $data->detection == 'Unlikely' ? 'selected' : '' }}>Unlikely</option>
                                                     <option value="2"
-                                                        {{ $data->detection == '2' ? 'selected' : '' }}>Likely</option>
+                                                        {{ $data->detection == 'Likely' ? 'selected' : '' }}>Likely</option>
                                                     <option value="1"
-                                                        {{ $data->detection == '1' ? 'selected' : '' }}>Very Likely
+                                                        {{ $data->detection == 'Very Likely' ? 'selected' : '' }}>Very Likely
                                                     </option>
                                                 </select>
                                             </div>

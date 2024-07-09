@@ -44,9 +44,12 @@
                         000{{ $doc->id }}
                     </a>
                 </td>
-                <td class="division">
-                    {{ $doc->document_type_name }}
+                <td class="doc-type">
+                    {{ Helpers::getDocumentTypeById($doc->document_type_id) }}
+
+                    <!-- {{ $doc->document_type_name}} -->
                 </td>
+
                 <td class="division">
                     {{ Helpers::getDivisionName($doc->division_id) }}
                 </td>
@@ -78,8 +81,8 @@
                             </a>
 
                             @if ($doc->status != 'Obsolete')
-                                <a href="{{ route('documents.edit', $doc->id) }}">Edit</a>
-                                
+                            <a href="{{ route('documents.edit', $doc->id) }}">Edit</a>
+
                             @endif
 
                             <!--<form-->
@@ -104,6 +107,6 @@
         </tbody>
     </table>
     @if (isset($count))
-        {!! $documents->links() !!}
+    {!! $documents->links() !!}
     @endif
 </div>
