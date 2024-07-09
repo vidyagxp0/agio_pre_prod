@@ -19,9 +19,72 @@
         }
     </script>
 
-    <style>
+<style>
         header .header_rcms_bottom {
             display: none;
+        }
+        .process-groups > div {
+            flex: 1;
+            text-align: center;
+            background-color: white;
+        }
+
+        .process-groups .scope-bar {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .mt-1 {
+            margin-top: 1rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+
+        .bg-white {
+            background-color: white;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+
+        .flex-grow-2 {
+            flex: 2;
+        }
+
+        .filter-bar {
+            width: 100%;
+        }
+
+        .filter-item {
+            flex: 1;
+            min-width: 150px;
+            margin: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .filter-item {
+                flex: 1 1 100%;
+                margin: 5px 0;
+            }
+        }
+
+        .process-groups .scope-bar .print-btn {
+            margin-left: 5px;
         }
 
         .filter-sub {
@@ -29,6 +92,37 @@
             gap: 16px;
             margin-left: 13px
         }
+        .active{
+            width: 100%;
+    text-align: center;
+    color: grey;
+
+        }
+        <style>
+.process-groups {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px; /* Adjust the spacing as needed */
+}
+
+.process-groups > div {
+    flex: 1;
+    text-align: center; 
+    background-color: white;/* Center align text in each div */
+}
+
+.process-groups .scope-bar {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.process-groups .scope-bar .print-btn {
+    margin-left: 5px;
+    
+}
+</style>
+
     </style>
     <style>
         .filter-bar {
@@ -57,23 +151,77 @@
             overflow: scroll
         }
     </style>
-    <div id="rcms-desktop">
+    <style>
+.mt-1 {
+    margin-top: 1rem;
+}
 
-        <div class="process-groups">
-            <div class="active" onclick="openTab('internal-audit', this)">OOC Log </div>
-        </div>
-        <div class="main-content">
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.flex-grow-2 {
+    flex: 2;
+}
+
+.filter-bar {
+    width: 100%;
+}
+
+.filter-item {
+    flex: 1;
+    min-width: 150px;
+    margin: 5px;
+}
+
+.form-control {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .filter-item {
+        flex: 1 1 100%;
+        margin: 5px 0;
+    }
+}
+</style>
+  <div id="rcms-desktop">
+
+
+  <div class="process-groups">
+            <div class="scope-bar">
+                <button class="print-btn btn btn-primary">Print</button>
+            </div>
+            <div class="active" onclick="openTab('internal-audit', this)">Out Of Calibration Log</div>
+            <div class="third-div">Third Div Content</div>
+        </div>        <div class="main-content">
             <div class="container-fluid">
                 <div class="process-tables-list">
                     <div class="process-table active" id="internal-audit">
-                        <div class="mt-1 mb-2 bg-white " style="height: 65px">
+                        <div class="mt-1 mb-2 bg-white " style="height: auto; padding: 10px; margin: 5px;">
                             <div class="d-flex align-items-center">
-                                <div class="scope-bar ml-3">
+                                <!-- <div class="scope-bar ml-3">
                                     <button style="width: 70px;margin-left:5px"
                                         class="print-btn btn btn-primary">Print</button>
-                                </div>
-                                <div class="flex-grow-2" style="margin-left:-50px; margin-bottom:12px">
-                                    <div class="filter-bar d-flex justify-content-between">
+                                </div> -->
+                                <!-- <div class="flex-grow-2" style="margin-left:-50px; margin-bottom:12px"> -->
+                                    <div class="filter-bar d-flex justify-content-between" style="flex-wrap: wrap;  display: flex;">
                                         <div class="filter-item">
                                             <label for="process">Department</label>
                                             <select name="Initiator_Group" id="initiator_group" class="form-control">
@@ -138,7 +286,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            <!-- </div> -->
                         </div>
 
                         <div class="table-block">
