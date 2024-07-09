@@ -1138,7 +1138,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="col-lg-6 new-time-data-field">
                                         <div class="group-input input-time">
                                             <label for="deviation_time">Deviation Observed On (Time) <span
@@ -1153,7 +1152,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="col-lg-6 new-time-data-field">
                                         <div
                                             class="group-input input-time @if ($data->Delay_Justification) style="display: block !important" @endif @error('Delay_Justification') @else delayJustificationBlock @enderror">
@@ -1164,8 +1162,6 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-
 
                                     <script>
                                         flatpickr("#deviation_time", {
@@ -1673,9 +1669,6 @@
                                                                 <th style="width: 16%"> Stage</th>
                                                                 <th style="width: 16%">Batch No</th>
                                                                 <th style="width: 8%">Action</th>
-
-
-
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -1759,7 +1752,6 @@
                                             });
                                         </script>
                                     </div>
-
 
                                     <!-- <div class="col-md-12">
                                         <div class="group-input">
@@ -1862,11 +1854,6 @@
                                         @enderror
                                     </div>
                                 </div>
-
-
-
-
-
 
 
                                     <div class="col-md-12">
@@ -2057,7 +2044,6 @@
                                         });
                                     </script>
 
-
                                 </div>
                                 <div class="button-block">
 
@@ -2163,8 +2149,6 @@
                                     document.getElementById("Investigation_button").style.display = "none";
                                     document.getElementById("CAPA_button").style.display = "none";
                                     document.getElementById("QRM_button").style.display = "none";
-
-
 
                                 }
 
