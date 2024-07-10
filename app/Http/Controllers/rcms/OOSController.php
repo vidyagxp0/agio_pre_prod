@@ -308,9 +308,9 @@ class OOSController extends Controller
             if ($changestage->stage == 10) {
                 $changestage->stage = "13";
                 $changestage->status = "Under phase III Investigation";
-                $changestage->completed_by_under_phaseIII_investigation= Auth::user()->name;
-                $changestage->completed_on_under_phaseIII_investigation = Carbon::now()->format('d-M-Y');
-                $changestage->comment_under_phaseIII_investigation = $request->comment;
+                $changestage->completed_by_phaseIIA_correction_inconclusive= Auth::user()->name;
+                $changestage->completed_on_phaseIIA_correction_inconclusive = Carbon::now()->format('d-M-Y');
+                $changestage->comment_phaseIIA_correction_inconclusive = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -331,9 +331,9 @@ class OOSController extends Controller
             if ($changestage->stage == 11) {
                 $changestage->stage = "13";
                 $changestage->status = "Under phase III Investigation";
-                $changestage->completed_by_under_phaseIII_investigation= Auth::user()->name;
-                $changestage->completed_on_under_phaseIII_investigation = Carbon::now()->format('d-M-Y');
-                $changestage->comment_under_phaseIII_investigation = $request->comment;
+                $changestage->completed_by_phaseIIB_correction_inconclusive= Auth::user()->name;
+                $changestage->completed_on_phaseIIB_correction_inconclusive = Carbon::now()->format('d-M-Y');
+                $changestage->comment_phaseIIB_correction_inconclusive = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -342,7 +342,7 @@ class OOSController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->action = 'Phase IIB Correction Inconclusive';
+                    $history->action = 'Phase II B Correction Inconclusive';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Under phase III Investigation";
                     $history->action_name = 'Update';
@@ -354,23 +354,22 @@ class OOSController extends Controller
             if ($changestage->stage == 13) {
                 $changestage->stage = "14";
                 $changestage->status = "Pending Final Approval Completed";
-                $changestage->completed_by_approval_completed= Auth::user()->name;
-                $changestage->completed_on_approval_completed = Carbon::now()->format('d-M-Y');
-                $changestage->comment_approval_completed = $request->comment;
-
-                $history = new OosAuditTrial();
-                $history->oos_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->action = 'Phase III Manufacturing Investigation';
-                $history->change_from = $lastDocument->status;
-                $history->change_to =   "Pending Final Approval Completed";
-                $history->action_name = 'Update';
-                $history->save();
+                $changestage->completed_by_phaseIII_manufacturing_investigation= Auth::user()->name;
+                $changestage->completed_on_phaseIII_manufacturing_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_phaseIII_manufacturing_investigation = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->action = 'Phase III Manufacturing Investigation';
+                    $history->change_from = $lastDocument->status;
+                    $history->change_to =   "Pending Final Approval Completed";
+                    $history->action_name = 'Update';
+                    $history->save();
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
