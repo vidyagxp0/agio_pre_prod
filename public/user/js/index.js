@@ -1011,6 +1011,14 @@ function handleDateInput(element, textInputID) {
     const year = date.getFullYear();
     textInput.setAttribute('value', `${day}-${month}-${year}`)
   }
+function handleMonthInput(element, textInputID) {
+    let textInput = document.getElementById(textInputID)
+    const date = new Date(element.value);
+    const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",];
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    textInput.setAttribute('value', `${month}-${year}`)
+  }
  
   function isStartDateLessThanEndDate(startDate, endDate) {
     // Convert date strings to Date objects

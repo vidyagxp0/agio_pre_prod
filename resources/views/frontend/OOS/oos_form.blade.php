@@ -568,8 +568,8 @@ $users = DB::table('users')
                                                     <div class="calenderauditee">
                                                         <input type="text" id="info_mfg_date" readonly 
                                                         placeholder="MM-YYYY" />
-                                                        <input type="date" name="info_product_material[0][info_mfg_date]" value=""
-                                                        class="hide-input" oninput="handleDateInput(this, 'info_mfg_date')">
+                                                        <input type="month" min="01-2000" value="12-29999" name="info_product_material[0][info_mfg_date]" value=""
+                                                        class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date')">
                                                     </div>
                                                 </div>
                                             </div>
@@ -580,8 +580,8 @@ $users = DB::table('users')
                                                     <div class="calenderauditee">
                                                         <input type="text" id="info_expiry_date" readonly 
                                                         placeholder="MM-YYYY" />
-                                                        <input type="date" name="info_product_material[0][info_expiry_date]"
-                                                        class="hide-input" oninput="handleDateInput(this, 'info_expiry_date')">
+                                                        <input type="month" min="01-2000"  name="info_product_material[0][info_expiry_date]"
+                                                        class="hide-input" oninput="handleMonthInput(this, 'info_expiry_date')">
                                                     </div>
                                                 </div>
                                             </div>
