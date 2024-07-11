@@ -371,7 +371,7 @@
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
                                 </div>  
-                                <div class="col-12">
+                                {{--  <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
                                         <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
@@ -382,7 +382,7 @@
                                             <option value="critical">Critical</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>  --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -545,7 +545,7 @@
                                 </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
+                                        <label for="Audit Schedule Start Date">Audit Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
@@ -557,7 +557,7 @@
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule End Date">Audit Schedule End Date</label>
+                                        <label for="Audit Schedule End Date">Audit Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
@@ -913,6 +913,21 @@
                                         </div>
                                     </div> 
                                 
+
+
+
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="severity-level">Observation Category
+                                        <select name="severity_level">
+                                            <option value="0">-- Select --</option>
+                                            <option value="minor">Minor</option>
+                                            <option value="major">Major</option>
+                                            <option value="critical">Critical</option>
+                                        </select>
+                                    </div>
+                                </div> 
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments">Audit Attachments</label>

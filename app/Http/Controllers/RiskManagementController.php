@@ -3831,6 +3831,7 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Risk Analysis & Work Group Assignment';
                 $changeControl->submitted_by = Auth::user()->name;
                 $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
+                $changeControl->submit_comment =$request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -3858,14 +3859,15 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Risk Processing & Action Plan';
                 $changeControl->evaluated_by = Auth::user()->name;
                 $changeControl->evaluated_on = Carbon::now()->format('d-M-Y');
-                
+                $changeControl->evaluation_complete_comment =$request->comment;
+
                 
                 $history = new RiskAuditTrail();
                 
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current = $changeControl->submitted_by;
+                $history->current = $changeControl->evaluated_by;
                 $history->comment = $request->comment;
                 $history->action = 'Evaluation Complete';
                 $history->user_id = Auth::user()->id;
@@ -3905,14 +3907,15 @@ class RiskManagementController extends Controller
 
                 $changeControl->evaluated_by = Auth::user()->name;
                 $changeControl->evaluated_on = Carbon::now()->format('d-M-Y');
-                
+                $changeControl->action_plan_complete_comment =$request->comment;
+  
                 
                 $history = new RiskAuditTrail();
                 
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current = $changeControl->submitted_by;
+                $history->current = $changeControl->evaluated_by;
                 $history->comment = $request->comment;
                 $history->action = 'Action Plan Complete';
                 $history->user_id = Auth::user()->id;
@@ -3952,12 +3955,13 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Actions Items in Progress';
                 $changeControl->plan_approved_by = Auth::user()->name;
                 $changeControl->plan_approved_on = Carbon::now()->format('d-M-Y');
+                $changeControl->action_plan_approved_comment =$request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current = $changeControl->submitted_by;
+                $history->current = $changeControl->plan_approved_by;
                 $history->comment = $request->comment;
                 $history->action = 'Action Plan Approved';
                 $history->user_id = Auth::user()->id;
@@ -3996,12 +4000,14 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Residual Risk Evaluation';
                 $changeControl->plan_approved_by = Auth::user()->name;
                 $changeControl->plan_approved_on = Carbon::now()->format('d-M-Y');
+                $changeControl->all_actions_completed_comment = $request->comment;
+
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current = $changeControl->submitted_by;
+                $history->current = $changeControl->plan_approved_by;
                 $history->comment = $request->comment;
                 $history->action = 'All Action Completed';
                 $history->user_id = Auth::user()->id;
@@ -4040,11 +4046,13 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Closed - Done';
                 $changeControl->risk_analysis_completed_by = Auth::user()->name;
                 $changeControl->risk_analysis_completed_on = Carbon::now()->format('d-M-Y');
+                $changeControl->risk_eveluation_comment =$request->comment;
+
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current = $changeControl->submitted_by;
+                $history->current = $changeControl->risk_analysis_completed_by;
                 $history->comment = $request->comment;
                 $history->action = 'All Action Completed Completed';
                 $history->user_id = Auth::user()->id;
@@ -4085,6 +4093,9 @@ class RiskManagementController extends Controller
                 $changeControl->status = "Closed - Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->cancel_comment =$request->comment;
+
+              
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -4107,6 +4118,7 @@ class RiskManagementController extends Controller
 
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_actions_needed_1 =$request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -4136,6 +4148,8 @@ class RiskManagementController extends Controller
 
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_actions_needed_2 =$request->comment;
+
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -4164,6 +4178,8 @@ class RiskManagementController extends Controller
 
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_actions_needed_3 =$request->comment;
+
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -4192,6 +4208,8 @@ class RiskManagementController extends Controller
 
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_actions_needed_4  = $request->comment;
+
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -4218,6 +4236,8 @@ class RiskManagementController extends Controller
 
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_actions_needed_5 =$request->comment;
+
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -4292,7 +4312,7 @@ class RiskManagementController extends Controller
         if (!empty($data)) {
 
             $riskgrdfishbone = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','fishbone')->first();
-            
+            $failure_mode = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','effect_analysis')->first();
             $riskgrdwhy_chart = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','why_chart')->first();
             $riskgrdwhat_who_where = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','what_who_where')->first();
 
@@ -4300,7 +4320,7 @@ class RiskManagementController extends Controller
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','riskgrdfishbone','riskgrdwhy_chart','riskgrdwhat_who_where'))
+            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','riskgrdfishbone','riskgrdwhy_chart','riskgrdwhat_who_where','failure_mode'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -4348,8 +4368,8 @@ class RiskManagementController extends Controller
     {
         $parent_id = $id;
         $parent_type = "Action-Item";
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -4361,6 +4381,6 @@ class RiskManagementController extends Controller
         $parent_short_description = RiskManagement::where('id', $id)->value('short_description');
         $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
 
-        return view('frontend.action-item.action-item', compact('parent_id', 'parent_type', 'record_number', 'currentDate', 'formattedDate', 'due_date', 'parent_record', 'parent_record', 'parent_division_id', 'parent_initiator_id', 'parent_intiation_date', 'parent_short_description','old_record'));
+        return view('frontend.action-item.action-item', compact('parent_id', 'parent_type', 'record', 'currentDate', 'formattedDate', 'due_date', 'parent_record', 'parent_record', 'parent_division_id', 'parent_initiator_id', 'parent_intiation_date', 'parent_short_description','old_record'));
     }
 }

@@ -326,7 +326,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Scheduled Start Date</th>
+                        <th class="w-20"> Start Date</th>
                         <td class="w-30">@if($data->schedule_start_date1){{ $data->schedule_start_date1 }}@else Not Applicable @endif</td>
                         <th class="w-20">Scheduled End Date</th>
                         <td class="w-30">@if($data->schedule_end_date1){{ $data->schedule_end_date1 }}@else Not Applicable @endif</td>
@@ -380,6 +380,235 @@
                     </table>
                 </div>
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="block">
+                <div class="block-head">
+                Failure Mode and Effect Analysis
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">Activity</th>
+                        <td class="w-30">
+                            @if($failure_mode->risk_factor)
+                                @foreach(unserialize($failure_mode->risk_factor) as $riskFactor)
+                                    {{ $riskFactor }}<br>
+                                @endforeach
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Possible Risk/Failure (Identified Risk)</th>
+                        <td class="w-30">
+                            @if($failure_mode->problem_cause)
+                                @foreach(unserialize($failure_mode->problem_cause) as $problemCause)
+                                    {{ $problemCause }}<br>
+                                @endforeach
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="w-50">Consequences of Risk/Potential Causes</th>
+                        <td class="w-50">
+                            @if($failure_mode->existing_risk_control)
+                                @foreach(unserialize($failure_mode->existing_risk_control) as $riskControl)
+                                    {{ $riskControl }}<br>
+                                @endforeach
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+
+                        <th class="w-20">Severity (S)</th>
+                        <td class="w-30">
+                            @if($failure_mode->initial_severity)
+                                @foreach(unserialize($failure_mode->initial_severity) as $severity)
+                                    {{ $severity }}<br>
+                                @endforeach
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+    
+                        <th class="w-20">Probability (P)</th>
+                        <td class="w-30">
+                            @if($failure_mode->initial_probability)
+                                @foreach(unserialize($failure_mode->initial_probability) as $probability)
+                                    {{ $probability }}<br>
+                                @endforeach
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                         <th class="w-20">Detection (D)</th>
+                            <td class="w-80">
+                                @if($failure_mode->initial_detectability)
+                                    @foreach(unserialize($failure_mode->initial_detectability) as $detectability)
+                                        {{ $detectability }}<br>
+                                    @endforeach
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+
+                    </tr>
+               <tr>
+                        <th class="w-20">Risk Level (RPN)</th>
+                        <td class="w-30">
+                            @if($failure_mode->initial_rpn)
+                                @foreach(unserialize($failure_mode->initial_rpn) as $rpn)
+                                    {{ $rpn }}<br>
+                                @endforeach
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                       <tr>
+                            <th class="w-20">Control Measures recommended/ Risk mitigation proposed</th>
+                            <td class="w-30">
+                                @if($failure_mode->risk_control_measure)
+                                    @foreach(unserialize($failure_mode->risk_control_measure) as $control_measure)
+                                        {{ $control_measure }}<br>
+                                    @endforeach
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Severity (S)</th>
+                        <td class="w-30">
+                            @if($failure_mode->residual_severity)
+                                @foreach(unserialize($failure_mode->residual_severity) as $severity)
+                                    {{ $severity }}<br>
+                                @endforeach
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Probability (P)</th>
+                        <td class="w-30">
+                            @if($failure_mode->residual_probability)
+                                @foreach(unserialize($failure_mode->residual_probability) as $probability)
+                                    {{ $probability }}<br>
+                                @endforeach
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Detection (D)</th>
+                        <td class="w-30">
+                            @if($failure_mode->residual_detectability)
+                                @foreach(unserialize($failure_mode->residual_detectability) as $detectability)
+                                    {{ $detectability }}<br>
+                                @endforeach
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                          <th class="w-20">Risk Level (RPN)</th>
+                            <td class="w-30">
+                                @if($failure_mode->residual_rpn)
+                                    @foreach(unserialize($failure_mode->residual_rpn) as $resudual_rpndata)
+                                        {{ $resudual_rpndata }}<br>
+                                    @endforeach
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Category of Risk Level (Low, Medium, and High)</th>
+                        <td class="w-30">
+                            @if($failure_mode->risk_acceptance)
+                                @foreach(unserialize($failure_mode->risk_acceptance) as $risk_level)
+                                    {{ $risk_level }}<br>
+                                @endforeach
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Risk Acceptance (Y/N)</th>
+                       <td class="w-30">
+                        @if($failure_mode->risk_acceptance2)
+                            @php
+                                $riskAcceptance2 = unserialize($failure_mode->risk_acceptance2);
+                            @endphp
+                            @if(is_array($riskAcceptance2))
+                                @foreach($riskAcceptance2 as $acceptance)
+                                    {{ $acceptance }}<br>
+                                @endforeach
+                            @else
+                                {{ $riskAcceptance2 }}
+                            @endif
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+
+                    </tr>
+
+                    <tr>
+                       <th class="w-20">Traceability document</th>
+                       <td class="w-80">
+                        @if($failure_mode->mitigation_proposal)
+                            @php
+                                $proposals = unserialize($failure_mode->mitigation_proposal);
+                            @endphp
+                            @if(is_array($proposals))
+                                @foreach($proposals as $proposal)
+                                    {{ $proposal }}<br>
+                                @endforeach
+                            @else
+                                {{ $proposals }}
+                            @endif
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+
+                    </tr>
+
+                </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <div class="block">
                 <div class="head">
                     <div class="block-head">
@@ -769,72 +998,72 @@
     </div>
 
     <table style="max-width: 700px!important; overflow: hidden;">
-    <tr>
-    <th class="w-20">What Will Be</th>
-    <td class="w-80">@if($riskgrdwhat_who_where->what_will_be) {!! nl2br(e($riskgrdwhat_who_where->what_will_be)) !!} @else Not Applicable @endif</td>
+        <tr>
+        <th class="w-20">What Will Be</th>
+        <td class="w-80">@if($riskgrdwhat_who_where->what_will_be) {!! nl2br(e($riskgrdwhat_who_where->what_will_be)) !!} @else Not Applicable @endif</td>
+        </tr>
+        <tr>
+        <th class="w-20">What Will Not Be</th>
+        <td class="w-80">@if($riskgrdwhat_who_where->what_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->what_will_not_be)) !!} @else Not Applicable @endif</td>
+    
     </tr>
-    <tr>
-    <th class="w-20">What Will Not Be</th>
-    <td class="w-80">@if($riskgrdwhat_who_where->what_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->what_will_not_be)) !!} @else Not Applicable @endif</td>
-   
-   </tr>
-    <tr>
-    <th class="w-20">What Will Rationale</th>
-    <td class="w-80">@if($riskgrdwhat_who_where->what_rationable) {!! nl2br(e($riskgrdwhat_who_where->what_rationable)) !!} @else Not Applicable @endif</td>
-    </tr>
-    <tr>
-    <th class="w-20">Where Will Be</th>
-    <td class="w-80">@if($riskgrdwhat_who_where->where_will_be) {!! nl2br(e($riskgrdwhat_who_where->where_will_be)) !!} @else Not Applicable @endif</td>
-    </tr>
-    <tr>
+        <tr>
+        <th class="w-20">What Will Rationale</th>
+        <td class="w-80">@if($riskgrdwhat_who_where->what_rationable) {!! nl2br(e($riskgrdwhat_who_where->what_rationable)) !!} @else Not Applicable @endif</td>
+        </tr>
+        <tr>
+        <th class="w-20">Where Will Be</th>
+        <td class="w-80">@if($riskgrdwhat_who_where->where_will_be) {!! nl2br(e($riskgrdwhat_who_where->where_will_be)) !!} @else Not Applicable @endif</td>
+        </tr>
+        <tr>
 
-        <th class="w-20">Where Will Not Be</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->where_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->where_will_not_be)) !!} @else Not Applicable @endif</td>
+            <th class="w-20">Where Will Not Be</th>
+            <td class="w-80">@if($riskgrdwhat_who_where->where_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->where_will_not_be)) !!} @else Not Applicable @endif</td>
+        </tr>
+        <tr>
+            <th class="w-20">Where Will Rationale</th>
+            <td class="w-80">@if($riskgrdwhat_who_where->where_rationable) {!! nl2br(e($riskgrdwhat_who_where->where_rationable)) !!} @else Not Applicable @endif</td>
+        
+        </tr>
+        <tr>
+            <th class="w-20">When Will Be</th>
+            <td class="w-80">@if($riskgrdwhat_who_where->when_will_be) {!! nl2br(e($riskgrdwhat_who_where->when_will_be)) !!} @else Not Applicable @endif</td>
+        </tr>
+        <tr>
+            <th class="w-20">When Will Not Be</th>
+            <td class="w-80">@if($riskgrdwhat_who_where->when_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->when_will_not_be)) !!} @else Not Applicable @endif</td>
+        </tr>
+        <tr> 
+            <th class="w-20">When Will Rationale</th>
+            <td class="w-80">@if($riskgrdwhat_who_where->when_rationable) {!! nl2br(e($riskgrdwhat_who_where->when_rationable)) !!} @else Not Applicable @endif</td>
     </tr>
-    <tr>
-        <th class="w-20">Where Will Rationale</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->where_rationable) {!! nl2br(e($riskgrdwhat_who_where->where_rationable)) !!} @else Not Applicable @endif</td>
-    
-    </tr>
-    <tr>
-        <th class="w-20">When Will Be</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->when_will_be) {!! nl2br(e($riskgrdwhat_who_where->when_will_be)) !!} @else Not Applicable @endif</td>
-    </tr>
-    <tr>
-        <th class="w-20">When Will Not Be</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->when_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->when_will_not_be)) !!} @else Not Applicable @endif</td>
-    </tr>
-    <tr> 
-        <th class="w-20">When Will Rationale</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->when_rationable) {!! nl2br(e($riskgrdwhat_who_where->when_rationable)) !!} @else Not Applicable @endif</td>
-   </tr>
-    <tr>
-        <th class="w-20">Coverage Will Be</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->coverage_will_be) {!! nl2br(e($riskgrdwhat_who_where->coverage_will_be)) !!} @else Not Applicable @endif</td>
-    </tr>
-    <tr>   
-       
-        <th class="w-20">Coverage Will Not Be</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->coverage_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->coverage_will_not_be)) !!} @else Not Applicable @endif</td>
-    </tr>
-    <tr>  
-        <th class="w-20">Coverage Will Rationale</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->coverage_rationable) {!! nl2br(e($riskgrdwhat_who_where->coverage_rationable)) !!} @else Not Applicable @endif</td>
-    </tr>
-    <tr>
-        <th class="w-20">Who Will Be</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->who_will_be) {!! nl2br(e($riskgrdwhat_who_where->who_will_be)) !!} @else Not Applicable @endif</td>
-     </tr>
-    <tr> 
-        <th class="w-20">Who Will Not Be</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->who_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->who_will_not_be)) !!} @else Not Applicable @endif</td>
-    </tr>
-    <tr>   
-       
-        <th class="w-20">Who Will Rationale</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->who_rationable) {!! nl2br(e($riskgrdwhat_who_where->who_rationable)) !!} @else Not Applicable @endif</td>
-    </tr>
-    
+        <tr>
+            <th class="w-20">Coverage Will Be</th>
+            <td class="w-80">@if($riskgrdwhat_who_where->coverage_will_be) {!! nl2br(e($riskgrdwhat_who_where->coverage_will_be)) !!} @else Not Applicable @endif</td>
+        </tr>
+        <tr>   
+        
+            <th class="w-20">Coverage Will Not Be</th>
+            <td class="w-80">@if($riskgrdwhat_who_where->coverage_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->coverage_will_not_be)) !!} @else Not Applicable @endif</td>
+        </tr>
+        <tr>  
+            <th class="w-20">Coverage Will Rationale</th>
+            <td class="w-80">@if($riskgrdwhat_who_where->coverage_rationable) {!! nl2br(e($riskgrdwhat_who_where->coverage_rationable)) !!} @else Not Applicable @endif</td>
+        </tr>
+        <tr>
+            <th class="w-20">Who Will Be</th>
+            <td class="w-80">@if($riskgrdwhat_who_where->who_will_be) {!! nl2br(e($riskgrdwhat_who_where->who_will_be)) !!} @else Not Applicable @endif</td>
+        </tr>
+        <tr> 
+            <th class="w-20">Who Will Not Be</th>
+            <td class="w-80">@if($riskgrdwhat_who_where->who_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->who_will_not_be)) !!} @else Not Applicable @endif</td>
+        </tr>
+        <tr>   
+        
+            <th class="w-20">Who Will Rationale</th>
+            <td class="w-80">@if($riskgrdwhat_who_where->who_rationable) {!! nl2br(e($riskgrdwhat_who_where->who_rationable)) !!} @else Not Applicable @endif</td>
+        </tr>
+        
     </table>        
 
  </div>              
