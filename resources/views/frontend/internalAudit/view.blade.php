@@ -436,10 +436,8 @@ function addMultipleFiles(input, block_id) {
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->intiation_date) }}"
                                                     name="intiation_date">
-
                                             </div>
                                         </div> -->
-
                                   <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
@@ -448,8 +446,6 @@ function addMultipleFiles(input, block_id) {
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
-
-
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Assigned to 1
@@ -458,7 +454,6 @@ function addMultipleFiles(input, block_id) {
                                                     @endif
 
                                                 </label>
-
                                                 <select name="assign_to"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $key => $value)
@@ -469,18 +464,30 @@ function addMultipleFiles(input, block_id) {
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="group-input">
-                                                <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                <div><small class="text-primary">Please Mention justification if due date iscrossed</small></div>
-                                                <input readonly type="text"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                    name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
-                                                {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
-                                                {{-- <div class="static"> {{ $due_date }}</div> --}}
-
+                                        <div class="col-md-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="due-date">Due Date </label>
+                                                <div class="calenderauditee">
+                                                    <!-- Display the formatted date in a readonly input -->
+                                                    <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} />
+                                                   
+                                                    <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                                </div>
                                             </div>
                                         </div>
+                                        <script>
+                                            function handleDateInput(dateInput, displayId) {
+                                                const date = new Date(dateInput.value);
+                                                const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                                document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                            }
+                                            
+                                            // Call this function initially to ensure the correct format is shown on page load
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                const dateInput = document.querySelector('input[name="due_date"]');
+                                                handleDateInput(dateInput, 'due_date');
+                                            });
+                                            </script>
 
                                 {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -1128,7 +1135,7 @@ function addMultipleFiles(input, block_id) {
                                                     </table>
                                                 </div>
                                             </div> --}}
-                                        </div>
+                                        {{-- </div> --}}
                                         <div class="col-6">
                                             <div class="group-input">
                                                 <label for="Audit Team">Audit Team</label>
@@ -1302,7 +1309,21 @@ function addMultipleFiles(input, block_id) {
                                                     </div>
                                             </div>
                                         </div>
-
+                                   <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="severity-level">Observation Category </label>
+                                                {{-- <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span> --}}
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level_form">
+                                                    <option  value="0">-- Select --</option>
+                                                    <option @if ($data->severity_level_form =='minor') selected @endif
+                                                        value="minor">Minor</option>
+                                                        <option @if ($data->severity_level_form =='major') selected @endif
+                                                            value="major">Major</option>
+                                                            <option @if ($data->severity_level_form =='critical') selected @endif
+                                                                value="critical">Critical</option>
+                                                </select>
+                                            </div>
+                                        </div> 
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="audit-agenda-grid">
@@ -1622,7 +1643,7 @@ function addMultipleFiles(input, block_id) {
                                                         </select>
                                                     </div>
                                                 </td>
-                                                {{--    <td>
+                                                {{-- <td>
                                                     <textarea name="what_will_not_be"></textarea> --}}
                                                      <td style="vertical-align: middle;">
                                                     <div
@@ -1630,7 +1651,6 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="remark_1" style="border-radius: 7px; border: 1.5px solid black;">{{$data->remark_1}}</textarea>
                                                     </div>
                                                 </td>
-
                                                 </td>
                                             </tr>
                                             <tr>
@@ -1648,14 +1668,12 @@ function addMultipleFiles(input, block_id) {
                                                         </select>
                                                     </div>
                                                 </td>
-                                                {{--    <td>
-                                                    <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="remark_2" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_2}}</textarea>
                                                     </div>
                                                 </td>
-
                                                 </td>
                                             </tr>
                                             <tr>
@@ -1673,14 +1691,12 @@ function addMultipleFiles(input, block_id) {
                                                         </select>
                                                     </div>
                                                 </td>
-                                                {{--    <td>
-                                                    <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="remark_3" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_3 }}</textarea>
                                                     </div>
                                                 </td>
-
                                                 </td>
                                             </tr>
                                             <tr>
@@ -1695,12 +1711,10 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_4 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $data->response_4 == "No" ? 'selected' : '' }}  >No</option>
                                                             <option value="N/A" {{ $data->response_4 == "N/A" ? 'selected' : '' }}>N/A</option>
-
                                                         </select>
                                                     </div>
                                                 </td>
-                                                {{--    <td>
-                                                    <textarea name="coverage_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="remark_4" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_4 }}</textarea>
@@ -1729,8 +1743,7 @@ function addMultipleFiles(input, block_id) {
                                                         </select>
                                                     </div>
                                                 </td>
-                                                {{--    <td>
-                                                    <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="remark_5" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_5 }}</textarea>
@@ -1758,8 +1771,7 @@ function addMultipleFiles(input, block_id) {
                                                         </select>
                                                     </div>
                                                 </td>
-                                                {{--    <td>
-                                                    <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="remark_6" style="border-radius: 7px; border: 1.5px solid black;">{{$data->remark_6}}</textarea>
@@ -1784,8 +1796,7 @@ function addMultipleFiles(input, block_id) {
                                                         </select>
                                                     </div>
                                                 </td>
-                                                {{--    <td>
-                                                    <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="remark_7" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_7 }}</textarea>
@@ -1810,8 +1821,7 @@ function addMultipleFiles(input, block_id) {
                                                         </select>
                                                     </div>
                                                 </td>
-                                                {{--    <td>
-                                                    <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="remark_8" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_8 }}</textarea>
@@ -1839,8 +1849,7 @@ function addMultipleFiles(input, block_id) {
                                                         </select>
                                                     </div>
                                                 </td>
-                                                {{--    <td>
-                                                    <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="remark_9" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_9 }}</textarea>
@@ -1867,8 +1876,7 @@ function addMultipleFiles(input, block_id) {
                                                         </select>
                                                     </div>
                                                 </td>
-                                                {{--    <td>
-                                                    <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="remark_10" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_10 }}</textarea>
@@ -1892,12 +1900,10 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_11 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $data->response_11 == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_11 == "N/A" ? 'selected' : '' }}>N/A</option>
-
                                                         </select>
                                                     </div>
                                                 </td>
-                                                {{--    <td>
-                                                    <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="remark_11" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_11 }}</textarea>
@@ -1921,12 +1927,10 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_12 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $data->response_12 == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_12 == "N/A" ? 'selected' : '' }}>N/A</option>
-
                                                         </select>
                                                     </div>
                                                 </td>
-                                                {{--    <td>
-                                                    <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="remark_12" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_12 }}</textarea>
@@ -1991,7 +1995,6 @@ function addMultipleFiles(input, block_id) {
                                                 <td class="flex text-center">2.1</td>
                                                 <td>Is status labels displayed on all equipments? </td>
                                                 <td>
-
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_14" id="response"
@@ -2000,11 +2003,8 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_14 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No"  {{ $data->response_14 == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_14 == "N/A" ? 'selected' : '' }}>N/A</option>
-
                                                         </select>
                                                     </div>
-
-
                                                 </td>
                                                 </td>
 
@@ -2014,9 +2014,6 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="remark_14" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_14 }}</textarea>
                                                     </div>
                                                 </td>
-
-
-
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2.2</td>
@@ -2040,9 +2037,6 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="remark_15" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_15 }}</textarea>
                                                     </div>
                                                 </td>
-
-
-
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2.3</td>
@@ -2066,10 +2060,6 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="remark_16" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_16 }}</textarea>
                                                     </div>
                                                 </td>
-
-
-
-
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2.4</td>
@@ -2086,6 +2076,7 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_17 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No"  {{ $data->response_17 == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_17 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                            
                                                         </select>
                                                     </div>
                                                 </td>
@@ -2096,9 +2087,6 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="remark_17" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_17 }}</textarea>
                                                     </div>
                                                 </td>
-
-
-
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2.5</td>
@@ -2125,9 +2113,6 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="remark_18" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_18 }}</textarea>
                                                     </div>
                                                 </td>
-
-
-
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2.6</td>
@@ -2182,9 +2167,6 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="remark_20" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_20 }}</textarea>
                                                     </div>
                                                 </td>
-
-
-
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2.8</td>
@@ -2209,9 +2191,6 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="remark_21" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_21 }}</textarea>
                                                     </div>
                                                 </td>
-
-
-
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2.9</td>
@@ -2263,9 +2242,6 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="remark_23" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_23 }}</textarea>
                                                     </div>
                                                 </td>
-
-
-
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2.11</td>
@@ -2284,16 +2260,12 @@ function addMultipleFiles(input, block_id) {
                                                         </select>
                                                     </div>
                                                 </td>
-
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="remark_24" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_24 }}</textarea>
                                                     </div>
                                                 </td>
-
-
-
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2.12</td>
@@ -2311,8 +2283,6 @@ function addMultipleFiles(input, block_id) {
                                                         </select>
                                                     </div>
                                                 </td>
-
-
                                                 {{-- <textarea name="who_will_not_be"></textarea> --}}
                                                 <td style="vertical-align: middle;">
                                                     <div
@@ -2320,9 +2290,6 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="remark_25" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_25 }}</textarea>
                                                     </div>
                                                 </td>
-
-
-
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2.13</td>
@@ -2347,11 +2314,7 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="remark_26" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_26 }}</textarea>
                                                     </div>
                                                 </td>
-
                                             </tr>
-
-
-
                                             <tr>
                                                 <td class="flex text-center">2.14</td>
                                                 <td>Is clean equipment clearly identified as “cleaned” with a
@@ -2497,7 +2460,6 @@ function addMultipleFiles(input, block_id) {
                                                     and checked by a second person
                                                     Check the weighing balance record.
                                                 </td>
-
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -2605,7 +2567,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="37" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_37 }}</textarea>
+                                                        <textarea name="remark_37" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_37 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2884,7 +2846,7 @@ function addMultipleFiles(input, block_id) {
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2.37</td>
-                                                <td>Air handling system qualification, cleaning details and PAO test
+                                                <td>Air handling system qualification , cleaning details and PAO test
                                                     reports.</td>
                                                 <td>
                                                     <div
@@ -7457,9 +7419,6 @@ function addMultipleFiles(input, block_id) {
                                             <textarea name="capsule_remark_45" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_45){{ $checklist4->capsule_remark_45}}@endif</textarea>
                                         </div>
                                     </td>
-
-
-
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">2.2</td>
@@ -7483,9 +7442,6 @@ function addMultipleFiles(input, block_id) {
                                             <textarea name="capsule_remark_46" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_46){{ $checklist4->capsule_remark_46}}@endif</textarea>
                                         </div>
                                     </td>
-
-
-
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">2.3</td>
@@ -7691,7 +7647,7 @@ function addMultipleFiles(input, block_id) {
         "Check the in-process equipment's cleaning status & records.",
         "Are any unplanned process changes (process excursions) documented in the batch record?",
     ];
-        // "Check for area activity record 59."
+       
     
 
     $documentationQuestions = [
@@ -7701,8 +7657,7 @@ function addMultipleFiles(input, block_id) {
         "In process carried out as per the written instruction describe in batch record?",
         "Is there any area cleaning record available for all individual areas?",
         "Current version of SOP's is available in respective areas?",
-        // Add remaining questions up to 65
-        // "Do records have doer & checker signatures? 7."
+        
     ];
 @endphp
 

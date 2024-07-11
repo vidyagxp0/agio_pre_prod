@@ -101,10 +101,11 @@
                 <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            @if (!empty($parent_id))
-                            <input type="hidden" name="parent_id" id="parent_id" value="{{ $parent_id }}">
-                            <input type="hidden" name="parent_record" id="parent_record" value="{{ $parent_record }}">
-                        @endif
+                        @if (!empty($parent_id))
+                                    <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                                    <input type="hidden" name="parent_type" value="{{ $parent_type }}">
+                                    <input type="hidden" name="parent_record" id="parent_record" value="{{ $parent_record }}">
+                                @endif
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="RLS Record Number"><b>Record Number</b></label>
@@ -122,6 +123,7 @@
                                 {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                             </div>
                         </div>
+                        
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"><b>Initiator</b></label>

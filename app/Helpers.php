@@ -1,7 +1,10 @@
 <?php
 // namespace App;
+
+use App\Http\Controllers\ExtensionNewController;
 use App\Models\ActionItem;
 use App\Models\Division;
+use App\Models\extension_new;
 use App\Models\QMSDivision;
 use App\Models\User;
 use App\Models\OOS_micro;
@@ -73,8 +76,6 @@ class Helpers
         }else{
             return  '';
         }
-
-
     }}
 
     public static function isRiskAssessment($data)
@@ -84,29 +85,28 @@ class Helpers
         }else{
             return  '';
         }
-         
+    }
+
+
+    public static function showStage($parentType, $model, $count)
+    {
+        $existingRecordsCount = $model::where('parent_type', $parentType)->count();
+        return $existingRecordsCount > $count;
     }
     // public static function getHodUserList(){
-
     //     return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
     // }
     // public static function getQAUserList(){
 
     //     return $QAUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'7'])->get();
     // }
-    // public static function getInitiatorUserList(){
-
-
+    // public static function getInitiatorUserList(){\
     //     return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'3'])->get();
     // }
     // public static function getApproverUserList(){
-
-
     //     return $ApproverUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'1'])->get();
     // }
     // public static function getReviewerUserList(){
-
-
     //     return $ReviewerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'2'])->get();
     // }
     // public static function getCFTUserList(){
@@ -797,7 +797,6 @@ class Helpers
         }else{
             return  '';
         }
-         
     }
 
     public static function getDueDatemonthly($date = null, $addDays = false, $format = null)
@@ -818,6 +817,4 @@ class Helpers
             return 'NA';
         }
     }
-
-
 }
