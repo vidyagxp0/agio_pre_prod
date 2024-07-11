@@ -94,6 +94,7 @@ class OOSController extends Controller
         $info_product_materials = $data->grids()->where('identifier', 'info_product_material')->first();
         $details_stabilities = $data->grids()->where('identifier', 'details_stability')->first();
         $oos_details = $data->grids()->where('identifier', 'oos_detail')->first();
+        $instrument_details = $data->grids()->where('identifier', 'instrument_detail')->first();
         $checklist_lab_invs = $data->grids()->where('identifier', 'checklist_lab_inv')->first();
         $oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
         $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
@@ -101,7 +102,7 @@ class OOSController extends Controller
         $oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
         // dd($phase_two_invs);
         return view('frontend.OOS.oos_form_view', 
-        compact('data', 'old_record','revised_date','cft' , 'info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusions', 'oos_conclusion_reviews'));
+        compact('data', 'old_record','revised_date','cft' , 'info_product_materials', 'details_stabilities', 'oos_details','instrument_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusions', 'oos_conclusion_reviews'));
 
     }
 

@@ -174,7 +174,30 @@
             });
         });
     </script>
+    <!-- ------------------------------grid-4 instrument_details-------------------------script -->
+    <script>
+        $(document).ready(function() {
+            $('#instrument_details').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                            '<td><input disabled type="text" name="instrument_detail['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_name]"></td>'+
+                            '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_id_number]"></td>' +
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
+                        '</tr>'; 
+                    return html;
+                }
+
+                var tableBody = $('#instrument_details_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
     <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
 
     <script>

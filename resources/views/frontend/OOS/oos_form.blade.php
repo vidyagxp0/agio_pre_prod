@@ -147,7 +147,30 @@ $users = DB::table('users')
             });
         });
     </script>
+    <!-- ------------------------------grid-4 instrument_details-------------------------script -->
+    <script>
+        $(document).ready(function() {
+            $('#instrument_details').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                            '<td><input disabled type="text" name="instrument_detail['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_name]"></td>'+
+                            '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_id_number]"></td>' +
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
+                        '</tr>'; 
+                    return html;
+                }
+
+                var tableBody = $('#instrument_details_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
     <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
 
     <script>
@@ -740,7 +763,7 @@ $users = DB::table('users')
                                 </table>
                             </div>
                         </div>
-        <!----------------grid-3----------------------------------- -->
+                    <!----------------grid-3----------------------------------- -->
 
                         <div class="group-input">
                             <label for="audit-agenda-grid">
@@ -788,6 +811,39 @@ $users = DB::table('users')
                                                 </div>
                                             </div>
                                             </td>
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!---------------- grid-4 instrument_details----------------------------------- -->
+
+                        <div class="group-input">
+                            <label for="audit-agenda-grid">
+                            Instrument details
+                                <button type="button" name="audit-agenda-grid" id="instrument_details">+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#document-details-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="instrument_details_details" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 4%">Row#</th>
+                                            <th style="width: 8%"> Name of instrument</th>
+                                            <th style="width: 8%"> Instrument Id Number</th>
+                                            <th style="width: 5%"> Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input disabled type="text" name="instrument_detail[0][serial]" value="1"></td>
+                                            <td><input type="text" name="instrument_detail[0][instrument_name]"></td>
+                                            <td><input type="text" name="instrument_detail[0][instrument_id_number]"></td>
                                             <td><button type="text" class="removeRowBtn">Remove</button></td>
                                         </tr>
                                     </tbody>

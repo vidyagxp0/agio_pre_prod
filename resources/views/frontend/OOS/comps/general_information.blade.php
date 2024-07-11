@@ -524,6 +524,43 @@
                     </table>
                 </div>
             </div>
+            <!----------------grid-4 instrument_details----------------------------------- -->
+
+            <div class="group-input">
+                <label for="audit-agenda-grid">
+                    Instrument details
+                    <button type="button" name="audit-agenda-grid" id="instrument_details">+</button>
+                    <span class="text-primary" data-bs-toggle="modal"
+                        data-bs-target="#document-details-field-instruction-modal"
+                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                        (Launch Instruction)
+                    </span>
+                </label>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="instrument_details_details" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="width: 4%">Row#</th>
+                                <th style="width: 8%"> Name of instrument</th>
+                                <th style="width: 8%"> Instrument Id Number</th>
+                                <th style="width: 5%"> Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if ($instrument_details && is_array($instrument_details->data))
+                                @foreach ($instrument_details->data as $instrument_detail)
+                                    <tr>
+                                        <td><input disabled type="text" name="instrument_detail[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="instrument_detail[{{ $loop->index }}][instrument_name]" value="{{ Helpers::getArrayKey($instrument_detail, 'instrument_name') }}"></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="instrument_detail[{{ $loop->index }}][instrument_id_number]" value="{{ Helpers::getArrayKey($instrument_detail, 'instrument_id_number') }}"></td>
+                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="button-block">
             @if ($data->stage == 0  || $data->stage >= 15)
             <div class="progress-bars">
