@@ -349,20 +349,7 @@
                                         <label for="Document Type">
                                             Document Type<span class="text-danger"></span>
                                         </label>
-                                        <!-- <select id="select-state" placeholder="Select..." name="document_type"
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                            <option value="">--Select--</option>
-                                            <option value="Procedure Document"@if ($showdata->document_type == 'Procedure Document') selected @endif>Procedure Document</option>
-                                            <option value="Work Instruction"@if ($showdata->document_type == 'Work Instruction') selected @endif>Work Instruction</option>
-                                            <option value="Form"@if ($showdata->document_type == 'Form') selected @endif>Form</option>
-                                            <option value="Template"@if ($showdata->document_type == 'Template') selected @endif>Template</option>
-                                            <option value="Policy Document"@if ($showdata->document_type == 'Policy Document') selected @endif>Policy Document</option>
-                                            <option value="Quality Record"@if ($showdata->document_type == 'Quality Record') selected @endif>Quality Record</option>
-                                            <option value="Specification Document"@if ($showdata->document_type == 'Specification Document') selected @endif>Specification Document</option>
-                                            <option value="Training Material"@if ($showdata->document_type == 'Training Material') selected @endif>Training Material</option>
-                                            <option value="Other"@if ($showdata->document_type == 'Other') selected @endif>Other</option>
-                                        </select> -->
-                                        <input type="text" value="{{$showdata->document_type}}">
+                                        <input type="text" name="document_type" value="{{$showdata->document_type}}">
                                     </div>
                                 </div>
 
@@ -417,7 +404,7 @@
                                 <div class="">
                                     <div class="group-input">
                                         <label for="reference_record">Reference Documents</label>
-                                        <input  type="text" name="reference" maxlength="255" value="{{ $showdatas->reference }}">
+                                        <input  type="text" name="reference" maxlength="255" value="{{ $showdata->reference }}">
                                         
 
                                     </div>
@@ -444,7 +431,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Document title">Document title</label>
-                                        <input type="text" name="document_title" maxlength="255"  value="{{$showdatas->document_title}}">
+                                        <input type="text" name="document_title" maxlength="255"  value="{{$showdata->document_title}}">
                                     </div>
                                 </div>
 
@@ -467,8 +454,8 @@ $users = DB::table('users')->get();
     </div>
 </div>
 <div id="typeOfErrorBlock" class="group-input col-6" >
-    <label for="custom_value">Other</label>
-    <input type="text" name="custom_value" class="form-control" value="{{ $showdata->otherFieldsUser ?? '' }}"/>
+    <label for="otherFieldsUser">Other</label>
+    <input type="text" name="otherFieldsUser" class="form-control" value="{{ $showdata->otherFieldsUser ?? '' }}"/>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -497,7 +484,7 @@ $users = DB::table('users')->get();
                                         <select id="select-state" placeholder="Select..." name="department_head_to">
                                             <option value="">Select a Value</option>
                                             @foreach ($users as $value)
-                                                <option @if ($showdatas->department_head_to == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option @if ($showdata->department_head_to == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('department_head_to')
@@ -530,7 +517,7 @@ $users = DB::table('users')->get();
                                     <select id="select-state" placeholder="Select..." name="qa_reviewer">
                                         <option value="">Select a value</option> 
                                         @foreach ($users as $key=> $value)
-                                            <option  @if ($showdatas->qa_reviewer == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                            <option  @if ($showdata->qa_reviewer == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('qa_reviewer')
