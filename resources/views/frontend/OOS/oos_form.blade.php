@@ -122,7 +122,6 @@ $users = DB::table('users')
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_test_name]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_results_obtained]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
-                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
                             '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
                             '<td>' +
@@ -553,7 +552,13 @@ $users = DB::table('users')
                                     calculateDateDifference();
                                 })
                             </script>
-
+                            
+                            <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Immediate action</label>
+                                <input type="text" name="immediate_action"  id="immediate_action" value="">
+                            </div>
+                        </div>
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Initial Attachments</label>
@@ -756,7 +761,6 @@ $users = DB::table('users')
                                             <th style="width: 8%">Test Name of OOS</th>
                                             <th style="width: 8%">Results Obtained</th>
                                             <th style="width: 8%">Specification Limit</th>
-                                            <th style="width: 8%">Details of Obvious Error</th>
                                             <th style="width: 16%">File Attachment</th>
                                             <th style="width: 8%">Submit By</th>
                                             <th style="width: 16%">Submit On</th>
@@ -770,7 +774,6 @@ $users = DB::table('users')
                                             <td><input type="text" name="oos_detail[0][oos_test_name]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_results_obtained]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_specification_limit]"></td>
-                                            <td><input type="text" name="oos_detail[0][oos_details_obvious_error]"></td>
                                             <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_submit_by]"></td>
                                             <td>

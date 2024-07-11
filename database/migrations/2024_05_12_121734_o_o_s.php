@@ -179,6 +179,8 @@ return new class extends Migration
             $table->longtext('oos_observed_on')->nullable();
             $table->longtext('delay_justification')->nullable();
             $table->longtext('oos_reported_date')->nullable();
+            $table->longtext('immediate_action')->nullable();
+             
             
             $table->text('stage')->nullable();
             $table->text('status')->nullable();

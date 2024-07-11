@@ -167,7 +167,8 @@ class OOS extends Model
           'date_close',
           'oos_observed_on',
           'delay_justification',
-          'oos_reported_date'
+          'oos_reported_date',
+          'immediate_action'
       ];
 
     protected $casts = [

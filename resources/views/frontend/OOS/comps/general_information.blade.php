@@ -251,7 +251,13 @@
                         </script>
 
 
-          
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Immediate action">Immediate action</label>
+                    <input type="text" name="immediate_action"  id="immediate_action" 
+                        value="{{ $data->immediate_action ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                </div>
+            </div>
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Initiator Group">Initial Attachment</label>
@@ -482,7 +488,6 @@
                                 <th style="width: 8%">Test Name of OOS</th>
                                 <th style="width: 12%">Results Obtained</th>
                                 <th style="width: 16%">Specification Limit</th>
-                                <th style="width: 10%">Details of Obvious Error</th>
                                 <th style="width: 14%">File Attachment</th>
                                 <th style="width: 16%">Submit On</th>
                                 <th style="width: 8%">Submit By</th>
@@ -498,7 +503,6 @@
                                         <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_detail[{{ $loop->index }}][oos_test_name]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_test_name') }}"></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_detail[{{ $loop->index }}][oos_results_obtained]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_results_obtained') }}"></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_detail[{{ $loop->index }}][oos_specification_limit]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_specification_limit') }}"></td>
-                                        <td><input {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_detail[{{ $loop->index }}][oos_details_obvious_error]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_details_obvious_error') }}"></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}}  type="file" name="oos_detail[{{ $loop->index }}][oos_file_attachment]"></td>
                                         <td>
                                           <div class="col-lg-6 new-date-data-field">
