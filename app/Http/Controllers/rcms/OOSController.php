@@ -610,9 +610,9 @@ class OOSController extends Controller
              if ($changestage->stage == 2) {
                  $changestage->stage = "1";
                  $changestage->status = "Opened";
-                 $changestage->completed_by_pending_initial_assessment = Auth::user()->name;
-                 $changestage->completed_on_pending_initial_assessment = Carbon::now()->format('d-M-Y');
-                 $changestage->comment_pending_initial_assessment = $request->comment;
+                 $changestage->completed_by_submit = Auth::user()->name;
+                 $changestage->completed_on_submit = Carbon::now()->format('d-M-Y');
+                 $changestage->comment_submit = $request->comment;
                      $history = new OosAuditTrial();
                      $history->oos_id = $id;
                      $history->activity_type = 'Activity Log';

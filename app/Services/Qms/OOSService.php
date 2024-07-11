@@ -28,6 +28,7 @@ class OOSService
         try {
 
             $input = $request->all();
+            // dd($input);
             
             $input['form_type'] = "OOS Chemical";
             $input['status'] = 'Opened';

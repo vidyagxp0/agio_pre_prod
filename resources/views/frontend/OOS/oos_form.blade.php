@@ -31,8 +31,8 @@ $users = DB::table('users')
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                        '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -41,8 +41,8 @@ $users = DB::table('users')
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                        '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -415,11 +415,10 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">Initiation department Code <span class="text-danger"></span></label>
-                                <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                     value="">
+                                <input type="text" name="initiator_group_code" id="initiator_group_code" value="">
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="If Others">If Others
                                     <span class="text-danger">*</span></label>
@@ -454,17 +453,7 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div>--}}
-                        <div class="col-md-6 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="due-date">OOS occurred On</label>
-                                <div class="calenderauditee">                                    
-                                    <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
-                                    <input type="date" name="deviation_occured_on_gi"   value=""
-                                    class="hide-input"
-                                    oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Source Document Type">Reference document</label>
@@ -477,6 +466,94 @@ $users = DB::table('users')
                                 <input type="text" name="reference_system_document_gi"  id="reference_system_document_gi" value="">
                             </div>
                         </div>
+                        <div class="col-md-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="due-date">OOS occurred On</label>
+                                <div class="calenderauditee">                                    
+                                    <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
+                                    <input type="date" name="deviation_occured_on_gi"   value=""
+                                    class="hide-input"
+                                    oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOS Observed On">OOS Observed On</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="oos_observed_on" readonly placeholder="DD-MMM-YYYY" />
+                                    {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                    <input type="date" name="oos_observed_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'oos_observed_on')" />
+                                </div>
+                            </div>
+                            @error('Deviation_date')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="deviation_time">Delay Justification</label>
+                                <textarea id="delay_justification" name="delay_justification"></textarea>
+                            </div>
+                            {{-- @error('Deviation_date')
+                                <div class="text-danger">{{  $message  }}</div>
+                            @enderror --}}
+                        </div>
+                        <script>
+                            flatpickr("#deviation_time", {
+                                enableTime: true,
+                                noCalendar: true,
+                                dateFormat: "H:i", // 24-hour format without AM/PM
+                                minuteIncrement: 1 // Set minute increment to 1
+
+                            });
+                        </script>
+                                
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Audit Schedule End Date">OOS Reported on</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="oos_reported_date" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="oos_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                                      class="hide-input" oninput="handleDateInput(this, 'oos_reported_date')" />
+                                </div>
+                            </div>
+                        </div>
+                            <script>
+                                $('.delayJustificationBlock').hide();
+
+                                function calculateDateDifference() {
+                                    let deviationDate = $('input[name=Deviation_date]').val();
+                                    let reportedDate = $('input[name=Deviation_reported_date]').val();
+
+                                    if (!deviationDate || !reportedDate) {
+                                        console.error('Deviation date or reported date is missing.');
+                                        return;
+                                    }
+
+                                    let deviationDateMoment = moment(deviationDate);
+                                    let reportedDateMoment = moment(reportedDate);
+
+                                    let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
+
+                                    // if (diffInDays > 0) {
+                                    //     $('.delayJustificationBlock').show();
+                                    // } else {
+                                    //     $('.delayJustificationBlock').hide();
+                                    // }
+
+                                }
+
+                                $('input[name=Deviation_date]').on('change', function() {
+                                    calculateDateDifference();
+                                })
+
+                                $('input[name=Deviation_reported_date]').on('change', function() {
+                                    calculateDateDifference();
+                                })
+                            </script>
+
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Initial Attachments</label>
@@ -566,9 +643,8 @@ $users = DB::table('users')
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
-                                                        <input type="text" id="info_mfg_date" readonly 
-                                                        placeholder="MM-YYYY" />
-                                                        <input type="month" min="01-2000" value="12-29999" name="info_product_material[0][info_mfg_date]" value=""
+                                                        <input type="text" id="info_mfg_date" readonly placeholder="MM-YYYY" />
+                                                        <input type="month"  name="info_product_material[0][info_mfg_date]" value=""
                                                         class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date')">
                                                     </div>
                                                 </div>
@@ -578,9 +654,8 @@ $users = DB::table('users')
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
-                                                        <input type="text" id="info_expiry_date" readonly 
-                                                        placeholder="MM-YYYY" />
-                                                        <input type="month" min="01-2000"  name="info_product_material[0][info_expiry_date]"
+                                                        <input type="text" id="info_expiry_date" readonly placeholder="MM-YYYY" />
+                                                        <input type="month"  name="info_product_material[0][info_expiry_date]"
                                                         class="hide-input" oninput="handleMonthInput(this, 'info_expiry_date')">
                                                     </div>
                                                 </div>

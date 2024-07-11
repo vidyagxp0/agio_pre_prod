@@ -164,7 +164,10 @@ class OOS extends Model
           'stage',
           // 'type',
           'date_open',
-          'date_close'
+          'date_close',
+          'oos_observed_on',
+          'delay_justification',
+          'oos_reported_date'
       ];
 
     protected $casts = [

@@ -112,7 +112,7 @@
                         value="{{ $data->initiator_group_code ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Initiator Group Code">If Others</label>
                     <textarea type="if_others_gi" name="if_others_gi" {{Helpers::isOOSChemical($data->stage)}}>{{ $data->if_others_gi }}</textarea>
@@ -147,19 +147,6 @@
                     </select>
                 </div>
             </div> --}}
-            <div class="col-lg-6 new-date-data-field">
-                <div class="group-input input-date">
-                    <label for="Deviation Occurred On"> OOS occurred On </label>
-                    <div><small class="text-primary"></small></div>
-                    <div class="calenderauditee">
-                        <input type="text" id="deviation_occured_on_gi" readonly 
-                        value="{{ Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
-                        <input type="date" name="deviation_occured_on_gi"
-                         class="hide-input"
-                            oninput="handleDateInput(this, 'deviation_occured_on_gi')" />
-                    </div>
-                </div>
-            </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Source Document Type">Reference document</label>
@@ -174,6 +161,97 @@
                         value="{{ $data->reference_system_document_gi ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
                 </div>
             </div>
+            <div class="col-lg-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="Deviation Occurred On"> OOS occurred On </label>
+                    <div><small class="text-primary"></small></div>
+                    <div class="calenderauditee">
+                        <input type="text" id="deviation_occured_on_gi" readonly 
+                        value="{{ Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
+                        <input type="date" name="deviation_occured_on_gi"
+                         class="hide-input"
+                            oninput="handleDateInput(this, 'deviation_occured_on_gi')" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="group-input">
+                    <label for="severity-level">OOS Observed On <span class="text-danger">*</span></label>
+                     <input type="date" id="oos_observed_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                        name="oos_observed_on" value="{{ old('oos_observed_on') ? old('oos_observed_on') : $data->oos_observed_on }}">
+                    @error('oos_observed_on')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-lg-6 new-time-data-field">
+                {{-- @error('delay_justification') @else delayJustificationBlock @enderror --}}
+                <div class="group-input input-time ">
+                    <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
+                    <textarea id="delay_justification" name="delay_justification">{{ $data->delay_justification }}</textarea>
+                </div>
+                @error('delay_justification')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <script>
+                flatpickr("#deviation_time", {
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i", // 24-hour format without AM/PM
+                    minuteIncrement: 1 // Set minute increment to 1
+
+                });
+            </script>
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Initiator Group">OOS Reported On 
+                    <input type="date" id="oos_reported_date" name="oos_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                        {{ $data->stage == 0 || $data->stage == 15 ? 'disabled' : '' }} value="{{ $data->oos_reported_date }}">
+                </div>
+                @error('oos_reported_date')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            // Hide the delayJustificationBlock initially
+                            $('.delayJustificationBlock').hide();
+
+                            // Check the condition on page load
+                            checkDateDifference();
+                        });
+
+                        function checkDateDifference() {
+                            let deviationDate = $('input[name=Deviation_date]').val();
+                            let reportedDate = $('input[name=Deviation_reported_date]').val();
+
+                            if (!deviationDate || !reportedDate) {
+                                console.error('Deviation date or reported date is missing.');
+                                return;
+                            }
+
+                            let deviationDateMoment = moment(deviationDate);
+                            let reportedDateMoment = moment(reportedDate);
+
+                            let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
+
+                            // if (diffInDays > 0) {
+                            //     $('.delayJustificationBlock').show();
+                            // } else {
+                            //     $('.delayJustificationBlock').hide();
+                            // }
+                        }
+
+                        // Call checkDateDifference whenever the values are changed
+                        $('input[name=Deviation_date], input[name=Deviation_reported_date]').on('change', function() {
+                            checkDateDifference();
+                        });
+                        </script>
+
+
+          
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Initiator Group">Initial Attachment</label>
@@ -290,9 +368,9 @@
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
                                                     <input  {{Helpers::isOOSChemical($data->stage)}}  type="text" id="info_mfg_date_{{ $loop->index }}" readonly placeholder="MM-YYYY" name="info_product_material[{{ $loop->index }}][info_mfg_date]"
-                                                     value="{{ Helpers::getdateFormat($info_product_material['info_mfg_date'] ?? '') }}"  />
-                                                    <input     {{Helpers::isOOSChemical($data->stage)}} type="date" name="info_product_material[{{ $loop->index }}][info_mfg_date]" 
-                                                    value="{{$info_product_material['info_mfg_date']}}" class="hide-input" oninput="handleDateInput(this, 'info_mfg_date_{{ $loop->index }}')">
+                                                     value="{{ Helpers::getmonthFormat($info_product_material['info_mfg_date'] ?? '') }}"  />
+                                                    <input  {{Helpers::isOOSChemical($data->stage)}} type="month" name="info_product_material[{{ $loop->index }}][info_mfg_date]" 
+                                                    value="{{$info_product_material['info_mfg_date']}}" class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date_{{ $loop->index }}')">
                                                 </div>
                                             </div>
                                         </div>
@@ -301,9 +379,9 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input  {{Helpers::isOOSChemical($data->stage)}} type="text" id="info_expiry_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="MM-YYYY" />
-                                                    <input  {{Helpers::isOOSChemical($data->stage)}} type="date" name="info_product_material[{{ $loop->index }}][info_expiry_date]" 
-                                                    value="{{ $info_product_material['info_expiry_date'] ?? '' }}" class="hide-input" oninput="handleDateInput(this, 'info_expiry_date_{{ $loop->index }}')">
+                                                    <input  {{Helpers::isOOSChemical($data->stage)}} type="text" id="info_expiry_date_{{ $loop->index }}" value="{{ Helpers::getmonthFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="MM-YYYY" />
+                                                    <input  {{Helpers::isOOSChemical($data->stage)}} type="month" name="info_product_material[{{ $loop->index }}][info_expiry_date]" 
+                                                    value="{{ $info_product_material['info_expiry_date'] ?? '' }}" class="hide-input" oninput="handleMonthInput(this, 'info_expiry_date_{{ $loop->index }}')">
                                                 </div>
                                             </div>
                                         </div>

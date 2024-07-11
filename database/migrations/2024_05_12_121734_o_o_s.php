@@ -175,7 +175,10 @@ return new class extends Migration
             $table->longtext('verification_attachment_uar')->nullable();
             $table->longtext('actionchild')->nullable();
             $table->longtext('Capachild')->nullable();
-            
+            // ======= addextrafield 11july24 ========
+            $table->longtext('oos_observed_on')->nullable();
+            $table->longtext('delay_justification')->nullable();
+            $table->longtext('oos_reported_date')->nullable();
             
             $table->text('stage')->nullable();
             $table->text('status')->nullable();
