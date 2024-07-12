@@ -331,6 +331,14 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm18')">CheckList - Preliminary Lab. Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Inv. Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button>
+                <!-- checklist start -->
+                <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist - Investigation of Bacterial Endotoxin Test (BET)</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Checklist - Investigation of Sterility</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Checklist - Investigation of Microbial limit test (MLT)</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Investigation of Chemical assay</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Residual solvent (RS)</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Dissolution </button>
+                <!-- checklist closed -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button>
@@ -370,6 +378,8 @@
 
             <!-- Preliminary Lab Invst. Review--->
             @include('frontend.OOS.comps.preliminary_lab_investigation')
+             <!-- All CheckList-->
+            {{-- @include('frontend.OOS.comps.all_checklist_Investigation_bsmmem') --}} 
 
             <!--Phase II Investigation -->
             @include('frontend.OOS.comps.phase_two_investigation')
