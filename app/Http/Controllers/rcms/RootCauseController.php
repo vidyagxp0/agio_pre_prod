@@ -367,6 +367,7 @@ use Illuminate\Support\Facades\Hash;
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
+        
         $history->activity_type = 'QA Reviewer';
         $history->previous = "Null";
         $history->current = $root->qa_reviewer;
@@ -1115,6 +1116,8 @@ use Illuminate\Support\Facades\Hash;
         $root->related_url = ($request->related_url);
         // $root->investigators = implode(',', $request->investigators);
         $root->root_cause_methodology = implode(',', $request->root_cause_methodology);
+
+       // dd($root->root_cause_methodology);
         // $root->country = ($request->country);
         $root->assign_to = $request->assign_to;
         $root->Sample_Types = $request->Sample_Types;
@@ -2625,7 +2628,7 @@ use Illuminate\Support\Facades\Hash;
                 $root->status = "Investigation in Progress";
                 $root->submitted_by= Auth::user()->name;
                 $root->submitted_on= Carbon::now()->format('d-M-Y');
-
+                $root->comments = $request->comment;
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
@@ -2673,6 +2676,7 @@ use Illuminate\Support\Facades\Hash;
                 $root->status = 'Pending QA Review';
                 $root->submitted_by = Auth::user()->name;
                 $root->submitted_on = Carbon::now()->format('d-M-Y');
+                $root->qa_comments_new = $request->comment;
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
@@ -2769,6 +2773,8 @@ use Illuminate\Support\Facades\Hash;
                 $root->status = "Close-Done";
                 $root->submitted_by = Auth::user()->name;
                 $root->submitted_on = Carbon::now()->format('d-M-Y');
+                $root->comment_3 = $request->comment;
+
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -2795,6 +2801,8 @@ use Illuminate\Support\Facades\Hash;
                 $root->status = "Closed -Done";
                 $root->evaluation_complete_by = Auth::user()->name;
                 $root->evaluation_complete_on = Carbon::now()->format('d-M-Y');
+             
+
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -2838,6 +2846,8 @@ use Illuminate\Support\Facades\Hash;
             $root->status = "Closed-Cancelled";
             $root->cancelled_by = Auth::user()->name;
             $root->cancelled_on = Carbon::now()->format('d-M-Y');
+            $root->cancel_comment = $request->comment;
+
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Activity Log';
@@ -2902,6 +2912,10 @@ use Illuminate\Support\Facades\Hash;
 
                 $capa->qA_review_complete_by = Auth::user()->name;
                 $capa->qA_review_complete_on = Carbon::now()->format('d-M-Y');
+                $capa->reject_1 = $request->comment;
+
+                $capa->cft_comments_new = $request->comment;
+
                     $history = new RootAuditTrial();    
                     $history->root_id = $id;
                     $history->previous = "";

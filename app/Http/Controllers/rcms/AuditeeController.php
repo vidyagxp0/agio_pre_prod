@@ -482,7 +482,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->start_date)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Audit Schedule Start Date';
+            $history->activity_type = 'Audit  Start Date';
             $history->previous = "Null";
             $history->current = $internalAudit->start_date;
             $history->comment = "Na";
@@ -500,7 +500,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->end_date)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Audit Schedule End Date';
+            $history->activity_type = 'Audit  End Date';
             $history->previous = "Null";
             $history->current = $internalAudit->end_date;
             $history->comment = "NA";
@@ -1055,6 +1055,25 @@ class AuditeeController extends Controller
             $history->save();
         }
 
+        if (!empty($internalAudit->severity_level)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Observation Category';
+            $history->previous = "Null";
+            $history->current = $internalAudit->severity_level;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
+
+
         toastr()->success("Record is Create Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
@@ -1354,13 +1373,13 @@ class AuditeeController extends Controller
 
 
 
-        if ($lastDocument->assign_to != $internalAudit->assign_to || !empty($request->assign_to_comment)) {
+        if ($lastDocument->severity_level != $internalAudit->severity_level || !empty($request->comment)) {
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Assigned to';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $internalAudit->assign_to;
+            $history->activity_type = 'Observation Category';
+            $history->previous = $lastDocument->severity_level;
+            $history->current = $internalAudit->severity_level;
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1368,7 +1387,7 @@ class AuditeeController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->assign_to) || $lastDocument->assign_to === '') {
+            if (is_null($lastDocument->severity_level) || $lastDocument->severity_level === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -1591,7 +1610,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Audit Schedule Start Date';
+            $history->activity_type = 'Audit  Start Date';
             $history->previous = $lastDocument->start_date;
             $history->current = $internalAudit->start_date;
             $history->comment = $request->date_comment;
@@ -1613,7 +1632,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Audit Schedule End Date';
+            $history->activity_type = 'Audit  End Date';
             $history->previous = $lastDocument->end_date;
             $history->current = $internalAudit->end_date;
             $history->comment = $request->date_comment;
@@ -2266,6 +2285,7 @@ class AuditeeController extends Controller
                 $changeControl->status = "Audit Preparation";
                 $changeControl->audit_schedule_by = Auth::user()->name;
                 $changeControl->audit_schedule_on = Carbon::now()->format('d-M-Y');
+                $changeControl->audit_schedule_on_comment = $request->comment;
                       
                 
                         $history = new AuditTrialExternal();
@@ -2315,7 +2335,8 @@ class AuditeeController extends Controller
                 $changeControl->status = "Pending Audit";
                 $changeControl->audit_preparation_completed_by = Auth::user()->name;
                 $changeControl->audit_preparation_completed_on = Carbon::now()->format('d-M-Y');
-                        
+                $changeControl->audit_preparation_completed_on_comment = $request->comment;
+                   
                 
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
@@ -2360,7 +2381,10 @@ class AuditeeController extends Controller
                 $changeControl->status = "Pending Response";
                 $changeControl->audit_mgr_more_info_reqd_by = Auth::user()->name;
                 $changeControl->audit_mgr_more_info_reqd_on = Carbon::now()->format('d-M-Y');
-                        $history = new AuditTrialExternal();
+                $changeControl->audit_mgr_more_info_reqd_on_comment = $request->comment;
+              
+                
+                      $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Activity Log';
                         $history->previous = "";
@@ -2404,7 +2428,10 @@ class AuditeeController extends Controller
                 $changeControl->status = "CAPA Execution in Progress";
                 $changeControl->audit_observation_submitted_by = Auth::user()->name;
                 $changeControl->audit_observation_submitted_on = Carbon::now()->format('d-M-Y');
-                        $history = new AuditTrialExternal();
+                $changeControl->audit_observation_submitted_on_comment = $request->comment;
+                  
+                
+                $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Activity Log';
                         $history->previous = "";
@@ -2435,6 +2462,9 @@ class AuditeeController extends Controller
                 $changeControl->audit_response_completed_on = Carbon::now()->format('d-M-Y');
                 $changeControl->response_feedback_verified_by = Auth::user()->name;
                 $changeControl->response_feedback_verified_on = Carbon::now()->format('d-M-Y');
+                
+                $changeControl->audit_lead_more_info_reqd_on_comment = $request->comment;
+             
                 $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -2474,15 +2504,16 @@ class AuditeeController extends Controller
                 $changeControl->stage = "6";
                 $changeControl->status = "Pending Response";
 
-                $changeControl->cancelled_by = Auth::user()->name;
-                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-
+                $changeControl->rejected_by = Auth::user()->name;
+                $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
+                $changeControl->reject_comment_2 = $request->comment;
+                    
                 $history = new AuditTrialExternal();
 
                 $history->ExternalAudit_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current = $changeControl->cancelled_by;
+                $history->current = $changeControl->rejected_by;
                 $history->comment = $request->comment;
                 $history->action  = "";
                 $history->user_id = Auth::user()->id;
@@ -2503,6 +2534,9 @@ class AuditeeController extends Controller
                 $changeControl->status = "Opened";
                 $changeControl->rejected_by = Auth::user()->name;
                 $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
+                $changeControl->rejected_on_comment = $request->comment;
+               
+
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -2564,7 +2598,8 @@ class AuditeeController extends Controller
                 $changeControl->status = "Pending Audit";
                 $changeControl->rejected_by = Auth::user()->name;
                 $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
-                
+                $changeControl->reject_comment_1 = $request->comment;
+               
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -2621,6 +2656,10 @@ class AuditeeController extends Controller
                 $changeControl->status = "Closed-Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->cancelled_on_comment = $request->comment;
+
+
+
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -2652,6 +2691,8 @@ class AuditeeController extends Controller
                 $changeControl->status = "Closed-Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->cancelled_on_comment1 = $request->comment;
+
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -2684,6 +2725,8 @@ class AuditeeController extends Controller
                 $changeControl->status = "Closed-Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->cancelled_on_comment2 = $request->comment;
+
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;
                 $history->activity_type = 'Activity Log';

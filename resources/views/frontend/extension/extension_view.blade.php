@@ -92,16 +92,13 @@
                             class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/audit_trailNew' , $extensionNew->id) }}"> Audit Trail </a> </button>
-
                         @if ($extensionNew->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Submit
                         </button>
-                           
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-required-modal">
                                 Cancel
                             </button>
-                           
                         @elseif($extensionNew->stage == 2 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                               Review
@@ -118,9 +115,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
                                 Approved
                              </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                              Send for CQA
-                             </button>
+                                @if($count == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Reject
                             </button>
@@ -142,7 +141,6 @@
                 </div>
                 <div class="status">
                     <div class="head">Current Status</div>
-                    {{-- ------------------------------By nilesh-------------------------------- --}}
                     @if ($extensionNew->stage == 0)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
@@ -179,7 +177,6 @@
                             @else
                                 <div class="" style="display: none"> Closed - Reject</div>
                             @endif
-
                             @if ($extensionNew->stage == 5)
                                 <div class="bg-danger" style="display: none">Closed - Reject</div>
                                 <div class="active"> In CQA Approval</div>
@@ -200,12 +197,11 @@
             <div class="cctab">
 
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks " onclick="openCity(event, 'CCForm2')">HOD review </button>
-                <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD review </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
-
             </div>
-            <form action="{{ route('extension_new.update',  $extensionNew->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('extension_new.update', $extensionNew->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <!-- Tab content -->
@@ -281,7 +277,6 @@
                                         name="reviewers" placeholder="Select Reviewers" >
                                         <option value="">-- Select --</option>
                                         @if (!empty($reviewers))
-                                        
                                             @foreach ($reviewers as $lan)
                                                 @if(Helpers::checkUserRolesreviewer($lan))
                                                     <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->reviewers) selected @endif>
@@ -323,7 +318,6 @@
                                     </div>
                                 </div>
                             </div>
-                           
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Actual Start Date">Proposed Due Date</label>
@@ -338,7 +332,6 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Short Description"> Description</label>
-                                 
                                     <textarea id="docname" type="text" name="description" value="" >{{$extensionNew->description}}</textarea>
                                 </div>
                                 {{-- @error('short_description')
@@ -409,7 +402,6 @@
                                <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30" >{{$extensionNew->reviewer_remarks}}</textarea>
                             </div>
                         </div>
-                       
                         {{-- <div class="col-12">
                             <div class="group-input">
                                 <label for="Guideline Attachment">Reviewer Attachment  </label>
@@ -476,8 +468,6 @@
                                <textarea name="approver_remarks" id="approver_remarks" cols="30" >{{$extensionNew->approver_remarks}}</textarea>
                             </div>
                         </div>
-                       
-                    
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Inv Attachments"> QA Attachment</label>
