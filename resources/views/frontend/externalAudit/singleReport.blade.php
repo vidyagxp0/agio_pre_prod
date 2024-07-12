@@ -221,6 +221,8 @@
                     <tr>
                         <th class="w-20">Description</th>
                         <td class="w-80">@if($data->initial_comments){{ $data->initial_comments }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr> 
                         <th class="w-20">If Others</th>
                         <td class="w-80">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>                       
                     </tr>
@@ -574,8 +576,10 @@
                         <tr>
                         <th class="w-20">Reference Record</th>
                         <td class="w-30">@if($data->Reference_Recores1){{ $data->Reference_Recores1 }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>  
                         <th class="w-20">Due Date Extension Justification</th>
-                        <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                     <th class="w-20">Remarks</th>

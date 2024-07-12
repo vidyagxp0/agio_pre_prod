@@ -92,7 +92,7 @@
                 row.querySelector('.initial-rpn').value = result;
             }
         </script>
-        <script>
+        {{--  <script>
             function calculateResidualResult(selectElement) {
                 let row = selectElement.closest('tr');
                 let R = parseFloat(row.querySelector('.residual-fieldR').value) || 0;
@@ -101,7 +101,7 @@
                 let result = R * P * N;
                 row.querySelector('.residual-rpn').value = result;
             }
-        </script>
+        </script>  --}}
         <script>
             function calculateRiskAnalysis(selectElement) {
                 // Get the row containing the changed select element
@@ -977,25 +977,26 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Row #</th>
-                                                            <th>Risk Factor</th>
-                                                            <th>Risk element </th>
-                                                            <th>Probable cause of risk element</th>
-                                                            <th>Existing Risk Controls</th>
-                                                            <th>Initial Severity- H(3)/M(2)/L(1)</th>
-                                                            <th>Initial Probability- H(3)/M(2)/L(1)</th>
-                                                            <th>Initial Detectability- H(1)/M(2)/L(3)</th>
-                                                            <th>Initial RPN</th>
+                                                            <th>Activity</th>
+                                                            {{--  <th>Activity</th>  --}}
+                                                            <th>Possible Risk/Failure (Identified Risk)</th>
+                                                            <th>Consequences of Risk/Potential Causes</th>
+                                                            <th>Severity (S)</th>
+                                                            <th>Probability (P)</th>
+                                                            <th>Detection (D)</th>
+                                                            <th>Risk Level (RPN)</th>
+
+                                                            {{--  <th>Risk Acceptance (Y/N)</th>  --}}
+                                                            
+                                                            <th>Control Measures recommended/ Risk mitigation proposed</th>
+                                                            <th>Severity (S)</th>
+                                                            <th>Probability (P)</th>
+                                                            <th>Detection (D)</th>
+                                                            <th>Risk Level (RPN)</th>
+
+                                                            <th>Category of Risk Level (Low, Medium and High)</th> 
                                                             <th>Risk Acceptance (Y/N)</th>
-                                                            <th>Proposed Additional Risk control measure (Mandatory for Risk
-                                                                elements having RPN>4)</th>
-                                                            <th>Residual Severity- H(3)/M(2)/L(1)</th>
-                                                            <th>Residual Probability- H(3)/M(2)/L(1)</th>
-                                                            <th>Residual Detectability- H(1)/M(2)/L(3)</th>
-                                                            <th>Residual RPN</th>
-                                                            <th>Risk Acceptance (Y/N)</th>
-                                                            <th>Mitigation proposal (Mention either CAPA reference number, IQ,
-                                                                OQ or
-                                                                PQ)</th>
+                                                            <th>Traceability document</th>
                                                             <th>Action</th>   
                                                         </tr>
                                                     </thead>

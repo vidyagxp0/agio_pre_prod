@@ -2431,7 +2431,7 @@ class AuditeeController extends Controller
                 $changeControl->audit_observation_submitted_on_comment = $request->comment;
                   
                 
-                $history = new AuditTrialExternal();
+                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Activity Log';
                         $history->previous = "";
@@ -2691,7 +2691,7 @@ class AuditeeController extends Controller
                 $changeControl->status = "Closed-Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-                $changeControl->cancelled_on_comment = $request->comment;
+                $changeControl->cancelled_on_comment1 = $request->comment;
 
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;
@@ -2725,7 +2725,7 @@ class AuditeeController extends Controller
                 $changeControl->status = "Closed-Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-                $changeControl->cancelled_on_comment = $request->comment;
+                $changeControl->cancelled_on_comment2 = $request->comment;
 
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;

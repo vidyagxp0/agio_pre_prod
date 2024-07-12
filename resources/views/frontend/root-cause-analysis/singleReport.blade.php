@@ -619,6 +619,122 @@
     </table>        
                
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="block">
+                <div class="block-head">
+                    Investigation
+                </div>
+
+                    <table>
+                    
+                        <tr>
+                            <th class="w-20">Objective</th>
+                              <td class="w-80">@if($data->objective){{ $data->objective }}@else Not Applicable @endif</td>
+                        </tr>
+
+
+                        <tr>
+                            <th class="w-20">Scope</th>
+                              <td class="w-80">@if($data->scope){{ $data->scope }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Problem Statement</th>
+                              <td class="w-80">@if($data->problem_statement_rca){{ $data->problem_statement_rca }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Requirement</th>
+                              <td class="w-80">@if($data->requirement){{ $data->requirement }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Immediate Action</th>
+                              <td class="w-80">@if($data->immediate_action){{ $data->immediate_action }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Investigation Team</th>
+                              <td class="w-80">@if($data->investigation_team){{ $data->investigation_team }}@else Not Applicable @endif</td>
+                        </tr>
+
+                         <tr>
+                            <th class="w-20">Investigation Tool</th>
+                              <td class="w-80">@if($data->investigation_tool){{ $data->investigation_tool }}@else Not Applicable @endif</td>
+                        </tr>
+                         <tr>
+                            <th class="w-20">Root Cause</th>
+                              <td class="w-80">@if($data->root_cause){{ $data->root_cause }}@else Not Applicable @endif</td>
+                        </tr>
+                         <tr>
+                            <th class="w-20">CAPA</th>
+                              <td class="w-80">@if($data->capa){{ $data->capa }}@else Not Applicable @endif</td>
+                        </tr>
+                         <tr>
+                            <th class="w-20">Root Cause Description</th>
+                              <td class="w-80">@if($data->root_cause_description_rca){{ $data->root_cause_description_rca }}@else Not Applicable @endif</td>
+                        </tr>
+
+                          <tr>
+                            <th class="w-20">Investigation Summary</th>
+                              <td class="w-80">@if($data->investigation_summary_rca){{ $data->investigation_summary_rca }}@else Not Applicable @endif</td>
+                        </tr>
+
+
+                          <tr>
+                            <th class="w-20">Impact / Risk Assessment</th>
+                              <td class="w-80">@if($data->impact_risk_assessment){{ $data->impact_risk_assessment }}@else Not Applicable @endif</td>
+                        </tr>
+                       
+                    </table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            Investigation Attachment
+
+                        </div>
+                        <table>
+    
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                                @if($data->root_cause_initial_attachment_rca)
+                                @foreach(json_decode($data->root_cause_initial_attachment_rca) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                                @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                            @endif
+    
+                        </table>
+                    </div>
+                </div>
+              
+
+
+
+
+
+
+
+
+
+
+
+
             <div class="block">
                 <div class="block-head">
                     QA Review

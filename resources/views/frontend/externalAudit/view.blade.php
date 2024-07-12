@@ -793,7 +793,7 @@ function addMultipleFiles(input, block_id) {
                                                             <td><input type="text" name="remark[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}">
                                                         </td>
-                                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                    <td><button type="text" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Remove</button></td>
                                                         </tr>
                                                     @endforeach
                                                         @endif
@@ -1266,7 +1266,7 @@ function addMultipleFiles(input, block_id) {
                                                                         oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>
                                                                     <td><input type="text" name="status_Observation[]" value="{{unserialize($grid_data1->status)[$key] ? unserialize($grid_data1->status)[$key]: "" }}"></td>
                                                                     <td><input type="text" name="remark_observation[]" value="{{unserialize($grid_data1->remark)[$key] ? unserialize($grid_data1->remark)[$key]: "" }}"></td> --}} 
-                                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                             <td><button type="button" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Remove</button></td>
                                                          </tr>
                                                             @endforeach
                                                             @endif
@@ -1449,6 +1449,9 @@ function addMultipleFiles(input, block_id) {
                             <div id="CCForm6" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
+                                     <div class="col-12 sub-head"  style="font-size: 16px">
+                                               Opened
+                                       </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Audit Schedule On">Audit Schedule By</label>
@@ -1470,16 +1473,44 @@ function addMultipleFiles(input, block_id) {
 
 
 
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Cancelled By">Cancelled(Opened Stage) By</label>
+                                                <div class="static">{{ $data->cancelled_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Cancelled On">Cancelled (Opened Stage) On</label>
+                                                <div class="static">{{ $data->cancelled_on }}</div>
+                                            </div>
+                                        </div>
+                                         <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static">{{ $data->cancelled_on_comment }}</div>
+                                        </div>
+                                    </div>
+                                     
+
+
+
+                                    <div class="col-12 sub-head"  style="font-size: 16px">
+                                               Audit Preparation
+                                       </div>
+                                    
+
                                     <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation Request More
+                                                <label for="Audit Preparation Completed On">Audit Preparation Reject
                                                     By</label>
                                                 <div class="static">{{ $data->rejected_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation Request More
+                                                <label for="Audit Preparation Completed On">Audit Preparation Reject
                                                     On</label>
                                                 <div class="static">{{ $data->rejected_on }}</div>
                                             </div>
@@ -1496,24 +1527,57 @@ function addMultipleFiles(input, block_id) {
 
 
 
+                                     <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Preparation Completed On">Audit Preparation (Complete Audit Preparation)
+                                                    By</label>
+                                                <div class="static">{{ $data->audit_preparation_completed_by }}</div>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled By">Cancelled By</label>
+                                                <label for="Audit Preparation Completed On">Audit Preparation  (Complete Audit Preparation)
+                                                    On</label>
+                                                <div class="static">{{ $data->audit_preparation_completed_on }}</div>
+                                            </div>
+                                        </div>
+                                         <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static">{{ $data->audit_preparation_completed_on_comment }}</div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Preparation Completed On">Audit Preparation (Cancel)
+                                                    By</label>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled On">Cancelled On</label>
+                                                <label for="Audit Preparation Completed On">Audit Preparation  (Cancel)
+                                                    On</label>
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
                                          <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->cancelled_on_comment }}</div>
+                                            <div class="static">{{ $data->cancelled_on_comment1 }}</div>
                                         </div>
                                     </div>
+
+
+                                    <div class="col-12 sub-head"  style="font-size: 16px">
+                                            Pending Audit
+                                       </div>
+                                    
+
+                                     
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Audit Preparation Completed On">Pending  Audit Reject
@@ -1538,28 +1602,26 @@ function addMultipleFiles(input, block_id) {
 
 
 
-      <div class="col-lg-4">
+                                     <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation Completed
+                                                <label for="Audit Preparation Completed On">Pending  Audit Cancel
                                                     By</label>
-                                                <div class="static">{{ $data->audit_preparation_completed_by }}</div>
+                                                <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation Completed
+                                                <label for="Audit Preparation Completed On">Pending  Audit Cancel
                                                     On</label>
-                                                <div class="static">{{ $data->audit_preparation_completed_on }}</div>
+                                                <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
                                          <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->audit_preparation_completed_on_comment }}</div>
+                                            <div class="static">{{ $data->cancelled_on_comment2 }}</div>
                                         </div>
                                     </div>
-
-
 
                                  
 
@@ -1570,14 +1632,14 @@ function addMultipleFiles(input, block_id) {
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd By">Pending Response
+                                                <label for="Audit Mgr.more Info Reqd By">Pending Response(Issue Report)
                                                     By</label>
                                                 <div class="static">{{ $data->audit_mgr_more_info_reqd_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd On">Pending Response
+                                                <label for="Audit Mgr.more Info Reqd On">Pending Response(Issue Report)
                                                     On</label>
                                                 <div class="static">{{ $data->audit_mgr_more_info_reqd_on }}</div>
                                             </div>
@@ -1588,16 +1650,21 @@ function addMultipleFiles(input, block_id) {
                                             <div class="static">{{ $data->audit_mgr_more_info_reqd_on_comment }}</div>
                                         </div>
                                     </div>
+                                       
+                                 <div class="col-12 sub-head"  style="font-size: 16px">
+                                        Pending Response
+                                       </div>
+                                           
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Observation Submitted By">CAPA Execution in Progress Submitted
+                                                <label for="Audit Observation Submitted By">CAPA Plan Proposed 
                                                     By</label>
                                                 <div class="static">{{ $data->audit_observation_submitted_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Observation Submitted On">CAPA Execution in Progress Submitted
+                                                <label for="Audit Observation Submitted On">CAPA Plan Proposed
                                                     On</label>
                                                 <div class="static">{{ $data->audit_observation_submitted_on }}</div>
                                             </div>
@@ -1608,6 +1675,34 @@ function addMultipleFiles(input, block_id) {
                                             <div class="static">{{ $data->audit_observation_submitted_on_comment }}</div>
                                         </div>
                                     </div>
+
+
+                                     <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Observation Submitted By">No CAPAs Required 
+                                                    By</label>
+                                                <div class="static">{{ $data->rejected_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Observation Submitted On">No CAPAs Required
+                                                    On</label>
+                                                <div class="static">{{ $data->rejected_on }}</div>
+                                            </div>
+                                        </div>
+                                         <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static">{{ $data->reject_comment_2 }}</div>
+                                        </div>
+                                    </div>
+                                       
+
+                                        <div class="col-12 sub-head"  style="font-size: 16px">
+                                          CAPA Execution in Progress
+                                       </div>
+                                    
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Audit Lead More Info Reqd By">All CAPA Close
@@ -1628,6 +1723,8 @@ function addMultipleFiles(input, block_id) {
                                             <div class="static">{{ $data->audit_lead_more_info_reqd_on_comment }}</div>
                                         </div>
                                     </div>
+
+{{--                                      
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Audit Response Completed By">Audit Response Completed
@@ -1667,8 +1764,8 @@ function addMultipleFiles(input, block_id) {
                                             <label for="Comments">Comments</label>
                                             <div class="static">{{ $data->comment }}</div>
                                         </div>
-                                    </div>
-                                        <div class="col-lg-4">
+                                    </div>  --}}
+                                        {{--  <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Response Feedback Verified By"> Rejected By
                                                     </label> 
@@ -1687,7 +1784,7 @@ function addMultipleFiles(input, block_id) {
                                             <label for="Comments">Comments</label>
                                             <div class="static">{{ $data->comment }}</div>
                                         </div>
-                                    </div>
+                                    </div>  --}}
 
                                     </div>
                                     <div class="button-block">

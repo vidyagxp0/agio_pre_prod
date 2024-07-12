@@ -286,7 +286,7 @@
                                     </select>
                                 </div>
                             </div>
-                                <div class="col-lg-6">
+                                {{--  <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="priority_level">Priority Level</label>
                                         <div><small class="text-primary">Choose high if Immidiate actions are
@@ -298,7 +298,7 @@
                                             <option value="high">High</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>  --}}
                                  {{-- <div class="col-lg-6"> --}}
                                     {{-- <div class="group-input">
                                         <label for="investigators">Additional Investigators</label>
@@ -313,7 +313,7 @@
                                         </select>
                                     </div> --}}
                                 {{-- </div> --}}
-                               <div class="col-lg-6">
+                               <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="department">Responsible Department </label>
                                     <select multiple name="departments[]" placeholder="Select Department(s)" data-search="false" data-silent-initial-value-set="true" id="department">
@@ -369,12 +369,12 @@
                                         </select>
                                     </div>
                                 </div> --}}
-                                <div class="col-12">
+                                {{--  <div class="col-12">
                                     <div class="group-input">
                                         <label for="related_url">Related URL</label>
                                         <input type="url" name="related_url" />
                                     </div>
-                                </div>
+                                </div>  --}}
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -812,30 +812,53 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="investigation_team">Investigation Team</label>
-                                <select id="investigation_team" name="investigation_team" class="form-control">
-                                    <option value="">Select a member of the Investigation Team</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('investigation_team')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
+                                                <div class="group-input">
+                                                    <label for="investigation_team">Investigation Team</label>
+                                                    <select id="investigation_team" name="investigation_team" class="form-control">
+                                                        <option value="">Select a member of the Investigation Team</option>
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('investigation_team')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
-                                            <div class="col-lg-12">
+
+
+                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="investigation_tool">Investigation Tool</label>
                                                     <textarea name="investigation_tool"></textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
+                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="root_cause">Root Cause</label>
                                                     <textarea name="root_cause"></textarea>
+                                                </div>
+                                            </div>
+                                           
+
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="capa">CAPA</label>
+                                                    <textarea name="capa"></textarea>
+                                                </div>
+                                            </div>
+                                             <div class="col-12">
+                                                <div class="group-input">
+                                                    <label for="root_cause_description">Root Cause Description</label>
+                                                    <textarea name="root_cause_description_rca"></textarea>
+                                                </div>
+                                            </div>
+
+                                             <div class="col-12">
+                                                <div class="group-input">
+                                                    <label for="investigation_summary">Investigation Summary</label>
+                                                    <textarea name="investigation_summary_rca"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -844,26 +867,16 @@
                                                     <textarea name="impact_risk_assessment"></textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="capa">CAPA</label>
-                                                    <textarea name="capa"></textarea>
-                                                </div>
-                                            </div>
+
+                                            
+                                             
+                                           
+                                          
+                                           
 
 
-                                            <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="root_cause_description">Root Cause Description</label>
-                                                    <textarea name="root_cause_description_rca"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="investigation_summary">Investigation Summary</label>
-                                                    <textarea name="investigation_summary_rca"></textarea>
-                                                </div>
-                                            </div>
+                                           
+                                           
 
                                             {{--  <div class="col-lg-12">
                                                 <div class="group-input">
@@ -875,7 +888,7 @@
 
                                         <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Investigation Attachment</label>
+                                        <label for="Inv Attachments">Investigation Attachment
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
@@ -978,7 +991,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">Engineering Comments</label>
-                                        <textarea name="Engineering_comments_new"></textarea>
+                                        <textarea name="    "></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

@@ -617,17 +617,14 @@
                                 </select>
                             </div>
                         </div>
-                                    <div class="col-lg-6">
+                                    {{--  <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="priority_level">Priority Level</label>
                                             <div><small class="text-primary">Choose high if Immidiate actions are
                                                     </small></div>
 
                                             <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="priority_level">
-                                                <!-- {{-- <option value="0">-- Select --</option>
-                                                <option value="low">Low</option>
-                                                <option value="medium">Medium</option>
-                                                <option value="high">High</option> --}} -->
+                                                
                                                 <option value="0">-- Select --</option>
                                                 <option @if ($data->priority_level == 'low') selected @endif
                                                  value="low">Low</option>
@@ -637,7 +634,7 @@
                                                 value="high">High</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div>  --}}
                                     {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="investigators">Additional Investigators</label>
@@ -654,7 +651,7 @@
                                         </div>
                                     </div> --}}
 
-                                 <div class="col-lg-6">
+                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="department">Responsible Department</label>
                                         @php
@@ -734,11 +731,11 @@
                                         </div>
                                     </div>  -->
 
-                                    <div class="col-12">
+                                    {{--  <div class="col-12">
                                <div class="group-input">
                               <label for="related_url">Related URL</label>
                            <input name="related_url" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->related_url }}">
-                       </div>
+                       </div>  --}}
                      </div>
 
                                                 <div class="button-block">
@@ -1417,22 +1414,22 @@
                                                 </div>
                                             </div>
                                           <div class="col-lg-12">
-    <div class="group-input">
-        <label for="investigation_team">Investigation Team</label>
-        <select id="investigation_team" name="investigation_team" class="form-control">
-            <option value="">Select a member of the Investigation Team</option>
-            @foreach ($users as $user)
-                <option value="{{ $user->id }}"
-                    @if ($data->investigation_team == $user->id) selected @endif>
-                    {{ $user->name }}
-                </option>
-            @endforeach
-        </select>
-        @error('investigation_team')
-            <p class="text-danger">{{ $message }}</p>
-        @enderror
-    </div>
-</div>
+                                                <div class="group-input">
+                                                    <label for="investigation_team">Investigation Team</label>
+                                                    <select id="investigation_team" name="investigation_team" class="form-control">
+                                                        <option value="">Select a member of the Investigation Team</option>
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->id }}"
+                                                                @if ($data->investigation_team == $user->id) selected @endif>
+                                                                {{ $user->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('investigation_team')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                             <div class="col-lg-12">
                                                 <div class="group-input">
@@ -1446,12 +1443,7 @@
                                                     <textarea name="root_cause"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->root_cause }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="impact_risk_assessment">Impact / Risk Assessment</label>
-                                                    <textarea name="impact_risk_assessment"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->impact_risk_assessment }}</textarea>
-                                                </div>
-                                            </div>
+                                           
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="capa">CAPA</label>
@@ -1473,6 +1465,13 @@
                                                 </div>
                                             </div>
 
+                                             <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="impact_risk_assessment">Impact / Risk Assessment</label>
+                                                    <textarea name="impact_risk_assessment"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->impact_risk_assessment }}</textarea>
+                                                </div>
+                                            </div>
+
                                             {{--  <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="investigation_summary">Investigation Summary</label>
@@ -1483,7 +1482,7 @@
 
                                    <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="comments">Investigation Attachment/label>
+                                            <label for="comments">Investigation Attachment
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             <div  class="file-attachment-field">
@@ -1596,7 +1595,7 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->comments }}</div>
+                                            <div class="static">{{ $data->comments_new1 }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -1638,7 +1637,7 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->cft_comments_new }}</div>
+                                            <div class="static">{{ $data->reject_1 }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -2190,4 +2189,8 @@ function addRootCauseAnalysisRiskAssessment1(tableId) {
         $('#root-cause-methodology').trigger('change');
     });
 </script>
-    @endsection
+ @endsection
+
+ 
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
