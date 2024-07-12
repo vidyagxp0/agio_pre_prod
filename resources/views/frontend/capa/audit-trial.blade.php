@@ -178,10 +178,10 @@
             <body>
                 <div style="display: flex; justify-content: flex-end;">
                    
-                    <button  class="button_theme1" style="margin-right: 10px"> <a class="text-white" href="{{ route('capashow',$data->id) }}"> Back </a> </button>
-                     
+                     <a class="button_theme1 text-white" href="{{ route('capashow',$data->id) }}" style="margin-right: 10px"> Back </a> 
+                                                
                 
-                    <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                     <a class="button_theme1 text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                 </a> </button></div>
                 </div>
                 <header>
