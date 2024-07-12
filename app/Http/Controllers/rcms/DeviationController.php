@@ -2704,7 +2704,8 @@ class DeviationController extends Controller
 
     public function launchExtensionDeviation(Request $request, $id){
         $deviation = Deviation::find($id);
-        $getCounter = LaunchExtension::where(['deviation_id' => $deviation->id, 'extension_identifier' => "Deviation"])->first();
+        $getCounter = LaunchExtension::where(['deviation_id' => $deviation->id,
+         'extension_identifier' => "Deviation"])->first();
         if($getCounter && $getCounter->counter == null){
             $counter = 1;
         } else {

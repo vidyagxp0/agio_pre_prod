@@ -14,6 +14,8 @@ use App\Models\RecordNumber;
 use App\Models\Division;
 use App\Models\QMSDivision;
 use App\Models\Extension;
+use App\Models\OOSLaunchExtension;
+
 use Carbon\Carbon;
 use Error;
 use Helpers;
@@ -21,8 +23,6 @@ use PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
-
-
 
 class OOSController extends Controller
 {
@@ -100,9 +100,17 @@ class OOSController extends Controller
         $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
         $oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
         $oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
-        // dd($phase_two_invs);
+        
+        $capaExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "Capa"])->first();
+        $qrmExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "QRM"])->first();
+        $investigationExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "Investigation"])->first();
+        $oosExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "OOS Chemical"])->first();
+
         return view('frontend.OOS.oos_form_view', 
-        compact('data', 'old_record','revised_date','cft' , 'info_product_materials', 'details_stabilities', 'oos_details','instrument_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusions', 'oos_conclusion_reviews'));
+        compact('data', 'old_record','revised_date','cft' , 'info_product_materials',
+         'details_stabilities', 'oos_details','instrument_details', 'checklist_lab_invs', 
+         'oos_capas', 'phase_two_invs', 'oos_conclusions', 'oos_conclusion_reviews','capaExtension',
+          'qrmExtension', 'investigationExtension', 'oosExtension'));
 
     }
 
@@ -138,6 +146,122 @@ class OOSController extends Controller
         
     }
 
+    public function launchExtensionOOS(Request $request, $id){
+        $oos = OOS::find($id);
+        $getCounter = OOSLaunchExtension::where(['oos_id' => $oos->id,
+         'extension_identifier' => "OOS Chemical"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($oos->id != null){
+            $data = OOSLaunchExtension::where([
+                'oos_id' => $oos->id,
+                'extension_identifier' => "OOS Chemical"
+            ])->firstOrCreate();
+
+            $data->oos_id = $request->oos_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->oos_proposed_due_date = $request->oos_proposed_due_date;
+            $data->oos_extension_justification = $request->oos_extension_justification;
+            $data->oos_extension_completed_by = $request->oos_extension_completed_by;
+            $data->oos_extension_completed_on = $request->oos_extension_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+    public function launchExtensionCapa(Request $request, $id){
+        $oos = OOS::find($id);
+        $getCounter = OOSLaunchExtension::where(['oos_id' => $oos->id, 'extension_identifier' => "Capa"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($oos->id != null){
+
+            $data = OOSLaunchExtension::where([
+                'oos_id' => $oos->id,
+                'extension_identifier' => "Capa"
+            ])->firstOrCreate();
+
+            $data->oos_id = $request->oos_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->capa_proposed_due_date = $request->capa_proposed_due_date;
+            $data->capa_extension_justification = $request->capa_extension_justification;
+            $data->capa_extension_completed_by = $request->capa_extension_completed_by;
+            $data->capa_extension_completed_on = $request->capa_extension_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+
+    public function launchExtensionQrm(Request $request, $id){
+        $oos = Deviation::find($id);
+        $getCounter = OOSLaunchExtension::where(['oos_id' => $oos->id, 'extension_identifier' => "QRM"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($oos->id != null){
+
+            $data = OOSLaunchExtension::where([
+                'oos_id' => $oos->id,
+                'extension_identifier' => "QRM"
+            ])->firstOrCreate();
+
+            $data->oos_id = $request->oos_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->qrm_proposed_due_date = $request->qrm_proposed_due_date;
+            $data->qrm_extension_justification = $request->qrm_extension_justification;
+            $data->qrm_extension_completed_by = $request->qrm_extension_completed_by;
+            $data->qrm_extension_completed_on = $request->qrm_extension_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+    public function launchExtensionInvestigation(Request $request, $id){
+        $oos = Deviation::find($id);
+        $getCounter = OOSLaunchExtension::where(['oos_id' => $oos->id, 'extension_identifier' => "Investigation"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($oos->id != null){
+
+            $data = OOSLaunchExtension::where([
+                'oos_id' => $oos->id,
+                'extension_identifier' => "Investigation"
+            ])->firstOrCreate();
+
+            $data->oos_id = $request->oos_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->investigation_proposed_due_date = $request->investigation_proposed_due_date;
+            $data->investigation_extension_justification = $request->investigation_extension_justification;
+            $data->investigation_extension_completed_by = $request->investigation_extension_completed_by;
+            $data->investigation_extension_completed_on = $request->investigation_extension_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
     public function send_stage(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {

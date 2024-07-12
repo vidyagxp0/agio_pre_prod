@@ -326,7 +326,8 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
             </div>
           <form action="{{ route('oos.oosstore') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -2480,7 +2481,213 @@ $users = DB::table('users')
                 </div>
             </div>
         </div>
+      
+        <!-- Extention add -->
 
+        <div id="CCForm20" class="inner-block cctabcontent">
+            <div class="inner-block-content">
+                <div class="row">
+                    <div class="sub-head"> OOS Extension </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="Audit Schedule End Date">Proposed Due Date (OOS)</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="oos_proposed_due_date" placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="oos_proposed_due_date"
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    oninput="handleDateInput(this, 'oos_proposed_due_date')"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="group-input">
+                            <label for="oos_extension_justification">Extension Justification (OOS)</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                    not require completion</small></div> -->
+                            <textarea class="tiny" name="oos_extension_justification" id="summernote-10">
+                        </textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for=" oos_extension_completed_by"> OOS Extension Completed By
+                            </label>
+                            <select name="oos_extension_completed_by" id="oos_extension_completed_by" >
+                                <option value="">-- Select --</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="Audit Schedule End Date">OOS Extension Completed On</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="oos_extension_completed_on" readonly placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="oos_extension_completed_on"
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    oninput="handleDateInput(this, 'oos_extension_completed_on')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-head"> CAPA Extension </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="capa_proposed_due_date">Proposed Due Date (CAPA)</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="capa_proposed_due_date" readonly placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="capa_proposed_due_date"
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    oninput="handleDateInput(this, 'capa_proposed_due_date')"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="group-input">
+                            <label for="capa_extension_justification">Extension Justification (CAPA)</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                    not require completion</small></div> -->
+                            <textarea class="tiny" name="capa_extension_justification" id="summernote-10">
+                        </textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for=" capa_extension_completed_by"> CAPA Extension Completed By
+                                </label>
+                                <select name="capa_extension_completed_by" id="capa_extension_completed_by" >
+                                    <option value="">-- Select --</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Audit Schedule End Date">CAPA Extension Completed On</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="capa_extension_completed_on" readonly placeholder="DD-MMM-YYYY"  />
+                                    <input type="date" name="capa_extension_completed_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                        oninput="handleDateInput(this, 'capa_extension_completed_on')"   class="hide-input"/>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- row_end --}}
+                    </div>
+                    <div class="sub-head"> Quality Risk Management Extension </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="qrm_proposed_due_date">Proposed Due Date (Quality Risk Management)</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="qrm_proposed_due_date" readonly placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="qrm_proposed_due_date"
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    oninput="handleDateInput(this, 'qrm_proposed_due_date')"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="group-input">
+                            <label for="qrm_extension_justification">Extension Justification (Quality Risk Management)</label>
+                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                            <textarea class="tiny" name="qrm_extension_justification" id="summernote-10"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for=" Quality_Risk_Management_Extension_Completed_By"> Quality Risk Management Extension Completed By </label>
+                                <select name="qrm_extension_completed_by" id="qrm_extension_completed_by">
+                                    <option value="">-- Select --</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="qrm_extension_completed_on">Quality Risk Management Extension Completed On</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="qrm_extension_completed_on" readonly placeholder="DD-MMM-YYYY"  />
+                                    <input type="date"name="qrm_extension_completed_on"
+                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'qrm_extension_completed_on')"  />
+                                </div>
+                            </div>
+                        </div>
+                        {{-- row_end --}}
+                    </div>
+                    <div class="sub-head">Investigation Extension </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="investigation_proposed_due_date">Proposed Due Date (Investigation)</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="investigation_proposed_due_date" readonly placeholder="DD-MMM-YYYY"  />
+                                <input type="date" name="investigation_proposed_due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                 class="hide-input" oninput="handleDateInput(this, 'investigation_proposed_due_date')"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="group-input">
+                            <label for="investigation_extension_justification">Extension Justification (Investigation)</label>
+                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                    not require completion</small></div>
+                            <textarea class="tiny" name="investigation_extension_justification" id="summernote-10">
+                        </textarea>
+                        </div>
+                    </div>
+                    {{-- row --}}
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for=" investigation_extension_completed_by"> Investigation Extension Completed By </label>
+                                <select name="investigation_extension_completed_by"id="investigation_extension_completed_by" >
+                                    <option value="">-- Select --</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="investigation_extension_completed_on">Investigation Extension Completed On</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="investigation_extension_completed_on" readonly placeholder="DD-MMM-YYYY"  />
+                                    <input type="date" name="investigation_extension_completed_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                        class="hide-input" oninput="handleDateInput(this, 'investigation_extension_completed_on')"  />
+                                </div>
+                            </div>
+                        </div>
+                        {{-- row-end --}}
+                    </div>
+                       
+                </div>
+                <div class="button-block">
+                    <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;" class="saveButton">Save</button>
+                    <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: 1px;">
+                        <button type="button"  class="backButton">Back</button>
+                    </a>
+                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;" class="nextButton" onclick="nextStep()">Next</button>
+                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"> <a href="{{ url('rcms/qms-dashboard') }}"
+                            class="text-white">
+                            Exit </a> </button>
+                        <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
+                            class="button  launch_extension" data-bs-toggle="modal"
+                            data-bs-target="#launch_extension">
+                            Launch Extension
+                        </a>  -->
+                </div>
+                </div>
+            </div>
+        </div>
+
+       
         <!----- Signature ----->
         <div id="CCForm17" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -2703,7 +2910,7 @@ $users = DB::table('users')
                             <div class="date"></div>
                         </div>
                     </div>
-<!-- ====================================================================== -->
+<!-- ==================================Activity Log==================================== -->
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="submitted by">Submitted By :</label>

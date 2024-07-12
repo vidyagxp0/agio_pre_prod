@@ -340,10 +340,11 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
-
+                <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
+               
             </div>
-          <form action="{{ route('oos.oosupdate', $data->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('oos.oosupdate', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div id="step-form">
                 @if (!empty($parent_id))
@@ -398,7 +399,10 @@
            {{--  @include('frontend.OOS.comps.oos_reopen')  --}}  
 
             <!-- Under Addendum Approval -->
-            @include('frontend.OOS.comps.under_approval') 
+            @include('frontend.OOS.comps.under_approval')
+            
+            @include('frontend.OOS.comps.oos_extension') 
+            
 
             <!--Under Addendum Execution -->
             {{-- @include('frontend.OOS.comps.under_execution') --}}
@@ -412,14 +416,784 @@
             <!----- Signature ----->
             @include('frontend.OOS.comps.signature')
 
+         </div>
+
+
+        </div>
+        </form>
+
+    </div>
+    </div>
+
+    <!-- Extention Model -->
+    <div class="container">
+        <div class="modal right fade" id="myModal3" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-titles">OOS Workflow</h4>
+                    </div>
+                    <div style="padding:3px;" class="modal-body">
+                        <Div class="button-box">
+                            <div style="background: #85be859e;" class="mini_buttons">
+                                Opened
+                            </div>
+                            <div class="down-logo">
+                                <img class="dawn_arrow" src="{{ asset('user/images/down.gif') }}" alt="..."
+                                    class="w-100 h-100">
+
+                            </div>
+                            <div style="background: #0000ff1f;" class="mini_buttons">
+                                HOD Review
+                            </div>
+                            <div class="down-logo">
+                                <img class="dawn_arrow" src="{{ asset('user/images/down.gif') }}" alt="..."
+                                    class="w-100 h-100">
+
+                            </div>
+                            <div style="background: #0000ff1f;" class="mini_buttons">
+                                QA Initial Review
+                            </div>
+                            <div class="down-logo">
+                                <img class="dawn_arrow" src="{{ asset('user/images/down.gif') }}" alt="..."
+                                    class="w-100 h-100">
+
+                            </div>
+                            <div style="background: #0000ff1f;" class="mini_buttons">
+                                CFT Review
+                            </div>
+                            <div class="down-logo">
+                                <img class="dawn_arrow" src="{{ asset('user/images/down.gif') }}" alt="..."
+                                    class="w-100 h-100">
+
+                            </div>
+                            <div style="background: #0000ff1f;" class="mini_buttons">
+                                QA Final Review
+                            </div>
+                            <div class="down-logo">
+                                <img class="dawn_arrow" src="{{ asset('user/images/down.gif') }}" alt="..."
+                                    class="w-100 h-100">
+
+                            </div>
+                            <div style="background: #0000ff1f;" class="mini_buttons">
+                                QA Head/Manager Designee Approval
+                            </div>
+                            <div class="down-logo">
+                                <img class="dawn_arrow" src="{{ asset('user/images/down.gif') }}" alt="..."
+                                    class="w-100 h-100">
+                            </div>
+
+                            <div style="background: #0000ff1f;" class="mini_buttons">
+                                Pending Initiator Update
+                            </div>
+                            <div class="down-logo">
+                                <img class="dawn_arrow" src="{{ asset('user/images/down.gif') }}" alt="..."
+                                    class="w-100 h-100">
+                            </div>
+
+                            <div style="background: #0000ff1f;" class="mini_buttons">
+                                QA Final Approval
+                            </div>
+                            <div class="down-logo">
+                                <img class="dawn_arrow" src="{{ asset('user/images/down.gif') }}" alt="..."
+                                    class="w-100 h-100">
+                            </div>
+                            <div style="background: #ff000042;" class="mini_buttons">
+                                Closed - Done
+                            </div>
+                        </Div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="modal right fade" id="myModal4" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">WorkFlow</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default close-btn" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
+    </div>
 
-    </div>
-    </form>
+  <div class="modal fade" id="launch_extension">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
 
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <div class="launch_extension_header">
+                    <h4 class="modal-title text-center">Launch Extension</h4>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form method="POST">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="main_head_modal">
+                        <ul>
+                            <li>
+                                <div>
+                                    @if($qrmExtension && $qrmExtension->counter == 3)
+                                        <a>-------</a>
+                                    @else
+                                        <a href="" data-bs-toggle="modal" data-bs-target="#qrm_extension"> QRM</a>
+                                    @endif
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    @if($investigationExtension && $investigationExtension->counter == 3)
+                                        <a>-------</a>
+                                    @else
+                                        <a href=""data-bs-toggle="modal" data-bs-target="#investigation_extension"> Investigation</a>
+                                    @endif
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    @if($capaExtension && $capaExtension->counter == 3)
+                                        <a>-------</a>
+                                    @else
+                                        <a href="" data-bs-toggle="modal" data-bs-target="#capa_extension"> CAPA</a>
+                                    @endif
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    @if($oosExtension && $oosExtension->counter == 3)
+                                        <a>-------</a>
+                                    @else
+                                        <a href="" data-bs-toggle="modal" data-bs-target="#deviation_extension"> Deviation</a>
+                                    @endif
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
+
+<div class="modal fade" id="qrm_extension">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">QRM-Extension</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form action="{{ route('launch-extension-qrm', $data->id) }}" method="post">
+                @csrf
+                <div class="modal-body">
+                    <!-- <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="password" name="password" required>
+                    </div> -->
+                    <div class="group-input">
+                        <label for="password">Proposed Due Date(QRM)</label>
+                        <input class="extension_modal_signature" type="date" name="qrm_proposed_due_date" id="qrm_proposed_due_date">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Extension Justification (QRM)<span
+                                class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text"
+                            name="qrm_extension_justification" id="qrm_extension_justification">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Quality Risk Management Extension Completed By </label>
+                        <select class="extension_modal_signature" name="qrm_extension_completed_by"
+                            id="qrm_extension_completed_by">
+                            <option value="">-- Select --</option>
+                            @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                        </select>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Quality Risk Management Extension Completed On </label>
+                        <input class="extension_modal_signature" type="date"
+                            name="qrm_completed_on" id="qrm_completed_on">
+                    </div>
+                    <input name="deviation_id" id="deviation_id" value="{{$data->id}}" hidden >
+                    <input name="extension_identifier" id="extension_identifier" value="QRM" hidden >
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="submit">
+                        Submit
+                    </button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
+
+<div class="modal fade" id="investigation_extension">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Investigation-Extension</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form action="{{ route('launch-extension-investigation', $data->id) }}" method="post">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <!-- <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="password" name="password" required>
+                    </div> -->
+                    <div class="group-input">
+                        <label for="password">Proposed Due Date(Investigation)</label>
+                        <input class="extension_modal_signature" type="date"
+                            name="investigation_proposed_due_date" id="investigation_proposed_due_date">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Extension Justification (Investigation)<span
+                                class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text"
+                            name="investigation_extension_justification" id="investigation_extension_justification">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Investigation Extension Completed By </label>
+                        <select class="extension_modal_signature" name="investigation_extension_completed_by" id="investigation_extension_completed_by">
+                            <option value="">-- Select --</option>
+                            @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                        </select>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Investigation Extension Completed On </label>
+                        <input class="extension_modal_signature" type="date" name="investigation_completed_on" id="investigation_completed_on">
+                    </div>
+                    <input name="deviation_id" id="deviation_id" value="{{$data->id}}" hidden >
+                    <input name="extension_identifier" id="extension_identifier" value="Investigation" hidden >
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="submit">
+                        Submit
+                    </button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="capa_extension">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">CAPA-Extension</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form action="{{ route('launch-extension-capa', $data->id) }}" method="post">
+                @csrf
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <!-- <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="password" name="password" required>
+                    </div> -->
+                    <div class="group-input">
+                        <label for="password">Proposed Due Date (CAPA)</label>
+                        <input class="extension_modal_signature" type="date" name="capa_proposed_due_date" id="capa_proposed_due_date">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Extension Justification (CAPA)<span
+                                class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text" name="capa_extension_justification" id="capa_extension_justification">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">CAPA Extension Completed By </label>
+                        <select class="extension_modal_signature" name="capa_extension_completed_by" id="capa_extension_completed_by">
+                            <option value="">-- Select --</option>
+                            @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                        </select>
+                    </div>
+                    <input name="deviation_id" id="deviation_id" value="{{$data->id}}" hidden >
+                    <input name="extension_identifier" id="extension_identifier" value="Capa" hidden >
+                    <div class="group-input">
+                        <label for="password">CAPA Extension Completed On </label>
+                        <input class="extension_modal_signature" type="date" name="capa_completed_on" id="capa_completed_on">
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="submit">
+                        Submit
+                    </button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deviation_extension">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">OOS-Extension</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form action="{{ route('launch-extension-deviation', $data->id) }}" method="post">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <!-- <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="password" name="password" required>
+                    </div> -->
+                    <div class="group-input">
+                        <label for="password">Proposed Due Date (OOS)</label>
+                        <input class="extension_modal_signature" type="date" name="dev_proposed_due_date" id="dev_proposed_due_date">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Extension Justification (OOS)<span
+                                class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text"
+                            name="dev_extension_justification" id="dev_extension_justification">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">OOS Extension Completed By </label>
+                        <select class="extension_modal_signature" name="dev_extension_completed_by" id="dev_extension_completed_by">
+                        <option value="">-- Select --</option>
+                                @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                        </select>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">OOS Extension Completed On </label>
+                        <input class="extension_modal_signature" type="date" name="dev_completed_on" id="dev_completed_on">
+                    </div>
+                    <input name="deviation_id" id="deviation_id" value="{{$data->id}}" hidden  >
+                    <input name="extension_identifier" id="extension_identifier" value="Deviation"  hidden >
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit">
+                        Submit
+                    </button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="effectivenss_extension">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <div class="launch_extension_header">
+                    <h4 class="modal-title text-center">Launch Effectiveness Check</h4>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form method="POST">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="main_head_modal">
+                        <ul>
+                            <li>
+                                <div> <a href="" data-bs-toggle="modal"
+                                        data-bs-target="#deviation_effectiveness"> Deviation Effectiveness
+                                        Check</a></div>
+                            </li>
+
+                            <li>
+                                <div> <a href="" data-bs-toggle="modal"
+                                        data-bs-target="#capa_effectiveness"> CAPA Effectivenss Check</a></div>
+                            </li>
+                            <li>
+                                <div> <a href="" data-bs-toggle="modal"
+                                        data-bs-target="#qrm_effectiveness"> QRM Effectiveness Check</a></div>
+                            </li>
+                            <li>
+                                <div> <a href=""data-bs-toggle="modal"
+                                        data-bs-target="#investigation_effectiveness"> Investigation Effectiveness
+                                        Check</a></div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deviation_effectiveness">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Deviation-Effectiveness</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="password" name="password" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="deviation">Effectiveness Check Plan(Deviation)</label>
+                        <input class="extension_modal_signature" type="date"
+                            name="effectiveness_deviation">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Deviation Effectiveness Check Plan Proposed By<span
+                                class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text"
+                            name="effectiveness_deviation_proposed_by">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Deviation Effectiveness Check Plan Proposed On </label>
+                        <input class="extension_modal_signature" type="text"
+                            name="deviation_effectiveness_by">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Effectiveness Check Colsure Comments(Deviation)</label>
+                        <input class="extension_modal_signature" type="date"
+                            name="deviation_effectiveness_on">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Next Review Date(Deviation)</label>
+                        <input class="extension_modal_signature" type="date" name="next_review_deviation">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Deviation Effectiveness Check closed By </label>
+                        <select class="extension_modal_signature" name="deviation_feectiveness_closed_by"
+                            id="">
+                            <option value="">-- Select --</option>
+                        </select>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Deviation Effectiveness Check CLosed On</label>
+                        <input class="extension_modal_signature" type="date"
+                            name="deviation_effectiveness_on">
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="submit">
+                        Submit
+                    </button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="capa_effectiveness">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">CAPA-Effectiveness</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="password" name="password" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Effectiveness Check Plan(CAPA)</label>
+                        <input class="extension_modal_signature" type="date"
+                            name="effectiveness_check_capa">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">CAPA Effectiveness Check Plan Proposed By<span
+                                class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text"
+                            name="_eefectiveness_capa_proposed_by">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">CAPA Effectiveness Check Plan Proposed On </label>
+                        <input class="extension_modal_signature" type="text"
+                            name="deviation_effectiveness_by">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Effectiveness Check Colsure Comments(CAPA)</label>
+                        <input class="extension_modal_signature" type="date"
+                            name="deviation_effectiveness_on">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Next Review Date(CAPA)</label>
+                        <input class="extension_modal_signature" type="date" name="next_review_capa">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">CAPA Effectiveness Check closed By </label>
+                        <select class="extension_modal_signature" name="capa_effectiveness_closed"
+                            id="">
+                            <option value="">-- Select --</option>
+                        </select>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">CAPA Effectiveness Check CLosed On</label>
+                        <input class="extension_modal_signature" type="date" name="capa_effectiveness_on">
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="submit">
+                        Submit
+                    </button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="qrm_effectiveness">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">QRM-Effectiveness</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and a outcome for this task and enter your username
+                        and password for this task.
+                    </div>
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="password" name="password" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Effectiveness Check Plan(QRM)</label>
+                        <input class="extension_modal_signature" type="date" name="deviation_due_capa">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">QRM Effectiveness Check Plan Proposed By<span
+                                class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text" name="qrm_proposed_by">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">QRM Effectiveness Check Plan Proposed On </label>
+                        <input class="extension_modal_signature" type="text" name="qrm_effectiveness_by">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Effectiveness Check Colsure Comments(QRM)</label>
+                        <input class="extension_modal_signature" type="date" name="qrm_effectiveness_on">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Next Review Date(QRM)</label>
+                        <input class="extension_modal_signature" type="date" name="next_review_qrm">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">QRM Effectiveness Check closed By </label>
+                        <select class="extension_modal_signature" name="qrm_effectivenss_check_by"
+                            id="">
+                            <option value="">-- Select --</option>
+                        </select>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">QRM Effectiveness Check CLosed On</label>
+                        <input class="extension_modal_signature" type="date" name="qrm_effectiveness_on">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit">
+                        Submit
+                    </button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+ <!-- ==============================investigation effectiveness===========  -->
+<div class="modal fade" id="investigation_effectiveness">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Investigation-Effectiveness</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="password" name="password" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Effectiveness Check Plan(Investigation)</label>
+                        <input class="extension_modal_signature" type="date"
+                            name="investigation_effectivenss_check">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Investigation Effectiveness Check Plan Proposed By<span
+                                class="text-danger">*</span></label>
+                        <input class="extension_modal_signature" type="text"
+                            name="investigation_effectivenss_by">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Investigation Effectiveness Check Plan Proposed On </label>
+                        <input class="extension_modal_signature" type="text"
+                            name="investigation_effectiveness_on">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Effectiveness Check Colsure Comments(Investigation)</label>
+                        <input class="extension_modal_signature" type="date"
+                            name="investigation_effectiveness_on">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Next Review Date(Investigation)</label>
+                        <input class="extension_modal_signature" type="date"
+                            name="investigation_effectiveness_on">
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Investigation Effectiveness Check closed By </label>
+                        <select class="extension_modal_signature" name="investigation_effectiveness_by"
+                            id="">
+                            <option value="">-- Select --</option>
+                        </select>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Investigation Effectiveness Check CLosed On</label>
+                        <input class="extension_modal_signature" type="date"
+                            name="investigation_effectiveness_on">
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="submit">
+                        Submit
+                    </button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- close extention model -->
     <script>
         document.getElementById('initiator_group').addEventListener('change', function() {
             var selectedValue = this.value;

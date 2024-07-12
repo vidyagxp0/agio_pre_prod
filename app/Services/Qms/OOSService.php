@@ -5,6 +5,7 @@ namespace App\Services\Qms;
 use App\Models\OOS;
 use App\Models\Oosgrids;
 use App\Models\OosAuditTrial;
+use App\Models\OOSLaunchExtension;
 use App\Models\RoleGroup;
 use App\Models\RecordNumber;
 use Helpers;
@@ -60,10 +61,50 @@ class OOSService
             }
 
             $oos = OOS::create($input);
+
             $record = RecordNumber::first();
             $record->counter = ((RecordNumber::first()->value('counter')) + 1);
             $record->update();
 
+        //    =============== LaunchExtention ================
+
+        if(!empty($oos->id)){
+            $oosExtention = new OOSLaunchExtension();
+            $oosExtention->oos_id = $oos->id;
+            $oosExtention->extension_identifier = 'OOS Chemical';
+            $oosExtention->oos_proposed_due_date = $request->oos_proposed_due_date;
+            $oosExtention->oos_extension_justification = $request->oos_extension_justification;
+            $oosExtention->oos_extension_completed_by =  $request->oos_extension_completed_by;
+            $oosExtention->oos_extension_completed_on = $request->oos_extension_completed_on;
+            $oosExtention->save();
+
+            $capaExtention = new OOSLaunchExtension();
+            $capaExtention->oos_id = $oos->id;
+            $capaExtention->extension_identifier = 'Capa';
+            $capaExtention->capa_proposed_due_date = $request->capa_proposed_due_date;
+            $capaExtention->capa_extension_justification = $request->capa_extension_justification;
+            $capaExtention->capa_extension_completed_by =  $request->capa_extension_completed_by;
+            $capaExtention->capa_extension_completed_on = $request->capa_extension_completed_on;
+            $capaExtention->save();
+
+            $qrmextExtention = new OOSLaunchExtension();
+            $qrmextExtention->oos_id = $oos->id;
+            $qrmextExtention->extension_identifier = 'QRM';
+            $qrmextExtention->qrm_proposed_due_date = $request->qrm_proposed_due_date;
+            $qrmextExtention->qrm_extension_justification = $request->qrm_extension_justification;
+            $qrmextExtention->qrm_extension_completed_by =  $request->qrm_extension_completed_by;
+            $qrmextExtention->qrm_extension_completed_on = $request->qrm_extension_completed_on;
+            $qrmextExtention->save();
+
+            $investigationExtention = new OOSLaunchExtension();
+            $investigationExtention->oos_id = $oos->id;
+            $investigationExtention->extension_identifier = 'Investigation';
+            $investigationExtention->investigation_proposed_due_date = $request->investigation_proposed_due_date;
+            $investigationExtention->investigation_extension_justification = $request->investigation_extension_justification;
+            $investigationExtention->investigation_extension_completed_by =  $request->investigation_extension_completed_by;
+            $investigationExtention->investigation_extension_completed_on = $request->investigation_extension_completed_on;
+            $investigationExtention->save();
+        }
             $grid_inputs = [
                 'info_product_material',
                 'details_stability',
@@ -1486,6 +1527,44 @@ class OOSService
              // ===================== update(Audit Trail) ===========
             // $lastOosRecod = OOS::find($id);
             $lastOosRecod = OOS::where('id', $id)->first();
+
+            if(!empty($lastOosRecod->id)){
+                $oosExtention = new OOSLaunchExtension();
+                $oosExtention->oos_id = $lastOosRecod->id;
+                $oosExtention->extension_identifier = 'OOS Chemical';
+                $oosExtention->oos_proposed_due_date = $request->oos_proposed_due_date;
+                $oosExtention->oos_extension_justification = $request->oos_extension_justification;
+                $oosExtention->oos_extension_completed_by =  $request->oos_extension_completed_by;
+                $oosExtention->oos_extension_completed_on = $request->oos_extension_completed_on;
+                $oosExtention->save();
+    
+                $capaExtention = new OOSLaunchExtension();
+                $capaExtention->oos_id = $lastOosRecod->id;
+                $capaExtention->extension_identifier = 'Capa';
+                $capaExtention->capa_proposed_due_date = $request->capa_proposed_due_date;
+                $capaExtention->capa_extension_justification = $request->capa_extension_justification;
+                $capaExtention->capa_extension_completed_by =  $request->capa_extension_completed_by;
+                $capaExtention->capa_extension_completed_on = $request->capa_extension_completed_on;
+                $capaExtention->save();
+    
+                $qrmextExtention = new OOSLaunchExtension();
+                $qrmextExtention->oos_id = $lastOosRecod->id;
+                $qrmextExtention->extension_identifier = 'QRM';
+                $qrmextExtention->qrm_proposed_due_date = $request->qrm_proposed_due_date;
+                $qrmextExtention->qrm_extension_justification = $request->qrm_extension_justification;
+                $qrmextExtention->qrm_extension_completed_by =  $request->qrm_extension_completed_by;
+                $qrmextExtention->qrm_extension_completed_on = $request->qrm_extension_completed_on;
+                $qrmextExtention->save();
+    
+                $investigationExtention = new OOSLaunchExtension();
+                $investigationExtention->oos_id = $lastOosRecod->id;
+                $investigationExtention->extension_identifier = 'Investigation';
+                $investigationExtention->investigation_proposed_due_date = $request->investigation_proposed_due_date;
+                $investigationExtention->investigation_extension_justification = $request->investigation_extension_justification;
+                $investigationExtention->investigation_extension_completed_by =  $request->investigation_extension_completed_by;
+                $investigationExtention->investigation_extension_completed_on = $request->investigation_extension_completed_on;
+                $investigationExtention->save();
+            }
             
             if ($lastOosRecod->description_gi != $request->description_gi){
                 // dd($lastOosRecod->description_gi);
