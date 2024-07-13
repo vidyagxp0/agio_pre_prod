@@ -400,13 +400,11 @@ $users = DB::table('users')
                                 <label for="Due Date"> Due Date </label>
                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                 <div class="calenderauditee">
-                                <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDate123(null, false, 'd-M-Y') }}" />
+                                <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ $due_date }}" />
                                 <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                 class="hide-input"
                                 oninput="handleDateInput(this, 'due_date')"  value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}"/>
                                 </div>
-
-                                
                             </div>
                         </div>
                        {{-- <div class="col-lg-6">
@@ -1084,12 +1082,9 @@ $users = DB::table('users')
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">Summary of Preliminary Investigation.</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1"></textarea>
                             </div>
                         </div>
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Lead Auditor">Root Cause Identified</label>

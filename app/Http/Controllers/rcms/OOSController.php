@@ -28,29 +28,14 @@ class OOSController extends Controller
 {
     public function index()
     {
-        $cft = [];
-
         $old_record = OOS::select('id', 'division_id', 'record_number')->get();
         
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
-        if ($division) {
-            $last_oos = OOS::where('division_id', $division->id)->latest()->first();
-            if ($last_oos) {
-                $record_number = $last_oos->record_number ? str_pad($last_oos->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
-                
-            } else {
-                $record_number = '0001';
-            }
-        }
-
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
-        $due_date= $formattedDate->format('Y-m-d');
-        // $changeControl = OpenStage::find(1);
-        //  if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        return view("frontend.OOS.oos_form", compact('due_date', 'record_number', 'old_record', 'cft'));
+        $due_date = $formattedDate->format('d-M-Y');
+        return view("frontend.OOS.oos_form", compact('formattedDate', 'due_date', 'old_record', 'record_number'));
 
     }
     
@@ -80,14 +65,9 @@ class OOSController extends Controller
 
     public static function show($id)
     {
-        $cft = [];
-        $revised_date = "";
-        $data = OOS::find($id);
-        // dd($data);
         $old_record = OOS::select('id', 'division_id', 'record_number')->get();
-        // $revised_date = Extension::where('parent_id', $id)->where('parent_type', "OOS Chemical")->value('revised_date');
+        $data = OOS::find($id);
         $data->record_number = str_pad($data->record_number, 4, '0', STR_PAD_LEFT);
-        
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
 
@@ -100,14 +80,15 @@ class OOSController extends Controller
         $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
         $oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
         $oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
-        
+        // $revised_date = "";
+        // $revised_date = Extension::where('parent_id', $id)->where('parent_type', "OOS Chemical")->value('revised_date');
         $capaExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "Capa"])->first();
         $qrmExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "QRM"])->first();
         $investigationExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "Investigation"])->first();
         $oosExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "OOS Chemical"])->first();
 
         return view('frontend.OOS.oos_form_view', 
-        compact('data', 'old_record','revised_date','cft' , 'info_product_materials',
+        compact('data', 'old_record', 'info_product_materials',
          'details_stabilities', 'oos_details','instrument_details', 'checklist_lab_invs', 
          'oos_capas', 'phase_two_invs', 'oos_conclusions', 'oos_conclusion_reviews','capaExtension',
           'qrmExtension', 'investigationExtension', 'oosExtension'));
