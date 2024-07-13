@@ -7,7 +7,7 @@
                     <label for="Description Deviation">Summary of Preliminary Investigation</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="summary_of_prelim_investiga_plic"
-                        id="summernote-1">
+                        id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}} >
                     {{ $data->summary_of_prelim_investiga_plic ? $data->summary_of_prelim_investiga_plic : ''}}</textarea>
                 </div>
             </div>
@@ -16,8 +16,8 @@
                 <div class="group-input">
                     <label for="Lead Auditor">Root Cause Identified</label>
                     <!-- <div class="text-primary">Please Choose the relevent units</div> -->
-                    <select name="root_cause_identified_plic">
-                        <option value="0" {{ $data->root_cause_identified_plic == '0' ? 'selected' : ''
+                    <select name="root_cause_identified_plic"  {{Helpers::isOOSChemical($data->stage)}}>
+                        <option value="" {{ $data->root_cause_identified_plic == '0' ? 'selected' : ''
                             }}>Enter Your Selection Here</option>
                         <option value="yes" {{ $data->root_cause_identified_plic == 'yes' ? 'selected' :
                             '' }}>yes</option>
@@ -30,17 +30,17 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
-                    <select name="oos_category_root_cause_ident_plic">
-                        <option value="0">Enter Your Selection Here</option>
-                        <option value="analyst_error" {{ $data->oos_category_root_cause_ident_plic ==
-                            'analyst_error' ? 'selected' : '' }}>Analyst Error</option>
-                        <option value="instrument_error" {{ $data->oos_category_root_cause_ident_plic ==
-                            'instrument_error' ? 'selected' : '' }}>Instrument Error</option>
-                        <option value="product_material_error" {{ $data->
-                            oos_category_root_cause_ident_plic == 'product_material_error' ? 'selected'
-                            : '' }}>Product/Material Related Error</option>
-                        <option value="other_error" {{ $data->oos_category_root_cause_ident_plic ==
-                            'other_error' ? 'selected' : '' }}>Other Error</option>
+                    <select name="oos_category_root_cause_ident_plic"  {{Helpers::isOOSChemical($data->stage)}}>
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="Analyst Error"{{ $data->oos_category_root_cause_ident_plic ==
+                            'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
+                        <option value="Instrument Error"{{ $data->oos_category_root_cause_ident_plic ==
+                            'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
+                        <option value="Product/Material Related Error"{{ $data->oos_category_root_cause_ident_plic ==
+                            'Product/Material Related Error' ? 'selected' : '' }}>Product/Material Related Error</option>
+                        <option value="Other Error"{{ $data->oos_category_root_cause_ident_plic ==
+                            'Other Error' ? 'selected' : '' }}>Other Error</option>
+                        
                     </select>
                 </div>
             </div>
@@ -50,17 +50,15 @@
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                             require completion</small></div>
                     <textarea class="summernote" name="oos_category_others_plic" id="summernote-1"
-                        value="">
-                   {{ $data->oos_category_others_plic }}
- 
-                   </textarea>
+                        value=""  {{Helpers::isOOSChemical($data->stage)}} > {{ $data->oos_category_others_plic }}
+                    </textarea>
                 </div>
             </div>
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Root Cause Details</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="root_cause_details_plic" id="summernote-1">
+                    <textarea class="summernote" name="root_cause_details_plic" id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}}>
                    {{ $data->root_cause_details_plic }}
                 </textarea>
                 </div>
@@ -71,17 +69,15 @@
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                             require completion </small></div>
                     <textarea class="summernote" name="Description_Deviation" id="summernote-1"
-                        value="">{{ $data->Description_Deviation ? $data->Description_Deviation : '' }}
+                        value=""  {{Helpers::isOOSChemical($data->stage)}} >{{ $data->Description_Deviation ? $data->Description_Deviation : '' }}
                     </textarea>
                 </div>
             </div>
-
-           
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">CAPA Required</label>
-                    <select name="capa_required_plic">
-                        <option value="0" {{ $data->capa_required_plic == '0' ? 'selected' : ''
+                    <select name="capa_required_plic"  {{Helpers::isOOSChemical($data->stage)}}>
+                        <option value="" {{ $data->capa_required_plic == '0' ? 'selected' : ''
                             }}>--Select---</option>
                         <option value="yes" {{ $data->capa_required_plic == 'yes' ? 'selected' : ''
                             }}>Yes</option>
@@ -93,8 +89,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Agenda">Reference CAPA No.</label>
-                    <input type="text" value="{{$data->reference_capa_no_plic}}"
-                        name="reference_capa_no_plic">
+                    <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_no_plic}}" name="reference_capa_no_plic">
                 </div>
             </div>
 
@@ -103,7 +98,7 @@
                     <label for="Description Deviation">Delay Justification for Preliminary Investigation</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="delay_justification_for_pi_plic"
-                        id="summernote-1" value="">
+                        id="summernote-1" value="" {{Helpers::isOOSChemical($data->stage)}}>
                      {{ $data->delay_justification_for_pi_plic ? $data->delay_justification_for_pi_plic : ''  }}
 
                 </textarea>
@@ -118,7 +113,6 @@
                     </small>
                     <div class="file-attachment-field">
                         <div class="file-attachment-list" id="supporting_attachment_plic">
-
                             @if ($data->supporting_attachment_plic)
                             @foreach ($data->supporting_attachment_plic as $file)
                             <h6 type="button" class="file-container text-dark"
@@ -138,7 +132,8 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="supporting_attachment_plic[]"
-                                oninput="addMultipleFiles(this, 'supporting_attachment_plic')" multiple>
+                                oninput="addMultipleFiles(this, 'supporting_attachment_plic')"
+                                multiple  {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
                     </div>
 
@@ -148,10 +143,16 @@
             </div>
 
             <div class="button-block">
-                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" id="ChangeNextButton" class="nextButton"
-                    onclick="nextStep()">Next</button>
+            @if ($data->stage == 0  || $data->stage >= 15)
+            <div class="progress-bars">
+                    <div class="bg-danger">Workflow is already Closed-Done</div>
+                </div>
+            @else
+            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" id="ChangeNextButton" class="nextButton"
+                onclick="nextStep()">Next</button>
+            @endif
                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>
             </div>

@@ -47,7 +47,9 @@
 
         }
     </style>
-    
+
+
+
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
@@ -62,8 +64,8 @@
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                        '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -72,8 +74,8 @@
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                        '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -128,7 +130,9 @@
         });
     </script>
     <!-- ------------------------------grid-3-------------------------script -->
-    <script>
+    
+
+<script>
         $(document).ready(function() {
             $('#oos_details').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -140,14 +144,13 @@
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_test_name]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_results_obtained]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
-                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
                             '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
                             '<td>' +
                             '<div class="col-lg-6 new-date-data-field">' +
                             '<div class="group-input input-date">' +
                             '<div class="calenderauditee">' +
                             '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                            '<input type="date" name="oos_details[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
+                            '<input type="date" name="oos_detail[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
                             '</div>' +
                             '</div>' +
                             '</div>' +
@@ -171,7 +174,32 @@
             });
         });
     </script>
+    <!-- ------------------------------grid-4 instrument_details-------------------------script -->
+    <script>
+        $(document).ready(function() {
+            $('#instrument_details').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                            '<td><input disabled type="text" name="instrument_detail['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_name]"></td>'+
+                            '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_id_number]"></td>' +
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
+                        '</tr>'; 
+                    return html;
+                }
+
+                var tableBody = $('#instrument_details_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
     <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
+
     <script>
         $(document).ready(function() {
             $('#oos_capa').click(function(e) {
@@ -218,7 +246,10 @@
             });
         });
     </script>
+
+
     <!-- -----------------------------grid-1----------OOS Conclusion ---------------- -->
+
     <script>
         $(document).ready(function() {
             $('#oos_conclusion').click(function(e) {
@@ -245,7 +276,10 @@
             });
         });
     </script>
+
+
     <!-- -----------------------------grid-1----------OOSConclusion_Review ---------------- -->
+
     <script>
         $(document).ready(function() {
             $('#oosconclusion_review').click(function(e) {
@@ -297,6 +331,14 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm18')">CheckList - Preliminary Lab. Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Inv. Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button>
+                <!-- checklist start -->
+                <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist - Investigation of Bacterial Endotoxin Test (BET)</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Checklist - Investigation of Sterility</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Checklist - Investigation of Microbial limit test (MLT)</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Investigation of Chemical assay</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Residual solvent (RS)</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Dissolution </button>
+                <!-- checklist closed -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button>
@@ -305,15 +347,12 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button> -->
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button> -->
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button> -->
-                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
-
+                <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
+               
             </div>
-          <form action="{{ route('oos.oosupdate', $data->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('oos.oosupdate', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div id="step-form">
                 @if (!empty($parent_id))
@@ -321,6 +360,10 @@
                 <input type="hidden" name="parent_type" value="{{ $parent_type }}">
                 @endif
             <!-- Tab content -->
+            
+            <!-- General Information -->
+            <!-- Tab content -->
+
             <!-- General Information -->
             @include('frontend.OOS.comps.general_information')
 
@@ -335,6 +378,8 @@
 
             <!-- Preliminary Lab Invst. Review--->
             @include('frontend.OOS.comps.preliminary_lab_investigation')
+             <!-- All CheckList-->
+            @include('frontend.OOS.comps.all_checklist_Investigation_bsmmem')
 
             <!--Phase II Investigation -->
             @include('frontend.OOS.comps.phase_two_investigation')
@@ -361,31 +406,38 @@
             @include('frontend.OOS.comps.batch_disposition')
 
             <!-- Re-Open -->
-            @include('frontend.OOS.comps.oos_reopen')    
+           {{--  @include('frontend.OOS.comps.oos_reopen')  --}}  
 
             <!-- Under Addendum Approval -->
-            @include('frontend.OOS.comps.under_approval')    
+            @include('frontend.OOS.comps.under_approval')
+            
+            @include('frontend.OOS.comps.oos_extension') 
+            
 
             <!--Under Addendum Execution -->
-            @include('frontend.OOS.comps.under_execution')
+            {{-- @include('frontend.OOS.comps.under_execution') --}}
 
             <!-- Under Addendum Review-->
-            @include('frontend.OOS.comps.under_review')
+            {{--  @include('frontend.OOS.comps.under_review') --}}
 
             <!-- Under Addendum Verification -->
-            @include('frontend.OOS.comps.under_verification')    
+            {{-- @include('frontend.OOS.comps.under_verification')  --}}   
 
             <!----- Signature ----->
             @include('frontend.OOS.comps.signature')
 
+         </div>
+
+
         </div>
-
-
-    </div>
-    </form>
+        </form>
 
     </div>
     </div>
+
+    <!-- Extention Model -->
+
+    <!-- close extention model -->
     <script>
         document.getElementById('initiator_group').addEventListener('change', function() {
             var selectedValue = this.value;
@@ -483,7 +535,7 @@
             $(this).closest('tr').remove();
         })
     </script>
-        <!-- --------------------------------------button--------------------- -->
+    <!-- --------------------------------------button--------------------- -->
         <script>
         VirtualSelect.init({
             ele: '#related_records, #hod'

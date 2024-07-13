@@ -306,9 +306,9 @@ Route::group(['prefix' => 'rcms'], function () {
 
             
             /**
-             * OOS
+             * OOS chemical
              */
-            Route::group(['prefix' => 'oos', 'as' => 'oos.'], function() {
+                Route::group(['prefix' => 'oos', 'as' => 'oos.'], function() {
                 Route::get('/',[OOSController::class, 'index'])->name('index');
                 Route::post('/oosstore', [OOSController::class, 'store'])->name('oosstore');
                 Route::get('oos_view/{id}', [OOSController::class, 'show'])->name('oos_view');
@@ -320,7 +320,9 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::post('cancel_stage/{id}', [OOSController::class, 'cancel_stage'])->name('cancel_stage');;
                 Route::post('thirdStage/{id}', [OOSController::class, 'stageChange'])->name('thirdStage');
                 Route::post('reject_stage/{id}', [OOSController::class, 'reject_stage'])->name('reject_stage');
-                Route::post('capa_child/{id}', [CapaController::class, 'child_change_control'])->name('capa_child_changecontrol');
+                Route::get('capa', [CapaController::class, 'capa'])->name('capa');
+                Route::post('child/{id}', [OOSController::class, 'child'])->name('child');
+    
                 
                 Route::get('AuditTrial/{id}', [OOSController::class, 'AuditTrial'])->name('audit_trial');
                 Route::get('auditDetails/{id}', [OOSController::class, 'auditDetails'])->name('audit_details');
@@ -328,6 +330,7 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
     
                 });
+    
 
                 /** 
                  * oos micro

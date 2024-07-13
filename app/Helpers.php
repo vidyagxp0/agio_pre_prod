@@ -4,6 +4,7 @@ use App\Models\ActionItem;
 use App\Models\Division;
 use App\Models\QMSDivision;
 use App\Models\User;
+use App\Models\OOS;
 use App\Models\OOS_micro;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -86,6 +87,18 @@ class Helpers
         }
          
     }
+   
+
+    public static function isOOSChemical($data)
+    {   
+        if($data == 0 || $data  >= 15){
+            return 'disabled';
+        }else{
+            return  '';
+        }
+         
+    }
+
     public static function isOOSMicro($micro_data)
     {   
         if($micro_data == 0 || $micro_data  >= 14){
@@ -611,6 +624,27 @@ class Helpers
         return $isQA;
     }
 
+    public static function getChemicalGridData(OOS $oos, $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
+    {
+        $res = $getKey ? '' : [];
+            try {
+                $grid = $oos->grids()->where('identifier', $identifier)->first();
+
+                if($grid && is_array($grid->data)){
+                    $res = $grid->data;
+                    if ($getKey && !$byIndex) {
+                        $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
+                    }
+                    if ($getKey && $byIndex && is_array($grid->data[$index])) {
+                        $res = array_key_exists($keyName, $grid->data[$index]) ? $grid->data[$index][$keyName] : '';
+                    }
+                }
+
+            } catch(\Exception $e){
+
+            }
+        return $res;
+    }
     // Helpers::getMicroGridData($micro, 'analyst_training', true, 'response', true, 0)
     public static function getMicroGridData(OOS_micro $micro, $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
     {

@@ -173,7 +173,14 @@ return new class extends Migration
             $table->longtext('required_attachment_uar')->nullable();
             $table->longtext('verification_comments_uav')->nullable();
             $table->longtext('verification_attachment_uar')->nullable();
-            
+            $table->longtext('actionchild')->nullable();
+            $table->longtext('Capachild')->nullable();
+            // ======= addextrafield 11july24 ========
+            $table->longtext('oos_observed_on')->nullable();
+            $table->longtext('delay_justification')->nullable();
+            $table->longtext('oos_reported_date')->nullable();
+            $table->longtext('immediate_action')->nullable();
+
             $table->text('stage')->nullable();
             $table->text('status')->nullable();
             $table->text('date_open')->nullable();
@@ -182,52 +189,89 @@ return new class extends Migration
             $table->text('parent_record')->nullable();
             $table->text('Description_Deviation')->nullable();
 
-            // workflow start stage 
-            $table->text('cancelled_by')->nullable();
-            $table->text('cancelled_on')->nullable();
-            $table->text('comment_cancle')->nullable();
-            $table->text('completed_by_pending_initial_assessment')->nullable();
-            $table->text('completed_on_pending_initial_assessment')->nullable();
-            $table->text('comment_pending_initial_assessment')->nullable();
-            $table->text('completed_by_under_phaseI_investigation')->nullable();
-            $table->text('completed_on_under_phaseI_investigation')->nullable();
-            $table->text('comment_under_phaseI_investigation')->nullable();
-            $table->text('completed_by_under_phaseIB_investigation')->nullable();
-            $table->text('completed_on_under_phaseIB_investigation')->nullable();
-            $table->text('comment_under_phaseIB_investigation')->nullable();
-            $table->text('completed_by_under_phaseI_correction')->nullable();
-            $table->text('completed_on_under_phaseI_correction')->nullable();
-            $table->text('comment_under_phaseI_correction')->nullable();
-            $table->text('completed_by_under_hypothesis')->nullable();
-            $table->text('completed_on_under_hypothesis')->nullable();
-            $table->text('comment_under_hypothesis')->nullable();
-            $table->text('completed_by_under_repeat_analysis')->nullable();
-            $table->text('completed_on_under_repeat_analysis')->nullable();
-            $table->text('comment_under_repeat_analysis')->nullable();
-            $table->text('completed_by_under_phaseII_investigation')->nullable();
-            $table->text('completed_on_under_phaseII_investigation')->nullable();
-            $table->text('comment_under_phaseII_investigation')->nullable();
-            $table->text('completed_by_under_manufacturing_investigation_phaseIIA')->nullable();
-            $table->text('completed_on_under_manufacturing_investigation_phaseIIA')->nullable();
-            $table->text('comment_under_manufacturing_investigation_phaseIIA')->nullable();
-            $table->text('completed_by_under_phaseIIA_correction')->nullable();
-            $table->text('completed_on_under_phaseIIA_correction')->nullable();
-            $table->text('comment_under_phaseIIA_correction')->nullable();
-            $table->text('completed_by_under_phaseIIB_additional_lab_investigation')->nullable();
-            $table->text('completed_on_under_phaseIIB_additional_lab_investigation')->nullable();
-            $table->text('comment_under_phaseIIB_additional_lab_investigation')->nullable();
-            $table->text('completed_by_under_batch_disposition')->nullable();
-            $table->text('completed_on_under_batch_disposition')->nullable();
-            $table->text('comment_under_batch_disposition')->nullable();
-            $table->text('completed_by_under_phaseIII_investigation')->nullable();
-            $table->text('completed_on_under_phaseIII_investigation')->nullable();
-            $table->text('comment_under_phaseIII_investigation')->nullable();
+            //====== workflow start stage 9july extra field add ===========
+              // ============  stage1 to stage0 ========
+              $table->text('cancelled_by')->nullable();
+              $table->text('cancelled_on')->nullable();
+              $table->text('comment_cancle')->nullable();
+            // ============  stage1 to stage2 ========
+            $table->text('completed_by_submit')->nullable();
+            $table->text('completed_on_submit')->nullable();
+            $table->text('comment_submit')->nullable();
+          
+            // ========== stage2 to stage3 ========
+            $table->text('completed_by_initial_phaseI_investigation')->nullable();
+            $table->text('completed_on_initial_phaseI_investigation')->nullable();
+            $table->text('comment_initial_phaseI_investigation')->nullable();
+            // ============ stage3 to stage4 ========
+            $table->text('completed_by_assignable_cause_found')->nullable();
+            $table->text('completed_on_assignable_cause_found')->nullable();
+            $table->text('comment_assignable_cause_found')->nullable();
+            // =========== stage4 to stage14 ===========
+            $table->text('completed_by_correction_completed')->nullable();
+            $table->text('completed_on_correction_completed')->nullable();
+            $table->text('comment_correction_completed')->nullable();
+            // stage3 to stage5
+            $table->text('completed_by_assignable_cause_not_found')->nullable();
+            $table->text('completed_on_assignable_cause_not_found')->nullable();
+            $table->text('comment_assignable_cause_not_found')->nullable();
+            // stage5 to stage6
+            $table->text('completed_by_proposed_hypothesis_experiment')->nullable();
+            $table->text('completed_on_proposed_hypothesis_experiment')->nullable();
+            $table->text('comment_proposed_hypothesis_experiment')->nullable();
+            // stage6 to stage7
+            $table->text('completed_by_obvious_error_found')->nullable();
+            $table->text('completed_on_obvious_error_found')->nullable();
+            $table->text('comment_obvious_error_found')->nullable();
+            // stage7 to stage13
+            $table->text('completed_by_repeat_analysis_completed')->nullable();
+            $table->text('completed_on_repeat_analysis_completed')->nullable();
+            $table->text('comment_repeat_analysis_completed')->nullable();
+           // stage6 to stage8 
+           $table->text('completed_by_no_assignable_cause_found')->nullable();
+           $table->text('completed_on_no_assignable_cause_found')->nullable();
+           $table->text('comment_no_assignable_cause_found')->nullable();
+            // ===========  stage8 to stage9 
+           $table->text('completed_by_manufacturing_investigation')->nullable();
+           $table->text('completed_on_manufacturing_investigation')->nullable();
+           $table->text('comment_manufacturing_investigation')->nullable();
+            // ===========  stage9 to stage10 =========
+           $table->text('completed_by_assignable_manufacturing_defect')->nullable();
+           $table->text('completed_on_assignable_manufacturing_defect')->nullable();
+           $table->text('comment_assignable_manufacturing_defect')->nullable();
+           //  ===========  stage9 to stage11 =========== 
+           $table->text('completed_by_no_assignable_manufacturing_defect')->nullable();
+           $table->text('completed_on_no_assignable_manufacturing_defect')->nullable();
+           $table->text('comment_no_assignable_manufacturing_defect')->nullable();
+           // ===========  stage10 to stage12 =========== 
+           $table->text('completed_by_phaseII_correction_complete')->nullable();
+           $table->text('completed_on_phaseII_correction_complete')->nullable();
+           $table->text('comment_phaseII_correction_complete')->nullable();
+           // ============= stage10 to stage14  =========
+           $table->text('completed_by_phaseIIA_correction_inconclusive')->nullable();
+           $table->text('completed_on_phaseIIA_correction_inconclusive')->nullable();
+           $table->text('comment_phaseIIA_correction_inconclusive')->nullable(); 
+           // ===========  stage11 to stage12 =========== 
+           $table->text('completed_by_retesting_resampling')->nullable();
+           $table->text('completed_on_retesting_resampling')->nullable();
+           $table->text('comment_retesting_resampling')->nullable();
+           // ============= stage11 to stage14  =========
+           $table->text('completed_by_phaseIIB_correction_inconclusive')->nullable();
+           $table->text('completed_on_phaseIIB_correction_inconclusive')->nullable();
+           $table->text('comment_phaseIIB_correction_inconclusive')->nullable(); 
+           //   ====== stage12 to stage13 ========
+           $table->text('completed_by_phaseIII_manufacturing_investigation')->nullable();
+           $table->text('completed_on_phaseIII_manufacturing_investigation')->nullable();
+           $table->text('comment_phaseIII_manufacturing_investigation')->nullable(); 
+           // =========== stage13 to 14 ===========
+           $table->text('completed_by_batch_disposition')->nullable();
+           $table->text('completed_on_batch_disposition')->nullable();
+           $table->text('comment_batch_disposition')->nullable(); 
+           // ===========  stage14 to 15 =========== 
             $table->text('completed_by_approval_completed')->nullable();
             $table->text('completed_on_approval_completed')->nullable();
             $table->text('comment_approval_completed')->nullable();
-            $table->text('completed_by_close_done')->nullable();
-            $table->text('completed_on_close_done')->nullable();
-            $table->text('comment_close_done')->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });

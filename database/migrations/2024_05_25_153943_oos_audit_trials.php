@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('change_to')->nullable();
             $table->string('change_from')->nullable();
             $table->string('action_name')->nullable();
+            $table->string('action')->nullable();
             $table->string('user_role')->nullable();
             $table->string('stage')->nullable();
             $table->softDeletes();

@@ -15,80 +15,6 @@ $users = DB::table('users')
             display: none;
         }
     </style>
-    <!-- --------------------------------------button--------------------- -->
-    <script>
-        VirtualSelect.init({
-            ele: '#related_records, #hod'
-        });
-
-        function openCity(evt, cityName) {
-            var i, cctabcontent, cctablinks;
-            cctabcontent = document.getElementsByClassName("cctabcontent");
-            for (i = 0; i < cctabcontent.length; i++) {
-                cctabcontent[i].style.display = "none";
-            }
-            cctablinks = document.getElementsByClassName("cctablinks");
-            for (i = 0; i < cctablinks.length; i++) {
-                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-
-            // Find the index of the clicked tab button
-            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
-
-            // Update the currentStep to the index of the clicked tab
-            currentStep = index;
-        }
-
-        const saveButtons = document.querySelectorAll(".saveButton");
-        const nextButtons = document.querySelectorAll(".nextButton");
-        const form = document.getElementById("step-form");
-        const stepButtons = document.querySelectorAll(".cctablinks");
-        const steps = document.querySelectorAll(".cctabcontent");
-        let currentStep = 0;
-
-        function nextStep() {
-            // Check if there is a next step
-            if (currentStep < steps.length - 1) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
-
-                // Show next step
-                steps[currentStep + 1].style.display = "block";
-
-                // Add active class to next button
-                stepButtons[currentStep + 1].classList.add("active");
-
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
-
-                // Update current step
-                currentStep++;
-            }
-        }
-
-        function previousStep() {
-            // Check if there is a previous step
-            if (currentStep > 0) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
-
-                // Show previous step
-                steps[currentStep - 1].style.display = "block";
-
-                // Add active class to previous button
-                stepButtons[currentStep - 1].classList.add("active");
-
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
-
-                // Update current step
-                currentStep--;
-            }
-        }
-    </script>
-
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
@@ -105,8 +31,8 @@ $users = DB::table('users')
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                        '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -115,8 +41,8 @@ $users = DB::table('users')
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                        '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -127,7 +53,7 @@ $users = DB::table('users')
                         '<td><input type="text" name="info_product_material[' + serialNumber + '][info_others_specify]" value=""></td>' +
                         '<td><input type="text" name="info_product_material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
                         '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
-                        '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select Option--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
                     '</tr>';
@@ -196,26 +122,21 @@ $users = DB::table('users')
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_test_name]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_results_obtained]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
-                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
                             '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
                             '<td>' +
-                            '<div class="col-lg-6 new-date-data-field">' +
-                            '<div class="group-input input-date">' +
-                            '<div class="calenderauditee">' +
-                            '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                            '<input type="date" name="oos_details[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="oos_detail[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
                             '</td>' +
+                        
                             '<td><button type="text" class="removeRowBtn">Remove</button></td>'
                          '</tr>';
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    // html += '</select></td>' + 
                     return html;
                 }
 
@@ -226,7 +147,30 @@ $users = DB::table('users')
             });
         });
     </script>
+    <!-- ------------------------------grid-4 instrument_details-------------------------script -->
+    <script>
+        $(document).ready(function() {
+            $('#instrument_details').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                            '<td><input disabled type="text" name="instrument_detail['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_name]"></td>'+
+                            '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_id_number]"></td>' +
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
+                        '</tr>'; 
+                    return html;
+                }
+
+                var tableBody = $('#instrument_details_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
     <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
 
     <script>
@@ -238,20 +182,34 @@ $users = DB::table('users')
                         '<td><input disabled type="text" name="oos_capa['+ serialNumber +'][serial]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_number]" value=""></td>' +
-                        '<td><input type="date" name="oos_capa['+ serialNumber +'][info_oos_reported_date]" value=""></td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="info_oos_reported_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_reported_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_reported_date' + serialNumber + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
                         '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_description]" value=""></td>' +
                         '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_previous_root_cause]"value=""></td>' +
                         '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_capa]" value=""></td>' +
-                        '<td><input type="date" name="oos_capa['+ serialNumber +'][info_oos_closure_date]" value=""></td>' +
-                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option value="">Select an Option</option><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="info_oos_closure_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_closure_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_closure_date' + serialNumber + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option value="">Select Option</option><option value="yes">Yes</option><option value="No">No</option></select></td>' +
                         '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_capa_reference_number]" value=""></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    // html += '</select></td>' + 
+                   
                     return html;
                 }
 
@@ -262,6 +220,7 @@ $users = DB::table('users')
             });
         });
     </script>
+
 
     <!-- -----------------------------grid-1----------OOS Conclusion ---------------- -->
 
@@ -292,6 +251,8 @@ $users = DB::table('users')
             });
         });
     </script>
+
+
     <!-- -----------------------------grid-1----------OOSConclusion_Review ---------------- -->
 
     <script>
@@ -356,6 +317,14 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm18')">CheckList - Preliminary Lab. Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Inv. Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button>
+                <!-- checklist start -->
+                <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist - Investigation of Bacterial Endotoxin Test (BET)</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Checklist - Investigation of Sterility</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Checklist - Investigation of Microbial limit test (MLT)</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Investigation of Chemical assay</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Residual solvent (RS)</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Dissolution </button>
+                <!-- checklist closed -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button>
@@ -364,13 +333,10 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button> -->
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button> -->
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button> -->
-                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
-
+                <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
+                
             </div>
           <form action="{{ route('oos.oosstore') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -392,7 +358,7 @@ $users = DB::table('users')
                                 <select id="dynamicSelectType" name="type">
                                     <option value="{{ route('oos.index') }}">OOS Chemical</option>
                                     <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
-                                    <option value="{{ route('oot.index')  }}">OOT</option>
+                                    <option value="{{ route('oot.index');  }}">OOT</option>
                                 </select>
                             </div>
                         </div>
@@ -431,19 +397,28 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Date Due"> Due Date </label>
-                                <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                        reason in "Due Date Extension Justification" data field.</small></div>
+                                <label for="Due Date"> Due Date </label>
+                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                 <div class="calenderauditee">
-                                    <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                    <input type="date" name="due_date"
-                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                        oninput="handleDateInput(this, 'due_date')" />
+                                <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ $due_date }}" />
+                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                class="hide-input"
+                                oninput="handleDateInput(this, 'due_date')"  value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}"/>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="col-lg-6">
+                       {{-- <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Short Description"> Severity Level</label>
+                                <select name="severity_level_gi" >
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option  value="Major">Major</option>
+                                    <option value="Minor">Minor</option>
+                                    <option value="Critical">Critical</option>
+                                </select>
+                            </div>
+                        </div>--}} 
+                        <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Short Description">Short Description
                                     <span class="text-danger">*</span></label>
@@ -457,21 +432,10 @@ $users = DB::table('users')
                         <p id="docnameError" style="color:red">**Short Description is required</p>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Short Description"> Severity Level</label>
-                                <select name="severity_level_gi" >
-                                    <option>Enter Your Selection Here</option>
-                                    <option  value="Major">Major</option>
-                                    <option value="Minor">Minor</option>
-                                    <option value="Critical">Critical</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
+                                <label for="Short Description">Initiation department Group  <span class="text-danger"></span></label>
                                 
                                 <select name="initiator_group" id="initiator_group">
-                                <option>Enter Your Selection Here</option>
+                                <option value="">Enter Your Selection Here</option>
                                 @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group) 
                                 <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }}</option> 
                                 @endforeach 
@@ -480,12 +444,11 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group Code">Initiator Group Code <span class="text-danger"></span></label>
-                                <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                     value="">
+                                <label for="Initiator Group Code">Initiation department Code <span class="text-danger"></span></label>
+                                <input type="text" name="initiator_group_code" id="initiator_group_code" value="">
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="If Others">If Others
                                     <span class="text-danger">*</span></label>
@@ -496,11 +459,10 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Initiator Group Code">Is Repeat?</label>
                                 <select name="is_repeat_gi">
-                                    <option>Enter Your Selection Here</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">yes</option>
                                     <option value="No">No</option>
                                 </select>
-
                             </div>
                         </div>
 
@@ -511,28 +473,124 @@ $users = DB::table('users')
                                  <textarea  name="repeat_nature_gi" ></textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Nature of Change</label>
                                 <select name="nature_of_change_gi">
-                                    <option>Enter Your Selection Here</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="temporary">Temporary</option>
                                     <option value="permanent">Permanent</option>
                                 </select>
                             </div>
+                        </div>--}}
+                        
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Source Document Type">Reference document</label>
+                                <input type="text" name="source_document_type_gi"  id="source_document_type_gi" value="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Reference System Document</label>
+                                <input type="text" name="reference_system_document_gi"  id="reference_system_document_gi" value="">
+                            </div>
                         </div>
                         <div class="col-md-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="due-date">Deviation Occured On</label>
+                                <label for="due-date">OOS occurred On</label>
                                 <div class="calenderauditee">                                    
                                     <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
-                                    <input type="date" name="deviation_occured_on_gi"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                    <input type="date" name="deviation_occured_on_gi"   value=""
                                     class="hide-input"
                                     oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOS Observed On">OOS Observed On</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="oos_observed_on" readonly placeholder="DD-MMM-YYYY" />
+                                    {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                    <input type="date" name="oos_observed_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'oos_observed_on')" />
+                                </div>
+                            </div>
+                            @error('Deviation_date')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="deviation_time">Delay Justification</label>
+                                <textarea id="delay_justification" name="delay_justification"></textarea>
+                            </div>
+                            {{-- @error('Deviation_date')
+                                <div class="text-danger">{{  $message  }}</div>
+                            @enderror --}}
+                        </div>
+                        <script>
+                            flatpickr("#deviation_time", {
+                                enableTime: true,
+                                noCalendar: true,
+                                dateFormat: "H:i", // 24-hour format without AM/PM
+                                minuteIncrement: 1 // Set minute increment to 1
+
+                            });
+                        </script>
+                                
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Audit Schedule End Date">OOS Reported on</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="oos_reported_date" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="oos_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                                      class="hide-input" oninput="handleDateInput(this, 'oos_reported_date')" />
+                                </div>
+                            </div>
+                        </div>
+                            <script>
+                                $('.delayJustificationBlock').hide();
+
+                                function calculateDateDifference() {
+                                    let deviationDate = $('input[name=Deviation_date]').val();
+                                    let reportedDate = $('input[name=Deviation_reported_date]').val();
+
+                                    if (!deviationDate || !reportedDate) {
+                                        console.error('Deviation date or reported date is missing.');
+                                        return;
+                                    }
+
+                                    let deviationDateMoment = moment(deviationDate);
+                                    let reportedDateMoment = moment(reportedDate);
+
+                                    let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
+
+                                    // if (diffInDays > 0) {
+                                    //     $('.delayJustificationBlock').show();
+                                    // } else {
+                                    //     $('.delayJustificationBlock').hide();
+                                    // }
+
+                                }
+
+                                $('input[name=Deviation_date]').on('change', function() {
+                                    calculateDateDifference();
+                                })
+
+                                $('input[name=Deviation_reported_date]').on('change', function() {
+                                    calculateDateDifference();
+                                })
+                            </script>
+                            
+                            <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Immediate action</label>
+                                <input type="text" name="immediate_action"  id="immediate_action" value="">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Initial Attachments</label>
                                 <small class="text-primary">
@@ -546,31 +604,7 @@ $users = DB::table('users')
                                             oninput="addMultipleFiles(this, 'initial_attachment_gi')" multiple>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                       
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Source Document Type">Source Document Type</label>
-                                <select name="source_document_type_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option value="OOT">OOT</option>
-                                    <option value="Lab Incident">Lab Incident</option>
-                                    <option value="Deviation">Deviation</option>
-                                    <option value="Product Non-conformance">Product Non-conformance</option>
-                                    <option value="Inspectional Observation">Inspectional Observation</option>
-                                    <option value="Others">Others</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Reference System Document</label>
-                                <select multiple id="reference_record" name="reference_system_document_gi" id="">
-                                    <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
+
                             </div>
                         </div>
                         <div class="sub-head pt-3">OOS Information</div>
@@ -578,41 +612,33 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
                                 <select name="sample_type_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option  value="Raw Material">Raw Material</option>
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="Raw Material">Raw Material</option>
                                     <option value="Packing Material">Packing Material</option>
                                     <option value="Finished Product">Finished Product</option>
                                     <option value="Satbility Sample">Satbility Sample</option>
                                     <option value="Others">Others</option>
-
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description ">Product / Material Name</label>
-
-                                <input type="text" name="product_material_name_gi">
+                                <input type="text" name="product_material_name_gi" placeholder="Enter your Product / Material Name">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input ">
                                 <label for="Short Description ">Market</label>
-                                <input type="text" name="market_gi">
+                                <input type="text" name="market_gi" placeholder="Enter your Market">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Customer*</label>
-                                <select name="customer_gi">
-                                    <option value="">Enter Your Selection Here</option>
-                                    <option name="yes">Yes</option>
-                                    <option name="no">No</option>
-                                </select>
+                                <input type="text" name="customer_gi" placeholder="Enter your Customer">
                             </div>
                         </div>
-
-
                         <!-- ---------------------------grid-1 -------------------------------- -->
                         <div class="group-input">
                             <label for="audit-agenda-grid">
@@ -653,10 +679,9 @@ $users = DB::table('users')
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
-                                                        <input type="text" id="info_mfg_date" readonly 
-                                                        placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="info_product_material[0][info_mfg_date]" value="" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        class="hide-input" oninput="handleDateInput(this, 'info_mfg_date')">
+                                                        <input type="text" id="info_mfg_date" readonly placeholder="MM-YYYY" />
+                                                        <input type="month"  name="info_product_material[0][info_mfg_date]" value=""
+                                                        class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date')">
                                                     </div>
                                                 </div>
                                             </div>
@@ -665,10 +690,9 @@ $users = DB::table('users')
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
-                                                        <input type="text" id="info_expiry_date" readonly 
-                                                        placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="info_product_material[0][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        class="hide-input" oninput="handleDateInput(this, 'info_expiry_date')">
+                                                        <input type="text" id="info_expiry_date" readonly placeholder="MM-YYYY" />
+                                                        <input type="month"  name="info_product_material[0][info_expiry_date]"
+                                                        class="hide-input" oninput="handleMonthInput(this, 'info_expiry_date')">
                                                     </div>
                                                 </div>
                                             </div>
@@ -681,7 +705,7 @@ $users = DB::table('users')
                                             <td><input type="text" name="info_product_material[0][info_process_sample_stage]" value=""></td>
                                             <td>
                                                 <select name="info_product_material[0][info_packing_material_type]">
-                                                    <option value="">--Select-- </option>
+                                                <option value="">Enter Your Selection Here</option>
                                                     <option value="Primary">Primary</option>
                                                     <option value="Secondary">Secondary</option>
                                                     <option value="Tertiary">Tertiary</option>
@@ -690,7 +714,7 @@ $users = DB::table('users')
                                             </td>
                                             <td>
                                                 <select name="info_product_material[0][info_stability_for]">
-                                                    <option value="">--Select-- </option>
+                                                    <option value="">Enter Your Selection Here</option>
                                                     <option vlaue="Submission">Submission</option>
                                                     <option vlaue="Commercial">Commercial</option>
                                                     <option vlaue="Pack Evaluation">Pack Evaluation</option>
@@ -747,7 +771,8 @@ $users = DB::table('users')
                                 </table>
                             </div>
                         </div>
-                       <!----------------grid-3----------------------------------- -->
+                    <!----------------grid-3----------------------------------- -->
+
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 OOS Details
@@ -767,7 +792,6 @@ $users = DB::table('users')
                                             <th style="width: 8%">Test Name of OOS</th>
                                             <th style="width: 8%">Results Obtained</th>
                                             <th style="width: 8%">Specification Limit</th>
-                                            <th style="width: 8%">Details of Obvious Error</th>
                                             <th style="width: 16%">File Attachment</th>
                                             <th style="width: 8%">Submit By</th>
                                             <th style="width: 16%">Submit On</th>
@@ -781,7 +805,6 @@ $users = DB::table('users')
                                             <td><input type="text" name="oos_detail[0][oos_test_name]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_results_obtained]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_specification_limit]"></td>
-                                            <td><input type="text" name="oos_detail[0][oos_details_obvious_error]"></td>
                                             <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_submit_by]"></td>
                                             <td>
@@ -802,7 +825,39 @@ $users = DB::table('users')
                                 </table>
                             </div>
                         </div>
-                        <!-- close grid -->
+                        <!---------------- grid-4 instrument_details----------------------------------- -->
+
+                        <div class="group-input">
+                            <label for="audit-agenda-grid">
+                            Instrument details
+                                <button type="button" name="audit-agenda-grid" id="instrument_details">+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#document-details-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="instrument_details_details" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 4%">Row#</th>
+                                            <th style="width: 8%"> Name of instrument</th>
+                                            <th style="width: 8%"> Instrument Id Number</th>
+                                            <th style="width: 5%"> Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input disabled type="text" name="instrument_detail[0][serial]" value="1"></td>
+                                            <td><input type="text" name="instrument_detail[0][instrument_name]"></td>
+                                            <td><input type="text" name="instrument_detail[0][instrument_id_number]"></td>
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
@@ -906,7 +961,7 @@ $users = DB::table('users')
                                     <div class="file-attachment-list" id="file_attachments_pli"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="file_attachments_pli" name="file_attachments_pli[]"
+                                        <input type="file" id="myfile" name="file_attachments_pli[]"
                                             oninput="addMultipleFiles(this, 'file_attachments_pli')" multiple>
                                     </div>
                                 </div>
@@ -986,7 +1041,7 @@ $users = DB::table('users')
                                                     <td>
                                                         <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <select name="checklist_lab_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                <option value="">Select an Option</option>
+                                                                <option value="">Enter Your Selection Here</option>
                                                                 <option value="Yes">Yes</option>
                                                                 <option value="No">No</option>
                                                                 <option value="N/A">N/A</option>
@@ -1027,12 +1082,9 @@ $users = DB::table('users')
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">Summary of Preliminary Investigation.</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1"></textarea>
                             </div>
                         </div>
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Lead Auditor">Root Cause Identified</label>
@@ -1212,7 +1264,7 @@ $users = DB::table('users')
                                             </div>
                                             </td>
                                             <td><select name="oos_capa[0][info_oos_capa_requirement]">
-                                                   <option value="">Select</option>
+                                                   <option value="">Select Option</option>
                                                     <option value="yes">Yes</option>
                                                     <option value="No">No</option>
                                                 </select></td>
@@ -1227,7 +1279,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Start Date"> Phase II Inv. Required?</label>
                                 <select name="phase_ii_inv_required_plir">
-                                    <option>Enter Your Selection Here</option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                                 </select>
@@ -1262,6 +1314,7 @@ $users = DB::table('users')
                 </div>
             </div>
         </div>
+        @include('frontend.OOS.oos_allchecklist')
 
         <!--Phase II Investigation -->
         <div id="CCForm5" class="inner-block cctabcontent">
@@ -1293,7 +1346,7 @@ $users = DB::table('users')
                             <label for="Auditee"> Manufacturing Invest. Type </label>
                             <select name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
                                 data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                <option value="">---Enter Select ---</option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="Chemical">Chemical</option>
                                 <option value="Microbiology">Microbiology</option>
                             </select>
@@ -1312,7 +1365,7 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="Audit Attachments"> Hypo/Exp. Required</label>
                             <select name="hypo_exp_required_piii">
-                               <option value="">--Select---</option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
 
@@ -1335,11 +1388,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attachments_pli"></div>
+                                <div class="file-attachment-list" id="file_attachments_pII"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="file_attachments_pli" name="file_attachments_pli[]"
-                                        oninput="addMultipleFiles(this, 'file_attachments_pli')" multiple>
+                                    <input type="file" id="myfile" name="file_attachments_pII[]"
+                                        oninput="addMultipleFiles(this, 'file_attachments_pII')" multiple>
                                 </div>
                             </div>
 
@@ -1476,7 +1529,7 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="Cancelled By">OOS Category-Reason identified </label>
                             <select name="oos_category_reason_identified_piiqcr">
-                                <option >Enter Your Selection Here</option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="Analyst Error">Analyst Error</option>
                                 <option value="Instrument Error">Instrument Error</option>
                                 <option value="Product/Material Related Error">Product/Material Related Error</option>
@@ -1679,7 +1732,7 @@ $users = DB::table('users')
                             <select name="results_to_be_reported_oosc">
                                 <option value="">Select an Option</option>
                                 <option value="Intial">Initial</option>
-                                <option value="Retested_result">Retested Result</option>
+                                <option value="Retested result">Retested Result</option>
                             </select>
                         </div>
                     </div>
@@ -1833,6 +1886,7 @@ $users = DB::table('users')
                                         <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                         <th style="width: 16%">Any Other Information</th>
                                         <th style="width: 16%">Action Taken on Affec.batch</th>
+                                        <th style="width: 5%"> Action </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1841,6 +1895,7 @@ $users = DB::table('users')
                                     <td><input type="text" name="oos_conclusion_review[0][conclusion_review_batch_no]"></td>
                                     <td><input type="text" name="oos_conclusion_review[0][conclusion_review_any_other_information]"></td>
                                     <td><input type="text" name="oos_conclusion_review[0][conclusion_review_action_affecte_batch]"></td>
+                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
                                 </tbody>
                             </table>
                         </div>
@@ -1970,13 +2025,14 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="Audit Attachments">OOS Category</label>
                              <select name="oos_category_bd">
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="default">Enter Your Selection Here</option>
-                                <option value="analyst_error">Analyst Error</option>
-                                <option value="instrument_error">Instrument Error</option>
-                                <option value="procedure_error">Procedure Error</option>
-                                <option value="product_related_error">Product Related Error</option>
-                                <option value="material_related_error">Material Related Error</option>
-                                <option value="other_error">Other Error</option>
+                                <option value="Analyst Error">Analyst Error</option>
+                                <option value="Instrument Error">Instrument Error</option>
+                                <option value="Procedure Error">Procedure Error</option>
+                                <option value="Product Related Error">Product Related Error</option>
+                                <option value="Material Related Error">Material Related Error</option>
+                                <option value="Other Error">Other Error</option>
                             </select>
                         </div>
                     </div>
@@ -1988,7 +2044,7 @@ $users = DB::table('users')
                     </div>
                     <div class="col-12">
                         <div class="group-input">
-                            <label for="Reference Recores">Material/Batch Release</label>
+                        <label for="Reference Recores">Material/Batch Release</label>
                         <select name="material_batch_release_bd">
                             <option value="">Enter Your Selection Here</option>
                             <option value="release">To Be Released</option>
@@ -2430,7 +2486,213 @@ $users = DB::table('users')
                 </div>
             </div>
         </div>
+      
+        <!-- Extention add -->
 
+        <div id="CCForm20" class="inner-block cctabcontent">
+            <div class="inner-block-content">
+                <div class="row">
+                    <div class="sub-head"> OOS Extension </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="Audit Schedule End Date">Proposed Due Date (OOS)</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="oos_proposed_due_date" placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="oos_proposed_due_date"
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    oninput="handleDateInput(this, 'oos_proposed_due_date')"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="group-input">
+                            <label for="oos_extension_justification">Extension Justification (OOS)</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                    not require completion</small></div> -->
+                            <textarea class="tiny" name="oos_extension_justification" id="summernote-10">
+                        </textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for=" oos_extension_completed_by"> OOS Extension Completed By
+                            </label>
+                            <select name="oos_extension_completed_by" id="oos_extension_completed_by" >
+                                <option value="">-- Select --</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="Audit Schedule End Date">OOS Extension Completed On</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="oos_extension_completed_on" readonly placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="oos_extension_completed_on"
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    oninput="handleDateInput(this, 'oos_extension_completed_on')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-head"> CAPA Extension </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="capa_proposed_due_date">Proposed Due Date (CAPA)</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="capa_proposed_due_date" readonly placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="capa_proposed_due_date"
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    oninput="handleDateInput(this, 'capa_proposed_due_date')"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="group-input">
+                            <label for="capa_extension_justification">Extension Justification (CAPA)</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                    not require completion</small></div> -->
+                            <textarea class="tiny" name="capa_extension_justification" id="summernote-10">
+                        </textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for=" capa_extension_completed_by"> CAPA Extension Completed By
+                                </label>
+                                <select name="capa_extension_completed_by" id="capa_extension_completed_by" >
+                                    <option value="">-- Select --</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Audit Schedule End Date">CAPA Extension Completed On</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="capa_extension_completed_on" readonly placeholder="DD-MMM-YYYY"  />
+                                    <input type="date" name="capa_extension_completed_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                        oninput="handleDateInput(this, 'capa_extension_completed_on')"   class="hide-input"/>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- row_end --}}
+                    </div>
+                    <div class="sub-head"> Quality Risk Management Extension </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="qrm_proposed_due_date">Proposed Due Date (Quality Risk Management)</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="qrm_proposed_due_date" readonly placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="qrm_proposed_due_date"
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    oninput="handleDateInput(this, 'qrm_proposed_due_date')"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="group-input">
+                            <label for="qrm_extension_justification">Extension Justification (Quality Risk Management)</label>
+                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                            <textarea class="tiny" name="qrm_extension_justification" id="summernote-10"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for=" Quality_Risk_Management_Extension_Completed_By"> Quality Risk Management Extension Completed By </label>
+                                <select name="qrm_extension_completed_by" id="qrm_extension_completed_by">
+                                    <option value="">-- Select --</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="qrm_extension_completed_on">Quality Risk Management Extension Completed On</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="qrm_extension_completed_on" readonly placeholder="DD-MMM-YYYY"  />
+                                    <input type="date"name="qrm_extension_completed_on"
+                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'qrm_extension_completed_on')"  />
+                                </div>
+                            </div>
+                        </div>
+                        {{-- row_end --}}
+                    </div>
+                    <div class="sub-head">Investigation Extension </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="investigation_proposed_due_date">Proposed Due Date (Investigation)</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="investigation_proposed_due_date" readonly placeholder="DD-MMM-YYYY"  />
+                                <input type="date" name="investigation_proposed_due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                 class="hide-input" oninput="handleDateInput(this, 'investigation_proposed_due_date')"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="group-input">
+                            <label for="investigation_extension_justification">Extension Justification (Investigation)</label>
+                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                    not require completion</small></div>
+                            <textarea class="tiny" name="investigation_extension_justification" id="summernote-10">
+                        </textarea>
+                        </div>
+                    </div>
+                    {{-- row --}}
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for=" investigation_extension_completed_by"> Investigation Extension Completed By </label>
+                                <select name="investigation_extension_completed_by"id="investigation_extension_completed_by" >
+                                    <option value="">-- Select --</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="investigation_extension_completed_on">Investigation Extension Completed On</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="investigation_extension_completed_on" readonly placeholder="DD-MMM-YYYY"  />
+                                    <input type="date" name="investigation_extension_completed_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                        class="hide-input" oninput="handleDateInput(this, 'investigation_extension_completed_on')"  />
+                                </div>
+                            </div>
+                        </div>
+                        {{-- row-end --}}
+                    </div>
+                       
+                </div>
+                <div class="button-block">
+                    <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;" class="saveButton">Save</button>
+                    <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: 1px;">
+                        <button type="button"  class="backButton">Back</button>
+                    </a>
+                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;" class="nextButton" onclick="nextStep()">Next</button>
+                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"> <a href="{{ url('rcms/qms-dashboard') }}"
+                            class="text-white">
+                            Exit </a> </button>
+                        <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
+                            class="button  launch_extension" data-bs-toggle="modal"
+                            data-bs-target="#launch_extension">
+                            Launch Extension
+                        </a>  -->
+                </div>
+                </div>
+            </div>
+        </div>
+
+       
         <!----- Signature ----->
         <div id="CCForm17" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -2653,7 +2915,7 @@ $users = DB::table('users')
                             <div class="date"></div>
                         </div>
                     </div>
-<!-- ====================================================================== -->
+<!-- ==================================Activity Log==================================== -->
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="submitted by">Submitted By :</label>
@@ -2707,9 +2969,7 @@ $users = DB::table('users')
 
                 <div class="button-block">
                     <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                    <button type="button" id="ChangeNextButton" class="nextButton"
-                        onclick="nextStep()">Next</button>
+                    <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                             Exit </a> </button>
                 </div>
@@ -2811,6 +3071,80 @@ $users = DB::table('users')
             evt.currentTarget.className += " active";
         }
     </script>
+     <!-- --------------------------------------button--------------------- -->
+     <script>
+        VirtualSelect.init({
+            ele: '#related_records, #hod'
+        });
+
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
+
+        const saveButtons = document.querySelectorAll(".saveButton");
+        const nextButtons = document.querySelectorAll(".nextButton");
+        const form = document.getElementById("step-form");
+        const stepButtons = document.querySelectorAll(".cctablinks");
+        const steps = document.querySelectorAll(".cctabcontent");
+        let currentStep = 0;
+
+        function nextStep() {
+            // Check if there is a next step
+            if (currentStep < steps.length - 1) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show next step
+                steps[currentStep + 1].style.display = "block";
+
+                // Add active class to next button
+                stepButtons[currentStep + 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep++;
+            }
+        }
+
+        function previousStep() {
+            // Check if there is a previous step
+            if (currentStep > 0) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show previous step
+                steps[currentStep - 1].style.display = "block";
+
+                // Add active class to previous button
+                stepButtons[currentStep - 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep--;
+            }
+        }
+    </script>
+
     <script>
         var maxLength = 255;
         $('#docname').keyup(function() {
