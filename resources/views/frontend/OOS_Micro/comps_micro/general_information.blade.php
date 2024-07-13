@@ -22,7 +22,7 @@
                     <label for="Initiator"> Record Number </label>
                     <input type="hidden" name="record" value="{{ $record_number }}">
                         <input disabled type="text" name="record"
-                        value="{{ Helpers::getDivisionName($micro_data->division_id) }}/OOS Micro/{{ Helpers::year($micro_data->created_at) }}/{{ $micro_data->record ? str_pad($micro_data->record, 4, "0", STR_PAD_LEFT ) : '1' }}">
+                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro/{{ Helpers::year($micro_data->created_at) }}/{{ $micro_data->record ? str_pad($micro_data->record, 4, "0", STR_PAD_LEFT ) : '1' }}">
                 </div>
             </div>
             <div class="col-lg-6">
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div> 
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Short Description">Short Description
                         <span class="text-danger">*</span></label>
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <p id="docnameError" style="color:red">**Short Description is required</p>                                                                                 
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Short Description"> Severity Level</label>
                     <select name="severity_level_gi" {{Helpers::isOOSMicro($micro_data->stage)}} >
@@ -85,10 +85,10 @@
                         '' }}>Critical</option>
                     </select>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Initiator Group"><b>Initiator Group</b></label>
+                    <label for="Initiator Group"><b>Initiation department group</b></label>
                     <select name="initiator_group_gi" id="initiator_group" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option selected disabled>---select---</option>
                         @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
@@ -100,7 +100,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Initiator Group Code">Initiator Group </label>
+                    <label for="Initiator Group Code">Initiation department group code </label>
                     <input type="text" name="initiator_group_code_gi" id="initiator_group_code"
                         value="{{ $micro_data->initiator_group_code_gi }}" readonly {{Helpers::isOOSMicro($micro_data->stage)}}>
                 </div>
@@ -146,7 +146,7 @@
                     <textarea name="repeat_nature_gi" {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->repeat_nature_gi }}</textarea>
                 </div>
             </div>
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group">Nature of Change</label>
                     <select name="nature_of_change_gi" {{Helpers::isOOSMicro($micro_data->stage)}}>
@@ -157,21 +157,46 @@
                             'selected' : '' }}>permanent</option>
                     </select>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
-                    <label for="Deviation Occurred On"> Deviation Occurred On </label>
-                    <div><small class="text-primary">If revising Deviation Occurred On, kindly mention revision
-                            reason in "Deviation Occurred On Extension Justification" data field.</small></div>
+                    <label for="Deviation Occurred On">OOS occurred On </label>
                     <div class="calenderauditee">
                         <input type="text" id="deviation_occured_on_gi" readonly value="{{ Helpers::getdateFormat($micro_data['deviation_occured_on_gi'] ?? '') }}" placeholder="DD-MM-YYYY" />
-                        <input type="date" name="deviation_occured_on_gi"
-                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                        <input type="date" name="deviation_occured_on_gi" class="hide-input"
                             oninput="handleDateInput(this, 'deviation_occured_on_gi')"  {{Helpers::isOOSMicro($micro_data->stage)}}/>
                     </div>
                 </div>
             </div>
+            
             <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Tnitiaror Grouo">Source Document Type</label>
+                    <select name="source_document_type_gi" {{Helpers::isOOSMicro($micro_data->stage)}}>
+                        <option>Enter Your Selection Here</option>
+                        <option value="oot" @if ($micro_data->source_document_type_gi == 'oot') selected @endif>OOT</option>
+                        <option value="lab-incident" @if ($micro_data->source_document_type_gi == 'lab-incident') selected @endif>Lab Incident</option>
+                        <option value="deviation" @if ($micro_data->source_document_type_gi == 'deviation') selected @endif>Deviation</option>
+                        <option value="product-non-conformance" @if ($micro_data->source_document_type_gi == 'product-non-conformance') selected @endif>Product Non-conformance</option>
+                        <option value="inspectional-observation" @if ($micro_data->source_document_type_gi == 'inspectional-observation') selected @endif>Inspectional Observation</option>
+                        <option value="other" @if ($micro_data->source_document_type_gi == 'other') selected @endif>Others</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Reference Recores">Reference System Document</label>
+                    <input type="text" name="reference_system_document_gi" value="{{ $micro_data->reference_system_document_gi}}" {{Helpers::isOOSMicro($micro_data->stage)}}>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Reference Recores">Reference Document</label>
+                   <input type="text" name="reference_document_gi" value="{{ $micro_data->reference_document_gi}}" {{Helpers::isOOSMicro($micro_data->stage)}}>
+                </div>
+            </div>
+            
+            <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Initiator Group">Initial Attachment</label>
                     <small class="text-primary">
@@ -211,38 +236,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Tnitiaror Grouo">Source Document Type</label>
-                    <select name="source_document_type_gi" {{Helpers::isOOSMicro($micro_data->stage)}}>
-                        <option>Enter Your Selection Here</option>
-                        <option value="oot" @if ($micro_data->source_document_type_gi == 'oot') selected @endif>OOT</option>
-                        <option value="lab-incident" @if ($micro_data->source_document_type_gi == 'lab-incident') selected @endif>Lab Incident</option>
-                        <option value="deviation" @if ($micro_data->source_document_type_gi == 'deviation') selected @endif>Deviation</option>
-                        <option value="product-non-conformance" @if ($micro_data->source_document_type_gi == 'product-non-conformance') selected @endif>Product Non-conformance</option>
-                        <option value="inspectional-observation" @if ($micro_data->source_document_type_gi == 'inspectional-observation') selected @endif>Inspectional Observation</option>
-                        <option value="other" @if ($micro_data->source_document_type_gi == 'other') selected @endif>Others</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Recores">Reference System Document</label>
-                    <select multiple id="reference_record" name="reference_system_document_gi[]" id="" {{Helpers::isOOSMicro($micro_data->stage)}}>
-                        <option value="1" {{ (!empty($micro_data->reference_system_document_gi) && in_array('1', explode(',', $micro_data->reference_system_document_gi[0]))) ? 'selected' : '' }}>1</option>
-                        <option value="2" {{ (!empty($micro_data->reference_system_document_gi) && in_array('2', explode(',', $micro_data->reference_system_document_gi[0]))) ? 'selected' : '' }}>2</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Recores">Reference Document</label>
-                    <select multiple id="reference_record" name="reference_document_gi[]" {{Helpers::isOOSMicro($micro_data->stage)}}>
-                        <option value="pdf" {{ (!empty($micro_data->reference_document_gi) && in_array('pdf', explode(',', $micro_data->reference_document_gi[0]))) ? 'selected' : '' }}>1</option>
-                        <option value="doc" {{ (!empty($micro_data->reference_document_gi) && in_array('doc', explode(',', $micro_data->reference_document_gi[0]))) ? 'selected' : '' }}>2</option>
-                    </select>
-                </div>
-            </div>
             <div class="sub-head pt-3">OOS Information</div>
             <div class="col-lg-6">
                 <div class="group-input">
@@ -254,7 +247,6 @@
                         <option value="finished-product" @if ($micro_data->sample_type_gi == 'finished-product') selected @endif>Finished Product</option>
                         <option value="stability-sample" @if ($micro_data->sample_type_gi == 'stability-sample') selected @endif>Stability Sample</option>
                         <option value="other" @if ($micro_data->sample_type_gi == 'other') selected @endif>Others</option>
-
                     </select>
                 </div>
             </div>
@@ -266,18 +258,14 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input ">
-                    <label for="Short Description ">Market</label>
+                    <label for="Market ">Market</label>
                     <input type="text" name="market_gi" value="{{ $micro_data->market_gi }}" {{Helpers::isOOSMicro($micro_data->stage)}}>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input ">
-                    <label for="Short Description ">Customer*</label>
-                    <select name="customer_gi" {{Helpers::isOOSMicro($micro_data->stage)}}>
-                        <option>Enter Your Selection Here</option>
-                        <option value="1" @if ($micro_data->customer_gi == 1) selected @endif>1</option>
-                        <option value="2" @if ($micro_data->customer_gi == 2) selected @endif>2</option>
-                    </select>
+                    <label for="Customer ">Customer*</label>
+                   <input type="text" name="customer_gi" value="{{ $micro_data->customer_gi}}" {{Helpers::isOOSMicro($micro_data->stage)}}>
                 </div>
             </div>
              <!-- ---------------------------grid-1 -------------------------------- -->

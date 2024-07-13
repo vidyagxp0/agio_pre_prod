@@ -369,11 +369,9 @@ $users = DB::table('users')
                                 class="hide-input"
                                 oninput="handleDateInput(this, 'due_date')"  value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}"/>
                                 </div>
-
-                                
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Short Description">Short Description
                                     <span class="text-danger">*</span></label>
@@ -385,7 +383,7 @@ $users = DB::table('users')
                                 @enderror
                         </div>
                         <p id="docnameError" style="color:red">**Short Description is required</p>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description"> Severity Level</label>
                                 <select name="severity_level_gi" >
@@ -395,10 +393,10 @@ $users = DB::table('users')
                                     <option value="Critical">Critical</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group"><b>Initiator Group</b></label>
+                                <label for="Initiator Group"><b>Initiation department group</b></label>
                                 <select name="initiator_group_gi" id="initiator_group">
                                     <option value="">-- Select --</option>
                                     <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
@@ -445,7 +443,7 @@ $users = DB::table('users')
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group Code">Initiator Group Code</label>
+                                <label for="Initiation department group code">Initiation department group code</label>
                                 <input type="text" name="initiator_group_code_gi" id="initiator_group_code"
                                     value="">
                             </div>
@@ -493,7 +491,7 @@ $users = DB::table('users')
                                 <textarea name="repeat_nature_gi"></textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                       {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Nature of Change</label>
                                 <select name="nature_of_change_gi">
@@ -502,31 +500,15 @@ $users = DB::table('users')
                                     <option value="permanent">Permanent</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-md-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Deviation-Occurred On">Deviation Occured On</label>
+                                <label for="OOS Occurred On">OOS Occured On</label>
                                 <div class="calenderauditee">                                    
                                     <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
                                     <input type="date" name="deviation_occured_on_gi"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
                                     class="hide-input"
                                     oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments">Initial Attachments</label>
-                                <small class="text-primary">
-                                    Please Attach all relevant or supporting documents
-                                </small>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="initial_attachment_gi"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="initial_attachment_gi[]"
-                                            oninput="addMultipleFiles(this, 'initial_attachment_gi')" multiple>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -547,21 +529,29 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Reference System Document</label>
-                                <select multiple id="reference_record" name="reference_system_document_gi[]" id="">
-                                    <option value="">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
+                                <input type="text" name="reference_system_document_gi" placeholder="Enter Reference System Document">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Reference Document</label>
-                                <select multiple id="reference_record" name="reference_document_gi[]" id="">
-                                    <option value="">--Select---</option>
-                                    <option value="pdf">pdf</option>
-                                    <option value="doc">doc</option>
-                                </select>
+                                <input type="text" name="reference_document_gi" placeholder="Enter Reference Document">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Initial Attachments</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="initial_attachment_gi"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="initial_attachment_gi[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_gi')" multiple>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="sub-head pt-3">OOS Information</div>
@@ -581,23 +571,19 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description ">Product / Material Name</label>
-                                <input type="text" name="product_material_name_gi">
+                                <input type="text" name="product_material_name_gi"  placeholder="Enter your Product / Material Name">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input ">
                                 <label for="Short Description ">Market</label>
-                                <input type="text" name="market_gi">
+                                <input type="text" name="market_gi" placeholder="Enter your Market">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input ">
                                 <label for="Short Description ">Customer</label>
-                                <select name="customer_gi">
-                                    <option value="">Enter Your Selection Here</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
+                                <input type="text" name="customer_gi" placeholder="Enter your Customer">
                             </div>
                         </div>
                         <!-- ---------------------------grid-1 -------------------------------- -->
@@ -640,9 +626,8 @@ $users = DB::table('users')
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
-                                                        <input type="text" id="info_mfg_date" readonly 
-                                                        placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="info_product_material[0][info_mfg_date]" value="" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        <input type="text" id="info_mfg_date" readonly placeholder="MM-YYYY" />
+                                                        <input type="date" name="info_product_material[0][info_mfg_date]" value="" 
                                                         class="hide-input" oninput="handleDateInput(this, 'info_mfg_date')">
                                                     </div>
                                                 </div>
@@ -652,9 +637,8 @@ $users = DB::table('users')
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
-                                                        <input type="text" id="info_expiry_date" readonly 
-                                                        placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="info_product_material[0][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        <input type="text" id="info_expiry_date" readonly placeholder="MM-YYYY" />
+                                                        <input type="date" name="info_product_material[0][info_expiry_date]"
                                                         class="hide-input" oninput="handleDateInput(this, 'info_expiry_date')">
                                                     </div>
                                                 </div>

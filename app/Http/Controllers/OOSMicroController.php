@@ -30,24 +30,13 @@ class OOSMicroController extends Controller
     {
         $cft = [];
         $old_record = OOS_micro::select('id', 'division_id', 'record')->get();
-        
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
-        
-        if ($division) {
-            $last_oos = OOS_micro::where('division_id', $division->id)->latest()->first();
-                if ($last_oos) {
-                    $record_number = $last_oos->record ? str_pad($last_oos->record + 1, 4, '0', STR_PAD_LEFT) : '0001';
-                } else {
-                    $record_number = '0001';
-                }
-        }
-
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('Y-m-d');
-
+        
         return view('frontend.OOS_Micro.oos_micro', compact('due_date', 'record_number', 'old_record', 'cft'));
     }
 

@@ -192,10 +192,10 @@ class OOS_micro extends Model
         'field_alert_ref_no_pli' => 'array',
         'verification_analysis_ref_pli' => 'array',
         'analyst_interview_ref_pli' => 'array',
-        'reference_system_document_gi' => 'array',
+        // 'reference_system_document_gi' => 'array',
         'recommended_actions_reference_plic' => 'array',
         // ======== add new type casting =========
-        'reference_document_gi' => 'array',
+        // 'reference_document_gi' => 'array',
         'manufacturing_invest_type_piii' => 'array',
         'manufacturing_invst_ref_piii' => 'array',
         'phase_i_investigation_ref_pli' =>'array',
