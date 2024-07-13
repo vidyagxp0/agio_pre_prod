@@ -26,6 +26,10 @@ class Errata extends Model
         'reference',
         'otherFieldsUser'
     ];
+    protected $casts = [
+        'intiation_date' => 'date',
+        'due_date' => 'date'
+    ];
 
    }
 

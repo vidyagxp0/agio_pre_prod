@@ -263,7 +263,7 @@
                                         </div>
                                         <div class="filter-item">
                                             <label for="originator">Source of Risk/Opportunity</label>
-                                            <select class="custom-select" id="originator">
+                                            <select class="custom-select" id="originator" style="width:50%">
                                                 <option value="NA">Search Records</option>
                                                 <option value="Audi">Audit</option>
                                                 <option value="Complaint">Complaint</option>

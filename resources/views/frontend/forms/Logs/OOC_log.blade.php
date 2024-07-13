@@ -148,7 +148,7 @@ header .header_rcms_bottom {
 }
 
 .filter-item label {
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 table {
@@ -230,7 +230,7 @@ table {
                                 style="flex-wrap: wrap;  display: flex;">
                                 <div class="filter-item">
                                     <label for="process">Department</label>
-                                    <select name="Initiator_Group" id="initiator_group">
+                                    <select name="Initiator_Group" id="initiator_group" style ="width:50%">
                                         <option value="NA">Select Department</option>
                                         <option value="CQA">Corporate Quality Assurance</option>
                                         <option value="QA">Quality Assurance</option>
@@ -277,7 +277,7 @@ table {
                                 </div>
                                 <div class="filter-item">
                                     <label for="originator">Equipment / Instrument</label>
-                                    <select class="custom-select" id="instrument_equipment">
+                                    <select class="custom-select" id="instrument_equipment" style ="width:60%">
                                         <option value="Null">Select Records</option>
                                         <option value="instrument_name">Instrument Name</option>
                                         <option value="instrument_id">Instrument Id</option>
@@ -324,7 +324,7 @@ table {
 
 
                                 <tbody id="tableData">
-                                    @include('frontend.forms.Logs.filterData.outofcalibration_data');
+                                    @include('frontend.forms.Logs.filterData.outofcalibration_data')
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content-center" style="margin-top: 10px;">

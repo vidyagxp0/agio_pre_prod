@@ -21,8 +21,8 @@ $productDetails= $ooclog->InstrumentDetails;
 
     <td>{{$ooclog->assignedUser ? $ooclog->assignedUser->name:'-'}}</td>
 
-    <td>{{$ooclog->ooc_due_date->format('d-M-Y')}}</td>
-    <td>{{$ooclog->due_date->format('d-M-Y')}}</td>
+    <td>{{$ooclog->ooc_due_date ? $ooclog->ooc_due_date->format('d-M-Y'): 'Not Applicable'}}</td>
+    <td>{{$ooclog->ooc_due_date ? $ooclog->due_date->format('d-M-Y') : 'Not Applicable'}}</td>
     <td>{{$ooclog->approved_ooc_completed ? $ooclog->approved_ooc_completed_on->format('d-M-Y'):'Not Applicable'}}</td>
     <td>{{$ooclog->status}}</td>
 
