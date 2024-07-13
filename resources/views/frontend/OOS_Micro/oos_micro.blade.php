@@ -32,7 +32,7 @@ $users = DB::table('users')
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
                         '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                        '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -42,7 +42,7 @@ $users = DB::table('users')
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
                         '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                        '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -627,8 +627,8 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="info_mfg_date" readonly placeholder="MM-YYYY" />
-                                                        <input type="date" name="info_product_material[0][info_mfg_date]" value="" 
-                                                        class="hide-input" oninput="handleDateInput(this, 'info_mfg_date')">
+                                                        <input type="month" name="info_product_material[0][info_mfg_date]" value="" 
+                                                        class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date')">
                                                     </div>
                                                 </div>
                                             </div>
@@ -638,8 +638,8 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="info_expiry_date" readonly placeholder="MM-YYYY" />
-                                                        <input type="date" name="info_product_material[0][info_expiry_date]"
-                                                        class="hide-input" oninput="handleDateInput(this, 'info_expiry_date')">
+                                                        <input type="month" name="info_product_material[0][info_expiry_date]"
+                                                        class="hide-input" oninput="handleMonthInput(this, 'info_expiry_date')">
                                                     </div>
                                                 </div>
                                             </div>
