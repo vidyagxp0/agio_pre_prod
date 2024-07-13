@@ -379,7 +379,7 @@
             <!-- Preliminary Lab Invst. Review--->
             @include('frontend.OOS.comps.preliminary_lab_investigation')
              <!-- All CheckList-->
-            {{-- @include('frontend.OOS.comps.all_checklist_Investigation_bsmmem') --}} 
+            @include('frontend.OOS.comps.all_checklist_Investigation_bsmmem')
 
             <!--Phase II Investigation -->
             @include('frontend.OOS.comps.phase_two_investigation')

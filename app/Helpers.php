@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use App\Models\OOS;
 
 class Helpers
 {
@@ -87,12 +88,11 @@ class Helpers
     public static function isRevised($data)
     {
     {
-        if($data  >= 8){
+        if($data >= 8){
             return 'disabled';
         }else{
             return  '';
         }
-
 
     }}
     // public static function getHodUserList(){
@@ -621,6 +621,28 @@ class Helpers
     //                 ->subject('Record is for Review');
     //     });
     // }
+
+    public static function getChemicalGridData(OOS $oos, $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
+    {
+        $res = $getKey ? '' : [];
+            try {
+                $grid = $oos->grids()->where('identifier', $identifier)->first();
+
+                if($grid && is_array($grid->data)){
+                    $res = $grid->data;
+                    if ($getKey && !$byIndex) {
+                        $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
+                    }
+                    if ($getKey && $byIndex && is_array($grid->data[$index])) {
+                        $res = array_key_exists($keyName, $grid->data[$index]) ? $grid->data[$index][$keyName] : '';
+                    }
+                }
+
+            } catch(\Exception $e){
+
+            }
+        return $res;
+    }
 
     public static function disabledErrataFields($data)
     {
