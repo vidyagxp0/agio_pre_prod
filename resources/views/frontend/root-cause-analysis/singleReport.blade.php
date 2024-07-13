@@ -191,7 +191,6 @@
                 <div class="block-head">
                     Investigation
                 </div>
-            <div style="max-width: 700px!important; overflow: hidden;">
                 <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
@@ -218,8 +217,6 @@
                         <td class="w-80" colspan="3">
                             @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
                         </td>
-                    </tr>
-                    <tr>    
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td>
                     </tr>
@@ -228,12 +225,9 @@
                         <td class="w-80" colspan="3"> @if($data->due_date)  {{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }} @else Not Applicable @endif</td>
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>r>
-                    </tr>
                     <tr>
                         <th class="w-20">Others</th>
                         <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr> 
                         <th class="w-20">Priority Level</th>
                         <td class="w-30">@if($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>
                     </tr>
@@ -245,14 +239,9 @@
                     </tr>
                     <tr>
                         <th class="w-20">Description</th>
-                        <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
-                    </tr> 
-                    
-                    
-                    <tr>  
-                       
+                        <td class="w-30">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
                         <th class="w-20">Comments</th>
-                        <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
                     </tr>                       
                     <tr>
                         <th class="w-20">Initiated Through
@@ -263,8 +252,6 @@
                     </tr>
                     
                 </table>
-            </div>
-
                 <div class="border-table">
                     <div class="block-head">
                         File Attachment, if any

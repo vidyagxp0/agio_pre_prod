@@ -390,32 +390,20 @@
                                         </div>
                                     </div> --}}
 
-                                
-                                    <div class="col-md-6 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="due-date">Due Date </label>
-                                            <div class="calenderauditee">
-                                                <!-- Display the formatted date in a readonly input -->
-                                                <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                               
-                                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
-                                            </div>
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                reason in "Due Date Extension Justification" data field.</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
-                                    <script>
-                                        function handleDateInput(dateInput, displayId) {
-                                            const date = new Date(dateInput.value);
-                                            const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                            document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                        }
-                                        
-                                        // Call this function initially to ensure the correct format is shown on page load
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            const dateInput = document.querySelector('input[name="due_date"]');
-                                            handleDateInput(dateInput, 'due_date');
-                                        });
-                                        </script>
-                                
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -665,6 +653,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
+
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
                                             Audit Agenda<button type="button" name="audit-agenda-grid"
@@ -1021,20 +1010,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="severity-level">Observation Category </label>
-                                        {{-- <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
-                                            guiding priority for corrective actions. Ranging from low to high, they ensure
-                                            quality standards and mitigate critical risks.</span> --}}
-                                        <select name="severity_level_form">
-                                            <option value="0">-- Select --</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                            <option value="critical">Critical</option>
-                                        </select>
-                                    </div>
-                                </div> 
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">

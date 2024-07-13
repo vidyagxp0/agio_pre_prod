@@ -10,7 +10,6 @@ use App\Models\ExtensionNewAuditTrail;
 use App\Models\RecordNumber;
 use App\Models\RoleGroup;
 use App\Models\User;
-use Helpers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -74,10 +73,6 @@ class ExtensionNewController extends Controller
         $extensionNew->initiator = Auth::user()->id;
 
         // dd($request->initiator);
-        $extensionNew->parent_id = $request->parent_id;
-        $extensionNew->parent_type = $request->parent_type;
-        $extensionNew->parent_record = $request->parent_record;
-
         $extensionNew->initiation_date = $request->initiation_date;
         $extensionNew->short_description = $request->short_description;
         $extensionNew->reviewers = $request->reviewers;
@@ -297,8 +292,6 @@ class ExtensionNewController extends Controller
 
     public function show(Request $request,$id){
         $extensionNew = extension_new::find($id);
-        $count = extension_new::where('parent_type' , 'LabIncident')->get()->count();
-
         $reviewers = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
@@ -313,7 +306,7 @@ class ExtensionNewController extends Controller
                 ->where('user_roles.q_m_s_roles_id', 1)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
-        return view('frontend.extension.extension_view', compact('extensionNew','reviewers','approvers','count'));
+        return view('frontend.extension.extension_view', compact('extensionNew','reviewers','approvers'));
 
     }
 
@@ -681,6 +674,8 @@ class ExtensionNewController extends Controller
                     return back();
                 }
                 if ($extensionNew->stage == 2) {
+
+
                     $extensionNew->stage = "3";
                     $extensionNew->status = "In Approved";
                     $extensionNew->submit_by_review = Auth::user()->name;
@@ -724,6 +719,8 @@ class ExtensionNewController extends Controller
                     //         }
                     //     }
                     // }
+
+
                     $extensionNew->update();
                     toastr()->success('Document Sent');
                     return back();

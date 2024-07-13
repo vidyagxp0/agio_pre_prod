@@ -231,7 +231,7 @@
 
                 <!-- Tab links -->
                 <div class="cctab">
-                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
                     
                      <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Investigation</button>
@@ -617,14 +617,17 @@
                                 </select>
                             </div>
                         </div>
-                                    {{--  <div class="col-lg-6">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="priority_level">Priority Level</label>
                                             <div><small class="text-primary">Choose high if Immidiate actions are
                                                     </small></div>
 
                                             <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="priority_level">
-                                                
+                                                <!-- {{-- <option value="0">-- Select --</option>
+                                                <option value="low">Low</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="high">High</option> --}} -->
                                                 <option value="0">-- Select --</option>
                                                 <option @if ($data->priority_level == 'low') selected @endif
                                                  value="low">Low</option>
@@ -634,7 +637,7 @@
                                                 value="high">High</option>
                                             </select>
                                         </div>
-                                    </div>  --}}
+                                    </div>
                                     {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="investigators">Additional Investigators</label>
@@ -651,7 +654,7 @@
                                         </div>
                                     </div> --}}
 
-                                 <div class="col-lg-12">
+                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="department">Responsible Department</label>
                                         @php
@@ -731,11 +734,11 @@
                                         </div>
                                     </div>  -->
 
-                                    {{--  <div class="col-12">
+                                    <div class="col-12">
                                <div class="group-input">
                               <label for="related_url">Related URL</label>
                            <input name="related_url" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->related_url }}">
-                       </div>  --}}
+                       </div>
                      </div>
 
                                                 <div class="button-block">
@@ -1414,22 +1417,22 @@
                                                 </div>
                                             </div>
                                           <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="investigation_team">Investigation Team</label>
-                                                    <select id="investigation_team" name="investigation_team" class="form-control">
-                                                        <option value="">Select a member of the Investigation Team</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}"
-                                                                @if ($data->investigation_team == $user->id) selected @endif>
-                                                                {{ $user->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('investigation_team')
-                                                        <p class="text-danger">{{ $message }}</p>
-                                                    @enderror
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="investigation_team">Investigation Team</label>
+        <select id="investigation_team" name="investigation_team" class="form-control">
+            <option value="">Select a member of the Investigation Team</option>
+            @foreach ($users as $user)
+                <option value="{{ $user->id }}"
+                    @if ($data->investigation_team == $user->id) selected @endif>
+                    {{ $user->name }}
+                </option>
+            @endforeach
+        </select>
+        @error('investigation_team')
+            <p class="text-danger">{{ $message }}</p>
+        @enderror
+    </div>
+</div>
 
                                             <div class="col-lg-12">
                                                 <div class="group-input">
@@ -1480,7 +1483,7 @@
 
                                    <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="comments">Investigation Attachment
+                                            <label for="comments">Investigation Attachment/label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             <div  class="file-attachment-field">
@@ -1576,106 +1579,54 @@
                         <div id="CCForm7" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Acknowledge_By">Acknowledge By</label>
-                                            <div class="static">{{ $data->submitted_by }}</div>
+                                            <div class="static">{{ $data->acknowledge_by }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Acknowledge_On">Acknowledge On</label>
-                                            <div class="static">{{ $data->submitted_on }}</div>
+                                            <div class="static">{{ $data->acknowledge_on }}</div>
                                         </div>
                                     </div>
-
-                                    
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->comments }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Submit_By">Submited By</label>
                                             <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Submit_On">Submited On</label>
                                             <div class="static">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
-
-
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->qa_comments_new }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd By">Root Cause more Info Req.
-                                                    By</label>
-                                                <div class="static">{{ $data->submitted_by }}</div>
-                                            </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd On">Root Cause more Info Req.
-                                                    On</label>
-                                                <div class="static">{{ $data->submitted_on }}</div>
-                                            </div>
-                                    </div>
-
-                                    
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->cft_comments_new }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="QA_Review_Complete_By">QA Review Completed By</label>
-                                            <div class="static">{{ $data->submitted_by }}</div>
+                                            <div class="static">{{ $data->qA_review_complete_by }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="QA_Review_Complete_On">QA Review Completed On</label>
-                                            <div class="static">{{ $data->submitted_on }}</div>
+                                            <div class="static">{{ $data->qA_review_complete_on }}</div>
                                         </div>
                                     </div>
-                                    
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->comment_3 }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancelled By</label>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancelled On">Cancelled On</label>
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
-                                        
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->cancel_comment }}</div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="button-block">
                                     <button type="submit" class="saveButton"
@@ -2129,7 +2080,7 @@ function addRootCauseAnalysisRiskAssessment1(tableId) {
     </script>
 
 
-    {{--  <script>
+    <script>
     $(document).ready(function() {
         $('#root-cause-methodology').on('change', function() {
             var selectedValues = $(this).val();
@@ -2151,40 +2102,6 @@ function addRootCauseAnalysisRiskAssessment1(tableId) {
                 $('#is-is-not-section').show();
             }
         });
-    });
-</script>    --}}
-
-
-<script>
-    $(document).ready(function() {
-        $('#root-cause-methodology').on('change', function() {
-            var selectedValues = $(this).val() || [];
-
-            // Hide all sections initially
-            $('#why-why-chart-section').hide();
-            $('#fmea-section').hide();
-            $('#fishbone-section').hide();
-            $('#is-is-not-section').hide();
-
-            // Show sections based on the selected values
-            selectedValues.forEach(function(value) {
-                if (value === 'Why-Why Chart') {
-                    $('#why-why-chart-section').show();
-                }
-                if (value === 'Failure Mode and Effect Analysis') {
-                    $('#fmea-section').show();
-                }
-                if (value === 'Fishbone or Ishikawa Diagram') {
-                    $('#fishbone-section').show();
-                }
-                if (value === 'Is/Is Not Analysis') {
-                    $('#is-is-not-section').show();
-                }
-            });
-        });
-
-        // Trigger the change event on page load to show the correct sections based on initial values
-        $('#root-cause-methodology').trigger('change');
     });
 </script>
     @endsection

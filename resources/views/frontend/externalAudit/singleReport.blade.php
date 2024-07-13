@@ -212,17 +212,13 @@
                     </tr>
                     <tr>
                         <th class="w-20">Others</th>
-                        <td class="w-80">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
                         <th class="w-20">External Agencies </th>
-                        <td class="w-80">@if($data->external_agencies){{ $data->external_agencies }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->external_agencies){{ $data->external_agencies }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Description</th>
                         <td class="w-80">@if($data->initial_comments){{ $data->initial_comments }} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr> 
                         <th class="w-20">If Others</th>
                         <td class="w-80">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>                       
                     </tr>
@@ -289,7 +285,7 @@
                         </tr>
                         <tr>
                             <th class="w-20">Comments (If Any)</th>
-                            <td class="w-80">
+                            <td class="w-30">
                                 @if($data->if_comments)
                                     @foreach (explode(',', $data->if_comments) as $Key => $value)
 
@@ -298,8 +294,6 @@
                                 @else
                                   Not Applicable
                                 @endif</td>
-                        </tr>
-                        <tr>        
                                 <th class="w-20">Product/Material Name</th>
                                 <td class="w-80">
                                     @if($data->material_name)
@@ -576,10 +570,8 @@
                         <tr>
                         <th class="w-20">Reference Record</th>
                         <td class="w-30">@if($data->Reference_Recores1){{ $data->Reference_Recores1 }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>  
                         <th class="w-20">Due Date Extension Justification</th>
-                        <td class="w-80">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                     <th class="w-20">Remarks</th>

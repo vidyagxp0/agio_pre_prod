@@ -9,7 +9,6 @@ class Errata extends Model
 {
     use HasFactory;
 
-
     public function initiator()
     {
         return $this->belongsTo(User::class,'initiator_id');
@@ -19,13 +18,10 @@ class Errata extends Model
     {
         return $this->belongsTo(QMSDivision::class,'division_id');
     }
-    protected $fillable =[
-        'department_head_to',
-        'document_title',
-        'qa_reviewer',
-        'reference',
-        'otherFieldsUser'
-    ];
 
-   }
+    public function newChanges()
+    {
+        return $this->hasOne(AddColumnErrataNew::class, 'erratanew_id','id');
+    }
+}
 
