@@ -74,8 +74,40 @@ class OutOfCalibration extends Model
         'initiated_through_hodreview_ooc',
         'initial_attachment_hodreview_ooc',
         'initiated_through_rootcause_ooc',
-        'initiated_through_impact_closure_ooc'
-    ];
+        'initiated_through_impact_closure_ooc',
+        'date_of_out_of_calibration',
+        'date_of_discovery',
+        'last_calibration_date',
+        'calibration_frequency',
+        'supervisor_review',
+        'section_incharge_review',
+        'is_repeat_assingablerc_ooc',
+        'ooc_category',
+        'stagei_hypthesis_study_ooc',
+        'justification_for_protocol_study_stageI_ooc',
+        'plan_of_protocol_stageI_study_hypothesis_study',
+        'conclusion_of_protocol_stageI_based_study_hypothesis_study_ooc',
+        'actiontaken_action',
+        'Initial_Attachment_otherfield',
+        'User_compiled',
+        're_qualification_status',
+        'calibration_status',
+        'found_satisfactory',
+        'OthewrReviewed_ooc',
+        'service_engineer_report_attachment',
+        'sample_status',
+        ];
+
+        protected $casts = [
+            'date_of_out_of_calibration' => 'date',
+            'date_of_discovery' => 'date',
+            'last_calibration_date' => 'date',
+            'intiation_date' => 'date',
+            'ooc_due_date'=> 'date',
+            'due_date' => 'date',
+            'correction_ooc_completed_on'=>'date',
+            'Initial_Attachment_otherfield' => 'array'
+        ];
 
     public function InstrumentDetails()
     {
@@ -93,4 +125,6 @@ class OutOfCalibration extends Model
     public function assignedUser(){
         return $this->belongsTo(User::class,'assign_to');
     }
+
+
 }

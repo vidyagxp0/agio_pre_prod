@@ -58,7 +58,6 @@ class OOCController extends Controller
         $data->ooc_due_date= $request->ooc_due_date;
         $data->Delay_Justification_for_Reporting= $request->Delay_Justification_for_Reporting;
         $data->HOD_Remarks = $request->HOD_Remarks;
-        // $data->attachments_hod_ooc = $request->attachments_hod_ooc;
         $data->Immediate_Action_ooc = $request->Immediate_Action_ooc;
         $data->Preliminary_Investigation_ooc = $request->Preliminary_Investigation_ooc;
         $data->qa_comments_ooc = $request->qa_comments_ooc;
@@ -103,6 +102,32 @@ class OOCController extends Controller
         $data->initiated_through_impact_closure_ooc = $request->initiated_through_impact_closure_ooc;
         $data->status = 'Opened';
         $data->stage = 1;
+
+        // New Added Lines
+
+        $data->date_of_out_of_calibration = $request -> date_of_out_of_calibration ;
+        $data->date_of_discovery = $request-> date_of_discovery;
+        $data->last_calibration_date = $request -> last_calibration_date;
+        $data->calibration_frequency =$request -> calibration_frequency;
+        $data->supervisor_review = $request->supervisor_review;
+        $data->section_incharge_review = $request -> section_incharge_review;
+        $data->is_repeat_assingablerc_ooc = $request-> is_repeat_assingablerc_ooc;
+        $data->ooc_category = $request -> ooc_category;
+        $data->stagei_hypthesis_study_ooc = $request -> stagei_hypthesis_study_ooc;
+        $data->justification_for_protocol_study_stageI_ooc = $request->justification_for_protocol_study_stageI_ooc;
+        $data->plan_of_protocol_stageI_study_hypothesis_study =$request ->plan_of_protocol_stageI_study_hypothesis_study;
+        $data->conclusion_of_protocol_stageI_based_study_hypothesis_study_ooc = $request->conclusion_of_protocol_stageI_based_study_hypothesis_study_ooc;
+        $data->actiontaken_action = $request->actiontaken_action;
+        $data->User_compiled = $request->User_compiled;
+        $data->re_qualification_status = $request->re_qualification_status;
+        $data->calibration_status = $request ->calibration_status;
+        $data->found_satisfactory = $request ->found_satisfactory;
+        $data->OthewrReviewed_ooc = $request ->OthewrReviewed_ooc;
+        $data->sample_status = $request->sample_status;
+
+
+
+      
 
 
         if (!empty($request->initial_attachment_ooc)) {
@@ -199,8 +224,31 @@ class OOCController extends Controller
             $data->initial_attachment_capa_ooc = json_encode($files);
         }
 
+        if (!empty($request->Initial_Attachment_otherfield)) {
+            $files = [];
+            if ($request->hasfile('Initial_Attachment_otherfield')) {
+                foreach ($request->file('Initial_Attachment_otherfield') as $file) {
+                    $name = $request->name . 'Initial_Attachment_otherfield' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->Initial_Attachment_otherfield = json_encode($files);
+        }
 
-        $data->save();
+
+        if (!empty($request->service_engineer_report_attachment)) {
+            $files = [];
+            if ($request->hasfile('service_engineer_report_attachment')) {
+                foreach ($request->file('service_engineer_report_attachment') as $file) {
+                    $name = $request->name . 'service_engineer_report_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->service_engineer_report_attachment = json_encode($files);
+        }
+            $data->save();
         
 
 
@@ -409,7 +457,6 @@ class OOCController extends Controller
 
 
         $oocGrid = $data->id;
-        // if($request->has('instrumentDetail')){
         if (!empty($request->instrumentdetails)) {
         $instrumentDetail = OOC_Grid::where(['ooc_id' => $oocGrid, 'identifier' => 'Instrument Details'])->firstOrNew();
         $instrumentDetail->ooc_id = $oocGrid;
@@ -418,7 +465,6 @@ class OOCController extends Controller
         $instrumentDetail->save();
         }
 
-    //    if($request->has('oocevoluation')){
         if (!empty($request->instrumentdetails)) {
 
         $oocevaluation = OOC_Grid::where(['ooc_id'=>$oocGrid,'identifier'=>'OOC Evaluation'])->firstOrNew();
@@ -431,7 +477,6 @@ class OOCController extends Controller
 
 
 
-        // HOD SuperVision Review
 
         // HOD Remarks
 if(!empty($data->HOD_Remarks)) {
@@ -541,22 +586,6 @@ if (!empty($data->qa_comments_description_ooc)) {
     $history->save();
 }
 
-// if (!empty($data->is_repeat_assingable_ooc)) {
-//     $history = new OOCAuditTrail();
-//     $history->ooc_id = $data->id;
-//     $history->activity_type = 'Assignable Root Cause Found';
-//     $history->previous = "Null";
-//     $history->current = $data->is_repeat_assingable_ooc;
-//     $history->comment = "Not Applicable";
-//     $history->user_id = Auth::user()->id;
-//     $history->user_name = Auth::user()->name;
-//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-//     $history->origin_state = $data->status;
-//     $history->change_to = "Opened";
-//     $history->change_from = "Initiator";
-//     $history->action_name = "Create";
-//     $history->save();
-// }
 
 if (!empty($data->protocol_based_study_hypthesis_study_ooc)) {
     $history = new OOCAuditTrail();
@@ -763,6 +792,7 @@ if (!empty($data->additional_remarks_stage_ooc)) {
     $history->action_name = "Create";
     $history->save();
 }
+
 // STAGEII
 if (!empty($data->initial_attachment_stageii_ooc)) {
     $history = new OOCAuditTrail();
@@ -780,40 +810,6 @@ if (!empty($data->initial_attachment_stageii_ooc)) {
     $history->action_name = "Create";
     $history->save();
 }
-
-// if (!empty($data->is_repeat_stageii_ooc)) {
-//     $history = new OOCAuditTrail();
-//     $history->ooc_id = $data->id;
-//     $history->activity_type = 'Rectification by Service Engineer required';
-//     $history->previous = "Null";
-//     $history->current = $data->is_repeat_stageii_ooc;
-//     $history->comment = "Not Applicable";
-//     $history->user_id = Auth::user()->id;
-//     $history->user_name = Auth::user()->name;
-//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-//     $history->origin_state = $data->status;
-//     $history->change_to = "Opened";
-//     $history->change_from = "Initiator";
-//     $history->action_name = "Create";
-//     $history->save();
-// }
-
-// if (!empty($data->is_repeat_stage_instrument_ooc)) {
-//     $history = new OOCAuditTrail();
-//     $history->ooc_id = $data->id;
-//     $history->activity_type = 'Is Repeat Stage Instrument';
-//     $history->previous = "Null";
-//     $history->current = $data->is_repeat_stage_instrument_ooc;
-//     $history->comment = "Not Applicable";
-//     $history->user_id = Auth::user()->id;
-//     $history->user_name = Auth::user()->name;
-//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-//     $history->origin_state = $data->status;
-//     $history->change_to = "Opened";
-//     $history->change_from = "Initiator";
-//     $history->action_name = "Create";
-//     $history->save();
-// }
 
 if (!empty($data->is_repeat_proposed_stage_ooc)) {
     $history = new OOCAuditTrail();
@@ -1237,6 +1233,49 @@ if (!empty($data->initiated_through_impact_closure_ooc)) {
     $history->save();
 }
 
+$fields = [
+    'date_of_out_of_calibration' => 'Date of Out of Calibration',
+    'date_of_discovery' => 'Date of Discovery',
+    'last_calibration_date' => 'Last Calibration Date',
+    'calibration_frequency' => 'Calibration Frequency',
+    'supervisor_review' => 'Supervisor Review',
+    'section_incharge_review' => 'Section Incharge Review',
+    'is_repeat_assingablerc_ooc' => 'Is Repeat Assignable RC OOC',
+    'ooc_category' => 'OOC Category',
+    'stagei_hypthesis_study_ooc' => 'Stage I Hypothesis Study OOC',
+    'justification_for_protocol_study_stageI_ooc' => 'Justification for Protocol Study Stage I OOC',
+    'plan_of_protocol_stageI_study_hypothesis_study' => 'Plan of Protocol Stage I Study Hypothesis Study',
+    'conclusion_of_protocol_stageI_based_study_hypothesis_study_ooc' => 'Conclusion of Protocol Stage I Based Study Hypothesis Study OOC',
+    'actiontaken_action' => 'Action Taken Action',
+    'User_compiled' => 'User Compiled',
+    're_qualification_status' => 'Re-Qualification Status',
+    'calibration_status' => 'Calibration Status',
+    'found_satisfactory' => 'Found Satisfactory',
+    'OthewrReviewed_ooc' => 'Other Reviewed OOC',
+    'sample_status' => 'Sample Status'
+];
+
+foreach ($fields as $field => $activityName) {
+    if (!empty($data->$field)) {
+        $history = new OOCAuditTrail();
+        $history->ooc_id = $data->id;
+        $history->activity_type = $activityName;
+        $history->previous = "Null";
+        $history->current = $data->$field;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->change_to = "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = "Create";
+        $history->save();
+    }
+}
+// new added migration / audit trail
+
+
 
 
 
@@ -1261,22 +1300,19 @@ if (!empty($data->initiated_through_impact_closure_ooc)) {
 
         $oocgrid = OOC_Grid::where('ooc_id',$id)->first();
         $oocEvolution = OOC_Grid::where(['ooc_id'=>$id, 'identifier'=>'OOC Evaluation'])->first();
+        $previousStage = session('previous_stage', $ooc->stage); // Default to current stage if previous not set
+    session(['previous_stage' => $ooc->stage]);
+    // dd($previousStage);
         // foreach ($oocgrid->data as $oogrid)
         // {
         //     return $oogrid;
         // }
 
-        return view('frontend.OOC.ooc_view' , compact('ooc','oocgrid','oocEvolution'));
+        return view('frontend.OOC.ooc_view' , compact('ooc','oocgrid','oocEvolution','previousStage'));
     }
 
     public function updateOutOfCalibration(Request $request,$id )
     {
-        // $validatedData = $request->validate([
-        //     'due_date' => 'required|date',
-        //     'ooc_due_date' => 'required|date',
-        //     // other validations...
-        // ]);
-
         if (!$request->description_ooc) {
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
@@ -1288,7 +1324,6 @@ if (!empty($data->initiated_through_impact_closure_ooc)) {
         $ooc->intiation_date = $request->intiation_date;
         $ooc->assign_to = $request->assign_to;
         $ooc->due_date = $request->due_date;
-        // $ooc->due_date = $validatedData['due_date'];
         $ooc->description_ooc = $request->description_ooc;
         $ooc->Initiator_Group= $request->Initiator_Group;
         $ooc->initiator_group_code= $request->initiator_group_code;
@@ -1297,10 +1332,8 @@ if (!empty($data->initiated_through_impact_closure_ooc)) {
         $ooc->is_repeat_ooc= $request->is_repeat_ooc;
         $ooc->Repeat_Nature= $request->Repeat_Nature;
         $ooc->ooc_due_date= $request->ooc_due_date;
-        // $ooc->ooc_due_date = $validatedData['ooc_due_date'];
         $ooc->Delay_Justification_for_Reporting= $request->Delay_Justification_for_Reporting;
         $ooc->HOD_Remarks = $request->HOD_Remarks;
-        // $ooc->attachments_hod_ooc = $request->attachments_hod_ooc;
         $ooc->Immediate_Action_ooc = $request->Immediate_Action_ooc;
         $ooc->Preliminary_Investigation_ooc = $request->Preliminary_Investigation_ooc;
         $ooc->qa_comments_ooc = $request->qa_comments_ooc;
@@ -1321,7 +1354,6 @@ if (!empty($data->initiated_through_impact_closure_ooc)) {
         $ooc->is_repeat_stageii_ooc = $request->is_repeat_stageii_ooc;
         $ooc->is_repeat_stage_instrument_ooc = $request->is_repeat_stage_instrument_ooc;
         $ooc->is_repeat_proposed_stage_ooc = $request->is_repeat_proposed_stage_ooc;
-        // $ooc->initial_attachment_stageii_ooc = $request->initial_attachment_stageii_ooc;
         $ooc->is_repeat_compiled_stageii_ooc = $request->is_repeat_compiled_stageii_ooc;
         $ooc->is_repeat_realease_stageii_ooc = $request->is_repeat_realease_stageii_ooc;
         $ooc->initiated_throug_stageii_ooc = $request->initiated_throug_stageii_ooc;
@@ -1340,6 +1372,30 @@ if (!empty($data->initiated_through_impact_closure_ooc)) {
         $ooc->initiated_through_hodreview_ooc = $request->initiated_through_hodreview_ooc;
         $ooc->initiated_through_rootcause_ooc = $request->initiated_through_rootcause_ooc;
         $ooc->initiated_through_impact_closure_ooc = $request->initiated_through_impact_closure_ooc;
+
+           // New Added Lines//new migration
+
+           $ooc->date_of_out_of_calibration = $request -> date_of_out_of_calibration ;
+           $ooc->date_of_discovery = $request-> date_of_discovery;
+           $ooc->last_calibration_date = $request -> last_calibration_date;
+           $ooc->calibration_frequency =$request -> calibration_frequency;
+           $ooc->supervisor_review = $request->supervisor_review;
+           $ooc->section_incharge_review = $request -> section_incharge_review;
+           $ooc->is_repeat_assingablerc_ooc = $request-> is_repeat_assingablerc_ooc;
+           $ooc->ooc_category = $request -> ooc_category;
+           $ooc->stagei_hypthesis_study_ooc = $request -> stagei_hypthesis_study_ooc;
+           $ooc->justification_for_protocol_study_stageI_ooc = $request->justification_for_protocol_study_stageI_ooc;
+           $ooc->plan_of_protocol_stageI_study_hypothesis_study =$request ->plan_of_protocol_stageI_study_hypothesis_study;
+           $ooc->conclusion_of_protocol_stageI_based_study_hypothesis_study_ooc = $request->conclusion_of_protocol_stageI_based_study_hypothesis_study_ooc;
+           $ooc->actiontaken_action = $request->actiontaken_action;
+           $ooc->User_compiled = $request->User_compiled;
+           $ooc->re_qualification_status = $request->re_qualification_status;
+           $ooc->calibration_status = $request ->calibration_status;
+           $ooc->found_satisfactory = $request ->found_satisfactory;
+           $ooc->OthewrReviewed_ooc = $request ->OthewrReviewed_ooc;
+           $ooc->sample_status = $request->sample_status;
+
+   
 
 
 
@@ -1435,6 +1491,32 @@ if (!empty($data->initiated_through_impact_closure_ooc)) {
                 }
             }
             $ooc->initial_attachment_capa_ooc = json_encode($files);
+        }
+
+        
+        if (!empty($request->Initial_Attachment_otherfield)) {
+            $files = [];
+            if ($request->hasfile('Initial_Attachment_otherfield')) {
+                foreach ($request->file('Initial_Attachment_otherfield') as $file) {
+                    $name = $request->name . 'Initial_Attachment_otherfield' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->Initial_Attachment_otherfield = json_encode($files);
+        }
+
+
+        if (!empty($request->service_engineer_report_attachment)) {
+            $files = [];
+            if ($request->hasfile('service_engineer_report_attachment')) {
+                foreach ($request->file('service_engineer_report_attachment') as $file) {
+                    $name = $request->name . 'service_engineer_report_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->service_engineer_report_attachment = json_encode($files);
         }
 
 
@@ -1596,8 +1678,8 @@ if ($lastDocumentOoc->ooc_due_date != $ooc->ooc_due_date ) {
     $history->save();
 
 }
-
 if ($lastDocumentOoc->is_repeat_ooc != $ooc->is_repeat_ooc ) {
+    // dd($lastDocumentOoc->is_repeat_ooc, $ooc->is_repeat_ooc);
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
     $history->activity_type = 'Is Repeat';
@@ -1614,6 +1696,7 @@ if ($lastDocumentOoc->is_repeat_ooc != $ooc->is_repeat_ooc ) {
     $history->save();
 
 }
+// dd($ooc->is_repeat_ooc);
 
 
 if ($lastDocumentOoc->Repeat_Nature != $ooc->Repeat_Nature) {
@@ -2076,24 +2159,6 @@ if ($lastDocumentOoc->is_repeat_stae_ooc != $ooc->is_repeat_stae_ooc) {
     $history->save();
 }
 
-// if ($lastDocumentOoc->is_repeat_stageii_ooc != $ooc->is_repeat_stageii_ooc) {
-//     $history = new OOCAuditTrail();
-//     $history->ooc_id = $id;
-//     $history->activity_type = 'Rectification by Service Engineer required';
-//     $history->previous = $lastDocumentOoc->is_repeat_stageii_ooc;
-//     $history->current = $ooc->is_repeat_stageii_ooc;
-//     $history->comment = $request->is_repeat_stageii_ooc_comment;
-//     $history->user_id = Auth::user()->id;
-//     $history->user_name = Auth::user()->name;
-//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-//     $history->origin_state = $lastDocumentOoc->status;
-//     $history->change_to = "Not Applicable";
-//     $history->change_from = $lastDocumentOoc->status;
-//     // $history->action_name = "Update";
-//     $history->save();
-    
-// }
-
 if ($lastDocumentOoc->is_repeat_stage_instrument_ooc != $ooc->is_repeat_stage_instrument_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
@@ -2129,22 +2194,25 @@ if ($lastDocumentOoc->is_repeat_proposed_stage_ooc != $ooc->is_repeat_proposed_s
     $history->save();
 }
 
-if ($lastDocumentOoc->is_repeat_compiled_stageii_ooc != $ooc->is_repeat_compiled_stageii_ooc) {
-    $history = new OOCAuditTrail();
-    $history->ooc_id = $id;
-    $history->activity_type = 'Compiled by';
-    $history->previous = $lastDocumentOoc->is_repeat_compiled_stageii_ooc;
-    $history->current = $ooc->is_repeat_compiled_stageii_ooc;
-    $history->comment = $request->is_repeat_compiled_stageii_ooc_comment;
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocumentOoc->status;
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocumentOoc->status;
-    // $history->action_name = "Update";
-    $history->save();
+if (isset($lastDocumentOoc->is_repeat_compiled_stageii_ooc) && isset($ooc->is_repeat_compiled_stageii_ooc)) {
+    if ($lastDocumentOoc->is_repeat_compiled_stageii_ooc !== $ooc->is_repeat_compiled_stageii_ooc) {
+        $history = new OOCAuditTrail();
+        $history->ooc_id = $id;
+        $history->activity_type = 'Compiled by';
+        $history->previous = $lastDocumentOoc->is_repeat_compiled_stageii_ooc;
+        $history->current = $ooc->is_repeat_compiled_stageii_ooc;
+        $history->comment = $request->is_repeat_compiled_stageii_ooc_comment ?? 'Not Applicable';
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocumentOoc->status;
+        $history->change_to = "Not Applicable";
+        $history->change_from = $lastDocumentOoc->status;
+        // $history->action_name = "Update";
+        $history->save();
+    }
 }
+
 
 if ($lastDocumentOoc->is_repeat_realease_stageii_ooc != $ooc->is_repeat_realease_stageii_ooc) {
     $history = new OOCAuditTrail();
@@ -2401,6 +2469,48 @@ if ($lastDocumentOoc->initiated_through_impact_closure_ooc != $ooc->initiated_th
     $history->save();
 }
 
+$fields = [
+    'date_of_out_of_calibration' => 'Date of Out of Calibration',
+    'date_of_discovery' => 'Date of Discovery',
+    'last_calibration_date' => 'Last Calibration Date',
+    'calibration_frequency' => 'Calibration Frequency',
+    'supervisor_review' => 'Supervisor Review',
+    'section_incharge_review' => 'Section Incharge Review',
+    'is_repeat_assingablerc_ooc' => 'Is Repeat Assignable RC OOC',
+    'ooc_category' => 'OOC Category',
+    'stagei_hypthesis_study_ooc' => 'Stage I Hypothesis Study OOC',
+    'justification_for_protocol_study_stageI_ooc' => 'Justification for Protocol Study Stage I OOC',
+    'plan_of_protocol_stageI_study_hypothesis_study' => 'Plan of Protocol Stage I Study Hypothesis Study',
+    'conclusion_of_protocol_stageI_based_study_hypothesis_study_ooc' => 'Conclusion of Protocol Stage I Based Study Hypothesis Study OOC',
+    'actiontaken_action' => 'Action Taken Action',
+    'User_compiled' => 'User Compiled',
+    're_qualification_status' => 'Re-Qualification Status',
+    'calibration_status' => 'Calibration Status',
+    'found_satisfactory' => 'Found Satisfactory',
+    'OthewrReviewed_ooc' => 'Other Reviewed OOC',
+    'sample_status' => 'Sample Status'
+];
+
+foreach ($fields as $field => $activityName) {
+    if (isset($ooc->$field) && $ooc->$field != $lastDocumentOoc[$field]) {
+        $history = new OOCAuditTrail();
+        $history->ooc_id = $id;
+        $history->activity_type = $activityName;
+        $history->previous = $lastDocumentOoc[$field];
+        $history->current = $ooc->$field;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocumentOoc['status'];
+        $history->change_to = "Not Applicable";
+        $history->change_from = $lastDocumentOoc['status'];
+
+        $history->save();
+    }
+}
+
+
 
 
 
@@ -2606,14 +2716,14 @@ $oocevaluation->save();
 
             if ($oocchange->stage == 5) {
                 $oocchange->stage = "7";
-                $oocchange->obvious_r_n_completed_by= Auth::user()->name;
-                $oocchange->obvious_r_n_completed_on = Carbon::now()->format('d-M-Y');
+                $oocchange->obvious_r_completed_by= Auth::user()->name;
+                $oocchange->obvious_r_completed_on = Carbon::now()->format('d-M-Y');
                 $oocchange->cause_i_ncompleted_comment =$request->comment;
                 $oocchange->status = "Under Stage II B Investigation";
                 $history = new OOCAuditTrail();
                 $history->ooc_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocumentOOC->obvious_r_n_completed_by;
+                $history->previous = $lastDocumentOOC->obvious_r_completed_by;
                 $history->current = $oocchange->obvious_r_n_completed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -2915,6 +3025,9 @@ public function RejectoocStateChange(Request $request, $id)
         if ($ooc->stage == 2) {
             $ooc->stage = "1";
             $ooc->status = "Opened";
+            // $ooc->comment_require_2 = $request->comment;
+            // $oocchange->initial_phase_i_investigation_required_completed_by= Auth::user()->name;
+            // $oocchange->initial_phase_i_investigation_required_completed_on = Carbon::now()->format('d-M-Y');
             $ooc->update();
             toastr()->success('Document Sent');
             return back();
@@ -2923,6 +3036,7 @@ public function RejectoocStateChange(Request $request, $id)
         if ($ooc->stage == 3) {
             $ooc->stage = "2";
             $ooc->status = "Pending Initial Assessment & Lab Investigation";
+            // $ooc->comment_require_3 = $request->comment;
             $ooc->update();
             toastr()->success('Document Sent');
             return back();
@@ -2930,6 +3044,15 @@ public function RejectoocStateChange(Request $request, $id)
         if ($ooc->stage == 8) {
             $ooc->stage = "7";
             $ooc->status = "Under Stage II B Investigation";
+            // $ooc->comment_require_8 = $request->comment;
+            $ooc->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+        if ($ooc->stage == 12) {
+            $ooc->stage = "2";
+            $ooc->status = "Pending Initial Assessment & Lab Investigation";
+            // $ooc->comment_require_12 = $request->comment;
             $ooc->update();
             toastr()->success('Document Sent');
             return back();
@@ -2940,6 +3063,7 @@ else {
     return back();
 }
 }
+
 
 
 
