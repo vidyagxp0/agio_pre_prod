@@ -216,7 +216,7 @@
                     <div class="process-table active" id="internal-audit">
                     <div class="mt-1 mb-2 bg-white" style="height: auto; padding: 10px;">
                             <div class="d-flex flex-wrap align-items-center">
-                                <div class="flex-grow-2">
+                                <div class="flex-grow-2">   
                                     <div class="filter-bar d-flex flex-wrap justify-content-between">
                                         <div class="filter-item">
                                             <label for="initiator_group">Department</label>

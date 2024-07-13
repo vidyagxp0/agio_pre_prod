@@ -126,6 +126,11 @@ class LogController extends Controller
                 $nonconformance = NonConformance::get();
 
                 return view('frontend.forms.Logs.non_conformance_log',compact('nonconformance'));
+               
+                case 'Incident':
+                    $Inc = Incident::get();
+    
+                    return view('frontend.forms.Logs.non_conformance_log',compact('Inc'));
             return $slug;
                    
             default:
