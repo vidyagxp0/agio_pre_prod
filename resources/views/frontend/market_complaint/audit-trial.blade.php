@@ -179,81 +179,10 @@
                     justify-content: end;
                     gap: 10px;
                 }
-                .button_theme1 {
-    height: 35px;
-    padding: 4px 15px;
-    font-size: 0.9rem;
-    border: none;
-    outline: none;
-    color: #fff;
-    background: #111;
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
-    border-radius: 5px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
-
-.button_theme1:hover {
-    color: white;
-    background: #111;
-}
-
-.button_theme1:before {
-    content: '';
-    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    background-size: 400%;
-    z-index: -1;
-    filter: blur(5px);
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    animation: glowing 20s linear infinite;
-    opacity: 0;
-    transition: opacity .3s ease-in-out;
-    border-radius: 10px;
-}
-
-.button_theme1:active {
-    color: #000
-}
-
-.button_theme1:active:after {
-    background: transparent;
-}
-
-.button_theme1:hover:before {
-    opacity: 1;
-}
-
-.button_theme1:after {
-    z-index: -1;
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #111;
-    left: 0;
-    top: 0;
-    border-radius: 10px;
-}
-
-
             </style>
 
             <body>
-                <div style="display: flex; justify-content: flex-end;">
-                    
-                     <a class="text-white" href="{{ route('marketcomplaint.marketcomplaint_view',$document->id) }}"><button  class="button_theme1" style="margin-right: 10px"> Back  </button></a>
-                     
-                
-                     <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">Exit</button>
-                </a> </div>
+
                 <header>
                     <table>
                         <tr>
@@ -278,10 +207,7 @@
                                 :{{ $document->initiator ? $document->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->description_gi }}</div>
-                                @php
-                                use Carbon\Carbon;
-                                @endphp
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Carbon::parse($document->due_date_gi)->format('j F Y') }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date_gi }}</div>
 
                         </div>
         </div>
@@ -322,21 +248,21 @@
                             <td>
                                 <div>
                                     <strong> Data Field Name :</strong><a
-                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                        href="{{ url('rcms/marketcomplaint/MarketComplaintAuditReport/',$document->id)}}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change From :</strong>{!! $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' !!}
+                                        <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
                                     @else
-                                        <strong>Change From :</strong>{!! $dataDemo->previous ? $dataDemo->previous : 'Null' !!}
+                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
                                     @endif
                                 </div>
                                 <br>
                                 <div>
                                     @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change To :</strong>{!! $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' !!}
+                                        <strong>Change To :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
                                     @else
-                                        <strong>Change To :</strong>{!! $dataDemo->current ? $dataDemo->current : 'Not Applicable' !!}
+                                        <strong>Change To :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">
@@ -354,9 +280,8 @@
                                 <div><strong> Peformed By
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
-                                <div style="margin-top: 5px;">
-                                    <strong>Performed On:</strong>
-                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('j F Y H:i') : 'Not Applicable' }}
+                                <div style="margin-top: 5px;"> <strong>Performed On
+                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>

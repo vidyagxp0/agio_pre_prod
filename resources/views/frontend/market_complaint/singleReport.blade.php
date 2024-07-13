@@ -29,8 +29,8 @@
         width: 25%;
     }
 
-    .w-80 {
-        width: 80%;
+    .w-30 {
+        width: 30%;
     }
 
     .w-40 {
@@ -134,7 +134,7 @@
     }
 
     .inner-block .block {
-        margin-bottom: 80px;
+        margin-bottom: 30px;
     }
 
     .inner-block .block-head {
@@ -162,25 +162,24 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                Market Complaint Single Report
+                    Market Complaint Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt=""
-                            class="w-100">
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100" >
                     </div>
                 </td>
             </tr>
         </table>
         <table>
             <tr>
-                <td class="w-80">
-                    <strong>MarketComplaint No.</strong>
+                <td class="w-30">
+                    {{-- <strong>Lab Incident No.</strong> --}}
                 </td>
                 <td class="w-40">
                    {{ Helpers::divisionNameForQMS($data->division_id) }}/MC/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
-                <td class="w-80">
+                <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
@@ -190,13 +189,13 @@
     <footer>
         <table>
             <tr>
-                <td class="w-80">
+                <td class="w-30">
                     <strong>Printed On :</strong> {{ date('d-M-Y') }}
                 </td>
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                {{-- <td class="w-80">
+                {{-- <td class="w-30">
                     <strong>Page :</strong> 1 of 1
                 </td> --}}
             </tr>
@@ -206,20 +205,20 @@
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
-                <div class="block-head" style="margin-top: 50px;">
+                <div class="block-head">
                     General Information
                 </div>
                 <table>
                     <tr>
                         <th class="w-20">Initiator</th>
-                        <td class="w-80">{{ $data->originator }}</td>
+                        <td class="w-30">{{ $data->originator }}</td>
                         <th class="w-20">Date Initiation</th>
-                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                         
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        {{-- <td class="w-80">{{ $data->initiator_group ?? 'Not Applicable' }}</td> --}}
+                        {{-- <td class="w-30">{{ $data->initiator_group ?? 'Not Applicable' }}</td> --}}
                         @php
                             $departments = [
                                 'CQA' => 'Corporate Quality Assurance',
@@ -243,114 +242,75 @@
                         <td class="w-80">{{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
  
                         <th class="w-20">Initiator Group Code</th>
-                        {{-- <td class="w-80">{{ $data->initiator_group ?? 'Not Applicable' }}</td> --}}
-                        <td class="w-80">{{ $data->initiator_group_code_gi ?? 'Not Applicable' }}</td>
+                        {{-- <td class="w-30">{{ $data->initiator_group ?? 'Not Applicable' }}</td> --}}
+                        <td class="w-30">{{ $data->initiator_group_code_gi ?? 'Not Applicable' }}</td>
 
                     </tr>
-                </table>
-                <table>
                     <tr>
                         <th class="w-20">If Other</th>
-                        <td class="w-80">{!! $data->if_other_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                            <th class="w-20">Due Date</th>
-                            <td class="w-80">{{  Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
-                        
-                   
-                        <th class="w-20">Repeat Nature</th>
-                        <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Short Description</th>
-                        <td class="w-80">{{ $data->description_gi ?? 'Not Applicable' }}</td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
+                        <td class="w-30">{{ $data->if_other_gi ?? 'Not Applicable' }}</td>
                         <th class="w-20">Severity Level</th>
-                        <td class="w-80">{!! $data->severity_level2 ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->severity_level2 ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Incident Details</th>
-                        <td class="w-80">{{ $data->Incident_Details ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->Incident_Details ?? 'Not Applicable' }}</td>
+                        <th class="w-20">If Other</th>
+                        <td class="w-30">{{ $data->if_other_gi ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Is Repeat</th>
-                        <td class="w-80">{{ $data->is_repeat_gi ?? 'Not Applicable' }}</td>
-                    
-                        <th class="w-20">Complaint</th>
-                        <td class="w-80">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
-                       
+                        <td class="w-30">{{ $data->is_repeat_gi ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Repeat Nature</th>
+                        <td class="w-30">{{ $data->repeat_nature_gi ?? 'Not Applicable' }}</td>
                     </tr>
-                </table>
-                
-                
-                <table>
                     <tr>
-                        <th class="w-20">Details Of Nature Market Complaint</th>
-                        <td class="w-80">{!! $data->details_of_nature_market_complaint_gi ?? 'Not Applicable' !!}</td>
+                        <th class="w-20">Description</th>
+                        <td class="w-30">{{ $data->description_gi ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Complaint</th>
+                        <td class="w-30">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
                     </tr>
-                </table>
-
-                <table>
                     <tr>
                         <th class="w-20">Complaint Reported On</th>
-                        <td class="w-80">{{ Helpers::getdateFormat($data->complaint_reported_on_gi) ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->complaint_reported_on_gi ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Details Of Nature Market Complaint</th>
+                        <td class="w-30">{{ $data->details_of_nature_market_complaint_gi ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Categorization Of Complaint</th>
-                        <td class="w-80">{{ $data->categorization_of_complaint_gi ?? 'Not Applicable' }}</td>
-
+                        <td class="w-30">{{ $data->categorization_of_complaint_gi ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Review Of Complaint Sample</th>
+                        <td class="w-30">{{ $data->review_of_complaint_sample_gi ?? 'Not Applicable' }}</td>
                     </tr>
-                </table>
-               
-                <table>
-                    <tr>   
-                    <th class="w-20">Review Of Complaint Sample</th>
-                        <td class="w-80">{!! $data->review_of_complaint_sample_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-               
                     <tr>
                         <th class="w-20">Review Of Batch Manufacturing Record (BMR)</th>
-                        <td class="w-80">{!! $data->review_of_batch_manufacturing_record_BMR_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>  
+                        <td class="w-30">{{ $data->review_of_batch_manufacturing_record_BMR_gi ?? 'Not Applicable' }}</td>
                         <th class="w-20">Review Of Raw Materials Used In Batch Manufacturing</th>
-                        <td class="w-80">{!! $data->review_of_raw_materials_used_in_batch_manufacturing_gi ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Review Of Batch Packing Record (BPR)</th>
-                        <td class="w-80">{!! $data->review_of_Batch_Packing_record_bpr_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->review_of_Batch_Packing_record_bpr_gi ?? 'Not Applicable' }}</td>
                         <th class="w-20">Review Of Packing Materials Used In Batch Packing</th>
-                        <td class="w-80">{!! $data->review_of_packing_materials_used_in_batch_packing_gi ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->review_of_packing_materials_used_in_batch_packing_gi ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Review Of Analytical Data</th>
-                        <td class="w-80">{!! $data->review_of_analytical_data_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->review_of_analytical_data_gi ?? 'Not Applicable' }}</td>
                         <th class="w-20">Review Of Training Record Of Concern Persons</th>
-                        <td class="w-80">{!! $data->review_of_training_record_of_concern_persons_gi ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->review_of_training_record_of_concern_persons_gi ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Review Of Equipment/Instrument Qualification & Calibration Record</th>
-                        <td class="w-80">{!! $data->rev_eq_inst_qual_calib_record_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->rev_eq_inst_qual_calib_record_gi ?? 'Not Applicable' }}</td>
                         <th class="w-20">Review Of Equipment Breakdown And Maintenance Record</th>
-                        <td class="w-80">{!! $data->review_of_equipment_break_down_and_maintainance_record_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->review_of_equipment_break_down_and_maintainance_record_gi ?? 'Not Applicable' }}</td>
                         <th class="w-20">Review Of Past History Of Product</th>
-                        <td class="w-80">{!! $data->review_of_past_history_of_product_gi ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->review_of_past_history_of_product_gi ?? 'Not Applicable' }}</td>
                     </tr>
-                </table>
-                <table>
-                   
                     <tr>
                         <th class="w-20">Initial Attachment</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if($data->initial_attachment_gi)
                                 <a href="{{ asset('upload/' . $data->initial_attachment_gi) }}" target="_blank">{{ $data->initial_attachment_gi }}</a>
                             @else
@@ -429,40 +389,32 @@
 
                     <tr>
                         <th class="w-20">Conclusion</th>
-                        <td class="w-80">{!! $data->conclusion_hodsr ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->conclusion_hodsr ?? 'Not Applicable' }}</td>
                         <th class="w-20">Root Cause Analysis</th>
-                        <td class="w-80">{!! $data->root_cause_analysis_hodsr ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->root_cause_analysis_hodsr ?? 'Not Applicable' }}</td>
                     </tr>
 
                     <tr>
                         <th class="w-20">Probable Root Causes</th>
-                        <td class="w-80">{!! $data->probable_root_causes_complaint_hodsr ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->probable_root_causes_complaint_hodsr ?? 'Not Applicable' }}</td>
                         <th class="w-20">Impact Assessment</th>
-                        <td class="w-80">{!! $data->impact_assessment_hodsr ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->impact_assessment_hodsr ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Corrective Action</th>
-                        <td class="w-80">{!! $data->corrective_action_hodsr ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->corrective_action_hodsr ?? 'Not Applicable' }}</td>
                         <th class="w-20">Preventive Action</th>
-                        <td class="w-80">{!! $data->preventive_action_hodsr ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->preventive_action_hodsr ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Summary and Conclusion</th>
-                        <td class="w-80">{!! $data->summary_and_conclusion_hodsr ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->summary_and_conclusion_hodsr ?? 'Not Applicable' }}</td>
                         <th class="w-20">Comments (if any)</th>
-                        <td class="w-80">{!! $data->comments_if_any_hodsr ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->comments_if_any_hodsr ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initial Attachment</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if($data->initial_attachment_hodsr)
                                 <a href="{{ asset('upload/' . $data->initial_attachment_hodsr) }}" target="_blank">{{ $data->initial_attachment_hodsr }}</a>
                             @else
@@ -483,58 +435,50 @@
                     Complaint Acknowledgement
                 </div>
                 <table>
+
+
+
+
                     <tr>
                         <th class="w-20">Manufacturer Name Address</th>
-                        <td class="w-80">{!! $data->manufacturer_name_address_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->manufacturer_name_address_ca ?? 'Not Applicable' }}</td>
                         <th class="w-20">Complaint Sample Required</th>
-                        <td class="w-80">{!! $data->complaint_sample_required_ca ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->complaint_sample_required_ca ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Complaint Sample Status</th>
-                        <td class="w-80">{!! $data->complaint_sample_status_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->complaint_sample_status_ca ?? 'Not Applicable' }}</td>
                         <th class="w-20">Brief Description of Complaint</th>
-                        <td class="w-80">{!! $data->brief_description_of_complaint_ca ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->brief_description_of_complaint_ca ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Batch Record Review Observation</th>
-                        <td class="w-80">{!! $data->batch_record_review_observation_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->batch_record_review_observation_ca ?? 'Not Applicable' }}</td>
                         <th class="w-20">Analytical Data Review Observation</th>
-                        <td class="w-80">{!! $data->analytical_data_review_observation_ca ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->analytical_data_review_observation_ca ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Retention Sample Review Observation</th>
-                        <td class="w-80">{!! $data->retention_sample_review_observation_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->retention_sample_review_observation_ca ?? 'Not Applicable' }}</td>
                         <th class="w-20">Stability Study Data Review</th>
-                        <td class="w-80">{!! $data->stability_study_data_review_ca ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->stability_study_data_review_ca ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">QMS Events If Any Review Observation</th>
-                        <td class="w-80">{!! $data->qms_events_ifany_review_observation_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->qms_events_ifany_review_observation_ca ?? 'Not Applicable' }}</td>
                         <th class="w-20">Repeated Complaints Queries For Product</th>
-                        <td class="w-80">{!! $data->repeated_complaints_queries_for_product_ca ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->repeated_complaints_queries_for_product_ca ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Interpretation on Complaint Sample If Received</th>
-                        <td class="w-80">{!! $data->interpretation_on_complaint_sample_ifrecieved_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">{{ $data->interpretation_on_complaint_sample_ifrecieved_ca ?? 'Not Applicable' }}</td>
                         <th class="w-20">Comments (if any)</th>
-                        <td class="w-80">{!! $data->comments_ifany_ca ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->comments_ifany_ca ?? 'Not Applicable' }}</td>
                     </tr>
 
                     <tr>
                         <th class="w-20">Initial Attachment</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if($data->initial_attachment_ca)
                                 <a href="{{ asset('upload/' . $data->initial_attachment_ca) }}" target="_blank">{{ $data->initial_attachment_ca }}</a>
                             @else
@@ -577,12 +521,12 @@
 
                     <tr>
                         <th class="w-20">Closure Comment</th>
-                        <td class="w-80">{!! $data->closure_comment_c ?? 'Not Applicable' !!}</td>
+                        <td class="w-30">{{ $data->closure_comment_c ?? 'Not Applicable' }}</td>
                         <!-- Add more rows for the remaining fields in the same format -->
                     </tr>
                     <tr>
                         <th class="w-20">Initial Attachment</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if($data->initial_attachment_c)
                                 <a href="{{ asset('upload/' . $data->initial_attachment_c) }}" target="_blank">{{ $data->initial_attachment_c }}</a>
                             @else
@@ -596,9 +540,9 @@
                     </tr>
                     <tr>
                         <th class="w-20">Action Taken</th>
-                        <td class="w-80">{{ $data->Action_Taken ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->Action_Taken ?? 'Not Applicable' }}</td>
                         <th class="w-20">Root Cause</th>
-                        <td class="w-80">{{ $data->Root_Cause ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->Root_Cause ?? 'Not Applicable' }}</td>
                     </tr> --}}
                 </table>
             </div>
@@ -609,9 +553,9 @@
                 <table>
                     <tr>
                         <th class="w-20">Currective Action</th>
-                        <td class="w-80">{{ $data->Currective_Action ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->Currective_Action ?? 'Not Applicable' }}</td>
                         <th class="w-20">Preventive Action</th>
-                        <td class="w-80">{{ $data->Preventive_Action ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->Preventive_Action ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Corrective & Preventive Action</th>
@@ -619,13 +563,13 @@
                     </tr>
                     <tr>
                         <th class="w-20">QA Review Comments</th>
-                        <td class="w-80">{{ $data->QA_Review_Comments ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->QA_Review_Comments ?? 'Not Applicable' }}</td>
                         <th class="w-20">QA Head/Designee Comments</th>
-                        <td class="w-80">{{ $data->QA_Head ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->QA_Head ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Incident Types</th>
-                        <td class="w-80">{{ $data->Incident_Type ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->Incident_Type ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Conclusion</th>
@@ -667,57 +611,57 @@
                 <table>
                     <tr>
                         <th class="w-20">Submitted By</th>
-                        <td class="w-80">{{ $data->submitted_by }}</td>
+                        <td class="w-30">{{ $data->submitted_by }}</td>
                         <th class="w-20">Submitted On</th>
-                        <td class="w-80">{{ $data->submitted_on }}</td>
+                        <td class="w-30">{{ $data->submitted_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Complete Review By :</th>
-                        <td class="w-80">{{  $data->complete_review_by }}</td>
+                        <td class="w-30">{{  $data->complete_review_by }}</td>
                         <th class="w-20">Complete Review On :</th>
-                        <td class="w-80">{{ $data->complete_review_on }}</td>
+                        <td class="w-30">{{ $data->complete_review_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Investigation Completed By</th>
-                        <td class="w-80">{{ $data->investigation_completed_by }}</td>
+                        <td class="w-30">{{ $data->investigation_completed_by }}</td>
                         <th class="w-20">Investigation Completed On</th>
-                        <td class="w-80">{{ $data->investigation_completed_on}}</td>
+                        <td class="w-30">{{ $data->investigation_completed_on}}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Propose Plan By :</th>
-                        <td class="w-80">{{ $data->propose_plan_by }}</td>
+                        <td class="w-30">{{ $data->propose_plan_by }}</td>
                         <th class="w-20">Propose Plan On :</th>
-                        <td class="w-80">{{ $data->propose_plan_on }}</td>
+                        <td class="w-30">{{ $data->propose_plan_on }}</td>
                     </tr>
                     {{-- <tr>
                         <th class="w-20">QA Head Approval Completed By</th>
-                        <td class="w-80">{{ $data->qA_head_approval_completed_by }}</td>
+                        <td class="w-30">{{ $data->qA_head_approval_completed_by }}</td>
                         <th class="w-20">QA Head Approval Completed On</th>
-                        <td class="w-80">{{ $data->qA_head_approval_completed_on }}</td>
+                        <td class="w-30">{{ $data->qA_head_approval_completed_on }}</td>
                     </tr> --}}
                     <tr>
                         <th class="w-20">Approve Plan By</th>
-                        <td class="w-80">{{ $data->approve_plan_by }}</td>
+                        <td class="w-30">{{ $data->approve_plan_by }}</td>
                         <th class="w-20">Approve Plan On</th>
-                        <td class="w-80">{{ $data->approve_plan_on }}</td>
+                        <td class="w-30">{{ $data->approve_plan_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">All CAPA Closed By</th>
-                        <td class="w-80">{{ $data->all_capa_closed_by }}</td>
+                        <td class="w-30">{{ $data->all_capa_closed_by }}</td>
                         <th class="w-20">All CAPA Closed On</th>
-                        <td class="w-80">{{ $data->all_capa_closed_on }}</td>
+                        <td class="w-30">{{ $data->all_capa_closed_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Closure Done By</th>
-                        <td class="w-80">{{ $data->closed_done_by }}</td>
+                        <td class="w-30">{{ $data->closed_done_by }}</td>
                         <th class="w-20">Closure Done On</th>
-                        <td class="w-80">{{ $data->closed_done_on }}</td>
+                        <td class="w-30">{{ $data->closed_done_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancelled By</th>
-                        <td class="w-80">{{ $data->cancelled_by }}</td>
+                        <td class="w-30">{{ $data->cancelled_by }}</td>
                         <th class="w-20">Cancelled On</th>
-                        <td class="w-80">{{ $data->cancelled_on }}</td>
+                        <td class="w-30">{{ $data->cancelled_on }}</td>
                     </tr>
                 </table>
             </div>

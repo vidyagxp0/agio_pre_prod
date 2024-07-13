@@ -348,7 +348,7 @@
                                         <select multiple name="capa_team[]" placeholder="Select CAPA Team"
                                             data-search="false" data-silent-initial-value-set="true" id="Audit">
                                             @foreach ($users as $data)
-                                                <option value="{{ $data->name }}">{{ $data->name }}</option>
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -411,7 +411,7 @@
                                         <label for="Containment Comments">
                                             Containment Comments <span class="text-danger d-none">*</span>
                                         </label>
-                                        <textarea name="containment_comments" id="capa_attachment"></textarea>
+                                        <textarea name="containment_comments" id="containment_comments"></textarea>
                                     </div>
                                 </div>
 

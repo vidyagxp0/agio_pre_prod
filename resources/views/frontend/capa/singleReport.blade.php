@@ -483,37 +483,10 @@
                         <th class="w-20">HOD Remark</th>
                         <td class="w-80">@if($data->hod_remarks){{ $data->hod_remarks }}@else Not Applicable @endif</td>
                     </tr>
-                   </table>
-                   <table>
-                    {{-- <tr>  
+                    <tr>  
                         <th class="w-20">HOD Attachment</th>
                         <td class="w-80">@if($data->hod_attachment){{ $data->hod_attachment }}@else Not Applicable @endif</td>
-                    </tr> --}}
-                    <div class="block-head">
-                        HOD Review Attachement
-                     </div>
-                       <div class="border-table">
-                         <table>
-                             <tr class="table_bg">
-                                 <th class="w-20">S.N.</th>
-                                 <th class="w-60">File </th>
-                             </tr>
-                                 @if($data->hod_attachment)
-                                 @foreach(json_decode($data->hod_attachment) as $key => $file)
-                                     <tr>
-                                         <td class="w-20">{{ $key + 1 }}</td>
-                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                     </tr>
-                                 @endforeach
-                                 @else
-                                 <tr>
-                                     <td class="w-20">1</td>
-                                     <td class="w-20">Not Applicable</td>
-                                 </tr>
-                             @endif
- 
-                         </table>
-                       </div>
+                    </tr>
                    </table>
 
                 </div>
@@ -528,44 +501,12 @@
                             <th class="w-20">CAPA QA Review</th>
                             <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
                         </tr>
-                       
+                        <tr>  
+                            <th class="w-20">QA Attachment</th>
+                            <td class="w-80">@if($data->qa_attachment){{ $data->qa_attachment }}@else Not Applicable @endif</td>
+                        </tr>
                     </table>
 
-                    {{-- <tr>  
-                        <th class="w-20">QA Attachment</th>
-                        <td class="w-80">@if($data->qa_attachment){{ $data->qa_attachment }}@else Not Applicable @endif</td>
-                    </tr> --}}
-  <table>
-                    {{-- <tr>  
-                        <th class="w-20">HOD Attachment</th>
-                        <td class="w-80">@if($data->hod_attachment){{ $data->hod_attachment }}@else Not Applicable @endif</td>
-                    </tr> --}}
-                    <div class="block-head">
-                        HOD Review Attachement
-                     </div>
-                       <div class="border-table">
-                         <table>
-                             <tr class="table_bg">
-                                 <th class="w-20">S.N.</th>
-                                 <th class="w-60">File </th>
-                             </tr>
-                                 @if($data->qa_attachment)
-                                 @foreach(json_decode($data->qa_attachment) as $key => $file)
-                                     <tr>
-                                         <td class="w-20">{{ $key + 1 }}</td>
-                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                     </tr>
-                                 @endforeach
-                                 @else
-                                 <tr>
-                                     <td class="w-20">1</td>
-                                     <td class="w-20">Not Applicable</td>
-                                 </tr>
-                             @endif
- 
-                         </table>
-                       </div>
-                   </table>
                 </div>
             </div>
                    

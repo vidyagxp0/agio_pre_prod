@@ -13,11 +13,6 @@
         }
     </style>
     <style>
-        .hide-input {
-            display: none;
-        }
-    </style>
-    <style>
         textarea.note-codable {
             display: none !important;
         }
@@ -36,16 +31,16 @@
         }
 
         /* .sub-head {
-                    margin-left: 280px;
-                    margin-right: 280px;
-                    color: #4274da;
-                    border-bottom: 2px solid #4274da;
-                    padding-bottom: 5px;
-                    margin-bottom: 20px;
-                    font-weight: bold;
-                    font-size: 1.2rem;
+                margin-left: 280px;
+                margin-right: 280px;
+                color: #4274da;
+                border-bottom: 2px solid #4274da;
+                padding-bottom: 5px;
+                margin-bottom: 20px;
+                font-weight: bold;
+                font-size: 1.2rem;
 
-                } */
+            } */
         .launch_extension {
             background: #4274da;
             color: white;
@@ -95,10 +90,10 @@
         }
 
         /* .saveButton:disabled{
-                        background: black!important;
-                        border:  black!important;
+                    background: black!important;
+                    border:  black!important;
 
-                    } */
+                } */
 
         .main-danger-block {
             display: flex;
@@ -241,25 +236,29 @@
             });
         });
     </script>
-
-
     <script>
         $(document).ready(function() {
             $('#ObservationAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var users = @json($users);
-                    var stageDisabled = {{ $data->stage == 0 || $data->stage == 7 ? 'true' : 'false' }};
-
-                    var disabledAttr = stageDisabled ? 'disabled' : '';
 
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="facility_name[]" ' + disabledAttr + '></td>' +
-                        '<td><input type="text" name="IDnumber[]" ' + disabledAttr + '></td>' +
-                        '<td><input type="text" name="Remarks[]" ' + disabledAttr + '></td>' +
+                        '<td> <input type="text" name="facility_name[]" id="facility_name"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
+                        '<td><input type="text" name="IDnumber[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
+                        '<td><input type="text" name="Remarks[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
+
+                        '</tr>';
+
+                    for (var i = 0; i < users.length; i++) {
+                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+
+                    html += '</select></td>' +
+
                         '</tr>';
 
                     return html;
@@ -267,13 +266,8 @@
 
                 var tableBody = $('#onservation-field-table tbody');
                 var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1); // +1 to get the correct serial number
+                var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
-            });
-
-            // Remove row functionality
-            $(document).on('click', '.removeRowBtn', function(e) {
-                $(this).closest('tr').remove();
             });
         });
     </script>
@@ -727,8 +721,8 @@
                                 CFT Review Not Required
                             </button>
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                        Child
-                                    </button> -->
+                                    Child
+                                </button> -->
                         @elseif(
                             $data->stage == 4 &&
                                 (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
@@ -755,8 +749,8 @@
                                 QA Final Review Complete
                             </button>
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                        Child
-                                    </button> -->
+                                    Child
+                                </button> -->
                         @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
@@ -1035,7 +1029,7 @@
                                             <label for="Date of Initiation"><b>Date of Initiation</b></label>
                                             <input readonly type="text"
                                                 value="{{ Helpers::getdateFormat($data->intiation_date) }}"
-                                                name="intiation_date" id="intiation_date">
+                                                name="initiation_date" id="initiation_date"s>
 
                                         </div>
                                     </div>
@@ -1068,75 +1062,73 @@
                                         document.getElementById('due_date').value = dueDateFormatted;
                                     </script>
 
-                                        <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="Initiator Group"><b>Department</b> <span
-                                                        class="text-danger">*</span></label>
-                                                <select name="Initiator_Group"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    id="initiator_group">
-                                                    <option value="">Enter Your Selection Here</option>
-                                                    <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif>
-                                                        Corporate
-                                                        Quality Assurance</option>
-                                                    <option value="QAB" @if ($data->Initiator_Group == 'QAB') selected @endif>
-                                                        Quality
-                                                        Assurance Biopharma</option>
-                                                    <option value="CQC" @if ($data->Initiator_Group == 'CQC') selected @endif>
-                                                        Central
-                                                        Quality Control</option>
-                                                    <option value="MANU" @if ($data->Initiator_Group == 'MANU') selected @endif>
-                                                        Manufacturing
-                                                    </option>
-                                                    <option value="PSG" @if ($data->Initiator_Group == 'PSG') selected @endif>
-                                                        Plasma
-                                                        Sourcing Group</option>
-                                                    <option value="CS" @if ($data->Initiator_Group == 'CS') selected @endif>
-                                                        Central
-                                                        Stores</option>
-                                                    <option value="ITG" @if ($data->Initiator_Group == 'ITG') selected @endif>
-                                                        Information
-                                                        Technology Group</option>
-                                                    <option value="MM" @if ($data->Initiator_Group == 'MM') selected @endif>
-                                                        Molecular
-                                                        Medicine</option>
-                                                    <option value="CL" @if ($data->Initiator_Group == 'CL') selected @endif>
-                                                        Central
-                                                        Laboratory</option>
-                                                    <option value="TT" @if ($data->Initiator_Group == 'TT') selected @endif>
-                                                        Tech
-                                                        team</option>
-                                                    <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif>
-                                                        Quality
-                                                        Assurance</option>
-                                                    <option value="QM" @if ($data->Initiator_Group == 'QM') selected @endif>
-                                                        Quality
-                                                        Management</option>
-                                                    <option value="IA" @if ($data->Initiator_Group == 'IA') selected @endif>
-                                                        IT
-                                                        Administration</option>
-                                                    <option value="ACC" @if ($data->Initiator_Group == 'ACC') selected @endif>
-                                                        Accounting
-                                                    </option>
-                                                    <option value="LOG" @if ($data->Initiator_Group == 'LOG') selected @endif>
-                                                        Logistics
-                                                    </option>
-                                                    <option value="SM" @if ($data->Initiator_Group == 'SM') selected @endif>
-                                                        Senior
-                                                        Management</option>
-                                                    <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif>
-                                                        Business
-                                                        Administration</option>
-                                                        <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif>
-                                                            Document Cell</option>
+                                    <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="Initiator Group"><b>Department</b> <span
+                                                    class="text-danger">*</span></label>
+                                            <select name="Initiator_Group"
+                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                id="initiator_group">
+                                                <option value="">Enter Your Selection Here</option>
+                                                <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif>
+                                                    Corporate
+                                                    Quality Assurance</option>
+                                                <option value="QAB" @if ($data->Initiator_Group == 'QAB') selected @endif>
+                                                    Quality
+                                                    Assurance Biopharma</option>
+                                                <option value="CQC" @if ($data->Initiator_Group == 'CQC') selected @endif>
+                                                    Central
+                                                    Quality Control</option>
+                                                <option value="MANU" @if ($data->Initiator_Group == 'MANU') selected @endif>
+                                                    Manufacturing
+                                                </option>
+                                                <option value="PSG" @if ($data->Initiator_Group == 'PSG') selected @endif>
+                                                    Plasma
+                                                    Sourcing Group</option>
+                                                <option value="CS" @if ($data->Initiator_Group == 'CS') selected @endif>
+                                                    Central
+                                                    Stores</option>
+                                                <option value="ITG" @if ($data->Initiator_Group == 'ITG') selected @endif>
+                                                    Information
+                                                    Technology Group</option>
+                                                <option value="MM" @if ($data->Initiator_Group == 'MM') selected @endif>
+                                                    Molecular
+                                                    Medicine</option>
+                                                <option value="CL" @if ($data->Initiator_Group == 'CL') selected @endif>
+                                                    Central
+                                                    Laboratory</option>
+                                                <option value="TT" @if ($data->Initiator_Group == 'TT') selected @endif>
+                                                    Tech
+                                                    team</option>
+                                                <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif>
+                                                    Quality
+                                                    Assurance</option>
+                                                <option value="QM" @if ($data->Initiator_Group == 'QM') selected @endif>
+                                                    Quality
+                                                    Management</option>
+                                                <option value="IA" @if ($data->Initiator_Group == 'IA') selected @endif>
+                                                    IT
+                                                    Administration</option>
+                                                <option value="ACC" @if ($data->Initiator_Group == 'ACC') selected @endif>
+                                                    Accounting
+                                                </option>
+                                                <option value="LOG" @if ($data->Initiator_Group == 'LOG') selected @endif>
+                                                    Logistics
+                                                </option>
+                                                <option value="SM" @if ($data->Initiator_Group == 'SM') selected @endif>
+                                                    Senior
+                                                    Management</option>
+                                                <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif>
+                                                    Business
+                                                    Administration</option>
 
-
-                                                </select>
-                                            </div>
-                                            @error('Initiator_Group')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
+                                            </select>
                                         </div>
+                                        @error('Initiator_Group')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -1150,8 +1142,6 @@
                                                     Yes</option>
                                                 <option @if ($data->equipment_name == 'no' || old('equipment_name') == 'no') selected @endif value="no">
                                                     No</option>>
-                                                    <option @if ($data->equipment_name == 'na' || old('equipment_name') == 'na') selected @endif value="na">
-                                                        NA</option>>
                                             </select>
                                         </div>
                                         @error('equipment_name')
@@ -1171,8 +1161,6 @@
                                                     Yes</option>
                                                 <option @if ($data->instrument_name == 'no' || old('instrument_name') == 'no') selected @endif value="no">
                                                     No</option>>
-                                                    <option @if ($data->instrument_name == 'na' || old('instrument_name') == 'na') selected @endif value="na">
-                                                        NA</option>>
                                             </select>
                                         </div>
                                         @error('instrument_name')
@@ -1192,8 +1180,6 @@
                                                     Yes</option>
                                                 <option @if ($data->inc_facility_name == 'no' || old('inc_facility_name') == 'no') selected @endif value="no">
                                                     No</option>>
-                                                    <option @if ($data->inc_facility_name == 'na' || old('inc_facility_name') == 'na') selected @endif value="na">
-                                                        NA</option>>
                                             </select>
                                         </div>
                                         @error('instrument_name')
@@ -1290,23 +1276,20 @@
                                             }
                                         }
                                     </script>
-                                   <div class="col-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="severity-level">Incident Observed On <span
-                                                class="text-danger">*</span></label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="incident_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->incident_date) }}" />
-                                            <input type="date" name="incident_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->incident_date }}"
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'incident_date')" />
+                                    <div class="col-6">
+                                        <div class="group-input">
+                                            <label for="severity-level">Incident Observed On <span
+                                                    class="text-danger">*</span></label>
+                                            <!-- <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span> -->
+                                            <input type="date" id="incident_date"
+                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                name="incident_date"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                value="{{ old('incident_date') ? old('incident_date') : $data->incident_date }}">
+                                            @error('incident_date')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
-                                        @error('Deviation_date')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
                                     </div>
-                                </div>
-
-
                                     <div class="col-lg-6 new-time-data-field">
                                         <div class="group-input input-time">
                                             <label for="incident_time">Incident Observed On (Time) <span
@@ -1321,15 +1304,6 @@
                                         </div>
                                     </div>
 
-                                    <script>
-                                        flatpickr("#incident_time", {
-                                            enableTime: true,
-                                            noCalendar: true,
-                                            dateFormat: "H:i", // 24-hour format without AM/PM
-                                            minuteIncrement: 1, // Set minute increment to 1
-                                            time_24hr: true // Force 24-hour format in the time picker
-                                        });
-                                    </script>
 
                                     <div class="col-lg-6 new-time-data-field">
                                         <div
@@ -1343,6 +1317,17 @@
                                         @enderror
                                     </div>
 
+
+
+                                    <script>
+                                        flatpickr("#incident_time", {
+                                            enableTime: true,
+                                            noCalendar: true,
+                                            dateFormat: "H:i", // 24-hour format without AM/PM
+                                            minuteIncrement: 1, // Set minute increment to 1
+                                            time_24hr: true // Force 24-hour format in the time picker
+                                        });
+                                    </script>
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -1359,20 +1344,19 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-6 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="severity-level">Incident Reported On <span
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group">Incident Reported On <span
                                                     class="text-danger">*</span></label>
-                                            <div class="calenderauditee">
-                                                <input type="text" id="incident_reported_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->incident_reported_date) }}" />
-                                                <input type="date" name="incident_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->incident_reported_date }}"
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'incident_reported_date')" />
-                                            </div>
-                                            @error('incident_reported_date')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
+                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                            <input type="date" id="incident_reported_date"
+                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                name="incident_reported_date"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                value="{{ $data->incident_reported_date }}">
                                         </div>
+                                        @error('incident_reported_date')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                     <script>
@@ -1566,67 +1550,15 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                    {{-- <div class="group-input" id="facilityRow"
-                                        @if ($data->Facility_Equipment == 'no') style="display: none" @endif>
-
-                                        <label for="audit-agenda-grid">
-                                            Facility/ Equipment/ Instrument/ System Details<span id="asteriskInvifaci"
-                                            style="display: {{ $data->Facility_Equipment == 'yes' ? 'inline' : 'none' }}"
-                                            class="text-danger">*</span>
-
-                                            <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="onservation-field-table"
-                                                style="width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 5%">Row#</th>
-                                                        <th style="width: 12%">Name</th>
-                                                        <th style="width: 16%">ID Number</th>
-                                                        <th style="width: 15%">Remarks</th>
-                                                        <th style="width: 8%">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if (!empty($grid_data->Remarks))
-                                                        @foreach (unserialize($grid_data->Remarks) as $key => $temps)
-                                                            <tr>
-                                                                <td><input disabled type="text" name="serial[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
-                                                                <td> <input type="text" name="facility_name[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}  value="{{ isset(unserialize($grid_data->facility_name)[$key]) ? unserialize($grid_data->facility_name)[$key] : '' }}"> </td>
-                                                                <td><input class="id-number" type="text" name="IDnumber[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}  value="{{ isset(unserialize($grid_data->IDnumber)[$key]) ? unserialize($grid_data->IDnumber)[$key] : '' }}"></td>
-                                                                <td><input class="remarks" type="text"  name="Remarks[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}  value="{{ unserialize($grid_data->Remarks)[$key] ? unserialize($grid_data->Remarks)[$key] : '' }}"> </td>
-                                                                <td><input type="text" class="Removebtn" name="Action[]" readonly></td>
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="main-danger-block">
-                                            @error('facility_name')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                            @error('IDnumber')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div> --}}
-
                                     <div class="group-input" id="facilityRow"
                                         @if ($data->Facility_Equipment == 'no') style="display: none" @endif>
                                         <label for="audit-agenda-grid">
-                                            Facility/ Equipment/ Instrument/ System Details<span id="asteriskInvifaci"
+                                            Facility/ Equipment/ Instrument/ System Details <span id="asteriskInvifaci"
                                                 style="display: {{ $data->Facility_Equipment == 'yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span>
-                                            <button type="button" name="audit-agenda-grid"
-                                                id="ObservationAdd">+</button>
+                                            <button type="button"
+                                                name="audit-agenda-grid"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                value="audit-agenda-grid" id="ObservationAdd">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#observation-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1643,60 +1575,52 @@
                                                         <th style="width: 16%">ID Number</th>
                                                         <th style="width: 15%">Remarks</th>
                                                         <th style="width: 8%">Action</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @if (!empty($grid_data->Remarks))
                                                         @foreach (unserialize($grid_data->Remarks) as $key => $temps)
                                                             <tr>
-                                                                <td><input disabled type="text" name="serial[]"
+                                                                <td><input disabled type="text"
+                                                                        name="serial[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                         value="{{ $key + 1 }}"></td>
-                                                                <td><input type="text" name="facility_name[]"
-                                                                        value="{{ isset(unserialize($grid_data->facility_name)[$key]) ? unserialize($grid_data->facility_name)[$key] : '' }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                                <td>
+
+                                                                    <input type="text" name="facility_name[]"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                                        value="{{ isset(unserialize($grid_data->facility_name)[$key]) ? unserialize($grid_data->facility_name)[$key] : '' }}">
                                                                 </td>
+
                                                                 <td><input class="id-number" type="text"
-                                                                        name="IDnumber[]"
-                                                                        value="{{ isset(unserialize($grid_data->IDnumber)[$key]) ? unserialize($grid_data->IDnumber)[$key] : '' }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                                        name="IDnumber[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                                        value="{{ isset(unserialize($grid_data->IDnumber)[$key]) ? unserialize($grid_data->IDnumber)[$key] : '' }}">
                                                                 </td>
                                                                 <td><input class="remarks" type="text"
-                                                                        name="Remarks[]"
-                                                                        value="{{ unserialize($grid_data->Remarks)[$key] ? unserialize($grid_data->Remarks)[$key] : '' }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                                        name="Remarks[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                                        value="{{ unserialize($grid_data->Remarks)[$key] ? unserialize($grid_data->Remarks)[$key] : '' }}">
                                                                 </td>
-                                                                <td><button class="removeRowBtn">Remove</button></td>
+                                                                <td><input type="text" class="Removebtn"
+                                                                        name="Action[]" readonly></td>
+
                                                             </tr>
                                                         @endforeach
-                                                    @else
-                                                        <tr>
-                                                            {{-- <td><input disabled type="text" name="serial[]" value="1"></td> --}}
-                                                            <td><input type="text" name="facility_name[]"
-                                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                            </td>
-                                                            <td><input type="text" name="IDnumber[]"
-                                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                            </td>
-                                                            <td><input type="text" name="Remarks[]"
-                                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                            </td>
-                                                            <td><button class="removeRowBtn">Remove</button></td>
-                                                        </tr>
                                                     @endif
                                                 </tbody>
                                             </table>
                                         </div>
                                         <div class="main-danger-block">
+
+
                                             @error('facility_name')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                             @error('IDnumber')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
+
                                         </div>
                                     </div>
-
-
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Facility_Equipment');
@@ -1719,6 +1643,7 @@
                                             for (var k = 0; k < remarksInputs.length; k++) {
                                                 inputsToToggle.push(remarksInputs[k]);
                                             }
+
 
                                             selectField.addEventListener('change', function() {
                                                 var isRequired = this.value === 'yes';
@@ -1777,9 +1702,12 @@
                                                     <tr>
                                                         <th style="width: 4%">Row#</th>
                                                         <th style="width: 12%">Document Number</th>
+
                                                         <th style="width: 16%"> Reference Document Name</th>
                                                         <th style="width: 16%"> Remarks</th>
                                                         <th style="width: 8%"> Action</th>
+
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1808,6 +1736,7 @@
                                                         @endforeach
                                                     @endif
                                                 </tbody>
+
                                             </table>
                                         </div>
                                         @error('Number')
@@ -2229,9 +2158,9 @@
                                         </a>
                                     @endif
                                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                    data-bs-target="#effectivenss_extension">
-                                                    Launch Effectiveness Check
-                                                </a> -->
+                                                data-bs-target="#effectivenss_extension">
+                                                Launch Effectiveness Check
+                                            </a> -->
                                 </div>
                             </div>
                         </div>
@@ -2501,15 +2430,15 @@
                                         </div>
                                 @endif
                                 <!-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="capa_required"> CAPA Required ?</label>
-                                                <select name="capa_required" id="capa_required">
-                                                    <option value="select">-- Select --</option>
-                                                    <option value="yes">Yes</option>
-                                                    <option value="no">No</option>
-                                                </select>
-                                            </div>
-                                        </div> -->
+                                        <div class="group-input">
+                                            <label for="capa_required"> CAPA Required ?</label>
+                                            <select name="capa_required" id="capa_required">
+                                                <option value="select">-- Select --</option>
+                                                <option value="yes">Yes</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -2531,15 +2460,15 @@
                                 </div>
 
                                 <!-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="qrm_required">QRM Required ?</label>
-                                                <select name="qrm_required" id="qrm_required">
-                                                    <option value="select">-- Select --</option>
-                                                    <option value="yes">Yes</option>
-                                                    <option value="no">No</option>
-                                                </select>
-                                            </div>
-                                        </div> -->
+                                        <div class="group-input">
+                                            <label for="qrm_required">QRM Required ?</label>
+                                            <select name="qrm_required" id="qrm_required">
+                                                <option value="select">-- Select --</option>
+                                                <option value="yes">Yes</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -2889,9 +2818,9 @@
                                     </a>
                                 @endif
                                 <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                    data-bs-target="#effectivenss_extension">
-                                                    Launch Effectiveness Check
-                                                </a> -->
+                                                data-bs-target="#effectivenss_extension">
+                                                Launch Effectiveness Check
+                                            </a> -->
                             </div>
                         </div>
                     </div>
@@ -3770,6 +3699,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -3938,6 +3869,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 25, 'q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -4101,6 +4034,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 27, 'q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -4269,6 +4204,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 28, 'q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -6360,8 +6297,6 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
-                                        ->select('user_id')
-                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -8091,9 +8026,9 @@
                                 </a>
                             @endif
                             <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                    data-bs-target="#effectivenss_extension">
-                                                    Launch Effectiveness Check
-                                                </a> -->
+                                                data-bs-target="#effectivenss_extension">
+                                                Launch Effectiveness Check
+                                            </a> -->
                         </div>
                     </div>
             </div>
@@ -9663,7 +9598,8 @@
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="short_description_required">Product Quality Impact</label>
-                            <select name="product_quality_imapct" id="product_quality_imapct">
+                            <select name="product_quality_imapct"
+                                id="product_quality_imapct" >
                                 <option value="0">-- Select --</option>
                                 <option @if ($data->product_quality_imapct == 'yes') selected @endif value="yes">Yes</option>
                                 <option @if ($data->product_quality_imapct == 'no') selected @endif value="no">No</option>
@@ -9679,7 +9615,7 @@
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="process_performance_impact">Process Performance Impact</label>
-                            <select name="process_performance_impact" id="process_performance_impact">
+                            <select  name="process_performance_impact"  id="process_performance_impact" >
                                 <option value="0">-- Select --</option>
                                 <option @if ($data->process_performance_impact == 'yes') selected @endif value="yes">Yes</option>
                                 <option @if ($data->process_performance_impact == 'no') selected @endif value="no">No</option>
@@ -9698,7 +9634,8 @@
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="process_performance_impact">Yield Impact</label>
-                            <select name="yield_impact" id="yield_impact">
+                            <select  name="yield_impact"
+                                id="yield_impact">
                                 <option value="0">-- Select --</option>
                                 <option @if ($data->yield_impact == 'yes') selected @endif value="yes">Yes</option>
                                 <option @if ($data->yield_impact == 'no') selected @endif value="no">No</option>
@@ -9713,7 +9650,8 @@
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="additionl_testing_required">Addtitional Testing Required</label>
-                            <select name="additionl_testing_required" id="additionl_testing_required">
+                            <select  name="additionl_testing_required"
+                                id="additionl_testing_required">
                                 <option value="0">-- Select --</option>
                                 <option @if ($data->additionl_testing_required == 'yes') selected @endif value="yes">Yes</option>
                                 <option @if ($data->additionl_testing_required == 'no') selected @endif value="no">No</option>
@@ -9730,7 +9668,8 @@
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="any_similar_incident_in_past"> Any Similar Incident In Past</label>
-                            <select name="any_similar_incident_in_past" id="any_similar_incident_in_past">
+                            <select  name="any_similar_incident_in_past"
+                                id="any_similar_incident_in_past">
                                 <option value="0">-- Select --</option>
                                 <option @if ($data->any_similar_incident_in_past == 'yes') selected @endif value="yes">Yes</option>
                                 <option @if ($data->any_similar_incident_in_past == 'no') selected @endif value="no">No</option>
@@ -9745,7 +9684,8 @@
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="classification_by_qa"> Classification By QA</label>
-                            <select name="classification_by_qa" id="classification_by_qa">
+                            <select name="classification_by_qa"
+                                id="classification_by_qa" >
                                 <option value="0">-- Select --</option>
                                 <option @if ($data->classification_by_qa == 'yes') selected @endif value="yes">Yes</option>
                                 <option @if ($data->classification_by_qa == 'no') selected @endif value="no">No</option>
@@ -9764,7 +9704,7 @@
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="gmp_impact">GMP Impact</label>
-                            <select name="gmp_impact" id="gmp_impact">
+                            <select  name="gmp_impact" id="gmp_impact" >
                                 <option value="0">-- Select --</option>
                                 <option @if ($data->gmp_impact == 'yes') selected @endif value="yes">Yes</option>
                                 <option @if ($data->gmp_impact == 'no') selected @endif value="no">No</option>
@@ -9799,9 +9739,9 @@
                         </a>
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                    data-bs-target="#effectivenss_extension">
-                                                    Launch Effectiveness Check
-                                                </a> -->
+                                                data-bs-target="#effectivenss_extension">
+                                                Launch Effectiveness Check
+                                            </a> -->
                 </div>
             </div>
         </div>
@@ -10429,9 +10369,9 @@
                         </a>
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                    data-bs-target="#effectivenss_extension">
-                                                    Launch Effectiveness Check
-                                                </a> -->
+                                                data-bs-target="#effectivenss_extension">
+                                                Launch Effectiveness Check
+                                            </a> -->
                 </div>
             </div>
         </div>
@@ -10460,28 +10400,28 @@
                         </div>
                     @endif --}}
                     <!-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="CAPA_Number"><b>CAPA No</b></label>
-                                    <input disabled type="text" name="capa_number">
-                                </div>
-                            </div> -->
+                            <div class="group-input">
+                                <label for="CAPA_Number"><b>CAPA No</b></label>
+                                <input disabled type="text" name="capa_number">
+                            </div>
+                        </div> -->
                     <!-- <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="Department1"> Other's 1 Department <span id="asteriskod1" style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                <select name="Other1_Department_person"
-                                                 @if ($data->stage == 4) disabled @endif id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
-                                                    <option value="0">-- Select --</option>
-                                                    <option @if ($data1->Other1_Department_person == 'Production') selected @endif
-                                                        value="Production">Production</option>
-                                                    <option  @if ($data1->Other1_Department_person == 'Warehouse') selected @endif
-                                                       value="Warehouse"> Warehouse</option>
-                                                    <option  @if ($data1->Other1_Department_person == 'Project management') selected @endif
-                                                                    value="Project management">Project management</option>
+                                        <div class="group-input">
+                                            <label for="Department1"> Other's 1 Department <span id="asteriskod1" style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                            <select name="Other1_Department_person"
+                                             @if ($data->stage == 4) disabled @endif id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
+                                                <option value="0">-- Select --</option>
+                                                <option @if ($data1->Other1_Department_person == 'Production') selected @endif
+                                                    value="Production">Production</option>
+                                                <option  @if ($data1->Other1_Department_person == 'Warehouse') selected @endif
+                                                   value="Warehouse"> Warehouse</option>
+                                                <option  @if ($data1->Other1_Department_person == 'Project management') selected @endif
+                                                                value="Project management">Project management</option>
 
-                                                </select>
+                                            </select>
 
-                                            </div>
-                                        </div> -->
+                                        </div>
+                                    </div> -->
 
 
                     <div class="col-lg-12">
@@ -10797,362 +10737,362 @@
                             </a>
                         @endif
                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                    data-bs-target="#effectivenss_extension">
-                                                    Launch Effectiveness Check
-                                                </a> -->
+                                                data-bs-target="#effectivenss_extension">
+                                                Launch Effectiveness Check
+                                            </a> -->
                     </div>
                 </div>
             </div>
         </div>
         <!-- investigation and capa -->
         <!-- <div id="CCForm3" class="inner-block cctabcontent">
-                                <div class="inner-block-content">
-                                    @if ($data->stage == 5)
-                                    <div class="row">
+                            <div class="inner-block-content">
+                                @if ($data->stage == 5)
+                                <div class="row">
 
-                                        <div class="col-md-12">
-                                            <div class="group-input">
-                                                <label for="Investigation Summary">Investigation Summary <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea class="tiny"
-                                                    name="Investigation_Summary"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-8">{{ $data->Investigation_Summary }}</textarea>
-                                            </div>
-                                            @error('Investigation_Summary')
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Investigation Summary">Investigation Summary <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea class="tiny"
+                                                name="Investigation_Summary"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-8">{{ $data->Investigation_Summary }}</textarea>
+                                        </div>
+                                        @error('Investigation_Summary')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Impact Assessment">Impact Assessment <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea class="tiny" name="Impact_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                id="summernote-9">{{ $data->Impact_assessment }}</textarea>
+                                        </div>
+                                        @error('Impact_assessment')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Root Cause">Root Cause  <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea class="tiny" name="Root_cause" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                id="summernote-10">{{ $data->Root_cause }}</textarea>
+                                        </div>
+                                        @error('Root_cause')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="CAPA Rquired">CAPA Required ? <span class="text-danger"   style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" >*</span></label>
+                                          <select name="CAPA_Rquired"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}   id="CAPA_Rquired" value="{{ $data->CAPA_Rquired }}">
+                                            <option value="0"> -- Select --</option>
+                                            <option @if ($data->CAPA_Rquired == 'yes') selected @endif
+                                                value="yes">Yes</option>
+                                            <option  @if ($data->CAPA_Rquired == 'no') selected @endif
+                                               value="no">No</option>
+                                          </select>
+                                          @error('CAPA_Rquired')
         <div class="text-danger">{{ $message }}</div>
     @enderror
                                         </div>
+                                    </div>
 
-                                        <div class="col-md-12">
-                                            <div class="group-input">
-                                                <label for="Impact Assessment">Impact Assessment <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea class="tiny" name="Impact_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    id="summernote-9">{{ $data->Impact_assessment }}</textarea>
-                                            </div>
-                                            @error('Impact_assessment')
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="CAPA Description">CAPA Description  <span id="asteriskIcon32q13" style="display: {{ $data->CAPA_Rquired == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea class="CAPA_Description summernote"
+                                                name="CAPA_Description"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-11">{{ $data->CAPA_Description }}</textarea>
+
+                                            @error('CAPA_Description')
         <div class="text-danger">{{ $message }}</div>
     @enderror
                                         </div>
+                                    </div>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            var selectField = document.getElementById('CAPA_Rquired');
+                                            var inputsToToggle = [];
 
-                                        <div class="col-md-12">
-                                            <div class="group-input">
-                                                <label for="Root Cause">Root Cause  <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea class="tiny" name="Root_cause" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    id="summernote-10">{{ $data->Root_cause }}</textarea>
-                                            </div>
-                                            @error('Root_cause')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-                                        </div>
+                                            var facilityNameInputs = document.getElementsByClassName('capa_type');
+                                            for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                inputsToToggle.push(facilityNameInputs[i]);
+                                            }
+                                            var facilityNameInputs = document.getElementsByClassName('CAPA_Description');
+                                            for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                inputsToToggle.push(facilityNameInputs[i]);
+                                            }
 
+                                            selectField.addEventListener('change', function() {
+                                                var isRequired = this.value === 'yes';
 
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="CAPA Rquired">CAPA Required ? <span class="text-danger"   style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" >*</span></label>
-                                              <select name="CAPA_Rquired"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}   id="CAPA_Rquired" value="{{ $data->CAPA_Rquired }}">
-                                                <option value="0"> -- Select --</option>
-                                                <option @if ($data->CAPA_Rquired == 'yes') selected @endif
-                                                    value="yes">Yes</option>
-                                                <option  @if ($data->CAPA_Rquired == 'no') selected @endif
-                                                   value="no">No</option>
-                                              </select>
-                                              @error('CAPA_Rquired')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <div class="group-input">
-                                                <label for="CAPA Description">CAPA Description  <span id="asteriskIcon32q13" style="display: {{ $data->CAPA_Rquired == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea class="CAPA_Description summernote"
-                                                    name="CAPA_Description"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-11">{{ $data->CAPA_Description }}</textarea>
-
-                                                @error('CAPA_Description')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-                                            </div>
-                                        </div>
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                var selectField = document.getElementById('CAPA_Rquired');
-                                                var inputsToToggle = [];
-
-                                                var facilityNameInputs = document.getElementsByClassName('capa_type');
-                                                for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                    inputsToToggle.push(facilityNameInputs[i]);
-                                                }
-                                                var facilityNameInputs = document.getElementsByClassName('CAPA_Description');
-                                                for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                    inputsToToggle.push(facilityNameInputs[i]);
-                                                }
-
-                                                selectField.addEventListener('change', function() {
-                                                    var isRequired = this.value === 'yes';
-
-                                                    inputsToToggle.forEach(function(input) {
-                                                        input.required = isRequired;
-                                                    });
-
-                                                    var asteriskIcon321 = document.getElementById('asteriskIcon32q1');
-                                                    var asteriskIcon3211 = document.getElementById('asteriskIcon32q13');
-                                                    asteriskIcon321.style.display = isRequired ? 'inline' : 'none';
-                                                    asteriskIcon3211.style.display = isRequired ? 'inline' : 'none';
+                                                inputsToToggle.forEach(function(input) {
+                                                    input.required = isRequired;
                                                 });
+
+                                                var asteriskIcon321 = document.getElementById('asteriskIcon32q1');
+                                                var asteriskIcon3211 = document.getElementById('asteriskIcon32q13');
+                                                asteriskIcon321.style.display = isRequired ? 'inline' : 'none';
+                                                asteriskIcon3211.style.display = isRequired ? 'inline' : 'none';
                                             });
-                                        </script>
+                                        });
+                                    </script>
 
-                                        <div class="col-md-12">
-                                            <div class="group-input">
-                                                <label for="Post Categorization Of Incident">Post Categorization Of Incident <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please Refer Intial incident category before updating.</small></div>
-                                                <select name="Post_Categorization"  id="Post_Categorization" value="Post_Categorization">
-                                                <option value=""> -- Select --</option>
-                                                <option @if ($data->Post_Categorization == 'major') selected @endif
-                                                    value="major">Major</option>
-                                                <option  @if ($data->Post_Categorization == 'minor') selected @endif
-                                                   value="minor">Minor</option>
-                                                   <option  @if ($data->Post_Categorization == 'critical') selected @endif
-                                                    value="critical">Critical</option>
-                                              </select>
-                                              @error('Post_Categorization')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <div class="group-input">
-                                                <label for="Investigation Of Revised Categorization">Justification for Revised Category <span class="text-danger" style="display:{{ $data->stage == 5 ? 'inline' : 'none' }}">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea class="tiny"
-                                                    name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
-                                            </div>
-                                            @error('Post_Categorization')
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Post Categorization Of Incident">Post Categorization Of Incident <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please Refer Intial incident category before updating.</small></div>
+                                            <select name="Post_Categorization"  id="Post_Categorization" value="Post_Categorization">
+                                            <option value=""> -- Select --</option>
+                                            <option @if ($data->Post_Categorization == 'major') selected @endif
+                                                value="major">Major</option>
+                                            <option  @if ($data->Post_Categorization == 'minor') selected @endif
+                                               value="minor">Minor</option>
+                                               <option  @if ($data->Post_Categorization == 'critical') selected @endif
+                                                value="critical">Critical</option>
+                                          </select>
+                                          @error('Post_Categorization')
         <div class="text-danger">{{ $message }}</div>
     @enderror
                                         </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Investigatiom Attachment">Investigation Attachment</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="Investigation_attachment">
-                                                        @if ($data->Investigation_attachment)
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Investigation Of Revised Categorization">Justification for Revised Category <span class="text-danger" style="display:{{ $data->stage == 5 ? 'inline' : 'none' }}">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea class="tiny"
+                                                name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
+                                        </div>
+                                        @error('Post_Categorization')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Investigatiom Attachment">Investigation Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="Investigation_attachment">
+                                                    @if ($data->Investigation_attachment)
     @foreach (json_decode($data->Investigation_attachment) as $file)
     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
     @endforeach
     @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input {{ $data->stage == 5 ? '' : 'disabled' }} type="file" id="myfile" name="Investigation_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Investigation_attachment')"
-                                                            multiple>
-                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="capa_Attachments">CAPA Attachment</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="Capa_attachment">
-                                                        @if ($data->Capa_attachment)
-    @foreach (json_decode($data->Capa_attachment) as $file)
-    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-    @endforeach
-    @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input {{ $data->stage == 5 ? '' : 'disabled' }} type="file" id="myfile" name="Capa_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Capa_attachment')"
-                                                            multiple>
-                                                    </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 5 ? '' : 'disabled' }} type="file" id="myfile" name="Investigation_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'Investigation_attachment')"
+                                                        multiple>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="capa_Attachments">CAPA Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="Capa_attachment">
+                                                    @if ($data->Capa_attachment)
+    @foreach (json_decode($data->Capa_attachment) as $file)
+    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+    @endforeach
+    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 5 ? '' : 'disabled' }} type="file" id="myfile" name="Capa_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'Capa_attachment')"
+                                                        multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 @else
     <div class="row">
 
-                                        <div class="col-md-12">
-                                            <div class="group-input">
-                                                <label for="Investigation Summary">Investigation Summary</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea readonly class="tiny"
-                                                    name="Investigation_Summary"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-8">{{ $data->Investigation_Summary }}</textarea>
-                                            </div>
-                                            @error('Investigation_Summary')
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Investigation Summary">Investigation Summary</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea readonly class="tiny"
+                                                name="Investigation_Summary"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-8">{{ $data->Investigation_Summary }}</textarea>
+                                        </div>
+                                        @error('Investigation_Summary')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Impact Assessment">Impact Assessment</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea readonly class="tiny"
+                                                name="Impact_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-9">{{ $data->Impact_assessment }}</textarea>
+                                        </div>
+                                        @error('Impact_assessment')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Root Cause">Root Cause </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea readonly class="tiny" name="Root_cause"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                id="summernote-10">{{ $data->Root_cause }}</textarea>
+                                        </div>
+                                        @error('Root_cause')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+                                    </div>
+
+
+                                    <div class="col-6">
+                                        <div class="group-input">
+                                            <label for="CAPA Rquired">CAPA Required ?</label>
+                                          <select disabled name="CAPA_Rquired"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}   id="CAPA_Rquired" value="{{ $data->CAPA_Rquired }}">
+                                            <option value="0"> -- Select --</option>
+                                            <option @if ($data->CAPA_Rquired == 'yes') selected @endif
+                                                value="yes">Yes</option>
+                                            <option  @if ($data->CAPA_Rquired == 'no') selected @endif
+                                               value="no">No</option>
+                                          </select>
+                                          @error('CAPA_Rquired')
         <div class="text-danger">{{ $message }}</div>
     @enderror
                                         </div>
+                                    </div>
 
-                                        <div class="col-md-12">
-                                            <div class="group-input">
-                                                <label for="Impact Assessment">Impact Assessment</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea readonly class="tiny"
-                                                    name="Impact_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-9">{{ $data->Impact_assessment }}</textarea>
-                                            </div>
-                                            @error('Impact_assessment')
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="CAPA Description">CAPA Description</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea readonly class="tiny"
+                                                name="CAPA_Description"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-11">{{ $data->CAPA_Description }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Post Categorization Of Incident">Post Categorization Of Incident</label>
+                                            <div><small class="text-primary">Please Refer Intial incident category before updating.</small></div>
+                                            <select name="Post_Categorization" id="Post_Categorization" value="Post_Categorization">
+                                            <option value=""> -- Select --</option>
+                                            <option @if ($data->Post_Categorization == 'major') selected @endif
+                                                value="major">Major</option>
+                                            <option  @if ($data->Post_Categorization == 'minor') selected @endif
+                                               value="minor">Minor</option>
+                                               <option  @if ($data->Post_Categorization == 'critical') selected @endif
+                                                value="critical">Critical</option>
+                                          </select>
+                                          @error('Post_Categorization')
         <div class="text-danger">{{ $message }}</div>
     @enderror
                                         </div>
+                                    </div>
 
-                                        <div class="col-md-12">
-                                            <div class="group-input">
-                                                <label for="Root Cause">Root Cause </label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea readonly class="tiny" name="Root_cause"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    id="summernote-10">{{ $data->Root_cause }}</textarea>
-                                            </div>
-                                            @error('Root_cause')
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Investigation Of Revised Categorization">Justification for Revised Category </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea readonly class="tiny"
+                                                name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
+                                        </div>
+                                        @error('Post_Categorization')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                        </div>
-
-
-                                        <div class="col-6">
-                                            <div class="group-input">
-                                                <label for="CAPA Rquired">CAPA Required ?</label>
-                                              <select disabled name="CAPA_Rquired"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}   id="CAPA_Rquired" value="{{ $data->CAPA_Rquired }}">
-                                                <option value="0"> -- Select --</option>
-                                                <option @if ($data->CAPA_Rquired == 'yes') selected @endif
-                                                    value="yes">Yes</option>
-                                                <option  @if ($data->CAPA_Rquired == 'no') selected @endif
-                                                   value="no">No</option>
-                                              </select>
-                                              @error('CAPA_Rquired')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <div class="group-input">
-                                                <label for="CAPA Description">CAPA Description</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea readonly class="tiny"
-                                                    name="CAPA_Description"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-11">{{ $data->CAPA_Description }}</textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <div class="group-input">
-                                                <label for="Post Categorization Of Incident">Post Categorization Of Incident</label>
-                                                <div><small class="text-primary">Please Refer Intial incident category before updating.</small></div>
-                                                <select name="Post_Categorization" id="Post_Categorization" value="Post_Categorization">
-                                                <option value=""> -- Select --</option>
-                                                <option @if ($data->Post_Categorization == 'major') selected @endif
-                                                    value="major">Major</option>
-                                                <option  @if ($data->Post_Categorization == 'minor') selected @endif
-                                                   value="minor">Minor</option>
-                                                   <option  @if ($data->Post_Categorization == 'critical') selected @endif
-                                                    value="critical">Critical</option>
-                                              </select>
-                                              @error('Post_Categorization')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <div class="group-input">
-                                                <label for="Investigation Of Revised Categorization">Justification for Revised Category </label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea readonly class="tiny"
-                                                    name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
-                                            </div>
-                                            @error('Post_Categorization')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Investigatiom Attachment">Investigatiom Attachment</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="Investigation_attachment">
-                                                        @if ($data->Investigation_attachment)
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Investigatiom Attachment">Investigatiom Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="Investigation_attachment">
+                                                    @if ($data->Investigation_attachment)
     @foreach (json_decode($data->Investigation_attachment) as $file)
     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
     @endforeach
     @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input disabled {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Investigation_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Investigation_attachment')"
-                                                            multiple>
-                                                    </div>
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input disabled {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Investigation_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'Investigation_attachment')"
+                                                        multiple>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="capa_Attachments">CAPA Attachment</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="Capa_attachment">
-                                                        @if ($data->Capa_attachment)
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="capa_Attachments">CAPA Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="Capa_attachment">
+                                                    @if ($data->Capa_attachment)
     @foreach (json_decode($data->Capa_attachment) as $file)
     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
     @endforeach
     @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input disabled {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Capa_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Capa_attachment')"
-                                                            multiple>
-                                                    </div>
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input disabled {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Capa_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'Capa_attachment')"
+                                                        multiple>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    @endif
-                                    <div class="button-block">
-                                        <button type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }} id="ChangesaveButton04" class=" saveAuditFormBtn d-flex" style="align-items: center;">
-                                            <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none" role="status">
-                                                <span class="sr-only">Loading...</span>
-                                              </div>
-                                              Save
-                                        </button>
-                                     <a href="/rcms/qms-dashboard">
-                                                <button type="button"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="backButton">Back</button>
-                                            </a>
-                                        <button type="button"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="nextButton" onclick="nextStep()">Next</button>
-                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                                Exit </a> </button>
-                                    </div>
                                 </div>
-                            </div>  -->
+                                @endif
+                                <div class="button-block">
+                                    <button type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }} id="ChangesaveButton04" class=" saveAuditFormBtn d-flex" style="align-items: center;">
+                                        <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                          </div>
+                                          Save
+                                    </button>
+                                 <a href="/rcms/qms-dashboard">
+                                            <button type="button"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="backButton">Back</button>
+                                        </a>
+                                    <button type="button"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                            Exit </a> </button>
+                                </div>
+                            </div>
+                        </div>  -->
 
         <!-- QA Final Review -->
         <div id="CCForm4" class="inner-block cctabcontent">
@@ -11246,9 +11186,9 @@
                         </a>
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                    data-bs-target="#effectivenss_extension">
-                                                    Launch Effectiveness Check
-                                                </a> -->
+                                                data-bs-target="#effectivenss_extension">
+                                                Launch Effectiveness Check
+                                            </a> -->
                 </div>
             </div>
         </div>
@@ -11385,9 +11325,9 @@
                         </a>
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                    data-bs-target="#effectivenss_extension">
-                                                    Launch Effectiveness Check
-                                                </a> -->
+                                                data-bs-target="#effectivenss_extension">
+                                                Launch Effectiveness Check
+                                            </a> -->
                 </div>
             </div>
         </div>
@@ -11829,150 +11769,127 @@
 
 
                     <!-- <div class="sub-head">
-                                Incident Effectiveness Check
+                            Incident Effectiveness Check
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Effectiveness_Check_Plan_incident">Effectiveness Check Plan(Incident)</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                        completion</small></div>
+                                <textarea class="tiny" name="Effectiveness_Check_Plan_incident" id="summernote-10"> </textarea>
                             </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Effectiveness_Check_Plan_incident">Effectiveness Check Plan(Incident)</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="Effectiveness_Check_Plan_incident" id="summernote-10"> </textarea>
-                                </div>
-                            </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for=" incident_Effectiveness_Check_Plan_Proposed_By">Incident Effectiveness Check
-                                            Plan Proposed By </label>
-                                        <select name="incident_Effectiveness_Check_Plan_Proposed_By"
-                                            id="incident_Effectiveness_Check_Plan_Proposed_By">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for=" incident_Effectiveness_Check_Plan_Proposed_By">Incident Effectiveness Check
+                                        Plan Proposed By </label>
+                                    <select name="incident_Effectiveness_Check_Plan_Proposed_By"
+                                        id="incident_Effectiveness_Check_Plan_Proposed_By">
+                                        <option value="">-- Select --</option>
+                                        @foreach ($users as $user)
     <option value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="incident_EC_Plan_Proposed_On"> Incident Effectiveness Check Plan Proposed
-                                            On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="incident_EC_Plan_Proposed_On" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="incident_EC_Plan_Proposed_On"
-                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'incident_EC_Plan_Proposed_On')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="EC_Closure_comments_incident">Effectiveness Check Closure
-                                        Comments(Incident)</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="EC_Closure_comments_incident" id="summernote-10"> </textarea>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="Next_review_date_incident">Next Review Date(Incident)</label>
+                                    <label for="incident_EC_Plan_Proposed_On"> Incident Effectiveness Check Plan Proposed
+                                        On</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="Next_review_date_incident" readonly
+                                        <input type="text" id="incident_EC_Plan_Proposed_On" readonly
                                             placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="Next_review_date_incident"
+                                        <input type="date" name="incident_EC_Plan_Proposed_On"
+                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'incident_EC_Plan_Proposed_On')" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="EC_Closure_comments_incident">Effectiveness Check Closure
+                                    Comments(Incident)</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                        completion</small></div>
+                                <textarea class="tiny" name="EC_Closure_comments_incident" id="summernote-10"> </textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Next_review_date_incident">Next Review Date(Incident)</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="Next_review_date_incident" readonly
+                                        placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="Next_review_date_incident"
+                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'Next_review_date_incident')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for=" deviaiton_EC_Closed_By">Incident Effectiveness Check Closed By</label>
+                                    <select name="deviaiton_EC_Closed_By" id="deviaiton_EC_Closed_By">
+                                        <option value="">-- Select --</option>
+                                        @foreach ($users as $user)
+    <option value="{{ $user->id }}">{{ $user->name }}</option>
+    @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="incident_Effectiveness_Check_Closed_On">Incident Effectiveness Check Closed
+                                        On</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="incident_Effectiveness_Check_Closed_On" readonly
+                                            placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="incident_Effectiveness_Check_Closed_On"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'Next_review_date_incident')" />
+                                            oninput="handleDateInput(this, 'incident_Effectiveness_Check_Closed_On')" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for=" deviaiton_EC_Closed_By">Incident Effectiveness Check Closed By</label>
-                                        <select name="deviaiton_EC_Closed_By" id="deviaiton_EC_Closed_By">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
+                        </div>
+
+                        <div class="sub-head">
+                            CAPA Effectiveness Check
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="EC_plan_Capa">Effectiveness Check Plan(CAPA)</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                        completion</small></div>
+                                <textarea class="tiny" name="EC_plan_Capa" id="summernote-10">
+                </textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for=" Investigation_Extension_Completed_By">CAPA Effectiveness Check Plan Proposed
+                                        By </label>
+                                    <select name="Investigation_Extension_Completed_By"
+                                        id="Investigation_Extension_Completed_By">
+                                        <option value="">-- Select --</option>
+                                        @foreach ($users as $user)
     <option value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="incident_Effectiveness_Check_Closed_On">Incident Effectiveness Check Closed
-                                            On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="incident_Effectiveness_Check_Closed_On" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="incident_Effectiveness_Check_Closed_On"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'incident_Effectiveness_Check_Closed_On')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="sub-head">
-                                CAPA Effectiveness Check
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="EC_plan_Capa">Effectiveness Check Plan(CAPA)</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="EC_plan_Capa" id="summernote-10">
-                </textarea>
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for=" Investigation_Extension_Completed_By">CAPA Effectiveness Check Plan Proposed
-                                            By </label>
-                                        <select name="Investigation_Extension_Completed_By"
-                                            id="Investigation_Extension_Completed_By">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
-    <option value="{{ $user->id }}">{{ $user->name }}</option>
-    @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Investigation_Extension_Completed_On">CAPA Effectiveness Check Plan Proposed
-                                            On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Investigation_Extension_Completed_On" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Investigation_Extension_Completed_On"
-                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Extension_Justi_QRM">Effectiveness Check Closure Comments(CAPA)</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
-                </textarea>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="Investigation_Extension_Completed_On">Next Review Date(CAPA)</label>
+                                    <label for="Investigation_Extension_Completed_On">CAPA Effectiveness Check Plan Proposed
+                                        On</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="Investigation_Extension_Completed_On" readonly
                                             placeholder="DD-MMM-YYYY" />
@@ -11983,95 +11900,91 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for=" Investigation_Extension_Completed_By">CAPA Effectiveness Check Closed
-                                            By</label>
-                                        <select name="Investigation_Extension_Completed_By"
-                                            id="Investigation_Extension_Completed_By">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Extension_Justi_QRM">Effectiveness Check Closure Comments(CAPA)</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                        completion</small></div>
+                                <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
+                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Investigation_Extension_Completed_On">Next Review Date(CAPA)</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="Investigation_Extension_Completed_On" readonly
+                                        placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="Investigation_Extension_Completed_On"
+                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for=" Investigation_Extension_Completed_By">CAPA Effectiveness Check Closed
+                                        By</label>
+                                    <select name="Investigation_Extension_Completed_By"
+                                        id="Investigation_Extension_Completed_By">
+                                        <option value="">-- Select --</option>
+                                        @foreach ($users as $user)
     <option value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Effectiveness_Check_Closed_On">CAPA Effectiveness Check Closed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Effectiveness_Check_Closed_On" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Effectiveness_Check_Closed_On"
-                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Effectiveness_Check_Closed_On')" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="sub-head">
-                                Quality Risk Management Effectiveness Check
-                            </div>
-                            <div class="col-md-12 mb-3">
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Extension_Justi_QRM">Effectiveness Check Plan( Quality Risk Management)</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
-                </textarea>
+                                    </select>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for=" Investigation_Extension_Completed_By"> QRM Effectiveness Check Plan Proposed
-                                            By </label>
-                                        <select name="Investigation_Extension_Completed_By"
-                                            id="Investigation_Extension_Completed_By">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
-    <option value="{{ $user->id }}">{{ $user->name }}</option>
-    @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Investigation_Extension_Completed_On">QRM Effectiveness Check Plan Proposed
-                                            On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Investigation_Extension_Completed_On" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Investigation_Extension_Completed_On"
-                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Extension_Justi_QRM">Effectiveness Check Closure Comments( Quality Risk
-                                        Management)</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
-                </textarea>
-                                </div>
-                            </div>
-
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="Investigation_Extension_Completed_On">Next Review Date(Quality Risk
-                                        Management)</label>
+                                    <label for="Effectiveness_Check_Closed_On">CAPA Effectiveness Check Closed On</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="Effectiveness_Check_Closed_On" readonly
+                                            placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="Effectiveness_Check_Closed_On"
+                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'Effectiveness_Check_Closed_On')" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="sub-head">
+                            Quality Risk Management Effectiveness Check
+                        </div>
+                        <div class="col-md-12 mb-3">
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Extension_Justi_QRM">Effectiveness Check Plan( Quality Risk Management)</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                        completion</small></div>
+                                <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
+                </textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for=" Investigation_Extension_Completed_By"> QRM Effectiveness Check Plan Proposed
+                                        By </label>
+                                    <select name="Investigation_Extension_Completed_By"
+                                        id="Investigation_Extension_Completed_By">
+                                        <option value="">-- Select --</option>
+                                        @foreach ($users as $user)
+    <option value="{{ $user->id }}">{{ $user->name }}</option>
+    @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Investigation_Extension_Completed_On">QRM Effectiveness Check Plan Proposed
+                                        On</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="Investigation_Extension_Completed_On" readonly
                                             placeholder="DD-MMM-YYYY" />
@@ -12082,132 +11995,159 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                        </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for=" Investigation_Extension_Completed_By">QRM Effectiveness Check Closed
-                                            By</label>
-                                        <select name="Investigation_Extension_Completed_By"
-                                            id="Investigation_Extension_Completed_By">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Extension_Justi_QRM">Effectiveness Check Closure Comments( Quality Risk
+                                    Management)</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                        completion</small></div>
+                                <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
+                </textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Investigation_Extension_Completed_On">Next Review Date(Quality Risk
+                                    Management)</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="Investigation_Extension_Completed_On" readonly
+                                        placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="Investigation_Extension_Completed_On"
+                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for=" Investigation_Extension_Completed_By">QRM Effectiveness Check Closed
+                                        By</label>
+                                    <select name="Investigation_Extension_Completed_By"
+                                        id="Investigation_Extension_Completed_By">
+                                        <option value="">-- Select --</option>
+                                        @foreach ($users as $user)
     <option value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Effectiveness_Check_Closed_On">QRM Effectiveness Check Closed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Effectiveness_Check_Closed_On" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Effectiveness_Check_Closed_On"
-                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Effectiveness_Check_Closed_On')" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="sub-head">
-                                Investigation Effectiveness Check
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Extension_Justi_QRM">Effectiveness Check Plan(Investigation)</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
-                </textarea>
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for=" Investigation_Extension_Completed_By">Investigation Effectiveness Check Plan
-                                            Proposed By </label>
-                                        <select name="Investigation_Extension_Completed_By"
-                                            id="Investigation_Extension_Completed_By">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
-    <option value="{{ $user->id }}">{{ $user->name }}</option>
-    @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Effectiveness_Check_Plan_Proposed_On">Investigation Effectiveness Check Plan
-                                            Proposed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Effectiveness_Check_Plan_Proposed_On" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Effectiveness_Check_Plan_Proposed_On"
-                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Effectiveness_Check_Plan_Proposed_On')" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="EC_Closure_Comments_investigation">Effectiveness Check Closure
-                                        Comments(Investigation)</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                            completion</small></div>
-                                    <textarea class="tiny" name="EC_Closure_Comments_investigation" id="summernote-10">
-                </textarea>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="Investigation_Extension_Completed_On">Next Review Date (Investigation)</label>
+                                    <label for="Effectiveness_Check_Closed_On">QRM Effectiveness Check Closed On</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="Investigation_Extension_Completed_On" readonly
+                                        <input type="text" id="Effectiveness_Check_Closed_On" readonly
                                             placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="Investigation_Extension_Completed_On"
+                                        <input type="date" name="Effectiveness_Check_Closed_On"
                                             max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
+                                            oninput="handleDateInput(this, 'Effectiveness_Check_Closed_On')" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for=" Investigation_Effectiveness_Check_Closed_By">Investigation Effectiveness
-                                            Check Closed By</label>
-                                        <select name="Investigation_Effectiveness_Check_Closed_By"
-                                            id="Investigation_Effectiveness_Check_Closed_By">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
+
+                        </div>
+                        <div class="sub-head">
+                            Investigation Effectiveness Check
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Extension_Justi_QRM">Effectiveness Check Plan(Investigation)</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                        completion</small></div>
+                                <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
+                </textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for=" Investigation_Extension_Completed_By">Investigation Effectiveness Check Plan
+                                        Proposed By </label>
+                                    <select name="Investigation_Extension_Completed_By"
+                                        id="Investigation_Extension_Completed_By">
+                                        <option value="">-- Select --</option>
+                                        @foreach ($users as $user)
     <option value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
-                                        </select>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Effectiveness_Check_Plan_Proposed_On">Investigation Effectiveness Check Plan
+                                        Proposed On</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="Effectiveness_Check_Plan_Proposed_On" readonly
+                                            placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="Effectiveness_Check_Plan_Proposed_On"
+                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'Effectiveness_Check_Plan_Proposed_On')" />
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Investigation_Effectiveness_Check_Closed_On">Investigation Effectiveness Check
-                                            Closed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Investigation_Effectiveness_Check_Closed_On" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Investigation_Effectiveness_Check_Closed_On"
-                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Investigation_Effectiveness_Check_Closed_On')" />
-                                        </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="EC_Closure_Comments_investigation">Effectiveness Check Closure
+                                    Comments(Investigation)</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                        completion</small></div>
+                                <textarea class="tiny" name="EC_Closure_Comments_investigation" id="summernote-10">
+                </textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Investigation_Extension_Completed_On">Next Review Date (Investigation)</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="Investigation_Extension_Completed_On" readonly
+                                        placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="Investigation_Extension_Completed_On"
+                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for=" Investigation_Effectiveness_Check_Closed_By">Investigation Effectiveness
+                                        Check Closed By</label>
+                                    <select name="Investigation_Effectiveness_Check_Closed_By"
+                                        id="Investigation_Effectiveness_Check_Closed_By">
+                                        <option value="">-- Select --</option>
+                                        @foreach ($users as $user)
+    <option value="{{ $user->id }}">{{ $user->name }}</option>
+    @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Investigation_Effectiveness_Check_Closed_On">Investigation Effectiveness Check
+                                        Closed On</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="Investigation_Effectiveness_Check_Closed_On" readonly
+                                            placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="Investigation_Effectiveness_Check_Closed_On"
+                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'Investigation_Effectiveness_Check_Closed_On')" />
                                     </div>
-                                </div> -->
+                                </div>
+                            </div> -->
                 </div>
 
                 <div class="button-block">
@@ -12235,9 +12175,9 @@
                         </a>
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                    data-bs-target="#effectivenss_extension">
-                                                    Launch Effectiveness Check
-                                                </a> -->
+                                                data-bs-target="#effectivenss_extension">
+                                                Launch Effectiveness Check
+                                            </a> -->
                 </div>
             </div>
         </div>
@@ -12635,13 +12575,13 @@
                     @csrf
                     <div class="modal-body">
                         <!-- <div class="group-input">
-                                <label for="username">Username <span class="text-danger">*</span></label>
-                                <input class="extension_modal_signature" type="text" name="username" required>
-                            </div>
-                            <div class="group-input">
-                                <label for="password">Password <span class="text-danger">*</span></label>
-                                <input class="extension_modal_signature" type="password" name="password" required>
-                            </div> -->
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="password" name="password" required>
+                        </div> -->
                         <div class="group-input">
                             <label for="password">Proposed Due Date(QRM)</label>
                             <input class="extension_modal_signature" type="date" name="qrm_proposed_due_date"
@@ -12700,13 +12640,13 @@
                     <div class="modal-body">
 
                         <!-- <div class="group-input">
-                                <label for="username">Username <span class="text-danger">*</span></label>
-                                <input class="extension_modal_signature" type="text" name="username" required>
-                            </div>
-                            <div class="group-input">
-                                <label for="password">Password <span class="text-danger">*</span></label>
-                                <input class="extension_modal_signature" type="password" name="password" required>
-                            </div> -->
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="password" name="password" required>
+                        </div> -->
                         <div class="group-input">
                             <label for="password">Proposed Due Date(Investigation)</label>
                             <input class="extension_modal_signature" type="date"
@@ -12767,13 +12707,13 @@
                     <div class="modal-body">
 
                         <!-- <div class="group-input">
-                                <label for="username">Username <span class="text-danger">*</span></label>
-                                <input class="extension_modal_signature" type="text" name="username" required>
-                            </div>
-                            <div class="group-input">
-                                <label for="password">Password <span class="text-danger">*</span></label>
-                                <input class="extension_modal_signature" type="password" name="password" required>
-                            </div> -->
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="password" name="password" required>
+                        </div> -->
                         <div class="group-input">
                             <label for="password">Proposed Due Date (CAPA)</label>
                             <input class="extension_modal_signature" type="date" name="capa_proposed_due_date"
@@ -12833,13 +12773,13 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                         <!-- <div class="group-input">
-                                <label for="username">Username <span class="text-danger">*</span></label>
-                                <input class="extension_modal_signature" type="text" name="username" required>
-                            </div>
-                            <div class="group-input">
-                                <label for="password">Password <span class="text-danger">*</span></label>
-                                <input class="extension_modal_signature" type="password" name="password" required>
-                            </div> -->
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="password" name="password" required>
+                        </div> -->
                         <div class="group-input">
                             <label for="password">Proposed Due Date (Incident)</label>
                             <input class="extension_modal_signature" type="date" name="dev_proposed_due_date"
@@ -13512,9 +13452,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                    <button>Close</button>
-                                </div> -->
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -13561,9 +13501,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                    <button>Close</button>
-                                </div> -->
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -13609,9 +13549,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                    <button>Close</button>
-                                </div> -->
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -13655,9 +13595,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                    <button>Close</button>
-                                </div> -->
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -13701,9 +13641,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                    <button>Close</button>
-                                </div> -->
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -13747,9 +13687,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                    <button>Close</button>
-                                </div> -->
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -13881,9 +13821,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                    <button>Close</button>
-                                </div> -->
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -13926,9 +13866,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                    <button>Close</button>
-                                </div> -->
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>

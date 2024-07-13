@@ -198,13 +198,14 @@
                                     General Information
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input">   
+                                    <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
+                                        {{-- <input disabled type="text" name="record" value=""> --}}
+                                        {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record}}"> --}}
                                         <input disabled type="text" name="record" id="record" 
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/MC/{{ date('y') }}/{{ str_pad($record, 4, '0', STR_PAD_LEFT) }}">
+                                        value="---/MC/{{ date('y') }}/{{ $record }}">
                                     </div>
                                 </div>
-                                
                                
 
 
@@ -371,7 +372,7 @@
                                         <label for="If Other">If Other</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea  name="if_other_gi" id="summernote-1">
+                                        <textarea class="summernote" name="if_other_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -433,7 +434,7 @@
                                         <select id="select-state" placeholder="Select..." name="complainant_gi">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
-                                                <option value="{{ $value->name }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -442,7 +443,7 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-6 new-date-data-field">
+                                <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="complaint_reported_on">Complaint Reported On</label>
                                         <div class="calenderauditee">
@@ -453,52 +454,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                 --}}
-                                 <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="complaint_reported_on">Complaint Reported On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="complaint_dat" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="complaint_date_picker" name="complaint_reported_on_gi"
-                                                value=""
-                                                class="hide-input" oninput="handleDateInput(this, 'complaint_dat')" />
-                                        </div>
-                                    </div>
-                                </div>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', (event) => {
-                                const dateInput = document.getElementById('complaint_date_picker');
-                                const today = new Date().toISOString().split('T')[0];
-                                dateInput.setAttribute('max', today);
-                        
-                                // Show the date picker when clicking on the readonly input
-                                const readonlyInput = document.getElementById('complaint_dat');
-                                readonlyInput.addEventListener('click', () => {
-                                    dateInput.style.display = 'block';
-                                    dateInput.focus();
-                                });
-                        
-                                // Update the readonly input when a date is selected
-                                dateInput.addEventListener('change', () => {
-                                    const selectedDate = new Date(dateInput.value);
-                                    readonlyInput.value = formatDate(selectedDate);
-                                    dateInput.style.display = 'none';
-                                });
-                            });
-                        
-                            function handleDateInput(dateInput, readonlyInputId) {
-                                const readonlyInput = document.getElementById(readonlyInputId);
-                                const selectedDate = new Date(dateInput.value);
-                                readonlyInput.value = formatDate(selectedDate);
-                            }
-                        
-                            function formatDate(date) {
-                                const options = { day: 'numeric', month: 'long', year: 'numeric' };
-                                return date.toLocaleDateString('en-GB', options);
-                            }
-                        </script>
                                 
-                                {{-- <script>
+                                <script>
                                     document.addEventListener('DOMContentLoaded', (event) => {
                                         const dateInput = document.getElementById('complaint_date_picker');
                                         const today = new Date().toISOString().split('T')[0];
@@ -526,7 +483,7 @@
                                         const options = { day: '2-digit', month: 'short', year: 'numeric' };
                                         readonlyInput.value = selectedDate.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                     }
-                                </script> --}}
+                                </script>
                                 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -1012,7 +969,7 @@
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+
                                     <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                             Exit </a> </button>
 
@@ -2060,7 +2017,7 @@
 
 
 {{-- ---------------------======================record number script  --}}
-{{-- <script>
+<script>
     document.addEventListener('DOMContentLoaded', function() {
 var originalRecordNumber = document.getElementById('record').value;
 var initialPlaceholder = '---';
@@ -2083,5 +2040,5 @@ document.getElementById('initiator_group').addEventListener('change', function()
 });
 });
 
-</script> --}}
+</script>
 @endsection
