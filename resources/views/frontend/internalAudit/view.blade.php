@@ -9698,7 +9698,482 @@ $checklistqualitycontrol = [
             Checklist for Audit Assesment
             </div>
 
+            <div class="col-12">
+                <div class="group-input">
+                    <div class="why-why-chart">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%;">Sr. No.</th>
+                                    <th style="width: 40%;">Question</th>
+                                    <th style="width: 20%;">Response</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                        <tr>
+                                            <td class="flex text-center">1.1</td>
+                                            <td>How long has company been manufacturing the material /s being audited? in Years</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                <input type="number" name="auditAssessmentChecklist[0][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[0]) ? $auditAssessmentChecklist->data[0]['response'] : '' }}" placeholder="Year" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                            </div>
+                                            </td>
+                                            <td style="vertical-align: middle;">
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="auditAssessmentChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[0]) ? $auditAssessmentChecklist->data[0]['remarks'] : '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                <tr>
+                                    <td class="flex text-center">1.2</td>
 
+                                    <td>Provide details of regulatory agencies from whom you have obtained Certificate / Registration / Approval. (Provide the certificate number and attach the copy of certificate) </td>
+
+                                    <td>
+                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                        <input type="number"  name="auditAssessmentChecklist[1][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[1]) ? $auditAssessmentChecklist->data[1]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                    </div>
+                                    </td>
+                                     <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[1]) ? $auditAssessmentChecklist->data[1]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                   
+                                <tr>
+                                    <td class="flex text-center">1.3</td>
+                                    <td> Have the inspectional issues been resolved?</td>
+                                    <td>
+                                        <div
+                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                            <select  name="auditAssessmentChecklist[2][response]"  id="auditAssessmentChecklist[2][response]"
+                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($auditAssessmentChecklist->data[2]['response'] == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if($auditAssessmentChecklist->data[2]['response'] == "No") selected @endif>No</option>
+                                                <option value="N/A" @if($auditAssessmentChecklist->data[2]['response'] == "N/A") selected @endif>N/A</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                     <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[2]) ? $auditAssessmentChecklist->data[2]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="flex text-center">1.4</td>
+                                    <td>Is there an FDA Drug Master File?
+                                        And is it periodically updated?
+                                         </td>
+                                    <td>
+                                        <div
+                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                            <select name="auditAssessmentChecklist[3][response]"  id="auditAssessmentChecklist[3][response]"
+                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if(isset($auditAssessmentChecklist->data[3]['response']) && $auditAssessmentChecklist->data[3]['response'] == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(isset($auditAssessmentChecklist->data[3]['response']) && $auditAssessmentChecklist->data[3]['response'] == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(isset($auditAssessmentChecklist->data[3]['response']) && $auditAssessmentChecklist->data[3]['response'] == "N/A") selected @endif>N/A</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[3]) ? $auditAssessmentChecklist->data[3]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="flex text-center">1.5</td>
+                                    <td>
+                                        Is there an Site Master File?
+                                        And is it periodically updated?
+
+                                    </td>
+                                    <td>
+                                        <div
+                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                            <select name="auditAssessmentChecklist[4][response]" id="auditAssessmentChecklist[4][response]"
+                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($auditAssessmentChecklist->data[4]['response'] == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if($auditAssessmentChecklist->data[4]['response'] == "No") selected @endif>No</option>
+                                                <option value="N/A" @if($auditAssessmentChecklist->data[4]['response'] == "N/A") selected @endif>N/A</option>
+                                            
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[4]) ? $auditAssessmentChecklist->data[4]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+
+                                    
+                                </tr>
+
+                                <tr>
+                                    <td class="flex text-center">1.6</td>
+                                    <td>
+                                        Number of employees in Production, in QA / QC and overall number of employees. Production Dept:	    Quality Dept:	 Total:
+                                    </td>
+                                    <td>
+                                        </td>
+
+                                    <td style="vertical-align: middle;">
+
+                                    </td>
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="flex text-center">1.6.1</td>
+                                    <td>
+                                       Production Dept.
+                                    </td>
+                                    <td>
+                                        <div style="display: flex;   margin: 5%; gap:5px">
+                                            <div style="display: flex; flex-direction: column; width: 300px;">
+                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="number"  name="auditAssessmentChecklist[5][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[5]) ? $auditAssessmentChecklist->data[5]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[5]) ? $auditAssessmentChecklist->data[5]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <td class="flex text-center">1.6.2</td>
+                                    <td>
+                                       Quality Dept.
+                                    </td>
+                                    <td>
+
+                                          <div style="display: flex;   margin: 5%; gap:5px">
+                                            <div style="display: flex; flex-direction: column; width: 300px;">
+
+                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="number"  name="auditAssessmentChecklist[6][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[6]) ? $auditAssessmentChecklist->data[6]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                </div>
+
+
+                                            </div>
+                                          </div>
+
+                                        </td>
+                                    <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[6]) ? $auditAssessmentChecklist->data[6]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+
+                                    </td>
+                                </tr> <tr>
+                                    <td class="flex text-center">1.6.3</td>
+                                    <td>
+                                       Total:
+                                    </td>
+                                    <td>
+
+                                          <div style="display: flex;   margin: 5%; gap:5px">
+                                            <div style="display: flex; flex-direction: column; width: 300px;">
+                                                <div  style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="number"  name="auditAssessmentChecklist[7][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[7]) ? $auditAssessmentChecklist->data[7]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        </td>
+                                    <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[7]) ? $auditAssessmentChecklist->data[7]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+
+                                    
+                                </tr>
+
+
+                                <tr>
+                                    <td class="flex text-center">1.7</td>
+                                    <td>Contracts for employees : Permanent / Temporary / Casual</td>
+                                    <td>
+                                        <div
+                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                            <select name="auditAssessmentChecklist[8][response]" id="auditAssessmentChecklist[8][response]"
+                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                <option value="">Select an Option</option>
+                                                <option value="Permanent" @if($auditAssessmentChecklist->data[8]['response'] == "Permanent") selected @endif>Yes</option>
+                                                <option value="Temporary" @if($auditAssessmentChecklist->data[8]['response'] == "Temporary") selected @endif>No</option>
+                                                <option value="Casual" @if($auditAssessmentChecklist->data[8]['response'] == "Casual") selected @endif>N/A</option>
+                                            
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[8]) ? $auditAssessmentChecklist->data[8]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+
+                                   
+                                </tr>
+                                <tr>
+                                    <td class="flex text-center">1.8</td>
+                                    <td>Are your personnel aware that the products supplied shall be used for Pharmaceuticals?</td>
+                                    <td>
+                                        <div
+                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                            <select name="auditAssessmentChecklist[9][response]" id="auditAssessmentChecklist[9][response]"
+                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($auditAssessmentChecklist->data[9]['response'] == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if($auditAssessmentChecklist->data[9]['response'] == "No") selected @endif>No</option>
+                                                <option value="N/A" @if($auditAssessmentChecklist->data[9]['response'] == "N/A") selected @endif>N/A</option>
+                                            
+                                            </select>
+                                        </div>
+                                    </td>
+                               <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[9][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[9]) ? $auditAssessmentChecklist->data[9]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="flex text-center">1.9</td>
+                                    <td>
+                                        Location : Urban, Rural, Industrial
+                                    </td>
+                                    <td>
+                                        <div
+                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                            <select name="auditAssessmentChecklist[10][response]" id="auditAssessmentChecklist[10][response]"
+                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                <option value="">Select an Option</option>
+                                                <option value="Urban" @if($auditAssessmentChecklist->data[10]['response'] == "Urban") selected @endif>Yes</option>
+                                                <option value="Rural" @if($auditAssessmentChecklist->data[10]['response'] == "Rural") selected @endif>No</option>
+                                                <option value="Industrial" @if($auditAssessmentChecklist->data[10]['response'] == "Industrial") selected @endif>N/A</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                   <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[10][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[10]) ? $auditAssessmentChecklist->data[10]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+
+                                    
+                                </tr>
+                                <tr>
+                                    <td class="flex text-center">1.10</td>
+                                    <td>
+                                        Do you make use of the service of sub-contractors?
+                                        If yes, which firm and for which material?
+
+
+                                    </td>
+
+                                    <td>
+
+
+                                    </td>
+                                    {{--    <td>
+                                        <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[11][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[11]) ? $auditAssessmentChecklist->data[4]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="flex text-center">1.10.1</td>
+                                    <td>
+                                       a :
+
+
+                                    </td>
+
+                                    <td>
+                                        <div
+                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                        <input type="number"  name="auditAssessmentChecklist[12][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[12]) ? $auditAssessmentChecklist->data[12]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+
+                                    </div>
+
+                                    </td>
+                                    {{--    <td>
+                                        <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[12][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[12]) ? $auditAssessmentChecklist->data[12]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+
+                                    </td>
+                                </tr>
+                                  <tr>
+                                    <td class="flex text-center">1.10.2</td>
+                                    <td>
+                                        b :
+
+
+                                    </td>
+
+                                    <td>
+                                        <div
+                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                        <input type="number"  name="auditAssessmentChecklist[13][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[13]) ? $auditAssessmentChecklist->data[13]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+
+                                    </div>
+
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[13][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[13]) ? $auditAssessmentChecklist->data[13]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+
+                                  
+                                </tr>
+                                  <tr>
+                                    <td class="flex text-center">1.10.3</td>
+                                    <td>
+                                        c :
+
+
+                                    </td>
+
+                                    <td>
+                                        <div
+                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                <input type="number"  name="auditAssessmentChecklist[14][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[14]) ? $auditAssessmentChecklist->data[14]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+
+                            </div>
+
+                                    </td>
+                                   <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[14][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[14]) ? $auditAssessmentChecklist->data[14]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="flex text-center">1.11</td>
+                                    <td>
+                                        Do you take steps to assure yourselves of the integrity and security of your product whilst it is at your sub-contractors? If yes, then list the steps taken:
+
+
+                                    </td>
+                                    <td>
+                                        <div
+                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                            <select name="auditAssessmentChecklist[15][response]" id="auditAssessmentChecklist[15][response]"
+                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($auditAssessmentChecklist->data[15]['response'] == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if($auditAssessmentChecklist->data[15]['response'] == "No") selected @endif>No</option>
+                                                <option value="N/A" @if($auditAssessmentChecklist->data[15]['response'] == "N/A") selected @endif>N/A</option>
+                                            
+                                            </select>
+                                        </div>
+                                    </td>
+                                    {{--    <td>
+                                        <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[15][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[15]) ? $auditAssessmentChecklist->data[15]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="flex text-center">1.12</td>
+                                    <td>
+                                        Is there a separate system for manufacture and control of penicillin / β lactam / any product of biological or animal origin / hormones?
+                                    </td>
+                                    <td>
+                                        <div
+                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                            <select name="auditAssessmentChecklist[16][response]" id="auditAssessmentChecklist[16][response]"
+                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($auditAssessmentChecklist->data[16]['response'] == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if($auditAssessmentChecklist->data[16]['response'] == "No") selected @endif>No</option>
+                                                <option value="N/A" @if($auditAssessmentChecklist->data[16]['response'] == "N/A") selected @endif>N/A</option>
+                                            
+                                            </select>
+                                        </div>
+                                    </td>
+                                    {{--    <td>
+                                        <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[16][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[16]) ? $auditAssessmentChecklist->data[16]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="flex text-center">1.13</td>
+                                    <td>
+                                        Is Quality Policy available? (If Yes, Attach copy of Quality Policy).
+                                    </td>
+                                    <td>
+                                        <div
+                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                            <select name="auditAssessmentChecklist[17][response]" id="auditAssessmentChecklist[17][response]"
+                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($auditAssessmentChecklist->data[17]['response'] == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if($auditAssessmentChecklist->data[17]['response'] == "No") selected @endif>No</option>
+                                                <option value="N/A" @if($auditAssessmentChecklist->data[17]['response'] == "N/A") selected @endif>N/A</option>
+                                            
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[17][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[17]) ? $auditAssessmentChecklist->data[17]['remarks'] : '' }}</textarea>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
 
             <div class="sub-head">
             Checklist for Personnel, Training and Education
