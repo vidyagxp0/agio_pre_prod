@@ -355,7 +355,7 @@ Route::group(['prefix' => 'rcms'], function () {
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
-
+            Route::get('/reopen-stage/{id}', [MarketComplaintController::class, 'reopenStage'])->name('reopen.stage');
 
 
 

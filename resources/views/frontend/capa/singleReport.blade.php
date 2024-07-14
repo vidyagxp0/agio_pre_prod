@@ -308,9 +308,12 @@
                      <tr>
                         <th class="w-20">CAPA Team</th>
                         <td class="w-80">@if($data->capa_team){{  Helpers::getInitiatorName($data->capa_team) }}@else Not Applicable @endif</td>
-                    
+                     </tr>
+                    </table>
+                    <table>
+                        <tr>
                             <th class="w-20">Reference Records</th>
-                            <td class="w-80">@if($data->capa_related_record){{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->capa_related_record){{ $data->capa_related_record}}@else Not Applicable @endif</td>
 
                     </tr>
                 </table>

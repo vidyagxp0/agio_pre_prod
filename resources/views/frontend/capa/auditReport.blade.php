@@ -153,7 +153,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                     CAPA Audit Trial Report
+                     CAPA Audit Trial Reportnln
                 </td>
                 <td class="w-30">
                     <div class="logo">

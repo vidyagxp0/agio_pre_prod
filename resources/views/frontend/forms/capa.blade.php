@@ -376,7 +376,7 @@
                                             id="">
                                             <option value="">--Select---</option>
                                             @foreach ($old_records as $new)
-                                                <option value="{{ $new->id }}">
+                                                <option value="{{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
@@ -411,7 +411,7 @@
                                         <label for="Containment Comments">
                                             Containment Comments <span class="text-danger d-none">*</span>
                                         </label>
-                                        <textarea name="containment_comments" id="capa_attachment"></textarea>
+                                        <textarea name="containment_comments" ></textarea>
                                     </div>
                                 </div>
 

@@ -248,18 +248,51 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-md-6 new-date-data-field">
+                                {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                         <div class="calenderauditee">
                                             <!-- Display the formatted date in a readonly input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="" />
                                            
-                                            <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                            <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input"  />
+                                        </div>
+                                    </div>
+                                </div> --}}
+
+
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Due Date </label>{{-- <span class="text-danger">*</span> --}}
+                                        <div class="calenderauditee">
+                                            <!-- Display the formatted date in a readonly input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="" class="form-control" required   />
+                                            <!-- Hidden input date format ke sath -->
+                                            <input type="date" id="due_date_input" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control hide-input" onchange="updateDueDateDisplay()" required />
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <script>
+                                    function updateDueDateDisplay() {
+                                        var dateInput = document.getElementById('due_date_input').value;
+                                        if (dateInput) {
+                                            var date = new Date(dateInput);
+                                            var options = { day: '2-digit', month: 'long', year: 'numeric' };
+                                            var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                            document.getElementById('due_date_display').value = formattedDate;
+                                        } else {
+                                            document.getElementById('due_date_display').value = '';
+                                        }
+                                    }
+                                
+                                    // To show the existing value if it's already set (for example, in an edit form)
+                                    $(document).ready(function() {
+                                        updateDueDateDisplay();
+                                    });
+                                </script>
+                                
+                                {{-- <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
                                         const options = { day: '2-digit', month: 'short', year: 'numeric' };
@@ -277,15 +310,14 @@
                                     .hide-input {
                                         display: none;
                                     }
-                                    </style>
+                                    </style> --}}
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                             class="text-danger">*</span></label>
-                                            <span id="rchars">255</span>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
+                                            <span id="rchars">255</span> Characters remaining
+                                        
                                         <input  name="description_gi" id="docname" maxlength="255" required >
                                     
                                     </div>
@@ -294,12 +326,12 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group"><b>Initiator Group</b></label>
+                                        <label for="Initiator Group"><b>Initiator Department</b></label>
                                         <select name="initiator_group" id="initiator_group">
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>
+                                            <option value="Quality Assurance Biopharma" @if (old('initiator_Group') == 'QAB') selected @endif>
                                                 Quality
                                                 Assurance Biopharma</option>
                                             <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>
@@ -342,13 +374,13 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <label for="Initiator Group Code">Department code</label>
                                         <input type="text" name="initiator_group_code_gi" id="initiator_group_code"
                                             value="" readonly>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
                                         <div><small class="text-primary">Please select related information</small></div>
@@ -364,9 +396,9 @@
                                             <option value="others">Others</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-md-12 mb-3">
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="If Other">If Other</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -374,31 +406,9 @@
                                         <textarea  name="if_other_gi" id="summernote-1">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Initiator Group">Is Repeat</label>
-                                        <select name="is_repeat_gi" onchange="">
-                                            <option value="">-- select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-
-
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Repeat Nature">Repeat Nature</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="repeat_nature_gi" id="summernote-1">
-
-                                    </textarea>
-                                    </div>
-                                </div>
+                               
 
 
 
@@ -427,7 +437,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Complainant</label>
                                         <select id="select-state" placeholder="Select..." name="complainant_gi">
@@ -439,6 +449,15 @@
                                         @error('assign_to')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
+                                    </div>
+                                </div> --}}
+
+                            {{-- ===changes according client requerement ======= --}}
+                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group">Complainant</label>
+                                      <input type="text" name="complainant_gi" >  
+                                
                                     </div>
                                 </div>
 
@@ -540,7 +559,7 @@
                                 </div>
 
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Product Details
@@ -666,8 +685,87 @@
                                             tableBody.append(newRow);
                                         });
                                     });
+                                </script> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="root_cause">
+                                            Product Details
+                                            <button type="button" id="product_details">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                  data-bs-target="#document-details-field-instruction-modal"
+                                                  style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="product_details_details" style="width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 100px;">Row #</th>
+                                                        <th>Product Name</th>
+                                                        <th>Batch No.</th>
+                                                        <th>Mfg. Date</th>
+                                                        <th>Exp. Date</th>
+                                                        <th>Batch Size</th>
+                                                        <th>Pack Size</th>
+                                                        <th>Dispatch Quantity</th>
+                                                        <th>Remarks</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input disabled type="text" name="serial_number_gi[0][serial]" value="1"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_product_name]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_batch_no]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_mfg_date]" placeholder="DD-MMM-YYYY"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_expiry_date]" placeholder="DD-MMM-YYYY"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_batch_size]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_pack_size]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_dispatch_quantity]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_remarks]"></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                
+                                    $(document).ready(function() {
+                                        $('#product_details').click(function(e) {
+                                            e.preventDefault();
+                                            
+                                            function generateTableRow(serialNumber) {
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="serial_number_gi[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_no]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" placeholder="DD-MMM-YYYY"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" placeholder="DD-MMM-YYYY"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_dispatch_quantity]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_remarks]"></td>' +
+                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                    '</tr>';
+                                                return html;
+                                            }
+                                
+                                            var tableBody = $('#product_details_details tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
                                 </script>
-
+                                
 
                                                                 {{-- {{ ---end s code }} --}}
                             <div class="col-12">
@@ -749,6 +847,30 @@
                                             <option value="Critical">Major</option>
                                             <option value="Critical">Minor</option>
                                         </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group">Is Repeat</label>
+                                        <select name="is_repeat_gi" onchange="">
+                                            <option value="">-- select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Repeat Nature">Repeat Nature</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="summernote" name="repeat_nature_gi" id="summernote-1">
+
+                                    </textarea>
                                     </div>
                                 </div>
 
@@ -1588,15 +1710,39 @@
                                                 <tr>
                                                     <th style="width: 5%;">Sr. No.</th>
                                                     <th style="width: 40%;">Requirements</th>
-                                                    <th style="width: 20%;">Expected date of investigation completion
-                                                    </th>
+                                                    <th style="width: 10%;">Yes/No</th> 
+                                                    <th style="width: 20%;">Expected date of investigation completion</th>
                                                     <th>Remarks</th>
                                                 </tr>
                                             </thead>
+                                            <style>
+                                                .main-head{
+                                                   display: flex; 
+                                                   justify-content: space-around;
+                                                   gap: 12px;
+                                                }
+                                                .label-head{
+                                                   display: flex !important;
+                                                    gap: 14px;
+                                                }
+                                                .input-head{
+                                                   margin-top: 4px;
+                                                }
+                                               </style>
                                             <tbody>
                                                 <tr>
                                                     <td class="flex text-center" name="">1</td>
                                                     <td>Complaint sample Required</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <span class="input-head"><input type="radio" name="csr1_yesno" value="yes"></span>
+                                                            <span>Yes</span>
+                                                        </label>
+                                                        <label class="label-head" >
+                                                           <span class="input-head"> <input type="radio" name="csr1_yesno" value="no"></span>
+                                                          <span>  No</span>
+                                                        </label>
+                                                    </td>
                                                     <td>
 
                                                         <div style="margin: auto; display: flex; justify-content: center;">
@@ -1619,6 +1765,14 @@
                                                 <tr>
                                                     <td class="flex text-center">2</td>
                                                     <td>Additional info. From Complainant</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <input type="radio" name="afc1_yesno" value="yes"> Yes
+                                                        </label>
+                                                        <label class="label-head">
+                                                            <input type="radio" name="afc1_yesno" value="no"> No
+                                                        </label>
+                                                    </td>
                                                     <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="afc1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -1631,13 +1785,18 @@
                                             <textarea name="afc2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
-
-
-
                                     </tr>
                                     <tr>
                                         <td class="flex text-center">3</td>
                                         <td>Analysis of complaint Sample</td>
+                                        <td class="main-head">
+                                            <label class="label-head">
+                                                <input type="radio" name="acs1_yesno" value="yes"> Yes
+                                            </label>
+                                            <label class="label-head">
+                                                <input type="radio" name="acs1_yesno" value="no"> No
+                                            </label>
+                                        </td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                 <textarea name="acs1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -1657,6 +1816,14 @@
                                     <tr>
                                         <td class="flex text-center">4</td>
                                         <td>QRM Approach</td>
+                                        <td class="main-head">
+                                            <label class="label-head">
+                                                <input type="radio" name="qrm1_yesno" value="yes"> Yes
+                                            </label>
+                                            <label class="label-head">
+                                                <input type="radio" name="qrm1_yesno" value="no"> No
+                                            </label>
+                                        </td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                 <textarea name="qrm1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -1675,6 +1842,14 @@
                                     <tr>
                                         <td class="flex text-center">5</td>
                                         <td>Others</td>
+                                        <td class="main-head">
+                                            <label class="label-head">
+                                                <input type="radio" name="oth1_yesno" value="yes"> Yes
+                                            </label>
+                                            <label class="label-head">
+                                                <input type="radio" name="oth1_yesno" value="no"> No
+                                            </label>
+                                        </td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                 <textarea name="oth1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
