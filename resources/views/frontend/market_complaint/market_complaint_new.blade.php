@@ -266,7 +266,7 @@
                                         <label for="due-date">Due Date </label>{{-- <span class="text-danger">*</span> --}}
                                         <div class="calenderauditee">
                                             <!-- Display the formatted date in a readonly input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="" class="form-control" required   />
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="" class="form-control"    />
                                             <!-- Hidden input date format ke sath -->
                                             <input type="date" id="due_date_input" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control hide-input" onchange="updateDueDateDisplay()" required />
                                         </div>
@@ -278,7 +278,7 @@
                                         var dateInput = document.getElementById('due_date_input').value;
                                         if (dateInput) {
                                             var date = new Date(dateInput);
-                                            var options = { day: '2-digit', month: 'long', year: 'numeric' };
+                                            var options = { day: '2-digit', month: 'short', year: 'numeric' };
                                             var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                             document.getElementById('due_date_display').value = formattedDate;
                                         } else {
@@ -323,7 +323,7 @@
                                     </div>
                                 </div>
 
-
+{{-- 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Department</b></label>
@@ -331,7 +331,7 @@
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
-                                            <option value="Quality Assurance Biopharma" @if (old('initiator_Group') == 'QAB') selected @endif>
+                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>
                                                 Quality
                                                 Assurance Biopharma</option>
                                             <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>
@@ -378,7 +378,59 @@
                                         <input type="text" name="initiator_group_code_gi" id="initiator_group_code"
                                             value="" readonly>
                                     </div>
+                                </div> --}}
+
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"><b>Initiator Department</b></label>
+                                        <select name="initiator_group" id="initiator_group">
+                                            <option value="" data-code="">-- Select --</option>
+                                            <option value="Corporate Quality Assurance" data-code="CQA" @if (old('initiator_group') == 'Corporate Quality Assurance') selected @endif>Corporate Quality Assurance</option>
+                                            <option value="Quality Assurance Biopharma" data-code="QAB" @if (old('initiator_group') == 'Quality Assurance Biopharma') selected @endif>Quality Assurance Biopharma</option>
+                                            <option value="Central Quality Control" data-code="CQC" @if (old('initiator_group') == 'Central Quality Control') selected @endif>Central Quality Control</option>
+                                            <option value="Manufacturing" data-code="MANU" @if (old('initiator_group') == 'Manufacturing') selected @endif>Manufacturing</option>
+                                            <option value="Plasma Sourcing Group" data-code="PSG" @if (old('initiator_group') == 'Plasma Sourcing Group') selected @endif>Plasma Sourcing Group</option>
+                                            <option value="Central Stores" data-code="CS" @if (old('initiator_group') == 'Central Stores') selected @endif>Central Stores</option>
+                                            <option value="Information Technology Group" data-code="ITG" @if (old('initiator_group') == 'Information Technology Group') selected @endif>Information Technology Group</option>
+                                            <option value="Molecular Medicine" data-code="MM" @if (old('initiator_group') == 'Molecular Medicine') selected @endif>Molecular Medicine</option>
+                                            <option value="Central Laboratory" data-code="CL" @if (old('initiator_group') == 'Central Laboratory') selected @endif>Central Laboratory</option>
+                                            <option value="Tech team" data-code="TT" @if (old('initiator_group') == 'Tech team') selected @endif>Tech team</option>
+                                            <option value="Quality Assurance" data-code="QA" @if (old('initiator_group') == 'Quality Assurance') selected @endif>Quality Assurance</option>
+                                            <option value="Quality Management" data-code="QM" @if (old('initiator_group') == 'Quality Management') selected @endif>Quality Management</option>
+                                            <option value="IT Administration" data-code="IA" @if (old('initiator_group') == 'IT Administration') selected @endif>IT Administration</option>
+                                            <option value="Accounting" data-code="ACC" @if (old('initiator_group') == 'Accounting') selected @endif>Accounting</option>
+                                            <option value="Logistics" data-code="LOG" @if (old('initiator_group') == 'Logistics') selected @endif>Logistics</option>
+                                            <option value="Senior Management" data-code="SM" @if (old('initiator_group') == 'Senior Management') selected @endif>Senior Management</option>
+                                            <option value="Business Administration" data-code="BA" @if (old('initiator_group') == 'Business Administration') selected @endif>Business Administration</option>
+                                        </select>
+                                    </div>
                                 </div>
+                                
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Department code</label>
+                                        <input type="text" name="initiator_group_code_gi" id="initiator_group_code" value="{{ old('initiator_group_code_gi') }}" readonly>
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                    document.getElementById('initiator_group').addEventListener('change', function() {
+                                        var selectedOption = this.options[this.selectedIndex];
+                                        var selectedCode = selectedOption.getAttribute('data-code');
+                                        document.getElementById('initiator_group_code').value = selectedCode;
+                                    });
+                                
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        var initiatorGroupElement = document.getElementById('initiator_group');
+                                        if (initiatorGroupElement.value) {
+                                            var selectedOption = initiatorGroupElement.options[initiatorGroupElement.selectedIndex];
+                                            var selectedCode = selectedOption.getAttribute('data-code');
+                                            document.getElementById('initiator_group_code').value = selectedCode;
+                                        }
+                                    });
+                                </script>
+                                
 
                                 {{-- <div class="col-lg-12">
                                     <div class="group-input">
@@ -895,6 +947,24 @@
                                 </div>
 
 
+                               
+
+
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                            Exit </a> </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="CCForm2" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="sub-head col-12">Investigation</div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
@@ -1130,21 +1200,6 @@
                                     });
                                 </script>
 
-
-                                <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
-                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                            Exit </a> </button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="CCForm2" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
                                 <div class="sub-head col-12">HOD/Supervisor Review</div>
 
 
@@ -2215,7 +2270,7 @@
         });
     </script>
 
-<script>
+{{-- <script>
     document.getElementById('initiator_group').addEventListener('change', function() {
         var selectedValue = this.value;
         document.getElementById('initiator_group_code').value = selectedValue;
@@ -2229,7 +2284,7 @@
             $('#effect_check_date').val('');
         }
     }
-</script>
+</script> --}}
 
 
 

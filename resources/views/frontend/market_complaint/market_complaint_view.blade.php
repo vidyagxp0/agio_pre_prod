@@ -798,7 +798,7 @@
                                     <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                 </div>
                             </div> --}}
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Date Due"><b>Date of Initiation</b></label>
                                     @php
@@ -806,6 +806,13 @@
                                     @endphp
                                     <input disabled type="text" value="{{ $formattedDate }}" name="intiation_date_display">
                                     <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
+                                </div>
+                            </div> --}}
+                            <div class="col-md-6 ">
+                                <div class="group-input ">
+                                    <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
+                                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                    <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                 </div>
                             </div>
 
@@ -875,7 +882,7 @@
                                     </div>
                                 </div>
                                 
-                                {{-- <script>
+                                <script>
                                     function updateDueDateDisplay() {
                                         var dateInput = document.getElementById('due_date_input').value;
                                         var date = new Date(dateInput);
@@ -888,8 +895,8 @@
                                     $(document).ready(function() {
                                         updateDueDateDisplay();
                                     });
-                                </script> --}}
-                                <script>
+                                </script>
+                                {{-- <script>
                                     function updateDueDateDisplay() {
                                         var dateInput = document.getElementById('due_date_input').value;
                                         var date = new Date(dateInput);
@@ -902,7 +909,7 @@
                                     $(document).ready(function() {
                                         updateDueDateDisplay();
                                     });
-                                </script>
+                                </script> --}}
 
                         <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -916,13 +923,13 @@
                                 </div>
 
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Initiator Department  <span class="text-danger"></span></label>
                                     <select name="initiator_group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                         <option selected disabled value="">---select---</option>
-                                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                            <option value="{{ $code}}" @if ($data->initiator_group == $code) selected @endif>
+                                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_groups)
+                                            <option value="{{ $initiator_group}}" @if ($data->initiator_group == $initiator_groups) selected @endif>
                                                 {{ $initiator_group }}
                                             </option>
                                         @endforeach
@@ -950,7 +957,48 @@
                                         document.getElementById('initiator_group_code_gi').value = initiatorGroupElement.value;
                                     }
                                 });
+                            </script> --}}
+
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Short Description">Initiator Department <span class="text-danger"></span></label>
+                                    <select name="initiator_group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                        <option selected disabled value="">---select---</option>
+                                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
+                                            <option value="{{ $initiator_group }}" data-code="{{ $code }}" @if ($data->initiator_group == $initiator_group) selected @endif>
+                                                {{ $initiator_group }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Initiator Group Code">Department Code</label>
+                                    <input readonly type="text" name="initiator_group_code_gi" id="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi ?? '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                </div>
+                            </div>
+                            
+                            <script>
+                                document.getElementById('initiator_group').addEventListener('change', function() {
+                                    var selectedOption = this.options[this.selectedIndex];
+                                    var selectedCode = selectedOption.getAttribute('data-code');
+                                    document.getElementById('initiator_group_code_gi').value = selectedCode;
+                                });
+                            
+                                // Set the group code on page load if a value is already selected
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    var initiatorGroupElement = document.getElementById('initiator_group');
+                                    if (initiatorGroupElement.value) {
+                                        var selectedOption = initiatorGroupElement.options[initiatorGroupElement.selectedIndex];
+                                        var selectedCode = selectedOption.getAttribute('data-code');
+                                        document.getElementById('initiator_group_code_gi').value = selectedCode;
+                                    }
+                                });
                             </script>
+                            
 
                             {{-- <div class="col-lg-12">
                                 <div class="group-input">
@@ -983,7 +1031,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12 mb-3">
+                            <div class="col-md-12 mb-3">    
                                 <div class="group-input">
                                     <label for="If Other">If Other</label>
                                     <div>
@@ -1938,10 +1986,10 @@
                                             
                                                 </tr>
                                                 @endforeach
-                                            @else
+                                            {{-- @else
                                                 <tr>
                                                     <td colspan="9">No product details found</td>
-                                                </tr>
+                                                </tr> --}}
                                             @endif
                                             
 

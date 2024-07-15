@@ -254,22 +254,22 @@ class MarketComplaintController extends Controller
                 $history->save();
             }
 
-            if (!empty($marketComplaint->initiator_group)) {
-                $history = new MarketComplaintAuditTrial();
-                $history->market_id = $marketComplaint->id;
-                $history->activity_type = 'Initiator Group';
-                $history->previous = "Null";
-                $history->current = $marketComplaint->initiator_group;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $marketComplaint->status;
-                 $history->change_to = "Opened";
-                    $history->change_from = "Initiation";
-                    $history->action_name = "Create";
-                $history->save();
-            }
+            // if (!empty($marketComplaint->initiator_group)) {
+            //     $history = new MarketComplaintAuditTrial();
+            //     $history->market_id = $marketComplaint->id;
+            //     $history->activity_type = 'Initiator Group';
+            //     $history->previous = "Null";
+            //     $history->current = $marketComplaint->initiator_group;
+            //     $history->comment = "Not Applicable";
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $marketComplaint->status;
+            //      $history->change_to = "Opened";
+            //         $history->change_from = "Initiation";
+            //         $history->action_name = "Create";
+            //     $history->save();
+            // }
 
               if (!empty($marketComplaint->initiated_through_gi)) {
                 $history = new MarketComplaintAuditTrial();
@@ -1647,29 +1647,29 @@ public function update(Request $request,$id)
 
 
 
-            if ( $lastmarketComplaint->initiator_group != $marketComplaint->initiator_group ) {
-                $history = new MarketComplaintAuditTrial();
-                $history->market_id = $marketComplaint->id;
-                $history->activity_type = 'Initiator Group';
-                $history->previous = $lastmarketComplaint->initiator_group;
-                $history->current = $marketComplaint->initiator_group;
-                $history->comment = $request->initiator_group_comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastmarketComplaint->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastmarketComplaint->status;
+            // if ( $lastmarketComplaint->initiator_group != $marketComplaint->initiator_group ) {
+            //     $history = new MarketComplaintAuditTrial();
+            //     $history->market_id = $marketComplaint->id;
+            //     $history->activity_type = 'Initiator Group';
+            //     $history->previous = $lastmarketComplaint->initiator_group;
+            //     $history->current = $marketComplaint->initiator_group;
+            //     $history->comment = $request->initiator_group_comment;
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $lastmarketComplaint->status;
+            //     $history->change_to = "Not Applicable";
+            //     $history->change_from = $lastmarketComplaint->status;
             
-                // New condition added here
-                if (is_null($lastmarketComplaint->initiator_group) || $lastmarketComplaint->initiator_group === '') {
-                    $history->action_name = "New";
-                } else {
-                    $history->action_name = "Update";
-                }
+            //     // New condition added here
+            //     if (is_null($lastmarketComplaint->initiator_group) || $lastmarketComplaint->initiator_group === '') {
+            //         $history->action_name = "New";
+            //     } else {
+            //         $history->action_name = "Update";
+            //     }
             
-                $history->save();
-            }
+            //     $history->save();
+            // }
             
             if ( $lastmarketComplaint->initiated_through_gi != $marketComplaint->initiated_through_gi ) {
                 $history = new MarketComplaintAuditTrial();
@@ -3109,7 +3109,7 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
 //    call function update  so how can do this 
         $marketComplaint->status = "Opened";
 
-        $this->update($request, $id);
+        $this->show($request, $id);
     // $history->change_to = "Opened";
   
 
