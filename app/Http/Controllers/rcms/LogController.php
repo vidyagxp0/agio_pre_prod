@@ -15,6 +15,7 @@ use App\Models\LabIncident;
 use App\Models\Ootc;
 use App\Models\MarketComplaint;
 use App\Models\OutOfCalibration;
+use App\Models\Incident;
 use App\Models\RiskManagement;
 use App\Models\InternalAudit;
 use Illuminate\Http\Request;
@@ -127,10 +128,14 @@ class LogController extends Controller
 
                 return view('frontend.forms.Logs.non_conformance_log',compact('nonconformance'));
                
-                case 'Incident':
-                    $Inc = Incident::get();
-    
-                    return view('frontend.forms.Logs.non_conformance_log',compact('Inc'));
+             case 'incident':
+                $Inc = Incident::with(['Grid' => function ($query) {
+                    $query->where('type','Product')->take(3);
+                }] )->take(3)->get();
+                // foreach($Inc as $ias)
+                // foreach ($ias->Grid as $a)
+                // return $a->product_name;
+                    return view('frontend.forms.Logs.incidentLog',compact('Inc'));
             return $slug;
                    
             default:

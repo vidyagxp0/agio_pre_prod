@@ -11,6 +11,7 @@ use App\Models\RiskManagement;
 use App\Models\NonConformance;
 use App\Models\OutOfCalibration;
 use App\Models\LabIncident;
+use App\Models\Incident;
 use App\Models\InternalAudit;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -878,7 +879,7 @@ class LogFilterController extends Controller
     return response()->json($res);
 }
 
-public function Incident_filter(Request $request)
+public function IncidentFilter(Request $request)
 {
     $res = [
         'status' => 'ok',
@@ -896,10 +897,6 @@ public function Incident_filter(Request $request)
         if ($request->division_idIncident) {
             $query->where('division_id', $request->division_idIncident);
         }
-
-        // if ($request->audit_type) {
-        //     $query->where('audit_type', $request->audit_type);
-        // }
 
         if ($request->period) {
             $currentDate = Carbon::now();
@@ -919,25 +916,22 @@ public function Incident_filter(Request $request)
             }
             if ($startDate) {
                 $query->whereDate('intiation_date', '>=', $startDate);
-                \Log::info("Filtering from period: {$request->period}, Start Date: {$startDate}");
             }
         }
 
         if ($request->date_fromIncident) {
             $dateFrom = Carbon::parse($request->date_fromIncident)->startOfDay();
             $query->whereDate('intiation_date', '>=', $dateFrom);
-            \Log::info("Filtering from Date From: {$dateFrom}");
-        }
+           }
 
         if ($request->date_toIncident) {
             $dateTo = Carbon::parse($request->date_toIncident)->endOfDay();
             $query->whereDate('intiation_date', '<=', $dateTo);
-            \Log::info("Filtering to Date To: {$dateTo}");
-        }
+           }
 
         $Inc = $query->get();
 
-        $htmlData = view('frontend.forms.Logs.filterData.Inc_data', compact('Inc'))->render();
+        $htmlData = view('frontend.forms.logs.filterData.Inc_data', compact('Inc'))->render();
 
         $res['body'] = $htmlData;
     } catch (\Exception $e) {

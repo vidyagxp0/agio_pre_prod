@@ -69,4 +69,4 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::post('/capa',[LogFilterController::class,'capa_filter'])->name('api.capa.filter');
  Route::post('/risk-management',[LogFilterController::class,'risk_management_filter'])->name('api.riskmanagement.filter');
  Route::post('/non-conformance',[LogFilterController::class,'nonconformance_filter'])->name('api.nonconformance.filter');
- Route::post('/Incident',[LogFilterController::class,'Incident_filter'])->name('api.incident.filter');
+ Route::post('/incident',[LogFilterController::class,'IncidentFilter'])->name('api.incident.filter');

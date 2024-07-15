@@ -20,7 +20,7 @@ $rowSpanCount = $incidentReportsCollection->sum(function($secondIncident) {
     @else
         NA
     @endif
-    <td rowspan="{{ $rowSpanCount }}">{{ $lablog->division ? $lablog->division->name : '-' }}/CC/{{ date('Y') }}/{{ str_pad($lablog->record, 4, '0', STR_PAD_LEFT) }}</td>
+    <td rowspan="{{ $rowSpanCount }}">{{ $lablog->division ? $lablog->division->name : '-' }}/LI/{{ date('Y') }}/{{ str_pad($lablog->record, 4, '0', STR_PAD_LEFT) }}</td>
     <td rowspan="{{ $rowSpanCount }}">{{ $lablog->initiator ? $lablog->initiator->name : '-' }}</td>
     <td rowspan="{{ $rowSpanCount }}">{{ $lablog->Initiator_Group }}</td>
     <td rowspan="{{ $rowSpanCount }}">{{ $lablog->division ? $lablog->division->name : '-' }}</td>
