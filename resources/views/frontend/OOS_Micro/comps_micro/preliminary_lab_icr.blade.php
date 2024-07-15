@@ -21,7 +21,7 @@
                             <div class="group-input">
                                 <label for="Audit Schedule End Date"> Field Alert Required</label>
                                 <select name="field_alert_required_pli" {{Helpers::isOOSMicro($micro_data->stage)}}>
-                                    <option>Enter Your Selection Here</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes" @if ($micro_data->field_alert_required_pli == 'yes') selected @endif>Yes</option>
                                     <option value="no" @if ($micro_data->field_alert_required_pli == 'no') selected @endif>No</option>
                                 </select>
@@ -31,9 +31,9 @@
                             <div class="group-input">
                                 <label for="Reference Records">Field Alert Ref.No.</label>
                                 <select {{Helpers::isOOSMicro($micro_data->stage)}} multiple id="reference_record" name="field_alert_ref_no_pli[]">
+                                   <option value="">Enter Your Selection Here</option>
                                     <option value="1" {{ (!empty($micro_data->field_alert_ref_no_pli) && in_array('1', explode(',', $micro_data->field_alert_ref_no_pli[0]))) ? 'selected' : '' }}>1</option>
                                     <option value="2" {{ (!empty($micro_data->field_alert_ref_no_pli) && in_array('2', explode(',', $micro_data->field_alert_ref_no_pli[0]))) ? 'selected' : '' }}>2</option>    
-                                    
                                 </select>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                             <div class="group-input">
                                 <label for="Product/Material Name"> Verification Analysis Required</label>
                                 <select name="verification_analysis_required_pli" {{Helpers::isOOSMicro($micro_data->stage)}}>
-                                    <option>Enter Your Selection Here</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes" @if ($micro_data->verification_analysis_required_pli == 'yes') selected @endif>Yes</option>
                                     <option value="no" @if ($micro_data->verification_analysis_required_pli == 'no') selected @endif>No</option>
                                 </select>
@@ -59,6 +59,7 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Verification Analysis Ref.</label>
                                 <select multiple id="reference_record" name="verification_analysis_ref_pli[]" id="" {{Helpers::isOOSMicro($micro_data->stage)}}>
+                                    <option value="">Enter Your Selection Here</option>    
                                     <option value="1" {{ (!empty($micro_data->verification_analysis_ref_pli) && in_array('1', explode(',', $micro_data->verification_analysis_ref_pli[0]))) ? 'selected' : '' }}>1</option>
                                     <option value="2" {{ (!empty($micro_data->verification_analysis_ref_pli) && in_array('2', explode(',', $micro_data->verification_analysis_ref_pli[0]))) ? 'selected' : '' }}>2</option>    
                                 </select>
@@ -69,7 +70,7 @@
                             <div class="group-input">
                                 <label for="Product/Material Name">Analyst Interview Req.</label>
                                 <select name="analyst_interview_req_pli" {{Helpers::isOOSMicro($micro_data->stage)}}>
-                                    <option>Enter Your Selection Here</option>
+                                <option value="">Enter Your Selection Here</option>
                                     <option value="yes" @if ($micro_data->analyst_interview_req_pli == 'yes') selected @endif>Yes</option>
                                     <option value="no" @if ($micro_data->analyst_interview_req_pli == 'no') selected @endif>No</option>
                                 </select>
@@ -102,7 +103,7 @@
                             <div class="group-input">
                                 <label for="Product/Material Name">Phase I Investigation Required</label>
                                 <select name="phase_i_investigation_required_pli" {{Helpers::isOOSMicro($micro_data->stage)}}>
-                                    <option>Enter Your Selection Here</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes" @if ($micro_data->phase_i_investigation_required_pli == 'yes') selected @endif>Yes</option>
                                     <option value="no" @if ($micro_data->phase_i_investigation_required_pli == 'no') selected @endif>No</option>
                                 </select>
@@ -275,8 +276,6 @@
                                                         </select>
                                                     </div>
                                                 </td>
-
-
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea  {{Helpers::isOOSMicro($micro_data->stage)}} name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -284,7 +283,6 @@
                                                 </td>
                                             </tr>
                                             <tr>
-
                                                 <td class="flex text-center">4</td>
                                                 <td>Correct test procedure followed e.g. Current Version of standard testing
                                                     procedure has been used in testing.</td>
@@ -300,8 +298,6 @@
                                                         </select>
                                                     </div>
                                                 </td>
-
-
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea {{Helpers::isOOSMicro($micro_data->stage)}} name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>

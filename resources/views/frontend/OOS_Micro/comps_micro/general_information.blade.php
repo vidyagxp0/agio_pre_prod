@@ -27,14 +27,11 @@
             </div>
             <div class="col-lg-6">
                <div class="group-input">
-                <label disabled for="Short Description">Division Code<span
-                        class="text-danger"></span></label>
-                <input disabled type="text" name="division_code"
-                    value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
+                <input disabled type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                 <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                 </div>
-            </div>  
-
+            </div> 
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Short Description">Initiator <span class="text-danger"></span></label>
@@ -214,13 +211,10 @@
                                 <a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><i class="fa fa-eye text-primary"
                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                <a type="button" class="remove-file"
-                                    data-file-name="{{ $file }}"><i
-                                        class="fa-solid fa-circle-xmark"
-                                        style="color:red; font-size:20px;"></i></a>
+                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                             </h6>
                         @endforeach
-
                         @endif
                             {{--@if(!empty($micro_data->initial_attachment_gi))
                                 @foreach($micro_data->initial_attachment_gi as $file)
@@ -239,7 +233,7 @@
             <div class="sub-head pt-3">OOS Information</div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Tnitiaror Grouo">Sample Type</label>
+                    <label for="Sample Type">Sample Type</label>
                     <select name="sample_type_gi" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="raw-material" @if ($micro_data->sample_type_gi == 'raw-material') selected @endif>Raw Material</option>
