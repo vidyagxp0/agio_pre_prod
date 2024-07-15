@@ -335,8 +335,8 @@
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date :  {{ \Carbon\Carbon::parse($document->due_date)->format('d-M-Y') }}</div>
 
                         </div>
-        </div>
-        </table>
+                    </div>
+                    </table>
 
         </header>
 
@@ -383,21 +383,40 @@
                                     {{  $dataDemo->activity_type }}
                                     {{--  <a    href="{{ url('auditDetailsRoot', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>  --}}
                                 </div>
-                                <div style="margin-top: 5px;">
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
-                                    @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
-                                    @endif
-                                </div>
-                                <br>
-                                <div>
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change To :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
-                                    @else
-                                        <strong>Change To :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
-                                    @endif
-                                </div>
+                                  @php
+                                    $checkAndUnserialize = function($data) {
+                                        if (is_string($data) && is_array(@unserialize($data))) {
+                                            return unserialize($data);
+                                        }
+                                        return $data;
+                                    };
+
+                                    $displayData = function($data) use ($checkAndUnserialize) {
+                                        $data = $checkAndUnserialize($data);
+                                        if (is_array($data)) {
+                                            return implode(', ', $data);
+                                        }
+                                        return $data;
+                                    };
+                                    @endphp
+
+                                    <div style="margin-top: 5px;">
+                                        @if($dataDemo->activity_type == "Activity Log")
+                                            <strong>Change From :</strong>{{ $dataDemo->change_from ? htmlspecialchars($displayData($dataDemo->change_from)) : 'Not Applicable' }}
+                                        @else
+                                            <strong>Change From :</strong>{{ $dataDemo->previous ? htmlspecialchars($displayData($dataDemo->previous)) : 'Not Applicable' }}
+                                        @endif
+                                    </div>
+                                    <br>
+                                    <div>
+                                        @if($dataDemo->activity_type == "Activity Log")
+                                            <strong>Change To :</strong>{{ $dataDemo->change_to ? htmlspecialchars($displayData($dataDemo->change_to)) : 'Not Applicable' }}
+                                        @else
+                                            <strong>Change To :</strong>{{ $dataDemo->current ? htmlspecialchars($displayData($dataDemo->current)) : 'Not Applicable' }}
+                                        @endif
+                                    </div>
+
+
                                 <div style="margin-top: 5px;">
                                     <strong>Change Type :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
                                 </div>

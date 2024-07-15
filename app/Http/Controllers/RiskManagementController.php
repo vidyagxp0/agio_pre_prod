@@ -2111,7 +2111,8 @@ class RiskManagementController extends Controller
            
             $history->save();
         }
-        if ((!empty($data['severity2_level']) && $lastDocument->severity2_level != $data['severity2_level']) || !empty($request->comment)) {
+      
+          if ($lastDocument->severity2_level != $data->severity2_level || !empty($request->comment)) {
 
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
@@ -3107,14 +3108,14 @@ class RiskManagementController extends Controller
 
 
 
-        if ($lastDocument->detection2 != $data->detection2 || !empty($request->detection2)) {
+        if ($lastDocument->detection2 != $data->detection2 || !empty($request->comment)) {
 
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Residual Detection';
             $history->previous = $lastDocument->detection2;
             $history->current = $data->detection2;
-            $history->comment = $request->detection2;
+            $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3131,14 +3132,14 @@ class RiskManagementController extends Controller
         }
 
 
-        if ($lastDocument->rpn2 != $data->rpn2 || !empty($request->rpn2)) {
+        if ($lastDocument->rpn2 != $data->rpn2 || !empty($request->comment)) {
 
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Residual RPN';
             $history->previous = $lastDocument->rpn2;
             $history->current = $data->rpn2;
-            $history->comment = $request->rpn2;
+            $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

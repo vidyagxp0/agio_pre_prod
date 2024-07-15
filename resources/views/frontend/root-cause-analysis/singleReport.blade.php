@@ -786,9 +786,9 @@
 
                     <tr>
                         <th class="w-20">Acknowledge By</th>
-                        <td class="w-30">{{ $data->acknowledge_by }}</td>
+                        <td class="w-30">{{ $data->submitted_by }}</td>
                         <th class="w-20">Acknowledge By</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->acknowledge_on) }}</td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Submited By</th>
@@ -798,8 +798,15 @@
                     </tr>
                     <tr>
                         <th class="w-20">QA Review Completed By</th>
-                        <td class="w-30">{{ $data->qA_review_complete_by }}</td>
+                        <td class="w-30">{{ $data->submitted_by }}</td>
                         <th class="w-20">QA Review Completed On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
+                    </tr>
+
+                     <tr>
+                        <th class="w-20">QA Review More Information Required By</th>
+                        <td class="w-30">{{ $data->qA_review_complete_by }}</td>
+                        <th class="w-20">QA Review More Information Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->qA_review_complete_on) }}</td>
                     </tr>
                     {{-- <tr>
@@ -812,7 +819,7 @@
                         <th class="w-20">Cancelled By</th>
                         <td class="w-30">{{ $data->cancelled_by }}</td>
                         <th class="w-20">Cancelled On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_by) }}</td>
                     </tr>
                     
                 </table>

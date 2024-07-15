@@ -425,7 +425,7 @@ function addAffectedDocuments(tableId) {
 // }
 
 
-function addRiskAssessment(tableId) {
+function addRiskAssessmentdata(tableId) {
     var table = document.getElementById(tableId);
     var currentRowCount = table.rows.length;
     var newRow = table.insertRow(currentRowCount);

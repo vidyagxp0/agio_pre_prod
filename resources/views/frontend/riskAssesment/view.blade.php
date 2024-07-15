@@ -202,6 +202,10 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Cancel
                             </button>
+
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
                         @elseif($data->stage == 3 && (in_array(16, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Action Plan Complete
@@ -1295,7 +1299,7 @@
                                             <div class="group-input">
                                                 <label for="agenda">
                                                     Failure Mode and Effect Analysis<button type="button" name="agenda"
-                                                        onclick="addRiskAssessment('risk-assessment-risk-management')"   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>+</button>
+                                                        onclick="addRiskAssessmentdata('risk-assessment-risk-management')"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>+</button>
                                                 </label>
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered" style="width: 200%"
