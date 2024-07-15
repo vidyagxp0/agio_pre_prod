@@ -250,12 +250,12 @@
                         <td class="w-30">@if($data->external_agencies){{ $data->external_agencies }}@else Not Applicable @endif</td>
                         <th class="w-20">Others</th>
                         <td class="w-30">@if($data->Others){{ $data->Others }}@else Not Applicable @endif</td>
-                        
+
 
                     </tr>
 
                 </table>
-           
+
 
 
             <div class="block">
@@ -269,7 +269,7 @@
                             <td class="w-20">@if($data->audit_schedule_start_date){{ $data->audit_schedule_start_date }}@else Not Applicable @endif</td>
                             <th class="w-30">Audit Schedule End Date</th>
                             <td class="w-20">@if($data->audit_schedule_end_date){{ $data->audit_schedule_end_date }}@else Not Applicable @endif</td>
-                        </tr>   
+                        </tr>
                         <tr>
                             <th class="w-20">Comments(If Any)</th>
                             <td class="w-30">
@@ -307,8 +307,8 @@
                         <td class="w-30">@if($data->lead_auditor){{ Helpers::getInitiatorName($data->lead_auditor) }}@else Not Applicable @endif</td>
                         <th class="w-20">External Auditor Details</th>
                         <td class="w-30">@if($data->Auditor_Details){{ $data->Auditor_Details }}@else Not Applicable @endif</td>
-                    </tr> 
-                     <tr>  
+                    </tr>
+                     <tr>
                         <th class="w-20">External Auditing Agencys</th>
                         <td class="w-30">@if($data->External_Auditing_Agency){{ $data->External_Auditing_Agency }}@else Not Applicable @endif</td>
                         <th class="w-20">Relevant Guidelines /Industry Standards</th>
@@ -345,7 +345,7 @@
                         <td class="w-30">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
                         <th class="w-20">Audit Category</th>
                         <td class="w-30">@if($data->Audit_Category){{ Helpers::getInitiatorName( $data->Audit_Category)}}@else Not Applicable @endif</td>
-                    </tr>   
+                    </tr>
                    <tr>
                         <th class="w-20">Supplier/Vendor/Manufacturer Site</th>
                         <td class="w-30">@if($data->Supplier_Site){{ $data->Supplier_Site }}@else Not Applicable @endif</td>
@@ -412,7 +412,7 @@
                         Audit Execution
                     </div>
                     <table>
-                   
+
                         <tr>
                             <th class="w-20">Audit Start Date</th>
                             <td class="w-30">
@@ -500,8 +500,8 @@
             </div>
         </div>
     </div>
-    
-                
+
+
                 <div class="border-table">
                     <div class="block-head">
                         Report  Attachment
@@ -557,7 +557,7 @@
 
 
 
-            
+
             <div class="inner-block">
             <div class="content-table">
             <div class="block">

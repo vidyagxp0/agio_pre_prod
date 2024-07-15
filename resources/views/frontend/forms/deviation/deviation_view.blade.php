@@ -912,8 +912,7 @@
                                             <label for="Division Code"><b>Site/Location Code</b></label>
                                             <input disabled type="text" name="division_code"
                                                 value="{{ $divisionName }}">
-                                            <input type="hidden" name="division_id"
-                                                value="{{ session()->get('division') }}">
+                                            <input type="hidden" name="division_id"  value="{{ session()->get('division') }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">

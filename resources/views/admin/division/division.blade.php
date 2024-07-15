@@ -23,7 +23,6 @@
                     <h3 class="card-title">All Divisions</h3>
                 </div>
 
-
                 <div class="card-body">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -38,8 +37,6 @@
 
                             @foreach ($division as $department)
                                 <tr>
-
-
                                     <td>{{ $department->name }}</td>
                                     <td>
                                         <a class="mdi mdi-table-edit"

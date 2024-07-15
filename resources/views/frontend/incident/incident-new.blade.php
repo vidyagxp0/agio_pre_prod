@@ -611,7 +611,7 @@
                         '][responsibility]"></td>' +
                         '<td><input type="text" name="investigationTeam[' + investigationTeamIndex +
                         '][remarks]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     '</tr>';
 
@@ -900,9 +900,6 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
-
-
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1622,8 +1619,6 @@
                     <div id="CCForm8" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-
-
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="HOD Remarks">HOD Remarks</label>
@@ -1647,8 +1642,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
@@ -1680,8 +1673,6 @@
                             <div class="row">
                                 <script>
                                     handleInvestigationRequiredChange();
-
-
                                     function handleInvestigationRequiredChange() {
                                         var investigationSelect = document.getElementById("Investigation_required");
                                         var investigationButton = document.getElementById("Investigation_button");
@@ -1857,7 +1848,6 @@
                                     class="saveButton">Save</button>
 
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-
 
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="nextButton" onclick="nextStep()">Next</button>
@@ -2630,7 +2620,6 @@
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
-
                                         </select>
 
                                     </div>
@@ -3319,7 +3308,6 @@
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
 
-
                                         </select>
 
                                     </div>
@@ -3453,8 +3441,6 @@
                                                 Administration</option>
                                             <option value="Information Technology">Information Technology</option>
                                             <option value="Project management">Project management</option>
-
-
 
                                         </select>
 
@@ -3779,7 +3765,6 @@
                                             <option value="na">NA</option>
 
                                         </select>
-
                                     </div>
                                 </div>
                                 @php
@@ -4110,7 +4095,7 @@
                                                             name="investigationTeam[0][responsibility]"></td>
                                                     <td><input type="text" class="Document_Remarks"
                                                             name="investigationTeam[0][remarks]"></td>
-                                                    <td><input type="text" class="Action" name="Action[]"></td>
+                                                    <td><input type="button" class="Action" name="Action[]"></td>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -4129,12 +4114,9 @@
                                             </option>
                                             <option value="Is/Is Not Analysis">Is/Is Not Analysis</option>
                                             <option value="Brainstorming">Brainstorming</option>
-
-
                                         </select>
                                     </div>
                                 </div>
-
 
                                 <div class="col-12 sub-head"></div>
                                 <div class="col-12">
@@ -4641,7 +4623,6 @@
                                                         <option value="">Procedural</option>
                                                         <option value="">Behavioral</option>
                                                         <option value="">Skill</option>
-
                                                         <option value="">Inattention to task</option>
                                                         <option value="">Lack of Process</option>
                                                         <option value="">Methods</option>
@@ -4655,17 +4636,10 @@
                                                     <input type="text" class="ifOthers"
                                                         name="rootCauseData[0][ifOthers]">
                                                 </td>
-                                                <td>
-                                                    <input type="text" class="Document_Remarks"
-                                                        name="rootCauseData[0][probability]">
+                                                <td> <input type="text" class="Document_Remarks"  name="rootCauseData[0][probability]"> </td>
+                                                <td> <input type="text" class="Document_Remarks"  name="rootCauseData[0][remarks]">
                                                 </td>
-                                                <td>
-                                                    <input type="text" class="Document_Remarks"
-                                                        name="rootCauseData[0][remarks]">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="Removebtn" name="Action[]">
-                                                </td>
+                                                <td> <input type="text" class="Removebtn" name="Action[]">  </td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -4968,18 +4942,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial[]" value="1">
-                                                    </td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Risk_Assessment[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Review_Schedule[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Actual_Reviewed[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Recorded_By[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Remarks[]"></td>
+                                                    <td><input disabled type="text" name="serial[]" value="1">  </td>
+                                                    <td><input type="text" class="Document_Remarks" name="Risk_Assessment[]"></td>
+                                                    <td><input type="text" class="Document_Remarks" name="Review_Schedule[]"></td>
+                                                    <td><input type="text" class="Document_Remarks" name="Actual_Reviewed[]"></td>
+                                                    <td><input type="text" class="Document_Remarks" name="Recorded_By[]"></td>
+                                                    <td><input type="text" class="Document_Remarks" name="Remarks[]"></td>
                                                     <td><input type="text" class="Removebtn" name="Action[]"></td>
                                                 </tbody>
                                             </table>

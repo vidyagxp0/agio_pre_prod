@@ -267,8 +267,6 @@ s                                            <option value="yes">Yes </option>
                                 </div>
 
 
-
-
                                 <div class="col-lg-12 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="occured on">OOT Occured On</label>
@@ -283,8 +281,6 @@ s                                            <option value="yes">Yes </option>
                                         </div>
                                     </div>
                                 </div>
-
-
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -444,8 +440,6 @@ s                                            <option value="yes">Yes </option>
                                     </div>
                                 </div>
 
-
-
                                 <div class="group-input">
                                     <label for="audit-agenda-grid"> Details Of Stability Study
                                         <button type="button" name="audit-agenda-grid" id="Details">+</button>
@@ -598,8 +592,6 @@ s                                            <option value="yes">Yes </option>
                                         </div>
                                     </div>
                                 </div>
-
-
 
                             </div>
                             <div class="button-block">
@@ -765,7 +757,6 @@ s                                            <option value="yes">Yes </option>
                                                     </div>
                                                 </td>
 
-
                                                 {{-- <td><input type="date" name="info_product[0][exp_date]"></td> --}}
                                                 <td><input type="text" name="info_product[0][ar_number]"></td>
                                                 <td><input type="text" name="info_product[0][pack_style]"></td>
@@ -881,8 +872,6 @@ s                                            <option value="yes">Yes </option>
 
                                                     </tr>
                                                 </thead>
-
-
                                                 <tbody>
                                                     <tr>
                                                         <td class="flex text-center">1</td>
@@ -1814,8 +1803,6 @@ s                                            <option value="yes">Yes </option>
                                     </div>
                                 </div>
 
-
-
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -1901,8 +1888,6 @@ s                                            <option value="yes">Yes </option>
                                     </div>
                                 </div>
 
-
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="closure attachment">Supporting Attachment </label>
@@ -1984,10 +1969,6 @@ s                                            <option value="yes">Yes </option>
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
 
                             </div>
                             <div class="button-block">
@@ -2105,10 +2086,6 @@ s                                            <option value="yes">Yes </option>
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>

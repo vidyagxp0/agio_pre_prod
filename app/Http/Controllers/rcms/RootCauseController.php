@@ -33,13 +33,13 @@ use Illuminate\Support\Facades\Hash;
         return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
     }
     public function root_store(Request $request)
-    { 
+    {
         if (!$request->short_description) {
            toastr()->error("Short description is required");
              return redirect()->back();
         }
         $root = new RootCauseAnalysis();
-        $root->form_type = "Root-cause-analysis"; 
+        $root->form_type = "Root-cause-analysis";
         $root->parent_id = $request->parent_id;
         $root->parent_type = $request->parent_type;
         $root->originator_id = $request->originator_id;
@@ -54,7 +54,7 @@ use Illuminate\Support\Facades\Hash;
         $root->due_date = $request->due_date;
         $root->cft_comments_new = $request->cft_comments_new;
          $root->Type= $request->Type;
-        
+
          $root->investigators = $request->investigators;
         // $root->investigators = implode(',', $request->investigators);
         $root->initiated_through = $request->initiated_through;
@@ -64,7 +64,7 @@ use Illuminate\Support\Facades\Hash;
         $root->comments = ($request->comments);
         $root->related_url = ($request->related_url);
         $root->root_cause_methodology = implode(',', $request->root_cause_methodology);
-        //Fishbone or Ishikawa Diagram 
+        //Fishbone or Ishikawa Diagram
         if (!empty($request->measurement  )) {
             $root->measurement = serialize($request->measurement);
         }
@@ -84,7 +84,7 @@ use Illuminate\Support\Facades\Hash;
             $root->methods = serialize($request->methods);
         }
         $root->problem_statement = ($request->problem_statement);
-        // Why-Why Chart (Launch Instruction) Problem Statement 
+        // Why-Why Chart (Launch Instruction) Problem Statement
         if (!empty($request->why_problem_statement)) {
             $root->why_problem_statement = $request->why_problem_statement;
         }
@@ -127,7 +127,7 @@ use Illuminate\Support\Facades\Hash;
         $root->who_will_be = ($request->who_will_be);
         $root->who_will_not_be = ($request->who_will_not_be);
         $root->who_rationable = ($request->who_rationable);
-        
+
         $root->investigation_summary = ($request->investigation_summary);
         // $root->zone = ($request->zone);
         // $root->country = ($request->country);
@@ -184,7 +184,7 @@ use Illuminate\Support\Facades\Hash;
             }
             $root->cft_attchament_new = json_encode($files);
         }
-        
+
         //Failure Mode and Effect Analysis+
 
         if (!empty($request->risk_factor)) {
@@ -243,7 +243,7 @@ use Illuminate\Support\Facades\Hash;
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
-        
+
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Division Code';
@@ -257,7 +257,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
         $history = new RootAuditTrial();
@@ -273,7 +273,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
         $history = new RootAuditTrial();
@@ -289,7 +289,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
         $history = new RootAuditTrial();
@@ -305,7 +305,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
         $history = new RootAuditTrial();
@@ -321,9 +321,9 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
         $history->action_name = 'Create';
-     
+
         $history->save();
- 
+
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
@@ -338,7 +338,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
         $history = new RootAuditTrial();
@@ -354,7 +354,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
         $history = new RootAuditTrial();
@@ -370,7 +370,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
         $history = new RootAuditTrial();
@@ -386,7 +386,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
         $history = new RootAuditTrial();
@@ -402,7 +402,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
         $history = new RootAuditTrial();
@@ -418,7 +418,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
         $history = new RootAuditTrial();
@@ -434,7 +434,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
         if (!empty($root->due_date)) {
@@ -451,7 +451,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
         }
@@ -460,12 +460,8 @@ use Illuminate\Support\Facades\Hash;
     }
     public function root_update(Request $request, $id)
 
-
-
     {
 
-
-        
         if (!$request->short_description) {
             toastr()->error("Short description is required");
             return redirect()->back();
@@ -485,7 +481,7 @@ use Illuminate\Support\Facades\Hash;
         $root->investigation_summary = ($request->investigation_summary);
         $root->root_cause_description = ($request->root_cause_description);
         $root->cft_comments_new = ($request->cft_comments_new);
-       
+
          $root->investigators = ($request->investigators);
         $root->related_url = ($request->related_url);
         // $root->investigators = implode(',', $request->investigators);
@@ -493,7 +489,7 @@ use Illuminate\Support\Facades\Hash;
         // $root->country = ($request->country);
         $root->assign_to = $request->assign_to;
         $root->Sample_Types = $request->Sample_Types;
-         
+
         // Root Cause +
         if (!empty($request->Root_Cause_Category  )) {
             $root->Root_Cause_Category = serialize($request->Root_Cause_Category);
@@ -509,7 +505,7 @@ use Illuminate\Support\Facades\Hash;
         }
         if (!empty($request->why_problem_statement)) {
             $root->why_problem_statement = $request->why_problem_statement;
-        } 
+        }
         if (!empty($request->why_1  )) {
             $root->why_1 = serialize($request->why_1);
         }
@@ -533,23 +529,23 @@ use Illuminate\Support\Facades\Hash;
          $root->what_will_be = ($request->what_will_be);
          $root->what_will_not_be = ($request->what_will_not_be);
          $root->what_rationable = ($request->what_rationable);
- 
+
          $root->where_will_be = ($request->where_will_be);
          $root->where_will_not_be = ($request->where_will_not_be);
          $root->where_rationable = ($request->where_rationable);
- 
+
          $root->when_will_be = ($request->when_will_be);
          $root->when_will_not_be = ($request->when_will_not_be);
          $root->when_rationable = ($request->when_rationable);
- 
+
          $root->coverage_will_be = ($request->coverage_will_be);
          $root->coverage_will_not_be = ($request->coverage_will_not_be);
          $root->coverage_rationable = ($request->coverage_rationable);
- 
+
          $root->who_will_be = ($request->who_will_be);
          $root->who_will_not_be = ($request->who_will_not_be);
          $root->who_rationable = ($request->who_rationable);
-         
+
         if (!empty($request->root_cause_initial_attachment)) {
             $files = [];
             if ($request->hasfile('root_cause_initial_attachment')) {
@@ -574,10 +570,10 @@ use Illuminate\Support\Facades\Hash;
             $root->cft_attchament_new = json_encode($files);
         }
 
-        
+
         // $root->investigators = json_encode($request->investigators);
         $root->submitted_by = $request->submitted_by;
-        
+
         $root->comments = $request->comments;
         $root->lab_inv_concl = $request->lab_inv_concl;
         //Failure Mode and Effect Analysis+
@@ -654,7 +650,7 @@ use Illuminate\Support\Facades\Hash;
         if (!empty($request->problem_statement)) {
             $root->problem_statement = $request->problem_statement;
         }
-        $root->update(); 
+        $root->update();
 
         if ($lastDocument->division_code != $root->division_code || !empty($request->division_code_comment)) {
 
@@ -671,7 +667,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -690,7 +686,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -709,7 +705,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -728,7 +724,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -747,7 +743,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -766,7 +762,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -785,7 +781,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -804,7 +800,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -823,7 +819,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -842,7 +838,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -861,7 +857,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -880,7 +876,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -899,7 +895,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -918,7 +914,7 @@ use Illuminate\Support\Facades\Hash;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
-           
+
 
             $history->save();
         }
@@ -970,8 +966,8 @@ use Illuminate\Support\Facades\Hash;
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Not Applicable';
                 $history->stage = 'Investigation in Progress';
-              
-                
+
+
 
                 $history->save();
             //     $list = Helpers::getQAUserList();
@@ -979,8 +975,8 @@ use Illuminate\Support\Facades\Hash;
             //         if($u->q_m_s_divisions_id == $root->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-                        
-                      
+
+
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $root],
@@ -990,7 +986,7 @@ use Illuminate\Support\Facades\Hash;
             //                 }
             //               );
             //             }
-            //      } 
+            //      }
             //   }
                 $root->update();
                 toastr()->success('Document Sent');
@@ -1017,7 +1013,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Not Applicable';
                 $history->stage = 'Pending QA Review';
-              
+
                 $history->save();
                 $root->update();
                 toastr()->success('Document Sent');
@@ -1026,7 +1022,7 @@ use Illuminate\Support\Facades\Hash;
 
 
 
-            
+
             // if ($root->stage == 3) {
             //     $root->stage = "4";
             //     $root->status = "Pending Group Review";
@@ -1121,7 +1117,7 @@ use Illuminate\Support\Facades\Hash;
         //         if($u->q_m_s_divisions_id == $root->division_id){
         //             $email = Helpers::getInitiatorEmail($u->user_id);
         //              if ($email !== null) {
-                  
+
         //               Mail::send(
         //                   'mail.view-mail',
         //                    ['data' => $root],
@@ -1131,7 +1127,7 @@ use Illuminate\Support\Facades\Hash;
         //                 }
         //               );
         //             }
-        //      } 
+        //      }
         //   }
             $root->update();
             $history = new RootCauseAnalysisHistory();
@@ -1210,7 +1206,7 @@ use Illuminate\Support\Facades\Hash;
     }
 
     public static function singleReport($id)
-    {    
+    {
         $data = RootCauseAnalysis::find($id);
         if (!empty($data)) {
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');

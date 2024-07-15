@@ -196,6 +196,8 @@
                     <tr>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}</td>
+                        {{-- <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}</td> --}}
+
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                         </td>

@@ -52,7 +52,7 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }}
+            {{ Helpers::getDivisionName($data->division_id) }}
             / OOT
         </div>
     </div>
@@ -296,7 +296,7 @@
                                         <option value="minor" @if ($data->severity_level == 'minor') selected @endif>Minor
                                         </option>
                                         <option value="critical" @if ($data->severity_level == 'critical') selected @endif>
-                                            critical </option>
+                                            Critical </option>
                                     </select>
 
                                 </div>
@@ -877,9 +877,6 @@
                                             @endif
 
                                         </tbody>
-
-
-
                                     </table>
                                 </div>
                             </div>
@@ -916,9 +913,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
@@ -1067,7 +1061,6 @@
                                             </tr>
                                         </thead>
 
-
                                         <tbody>
 
                                             @if ($InfoProductMat && is_array($InfoProductMat->data))
@@ -1081,49 +1074,38 @@
                                                                 value="{{ isset($gridData['batch_no']) ? $gridData['batch_no'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="date" class="numberDetail"
-                                                                name="info_product[{{ $loop->index }}][mfg_date]"
-                                                                value="{{ isset($gridData['mfg_date']) ? $gridData['mfg_date'] : '' }}">
+                                                            <input type="date" class="numberDetail" name="info_product[{{ $loop->index }}][mfg_date]"  value="{{ isset($gridData['mfg_date']) ? $gridData['mfg_date'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="date" class="numberDetail"
-                                                                name="info_product[{{ $loop->index }}][exp_date]"value="{{ isset($gridData['exp_date']) ? $gridData['exp_date'] : '' }}">
+                                                            <input type="date" class="numberDetail" name="info_product[{{ $loop->index }}][exp_date]"value="{{ isset($gridData['exp_date']) ? $gridData['exp_date'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="info_product[{{ $loop->index }}][ar_number]"value="{{ isset($gridData['ar_number']) ? $gridData['ar_number'] : '' }}">
+                                                            <input type="text" class="numberDetail" name="info_product[{{ $loop->index }}][ar_number]"value="{{ isset($gridData['ar_number']) ? $gridData['ar_number'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="info_product[{{ $loop->index }}][pack_style]"
-                                                                value="{{ isset($gridData['pack_style']) ? $gridData['pack_style'] : '' }}">
+                                                            <input type="text" class="numberDetail"  name="info_product[{{ $loop->index }}][pack_style]"          value="{{ isset($gridData['pack_style']) ? $gridData['pack_style'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text"
-                                                                class="numberDetail"name="info_product[{{ $loop->index }}][frequency]"
-                                                                value="{{ isset($gridData['frequency']) ? $gridData['frequency'] : '' }}">
+                                                            <input type="text" class="numberDetail"name="info_product[{{ $loop->index }}][frequency]"  value="{{ isset($gridData['frequency']) ? $gridData['frequency'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text"
-                                                                class="numberDetail"name="info_product[{{ $loop->index }}][condition]"
-                                                                value="{{ isset($gridData['condition']) ? $gridData['condition'] : '' }}">
+                                                            <input type="text" class="numberDetail"name="info_product[{{ $loop->index }}][condition]" value="{{ isset($gridData['condition']) ? $gridData['condition'] : '' }}">
                                                         </td>
 
-                                                        <td><button type="text" class="removeRowBtn">Remove</button>
-                                                        </td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button>  </td>
 
                                                     </tr>
-                                                @endforeach
-                                            @else
-                                                <td><input type="text" name="info_product[0][batch_no]"></td>
-                                                <td><input type="date" name="info_product[0][mfg_date]"></td>
-                                                <td><input type="date" name="info_product[0][exp_date]"></td>
-                                                <td><input type="text" name="info_product[0][ar_number]"></td>
-                                                <td><input type="text" name="info_product[0][pack_style]"></td>
-                                                <td><input type="text" name="info_product[0][frequency]"></td>
-                                                <td><input type="text" name="info_product[0][condition]"></td>
-                                                <td><input type="text" class="Action" name=""></td>
-                                            @endif
+                                                          @endforeach
+                                                    @else
+                                                        <td><input type="text" name="info_product[0][batch_no]"></td>
+                                                        <td><input type="date" name="info_product[0][mfg_date]"></td>
+                                                        <td><input type="date" name="info_product[0][exp_date]"></td>
+                                                        <td><input type="text" name="info_product[0][ar_number]"></td>
+                                                        <td><input type="text" name="info_product[0][pack_style]"></td>
+                                                        <td><input type="text" name="info_product[0][frequency]"></td>
+                                                        <td><input type="text" name="info_product[0][condition]"></td>
+                                                        <td><input type="text" class="Action" name=""></td>
+                                                    @endif
 
                                         </tbody>
 
@@ -2025,8 +2007,6 @@
                                                                 style="border-radius: 7px; border: 1.5px solid black;">{{ $checkList->remark_twenty_five }}</textarea>
                                                         </div>
                                                     </td>
-
-
                                                 </tr>
                                                 <tr>
                                                     <td class="flex text-center">26</td>
@@ -2421,9 +2401,7 @@
                                     <label>Retraining to Analyst Required ? <span class="text-danger"></span></label>
                                     <select name="retraining_to_analyst_required">
                                         <option>---select---</option>
-
-                                        <option value="yes" @if ($data->action_taken_result == 'yes') selected @endif>Yes
-                                        </option>
+                                        <option value="yes" @if ($data->action_taken_result == 'yes') selected @endif>Yes  </option>
                                         <option value="no" @if ($data->action_taken_result == 'no') selected @endif>No
                                         </option>
                                     </select>
@@ -2724,8 +2702,6 @@
                                     <div class="static">{{ $data->a_l_comments }}</div>
                                 </div>
                             </div>
-
-
                         </div>
 
                         <div class="row">
@@ -2899,7 +2875,6 @@
                                 <label>Finaly Validity Check <span class="text-danger"></span></label>
                                 <select name="finaly_validity_check">
                                     <option>---select---</option>
-
                                     <option value="valid" @if ($data->finaly_validity_check == 'valid') selected @endif>Valid
                                     </option>
                                     <option value="invalid" @if ($data->finaly_validity_check == 'invalid') selected @endif>Invalid
@@ -3217,10 +3192,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
-
 
                         </div>
                         <div class="button-block">
@@ -3899,8 +3870,6 @@
                             </div>
 
 
-
-
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="closure attachment">CQ Attachment </label>
@@ -4009,10 +3978,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
-
 
                         </div>
                         <div class="button-block">
@@ -4268,10 +4233,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
-
 
                         </div>
                         <div class="button-block">
@@ -5029,8 +4990,7 @@
                         '<td><input type="date" name="info_product[' + infoProduct + '][mfg_date]"></td>' +
                         '<td><input type="date" name="info_product[' + infoProduct + '][exp_date]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][ar_number]"></td>' +
-                        '<td><input type="text" name="info_product[' + infoProduct +
-                        '][pack_style]"></td>' +
+                        '<td><input type="text" name="info_product[' + infoProduct + '][pack_style]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][frequency]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][condition]"></td>' +
                         '<td><button type="button" class="removeRowBtn">Remove</button></td>' +

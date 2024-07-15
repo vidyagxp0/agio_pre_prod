@@ -358,7 +358,7 @@
                     users.forEach(user => {
                         userOptionsHtml = userOptionsHtml.concat(`<option value="${user.id}">${user.name}</option>`)
                     });
-                    
+
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
@@ -955,7 +955,7 @@
                                         </div>
                                     </div>
 
-                                    
+
                                     <script>
                                         // Format the due date to DD-MM-YYYY
                                         var dueDateFormatted = new Date("{{ $dueDate }}").toLocaleDateString('en-GB', {
@@ -1735,7 +1735,7 @@
                                                                     <td><input type="text" class="Removebtn"
                                                                             name="Action[]" readonly></td>
                                                                 </tr>
-                                                                    
+
                                                                 @endforeach
                                                             @endif
                                                         </tbody>
@@ -1795,7 +1795,7 @@
                                         </script>
                                     </div>
 
-                                   
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Description Failure Investigation">Description of Failure Investigation <span
@@ -1809,7 +1809,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Immediate Action">Immediate Action (if any) <span
@@ -2606,7 +2606,7 @@
                                         </script>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="QAInitialRemark">QA Initial Remarks</label>
@@ -2778,7 +2778,7 @@
                                             <select @if ($data->stage == 4) disabled @endif name="RA_person" class="RA_person"
                                                 id="RA_person">
                                                 <option value="">-- Select --</option>
-                                                @foreach ($users as $user)
+                                                @foreach ($userData as $user)
                                                     <option value="{{ $user->id }}" @if ($user->id == $data1->RA_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
@@ -9781,7 +9781,7 @@
                                             @endforeach
                                         @else
                                             <td><input disabled type="text" name="investigationTeam[0][serial]" value="1"></td>
-                                            <td> 
+                                            <td>
                                                 <select name="investigationTeam[0][teamMember]" id="">
                                                     <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
@@ -13154,7 +13154,7 @@
                             <label for="QA Final Review Comments">QA Head/Manager Designee Approval Comments :-</label>
                             <div class="">{{ $data->QA_head_approved_comment }}</div>
                         </div>
-                    </div>                    
+                    </div>
 
                     <div class="sub-head">Initiator Update</div>
                     <div class="col-lg-3">
@@ -14952,7 +14952,7 @@
 <script>
         document.addEventListener('DOMContentLoaded', function () {
             const currentStage = document.getElementById('stage').value;
-            
+
             if (currentStage > 2)
             {
                 const RA_Review = document.getElementById('RA_Review').value;

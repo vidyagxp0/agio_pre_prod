@@ -202,7 +202,7 @@
                                     <tr>
                                     <tr> {{ $data->created_at }} added by {{ $data->originator }}
                                         <th class="w-20">Site/Location Code</th>
-                                        <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}
+                                        <td class="w-30"> {{ Helpers::getDivisionName($data->division_id) }}
                                         </td>
                                         <th class="w-20">Initiator</th>
                                         <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>

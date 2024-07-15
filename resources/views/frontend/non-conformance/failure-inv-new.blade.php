@@ -1186,10 +1186,7 @@
                                                     <th style="width: 12%">Document Number</th>
                                                     <th style="width: 16%"> Reference Document Name</th>
                                                     <th style="width: 16%"> Remarks</th>
-
                                                     <th style="width: 8%"> Action</th>
-
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1200,8 +1197,6 @@
                                                 <td><input type="text" class="Document_Remarks"
                                                         name="Document_Remarks[]"></td>
                                                 <td><input type="text" class="" name="Action[]" readonly></td>
-
-
                                             </tbody>
 
                                         </table>
@@ -1286,9 +1281,6 @@
                                                         <th style="width: 16%"> Stage</th>
                                                         <th style="width: 16%">Batch No</th>
                                                         <th style="width: 8%">Action</th>
-
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1297,7 +1289,6 @@
                                                     <td><input type="text" class="productName" name="product_name[]">
                                                     </td>
                                                     <td>
-
                                                         <select name="product_stage[]" id="product_stage"
                                                             class="productStage">
                                                             <option value="">-- Select --</option>
@@ -3360,9 +3351,6 @@
                                                 Administration</option>
                                             <option value="Information Technology">Information Technology</option>
                                             <option value="Project management">Project management</option>
-
-
-
                                         </select>
 
                                     </div>
@@ -3487,9 +3475,6 @@
                                                 Administration</option>
                                             <option value="Information Technology">Information Technology</option>
                                             <option value="Project management">Project management</option>
-
-
-
                                         </select>
 
                                     </div>
@@ -3567,9 +3552,7 @@
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
-
                                         </select>
-
                                     </div>
                                 </div>
                                 @php
@@ -3616,9 +3599,6 @@
                                                 Administration</option>
                                             <option value="Information Technology">Information Technology</option>
                                             <option value="Project management">Project management</option>
-
-
-
                                         </select>
 
                                     </div>
@@ -3745,9 +3725,6 @@
                                                 Administration</option>
                                             <option value="Information Technology">Information Technology</option>
                                             <option value="Project management">Project management</option>
-
-
-
                                         </select>
 
                                     </div>
@@ -3875,9 +3852,6 @@
                                                 Administration</option>
                                             <option value="Information Technology">Information Technology</option>
                                             <option value="Project management">Project management</option>
-
-
-
                                         </select>
 
                                     </div>
@@ -4184,141 +4158,140 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 sub-head"></div>
-<div class="col-12">
-    <div class="group-input">
-        <label for="fishbone">
-            Fishbone or Ishikawa Diagram
-            <button type="button" name="agenda"
-                onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
-            <button type="button" name="agenda" class="fishbone-del-btn"
-                onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
-                <i class="fa-solid fa-trash-can"></i>
-            </button>
-            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#fishbone-instruction-modal"
-                style="font-size: 0.8rem; font-weight: 400;">
-                (Launch Instruction)
-            </span>
-        </label>
-        <div class="fishbone-ishikawa-diagram">
-            <div class="left-group">
-                <div class="grid-field field-name">
-                    <div>Measurement</div>
-                    <div>Materials</div>
-                    <div>Methods</div>
-                </div>
-                <div class="top-field-group">
-                    <div class="grid-field fields top-field">
-                        <div><input type="text" name="measurement[]"></div>
-                        <div><input type="text" name="materials[]"></div>
-                        <div><input type="text" name="methods[]"></div>
-                    </div>
-                </div>
-                <div class="mid"></div>
-                <div class="bottom-field-group">
-                    <div class="grid-field fields bottom-field">
-                        <div><input type="text" name="environment[]"></div>
-                        <div><input type="text" name="manpower[]"></div>
-                        <div><input type="text" name="machine[]"></div>
-                    </div>
-                </div>
-                <div class="grid-field field-name">
-                    <div>Environment</div>
-                    <div>Manpower</div>
-                    <div>Machine</div>
-                </div>
-            </div>
-            <div class="right-group">
-                <div class="field-name">
-                    Problem Statement
-                </div>
-                <div class="field">
-                    <textarea name="problem_statement"></textarea>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-12 sub-head"></div>
-<div class="col-12">
-    <div class="group-input">
-        <label for="why-why-chart">
-            Why-Why Chart
-            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#why_chart-instruction-modal"
-                style="font-size: 0.8rem; font-weight: 400;">
-                (Launch Instruction)
-            </span>
-        </label>
-        <div class="why-why-chart">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr style="background: #f4bb22">
-                        <th style="width:150px;">Problem Statement :</th>
-                        <td>
-                            <textarea name="why_problem_statement"></textarea>
-                        </td>
-                    </tr>
-                    <tr class="why-row">
-                        <th style="width:150px; color: #393cd4;">
-                            Why 1 <span onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
-                        </th>
-                        <td>
-                            <div class="col-md-10 why_1_block">
-                                <textarea name="why_1[]"></textarea>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="why-row">
-                        <th style="width:150px; color: #393cd4;">
-                            Why 2 <span onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
-                        </th>
-                        <td>
-                            <div class="why_2_block">
-                                <textarea name="why_2[]"></textarea>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="why-row">
-                        <th style="width:150px; color: #393cd4;">
-                            Why 3 <span onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
-                        </th>
-                        <td>
-                            <div class="why_3_block">
-                                <textarea name="why_3[]"></textarea>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="why-row">
-                        <th style="width:150px; color: #393cd4;">
-                            Why 4 <span onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
-                        </th>
-                        <td>
-                            <div class="why_4_block">
-                                <textarea name="why_4[]"></textarea>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="why-row">
-                        <th style="width:150px; color: #393cd4;">
-                            Why 5 <span onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
-                        </th>
-                        <td>
-                            <div class="why_5_block">
-                                <textarea name="why_5[]"></textarea>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr style="background: #0080006b;">
-                        <th style="width:150px;">Root Cause :</th>
-                        <td>
-                            <textarea name="root-cause"></textarea>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="fishbone">
+                                                Fishbone or Ishikawa Diagram
+                                                <button type="button" name="agenda"
+                                                    onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
+                                                <button type="button" name="agenda" class="fishbone-del-btn"
+                                                    onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#fishbone-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="fishbone-ishikawa-diagram">
+                                                <div class="left-group">
+                                                    <div class="grid-field field-name">
+                                                        <div>Measurement</div>
+                                                        <div>Materials</div>
+                                                        <div>Methods</div>
+                                                    </div>
+                                                    <div class="top-field-group">
+                                                        <div class="grid-field fields top-field">
+                                                            <div><input type="text" name="measurement[]"></div>
+                                                            <div><input type="text" name="materials[]"></div>
+                                                            <div><input type="text" name="methods[]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mid"></div>
+                                                    <div class="bottom-field-group">
+                                                        <div class="grid-field fields bottom-field">
+                                                            <div><input type="text" name="environment[]"></div>
+                                                            <div><input type="text" name="manpower[]"></div>
+                                                            <div><input type="text" name="machine[]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="grid-field field-name">
+                                                        <div>Environment</div>
+                                                        <div>Manpower</div>
+                                                        <div>Machine</div>
+                                                    </div>
+                                                </div>
+                                                <div class="right-group">
+                                                    <div class="field-name">
+                                                        Problem Statement
+                                                    </div>
+                                                    <div class="field">
+                                                        <textarea name="problem_statement"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="why-why-chart">
+                                                Why-Why Chart
+                                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#why_chart-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="why-why-chart">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                        <tr style="background: #f4bb22">
+                                                            <th style="width:150px;">Problem Statement :</th>
+                                                            <td>
+                                                                <textarea name="why_problem_statement"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 1 <span onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="col-md-10 why_1_block">
+                                                                    <textarea name="why_1[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 2 <span onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_2_block">
+                                                                    <textarea name="why_2[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 3 <span onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_3_block">
+                                                                    <textarea name="why_3[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 4 <span onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_4_block">
+                                                                    <textarea name="why_4[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 5 <span onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_5_block">
+                                                                    <textarea name="why_5[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="background: #0080006b;">
+                                                            <th style="width:150px;">Root Cause :</th>
+                                                            <td>
+                                                                <textarea name="root-cause"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 <div class="sub-head"></div>
                                 <script>
@@ -4882,13 +4855,11 @@
                                             <option value="Non Conformance">Non Conformance </option>
                                             <option value="OS/OT">OS/OT</option>
                                             <option value="Audit_Obs">Audit Observation </option>
-
                                             <option value="Complaint">Complaint</option>
                                             <option value="Product_Recall">Product Recall</option>
                                             <option value="Returned_Goods">Returned Goods</option>
                                             <option value="APQR">APQR</option>
-                                            <option value="Management_Review_Action_Plan">Management Review Action Plan
-                                            </option>
+                                            <option value="Management_Review_Action_Plan">Management Review Action Plan  </option>
                                             <option value="Investigation">Investigation</option>
                                             <option value="Internal_Review">Internal Review</option>
                                             <option value="Quality_Risk_Assessment">Quality Risk Assessment</option>
@@ -5195,8 +5166,6 @@
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-
-
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Feedbacks">QA Feedbacks</label>
@@ -5478,8 +5447,6 @@
 
                                 {{-- row --}}
                                 <div class="row">
-
-
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for=" Quality_Risk_Management_Extension_Completed_By"> Quality Risk
@@ -6018,8 +5985,6 @@
                     </div>
 
 
-
-
                     <!-- Activity Log content -->
                     <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -6165,11 +6130,6 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-
-
-
-
-
 
                             </div>
                             <div class="button-block">
@@ -6617,7 +6577,6 @@
                             </div>
 
                         </div>
-
 
                         <div class="modal-footer">
                             <button type="submit">

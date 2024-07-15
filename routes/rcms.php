@@ -85,8 +85,6 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('extension-audit-trial-details/{id}', [ExtensionController::class, 'extensionAuditTrialDetails']);
             Route::get('extensionSingleReport/{id}', [ExtensionController::class, 'singleReport'])->name('extensionSingleReport');
             Route::get('extensionAuditReport/{id}', [ExtensionController::class, 'auditReport'])->name('extensionAuditReport');
-
-
             Route::post('send-At/{id}', [ActionItemController::class, 'stageChange']);
             Route::post('send-rejection-field/{id}', [CCController::class, 'stagereject']);
             Route::post('send-cft-field/{id}', [CCController::class, 'stageCFTnotReq']);
@@ -306,13 +304,6 @@ Route::group(['prefix' => 'rcms'], function () {
 
             Route::get('OOCSingleReport/{id}',[OOCController::class, 'singleReports']);
 
-
-
-
-
-
-
-
             /**
              * OOT
              */
@@ -394,7 +385,6 @@ Route::group(['prefix' => 'rcms'], function () {
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
-
 
             /********************* Incident Routes Starts *******************/
 
