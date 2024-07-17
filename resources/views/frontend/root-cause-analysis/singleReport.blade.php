@@ -428,11 +428,13 @@
                             @endif
                           </td>
                     </tr>
+                  <div>
                     <tr>
-                        <th class="w-20">Problem Statement1</th>
+                        <th class="w-20">Problem Statement 1</th>
                         <td class="w-80">@if($data->problem_statement){{ $data->problem_statement }}@else Not Applicable @endif</td>
                       
                     </tr> 
+                  </div>
              </table>
                         
              <div class="block-head">
