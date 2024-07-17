@@ -23,6 +23,7 @@ use App\Services\FileService;
 use PDF;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
+use App\Models\OOSMicroLaunchExtension;
 
 class OOSMicroController extends Controller
 {
@@ -79,6 +80,47 @@ class OOSMicroController extends Controller
         $micro['stage'] = 1;
         $micro['division_id'] = $request->division_id;
         $OOSmicro = OOS_micro::create($micro);
+         //    =============== LaunchExtention ================
+
+         if(!empty($OOSmicro->id)){
+            $OOSmicroExtention = new OOSMicroLaunchExtension();
+            $OOSmicroExtention->oos_micro_id = $OOSmicro->id;
+            $OOSmicroExtention->extension_identifier = 'OOS Chemical';
+            $OOSmicroExtention->oos_proposed_due_date = $request->oos_proposed_due_date;
+            $OOSmicroExtention->oos_extension_justification = $request->oos_extension_justification;
+            $OOSmicroExtention->oos_extension_completed_by =  $request->oos_extension_completed_by;
+            $OOSmicroExtention->oos_extension_completed_on = $request->oos_extension_completed_on;
+            $OOSmicroExtention->save();
+
+            $capaExtention = new OOSMicroLaunchExtension();
+            $capaExtention->oos_micro_id = $OOSmicro->id;
+            $capaExtention->extension_identifier = 'Capa';
+            $capaExtention->capa_proposed_due_date = $request->capa_proposed_due_date;
+            $capaExtention->capa_extension_justification = $request->capa_extension_justification;
+            $capaExtention->capa_extension_completed_by =  $request->capa_extension_completed_by;
+            $capaExtention->capa_extension_completed_on = $request->capa_extension_completed_on;
+            $capaExtention->save();
+
+            $qrmextExtention = new OOSMicroLaunchExtension();
+            $qrmextExtention->oos_micro_id = $OOSmicro->id;
+            $qrmextExtention->extension_identifier = 'QRM';
+            $qrmextExtention->qrm_proposed_due_date = $request->qrm_proposed_due_date;
+            $qrmextExtention->qrm_extension_justification = $request->qrm_extension_justification;
+            $qrmextExtention->qrm_extension_completed_by =  $request->qrm_extension_completed_by;
+            $qrmextExtention->qrm_extension_completed_on = $request->qrm_extension_completed_on;
+            $qrmextExtention->save();
+
+            $investigationExtention = new OOSMicroLaunchExtension();
+            $investigationExtention->oos_micro_id = $OOSmicro->id;
+            $investigationExtention->extension_identifier = 'Investigation';
+            $investigationExtention->investigation_proposed_due_date = $request->investigation_proposed_due_date;
+            $investigationExtention->investigation_extension_justification = $request->investigation_extension_justification;
+            $investigationExtention->investigation_extension_completed_by =  $request->investigation_extension_completed_by;
+            $investigationExtention->investigation_extension_completed_on = $request->investigation_extension_completed_on;
+            $investigationExtention->save();
+        }
+      
+         
     //    record update
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -682,13 +724,14 @@ class OOSMicroController extends Controller
             $instrument_details = $micro_data->grids()->where('identifier', 'instrument_detail')->first();
             $products_details = $micro_data->grids()->where('identifier', 'products_details')->first();
                 
-            // $capaExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "Capa"])->first();
-            // $qrmExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "QRM"])->first();
-            // $investigationExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "Investigation"])->first();
-            // $oosExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "OOS Chemical"])->first();
+            $capaExtension = OOSMicroLaunchExtension::where(['oos_micro_id' => $id, "extension_identifier" => "Capa"])->first();
+            $qrmExtension = OOSMicroLaunchExtension::where(['oos_micro_id' => $id, "extension_identifier" => "QRM"])->first();
+            $investigationExtension = OOSMicroLaunchExtension::where(['oos_micro_id' => $id, "extension_identifier" => "Investigation"])->first();
+            $oosExtension = OOSMicroLaunchExtension::where(['oos_micro_id' => $id, "extension_identifier" => "OOS Chemical"])->first();
 
-            return view('frontend.OOS_Micro.oos_micro_view',compact('micro_data','record_number','old_record',
-             'info_product_materials','details_stabilities','oos_details','oos_capas','oos_conclusions','oos_conclusion_reviews','instrument_details','products_details'));
+            return view('frontend.OOS_Micro.oos_micro_view',compact('micro_data','record_number','old_record','info_product_materials','details_stabilities',
+            'oos_details','oos_capas','oos_conclusions','oos_conclusion_reviews','instrument_details','products_details','capaExtension',
+            'qrmExtension', 'investigationExtension', 'oosExtension'));
        }
         public function update(Request $request, $id){
             
@@ -739,6 +782,43 @@ class OOSMicroController extends Controller
 
      //---------------------Audit Trail Update-------------------------------/////////////////
      $lastDocument = OOS_micro::find($id);
+     if(!empty($lastDocument->id)){
+        $oosExtention = new OOSMicroLaunchExtension();
+        $oosExtention->oos_micro_id = $lastDocument->id;
+        $oosExtention->extension_identifier = 'OOS Chemical';
+        $oosExtention->oos_proposed_due_date = $request->oos_proposed_due_date;
+        $oosExtention->oos_extension_justification = $request->oos_extension_justification;
+        $oosExtention->oos_extension_completed_by =  $request->oos_extension_completed_by;
+        $oosExtention->oos_extension_completed_on = $request->oos_extension_completed_on;
+        $oosExtention->save();
+
+        $capaExtention = new OOSMicroLaunchExtension();
+        $capaExtention->oos_micro_id = $lastDocument->id;
+        $capaExtention->extension_identifier = 'Capa';
+        $capaExtention->capa_proposed_due_date = $request->capa_proposed_due_date;
+        $capaExtention->capa_extension_justification = $request->capa_extension_justification;
+        $capaExtention->capa_extension_completed_by =  $request->capa_extension_completed_by;
+        $capaExtention->capa_extension_completed_on = $request->capa_extension_completed_on;
+        $capaExtention->save();
+
+        $qrmextExtention = new OOSMicroLaunchExtension();
+        $qrmextExtention->oos_micro_id = $lastDocument->id;
+        $qrmextExtention->extension_identifier = 'QRM';
+        $qrmextExtention->qrm_proposed_due_date = $request->qrm_proposed_due_date;
+        $qrmextExtention->qrm_extension_justification = $request->qrm_extension_justification;
+        $qrmextExtention->qrm_extension_completed_by =  $request->qrm_extension_completed_by;
+        $qrmextExtention->qrm_extension_completed_on = $request->qrm_extension_completed_on;
+        $qrmextExtention->save();
+
+        $investigationExtention = new OOSMicroLaunchExtension();
+        $investigationExtention->oos_micro_id = $lastDocument->id;
+        $investigationExtention->extension_identifier = 'Investigation';
+        $investigationExtention->investigation_proposed_due_date = $request->investigation_proposed_due_date;
+        $investigationExtention->investigation_extension_justification = $request->investigation_extension_justification;
+        $investigationExtention->investigation_extension_completed_by =  $request->investigation_extension_completed_by;
+        $investigationExtention->investigation_extension_completed_on = $request->investigation_extension_completed_on;
+        $investigationExtention->save();
+    }
 
      $general_information = [
         'description_gi' => 'Short Description',

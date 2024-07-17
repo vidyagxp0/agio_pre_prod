@@ -1,5 +1,8 @@
 @extends('frontend.layout.main')
 @section('container')
+@php
+        $users = DB::table('users')->get();
+@endphp
     <style>
         textarea.note-codable {
             display: none !important;
@@ -354,6 +357,8 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Extension</button>
+
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
             </div>
             <!-- General Information -->
@@ -380,6 +385,8 @@
                 @include('frontend.OOS_Micro.comps_micro.batch_disposition') 
                 <!-- reopen -->
                 @include('frontend.OOS_Micro.comps_micro.reopen')
+                 <!-- oos_extension -->
+                @include('frontend.OOS_Micro.comps_micro.oos_extension') 
                 <!-- Signature  -->
                 @include('frontend.OOS_Micro.comps_micro.signature')
         </div>
