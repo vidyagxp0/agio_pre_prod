@@ -73,7 +73,7 @@ class OOTController extends Controller
         $data->due_date              = $request->due_date;
         $data->due_date              = Carbon::now()->addDays(30)->format('d-M-Y');
         $data->division_id           = $request->division_id;
-        $data->severity_level        = $request->severity_level;
+        // $data->severity_level        = $request->severity_level;
         $data->initiator_group       = $request->initiator_group;
         $data->initiator_group_code  = $request->initiator_group_code;
         $data->initiated_through     = $request->initiated_through;
@@ -311,11 +311,19 @@ class OOTController extends Controller
         //  dd($OotResultGrid);
         $OotResultGrid->save();
 
+
+
         $InfoProductMat = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'info_product'])->firstOrCreate();
         $InfoProductMat->ootcs_id = $data->id;
         $InfoProductMat->identifier = 'info_product';
         $InfoProductMat->data = $request->info_product;
         $InfoProductMat->save();
+
+        $productDetail = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'product_detail'])->firstOrCreate();
+        $productDetail->ootcs_id = $data->id;
+        $productDetail->identifier = 'product_detail';
+        $productDetail->data = $request->product_detail;
+        $productDetail->save();
 
 
         if (!empty($data->division_code)) {
@@ -754,13 +762,15 @@ class OOTController extends Controller
        $GridOotRes = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'oot_result'])->first();
     // dd($GridOotRes);
        $InfoProductMat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'info_product'])->first();
+       $productDetail = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_detail'])->first();
+
 
 
        $checkList = OotChecklist::where(['ootcs_id' => $id,  ])->first();
 
        $record_number = ((RecordNumber::first()->value('counter')) + 1);
        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        return view('frontend.OOT.ootView',compact('data','record_number','grid_product_mat','checkList','gridStability','GridOotRes','InfoProductMat','formattedDate','occuredDate','old_record'));
+        return view('frontend.OOT.ootView',compact('data','record_number','grid_product_mat','checkList','gridStability','GridOotRes','InfoProductMat','formattedDate','occuredDate','old_record','productDetail'));
 
     }
 
@@ -768,14 +778,14 @@ class OOTController extends Controller
         $lastDocument = Ootc::find($id);
 
         $data = Ootc::find($id);
-        $data->division_id           = $request->division_id;
+        // $data->division_id           = $request->division_id;
         $data->record_number         = $lastDocument->record_number;
         // dd($lastDocument->record_number);
         $data->due_date              = $request->due_date;
-        $data->severity_level        = $request->severity_level;
+        // $data->severity_level        = $request->severity_level;
         $data->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
         $data->initiator_group       = $request->initiator_group;
-        $data->initiator_group_code  =$request->initiator_group_code;
+        // $data->initiator_group_code  =$request->initiator_group_code;
         $data->initiated_through     = $request->initiated_through;
         $data->short_description     = $request->short_description;
         $data->if_others	         = $request->if_others;
@@ -933,6 +943,15 @@ class OOTController extends Controller
         $InfoProductMat->identifier = 'info_product';
         $InfoProductMat->data = $request->info_product;
         $InfoProductMat->update();
+        toastr()->success('Record is Update Successfully');
+
+
+        $data->update();
+        $productDetail = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'product_detail'])->firstOrCreate();
+        $productDetail->ootcs_id = $data->id;
+        $productDetail->identifier = 'product_detail';
+        $productDetail->data = $request->product_detail;
+        $productDetail->update();
         // dd($InfoProductMat);
         toastr()->success('Record is Update Successfully');
 
@@ -1443,6 +1462,8 @@ class OOTController extends Controller
     public function singleReport(Request $request, $id){
         $data = Ootc::find($id);
         $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
+        $productDetail = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_detail'])->first();
+
     //    dd($grid_product_mat);
        $gridStability = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'details_of_stability'])->first();
        $GridOotRes = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'oot_result'])->first();
@@ -1452,7 +1473,7 @@ class OOTController extends Controller
         if(!empty($data)){
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.OOT.singleReports', compact('data','grid_product_mat','gridStability','GridOotRes','InfoProductMat','checkList'))
+            $pdf = PDF::loadview('frontend.OOT.singleReports', compact('data','grid_product_mat','gridStability','GridOotRes','InfoProductMat','checkList','productDetail'))
                 ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,

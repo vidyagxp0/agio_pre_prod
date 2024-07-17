@@ -241,9 +241,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label disabled for="Short Description">Division Code</label>
-                                    <input disabled type="text" name="division_code"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                    <input disabled type="text" name="division_code"  value="{{ Helpers::getDivisionName($data->division_id) }}">
                                 </div>
                             </div>
 
@@ -286,26 +284,7 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Short Description">Severity Level <span
-                                            class="text-danger"></span></label>
-
-                                    <select name="severity_level" id="severity_level">
-                                        <option value="0"> select</option>
-                                        <option value="major" @if ($data->severity_level == 'major') selected @endif>Major
-                                        </option>
-                                        <option value="minor" @if ($data->severity_level == 'minor') selected @endif>Minor
-                                        </option>
-                                        <option value="critical" @if ($data->severity_level == 'critical') selected @endif>
-                                            Critical </option>
-                                    </select>
-
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Short Description">Initiator Group <span
-                                            class="text-danger"></span></label>
+                                    <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
 
                                     <select name="initiator_group" id="initiator_group">
                                         <option value="CQA"
@@ -350,8 +329,6 @@
                                     </select>
                                 </div>
                             </div>
-
-
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -423,38 +400,26 @@
                                     <label for="Short Description">Is Repeat?<span class="text-danger"></span></label>
                                     <select id="is_repeat" name="is_repeat">
                                         <option>select</option>
-
-                                        <option value="yes" @if ($data->is_repeat == 'yes') selected @endif>Yes
-                                        </option>
-                                        <option value="no" @if ($data->is_repeat == 'no') selected @endif>No
-                                        </option>
-
+                                        <option value="yes" @if ($data->is_repeat == 'yes') selected @endif>Yes </option>
+                                        <option value="no" @if ($data->is_repeat == 'no') selected @endif>No </option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> Repeat Nature</label>
-                                    <textarea class="summernote" name="repeat_nature" id="summernote-16" value="{{ $data->repeat_nature }}">{{ $data->repeat_nature }} </textarea>
-                                </div>
-                            </div>
-
+{{--
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Short Description">Nature Of Change<span
                                             class="text-danger"></span></label>
                                     <select multiple id="natureOfChange" name="nature_of_change">
 
-                                        <option value="temporary" @if ($data->nature_of_change == 'temporary') selected @endif>
-                                            Temporary</option>
+                                        <option value="temporary" @if ($data->nature_of_change == 'temporary') selected @endif> Temporary</option>
 
-                                        <option value="permanent" @if ($data->nature_of_change == 'permanent') selected @endif>
-                                            Permanent</option>
+                                        <option value="permanent" @if ($data->nature_of_change == 'permanent') selected @endif> Permanent</option>
 
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -462,7 +427,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="oot_occured_on"  value="{{ Helpers::getdateFormat($data->oot_occured_on) }}" disabled/>
                                             <input type="date" name="oot_occured_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" hidden/>
+                                                oninput="handleDateInput(this, 'oot_occured_on')" hidden/>
                                         </div>
                                 </div>
                             </div>
@@ -598,12 +563,12 @@
                                                                 name="product_materiel[{{ $loop->index }}][a_r_number]"value="{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="date" class="numberDetail"
+                                                            <input type="month" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][m_f_g_date]" value="{{ isset($gridData['m_f_g_date']) ?  $gridData['m_f_g_date'] : '' }}">
                                                         </td>
 
                                                         <td>
-                                                            <input type="date" class="numberDetail"
+                                                            <input type="month" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][expiry_date]"
                                                                 value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
                                                                 oninput="handleDateInput(this, 'expiry_date')">
@@ -634,6 +599,106 @@
                                                         name="product_materiel[0][expiry_date]"></td>
                                                 <td><input type="text" class="Document_Remarks"
                                                         name="product_materiel[0][label_claim]"></td>
+                                                {{-- <td><button type="text" class="removeRowBtn">Remove</button></td> --}}
+                                            @endif
+
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    Product Detail
+                                    <button type="button" name="audit-agenda-grid" id="productAdd">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#observation-field-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="product_details">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%">Row No.</th>
+                                                <th style="width: 12%">Product Name</th>
+                                                <th style="width: 15%">AR No.</th>
+                                                <th style="width: 16%">Sample On</th>
+                                                <th style="width: 15%">Sample By</th>
+                                                <th style="width: 15%">Analyzed On </th>
+                                                <th style="width: 15%">Observation On</th>
+                                                <th style="width: 15%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @if ($productDetail && is_array($productDetail->data))
+                                                @foreach ($productDetail->data as $gridData)
+                                                    <tr>
+
+                                                        <td>{{ $loop->index + 1 }}</td>
+                                                        <td>
+                                                            <input type="text" class="numberDetail" name="product_detail[][product_name]" value="{{ isset($gridData['product_name']) ? $gridData['product_name'] : '' }}">
+                                                        </td>
+
+                                                        <td>
+                                                            <input type="text" class="numberDetail" name="product_detail[{{ $loop->index }}][ar_num]"value="{{ isset($gridData['ar_num']) ? $gridData['ar_num'] : '' }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="month" class="numberDetail"  name="product_detail[{{ $loop->index }}][sample_on]" value="{{ isset($gridData['sample_on']) ?  $gridData['sample_on'] : '' }}">
+                                                        </td>
+
+
+
+                                                        <td>
+                                                            <input type="text" class="numberDetail" name="product_detail[{{ $loop->index }}][sample_by]"value="{{ isset($gridData['sample_by']) ? $gridData['sample_by'] : '' }}">
+                                                        </td>
+
+                                                        {{-- <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input   class="click_date"  id="date_{{ $loop->index }}analyzed_on" type="text" name="product_detail[{{ $loop->index }}][analyzed_on]"  placeholder="DD-MMM-YYYY"  value="{{ !empty($gridData['analyzed_on']) ? \Carbon\Carbon::parse($gridData['analyzed_on'])->format('d-M-Y') : '' }}"/>
+                                                                        <input type="date"   name="product_detail[{{ $loop->index }}][analyzed_on]"  value="{{ !empty($gridData['analyzed_on']) ? \Carbon\Carbon::parse($gridData['analyzed_on'])->format('Y-m-d') : '' }}"   id="date{{ $loop->index }}analyzed_on" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, 'date_{{ $loop->index   }}analyzed_on')" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td> --}}
+
+                                                        <td>
+                                                            <input type="month" class="numberDetail"  name="product_detail[{{ $loop->index }}][analyzed_on]" value="{{ isset($gridData['analyzed_on']) ?  $gridData['analyzed_on'] : '' }}">
+                                                        </td>
+
+                                                        <td>
+                                                            <input type="month" class="numberDetail"  name="product_detail[{{ $loop->index }}][observation_on]" value="{{ isset($gridData['observation_on']) ?  $gridData['observation_on'] : '' }}">
+                                                        </td>
+
+                                                        {{-- <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input   class="click_date"  id="date_{{ $loop->index }}observation_on" type="text" name="product_detail[{{ $loop->index }}][observation_on]"  placeholder="DD-MMM-YYYY"  value="{{ !empty($gridData['observation_on']) ? \Carbon\Carbon::parse($gridData['observation_on'])->format('d-M-Y') : '' }}"/>
+                                                                        <input type="date"   name="product_detail[{{ $loop->index }}][observation_on]"  value="{{ !empty($gridData['observation_on']) ? \Carbon\Carbon::parse($gridData['observation_on'])->format('Y-m-d') : '' }}"   id="date{{ $loop->index }}observation_on" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, 'date_{{ $loop->index   }}observation_on')" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </td> --}}
+
+                                                        <td><button type="button" class="removeRowBtn" name="Action[]">Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                {{-- <td>{{ $serialNumber }}</td> --}}
+                                                <td><input type="text" class="numberDetail"     name="product_detail[0][product_name]"></td>
+                                                <td><input type="text" class="Document_Remarks" name="product_detail[0][ar_num]"></td>
+                                                <td><input type="month" class="Document_Remarks" name="product_detail[0][sample_on]"></td>
+                                                <td><input type="text" class="Document_Remarks" name="product_detail[0][sample_by]">  </td>
+                                                <td><input type="month" class="Document_Remarks" name="product_detail[0][analyzed_on]"></td>
+                                                <td><input type="month" class="Document_Remarks" name="product_detail[0][observation_on]"></td>
                                                 {{-- <td><button type="text" class="removeRowBtn">Remove</button></td> --}}
                                             @endif
 
@@ -755,8 +820,6 @@
 
                                                         <td><button type="text" class="removeRowBtn">Remove</button>
                                                         </td>
-
-
                                                     </tr>
                                                 @endforeach
                                             @else
@@ -766,8 +829,7 @@
                                                 <td><input type="text" name="details_of_stability[0][temprature]"></td>
                                                 <td><input type="text" name="details_of_stability[0][interval]"></td>
                                                 <td><input type="text" name="details_of_stability[0][orientation]"></td>
-                                                <td><input type="text" name="details_of_stability[0][pack_details]">
-                                                </td>
+                                                <td><input type="text" name="details_of_stability[0][pack_details]">  </td>
                                                 <td><input type="text" class="removeRowBtn" name=""> Remove
                                                 </td>
                                             @endif
@@ -1069,21 +1131,19 @@
 
                                                         <td>{{ $loop->index + 1 }}</td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="info_product[{{ $loop->index }}][batch_no]"
-                                                                value="{{ isset($gridData['batch_no']) ? $gridData['batch_no'] : '' }}">
+                                                            <input type="text" class="numberDetail" name="info_product[{{ $loop->index }}][batch_no]" value="{{ isset($gridData['batch_no']) ? $gridData['batch_no'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="date" class="numberDetail" name="info_product[{{ $loop->index }}][mfg_date]"  value="{{ isset($gridData['mfg_date']) ? $gridData['mfg_date'] : '' }}">
+                                                            <input type="month" class="numberDetail" name="info_product[{{ $loop->index }}][mfg_date]"  value="{{ isset($gridData['mfg_date']) ? $gridData['mfg_date'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="date" class="numberDetail" name="info_product[{{ $loop->index }}][exp_date]"value="{{ isset($gridData['exp_date']) ? $gridData['exp_date'] : '' }}">
+                                                            <input type="month" class="numberDetail" name="info_product[{{ $loop->index }}][exp_date]"  value="{{ isset($gridData['exp_date']) ? $gridData['exp_date'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="numberDetail" name="info_product[{{ $loop->index }}][ar_number]"value="{{ isset($gridData['ar_number']) ? $gridData['ar_number'] : '' }}">
+                                                            <input type="text" class="numberDetail" name="info_product[{{ $loop->index }}][ar_number]" value="{{ isset($gridData['ar_number']) ? $gridData['ar_number'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"  name="info_product[{{ $loop->index }}][pack_style]"          value="{{ isset($gridData['pack_style']) ? $gridData['pack_style'] : '' }}">
+                                                            <input type="text" class="numberDetail"  name="info_product[{{ $loop->index }}][pack_style]" value="{{ isset($gridData['pack_style']) ? $gridData['pack_style'] : '' }}">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"name="info_product[{{ $loop->index }}][frequency]"  value="{{ isset($gridData['frequency']) ? $gridData['frequency'] : '' }}">
@@ -4875,8 +4935,7 @@
 
     <script>
         $(document).ready(function() {
-            let indexDetail =
-                {{ $grid_product_mat && is_array($grid_product_mat->data) ? count($grid_product_mat->data) : 0 }};
+            let indexDetail = {{ $grid_product_mat && is_array($grid_product_mat->data) ? count($grid_product_mat->data) : 0 }};
             $('#addproduct').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
@@ -4886,8 +4945,8 @@
                         '<td><input type="text" name="product_materiel[' + indexDetail + '][item_product_code]"></td>' +
                         '<td><input type="text" name="product_materiel[' + indexDetail + '][lot_batch_no]"></td>' +
                         '<td><input type="text" name="product_materiel[' + indexDetail +'][a_r_number]"></td>' +
-                        '<td><input type="date" name="product_materiel[' + indexDetail + '][m_f_g_date]"></td>' +
-                        '<td><input type="date" name="product_materiel[' + indexDetail + '][expiry_date]"></td>' +
+                        '<td><input type="month" name="product_materiel[' + indexDetail + '][m_f_g_date]"></td>' +
+                        '<td><input type="month" name="product_materiel[' + indexDetail + '][expiry_date]"></td>' +
                         '<td><input type="text" name="product_materiel[' + indexDetail + '][label_claim]"></td>' +
                         '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
@@ -4905,6 +4964,36 @@
         });
     </script>
 
+<script>
+    $(document).ready(function() {
+        let indexDetail =  {{ $productDetail && is_array($productDetail->data) ? count($productDetail->data) : 0 }};
+        $('#productAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                    '<td><input type="text" name="product_detail[' + indexDetail + '][product_name]"></td>' +
+                    '<td><input type="text" name="product_detail[' + indexDetail + '][ar_num]"></td>' +
+                     ' <td><input type="month" name="product_detail[' + indexDetail +'][sample_on]"></td>' +
+                    // '<td> <div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_'+ indexDetail +'sample_on" type="text" name="product_detail[' + indexDetail + '][sample_on]" placeholder="DD-MMM-YYYY" /> <input type="date" name="product_detail[' + indexDetail + '][sample_on]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'sample_on" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'sample_on\')" /> </div> </div></div></td>' +
+                    '<td><input type="text" name="product_detail['+ indexDetail +'][sample_by]"></td>' +
+                    // '<td> <div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_'+ indexDetail +'analyzed_on" type="text" name="product_detail[' + indexDetail + '][analyzed_on]" placeholder="DD-MMM-YYYY" /> <input type="date" name="product_detail[' + indexDetail + '][analyzed_on]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'analyzed_on" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'analyzed_on\')" /> </div> </div></div></td>' +
+                     '<td><input type="month" name="product_detail[' + indexDetail + '][analyzed_on]"></td>' +
+                    // '<td> <div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_'+ indexDetail +'observation_on" type="text" name="product_detail[' + indexDetail + '][observation_on]" placeholder="DD-MMM-YYYY" /> <input type="date" name="product_detail[' + indexDetail + '][observation_on]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'observation_on" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'observation_on\')" /> </div> </div></div></td>' +
+                     '<td><input type="month" name="product_detail[' + indexDetail + '][observation_on]"></td>' +
+                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +  '</tr>';
+                '</tr>';
+                indexDetail++;
+                return html;
+            }
+            var tableBody = $('#product_details tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+    });
+</script>
+
 
     <script>
         $(document).ready(function() {
@@ -4916,16 +5005,11 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][a_r_number]"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][tempreture]"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][interval]"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][oriention]"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][pack_details]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][a_r_number]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][temprature]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][interval]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][orientation]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][pack_details]"></td>' +
                         '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
 
                         '</tr>';
@@ -4987,8 +5071,8 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][batch_no]"></td>' +
-                        '<td><input type="date" name="info_product[' + infoProduct + '][mfg_date]"></td>' +
-                        '<td><input type="date" name="info_product[' + infoProduct + '][exp_date]"></td>' +
+                        '<td><input type="month" name="info_product[' + infoProduct + '][mfg_date]"></td>' +
+                        '<td><input type="month" name="info_product[' + infoProduct + '][exp_date]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][ar_number]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][pack_style]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][frequency]"></td>' +

@@ -1042,7 +1042,6 @@ class DashboardController extends Controller
             $division_name = $division->name;
 
         }
-
         elseif ($type == "Market Complaint") {
             $data = MarketComplaint::find($id);
             $audit = "marketcomplaint/marketauditTrailPdf/" . $data->id;
@@ -1074,7 +1073,6 @@ class DashboardController extends Controller
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }
-
 
         $type = $type == 'Capa' ? 'CAPA' : $type;
 

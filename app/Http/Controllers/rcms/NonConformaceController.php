@@ -4490,11 +4490,12 @@ class NonConformaceController extends Controller
     public function NonConformanceAuditTrailPdf($id)
     {
         $doc = NonConformance::find($id);
+        $audit = NonConformanceAuditTrails::where('non_conformances_id', $id)->orderByDesc('id')->paginate(5);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
         $data = NonConformanceAuditTrails::where('non_conformances_id', $doc->id)->orderByDesc('id')->get();
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
-        $pdf = PDF::loadview('frontend.non-conformance.audit-trail-pdf', compact('data', 'doc'))
+        $pdf = PDF::loadview('frontend.non-conformance.audit-trail-pdf', compact('data', 'doc','audit'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,

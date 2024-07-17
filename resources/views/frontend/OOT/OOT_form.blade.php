@@ -192,19 +192,6 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Short Description">Severity Level <span
-                                                class="text-danger"></span></label>
-                                        <select name="severity_level" id="severity_level">
-                                            <option value="">Select Option </option>
-                                            <option value="major">Major</option>
-                                            <option value="minor">minor </option>
-                                            <option value="critical">critical </option>
-                                        </select>
-
-                                    </div>
-                                </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -240,17 +227,9 @@
                                     <div class="group-input">
                                         <label for="Short Description">Is Repeat<span class="text-danger"></span></label>
                                         <select id="is_repeat" name="is_repeat">
-s                                            <option value="yes">Yes </option>
+                                           <option value="yes">Yes </option>
                                             <option value="no">No </option>
                                         </select>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments"> Repeat Nature</label>
-                                        <textarea class="summernote" name="repeat_nature" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
@@ -380,17 +359,62 @@ s                                            <option value="yes">Yes </option>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="product_materiel[0][serial]"
-                                                        value="1"></td>
-                                                <td><input type="text" name="product_materiel[0][item_product_code]">
-                                                </td>
+                                                <td><input disabled type="text" name="product_materiel[0][serial]"  value="1"></td>
+                                                <td><input type="text" name="product_materiel[0][item_product_code]"></td>
                                                 <td><input type="text" name="product_materiel[0][lot_batch_no]"></td>
                                                 <td><input type="text" name="product_materiel[0][a_r_number]">
-
-
-                                                <td><input type="date" name="product_materiel[0][m_f_g_date]"></td>
-                                                <td><input type="date" name="product_materiel[0][expiry_date]"></td>
+                                                <td><input type="month"  id="date" name="date" placeholder="MM-YYYY" pattern="\d{2}-\d{4}"></td>
+                                                {{-- <td><input type="month"  name="product_materiel[0][m_f_g_date]"></td> --}}
+                                                <td><input type="month" name="product_materiel[0][expiry_date]"></td>
                                                 <td><input type="text" name="product_materiel[0][label_claim]"></td>
+
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="group-input">
+                                    <label for="audit-agenda-grid">
+                                        Product Detail
+                                        <button type="button" name="audit-agenda-grid" id="productAdd">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#observation-field-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        </span>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="product_details">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 5%">Row No.</th>
+                                                    <th style="width: 12%">Product Name</th>
+                                                    <th style="width: 15%">AR No.</th>
+                                                    <th style="width: 16%">Sample On</th>
+                                                    <th style="width: 15%">Sample By</th>
+                                                    <th style="width: 15%">Analyzed On </th>
+                                                    <th style="width: 15%">Observation On</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="serial[]" value="1"></td>
+                                                <td><input type="text" name="product_detail[0][product_name]"></td>
+                                                <td><input type="text" name="product_detail[0][ar_num]"></td>
+                                                {{-- <td>
+                                                    <div class="col-md-6 new-date-data-field">
+                                                        <div class="group-input input-date">
+                                                            <div class="calenderautitee">
+                                                                <input type="text" id="sample_on" placeholder="DD-MM-YYYY" readonly />
+                                                                <input type="date" name="product_detail[0][sample_on]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
+                                                                    oninput="handleDateInput(this, 'sample_on')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td> --}}
+                                                <td> <input type="month" name="product_detail[0][sample_on]"> </td>
+                                                <td><input type="text" name="product_detail[0][sample_by]"></td>
+                                                <td><input type="month" name="product_detail[0][analyzed_on]"></td>
+                                                <td><input type="month" name="product_detail[0][observation_on]"></td>
 
                                             </tbody>
 
@@ -464,9 +488,7 @@ s                                            <option value="yes">Yes </option>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="details_of_stability[]"
-                                                        value="1"></td>
-
+                                                <td><input disabled type="text" name="details_of_stability[]" value="1"></td>
                                                 <td><input type="text" name="details_of_stability[0][a_r_number]"></td>
                                                 <td><input type="text" name="details_of_stability[0][temprature]"></td>
                                                 <td><input type="text" name="details_of_stability[0][interval]"></td>
@@ -527,7 +549,6 @@ s                                            <option value="yes">Yes </option>
                                                 <td><input type="text" name="oot_result[0][p_i_details]"></td>
                                                 <td><input type="text" name="oot_result[0][difference_of_result]"></td>
                                                 <td><input type="text" name="oot_result[0][trend_limit]"></td>
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -624,7 +645,6 @@ s                                            <option value="yes">Yes </option>
                                     </div>
                                 </div>
 
-
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Corrective Action</label>
@@ -693,7 +713,6 @@ s                                            <option value="yes">Yes </option>
                         <div class="inner-block-content">
                             <div class="row">
 
-
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Reason for Stability</label>
@@ -726,47 +745,18 @@ s                                            <option value="yes">Yes </option>
                                             </thead>
                                             <tbody>
                                                 <td><input disabled type="text" name="serial[]" value="1"></td>
-                                                <td><input type="text" name="info_product[0][batch_no]"></td>
-                                                {{-- <td><input type="date" name="info_product[0][mfg_date]"></td> --}}
-                                                <td>
-                                                    <div class="col-md-6 new-date-data-field">
-                                                        <div class="group-input input-date">
-                                                            <div class="calenderautitee">
-                                                                <input type="text" id="info_product_0_mfg_date"
-                                                                    placeholder="DD-MM-YYYY" readonly />
-                                                                <input type="date" name="info_product[0][m_f_g_date]"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                    class="hide-input"
-                                                                    oninput="handleDateInput(this, 'info_product_0_mfg_date')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="col-md-6 new-date-data-field">
-                                                        <div class="group-input input-date">
-                                                            <div class="calenderautitee">
-                                                                <input type="text" id="info_product_0_exp_date"
-                                                                    placeholder="DD-MM-YYYY" readonly />
-                                                                <input type="date" name="info_product[0][exp_date]"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                    class="hide-input"
-                                                                    oninput="handleDateInput(this, 'info_product_0_exp_date')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                {{-- <td><input type="date" name="info_product[0][exp_date]"></td> --}}
-                                                <td><input type="text" name="info_product[0][ar_number]"></td>
-                                                <td><input type="text" name="info_product[0][pack_style]"></td>
-                                                <td><input type="text" name="info_product[0][frequency]"></td>
-                                                <td><input type="text" name="info_product[0][condition]"></td>
+                                                <td><input type="text"  name="info_product[0][batch_no]"></td>
+                                                <td><input type="month" name="info_product[0][mfg_date]"></td>
+                                                <td><input type="month" name="info_product[0][exp_date]"></td>
+                                                <td><input type="text"  name="info_product[0][ar_number]"></td>
+                                                <td><input type="text"  name="info_product[0][pack_style]"></td>
+                                                <td><input type="text"  name="info_product[0][frequency]"></td>
+                                                <td><input type="text"  name="info_product[0][condition]"></td>
                                             </tbody>
-
                                         </table>
                                     </div>
                                 </div>
+
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -3868,9 +3858,9 @@ s                                            <option value="yes">Yes </option>
                         '][lot_batch_no]"></td>' +
                         ' <td><input type="text" name="product_materiel[' + indexDetail +
                         '][a_r_number]"></td>' +
-                        '<td><input type="date" name="product_materiel['+ indexDetail +'][m_f_g_date]"></td>' +
+                        '<td><input type="month" name="product_materiel['+ indexDetail +'][m_f_g_date]"></td>' +
                         // '<td> <div class="col-md-6 new-date-data-field"> <div class="group-input input-date"> <div class="calenderautitee"> <input type="text" id="product_materiel_0_mfg_date" placeholder="DD-MM-YYYY" readonly /> <input type="date" name="product_materiel[0][m_f_g_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, "product_materiel_0_mfg_date")" placeholder="DD-MM-YYYY" /> </div> </div> </div> </td>' +
-                        '<td><input type="date" name="product_materiel[' + indexDetail +
+                        '<td><input type="month" name="product_materiel[' + indexDetail +
                         '][expiry_date]"></td>' +
                         '<td><input type="text" name="product_materiel[' + indexDetail +
                         '][label_claim]"></td>' +
@@ -4008,8 +3998,6 @@ s                                            <option value="yes">Yes </option>
     });
 </script> --}}
 
-
-
     <script>
         $(document).ready(function() {
             let infoProduct = 1;
@@ -4020,11 +4008,10 @@ s                                            <option value="yes">Yes </option>
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][batch_no]"></td>' +
-                        '<td><input type="date" name="info_product[' + infoProduct + '][mfg_date]"></td>' +
-                        '<td><input type="date" name="info_product[' + infoProduct + '][exp_date]"></td>' +
+                        '<td><input type="month" name="info_product[' + infoProduct + '][mfg_date]"></td>' +
+                        '<td><input type="month" name="info_product[' + infoProduct + '][exp_date]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][ar_number]"></td>' +
-                        '<td><input type="text" name="info_product[' + infoProduct +
-                        '][pack_style]"></td>' +
+                        '<td><input type="text" name="info_product[' + infoProduct + '][pack_style]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][frequency]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][condition]"></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
@@ -4124,6 +4111,36 @@ s                                            <option value="yes">Yes </option>
             });
         });
     </script>
+
+<script>
+    $(document).ready(function() {
+        let indexDetail = 1;
+        $('#productAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                    '<td><input type="text" name="product_detail[' + indexDetail + '][product_name]"></td>' +
+                    '<td><input type="text" name="product_detail[' + indexDetail + '][ar_num]"></td>' +
+                    '<td><input type="month" name="product_detail[' + indexDetail + '][sample_on]"></td>' +
+                    // '<td> <div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_'+ indexDetail +'sample_on" type="text" name="product_detail[' + indexDetail + '][sample_on]" placeholder="DD-MMM-YYYY" /> <input type="date" name="product_detail[' + indexDetail + '][sample_on]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'sample_on" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'sample_on\')" /> </div> </div></div></td>' +
+                    '<td><input type="date" name="product_detail['+ indexDetail +'][sample_by]"></td>' +
+                    '<td><input type="month" name="product_detail[' + indexDetail + '][analyzed_on]"></td>' +
+                    // '<td> <div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_'+ indexDetail +'analyzed_on" type="text" name="product_detail[' + indexDetail + '][analyzed_on]" placeholder="DD-MMM-YYYY" /> <input type="date" name="product_detail[' + indexDetail + '][analyzed_on]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'analyzed_on" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'analyzed_on\')" /> </div> </div></div></td>' +
+                    // '<td> <div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_'+ indexDetail +'observation_on" type="text" name="product_detail[' + indexDetail + '][observation_on]" placeholder="DD-MMM-YYYY" /> <input type="date" name="product_detail[' + indexDetail + '][observation_on]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'observation_on" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'observation_on\')" /> </div> </div></div></td>' +
+                     '<td><input type="month" name="product_detail[' + indexDetail + '][observation_on]"></td>' +
+                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +  '</tr>';
+                '</tr>';
+                indexDetail++;
+                return html;
+            }
+            var tableBody = $('#product_details tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+    });
+</script>
 
     <script>
         var maxLength = 255;

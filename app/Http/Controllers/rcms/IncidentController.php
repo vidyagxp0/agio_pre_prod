@@ -4553,7 +4553,6 @@ if ($incident->Initial_attachment) {
     public function cftnotreqired(Request $request, $id)
     {
 
-
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $incident = Incident::find($id);
             $lastDocument = Incident::find($id);
@@ -4763,11 +4762,12 @@ if ($incident->Initial_attachment) {
     public function incidentAuditTrailPdf($id)
     {
         $doc = Incident::find($id);
+        $audit = IncidentAuditTrail::where('incident_id', $id)->orderByDesc('id')->paginate(5);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
         $data = IncidentAuditTrail::where('incident_id', $doc->id)->orderByDesc('id')->get();
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
-        $pdf = PDF::loadview('frontend.incident.audit-trail-pdf', compact('data', 'doc'))
+        $pdf = PDF::loadview('frontend.incident.audit-trail-pdf', compact('data', 'doc','audit'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,
