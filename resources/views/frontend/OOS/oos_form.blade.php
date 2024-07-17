@@ -147,7 +147,64 @@ $users = DB::table('users')
             });
         });
     </script>
-    <!-- ------------------------------grid-4 instrument_details-------------------------script -->
+    
+    <!-- ------------------------------grid-4 products_details-------------------------script -->
+    <script>
+        $(document).ready(function() {
+            $('#products_details').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                            '<td><input disabled type="text" name="products_details['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="products_details['+ serialNumber +'][product_name]"></td>'+
+                            '<td><input type="text" name="products_details['+ serialNumber +'][product_AR_No]"></td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="sampled_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][sampled_on]" value="" class="hide-input" oninput="handleDateInput(this, \'sampled_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                        
+                            '<td><input type="text" name="products_details['+ serialNumber +'][sample_by]"></td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="analyzed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][analyzed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'analyzed_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="observed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][observed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'observed_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                           '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
+                        '</tr>'; 
+                    return html;
+                }
+
+                var tableBody = $('#products_details_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+    <!-- ------------------------------grid-5 instrument_details-------------------------script -->
     <script>
         $(document).ready(function() {
             $('#instrument_details').click(function(e) {
@@ -808,7 +865,7 @@ $users = DB::table('users')
                                             <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_submit_by]"></td>
                                             <td>
-                                                <div class="col-lg-6 new-date-data-field">
+                                            <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="oos_submit_on" readonly 
@@ -825,9 +882,79 @@ $users = DB::table('users')
                                 </table>
                             </div>
                         </div>
-                        <!---------------- grid-4 instrument_details----------------------------------- -->
+                        <!---------------- grid-4 Products_details----------------------------------- -->
 
                         <div class="group-input">
+                            <label for="audit-agenda-grid">
+                            Products details
+                                <button type="button" name="audit-agenda-grid" id="products_details">+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#document-details-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="products_details_details" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 4%">Row#</th>
+                                            <th style="width: 8%"> Name of Product</th>
+                                            <th style="width: 8%"> A.R.No </th>
+                                            <th style="width: 8%"> Sampled on </th>
+                                            <th style="width: 8%"> Sample by</th>
+                                            <th style="width: 8%"> Analyzed on</th>
+                                            <th style="width: 8%"> Observed on </th>
+                                            <th style="width: 5%"> Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input disabled type="text" name="products_details[0][serial]" value="1"></td>
+                                            <td><input type="text" name="products_details[0][product_name]"></td>
+                                            <td><input type="text" name="products_details[0][product_AR_No]"></td> 
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="sampled_on" readonly placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="products_details[0][sampled_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'sampled_on')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
+                                            <td><input type="text" name="products_details[0][sample_by]"></td>
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="analyzed_on" readonly placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="products_details[0][analyzed_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'analyzed_on')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="observed_on" readonly placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="products_details[0][observed_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'observed_on')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                         <!---------------- grid-5 instrument_details----------------------------------- -->
+
+                         <div class="group-input">
                             <label for="audit-agenda-grid">
                             Instrument details
                                 <button type="button" name="audit-agenda-grid" id="instrument_details">+</button>

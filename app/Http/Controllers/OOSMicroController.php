@@ -91,6 +91,8 @@ class OOSMicroController extends Controller
             'oos_capa',
             'oos_conclusion',
             'oos_conclusion_review',
+            'instrument_detail',
+            'products_details',
             "phase_IB_investigation",
             "analyst_training_proce",
             "sample_receiving_verification_lab",
@@ -677,9 +679,16 @@ class OOSMicroController extends Controller
             $oos_capas = $micro_data->grids()->where('identifier', 'oos_capa')->first();
             $oos_conclusions = $micro_data->grids()->where('identifier', 'oos_conclusion')->first();
             $oos_conclusion_reviews = $micro_data->grids()->where('identifier', 'oos_conclusion_review')->first();
-            
+            $instrument_details = $micro_data->grids()->where('identifier', 'instrument_detail')->first();
+            $products_details = $micro_data->grids()->where('identifier', 'products_details')->first();
+                
+            // $capaExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "Capa"])->first();
+            // $qrmExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "QRM"])->first();
+            // $investigationExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "Investigation"])->first();
+            // $oosExtension = OOSLaunchExtension::where(['oos_id' => $id, "extension_identifier" => "OOS Chemical"])->first();
+
             return view('frontend.OOS_Micro.oos_micro_view',compact('micro_data','record_number','old_record',
-             'info_product_materials','details_stabilities','oos_details','oos_capas','oos_conclusions','oos_conclusion_reviews'));
+             'info_product_materials','details_stabilities','oos_details','oos_capas','oos_conclusions','oos_conclusion_reviews','instrument_details','products_details'));
        }
         public function update(Request $request, $id){
             
@@ -1155,6 +1164,8 @@ if($lastDocument->$key != $request->$key){
                     'oos_capa',
                     'oos_conclusion',
                     'oos_conclusion_review',
+                    'instrument_detail',
+                    'products_details',
                     // "phase_I_investigation",
                     'phase_IB_investigation',
                     "analyst_training_proce",

@@ -529,7 +529,84 @@
                     </table>
                 </div>
             </div>
-            <!----------------grid-4 instrument_details----------------------------------- -->
+             <!----------------grid-4 Products_details----------------------------------- -->
+
+             <div class="group-input">
+                <label for="audit-agenda-grid">
+                    Product details
+                    <button type="button" name="audit-agenda-grid" id="products_details">+</button>
+                    <span class="text-primary" data-bs-toggle="modal"
+                        data-bs-target="#document-details-field-instruction-modal"
+                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                        (Launch Instruction)
+                    </span>
+                </label>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="products_details_details" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="width: 4%">Row#</th>
+                                <th style="width: 8%"> Name of Product</th>
+                                <th style="width: 8%"> A.R.No </th>
+                                <th style="width: 8%"> Sampled on </th>
+                                <th style="width: 8%"> Sample by</th>
+                                <th style="width: 8%"> Analyzed on</th>
+                                <th style="width: 8%"> Observed on </th>
+                                <th style="width: 5%"> Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if ($products_details && is_array($products_details->data))
+                                @foreach ($products_details->data as $products_detail)
+                                    <tr>
+                                        <td><input disabled type="text" name="products_details[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="products_details[{{ $loop->index }}][product_name]" value="{{ Helpers::getArrayKey($products_detail, 'product_name') }}"></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="products_details[{{ $loop->index }}][product_AR_No]" value="{{ Helpers::getArrayKey($products_detail, 'product_AR_No') }}"></td>
+                                        <td>
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <div class="calenderauditee">
+                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="text" id="sampled_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['sampled_on'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
+                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="date" name="products_details[{{ $loop->index }}][sampled_on]" 
+                                                    value="{{ $products_detail['sampled_on'] ?? '' }}"  class="hide-input" oninput="handleDateInput(this, 'sampled_on_{{ $loop->index }}')">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="products_details[{{ $loop->index }}][sample_by]" value="{{ Helpers::getArrayKey($products_detail, 'sample_by') }}"></td>
+                                        <td>
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <div class="calenderauditee">
+                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="text" id="analyzed_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['analyzed_on'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
+                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="date" name="products_details[{{ $loop->index }}][analyzed_on]" 
+                                                    value="{{ $products_detail['analyzed_on'] ?? '' }}"  class="hide-input" oninput="handleDateInput(this, 'analyzed_on_{{ $loop->index }}')">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </td>
+                                        <td>
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="observed_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['observed_on'] ?? '') }}"
+                                                     readonly placeholder="DD-MM-YYYY" {{Helpers::isOOSChemical($data->stage)}} />
+                                                    <input type="date" name="products_details[{{ $loop->index }}][observed_on]" 
+                                                    value="{{ $products_detail['observed_on'] ?? '' }}"  class="hide-input" 
+                                                    oninput="handleDateInput(this, 'observed_on_{{ $loop->index }}')"   {{Helpers::isOOSChemical($data->stage)}} >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </td>
+                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!----------------grid-5 instrument_details----------------------------------- -->
 
             <div class="group-input">
                 <label for="audit-agenda-grid">

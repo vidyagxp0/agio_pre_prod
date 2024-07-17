@@ -174,7 +174,62 @@
             });
         });
     </script>
-    <!-- ------------------------------grid-4 instrument_details-------------------------script -->
+    <!-- ------------------------------grid-4 products_details-------------------------script -->
+    <script>
+        $(document).ready(function() {
+            $('#products_details').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                            '<td><input disabled type="text" name="products_details['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="products_details['+ serialNumber +'][product_name]"></td>'+
+                            '<td><input type="text" name="products_details['+ serialNumber +'][product_AR_No]"></td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="sampled_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][sampled_on]" value="" class="hide-input" oninput="handleDateInput(this, \'sampled_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                            '<td><input type="text" name="products_details['+ serialNumber +'][sample_by]"></td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="analyzed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][analyzed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'analyzed_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="observed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][observed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'observed_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
+                        '</tr>'; 
+                    return html;
+                }
+
+                var tableBody = $('#products_details_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+    <!-- ------------------------------grid-5 instrument_details-------------------------script -->
     <script>
         $(document).ready(function() {
             $('#instrument_details').click(function(e) {

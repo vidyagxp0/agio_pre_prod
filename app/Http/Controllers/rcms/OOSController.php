@@ -75,6 +75,7 @@ class OOSController extends Controller
         $details_stabilities = $data->grids()->where('identifier', 'details_stability')->first();
         $oos_details = $data->grids()->where('identifier', 'oos_detail')->first();
         $instrument_details = $data->grids()->where('identifier', 'instrument_detail')->first();
+        $products_details = $data->grids()->where('identifier', 'products_details')->first();
         $checklist_lab_invs = $data->grids()->where('identifier', 'checklist_lab_inv')->first();
         $oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
         $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
@@ -89,7 +90,7 @@ class OOSController extends Controller
 
         return view('frontend.OOS.oos_form_view', 
         compact('data', 'old_record', 'info_product_materials',
-         'details_stabilities', 'oos_details','instrument_details', 'checklist_lab_invs', 
+         'details_stabilities', 'oos_details','instrument_details','products_details', 'checklist_lab_invs', 
          'oos_capas', 'phase_two_invs', 'oos_conclusions', 'oos_conclusion_reviews','capaExtension',
           'qrmExtension', 'investigationExtension', 'oosExtension'));
 
