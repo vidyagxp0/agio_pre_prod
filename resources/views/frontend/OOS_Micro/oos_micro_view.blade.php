@@ -101,7 +101,6 @@
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_test_name]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_results_obtained]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
-                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
                             '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
                             '<td>' +
                             '<div class="col-lg-6 new-date-data-field">' +

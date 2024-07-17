@@ -495,8 +495,7 @@
                                 <th style="width: 8%">Test Name of OOS</th>
                                 <th style="width: 12%">Results Obtained</th>
                                 <th style="width: 16%">Specification Limit</th>
-                                <th style="width: 16%">Details of Obvious Error</th>
-                                <!-- <th style="width: 16%">File Attachment</th> -->
+                               <!-- <th style="width: 16%">File Attachment</th> -->
                                 <th style="width: 16%">Submit On</th>
                         </tr>
                         @if(($data->oos_details) && is_array($data->oos_details->data))
@@ -507,14 +506,11 @@
                             <td class="w-15">{{ $datagridIII['oos_test_name'] ?  $datagridIII['oos_test_name']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_results_obtained'] ?  $datagridIII['oos_results_obtained']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_specification_limit'] ?  $datagridIII['oos_specification_limit']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $datagridIII['oos_details_obvious_error'] ?  $datagridIII['oos_details_obvious_error']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_submit_on'] ?  Helpers::getdateFormat($datagridIII['oos_submit_on'] ?? ''): "Not Applicable" }} </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
@@ -570,8 +566,7 @@
                         <th class="w-20">Phase I Investigation Ref.</th>
                         <td class="w-80">Not Applicable</td>
                     </tr>
-                  <!-- -->
-                 <div class="block-head">File Attachments</div>
+                  <div class="block-head">File Attachments</div>
                       <div class="border-table">
                         <table>
                             <tr class="table_bg">

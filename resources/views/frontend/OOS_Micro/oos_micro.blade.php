@@ -122,7 +122,6 @@ $users = DB::table('users')
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_test_name]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_results_obtained]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
-                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
                             '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
                             '<td>' +
                             '<div class="col-lg-6 new-date-data-field">' +
@@ -448,7 +447,7 @@ $users = DB::table('users')
                                     value="">
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Initiated Through ?</label>
                                 <select name="initiated_through_gi"
@@ -466,8 +465,8 @@ $users = DB::table('users')
                                             <option value="others">Others</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
+                        </div> --}}
+                        <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group Code">If Others </label>
                                 <textarea name="if_others_gi"></textarea>
@@ -501,17 +500,6 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div> --}}
-                        <div class="col-md-6 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOS Occurred On">OOS Occured On</label>
-                                <div class="calenderauditee">                                    
-                                    <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
-                                    <input type="date" name="deviation_occured_on_gi"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                    class="hide-input"
-                                    oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Source Document Type</label>
@@ -536,6 +524,100 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Reference Recores">Reference Document</label>
                                 <input type="text" name="reference_document_gi" placeholder="Enter Reference Document">
+                            </div>
+                        </div>
+                        <div class="col-md-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOS Occurred On">OOS Occured On</label>
+                                <div class="calenderauditee">                                    
+                                    <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
+                                    <input type="date" name="deviation_occured_on_gi"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                    class="hide-input"
+                                    oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOS Observed On">OOS Observed On</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="oos_observed_on" readonly placeholder="DD-MMM-YYYY" />
+                                    {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                    <input type="date" name="oos_observed_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'oos_observed_on')" />
+                                </div>
+                            </div>
+                            @error('Deviation_date')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="deviation_time">Delay Justification</label>
+                                <textarea id="delay_justification" name="delay_justification"></textarea>
+                            </div>
+                            {{-- @error('Deviation_date')
+                                <div class="text-danger">{{  $message  }}</div>
+                            @enderror --}}
+                        </div>
+                        <script>
+                            flatpickr("#deviation_time", {
+                                enableTime: true,
+                                noCalendar: true,
+                                dateFormat: "H:i", // 24-hour format without AM/PM
+                                minuteIncrement: 1 // Set minute increment to 1
+
+                            });
+                        </script>
+                                
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Audit Schedule End Date">OOS Reported on</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="oos_reported_date" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="oos_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                                      class="hide-input" oninput="handleDateInput(this, 'oos_reported_date')" />
+                                </div>
+                            </div>
+                        </div>
+                            <script>
+                                $('.delayJustificationBlock').hide();
+
+                                function calculateDateDifference() {
+                                    let deviationDate = $('input[name=Deviation_date]').val();
+                                    let reportedDate = $('input[name=Deviation_reported_date]').val();
+
+                                    if (!deviationDate || !reportedDate) {
+                                        console.error('Deviation date or reported date is missing.');
+                                        return;
+                                    }
+
+                                    let deviationDateMoment = moment(deviationDate);
+                                    let reportedDateMoment = moment(reportedDate);
+
+                                    let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
+
+                                    // if (diffInDays > 0) {
+                                    //     $('.delayJustificationBlock').show();
+                                    // } else {
+                                    //     $('.delayJustificationBlock').hide();
+                                    // }
+
+                                }
+
+                                $('input[name=Deviation_date]').on('change', function() {
+                                    calculateDateDifference();
+                                })
+
+                                $('input[name=Deviation_reported_date]').on('change', function() {
+                                    calculateDateDifference();
+                                })
+                            </script>
+                            
+                            <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Immediate action</label>
+                                <input type="text" name="immediate_action"  id="immediate_action" value="">
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -738,7 +820,6 @@ $users = DB::table('users')
                                             <th style="width: 8%">Test Name of OOS</th>
                                             <th style="width: 8%">Results Obtained</th>
                                             <th style="width: 8%">Specification Limit</th>
-                                            <th style="width: 8%">Details of Obvious Error</th>
                                             <th style="width: 16%">File Attachment</th>
                                             <th style="width: 16%">Submit On</th>
                                             <th style="width: 15%">Action </th>
@@ -751,7 +832,6 @@ $users = DB::table('users')
                                             <td><input type="text" name="oos_detail[0][oos_test_name]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_results_obtained]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_specification_limit]"></td>
-                                            <td><input type="text" name="oos_detail[0][oos_details_obvious_error]"></td>
                                             <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
                                             <td>
                                                 <div class="col-lg-6 new-date-data-field">
@@ -1235,7 +1315,6 @@ $users = DB::table('users')
                                                     <option value="No">No</option>
                                                 </select></td>
                                             <td><input type="text" name="oos_capa[0][info_oos_capa_reference_number]" value=""></td> 
-                                            <td><button type="text" class="removeRowBtn">Remove</button></td><td><button type="text" class="removeRowBtn">Remove</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1525,12 +1604,18 @@ $users = DB::table('users')
                                 <input type="string" name="others_oos_category_piiqcr">
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Details of Obvious Error">Details of Obvious Error</label>
+                                <input type="text" name="oos_details_obvious_error">
+                            </div>
+                       </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">Details of Root Cause</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                 <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
-                                        </textarea>
+                                </textarea>
                             </div>
                         </div>
                         <div class="col-md-12 mb-4">
@@ -8066,14 +8151,10 @@ $users = DB::table('users')
                                         </tr>
                                         @endforeach
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
             <div class="inner-block-content">

@@ -271,6 +271,12 @@ $phase_II_OOS_investigations = [
                             <input  {{Helpers::isOOSMicro($micro_data->stage)}} type="string" name="others_oos_category_piiqcr" value="{{ $micro_data->others_oos_category_piiqcr }}">
                         </div>
                     </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Details of Obvious Error">Details of Obvious Error</label>
+                            <input  {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_details_obvious_error" value="{{ $micro_data->oos_details_obvious_error }}">
+                        </div>
+                    </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Details of Root Cause</label>

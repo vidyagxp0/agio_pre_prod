@@ -160,16 +160,18 @@ class OOS extends Model
           'required_attachment_uar',
           'verification_comments_uav',
           'verification_attachment_uar',
+          'oos_observed_on',
+          'delay_justification',
+          'oos_reported_date',
+          'immediate_action',
+          'oos_details_obvious_error',
           'status',
           'stage',
           // 'type',
           'date_open',
-          'date_close', 
+          'date_close'
 
-          'oos_observed_on',
-          'delay_justification',
-          'oos_reported_date',
-          'immediate_action'
+         
           
       ];
 

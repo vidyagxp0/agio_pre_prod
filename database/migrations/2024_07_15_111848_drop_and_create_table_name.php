@@ -210,8 +210,13 @@ return new class extends Migration
         $table->text('initiator_group_gi')->nullable();
         $table->text('initiator_group_code_gi')->nullable();
         $table->text('initiated_through_gi')->nullable();
-
-
+         // ======= addextrafield 11july24 ========
+         $table->longtext('oos_observed_on')->nullable();
+         $table->longtext('delay_justification')->nullable();
+         $table->longtext('oos_reported_date')->nullable();
+         $table->longtext('immediate_action')->nullable();
+         $table->longtext('oos_details_obvious_error')->nullable();
+         
         //====== workflow start stage 9july extra field add ===========
         // ============  stage1 to stage2 ========
         $table->text('completed_by_submit')->nullable();

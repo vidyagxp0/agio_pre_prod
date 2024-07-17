@@ -15,9 +15,8 @@
                     <label for="Description Deviation">Summary Mfg. Investigation</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="summary_mfg_investigation_piiqcr" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
-                {{$data->summary_mfg_investigation_piiqcr ? $data->summary_mfg_investigation_piiqcr : ''}}
-                        
-                </textarea>
+                          {{$data->summary_mfg_investigation_piiqcr ? $data->summary_mfg_investigation_piiqcr : ''}}
+                    </textarea>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -29,7 +28,6 @@
                             '' }}>Yes</option>
                         <option value="no" {{ $data->root_casue_identified_piiqcr === 'no' ? 'selected' : ''
                             }}>No</option>
-
                     </select>
                 </div>
             </div>
@@ -54,6 +52,12 @@
                     <label for="Audit Preparation Completed On">Others (OOS category)</label>
                     <input type="text" name="others_oos_category_piiqcr"
                         value="{{$data->others_oos_category_piiqcr}}" {{Helpers::isOOSChemical($data->stage)}}>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Details of Obvious Error">Details of Obvious Error</label>
+                    <input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_details_obvious_error" value="{{ $data->oos_details_obvious_error }}">
                 </div>
             </div>
             <div class="col-md-12 mb-4">

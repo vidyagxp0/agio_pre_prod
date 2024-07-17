@@ -202,6 +202,12 @@ return new class extends Migration
             $table->text('investigation_ref')->nullable();
             $table->text('hypo_exp_ref')->nullable(); 
             $table->longtext('verification_comments')->nullable(); 
+            // ======= addextrafield 11july24 ========
+            $table->longtext('oos_observed_on')->nullable();
+            $table->longtext('delay_justification')->nullable();
+            $table->longtext('oos_reported_date')->nullable();
+            $table->longtext('immediate_action')->nullable();
+            $table->longtext('oos_details_obvious_error')->nullable();
             
             // attechment
             $table->longtext('ua_approval_attachment')->nullable();

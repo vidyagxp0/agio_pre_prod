@@ -102,7 +102,7 @@
                         value="{{ $micro_data->initiator_group_code_gi }}" readonly {{Helpers::isOOSMicro($micro_data->stage)}}>
                 </div>
             </div>
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group">Initiated Through ?</label>
                     <select name="initiated_through_gi" onchange="otherController(this.value, 'others', 'initiated_through_req')" {{Helpers::isOOSMicro($micro_data->stage)}}>
@@ -119,8 +119,8 @@
                             <option value="others" @if ($micro_data->initiated_through_gi == 'others') selected @endif>Others</option>
                     </select>
                 </div>
-            </div>
-            <div class="col-lg-6">
+            </div> --}}
+            <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Initiator Group Code">If Others </label>
                     <textarea name="if_others_gi" {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->if_others_gi }}</textarea>
@@ -155,17 +155,6 @@
                     </select>
                 </div>
             </div> --}}
-            <div class="col-lg-6 new-date-data-field">
-                <div class="group-input input-date">
-                    <label for="Deviation Occurred On">OOS occurred On </label>
-                    <div class="calenderauditee">
-                        <input type="text" id="deviation_occured_on_gi" readonly value="{{ Helpers::getdateFormat($micro_data['deviation_occured_on_gi'] ?? '') }}" placeholder="DD-MM-YYYY" />
-                        <input type="date" name="deviation_occured_on_gi" class="hide-input"
-                            oninput="handleDateInput(this, 'deviation_occured_on_gi')"  {{Helpers::isOOSMicro($micro_data->stage)}}/>
-                    </div>
-                </div>
-            </div>
-            
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Source Document Type</label>
@@ -192,7 +181,105 @@
                    <input type="text" name="reference_document_gi" value="{{ $micro_data->reference_document_gi}}" {{Helpers::isOOSMicro($micro_data->stage)}}>
                 </div>
             </div>
+            <div class="col-lg-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="Deviation Occurred On">OOS occurred On </label>
+                    <div class="calenderauditee">
+                        <input type="text" id="deviation_occured_on_gi" readonly value="{{ Helpers::getdateFormat($micro_data['deviation_occured_on_gi'] ?? '') }}" placeholder="DD-MM-YYYY" />
+                        <input type="date" name="deviation_occured_on_gi" class="hide-input"
+                            oninput="handleDateInput(this, 'deviation_occured_on_gi')"  {{Helpers::isOOSMicro($micro_data->stage)}}/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="Deviation Occurred On"> OOS Observed On </label>
+                    <div><small class="text-primary"></small></div>
+                    <div class="calenderauditee">
+                        <input type="text" id="oos_observed_on" readonly 
+                        value="{{ Helpers::getdateFormat($micro_data['oos_observed_on'] ?? '') }}" {{Helpers::isOOSChemical($micro_data->stage)}} placeholder="DD-MM-YYYY" />
+                        <input type="date" name="oos_observed_on"
+                         class="hide-input"
+                            oninput="handleDateInput(this, 'oos_observed_on')" />
+                    </div>
+                </div>
+            </div>
             
+            <div class="col-lg-6 new-time-data-field">
+                {{-- @error('delay_justification') @else delayJustificationBlock @enderror --}}
+                <div class="group-input input-time ">
+                    <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
+                    <textarea id="delay_justification" name="delay_justification">{{ $micro_data->delay_justification }}</textarea>
+                </div>
+                @error('delay_justification')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <script>
+                flatpickr("#deviation_time", {
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i", // 24-hour format without AM/PM
+                    minuteIncrement: 1 // Set minute increment to 1
+
+                });
+            </script>
+            
+            <div class="col-lg-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="Deviation Occurred On"> OOS Reported On</label>
+                    <div><small class="text-primary"></small></div>
+                    <div class="calenderauditee">
+                        <input type="text" id="oos_reported_date" readonly 
+                        value="{{ Helpers::getdateFormat($micro_data['oos_reported_date'] ?? '') }}" {{Helpers::isOOSChemical($micro_data->stage)}} placeholder="DD-MM-YYYY" />
+                        <input type="date" name="oos_reported_date" class="hide-input" oninput="handleDateInput(this, 'oos_reported_date')" />
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    // Hide the delayJustificationBlock initially
+                    $('.delayJustificationBlock').hide();
+
+                    // Check the condition on page load
+                    checkDateDifference();
+                });
+
+                function checkDateDifference() {
+                    let deviationDate = $('input[name=Deviation_date]').val();
+                    let reportedDate = $('input[name=Deviation_reported_date]').val();
+
+                    if (!deviationDate || !reportedDate) {
+                        console.error('Deviation date or reported date is missing.');
+                        return;
+                    }
+
+                    let deviationDateMoment = moment(deviationDate);
+                    let reportedDateMoment = moment(reportedDate);
+
+                    let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
+
+                    // if (diffInDays > 0) {
+                    //     $('.delayJustificationBlock').show();
+                    // } else {
+                    //     $('.delayJustificationBlock').hide();
+                    // }
+                }
+
+                // Call checkDateDifference whenever the values are changed
+                $('input[name=Deviation_date], input[name=Deviation_reported_date]').on('change', function() {
+                    checkDateDifference();
+                });
+                </script>
+
+
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Immediate action">Immediate action</label>
+                    <input type="text" name="immediate_action"  id="immediate_action" 
+                        value="{{ $micro_data->immediate_action ?? '' }}" {{Helpers::isOOSChemical($micro_data->stage)}}>
+                </div>
+            </div>
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Initiator Group">Initial Attachment</label>
@@ -418,7 +505,6 @@
                                 <th style="width: 8%">Test Name of OOS</th>
                                 <th style="width: 12%">Results Obtained</th>
                                 <th style="width: 16%">Specification Limit</th>
-                                <th style="width: 10%">Details of Obvious Error</th>
                                 <th style="width: 14%">File Attachment</th>
                                 <th style="width: 16%">Submit On</th>
                                 <th style="width: 5%"> Action</th>
@@ -433,7 +519,6 @@
                                         <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_detail[{{ $loop->index }}][oos_test_name]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_test_name') }}"></td>
                                         <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_detail[{{ $loop->index }}][oos_results_obtained]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_results_obtained') }}"></td>
                                         <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_detail[{{ $loop->index }}][oos_specification_limit]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_specification_limit') }}"></td>
-                                        <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_detail[{{ $loop->index }}][oos_details_obvious_error]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_details_obvious_error') }}"></td>
                                         <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="file" name="oos_detail[{{ $loop->index }}][oos_file_attachment]"></td>
                                         <td>
                                           <div class="col-lg-6 new-date-data-field">

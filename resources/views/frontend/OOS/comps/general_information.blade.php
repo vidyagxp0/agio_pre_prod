@@ -174,16 +174,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="group-input">
-                    <label for="severity-level">OOS Observed On <span class="text-danger">*</span></label>
-                     <input type="date" id="oos_observed_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                        name="oos_observed_on" value="{{ old('oos_observed_on') ? old('oos_observed_on') : $data->oos_observed_on }}">
-                    @error('oos_observed_on')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+            <div class="col-lg-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="Deviation Occurred On"> OOS Observed On </label>
+                    <div><small class="text-primary"></small></div>
+                    <div class="calenderauditee">
+                        <input type="text" id="oos_observed_on" readonly 
+                        value="{{ Helpers::getdateFormat($data['oos_observed_on'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
+                        <input type="date" name="oos_observed_on"
+                         class="hide-input"
+                            oninput="handleDateInput(this, 'oos_observed_on')" />
+                    </div>
                 </div>
             </div>
+            
             <div class="col-lg-6 new-time-data-field">
                 {{-- @error('delay_justification') @else delayJustificationBlock @enderror --}}
                 <div class="group-input input-time ">
@@ -203,52 +207,53 @@
 
                 });
             </script>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Initiator Group">OOS Reported On 
-                    <input type="date" id="oos_reported_date" name="oos_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                        {{ $data->stage == 0 || $data->stage == 15 ? 'disabled' : '' }} value="{{ $data->oos_reported_date }}">
+            
+            <div class="col-lg-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="Deviation Occurred On"> OOS Reported On</label>
+                    <div><small class="text-primary"></small></div>
+                    <div class="calenderauditee">
+                        <input type="text" id="oos_reported_date" readonly 
+                        value="{{ Helpers::getdateFormat($data['oos_reported_date'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
+                        <input type="date" name="oos_reported_date" class="hide-input" oninput="handleDateInput(this, 'oos_reported_date')" />
+                    </div>
                 </div>
-                @error('oos_reported_date')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
             </div>
+            <script>
+                $(document).ready(function() {
+                    // Hide the delayJustificationBlock initially
+                    $('.delayJustificationBlock').hide();
 
-                    <script>
-                        $(document).ready(function() {
-                            // Hide the delayJustificationBlock initially
-                            $('.delayJustificationBlock').hide();
+                    // Check the condition on page load
+                    checkDateDifference();
+                });
 
-                            // Check the condition on page load
-                            checkDateDifference();
-                        });
+                function checkDateDifference() {
+                    let deviationDate = $('input[name=Deviation_date]').val();
+                    let reportedDate = $('input[name=Deviation_reported_date]').val();
 
-                        function checkDateDifference() {
-                            let deviationDate = $('input[name=Deviation_date]').val();
-                            let reportedDate = $('input[name=Deviation_reported_date]').val();
+                    if (!deviationDate || !reportedDate) {
+                        console.error('Deviation date or reported date is missing.');
+                        return;
+                    }
 
-                            if (!deviationDate || !reportedDate) {
-                                console.error('Deviation date or reported date is missing.');
-                                return;
-                            }
+                    let deviationDateMoment = moment(deviationDate);
+                    let reportedDateMoment = moment(reportedDate);
 
-                            let deviationDateMoment = moment(deviationDate);
-                            let reportedDateMoment = moment(reportedDate);
+                    let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
 
-                            let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
+                    // if (diffInDays > 0) {
+                    //     $('.delayJustificationBlock').show();
+                    // } else {
+                    //     $('.delayJustificationBlock').hide();
+                    // }
+                }
 
-                            // if (diffInDays > 0) {
-                            //     $('.delayJustificationBlock').show();
-                            // } else {
-                            //     $('.delayJustificationBlock').hide();
-                            // }
-                        }
-
-                        // Call checkDateDifference whenever the values are changed
-                        $('input[name=Deviation_date], input[name=Deviation_reported_date]').on('change', function() {
-                            checkDateDifference();
-                        });
-                        </script>
+                // Call checkDateDifference whenever the values are changed
+                $('input[name=Deviation_date], input[name=Deviation_reported_date]').on('change', function() {
+                    checkDateDifference();
+                });
+                </script>
 
 
             <div class="col-lg-6">

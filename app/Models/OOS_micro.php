@@ -175,7 +175,11 @@ class OOS_micro extends Model
         'addi_testing_ref',
         'investigation_ref',
         'hypo_exp_ref',
-
+        'oos_observed_on',
+        'delay_justification',
+        'oos_reported_date',
+        'immediate_action',
+        'oos_details_obvious_error',
         'status',
         'stage',
         'date_open',

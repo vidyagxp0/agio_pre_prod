@@ -1543,6 +1543,20 @@ $users = DB::table('users')
                             <input type="text" name="others_oos_category_piiqcr">
                         </div>
                     </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Details of Obvious Error">Details of Obvious Error</label>
+                            <input type="text" name="oos_details_obvious_error">
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Details of Root Cause</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                            <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
+                            </textarea>
+                        </div>
+                    </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Details of Root Cause</label>
