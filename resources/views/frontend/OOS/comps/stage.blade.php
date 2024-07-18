@@ -44,7 +44,6 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Proposed Hypothesis Experiment</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
             @elseif($data->stage == 6 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>   -->
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Obvious Error Found</button> 
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">No Assignable Cause Found</button> 
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button> 
@@ -57,7 +56,6 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Menufacturing Investigation</button> 
             @elseif($data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>  
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">To Under Hypothesis Experiment State</button> 
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Found (Menufacturing Defect)</button> 
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">No Assignable Cause Found (No Menufacturing Defect)</button> 
             @elseif($data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -74,7 +72,7 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Batch Disposition</button>  
             @elseif($data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>  
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II Manufacturing Investigation</button> 
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase III Manufacturing Investigation</button> 
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button> 
                 
             @elseif($data->stage == 14 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))

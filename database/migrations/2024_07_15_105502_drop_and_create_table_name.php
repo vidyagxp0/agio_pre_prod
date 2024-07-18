@@ -223,7 +223,7 @@ return new class extends Migration
             $table->text('completed_by_obvious_error_found')->nullable();
             $table->text('completed_on_obvious_error_found')->nullable();
             $table->text('comment_obvious_error_found')->nullable();
-            // stage7 to stage13
+            // stage7 to stage14
             $table->text('completed_by_repeat_analysis_completed')->nullable();
             $table->text('completed_on_repeat_analysis_completed')->nullable();
             $table->text('comment_repeat_analysis_completed')->nullable();
@@ -259,14 +259,14 @@ return new class extends Migration
            $table->text('completed_by_phaseIIB_correction_inconclusive')->nullable();
            $table->text('completed_on_phaseIIB_correction_inconclusive')->nullable();
            $table->text('comment_phaseIIB_correction_inconclusive')->nullable(); 
-           //   ====== stage12 to stage13 ========
-           $table->text('completed_by_phaseIII_manufacturing_investigation')->nullable();
-           $table->text('completed_on_phaseIII_manufacturing_investigation')->nullable();
-           $table->text('comment_phaseIII_manufacturing_investigation')->nullable(); 
-           // =========== stage13 to 14 ===========
+           // =========== stage12 to 14 ===========
            $table->text('completed_by_batch_disposition')->nullable();
            $table->text('completed_on_batch_disposition')->nullable();
            $table->text('comment_batch_disposition')->nullable(); 
+           //   ====== stage13 to stage14 ========
+           $table->text('completed_by_phaseIII_manufacturing_investigation')->nullable();
+           $table->text('completed_on_phaseIII_manufacturing_investigation')->nullable();
+           $table->text('comment_phaseIII_manufacturing_investigation')->nullable(); 
            // ===========  stage14 to 15 =========== 
             $table->text('completed_by_approval_completed')->nullable();
             $table->text('completed_on_approval_completed')->nullable();

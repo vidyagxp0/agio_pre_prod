@@ -346,9 +346,9 @@ class OOSController extends Controller
             if ($changestage->stage == 6) {
                 $changestage->stage = "8";
                 $changestage->status = "Under Phase II Investigation";
-                $changestage->completed_by_under_phaseII_investigation = Auth::user()->name;
-                $changestage->completed_on_under_phaseII_investigation = Carbon::now()->format('d-M-Y');
-                $changestage->comment_under_phaseII_investigation = $request->comment;
+                $changestage->completed_by_no_assignable_cause_found = Auth::user()->name;
+                $changestage->completed_on_no_assignable_cause_found = Carbon::now()->format('d-M-Y');
+                $changestage->comment_no_assignable_cause_found = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -369,9 +369,9 @@ class OOSController extends Controller
             if ($changestage->stage == 8) {
                 $changestage->stage = "9";
                 $changestage->status = "under Manufacturing Investigation phase II a";
-                $changestage->completed_by_under_manufacturing_investigation_phaseIIA = Auth::user()->name;
-                $changestage->completed_on_under_manufacturing_investigation_phaseIIA = Carbon::now()->format('d-M-Y');
-                $changestage->comment_under_manufacturing_investigation_phaseIIA = $request->comment;
+                $changestage->completed_by_manufacturing_investigation = Auth::user()->name;
+                $changestage->completed_on_manufacturing_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_manufacturing_investigation = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -392,9 +392,9 @@ class OOSController extends Controller
             if ($changestage->stage == 9) {
                 $changestage->stage = "11";
                 $changestage->status = "Under phase II b Additional Lab Investigation";
-                $changestage->completed_by_under_phaseIIB_additional_lab_investigation= Auth::user()->name;
-                $changestage->completed_on_under_phaseIIB_additional_lab_investigation = Carbon::now()->format('d-M-Y');
-                $changestage->comment_under_phaseIIB_additional_lab_investigation = $request->comment;
+                $changestage->completed_by_no_assignable_manufacturing_defect= Auth::user()->name;
+                $changestage->completed_on_no_assignable_manufacturing_defect = Carbon::now()->format('d-M-Y');
+                $changestage->comment_no_assignable_manufacturing_defect = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -610,7 +610,7 @@ class OOSController extends Controller
             }
             if ($changestage->stage == 9) {
                 $changestage->stage = "10";
-                $changestage->status = "Under PhaseIIA Correction";
+                $changestage->status = "Under PhaseII A Correction";
                 $changestage->completed_by_assignable_manufacturing_defect= Auth::user()->name;
                 $changestage->completed_on_assignable_manufacturing_defect = Carbon::now()->format('d-M-Y');
                 $changestage->comment_assignable_manufacturing_defect = $request->comment;
@@ -740,9 +740,9 @@ class OOSController extends Controller
              if ($changestage->stage == 3) {
                  $changestage->stage = "2";
                  $changestage->status = "Pending Initial Assessment & Lab Incident";
-                 $changestage->completed_by_under_phaseI_investigation = Auth::user()->name;
-                 $changestage->completed_on_under_phaseI_investigation = Carbon::now()->format('d-M-Y');
-                 $changestage->comment_under_phaseI_investigation = $request->comment;
+                 $changestage->completed_by_initial_phaseI_investigation = Auth::user()->name;
+                 $changestage->completed_on_initial_phaseI_investigation = Carbon::now()->format('d-M-Y');
+                 $changestage->comment_initial_phaseI_investigation = $request->comment;
                      $history = new OosAuditTrial();
                      $history->oos_id = $id;
                      $history->activity_type = 'Activity Log';
@@ -763,9 +763,9 @@ class OOSController extends Controller
              if ($changestage->stage == 4) {
                  $changestage->stage = "3";
                  $changestage->status = "Under Phase I Investigation";
-                 $changestage->completed_by_under_phaseI_investigation = Auth::user()->name;
-                 $changestage->completed_on_under_phaseI_investigation = Carbon::now()->format('d-M-Y');
-                 $changestage->comment_under_phaseI_investigation = $request->comment;
+                 $changestage->completed_by_assignable_cause_found = Auth::user()->name;
+                 $changestage->completed_on_assignable_cause_found = Carbon::now()->format('d-M-Y');
+                 $changestage->comment_assignable_cause_found = $request->comment;
                      $history = new OosAuditTrial();
                      $history->oos_id = $id;
                      $history->activity_type = 'Activity Log';
@@ -786,9 +786,9 @@ class OOSController extends Controller
              if ($changestage->stage == 5) {
                  $changestage->stage = "3";
                  $changestage->status = "Under Phase I Investigation";
-                 $changestage->completed_by_under_phaseI_investigation = Auth::user()->name;
-                 $changestage->completed_on_under_phaseI_investigation = Carbon::now()->format('d-M-Y');
-                 $changestage->comment_under_phaseI_investigation = $request->comment;
+                 $changestage->completed_by_assignable_cause_not_found = Auth::user()->name;
+                 $changestage->completed_on_assignable_cause_not_found = Carbon::now()->format('d-M-Y');
+                 $changestage->comment_assignable_cause_not_found = $request->comment;
                      $history = new OosAuditTrial();
                      $history->oos_id = $id;
                      $history->activity_type = 'Activity Log';
@@ -809,9 +809,9 @@ class OOSController extends Controller
              if ($changestage->stage == 7) {
                  $changestage->stage = "6";
                  $changestage->status = "Under Hypothesis Experient";
-                 $changestage->completed_by_under_hypothesis = Auth::user()->name;
-                 $changestage->completed_on_under_hypothesis = Carbon::now()->format('d-M-Y');
-                 $changestage->comment_under_hypothesis = $request->comment;
+                 $changestage->completed_by_obvious_error_found = Auth::user()->name;
+                 $changestage->completed_on_obvious_error_found = Carbon::now()->format('d-M-Y');
+                 $changestage->comment_obvious_error_found = $request->comment;
                      $history = new OosAuditTrial();
                      $history->oos_id = $id;
                      $history->activity_type = 'Activity Log';
@@ -833,9 +833,9 @@ class OOSController extends Controller
              if ($changestage->stage == 8) {
                  $changestage->stage = "6";
                  $changestage->status = "Under Hypothesis Experient";
-                 $changestage->completed_by_under_phaseII_investigation = Auth::user()->name;
-                 $changestage->completed_on_under_phaseII_investigation = Carbon::now()->format('d-M-Y');
-                 $changestage->comment_under_phaseII_investigation = $request->comment;
+                 $changestage->completed_by_no_assignable_cause_found = Auth::user()->name;
+                 $changestage->completed_on_no_assignable_cause_found = Carbon::now()->format('d-M-Y');
+                 $changestage->comment_no_assignable_cause_found = $request->comment;
                      $history = new OosAuditTrial();
                      $history->oos_id = $id;
                      $history->activity_type = 'Activity Log';
@@ -856,9 +856,9 @@ class OOSController extends Controller
              if ($changestage->stage == 9) {
                  $changestage->stage = "8";
                  $changestage->status = "under phase II Investigation";
-                 $changestage->completed_by_under_manufacturing_investigation_phaseIIA = Auth::user()->name;
-                 $changestage->completed_on_under_manufacturing_investigation_phaseIIA = Carbon::now()->format('d-M-Y');
-                 $changestage->comment_under_manufacturing_investigation_phaseIIA = $request->comment;
+                 $changestage->completed_by_manufacturing_investigation = Auth::user()->name;
+                 $changestage->completed_on_manufacturing_investigation = Carbon::now()->format('d-M-Y');
+                 $changestage->comment_manufacturing_investigation = $request->comment;
                  
                  $history = new OosAuditTrial();
                  $history->oos_id = $id;
@@ -880,9 +880,9 @@ class OOSController extends Controller
              if ($changestage->stage == 10) {
                  $changestage->stage = "9";
                  $changestage->status = "Under Manufacturing Investigation Phase II a";
-                 $changestage->completed_by_under_manufacturing_investigation_phaseIIA = Auth::user()->name;
-                 $changestage->completed_on_under_manufacturing_investigation_phaseIIA = Carbon::now()->format('d-M-Y');
-                 $changestage->comment_under_manufacturing_investigation_phaseIIA = $request->comment;
+                 $changestage->completed_by_assignable_manufacturing_defect = Auth::user()->name;
+                 $changestage->completed_on_assignable_manufacturing_defect = Carbon::now()->format('d-M-Y');
+                 $changestage->comment_assignable_manufacturing_defect = $request->comment;
                      $history = new OosAuditTrial();
                      $history->oos_id = $id;
                      $history->activity_type = 'Activity Log';
@@ -901,11 +901,11 @@ class OOSController extends Controller
                  return back();
              }
              if ($changestage->stage == 11) {
-                 $changestage->stage = "10";
-                 $changestage->status = "Under Phase II a correction";
-                 $changestage->completed_by_under_phaseIIB_additional_lab_investigation= Auth::user()->name;
-                 $changestage->completed_on_under_phaseIIB_additional_lab_investigation = Carbon::now()->format('d-M-Y');
-                 $changestage->comment_under_phaseIIB_additional_lab_investigation = $request->comment;
+                 $changestage->stage = "9";
+                 $changestage->status = "Under Phase II A correction";
+                 $changestage->completed_by_assignable_manufacturing_defect = Auth::user()->name;
+                 $changestage->completed_on_assignable_manufacturing_defect = Carbon::now()->format('d-M-Y');
+                 $changestage->comment_assignable_manufacturing_defect = $request->comment;
                      $history = new OosAuditTrial();
                      $history->oos_id = $id;
                      $history->activity_type = 'Activity Log';
@@ -926,9 +926,9 @@ class OOSController extends Controller
              if ($changestage->stage == 13) {
                  $changestage->stage = "11";
                  $changestage->status = "Under phase II b Additional Lab Investigation";
-                 $changestage->completed_by_under_phaseIII_investigation= Auth::user()->name;
-                 $changestage->completed_on_under_phaseIII_investigation = Carbon::now()->format('d-M-Y');
-                 $changestage->comment_under_phaseIII_investigation = $request->comment;
+                 $changestage->completed_by_phaseIIB_correction_inconclusive= Auth::user()->name;
+                 $changestage->completed_on_phaseIIB_correction_inconclusive = Carbon::now()->format('d-M-Y');
+                 $changestage->comment_phaseIIB_correction_inconclusive = $request->comment;
                      $history = new OosAuditTrial();
                      $history->oos_id = $id;
                      $history->activity_type = 'Activity Log';
@@ -949,9 +949,9 @@ class OOSController extends Controller
              if ($changestage->stage == 14) {
                  $changestage->stage = "13";
                  $changestage->status = "Under Phase III Investigation";
-                 $changestage->completed_by_approval_completed= Auth::user()->name;
-                 $changestage->completed_on_approval_completed = Carbon::now()->format('d-M-Y');
-                 $changestage->comment_approval_completed = $request->comment;
+                 $changestage->completed_by_phaseIII_manufacturing_investigation= Auth::user()->name;
+                 $changestage->completed_on_phaseIII_manufacturing_investigation = Carbon::now()->format('d-M-Y');
+                 $changestage->comment_phaseIII_manufacturing_investigation = $request->comment;
                      $history = new OosAuditTrial();
                      $history->oos_id = $id;
                      $history->activity_type = 'Activity Log';
