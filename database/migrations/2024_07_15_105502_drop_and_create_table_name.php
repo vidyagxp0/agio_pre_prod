@@ -71,6 +71,7 @@ return new class extends Migration
             $table->longText('supporting_attachments_plir')->nullable();
             // phase ii investigation
              $table->longText('qa_approver_comments_piii')->nullable();
+             $table->longText('reason_manufacturing_piii')->nullable(); 
              $table->string('manufact_invest_required_piii')->nullable();
              $table->longText('manufacturing_invest_type_piii')->nullable();
              $table->longText('manufacturing_invst_ref_piii')->nullable();
@@ -152,6 +153,7 @@ return new class extends Migration
             $table->longtext('justify_for_delay_in_activity_bd')->nullable();
             $table->longtext('disposition_attachment_bd')->nullable();
             $table->longtext('other_action_specify_ro')->nullable();
+            $table->longtext('Field_alert_QA_initial_approval')->nullable();
             $table->longtext('reopen_attachment_ro')->nullable();
             $table->longtext('reopen_approval_comments_uaa')->nullable();
             $table->longtext('addendum_attachment_uaa')->nullable();
@@ -171,6 +173,7 @@ return new class extends Migration
             $table->longtext('verification_attachment_uar')->nullable();
             $table->longtext('actionchild')->nullable();
             $table->longtext('Capachild')->nullable();
+            $table->longtext('Rootchild')->nullable();
             // ======= addextrafield 11july24 ========
             $table->longtext('oos_observed_on')->nullable();
             $table->longtext('delay_justification')->nullable();

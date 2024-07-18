@@ -1558,6 +1558,14 @@ $users = DB::table('users')
                                         </textarea>
                             </div>
                         </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Reason for manufacturing</label>
+                                <textarea class="summernote" name="reason_manufacturing_piii" id="summernote-1">
+                                </textarea>
+                            </div>
+                        </div>
+                        
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Report Attachments"> Manufact. Invest. Required? </label>

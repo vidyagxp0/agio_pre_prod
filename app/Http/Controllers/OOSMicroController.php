@@ -2065,12 +2065,26 @@ if($lastDocument->$key != $request->$key){
             return view('frontend.action-item.action-item', compact('parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id',
              'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'old_record'));
         }
+        elseif ($request->child_type == "RootCoRootcause_Analysis")
+        {
+           $parent_name = "Root";
+           $actionchild = OOS_MICRO::find($id);
+           $actionchild->Rootchild = $record;
+           $parent_id = $id;
+           $actionchild->save();
+
+           return view('frontend.forms.root-cause-analysis', 
+            compact('parent_id', 'parent_record','parent_type','old_record', 'record','record_number', 'due_date', 'parent_short_description',
+             'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record'));
+        
+       }
         else {
             $parent_name = "Root";
             $Rootchild = OOS_MICRO::find($id);
             $Rootchild->Rootchild = $record;
             $Rootchild->save();
-            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record'));
+            return view('frontend.forms.root-cause-analysis', 
+            compact('parent_id', 'parent_record','parent_type','old_record', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record'));
         }
     }
 // ================= close workflow ===================

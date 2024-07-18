@@ -71,6 +71,7 @@ class OOS_micro extends Model
         'review_comments_plir',
         'phase_ii_inv_required_plir',
         'qa_approver_comments_piii',
+        'reason_manufacturing_piii',
         'manufact_invest_required_piii',
         'manufacturing_invest_type_piii',
         'manufacturing_invst_ref_piii',

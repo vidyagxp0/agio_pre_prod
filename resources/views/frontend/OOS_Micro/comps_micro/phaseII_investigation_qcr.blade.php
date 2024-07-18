@@ -15,6 +15,17 @@
                     </textarea>
                 </div>
             </div>
+            <div class="col-md-12 mb-4">
+                <div class="group-input">
+                    <label for="Description Deviation">Reason for manufacturing</label>
+                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                    <textarea class="summernote" name="reason_manufacturing_piii"
+                        id="summernote-1" {{Helpers::isOOSMicro($micro_data->stage)}}>
+                        {{ $micro_data->reason_manufacturing_piii }}
+                    </textarea>
+                </div>
+            </div>
+            
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Report Attachments"> Manufact. Invest. Required? </label>

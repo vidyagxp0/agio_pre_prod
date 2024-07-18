@@ -85,6 +85,7 @@ return new class extends Migration
 
         // phase ii investigation
         $table->longText('qa_approver_comments_piii')->nullable();
+        $table->longText('reason_manufacturing_piii')->nullable(); 
         $table->string('manufact_invest_required_piii')->nullable();
         $table->longText('manufacturing_invest_type_piii')->nullable();
         $table->longText('manufacturing_invst_ref_piii')->nullable();
@@ -146,7 +147,6 @@ return new class extends Migration
         $table->longtext('conclusion_attachment_ocr')->nullable();
         $table->string('qa_approver_ocr')->nullable();
 
-
         //OOS CQ Review
         $table->string('capa_required_OOS_CQ')->nullable();
         $table->string('ref_action_plan_OOS_CQ')->nullable();
@@ -154,8 +154,6 @@ return new class extends Migration
         $table->longText('cq_review_comments_OOS_CQ')->nullable();
         $table->longText('action_plan_requirement_OOS_CQ')->nullable();
         $table->longText('cq_attachment_OOS_CQ')->nullable();
-
-
 
         //Batch Disposition
         $table->string('oos_category_BI')->nullable();
@@ -294,9 +292,10 @@ return new class extends Migration
         $table->text('completed_by_approval_completed')->nullable();
         $table->text('completed_on_approval_completed')->nullable();
         $table->text('comment_approval_completed')->nullable();
-
+        // ======== childs ===============
         $table->text('Capachild')->nullable();
         $table->text('actionchild')->nullable();
+        $table->text('Rootchild')->nullable();
         $table->timestamps();
     });
 

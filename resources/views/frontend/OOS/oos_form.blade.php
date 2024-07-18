@@ -1454,7 +1454,14 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="Description Deviation">QA Approver Comments</label>
                             <textarea class="summernote" name="qa_approver_comments_piii" id="summernote-1">
-                                    </textarea>
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Reason for manufacturing </label>
+                            <textarea class="summernote" name="reason_manufacturing_piii" id="summernote-1">
+                            </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -2365,7 +2372,14 @@ $users = DB::table('users')
                 QA Head/Designee Approval
                 </div>
                 <div class="row">
-                    <div class="col-md-12 mb-4">
+                <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation"> FAR (Field alert) </label>
+                            <textarea class="summernote" name="Field_alert_QA_initial_approval" id="summernote-1">
+                            </textarea>
+                        </div>
+                    </div>   
+                <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation"> Approval Comments </label>
                             <textarea class="summernote" name="reopen_approval_comments_uaa" id="summernote-1">

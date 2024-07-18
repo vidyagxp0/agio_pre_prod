@@ -13,6 +13,13 @@
                     {{$data->qa_approver_comments_piii ? $data->qa_approver_comments_piii : ""}}</textarea>
                 </div>
             </div>
+            <div class="col-md-12 mb-4">
+                <div class="group-input">
+                    <label for="Description Deviation">Reason for manufacturing</label>
+                    <textarea class="summernote" name="reason_manufacturing_piii" id="summernote-1">
+                    {{$data->reason_manufacturing_piii ? $data->reason_manufacturing_piii : ""}}</textarea>
+                </div>
+            </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Report Attachments"> Manufact. Invest. Required? </label>
@@ -25,7 +32,6 @@
                     </select>
                 </div>
             </div>
-
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Auditee"> Manufacturing Invest. Type </label>
@@ -46,7 +52,6 @@
                     </textarea>
                 </div>
             </div>
-
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments"> Hypo/Exp. Required</label>
