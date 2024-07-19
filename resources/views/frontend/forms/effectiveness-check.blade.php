@@ -41,6 +41,14 @@
             <form action="{{ route('effectiveness.store') }}" method="post" , enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
+                    @if (!empty($parent_id))
+                    
+                    <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                    <input type="hidden" name="parent_type" value="{{ $parent_type }}">
+                    @php
+                        // dd($parent_id);
+                    @endphp
+                @endif
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">

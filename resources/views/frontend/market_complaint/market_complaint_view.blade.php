@@ -175,6 +175,11 @@
             border-radius: 0px 20px 20px 0px;
 
         }
+        .printtab{
+            margin-left: 98rem; 
+            width:60px;
+            color: rgb(0, 149, 255));
+        }
     </style>
     {{-- ! ========================================= --}}
     {{-- !               DATA FIELDS                 --}}
@@ -270,14 +275,14 @@
                             Child
                         </button></a>
 
-                        @elseif($data->stage == 8 )
+                        {{-- @elseif($data->stage == 8 )
                         <a href="{{ route('reopen.stage', $data->id) }}">
                             <button class="button_theme1"> Re Open </button>
                         </a>
-                      
+                      --}}
                         @endif
                          <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"><button class="button_theme1"> Exit
-                            </button> </a>
+                            </button> </a> 
 
 
                     </div>
@@ -816,6 +821,17 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Short Description">Short Description<span
+                                        class="text-danger">*</span></label>
+                                        <span id="rchars">255</span> Characters remaining
+                                  
+                                    <input  name="description_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="docname" required value="{{ $data->description_gi }}"  maxlength="255" >
+                                
+                                </div>
+                            </div>
+
                             {{-- <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="due-date">Due Date <span class="text-danger">*</span></label>
@@ -872,10 +888,10 @@
                                 </div> --}}
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                      <label for="due-date">Due Date </label>    {{--<span class="text-danger">*</span> --}}
+                                        <label for="due-date">Due Date </label>{{--<span class="text-danger">*</span> --}}
                                         <div class="calenderauditee">
                                             <!-- Display the formatted date in a readonly input -->
-                                            <input type="text" id="due_date_display"  placeholder="DD-MMM-YYYY" value="{{ $data->due_date_gi }}" class="form-control" />
+                                            <input type="text" id="due_date_display" placeholder="DD-MMM-YYYY" value="" class="form-control" />
                                             <!-- Hidden input date format ke sath -->
                                             <input type="date" id="due_date_input" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->due_date_gi }}" class="form-control hide-input" onchange="updateDueDateDisplay()" />
                                         </div>
@@ -885,17 +901,23 @@
                                 <script>
                                     function updateDueDateDisplay() {
                                         var dateInput = document.getElementById('due_date_input').value;
-                                        var date = new Date(dateInput);
-                                        var options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                        var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                        document.getElementById('due_date_display').value = formattedDate;
+                                        if (dateInput) {
+                                            var date = new Date(dateInput);
+                                            var options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                            var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                            document.getElementById('due_date_display').value = formattedDate;
+                                        } else {
+                                            document.getElementById('due_date_display').value = '';
+                                            document.getElementById('due_date_display').placeholder = 'DD-MMM-YYYY';
+                                        }
                                     }
-                            
+                                
                                     // To show the existing value if it's already set (for example, in an edit form)
                                     $(document).ready(function() {
                                         updateDueDateDisplay();
                                     });
                                 </script>
+                                
                                 {{-- <script>
                                     function updateDueDateDisplay() {
                                         var dateInput = document.getElementById('due_date_input').value;
@@ -911,16 +933,7 @@
                                     });
                                 </script> --}}
 
-                        <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                            class="text-danger">*</span></label>
-                                            <span id="rchars">255</span> Characters remaining
-                                      
-                                        <input  name="description_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="docname" required value="{{ $data->description_gi }}"  maxlength="255" >
-                                    
-                                    </div>
-                                </div>
+                                
 
 
                             {{-- <div class="col-lg-6">
@@ -1125,48 +1138,49 @@
                     </div>
                 </div>
 
-                                                        <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="complaint_reported_on">Complaint Reported On</label>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="complaint_dat" readonly placeholder="DD-MMM-YYYY" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('j F Y') : '' }}" />
-                                        <input type="date" id="complaint_date_picker" name="complaint_reported_on_gi" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('Y-m-d') : '' }}" class="hide-input" oninput="handleDateInput(this, 'complaint_dat')" />
-                                    </div>
-                                </div>
-                            </div>
-                    
-                    <script>
-                        document.addEventListener('DOMContentLoaded', (event) => {
-                            const dateInput = document.getElementById('complaint_date_picker');
-                            const today = new Date().toISOString().split('T')[0];
-                            dateInput.setAttribute('max', today);
-                    
-                            // Show the date picker when clicking on the readonly input
-                            const readonlyInput = document.getElementById('complaint_dat');
-                            readonlyInput.addEventListener('click', () => {
-                                dateInput.style.display = 'block';
-                                dateInput.focus();
-                            });
-                    
-                            // Update the readonly input when a date is selected
-                            dateInput.addEventListener('change', () => {
-                                const selectedDate = new Date(dateInput.value);
-                                readonlyInput.value = formatDate(selectedDate);
-                                dateInput.style.display = 'none';
-                            });
+                <div class="col-lg-6 new-date-data-field">
+                    <div class="group-input input-date">
+                        <label for="complaint_reported_on">Complaint Reported On</label>
+                        <div class="calenderauditee">
+                            <input type="text" id="complaint_dat" readonly placeholder="DD-MMM-YYYY" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('d-M-Y') : '' }}" />
+                            <input type="date" id="complaint_date_picker" name="complaint_reported_on_gi" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('Y-m-d') : '' }}" class="hide-input" oninput="handleDateInput(this, 'complaint_dat')" />
+                        </div>
+                    </div>
+                </div>
+                
+                <script>
+                    document.addEventListener('DOMContentLoaded', (event) => {
+                        const dateInput = document.getElementById('complaint_date_picker');
+                        const today = new Date().toISOString().split('T')[0];
+                        dateInput.setAttribute('max', today);
+                
+                        // Show the date picker when clicking on the readonly input
+                        const readonlyInput = document.getElementById('complaint_dat');
+                        readonlyInput.addEventListener('click', () => {
+                            dateInput.style.display = 'block';
+                            dateInput.focus();
                         });
-                    
-                        function handleDateInput(dateInput, readonlyInputId) {
-                            const readonlyInput = document.getElementById(readonlyInputId);
+                
+                        // Update the readonly input when a date is selected
+                        dateInput.addEventListener('change', () => {
                             const selectedDate = new Date(dateInput.value);
                             readonlyInput.value = formatDate(selectedDate);
-                        }
-                    
-                        function formatDate(date) {
-                            const options = { day: 'numeric', month: 'long', year: 'numeric' };
-                            return date.toLocaleDateString('en-GB', options);
-                        }
-                    </script>
+                            dateInput.style.display = 'none';
+                        });
+                    });
+                
+                    function handleDateInput(dateInput, readonlyInputId) {
+                        const readonlyInput = document.getElementById(readonlyInputId);
+                        const selectedDate = new Date(dateInput.value);
+                        readonlyInput.value = formatDate(selectedDate);
+                    }
+                
+                    function formatDate(date) {
+                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                        return date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                    }
+                </script>
+                
                     
                             
                             <div class="col-md-12 mb-3">
@@ -1508,6 +1522,49 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="is_repeat_gi">Is Repeat</label>
+                                    <select name="is_repeat_gi" id="is_repeat_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                        <option value="" {{ $data->is_repeat_gi == '0' ? 'selected' : '' }}>-- select --</option>
+                                        <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes</option>
+                                        <option value="no" {{ $data->is_repeat_gi == 'no' ? 'selected' : '' }}>No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 mb-3" id="repeat_nature_div" style="display: none;">
+                                <div class="group-input">
+                                    <label for="repeat_nature_gi">Repeat Nature</label>
+                                    <div>
+                                        <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                    </div>
+                                    <textarea name="repeat_nature_gi" id="repeat_nature_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->repeat_nature_gi }}</textarea>
+                                </div>
+                            </div>
+                            
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    var isRepeatSelect = document.getElementById('is_repeat_gi');
+                                    var repeatNatureDiv = document.getElementById('repeat_nature_div');
+                            
+                                    // Handle the change event for the select element
+                                    isRepeatSelect.addEventListener('change', function() {
+                                        if (isRepeatSelect.value === 'yes') {
+                                            repeatNatureDiv.style.display = 'block';
+                                        } else {
+                                            repeatNatureDiv.style.display = 'none';
+                                        }
+                                    });
+                            
+                                    // Check the current value and show/hide the repeat nature div on page load
+                                    if (isRepeatSelect.value === 'yes') {
+                                        repeatNatureDiv.style.display = 'block';
+                                    }
+                                });
+                            </script>
+                            
+
+                            {{-- <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="is_repeat_gi">Is Repeat</label>
                                     <select name="is_repeat_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                         <option value="" {{ $data->is_repeat_gi == '0' ? 'selected' : '' }}>--
                                             select --</option>
@@ -1529,7 +1586,7 @@
 
                                     </textarea>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
                             <div class="col-md-12 mb-3">
@@ -2248,7 +2305,7 @@
                     <div class="row">
                        
                         
-                        <button id="printButton" onclick="printTabContent()" style="margin-left: 110rem; width:60px">Print</button>
+                        {{-- <button id="printButton" onclick="printTabContent()" style="margin-left: 110rem; width:60px; color:red">Print</button> --}}
                         <script>
                             function printTabContent() {
                                 var printContents = document.getElementById('CCForm3').innerHTML;
@@ -2259,6 +2316,8 @@
                                 document.body.innerHTML = originalContents;
                             }
                         </script>
+                        <button class="printtab" id="printButton" onclick="printTabContent()">print</button>
+                        {{-- <button id="printButton" onclick="printTabContent()" style="margin-left: 110rem; width:60px; color:red">Print</button> --}}
                         <div class="sub-head">Acknowledgement</div>
 
 
@@ -2617,6 +2676,7 @@
                         </div>
                     </div> --}}
                      
+                   
                     <div class="sub-head">
                         Proposal to accomplish investigation:
                     </div>
@@ -2634,18 +2694,18 @@
                                         </tr>
                                     </thead>
                                     <style>
-                                     .main-head{
-                                        display: flex; 
-                                        justify-content: space-around;
-                                        gap: 12px;
-                                     }
-                                     .label-head{
-                                        display: flex !important;
-                                         gap: 14px;
-                                     }
-                                     .input-head{
-                                        margin-top: 4px;
-                                     }
+                                        .main-head{
+                                           display: flex; 
+                                           justify-content: space-around;
+                                           gap: 12px;
+                                        }
+                                        .label-head{
+                                           display: flex !important;
+                                            gap: 14px;
+                                        }
+                                        .input-head{
+                                           margin-top: 4px;
+                                        }
                                     </style>
                                     <tbody>
                                         <tr>
@@ -2654,15 +2714,15 @@
                                             <td class="main-head">
                                                 <label class="label-head">
                                                     <span class="input-head">
-                                                        <input type="radio" name="csr1_yesno" value="yes" {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'yes' ? 'checked' : '' }}>
+                                                        <input type="radio" name="csr1_yesno" value="yes" {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'yes' ? 'checked' : '' }} onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
                                                     </span>
                                                     <span>Yes</span>
                                                 </label>
-                                                <label class="label-head" >
-                                                   <span class="input-head"> 
-                                                    <input type="radio" name="csr1_yesno" value="no" {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'no' ? 'checked' : '' }}></span>
-                                                    {{-- <input type="radio" name="csr1_yesno" value="no"></span> --}}
-                                                  <span>  No</span>
+                                                <label class="label-head">
+                                                    <span class="input-head">
+                                                        <input type="radio" name="csr1_yesno" value="no" {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'no' ? 'checked' : '' }} onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
+                                                    </span>
+                                                    <span>No</span>
                                                 </label>
                                             </td>
                                             <td>
@@ -2681,15 +2741,12 @@
                                             <td>Additional info. From Complainant</td>
                                             <td class="main-head">
                                                 <label class="label-head">
-                                                    <input type="radio" name="afc1_yesno" value="yes" {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'yes' ? 'checked' : '' }}>
-                                                    {{-- <input type="radio" name="afc1_yesno" value="yes"> Yes --}}
+                                                    <input type="radio" name="afc1_yesno" value="yes" {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'yes' ? 'checked' : '' }} onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')">
                                                     <span>Yes</span>
                                                 </label>
                                                 <label class="label-head">
-                                                    {{-- <input type="radio" name="afc1_yesno" value="no"> No --}}
-                                                    <input type="radio" name="afc1_yesno" value="no" {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'no' ? 'checked' : '' }}>
+                                                    <input type="radio" name="afc1_yesno" value="no" {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'no' ? 'checked' : '' }} onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')">
                                                     <span>No</span>
-
                                                 </label>
                                             </td>
                                             <td>
@@ -2708,13 +2765,11 @@
                                             <td>Analysis of complaint Sample</td>
                                             <td class="main-head">
                                                 <label class="label-head">
-                                                    <input type="radio" name="acs1_yesno" value="yes" {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'yes' ? 'checked' : '' }}>
-                                                    {{-- <input type="radio" name="acs1_yesno" value="yes"> Yes --}}
+                                                    <input type="radio" name="acs1_yesno" value="yes" {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'yes' ? 'checked' : '' }} onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')">
                                                     <span>Yes</span>
                                                 </label>
                                                 <label class="label-head">
-                                                    <input type="radio" name="acs1_yesno" value="no" {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'no' ? 'checked' : '' }}>
-                                                    {{-- <input type="radio" name="acs1_yesno" value="no"> No --}}
+                                                    <input type="radio" name="acs1_yesno" value="no" {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'no' ? 'checked' : '' }} onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')">
                                                     <span>No</span>
                                                 </label>
                                             </td>
@@ -2734,16 +2789,12 @@
                                             <td>QRM Approach</td>
                                             <td class="main-head">
                                                 <label class="label-head">
-                                                    {{-- <input type="radio" name="qrm1_yesno" value="yes"> Yes --}}
-                                                    <input type="radio" name="qrm1_yesno" value="yes" {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'yes' ? 'checked' : '' }}>
+                                                    <input type="radio" name="qrm1_yesno" value="yes" {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'yes' ? 'checked' : '' }} onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')">
                                                     <span>Yes</span>
-
                                                 </label>
                                                 <label class="label-head">
-                                                    {{-- <input type="radio" name="qrm1_yesno" value="no"> No --}}
-                                                    <input type="radio" name="qrm1_yesno" value="no" {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'no' ? 'checked' : '' }}>
+                                                    <input type="radio" name="qrm1_yesno" value="no" {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'no' ? 'checked' : '' }} onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')">
                                                     <span>No</span>
-
                                                 </label>
                                             </td>
                                             <td>
@@ -2762,16 +2813,12 @@
                                             <td>Others</td>
                                             <td class="main-head">
                                                 <label class="label-head">
-                                                    {{-- <input type="radio" name="oth1_yesno" value="yes"> Yes --}}
-                                                    <input type="radio" name="oth1_yesno" value="yes" {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'yes' ? 'checked' : '' }}>
+                                                    <input type="radio" name="oth1_yesno" value="yes" {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'yes' ? 'checked' : '' }} onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')">
                                                     <span>Yes</span>
-
                                                 </label>
                                                 <label class="label-head">
-                                                    {{-- <input type="radio" name="oth1_yesno" value="no"> No --}}
-                                                    <input type="radio" name="oth1_yesno" value="no" {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'no' ? 'checked' : '' }}>
+                                                    <input type="radio" name="oth1_yesno" value="no" {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'no' ? 'checked' : '' }} onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')">
                                                     <span>No</span>
-
                                                 </label>
                                             </td>
                                             <td>
@@ -2790,6 +2837,32 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <script>
+                        function toggleInputs(radioName, textarea1, textarea2) {
+                            const radios = document.getElementsByName(radioName);
+                            let selectedValue = '';
+                            for (const radio of radios) {
+                                if (radio.checked) {
+                                    selectedValue = radio.value;
+                                    break;
+                                }
+                            }
+                            
+                            document.getElementsByName(textarea1)[0].disabled = selectedValue !== 'yes';
+                            document.getElementsByName(textarea2)[0].disabled = selectedValue !== 'yes';
+                        }
+                    
+                        // Call toggleInputs for each row on page load
+                        document.addEventListener('DOMContentLoaded', function() {
+                            toggleInputs('csr1_yesno', 'csr1', 'csr2');
+                            toggleInputs('afc1_yesno', 'afc1', 'afc2');
+                            toggleInputs('acs1_yesno', 'acs1', 'acs2');
+                            toggleInputs('qrm1_yesno', 'qrm1', 'qrm2');
+                            toggleInputs('oth1_yesno', 'oth1', 'oth2');
+                        });
+                    </script>
+                    
                     
 
                     <div class="col-12">

@@ -2886,11 +2886,13 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         
         $cc = MarketComplaint::find($id);
         $cft = [];
-        $parent_id = $id;
+        
         $parent_type = "Capa";
         $old_records = Capa::select('id', 'division_id', 'record')->get();
-        $record = ((RecordNumber::first()->value('counter')) + 1);
+        // $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record =$cc->record;
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $parent_id = $record;
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -2921,11 +2923,13 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
             
             $cc = MarketComplaint::find($id);
             $cft = [];
-            $parent_id = $id;
+           
             $parent_type = "Capa";
             $old_records = Capa::select('id', 'division_id', 'record')->get();
-            $record = ((RecordNumber::first()->value('counter')) + 1);
+            // $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = $cc->record;
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $parent_id = $record;
             $currentDate = Carbon::now();
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');

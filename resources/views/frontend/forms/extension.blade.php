@@ -72,6 +72,12 @@
                 @csrf
 
                 <div id="step-form">
+                    @if (!empty($parent_id))
+                    
+                    <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                    <input type="hidden" name="parent_type" value="{{ $parent_type }}">
+                  
+                @endif
                     <!--  Extension Details Tab content -->
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -79,8 +85,8 @@
                                 <div class="col-12">
                                     <div class="sub-head">Extension Details</div>
                                 </div>
-                                <input type="hidden" name="parent_id" value="{{ $parent_id }}">
-                                <input type="hidden" name="parent_type" value="{{ $parent_name }}">
+                                {{-- <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                                <input type="hidden" name="parent_type" value="{{ $parent_name }}"> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number">Record Number</label>

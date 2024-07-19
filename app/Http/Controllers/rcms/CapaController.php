@@ -2785,10 +2785,12 @@ class CapaController extends Controller
     public function child_change_control(Request $request, $id)
     {
         $cft =[];
-        $parent_id = $id;
+        $ccparentid = Capa::find($id);
         $parent_type = "Audit_Program";
-        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record =  $ccparentid->record;
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $parent_id = $record;
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('d-M-Y');
@@ -2809,16 +2811,18 @@ class CapaController extends Controller
         }
         if ($request->child_type == "extension") {
             $parent_due_date = "";
-            $parent_id = $id;
+            // $parent_id = $id;
+            $parent_type = "CAPA";
+
             $parent_name = $request->parent_name;
             if ($request->due_date) {
                 $parent_due_date = $request->due_date;
             }
 
-            $record = ((RecordNumber::first()->value('counter')) + 1);
-            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            // $record = ((RecordNumber::first()->value('counter')) + 1);
+            // $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number = $record;
-            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
+            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date','parent_type'));
         }
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         if ($request->child_type == "Action_Item") {
@@ -2839,19 +2843,23 @@ class CapaController extends Controller
 
     public function effectiveness_check(Request $request, $id)
     {
-        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $ccparentid = Capa::find($id);
+        $record =  $ccparentid->record;
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $parent_id = $record;
+        $parent_type = "CAPA";
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('Y-m-d');
         $record_number = $record;
-        return view("frontend.forms.effectiveness-check", compact('due_date', 'record_number'));
+        return view("frontend.forms.effectiveness-check", compact('due_date', 'record_number','parent_id','parent_type'));
     }
 
 
     public static function singleReport($id)
     {
         $data = Capa::find($id);
+        
         
         if (!empty($data))
          {
