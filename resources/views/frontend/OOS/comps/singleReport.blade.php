@@ -245,32 +245,30 @@
             <div class="block">
                 <div class="block-head"> General Information </div>
                 <table>
-                       <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ $data->originator }}</td>
-                        <th class="w-20">Date of Initiation</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
-                    </tr>
                     <tr>
                         <th class="w-20">Record Number</th>
                         <td class="w-30">@if($data->record_number){{  str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                     </tr>
+                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
+                        <th class="w-20">Initiator</th>
+                        <td class="w-30">{{ $data->originator }}</td>
+                     </tr>
                     <tr>
+                       <th class="w-20">Date of Initiation</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                         <th class="w-20">Due Date</th>
                         <td class="w-30">@if($data->due_date){{ str_pad(Helpers::getdateFormat($data['due_date'] ?? ''), 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
-                        <th class="w-20"> Severity Level</th>
-                        <td class="w-30">@if($data->severity_level_gi){{ $data->severity_level_gi }} @else Not Applicable @endif</td>
-                    </tr>
+                        </tr>
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">@if($data->description_gi){{ $data->description_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initiator Group</th>
+                        <th class="w-20">Initiation department </th>
                         <td class="w-30">@if($data->initiator_group){{ $data->initiator_group }} @else Not Applicable @endif</td>
-                        <th class="w-20">Initiator Group Code</th>
+                        <th class="w-20">Initiation department group code </th>
                         <td class="w-80">{{ $data->initiator_group_code }}</td>
                     </tr>
                     <tr>
@@ -278,28 +276,43 @@
                         <td class="w-80">@if($data->if_others_gi){{ $data->if_others_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Is Repeat </th>
+                        <td class="w-80">@if($data->is_repeat_gi){{ $data->is_repeat_gi }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Repeat Nature</th>
                         <td class="w-80">@if($data->repeat_nature_gi){{ $data->repeat_nature_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Is Repeat </th>
-                        <td class="w-80">@if($data->is_repeat_gi){{ $data->is_repeat_gi }}@else Not Applicable @endif</td>
-                        <th class="w-20">Nature of Change</th>
-                        <td class="w-80">@if($data->nature_of_change_gi){{ $data->nature_of_change_gi }}@else Not Applicable @endif</td>
+                        <th class="w-20">Source Document Type</th>
+                        <td class="w-80">@if($data->source_document_type_gi){{ $data->source_document_type_gi }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr> 
+                        <th class="w-20">Reference System Document</th>
+                        <td class="w-80">@if($data->reference_system_document_gi){{ $data->reference_system_document_gi }}@else Not Applicable @endif</td>
+                        <th class="w-20">Reference Document</th>
+                        <td class="w-80">@if($data->reference_document_gi){{ $data->reference_document_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Deviation Occurred On</th>
-                        <td class="w-80">
+                        <th class="w-20">OOS Occurred On</th>
                         <td class="w-30">@if($data->deviation_occured_on_gi)
                             {{ str_pad(Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? ''), 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         </td>
-                        <th class="w-20">Source Document Type</th>
-                        <td class="w-80">@if($data->problem_description){{ $data->problem_description }}@else Not Applicable @endif</td>
                     </tr>
-                     <tr>
-                         <th class="w-20">Reference System Document</th>
-                        <td class="w-80">@if($data->problem_description){{ $data->problem_description }}@else Not Applicable @endif</td>
-                     </tr>
+                    <tr> 
+                        <th class="w-20"> OOS Observed On </th>
+                        <td class="w-80">@if($data->oos_observed_on){{ $data->oos_observed_on }}@else Not Applicable @endif</td>
+                        <th class="w-20">Delay Justification</th>
+                        <td class="w-80">@if($data->delay_justification){{ $data->delay_justification }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">OOS Reported On</th>
+                        <td class="w-30">@if($data->oos_reported_date)
+                            {{ str_pad(Helpers::getdateFormat($data['oos_reported_date'] ?? ''), 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        </td>
+                        <th class="w-20">Immediate Action</th>
+                        <td class="w-80">@if($data->immediate_action){{ $data->immediate_action }}@else Not Applicable @endif</td>
+                    </tr>
                     <tr>
                         <th class="w-20">Sample Type</th>
                         <td class="w-80">@if($data->sample_type_gi){{ Helpers::recordFormat($data->sample_type_gi) }}@else Not Applicable @endif</td>

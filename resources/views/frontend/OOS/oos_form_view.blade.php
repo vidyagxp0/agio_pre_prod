@@ -401,7 +401,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
@@ -458,7 +458,7 @@
             @include('frontend.OOS.comps.oos_cq_review')
 
             <!-- Batch Disposition -->
-            @include('frontend.OOS.comps.batch_disposition')
+            {{-- @include('frontend.OOS.comps.batch_disposition') --}}
 
             <!-- Re-Open -->
            {{--  @include('frontend.OOS.comps.oos_reopen')  --}}  
@@ -467,7 +467,6 @@
             @include('frontend.OOS.comps.under_approval')
             
             @include('frontend.OOS.comps.oos_extension') 
-            
 
             <!--Under Addendum Execution -->
             {{-- @include('frontend.OOS.comps.under_execution') --}}

@@ -29,8 +29,8 @@ class OOS extends Model
           'deviation_occured_on_gi',
           'description_gi',
           'initial_attachment_gi',
-          'reference_system_document_gi',
           'source_document_type_gi',
+          'reference_system_document_gi',
           'reference_document',
           'sample_type_gi',
           'product_material_name_gi',
@@ -179,7 +179,7 @@ class OOS extends Model
 
     protected $casts = [
       'recommended_actions_reference_plic' => 'array',
-      'reference_document' => 'array',
+      // 'reference_document' => 'array',
       'Comments_plidata' => 'array',
       'verification_analysis_ref_pli' => 'array',
       'analyst_interview_ref_pli' => 'array',

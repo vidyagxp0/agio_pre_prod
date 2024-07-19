@@ -128,7 +128,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-6 mt-4">
+            <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group">Repeat Nature</label>
                     <textarea type="text" name="repeat_nature_gi" {{Helpers::isOOSChemical($data->stage)}}>{{ $data->repeat_nature_gi }}</textarea>
@@ -149,9 +149,16 @@
             </div> --}}
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Source Document Type">Reference document</label>
-                   <input type="text" name="source_document_type_gi"  id="source_document_type_gi" 
-                        value="{{ $data->source_document_type_gi ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                    <label for="Tnitiaror Grouo">Source Document Type</label>
+                    <select name="source_document_type_gi" {{Helpers::isOOSChemical($data->stage)}}>
+                        <option>Enter Your Selection Here</option>
+                        <option value="OOT" @if ($data->source_document_type_gi == 'oot') selected @endif>OOT</option>
+                        <option value="Lab Incident" @if ($data->source_document_type_gi == 'Lab Incident') selected @endif>Lab Incident</option>
+                        <option value="Deviation" @if ($data->source_document_type_gi == 'Deviation') selected @endif>Deviation</option>
+                        <option value="Product Non-conformance" @if ($data->source_document_type_gi == 'Product Non-conformance') selected @endif>Product Non-conformance</option>
+                        <option value="Inspectional Observation" @if ($data->source_document_type_gi == 'Inspectional Observation') selected @endif>Inspectional Observation</option>
+                        <option value="Others" @if ($data->source_document_type_gi == 'Others') selected @endif>Others</option>
+                    </select>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -161,9 +168,16 @@
                         value="{{ $data->reference_system_document_gi ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
                 </div>
             </div>
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="reference_document">Reference document</label>
+                    <input type="text" name="reference_document"  id="reference_document" 
+                        value="{{ $data->reference_document ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                </div>
+            </div>
             <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
-                    <label for="Deviation Occurred On"> OOS occurred On </label>
+                    <label for="oos Occurred On"> OOS occurred On </label>
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
                         <input type="text" id="deviation_occured_on_gi" readonly 
@@ -210,7 +224,7 @@
             
             <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
-                    <label for="Deviation Occurred On"> OOS Reported On</label>
+                    <label for="Deviation Occurred On"> OOS Reported On </label>
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
                         <input type="text" id="oos_reported_date" readonly 
@@ -258,7 +272,7 @@
 
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Immediate action">Immediate action</label>
+                    <label for="Immediate action">Immediate Action</label>
                     <input type="text" name="immediate_action"  id="immediate_action" 
                         value="{{ $data->immediate_action ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
                 </div>

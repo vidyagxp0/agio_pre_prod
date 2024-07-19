@@ -389,7 +389,7 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
@@ -523,7 +523,7 @@ $users = DB::table('users')
                             </div>
                         </div>
 
-                        <div class="col-lg-6 mt-4">
+                        <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group"></label>
                                 <label for="Repeat Nature">Repeat Nature</label>
@@ -540,17 +540,30 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div>--}}
-                        
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Source Document Type">Reference document</label>
-                                <input type="text" name="source_document_type_gi"  id="source_document_type_gi" value="">
+                                <label for="Tnitiaror Grouo">Source Document Type</label>
+                                <select name="source_document_type_gi">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="OOT">OOT</option>
+                                    <option value="Lab Incident">Lab Incident</option>
+                                    <option value="Deviation">Deviation</option>
+                                    <option value="Product Non-conformance">Product Non-conformance</option>
+                                    <option value="Inspectional Observation">Inspectional Observation</option>
+                                    <option value="Others">Others</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Reference System Document</label>
                                 <input type="text" name="reference_system_document_gi"  id="reference_system_document_gi" value="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Document">Reference document</label>
+                                <input type="text" name="reference_document"  id="reference_document" value="">
                             </div>
                         </div>
                         <div class="col-md-6 new-date-data-field">
@@ -2162,12 +2175,89 @@ $users = DB::table('users')
 
             </div>
         </div>
-        <!-- Batch Disposition -->
-        <div id="CCForm11" class="inner-block cctabcontent">
+       
+        <!-- Re-Open -->
+        <div id="CCForm12" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                    Batch Disposition
+                    Reopen Request
                 </div>
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Other Action (Specify)</label>
+                            <textarea class="summernote" name="other_action_specify_ro" id="summernote-1">
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="group-input">
+                            <label for="Reference Recores">Reopen Attachment</label>
+                            <small class="text-primary">
+                                Please Attach all relevant or supporting documents
+                            </small>
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="reopen_attachment_ro"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="reopen_attachment_ro[]"
+                                        oninput="addMultipleFiles(this, 'reopen_attachment_ro')" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" id="ChangeNextButton" class="nextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--QA Head/Designee Approval -->
+        <div id="CCForm13" class="inner-block cctabcontent">
+            <div class="inner-block-content">
+                <div class="sub-head">
+                QA Head/Designee Approval
+                </div>
+                <div class="row">
+                <div class="col-md-12 mb-4">
+                    <div class="group-input">
+                        <label for="Description Deviation"> FAR (Field alert) </label>
+                        <textarea class="summernote" name="Field_alert_QA_initial_approval" id="summernote-1">
+                        </textarea>
+                    </div>
+                </div>   
+                <div class="col-md-12 mb-4">
+                    <div class="group-input">
+                        <label for="Description Deviation"> Approval Comments </label>
+                        <textarea class="summernote" name="reopen_approval_comments_uaa" id="summernote-1">
+                        </textarea>
+                    </div>
+                </div>
+                    <div class="col-12">
+                        <div class="group-input">
+                            <label for="Reference Recores">Approval Attachment</label>
+                            <small class="text-primary">
+                                Please Attach all relevant or supporting documents
+                            </small>
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="addendum_attachment_uaa"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="addendum_attachment_uaa[]"
+                                        oninput="addMultipleFiles(this, 'addendum_attachment_uaa')" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-head"> Batch Disposition </div>
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="group-input">
@@ -2310,98 +2400,6 @@ $users = DB::table('users')
                         </div>
                     </div>
 
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!-- Re-Open -->
-        <div id="CCForm12" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Reopen Request
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Other Action (Specify)</label>
-                            <textarea class="summernote" name="other_action_specify_ro" id="summernote-1">
-                            </textarea>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Reopen Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="reopen_attachment_ro"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="reopen_attachment_ro[]"
-                                        oninput="addMultipleFiles(this, 'reopen_attachment_ro')" multiple>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!--QA Head/Designee Approval -->
-        <div id="CCForm13" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                QA Head/Designee Approval
-                </div>
-                <div class="row">
-                <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation"> FAR (Field alert) </label>
-                            <textarea class="summernote" name="Field_alert_QA_initial_approval" id="summernote-1">
-                            </textarea>
-                        </div>
-                    </div>   
-                <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation"> Approval Comments </label>
-                            <textarea class="summernote" name="reopen_approval_comments_uaa" id="summernote-1">
-                            </textarea>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Approval Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="addendum_attachment_uaa"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="addendum_attachment_uaa[]"
-                                        oninput="addMultipleFiles(this, 'addendum_attachment_uaa')" multiple>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>

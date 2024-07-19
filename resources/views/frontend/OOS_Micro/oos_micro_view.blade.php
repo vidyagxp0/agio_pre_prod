@@ -26,7 +26,7 @@
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="MM-YYYY" />' +
                         '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
@@ -36,7 +36,7 @@
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="MM-YYYY" />' +
                         '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
@@ -355,11 +355,11 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button> -->
+                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Closure Summary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Extension</button>
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
             </div>
             <!-- General Information -->
             <form action="{{ route('oos_micro.update', $micro_data->id) }}" method="POST" enctype="multipart/form-data">
@@ -382,9 +382,9 @@
                 <!-- oos_conclusion_cq_review -->
                 @include('frontend.OOS_Micro.comps_micro.oos_conclusion_cq_review')
                 <!-- batch_disposition -->
-                @include('frontend.OOS_Micro.comps_micro.batch_disposition') 
-                <!-- reopen -->
-                @include('frontend.OOS_Micro.comps_micro.reopen')
+                {{-- @include('frontend.OOS_Micro.comps_micro.batch_disposition') --}}
+                <!-- closure_summary -->
+                @include('frontend.OOS_Micro.comps_micro.closure_summary')
                  <!-- oos_extension -->
                 @include('frontend.OOS_Micro.comps_micro.oos_extension') 
                 <!-- Signature  -->

@@ -85,7 +85,7 @@
             </div> --}}
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Initiator Group"><b>Initiation department group</b></label>
+                    <label for="Initiator Group"><b>Initiation Department </b></label>
                     <select name="initiator_group_gi" id="initiator_group" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option selected disabled>---select---</option>
                         @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
@@ -97,7 +97,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Initiator Group Code">Initiation department group code </label>
+                    <label for="Initiator Group Code">Initiation Department Group Code </label>
                     <input type="text" name="initiator_group_code_gi" id="initiator_group_code"
                         value="{{ $micro_data->initiator_group_code_gi }}" readonly {{Helpers::isOOSMicro($micro_data->stage)}}>
                 </div>
@@ -198,9 +198,7 @@
                     <div class="calenderauditee">
                         <input type="text" id="oos_observed_on" readonly 
                         value="{{ Helpers::getdateFormat($micro_data['oos_observed_on'] ?? '') }}" {{Helpers::isOOSChemical($micro_data->stage)}} placeholder="DD-MM-YYYY" />
-                        <input type="date" name="oos_observed_on"
-                         class="hide-input"
-                            oninput="handleDateInput(this, 'oos_observed_on')" />
+                        <input type="date" name="oos_observed_on" class="hide-input" oninput="handleDateInput(this, 'oos_observed_on')" />
                     </div>
                 </div>
             </div>
@@ -391,7 +389,7 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="info_mfg_date_{{ $loop->index }}" readonly placeholder="DD-MM-YYYY" name="info_product_material[{{ $loop->index }}][info_mfg_date]"
+                                                    <input type="text" id="info_mfg_date_{{ $loop->index }}" readonly placeholder="MM-YYYY" name="info_product_material[{{ $loop->index }}][info_mfg_date]"
                                                      value="{{ Helpers::getmonthFormat($info_product_material['info_mfg_date'] ?? '') }}"  />
                                                     <input {{Helpers::isOOSMicro($micro_data->stage)}} type="month" name="info_product_material[{{ $loop->index }}][info_mfg_date]" 
                                                     value="{{$info_product_material['info_mfg_date']}}" class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date_{{ $loop->index }}')">
@@ -403,9 +401,9 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="info_expiry_date_{{ $loop->index }}" value="{{ Helpers::getmonthFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
-                                                    <input {{Helpers::isOOSMicro($micro_data->stage)}} type="month" name="info_product_material[{{ $loop->index }}][info_expiry_date]" 
-                                                    value="{{ $info_product_material['info_expiry_date'] ?? '' }}" class="hide-input" oninput="handleMonthInput(this, 'info_expiry_date_{{ $loop->index }}')">
+                                                    <input type="text" id="info_expiry_date_{{ $loop->index }}" value="{{ Helpers::getmonthFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="MM-YYYY" />
+                                                    <input type="month" name="info_product_material[{{ $loop->index }}][info_expiry_date]" 
+                                                    value="{{ $info_product_material['info_expiry_date'] ?? '' }}" class="hide-input" oninput="handleMonthInput(this, 'info_expiry_date_{{ $loop->index }}')"  {{Helpers::isOOSMicro($micro_data->stage)}}>
                                                 </div>
                                             </div>
                                         </div>

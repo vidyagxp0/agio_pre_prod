@@ -31,7 +31,7 @@ $users = DB::table('users')
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="MM-YYYY" />' +
                         '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
@@ -41,7 +41,7 @@ $users = DB::table('users')
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="MM-YYYY" />' +
                         '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
@@ -381,10 +381,10 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button> -->
+                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Closure Summary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Extension</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
 
             </div>
 
@@ -476,7 +476,7 @@ $users = DB::table('users')
                         </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group"><b>Initiation department group</b></label>
+                                <label for="Initiator Group"><b>Initiation department </b></label>
                                 <select name="initiator_group_gi" id="initiator_group">
                                     <option value="">-- Select --</option>
                                     <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
@@ -2413,10 +2413,11 @@ $users = DB::table('users')
 
                 </div>
             </div>
-            <!-- Batch Disposition -->
-            <div id="CCForm11" class="inner-block cctabcontent">
+          
+            <!-- Closer -->
+            <div id="CCForm12" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">
+                <div class="sub-head">
                         Batch Disposition
                     </div>
                     <div class="row">
@@ -2593,7 +2594,14 @@ $users = DB::table('users')
                                 <textarea class="summernote" name="justify_for_delay_BI" id="summernote-1">
                                         </textarea>
                             </div>
-
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Closure Summary</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="reopen_request" id="summernote-1">
+                                        </textarea>
+                            </div>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
@@ -2620,49 +2628,8 @@ $users = DB::table('users')
                                     Exit </a> </button>
                         </div>
                     </div>
-                </div>
-
-            </div>
-            <!-- Re-Open -->
-            <div id="CCForm12" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="sub-head">
-                        Reopen Request
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">Other Action (Specify)</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="reopen_request" id="summernote-1">
-                                        </textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="Reference Recores">Reopen Attachment</label>
-                                <small class="text-primary">
-                                    Please Attach all relevant or supporting documents
-                                </small>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="reopen_attachment"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="reopen_attachment[]"
-                                            oninput="addMultipleFiles(this, 'reopen_attachment')" multiple>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <!-- <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button> -->
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
-                        </div>
-                    </div>
+                    
+                    <!-- </div> -->
                 </div>
 
             </div>

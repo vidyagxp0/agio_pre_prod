@@ -1,9 +1,6 @@
-  <!-- Batch Disposition -->
-  <div id="CCForm11" class="inner-block cctabcontent">
+<div id="CCForm12" class="inner-block cctabcontent">
     <div class="inner-block-content">
-        <div class="sub-head">
-            Batch Disposition
-        </div>
+        <div class="sub-head"> Batch Disposition </div>
         <div class="row">
             <div class="col-lg-6">
                 <div class="group-input">
@@ -154,7 +151,13 @@
                      {{Helpers::isOOSMicro($micro_data->stage)}}>
                         {{ $micro_data->justify_for_delay_BI }}</textarea>
                 </div>
-
+            </div>
+            <div class="col-md-12 mb-4">
+                <div class="group-input">
+                    <label for="Description Deviation">Closure Summary</label>
+                    <textarea class="summernote" name="reopen_request" id="summernote-1">
+                    {{ $micro_data->reopen_request }}    </textarea>
+                </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
