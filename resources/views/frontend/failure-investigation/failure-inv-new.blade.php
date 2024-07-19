@@ -342,7 +342,24 @@
         });
     </script>
     
-    <script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {{--  <script>
         $(document).ready(function() {
             $('#ObservationAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -353,6 +370,7 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td> <select name="facility_name[]" id="facility_name">  <option value="">-- Select --</option>  <option value="1">Facility</option>  <option value="2"> Equipment</option> <option value="3">Instrument</option></select> </td>' +
+                      '<td><input type="text" name="datatype[]"></td>' +
                         '<td><input type="text" name="IDnumber[]"></td>' +
                         '<td><input type="text" name="Remarks[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
@@ -377,8 +395,12 @@
                 tableBody.append(newRow);
             });
         });
-    </script>
-    <script>
+    </script>  --}}
+
+
+
+
+    {{--  <script>
         $(document).ready(function() {
             $('#ReferenceDocument').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -417,9 +439,9 @@
             $(this).closest('div').remove();
             console.log('removing')
         })
-    </script>
+    </script>  --}}
 
-    <script>
+    {{--  <script>
         $(document).ready(function() {
             $('#Product_Details').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -430,7 +452,10 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="product_name[]"></td>' +
-                        '<td> <select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' +
+                        '<td><input type="text" name="product_stage[]"></td>' +
+                    
+                    
+                         '<td> <select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' +  
                         '<td><input type="text" name="batch_no[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
 
@@ -455,7 +480,7 @@
                 tableBody.append(newRow);
             });
         });
-    </script>
+    </script>  --}}
     <script>
         $(document).on('click', '.removeRowBtn', function() {
             $(this).closest('tr').remove();
@@ -700,57 +725,26 @@
                                     document.getElementById('due_date').value = dueDateFormatted;
                                 </script>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Initiator Group"><b>Department</b><span
-                                                class="text-danger">*</span></label>
-                                        <select name="Initiator_Group" id="initiator_group" required>
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>
-                                                Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('Initiator_Group') == 'CQC') selected @endif>
-                                                Central
-                                                Quality Control</option>
-                                            <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>
-                                                Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>
-                                                Central
-                                                Laboratory</option>
 
-                                            <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
-                                                team</option>
-                                            <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
-                                                Business Administration</option>
-                                        </select>
-                                        @error('Initiator_Group')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
+    
+                         
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="Initiator Group"><b>Department</b><span class="text-danger">*</span></label>
+                                                <select name="Initiator_Group" id="initiator_group" required>
+                                                    <option value="">-- Select --</option>
+                                                    @foreach (Helpers::getDepartments() as $key => $value)
+                                                        <option value="{{ $key }}" @if (old('Initiator_Group') == $key) selected @endif>{{ $value }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('Initiator_Group')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Department Code</label>
@@ -870,15 +864,20 @@
                                     @enderror --}}
                                 </div>
 
-                                <script>
+                             <script>
+                                document.addEventListener('DOMContentLoaded', function() {
                                     flatpickr("#failure_investigation_time", {
                                         enableTime: true,
                                         noCalendar: true,
                                         dateFormat: "H:i", // 24-hour format without AM/PM
+                                        time_24hr: true, // Ensure 24-hour time format
                                         minuteIncrement: 1 // Set minute increment to 1
-
                                     });
-                                </script>
+                                });
+                            </script>
+
+
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="facility">Failure Investigation Observed By</label>
@@ -955,6 +954,16 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                     <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Process"><b>Process</b><span class="text-danger">*</span></label>
+                                        <input type="text" name="process" id="process" value="">
+                                        @error('process')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit type">Failure Investigation Related To </label>
@@ -987,6 +996,108 @@
                                         <input type="text" id="others" name="others" class="others">
                                     </div>
                                 </div>
+
+
+
+
+
+
+{{--  
+
+<div class="col-lg-12">
+    <div class="group-input">
+        <label for="system"><b>System</b><span class="text-danger">*</span></label>
+        <select name="system" id="system" onchange="toggleDetailFields(this.value)">
+            <option value="">-- Select System --</option>
+            <option value="equipment" {{ old('system') == 'equipment' ? 'selected' : '' }}>Equipment</option>
+            <option value="instrument" {{ old('system') == 'instrument' ? 'selected' : '' }}>Instrument</option>
+            <option value="facility" {{ old('system') == 'facility' ? 'selected' : '' }}>Facility</option>
+            <option value="other" {{ old('system') == 'other' ? 'selected' : '' }}>Other</option>
+        </select>
+        @error('system')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<div class="col-lg-12" id="equipment_name_input" style="display: none;">
+    <div class="group-input">
+        <label for="equipment_name"><b>Equipment Name</b></label>
+        <input type="text" name="equipment_name" id="equipment_name" value="{{ old('equipment_name') }}">
+        @error('equipment_name')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<div class="col-lg-12" id="instrument_name_input" style="display: none;">
+    <div class="group-input">
+        <label for="instrument_name"><b>Instrument Name</b></label>
+        <input type="text" name="instrument_name" id="instrument_name" value="{{ old('instrument_name') }}">
+        @error('instrument_name')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<div class="col-lg-12" id="facility_name_input" style="display: none;">
+    <div class="group-input">
+        <label for="facility_name"><b>Facility Name</b></label>
+        <input type="text" name="facility_name" id="facility_name" value="{{ old('facility_name') }}">
+        @error('facility_name')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<div class="col-lg-12" id="other_system_input" style="display: none;">
+    <div class="group-input">
+        <label for="other_system_detail"><b>Specify Other System</b></label>
+        <input type="text" name="other_system_detail" id="other_system_detail" value="{{ old('other_system_detail') }}">
+        @error('other_system_detail')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle the detail fields based on the selected system value
+        function toggleDetailFields(value) {
+            var equipmentInput = document.getElementById('equipment_name_input');
+            var instrumentInput = document.getElementById('instrument_name_input');
+            var facilityInput = document.getElementById('facility_name_input');
+            var otherInput = document.getElementById('other_system_input');
+
+            equipmentInput.style.display = (value === 'equipment') ? 'block' : 'none';
+            instrumentInput.style.display = (value === 'instrument') ? 'block' : 'none';
+            facilityInput.style.display = (value === 'facility') ? 'block' : 'none';
+            otherInput.style.display = (value === 'other') ? 'block' : 'none';
+        }
+
+        // Initialize the toggle based on the current selection
+        toggleDetailFields(document.getElementById('system').value);
+
+        // Add event listener for the system select field
+        document.getElementById('system').addEventListener('change', function() {
+            toggleDetailFields(this.value);
+        });
+    });
+</script>
+  --}}
+
+
+
+
+
+
+
+
+
+
+
+
+                                
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         var selectField = document.getElementById('audit_type');
@@ -1017,318 +1128,363 @@
                                         });
                                     });
                                 </script>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Facility/Equipment"> Facility/ Equipment/ Instrument/ System Details
-                                            Required?</label>
-                                        <select name="Facility_Equipment" id="Facility_Equipment">
-                                            <option value="">--Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-
-                                        </select>
-                                    </div>
-                                    @error('Facility_Equipment')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="group-input" id="facilityRow" style="display: none">
-                                    <label for="audit-agenda-grid">
-                                        Facility/ Equipment/ Instrument/ System Details
-                                        <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="onservation-field-table">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 4%">Row#</th>
-                                                    <th style="width: 12%">Name</th>
-                                                    <th style="width: 16%"> ID Number</th>
-                                                    <th style="width: 15%">Remarks</th>
-                                                    <th style="width: 8%">Action</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <td><input disabled type="text" name="serial[]" value="1"></td>
-                                                <td> <select name="facility_name[]" id="facility_name"
-                                                        class="facility-name">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="Facility">Facility</option>
-                                                        <option value="Equipment"> Equipment</option>
-                                                        <option value="Instrument">Instrument</option>
-                                                    </select> </td>
-                                                <td><input type="text" name="IDnumber[]" class="id-number"></td>
-                                                <td><input type="text" name="Remarks[]" class="remarks"></td>
-                                                <td><input type="text" name="Action[]" class="action" readonly></td>
-
-                                            </tbody>
-
-                                        </table>
-                                    </div>
-                                </div>
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        var selectField = document.getElementById('Facility_Equipment');
-                                        var inputsToToggle = [];
-
-                                        // Add elements with class 'facility-name' to inputsToToggle
-                                        var facilityNameInputs = document.getElementsByClassName('facility-name');
-                                        for (var i = 0; i < facilityNameInputs.length; i++) {
-                                            inputsToToggle.push(facilityNameInputs[i]);
-                                        }
-
-                                        // Add elements with class 'id-number' to inputsToToggle
-                                        var idNumberInputs = document.getElementsByClassName('id-number');
-                                        for (var j = 0; j < idNumberInputs.length; j++) {
-                                            inputsToToggle.push(idNumberInputs[j]);
-                                        }
-
-                                        // Add elements with class 'remarks' to inputsToToggle
-                                        var remarksInputs = document.getElementsByClassName('remarks');
-                                        for (var k = 0; k < remarksInputs.length; k++) {
-                                            inputsToToggle.push(remarksInputs[k]);
-                                        }
 
 
-                                        selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
-                                            console.log(this.value, isRequired, 'value');
+<div class="col-lg-12">
+    <div class="group-input">
+        <label for="Facility/Equipment"> Facility/ Equipment/ Instrument/ System Details Required?</label>
+        <select name="Facility_Equipment" id="Facility_Equipment">
+            <option value="">--Select--</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+    </div>
+    @error('Facility_Equipment')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
 
-                                            inputsToToggle.forEach(function(input) {
-                                                input.required = isRequired;
-                                                console.log(input.required, isRequired, 'input req');
-                                            });
+<div class="group-input" id="facilityRow" style="display: none">
+    <label for="audit-agenda-grid">
+        Facility/ Equipment/ Instrument/ System Details
+        <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+            (Launch Instruction)
+        </span>
+    </label>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="onservation-field-table">
+            <thead>
+                <tr>
+                    <th style="width: 4%">Row#</th>
+                    <th style="width: 12%">Name</th>
+                    <th style="width: 12%">Type</th>
+                    <th style="width: 16%">ID Number</th>
+                    <th style="width: 15%">Remarks</th>
+                    <th style="width: 8%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input disabled type="text" name="serial[]" value="1"></td>
+                    <td>
+                        <select name="facility_name[]" class="facility-name">
+                            <option value="">-- Select --</option>
+                            <option value="Facility">Facility</option>
+                            <option value="Equipment">Equipment</option>
+                            <option value="Instrument">Instrument</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="datatype[]" class="id-number"></td>
+                    <td><input type="text" name="IDnumber[]" class="id-number"></td>
+                    <td><input type="text" name="Remarks[]" class="remarks"></td>
+                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-                                            document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
-                                            // Show or hide the asterisk icon based on the selected value
-                                            var asteriskIcon = document.getElementById('asteriskInvi');
-                                            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                        });
-                                    });
-                                </script>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Document Details Required">Document Details Required?</label>
-                                        <select name=" Document_Details_Required" id="Document_Details_Required">
-                                            <option value="">--Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectField = document.getElementById('Facility_Equipment');
+        var inputsToToggle = [];
 
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="group-input" id="documentsRow" style="display: none">
-                                    <label for="audit-agenda-grid">
-                                        Document Details
-                                        <button type="button" name="audit-agenda-grid" id="ReferenceDocument">+</button>
+        // Add elements with class 'facility-name' to inputsToToggle
+        var facilityNameInputs = document.getElementsByClassName('facility-name');
+        for (var i = 0; i < facilityNameInputs.length; i++) {
+            inputsToToggle.push(facilityNameInputs[i]);
+        }
 
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="ReferenceDocument_details"
-                                            style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 4%">Row#</th>
-                                                    <th style="width: 12%">Document Number</th>
-                                                    <th style="width: 16%"> Reference Document Name</th>
-                                                    <th style="width: 16%"> Remarks</th>
+        // Add elements with class 'id-number' to inputsToToggle
+        var idNumberInputs = document.getElementsByClassName('id-number');
+        for (var j = 0; j < idNumberInputs.length; j++) {
+            inputsToToggle.push(idNumberInputs[j]);
+        }
 
-                                                    <th style="width: 8%"> Action</th>
+        // Add elements with class 'remarks' to inputsToToggle
+        var remarksInputs = document.getElementsByClassName('remarks');
+        for (var k = 0; k < remarksInputs.length; k++) {
+            inputsToToggle.push(remarksInputs[k]);
+        }
 
+        selectField.addEventListener('change', function() {
+            var isRequired = this.value === 'yes';
+            inputsToToggle.forEach(function(input) {
+                input.required = isRequired;
+            });
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <td><input disabled type="text" name="serial[]" value="1"></td>
-                                                <td><input type="text" class="numberDetail" name="Number[]"></td>
-                                                <td><input type="text" class="ReferenceDocumentName"
-                                                        name="ReferenceDocumentName[]"></td>
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="Document_Remarks[]"></td>
-                                                <td><input type="text" class="" name="Action[]" readonly></td>
+            document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
+        });
 
+        // Add row functionality
+        $('#ObservationAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                    '<td> <select name="facility_name[]" class="facility-name">  <option value="">-- Select --</option>  <option value="Facility">Facility</option>  <option value="Equipment"> Equipment</option> <option value="Instrument">Instrument</option></select> </td>' +
+                    '<td><input type="text" name="datatype[]" class="id-number"></td>' +
+                    '<td><input type="text" name="IDnumber[]" class="id-number"></td>' +
+                    '<td><input type="text" name="Remarks[]" class="remarks"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
 
-                                            </tbody>
+                return html;
+            }
 
-                                        </table>
-                                    </div>
-                                </div>
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        // note-codable
+            var tableBody = $('#onservation-field-table tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
 
-                                        var selectField = document.getElementById('Document_Details_Required');
-                                        var inputsToToggle = [];
-
-                                        // Add elements with class 'facility-name' to inputsToToggle
-                                        var facilityNameInputs = document.getElementsByClassName('numberDetail');
-                                        for (var i = 0; i < facilityNameInputs.length; i++) {
-                                            inputsToToggle.push(facilityNameInputs[i]);
-                                        }
-
-                                        // Add elements with class 'id-number' to inputsToToggle
-                                        var idNumberInputs = document.getElementsByClassName('Document_Remarks');
-                                        for (var j = 0; j < idNumberInputs.length; j++) {
-                                            inputsToToggle.push(idNumberInputs[j]);
-                                        }
-
-                                        // Add elements with class 'remarks' to inputsToToggle
-                                        var remarksInputs = document.getElementsByClassName('ReferenceDocumentName');
-                                        for (var k = 0; k < remarksInputs.length; k++) {
-                                            inputsToToggle.push(remarksInputs[k]);
-                                        }
-
-
-                                        selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
-                                            console.log(this.value, isRequired, 'value');
-
-                                            inputsToToggle.forEach(function(input) {
-                                                input.required = isRequired;
-                                                console.log(input.required, isRequired, 'input req');
-                                            });
-
-
-                                            document.getElementById('documentsRow').style.display = isRequired ? 'block' : 'none';
-                                            // Show or hide the asterisk icon based on the selected value
-                                            var asteriskIcon = document.getElementById('asteriskInviDetails');
-                                            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                        });
-                                    });
-                                </script>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Product Details Required">Product/Batch Details Required?</label>
-                                        <select name=" Product_Details_Required" id="Product_Details_Required">
-                                            <option value="">--Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-
-                                        </select>
-                                    </div>
-                                </div>
+        // Remove row functionality
+        $('#onservation-field-table').on('click', '.removeRowBtn', function(e) {
+            $(this).closest('tr').remove();
+            // Update serial numbers
+            $('#onservation-field-table tbody tr').each(function(index, element) {
+                $(element).find('input[name="serial[]"]').val(index + 1);
+            });
+        });
+    });
+</script>
 
 
-                                <div class="col-lg-12">
-                                    <div class="group-input" id="productRow" style="display: none">
-                                        <label for="audit-agenda-grid">
-                                            Product/Batch Details
-                                            <button type="button" name="audit-agenda-grid"
-                                                id="Product_Details">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#product-batch-grid"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="Product_Details_Details"
-                                                style="width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 4%">Row#</th>
-                                                        <th style="width: 12%">Product</th>
-                                                        <th style="width: 16%"> Stage</th>
-                                                        <th style="width: 16%">Batch No</th>
-                                                        <th style="width: 8%">Action</th>
+                       <div class="col-lg-12">
+    <div class="group-input">
+        <label for="Document_Details_Required">Document Details Required?</label>
+        <select name="Document_Details_Required" id="Document_Details_Required">
+            <option value="">--Select--</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+    </div>
+</div>
+
+<div class="group-input" id="documentsRow" style="display: none">
+    <label for="audit-agenda-grid">
+        Document Details
+        <button type="button" name="audit-agenda-grid" id="ReferenceDocument">+</button>
+        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">(Launch Instruction)</span>
+    </label>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="ReferenceDocument_details" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="width: 4%">Row#</th>
+                    <th style="width: 12%">Document Number</th>
+                    <th style="width: 16%">Reference Document Name</th>
+                    <th style="width: 16%">Remarks</th>
+                    <th style="width: 8%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input disabled type="text" name="serial[]" value="1"></td>
+                    <td><input type="text" class="numberDetail" name="Number[]"></td>
+                    <td><input type="text" class="ReferenceDocumentName" name="ReferenceDocumentName[]"></td>
+                    <td><input type="text" class="Document_Remarks" name="Document_Remarks[]"></td>
+                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectField = document.getElementById('Document_Details_Required');
+        var inputsToToggle = [];
+
+        // Add elements with class 'numberDetail' to inputsToToggle
+        var numberDetailInputs = document.getElementsByClassName('numberDetail');
+        for (var i = 0; i < numberDetailInputs.length; i++) {
+            inputsToToggle.push(numberDetailInputs[i]);
+        }
+
+        // Add elements with class 'Document_Remarks' to inputsToToggle
+        var documentRemarksInputs = document.getElementsByClassName('Document_Remarks');
+        for (var j = 0; j < documentRemarksInputs.length; j++) {
+            inputsToToggle.push(documentRemarksInputs[j]);
+        }
+
+        // Add elements with class 'ReferenceDocumentName' to inputsToToggle
+        var referenceDocumentNameInputs = document.getElementsByClassName('ReferenceDocumentName');
+        for (var k = 0; k < referenceDocumentNameInputs.length; k++) {
+            inputsToToggle.push(referenceDocumentNameInputs[k]);
+        }
+
+        selectField.addEventListener('change', function() {
+            var isRequired = this.value === 'yes';
+            console.log(this.value, isRequired, 'value');
+
+            inputsToToggle.forEach(function(input) {
+                input.required = isRequired;
+                console.log(input.required, isRequired, 'input req');
+            });
+
+            document.getElementById('documentsRow').style.display = isRequired ? 'block' : 'none';
+        });
+
+        // Add row functionality
+        $('#ReferenceDocument').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                    '<td><input type="text" name="Number[]" class="numberDetail"></td>' +
+                    '<td><input type="text" name="ReferenceDocumentName[]" class="ReferenceDocumentName"></td>' +
+                    '<td><input type="text" name="Document_Remarks[]" class="Document_Remarks"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+
+                return html;
+            }
+
+            var tableBody = $('#ReferenceDocument_details tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+
+        // Remove row functionality
+        $('#ReferenceDocument_details').on('click', '.removeRowBtn', function(e) {
+            $(this).closest('tr').remove();
+            // Update serial numbers
+            $('#ReferenceDocument_details tbody tr').each(function(index, element) {
+                $(element).find('input[name="serial[]"]').val(index + 1);
+            });
+        });
+    });
+</script>
 
 
 
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <td><input disabled type="text" name="serial[]" value="1">
-                                                    </td>
-                                                    <td><input type="text" class="productName" name="product_name[]">
-                                                    </td>
-                                                    <td>
-
-                                                        <select name="product_stage[]" id="product_stage"
-                                                            class="productStage">
-                                                            <option value="">-- Select --</option>
-                                                            <option value="">1</option>
-                                                            <option value="">2</option>
-                                                            <option value="">3</option>
-                                                            <option value="">4</option>
-                                                            <option value="">5</option>
-                                                            <option value="">6</option>
-                                                            <option value="">7</option>
-                                                            <option value="">8</option>
-                                                            <option value="">9</option>
-                                                            <option value="">Final</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" class="productBatchNo" name="batch_no[]">
-                                                    </td>
-                                                    <td><input type="text" class="Removebtn" name="Action[]" readonly>
-                                                    </td>
 
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    @error('product_name')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                    @error('product_stage')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                    @error('batch_no')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        var selectField = document.getElementById('Product_Details_Required');
-                                        var inputsToToggle = [];
-
-                                        // Add elements with class 'productName' to inputsToToggle
-                                        var productNameInputs = document.getElementsByClassName('productName');
-                                        for (var i = 0; i < productNameInputs.length; i++) {
-                                            inputsToToggle.push(productNameInputs[i]);
-                                        }
-
-                                        // Add elements with class 'productStage' to inputsToToggle
-                                        var productStageInputs = document.getElementsByClassName('productStage');
-                                        for (var j = 0; j < productStageInputs.length; j++) {
-                                            inputsToToggle.push(productStageInputs[j]);
-                                        }
-
-                                        // Add elements with class 'productBatchNo' to inputsToToggle
-                                        var productBatchNoInputs = document.getElementsByClassName('productBatchNo');
-                                        for (var k = 0; k < productBatchNoInputs.length; k++) {
-                                            inputsToToggle.push(productBatchNoInputs[k]);
-                                        }
 
 
-                                        selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'yes';
-                                            console.log(this.value, isRequired, 'value');
 
-                                            inputsToToggle.forEach(function(input) {
-                                                input.required = isRequired;
-                                                console.log(input.required, isRequired, 'input req');
-                                            });
 
-                                            document.getElementById('productRow').style.display = isRequired ? 'block' : 'none';
-                                            var asteriskIcon = document.getElementById('asteriskInvi');
-                                            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                        });
-                                    });
-                                </script>
+
+
+
+<div class="col-lg-12">
+    <div class="group-input">
+        <label for="Product_Details_Required">Product/Batch Details Required?</label>
+        <select name="Product_Details_Required" id="Product_Details_Required">
+            <option value="">--Select--</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+    </div>
+</div>
+
+<div class="col-lg-12">
+    <div class="group-input" id="productRow" style="display: none">
+        <label for="audit-agenda-grid">
+            Product/Batch Details
+            <button type="button" name="audit-agenda-grid" id="Product_Details">+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#product-batch-grid" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">(Launch Instruction)</span>
+        </label>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="Product_Details_Details" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="width: 4%">Row#</th>
+                        <th style="width: 12%">Product</th>
+                        <th style="width: 16%">Stage</th>
+                        <th style="width: 16%">Batch No</th>
+                        <th style="width: 8%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input disabled type="text" name="serial[]" value="1"></td>
+                        <td><input type="text" class="productName" name="product_name[]"></td>
+                        <td><input type="text" class="product_stage" name="product_stage[]"></td>
+                        <td><input type="text" class="productBatchNo" name="batch_no[]"></td>
+                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @error('product_name')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+    @error('product_stage')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+    @error('batch_no')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectField = document.getElementById('Product_Details_Required');
+        var inputsToToggle = [];
+
+        // Add elements with class 'productName' to inputsToToggle
+        var productNameInputs = document.getElementsByClassName('productName');
+        for (var i = 0; i < productNameInputs.length; i++) {
+            inputsToToggle.push(productNameInputs[i]);
+        }
+
+        // Add elements with class 'product_stage' to inputsToToggle
+        var productStageInputs = document.getElementsByClassName('product_stage');
+        for (var j = 0; j < productStageInputs.length; j++) {
+            inputsToToggle.push(productStageInputs[j]);
+        }
+
+        // Add elements with class 'productBatchNo' to inputsToToggle
+        var productBatchNoInputs = document.getElementsByClassName('productBatchNo');
+        for (var k = 0; k < productBatchNoInputs.length; k++) {
+            inputsToToggle.push(productBatchNoInputs[k]);
+        }
+
+        selectField.addEventListener('change', function() {
+            var isRequired = this.value === 'yes';
+            inputsToToggle.forEach(function(input) {
+                input.required = isRequired;
+            });
+
+            document.getElementById('productRow').style.display = isRequired ? 'block' : 'none';
+        });
+
+        // Add row functionality
+        $('#Product_Details').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                    '<td><input type="text" class="productName" name="product_name[]"></td>' +
+                    '<td><input type="text" class="product_stage" name="product_stage[]"></td>' +
+                    '<td><input type="text" class="productBatchNo" name="batch_no[]"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+                return html;
+            }
+
+            var tableBody = $('#Product_Details_Details tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+
+        // Remove row functionality
+        $('#Product_Details_Details').on('click', '.removeRowBtn', function(e) {
+            $(this).closest('tr').remove();
+            // Update serial numbers
+            $('#Product_Details_Details tbody tr').each(function(index, element) {
+                $(element).find('input[name="serial[]"]').val(index + 1);
+            });
+        });
+    });
+</script>
+
                                 <!-- <div class="col-lg-6">
                                         <div class="group-input" id="external_agencies_req">
                                             <label for="others">HOD / Designee<span class="text-danger d-none">*</span></label>

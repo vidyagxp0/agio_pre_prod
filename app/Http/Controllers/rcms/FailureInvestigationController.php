@@ -89,15 +89,21 @@ class FailureInvestigationController extends Controller
 
         $failureInvestigation->form_progress = isset($form_progress) ? $form_progress : null;
 
+
+
         # -------------new-----------
         //  $failureInvestigation->record_number = $request->record_number;
         $failureInvestigation->division_id = $request->division_id;
         $failureInvestigation->assign_to = $request->assign_to;
         $failureInvestigation->Facility = $request->Facility;
         $failureInvestigation->due_date = $request->due_date;
-        $failureInvestigation->intiation_date = $request->intiation_date;
+        $failureInvestigation->intiation_date = Carbon::createFromFormat('d-M-Y', $request->intiation_date)->format('Y-m-d');
         $failureInvestigation->Initiator_Group = $request->Initiator_Group;
         $failureInvestigation->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
+
+        $failureInvestigation->process = $request->process; // Add this line
+
+   
         $failureInvestigation->initiator_group_code = $request->initiator_group_code;
         $failureInvestigation->short_description = $request->short_description;
         $failureInvestigation->failure_investigation_date = $request->failure_investigation_date;
@@ -441,6 +447,10 @@ class FailureInvestigationController extends Controller
         $data3->type = "FailureInvestigation";
         if (!empty($request->facility_name)) {
             $data3->facility_name = serialize($request->facility_name);
+        }
+
+        if (!empty($request->datatype)) {
+            $data3->datatype = serialize($request->datatype);
         }
         if (!empty($request->IDnumber)) {
             $data3->IDnumber = serialize($request->IDnumber);
@@ -1237,6 +1247,15 @@ class FailureInvestigationController extends Controller
                         }
                     },
                 ],
+
+
+                'datatype' => [
+                    function ($attribute, $value, $fail) use ($request) {
+                        if ($request->input('datatype') === 'yes' && (count($value) === 1 && reset($value) === null)) {
+                            $fail('The Type field is required when Type is yes.');
+                        }
+                    },
+                ],
                 'IDnumber' => [
                     function ($attribute, $value, $fail) use ($request) {
                         if ($request->input('Facility_Equipment') === 'yes' && (count($value) === 1 && reset($value) === null)) {
@@ -1305,6 +1324,9 @@ class FailureInvestigationController extends Controller
                 $form_progress = 'general-open';
             }
         }
+///--------------------------progress--------------------------------------------
+        $failureInvestigation->form_progress = $form_progress ?? $failureInvestigation->form_progress;
+  //------------------------------------------------------------------------------
         if ($request->form_name == 'qa')
         {
             $validator = Validator::make($request->all(), [
@@ -2254,6 +2276,10 @@ class FailureInvestigationController extends Controller
          $data3=FailureInvestigationGrid::where('failure_investigation_grid_id', $failureInvestigation->id)->where('type', "FailureInvestigation")->first();
                 if (!empty($request->IDnumber)) {
                     $data3->IDnumber = serialize($request->IDnumber);
+                }
+
+                if (!empty($request->datatype)) {
+                    $data3->datatype = serialize($request->datatype);
                 }
                 if (!empty($request->facility_name)) {
                     $data3->facility_name = serialize($request->facility_name);
@@ -6877,8 +6903,9 @@ class FailureInvestigationController extends Controller
             $parent_name = "Root";
             $Rootchild = FailureInvestigation::find($id);
             $Rootchild->Rootchild = $record_number;
+            $record = $record_number;
             $Rootchild->save();
-            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
+            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
         }
     }
 
