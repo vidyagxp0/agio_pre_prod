@@ -969,7 +969,7 @@
                                         <div class="group-input">
                                             <label for="agenda">
                                                 Failure Mode and Effect Analysis<button type="button" name="agenda"
-                                                    onclick="addRiskAssessment('risk-assessment-risk-management')">+</button>
+                                                    onclick="addRiskAssessmentdata('risk-assessment-risk-management')">+</button>
                                             </label>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered" style="width: 200%"
