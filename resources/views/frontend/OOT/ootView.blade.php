@@ -66,8 +66,7 @@
                     <div class="d-flex" style="gap:20px;">
                         @php
                             $userRoles = DB::table('user_roles')
-                                ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
-                                ->get();
+                                ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         @endphp
                         <button class="button_theme1"> <a class="text-white"
@@ -198,8 +197,8 @@
             <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Under Addendum Approval</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button> --}}
+            <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>--}}
+            <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Extension</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Activity Log</button>
          </div>
 

@@ -363,8 +363,8 @@
                                                 <td><input type="text" name="product_materiel[0][item_product_code]"></td>
                                                 <td><input type="text" name="product_materiel[0][lot_batch_no]"></td>
                                                 <td><input type="text" name="product_materiel[0][a_r_number]">
-                                                <td><input type="month"  id="date" name="date" placeholder="MM-YYYY" pattern="\d{2}-\d{4}"></td>
-                                                {{-- <td><input type="month"  name="product_materiel[0][m_f_g_date]"></td> --}}
+                                                {{-- <td><input type="month"  id="date" name="date" placeholder="MM-YYYY" pattern="\d{2}-\d{4}"></td> --}}
+                                                <td><input type="month"  name="product_materiel[0][m_f_g_date]"></td>
                                                 <td><input type="month" name="product_materiel[0][expiry_date]"></td>
                                                 <td><input type="text" name="product_materiel[0][label_claim]"></td>
 
@@ -3969,34 +3969,6 @@
         });
     </script>
 
-    {{-- <script>
-    $(document).ready(function() {
-        let infoProduct = 1:
-        $('#infoProAdd').click(function(e) {
-            function generateTableRow(serialNumber) {
-                var html =
-                    '<tr>' +
-                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>'+
-                    '<td><input type="text" name="info_product['+infoProduct+'][batch_no]"></td>'+
-                    '<td><input type="date" name="info_product['+infoProduct+'][mfg_date]"></td>'+
-                    '<td><input type="date" name="info_product['+infoProduct+'][exp_date]"></td>'+
-                    '<td><input type="text" name="info_product['+infoProduct+'][ar_number]"></td>'+
-                    '<td><input type="text"  name="info_product['+infoProduct+'][pack_style]"></td>'+
-                    '<td><input type="text"  name="info_product['+infoProduct+'][frequency]"></td>'+
-                    '<td><input type="text"  name="info_product['+infoProduct+'][condition]"></td>'+
-                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                    '</tr>';
-                '</tr>';
-                infoProduct++;
-                return html;
-            }
-            var tableBody = $('#productMaterialInfo_details tbody');
-            var rowCount = tableBody.children('tr').length;
-            var newRow = generateTableRow(rowCount + 1);
-            tableBody.append(newRow);
-        });
-    });
-</script> --}}
 
     <script>
         $(document).ready(function() {

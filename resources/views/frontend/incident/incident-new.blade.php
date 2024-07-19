@@ -856,7 +856,7 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="short_description_required">Equipment Name</label>
                                         <select name="equipment_name" id="equipment_name" required>
@@ -899,7 +899,7 @@
                                     @error('inc_facility_name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -4049,6 +4049,15 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="imidiate_action" id="summernote-10">    </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Root Cause">Impact Assesment</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="tiny" name="impact_ass" id="summernote-10">    </textarea>
                                     </div>
                                 </div>
 

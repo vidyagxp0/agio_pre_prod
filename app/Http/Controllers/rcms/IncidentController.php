@@ -149,9 +149,9 @@ class IncidentController extends Controller
         $incident->Facility_Equipment = $request->Facility_Equipment;
         $incident->detail_of_root = $request->detail_of_root;
         $incident->Document_Details_Required = $request->Document_Details_Required;
-        $incident->equipment_name = $request->equipment_name;
-        $incident->instrument_name = $request->instrument_name;
-        $incident->inc_facility_name = $request->inc_facility_name;
+        // $incident->equipment_name = $request->equipment_name;
+        // $incident->instrument_name = $request->instrument_name;
+        // $incident->inc_facility_name = $request->inc_facility_name;
         $incident->product_quality_imapct = $request->product_quality_imapct;
         $incident->process_performance_impact = $request->process_performance_impact;
         $incident->yield_impact = $request->yield_impact;
@@ -1479,18 +1479,18 @@ if ($incident->Initial_attachment) {
         $incident->Occurrence = $request->Occurrence ? $request->Occurrence : $incident->Occurrence;
         $incident->detection = $request->detection ? $request->detection: $incident->detection;
 
-        $incident->equipment_name = $request->equipment_name;
-        $incident->instrument_name = $request->instrument_name;
-        $incident->inc_facility_name = $request->inc_facility_name;
-        $incident->product_quality_imapct = $request->product_quality_imapct;
-        $incident->process_performance_impact = $request->process_performance_impact;
-        $incident->yield_impact = $request->yield_impact;
-        $incident->gmp_impact = $request->gmp_impact;
-        $incident->additionl_testing_required = $request->additionl_testing_required;
-        $incident->any_similar_incident_in_past = $request->any_similar_incident_in_past;
-        $incident->classification_by_qa = $request->classification_by_qa;
-        $incident->capa_require = $request->capa_require;
-        $incident->deviation_required = $request->deviation_required;
+        // $incident->equipment_name = $request->equipment_name;
+        // $incident->instrument_name = $request->instrument_name;
+        // $incident->inc_facility_name = $request->inc_facility_name;
+        // $incident->product_quality_imapct = $request->product_quality_imapct;
+        // $incident->process_performance_impact = $request->process_performance_impact;
+        // $incident->yield_impact = $request->yield_impact;
+        // $incident->gmp_impact = $request->gmp_impact;
+        // $incident->additionl_testing_required = $request->additionl_testing_required;
+        // $incident->any_similar_incident_in_past = $request->any_similar_incident_in_past;
+        // $incident->classification_by_qa = $request->classification_by_qa;
+        // $incident->capa_require = $request->capa_require;
+        // $incident->deviation_required = $request->deviation_required;
 
         $newDataGridqrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' =>
         'failure_mode_qrms'])->firstOrCreate();
@@ -1670,7 +1670,6 @@ if ($incident->Initial_attachment) {
                     }
                 }
 
-
                 $Cft->production_attachment = json_encode($files);
             }
             if (!empty ($request->Warehouse_attachment)) {
@@ -1683,7 +1682,6 @@ if ($incident->Initial_attachment) {
                     }
                 }
 
-
                 $Cft->Warehouse_attachment = json_encode($files);
             }
             if (!empty ($request->Quality_Control_attachment)) {
@@ -1695,7 +1693,6 @@ if ($incident->Initial_attachment) {
                         $files[] = $name;
                     }
                 }
-
 
                 $Cft->Quality_Control_attachment = json_encode($files);
             }
@@ -2123,6 +2120,7 @@ if ($incident->Initial_attachment) {
             $incident->objective = $request->objective;
             $incident->scope = $request->scope;
             $incident->imidiate_action = $request->imidiate_action;
+            $incident->impact_ass = $request->impact_ass;
             $incident->investigation_approach = is_array($request->investigation_approach) ? implode(',', $request->investigation_approach) : '';
             $incident->attention_issues = $request->attention_issues;
             $incident->attention_actions = $request->attention_actions;

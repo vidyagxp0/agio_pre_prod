@@ -178,9 +178,6 @@
     <div class="inner-block">
 
         <div class="head">Audit Trial Histroy Configuration Report</div>
-
-
-
         <div class="first-table">
             <table>
                 <tr>
@@ -275,7 +272,6 @@
                 @endforeach
             </table>
         </div>
-
     </div>
 
     <footer>
