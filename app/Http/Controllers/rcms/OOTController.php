@@ -98,6 +98,10 @@ class OOTController extends Controller
         $data->analyst_name           = $request->analyst_name;
         $data->others                 = $request->others;
         $data->reference_record       = $request->reference_record;
+        $data->delay_justification    = $request->delay_justification;
+        $data->oot_observed_on        = $request->oot_observed_on;
+        $data->oot_report_on          = $request->oot_report_on;
+        $data->immediate_action       = $request->immediate_action;
 
         // if (is_array($request->stability_for)) {
         //     $data->stability_for = implode(',', $request->stability_for);
@@ -777,6 +781,8 @@ class OOTController extends Controller
     public function update( Request $request,$id){
         $lastDocument = Ootc::find($id);
 
+
+
         $data = Ootc::find($id);
         // $data->division_id           = $request->division_id;
         $data->record_number         = $lastDocument->record_number;
@@ -792,7 +798,7 @@ class OOTController extends Controller
         $data->is_repeat             = $request->is_repeat;
         $data->repeat_nature         = $request->repeat_nature;
         $data->nature_of_change      = $request->nature_of_change;
-        // $data->oot_occured_on        = $request->oot_occured_on;
+         $data->oot_occured_on        = $request->oot_occured_on;
         $data->oot_details           = $request->oot_details;
         $data->producct_history      = $request->producct_history;
         $data->probble_cause         = $request->probble_cause;
@@ -807,6 +813,11 @@ class OOTController extends Controller
         $data->analyst_name          = $request->analyst_name;
         $data->others                = $request->others;
         $data->reference_record      = $request->reference_record;
+
+        $data->delay_justification    = $request->delay_justification;
+        $data->oot_observed_on        = $request->oot_observed_on? $request->oot_observed_on : $data->oot_observed_on;
+        $data->oot_report_on          = $request->oot_report_on? $request->oot_report_on : $data->oot_report_on;
+        $data->immediate_action       = $request->immediate_action;
 
         // if (is_array($request->stability_for )) {
         //     $data->stability_for = implode(',', $request->stability_for);

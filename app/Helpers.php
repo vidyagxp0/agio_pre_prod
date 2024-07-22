@@ -60,6 +60,19 @@ class Helpers
 
     }
 
+    public static function getmonthFormat($date)
+    {
+        if(empty($date)) {
+            return ''; // or any default value you prefer
+        }
+       else{
+            $date = Carbon::parse($date);
+            $formatted_date = $date->format("M-Y");
+            return $formatted_date;
+        }
+
+    }
+
     public static function getdateFormat1($date)
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y');
@@ -78,13 +91,13 @@ class Helpers
     }}
 
     public static function isRiskAssessment($data)
-    {   
+    {
         if($data == 0 || $data  >= 7){
             return 'disabled';
         }else{
             return  '';
         }
-         
+
     }
     // public static function getHodUserList(){
 
@@ -430,10 +443,10 @@ class Helpers
                 break;
             case 'RA':
                 $full_department_name = "Regulatory Affairs";
-                break; 
+                break;
             case 'PV':
                 $full_department_name = "Pharmacovigilance";
-                break;         
+                break;
 
             default:
                 break;
@@ -468,7 +481,7 @@ class Helpers
             'RA' => 'Regulatory Affairs',
             'PV' => 'Pharmacovigilance',
         ];
-        
+
         return $departments;
     }
 
@@ -490,7 +503,7 @@ class Helpers
             'VMP' => 'Validation Master Plan',
             'QM' => 'Quality Manual',
         ];
-        
+
         return $document_types;
     }
 

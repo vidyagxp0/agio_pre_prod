@@ -233,7 +233,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Short Description">Nature Of Change<span
                                                 class="text-danger"></span></label>
@@ -243,7 +243,7 @@
                                             <option value="permanent">Permanent </option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
                                 <div class="col-lg-12 new-date-data-field">
@@ -260,6 +260,90 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="OOt Observed On">OOT Observed On</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="oot_observed_on" readonly placeholder="DD-MMM-YYYY" />
+                                            {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                            <input type="date" name="oot_observed_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'oot_observed_on')" />
+                                        </div>
+                                    </div>
+                                    @error('Deviation_date')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-6 new-time-data-field">
+                                    <div class="group-input input-time">
+                                        <label for="deviation_time">Delay Justification</label>
+                                        <textarea id="delay_justification" name="delay_justification"></textarea>
+                                    </div>
+                                    {{-- @error('Deviation_date')
+                                        <div class="text-danger">{{  $message  }}</div>
+                                    @enderror --}}
+                                </div>
+                                <script>
+                                    flatpickr("#deviation_time", {
+                                        enableTime: true,
+                                        noCalendar: true,
+                                        dateFormat: "H:i", // 24-hour format without AM/PM
+                                        minuteIncrement: 1 // Set minute increment to 1
+
+                                    });
+                                </script>
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Schedule End Date">OOt Reported on</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="oot_report_on" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="oot_report_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                              class="hide-input" oninput="handleDateInput(this, 'oot_report_on')" />
+                                        </div>
+                                    </div>
+                                </div>
+                                    <script>
+                                        $('.delayJustificationBlock').hide();
+
+                                        function calculateDateDifference() {
+                                            let deviationDate = $('input[name=Deviation_date]').val();
+                                            let reportedDate = $('input[name=Deviation_reported_date]').val();
+
+                                            if (!deviationDate || !reportedDate) {
+                                                console.error('Deviation date or reported date is missing.');
+                                                return;
+                                            }
+
+                                            let deviationDateMoment = moment(deviationDate);
+                                            let reportedDateMoment = moment(reportedDate);
+
+                                            let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
+
+                                            // if (diffInDays > 0) {
+                                            //     $('.delayJustificationBlock').show();
+                                            // } else {
+                                            //     $('.delayJustificationBlock').hide();
+                                            // }
+
+                                        }
+
+                                        $('input[name=Deviation_date]').on('change', function() {
+                                            calculateDateDifference();
+                                        })
+
+                                        $('input[name=Deviation_reported_date]').on('change', function() {
+                                            calculateDateDifference();
+                                        })
+                                    </script>
+
+                                    <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Reference Recores">Immediate action</label>
+                                        <input type="text" name="immediate_action"  id="immediate_action" value="">
+                                    </div>
+                                     </div>
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -363,9 +447,31 @@
                                                 <td><input type="text" name="product_materiel[0][item_product_code]"></td>
                                                 <td><input type="text" name="product_materiel[0][lot_batch_no]"></td>
                                                 <td><input type="text" name="product_materiel[0][a_r_number]">
-                                                {{-- <td><input type="month"  id="date" name="date" placeholder="MM-YYYY" pattern="\d{2}-\d{4}"></td> --}}
-                                                <td><input type="month"  name="product_materiel[0][m_f_g_date]"></td>
-                                                <td><input type="month" name="product_materiel[0][expiry_date]"></td>
+
+                                                {{-- <td><input type="month"  name="product_materiel[0][m_f_g_date]"></td> --}}
+                                                <td>
+                                                    <div class="col-lg-6 new-date-data-field">
+                                                        <div class="group-input input-date">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" id="m_f_g_date" readonly placeholder="MM-YYYY" />
+                                                                <input type="month" name="product_materiel[0][m_f_g_date]" value=""
+                                                                class="hide-input" oninput="handleMonthInput(this, 'm_f_g_date')">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </td>
+                                                    <td>
+                                                    <div class="col-lg-6 new-date-data-field">
+                                                        <div class="group-input input-date">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" id="expiry_date" readonly placeholder="MM-YYYY" />
+                                                                <input type="month" name="product_materiel[0][expiry_date]"
+                                                                class="hide-input" oninput="handleMonthInput(this, 'expiry_date')">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   </td>
+                                                {{-- <td><input type="month" name="product_materiel[0][expiry_date]"></td> --}}
                                                 <td><input type="text" name="product_materiel[0][label_claim]"></td>
 
                                             </tbody>
@@ -832,7 +938,7 @@
                                         <label for="Short Description"> Preliminary Laboratory Investigation Required
                                             ?<span class="text-danger"></span></label>
                                         <select name="p_l_irequired">
-                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="0">Enter Your Selection Here</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -3858,14 +3964,30 @@
                         '][lot_batch_no]"></td>' +
                         ' <td><input type="text" name="product_materiel[' + indexDetail +
                         '][a_r_number]"></td>' +
-                        '<td><input type="month" name="product_materiel['+ indexDetail +'][m_f_g_date]"></td>' +
-                        // '<td> <div class="col-md-6 new-date-data-field"> <div class="group-input input-date"> <div class="calenderautitee"> <input type="text" id="product_materiel_0_mfg_date" placeholder="DD-MM-YYYY" readonly /> <input type="date" name="product_materiel[0][m_f_g_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, "product_materiel_0_mfg_date")" placeholder="DD-MM-YYYY" /> </div> </div> </div> </td>' +
-                        '<td><input type="month" name="product_materiel[' + indexDetail +
-                        '][expiry_date]"></td>' +
-                        '<td><input type="text" name="product_materiel[' + indexDetail +
-                        '][label_claim]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                        '</tr>';
+                        // '<td><input type="month" name="product_materiel['+ indexDetail +'][m_f_g_date]"></td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="m_f_g_date' + indexDetail + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="product_materiel['+ indexDetail +'][m_f_g_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'m_f_g_date' + indexDetail + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="expiry_date' + indexDetail + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="product_materiel[' + indexDetail +'][expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'expiry_date' + indexDetail + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        // '<td><input type="month" name="product_materiel[' + indexDetail +'][expiry_date]"></td>' +
+                        '<td><input type="text" name="product_materiel[' + indexDetail + '][label_claim]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +'</tr>';
                     '</tr>';
                     indexDetail++;
                     return html;

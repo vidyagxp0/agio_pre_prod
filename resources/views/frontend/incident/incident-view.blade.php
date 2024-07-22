@@ -2494,24 +2494,7 @@
                                             </div>
                                         </div> -->
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Capa Required">CAPA Required ? <span
-                                                class="text-danger">*</span></label>
-                                        <select
-                                            name="capa_required"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                            id="capa_required" value="{{ $data->capa_required }}">
-                                            <option value="select">-- Select --</option>
-                                            <option @if ($data->capa_required == 'yes') selected @endif value='yes'>
-                                                Yes</option>
-                                            <option @if ($data->capa_required == 'no') selected @endif value='no'>
-                                                No</option>
-                                        </select>
-                                        <!-- @error('capa_required')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror -->
-                                    </div>
-                                </div>
+
 
                                 <!-- <div class="col-lg-6">
                                             <div class="group-input">
@@ -2526,7 +2509,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="QRM Required">QRM Required? <span class="text-danger">*</span></label>
+                                        <label for="QRM Required">QRM Required ? <span class="text-danger">*</span></label>
                                         <select
                                             name="qrm_required"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                             id="qrm_required" value="{{ $data->qrm_required }}">
@@ -2537,8 +2520,8 @@
                                                 No</option>
                                         </select>
                                         <!-- @error('qrm_required')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror -->
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror -->
                                     </div>
                                 </div>
 
@@ -9639,6 +9622,26 @@
 
                             </table>
                         </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6">
+                    <div class="group-input">
+                        <label for="Capa Required">CAPA Required ? <span
+                                class="text-danger">*</span></label>
+                        <select
+                            name="capa_required"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                            id="capa_required" value="{{ $data->capa_required }}">
+                            <option value="select">-- Select --</option>
+                            <option @if ($data->capa_required == 'yes') selected @endif value='yes'>
+                                Yes</option>
+                            <option @if ($data->capa_required == 'no') selected @endif value='no'>
+                                No</option>
+                        </select>
+                        <!-- @error('capa_required')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror -->
                     </div>
                 </div>
 

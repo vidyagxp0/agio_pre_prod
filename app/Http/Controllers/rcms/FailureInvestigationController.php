@@ -143,7 +143,7 @@ class FailureInvestigationController extends Controller
         $failureInvestigation->Disposition_Batch = $request->Disposition_Batch;
         $failureInvestigation->Facility_Equipment = $request->Facility_Equipment;
         $failureInvestigation->Document_Details_Required = $request->Document_Details_Required;
-      
+
         if ($request->failure_investigation_category == 'major' || $request->failure_investigation_category == 'minor' || $request->failure_investigation_category == 'critical') {
             $list = Helpers::getHeadoperationsUserList();
                     foreach ($list as $u) {
@@ -640,7 +640,7 @@ class FailureInvestigationController extends Controller
         $Cft->Other5_by = $request->Other5_by;
         $Cft->Other5_on = $request->Other5_on;
 
-        
+
         if (!empty ($request->RA_attachment)) {
             $files = [];
             if ($request->hasfile('RA_attachment')) {
@@ -695,7 +695,7 @@ class FailureInvestigationController extends Controller
                 }
             }
             $Cft->Production_Injection_Attachment = json_encode($files);
-        }            
+        }
         if (!empty ($request->Store_attachment)) {
             $files = [];
             if ($request->hasfile('Store_attachment')) {
@@ -794,7 +794,7 @@ class FailureInvestigationController extends Controller
                 }
             }
             $Cft->Environment_Health_Safety_attachment = json_encode($files);
-        }            
+        }
         if (!empty ($request->Information_Technology_attachment)) {
             $files = [];
             if ($request->hasfile('Information_Technology_attachment')) {
@@ -1158,7 +1158,7 @@ class FailureInvestigationController extends Controller
 
         $whyData = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'why'])->first();
         $why_data = json_decode($whyData->data, true);
-  
+
         $fishbone = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'fishbone'])->first();
         $fishbone_data = json_decode($fishbone->data, true);
 
@@ -1176,7 +1176,7 @@ class FailureInvestigationController extends Controller
     public function update(Request $request,$id)
     {
         $form_progress = null;
-        
+
         $lastFailureInvestigation = FailureInvestigation::find($id);
         $failureInvestigation = FailureInvestigation::find($id);
         $lastCft = FailureInvestigationCft::where('failure_investigation_id', $failureInvestigation->id)->first();
@@ -1529,7 +1529,7 @@ class FailureInvestigationController extends Controller
 
                 $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person;
                 $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->Production_Table_Review : $request->Production_Table_Review;
-                
+
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
 
@@ -1559,16 +1559,16 @@ class FailureInvestigationController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
 
                 $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
@@ -1580,7 +1580,7 @@ class FailureInvestigationController extends Controller
                 $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
                 $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
                 $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-                
+
                 $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
                 $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
                 $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
@@ -1628,7 +1628,7 @@ class FailureInvestigationController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
 
@@ -1637,10 +1637,10 @@ class FailureInvestigationController extends Controller
 
                 $Cft->Project_management_review = $request->Project_management_review;
                 $Cft->Project_management_person = $request->Project_management_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person;
@@ -1693,13 +1693,13 @@ class FailureInvestigationController extends Controller
 
             $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
             $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-            
+
             $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
             $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
 
             $Cft->Engineering_assessment = $request->Engineering_assessment;
             $Cft->Engineering_feedback = $request->Engineering_feedback;
-            
+
             $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
             $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
 
@@ -1708,7 +1708,7 @@ class FailureInvestigationController extends Controller
 
             $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
             $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-            
+
             $Cft->Other1_assessment = $request->Other1_assessment;
             $Cft->Other1_feedback = $request->Other1_feedback;
 
@@ -1779,7 +1779,7 @@ class FailureInvestigationController extends Controller
                     }
                 }
                 $Cft->Production_Injection_Attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Store_attachment)) {
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
@@ -1879,7 +1879,7 @@ class FailureInvestigationController extends Controller
                 }
                 $Cft->Environment_Health_Safety_attachment = json_encode($files);
             }
-            
+
             if (!empty ($request->Information_Technology_attachment)) {
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
@@ -2244,7 +2244,7 @@ class FailureInvestigationController extends Controller
             $newDataGridFishbone->identifier = 'fishbone';
             $newDataGridFishbone->data = $request->fishbone;
             $newDataGridFishbone->save();
-            
+
         }
 
 
@@ -2327,7 +2327,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->failure_investigation_date != $failureInvestigation->failure_investigation_date || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->failure_investigation_date != $failureInvestigation->failure_investigation_date || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Failure Investigation Observed';
@@ -2344,7 +2344,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Observed_by != $failureInvestigation->Observed_by || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Observed_by != $failureInvestigation->Observed_by || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Observed by';
@@ -2361,7 +2361,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->failure_investigation_reported_date != $failureInvestigation->failure_investigation_reported_date || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->failure_investigation_reported_date != $failureInvestigation->failure_investigation_reported_date || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Failure Investigation Reported on';
@@ -2378,7 +2378,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->audit_type != $failureInvestigation->audit_type || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->audit_type != $failureInvestigation->audit_type || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Failure Investigation Related To';
@@ -2395,7 +2395,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Others != $failureInvestigation->Others || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Others != $failureInvestigation->Others || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Others';
@@ -2412,7 +2412,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Facility_Equipment != $failureInvestigation->Facility_Equipment || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Facility_Equipment != $failureInvestigation->Facility_Equipment || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Facility/ Equipment/ Instrument/ System Details Required?';
@@ -2429,7 +2429,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Document_Details_Required != $failureInvestigation->Document_Details_Required || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Document_Details_Required != $failureInvestigation->Document_Details_Required || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Document Details Required';
@@ -2446,7 +2446,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Product_Batch != $failureInvestigation->Product_Batch || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Product_Batch != $failureInvestigation->Product_Batch || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Name of Product & Batch No';
@@ -2463,7 +2463,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Description_failure_investigation != $failureInvestigation->Description_failure_investigation || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Description_failure_investigation != $failureInvestigation->Description_failure_investigation || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Description of Failure Investigation';
@@ -2480,7 +2480,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Immediate_Action != $failureInvestigation->Immediate_Action || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Immediate_Action != $failureInvestigation->Immediate_Action || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Immediate Action (if any)';
@@ -2497,7 +2497,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Preliminary_Impact != $failureInvestigation->Preliminary_Impact || !empty ($request->comment)) {           
+        if ($lastFailureInvestigation->Preliminary_Impact != $failureInvestigation->Preliminary_Impact || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Preliminary Impact of Failure Investigation';
@@ -2514,7 +2514,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->HOD_Remarks != $failureInvestigation->HOD_Remarks || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->HOD_Remarks != $failureInvestigation->HOD_Remarks || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'HOD Remarks';
@@ -2531,7 +2531,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->failure_investigation_category != $failureInvestigation->failure_investigation_category || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->failure_investigation_category != $failureInvestigation->failure_investigation_category || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Initial Failure Investigation Category';
@@ -2548,7 +2548,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Justification_for_categorization != $failureInvestigation->Justification_for_categorization || !empty ($request->comment)) {           
+        if ($lastFailureInvestigation->Justification_for_categorization != $failureInvestigation->Justification_for_categorization || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Justification for Categorization';
@@ -2565,7 +2565,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Investigation_required != $failureInvestigation->Investigation_required || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Investigation_required != $failureInvestigation->Investigation_required || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Investigation Is required ?';
@@ -2582,7 +2582,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Investigation_Details != $failureInvestigation->Investigation_Details || !empty ($request->comment)) {           
+        if ($lastFailureInvestigation->Investigation_Details != $failureInvestigation->Investigation_Details || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Investigation Details';
@@ -2599,7 +2599,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Customer_notification != $failureInvestigation->Customer_notification || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Customer_notification != $failureInvestigation->Customer_notification || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Customer Notification Required ?';
@@ -2616,7 +2616,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->customers != $failureInvestigation->customers || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->customers != $failureInvestigation->customers || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Customer';
@@ -2633,7 +2633,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->QAInitialRemark != $failureInvestigation->QAInitialRemark || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->QAInitialRemark != $failureInvestigation->QAInitialRemark || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'QA Initial Remarks';
@@ -2650,7 +2650,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Investigation_Summary != $failureInvestigation->Investigation_Summary || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Investigation_Summary != $failureInvestigation->Investigation_Summary || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Investigation Summary';
@@ -2667,7 +2667,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Impact_assessment != $failureInvestigation->Impact_assessment || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Impact_assessment != $failureInvestigation->Impact_assessment || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Impact Assessment';
@@ -2684,7 +2684,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Root_cause != $failureInvestigation->Root_cause || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Root_cause != $failureInvestigation->Root_cause || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Root Cause';
@@ -2718,7 +2718,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->capa_type != $failureInvestigation->capa_type || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->capa_type != $failureInvestigation->capa_type || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'CAPA Type?';
@@ -2735,7 +2735,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->CAPA_Description != $failureInvestigation->CAPA_Description || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->CAPA_Description != $failureInvestigation->CAPA_Description || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'CAPA Description';
@@ -2752,7 +2752,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Post_Categorization != $failureInvestigation->Post_Categorization || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Post_Categorization != $failureInvestigation->Post_Categorization || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Post Categorization Of Failure Investigation';
@@ -2769,7 +2769,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Investigation_Of_Review != $failureInvestigation->Investigation_Of_Review || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Investigation_Of_Review != $failureInvestigation->Investigation_Of_Review || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Investigation Of Revised Categorization';
@@ -2786,7 +2786,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->QA_Feedbacks != $failureInvestigation->QA_Feedbacks || !empty ($request->comment)) {           
+        if ($lastFailureInvestigation->QA_Feedbacks != $failureInvestigation->QA_Feedbacks || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'QA Feedbacks';
@@ -2803,7 +2803,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Closure_Comments != $failureInvestigation->Closure_Comments || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Closure_Comments != $failureInvestigation->Closure_Comments || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Closure Comments';
@@ -2820,7 +2820,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Disposition_Batch != $failureInvestigation->Disposition_Batch || !empty ($request->comment)) {            
+        if ($lastFailureInvestigation->Disposition_Batch != $failureInvestigation->Disposition_Batch || !empty ($request->comment)) {
             $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'Disposition of Batch';
@@ -3033,7 +3033,7 @@ class FailureInvestigationController extends Controller
             $history->save();
         }
 
-        
+
         /*************** Production Tablet ***************/
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new FailureInvestigationAuditTrail;
@@ -5096,7 +5096,7 @@ class FailureInvestigationController extends Controller
                 $history->stage = 'More Info Required';
                 $history->save();
                 $failureInvestigation->update();
-                
+
                 $history = new FailureInvestigationHistory();
                 $history->type = "Failure Investigation";
                 $history->doc_id = $id;
@@ -5654,14 +5654,14 @@ class FailureInvestigationController extends Controller
     }
 
     public function failure_investigation_send_stage(Request $request, $id)
-    { 
+    {
         try {
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
                 $failureInvestigation = FailureInvestigation::find($id);
                 $updateCFT = FailureInvestigationCft::where('failure_investigation_id', $id)->latest()->first();
                 $lastDocument = FailureInvestigation::find($id);
                 $cftDetails = FailureInvestigationCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'failure_investigation_id' => $id])->distinct('cft_user_id')->count();
-    
+
                 if ($failureInvestigation->stage == 1) {
                     if ($failureInvestigation->form_progress !== 'general-open')
                     {
@@ -5671,23 +5671,23 @@ class FailureInvestigationController extends Controller
                             'title' => 'Mandatory Fields!',
                             'message' => 'General Information Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     } else {
-                        
+
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
                             'message' => 'Sent for HOD review state'
                         ]);
                     }
-                    
+
                     $failureInvestigation->stage = "2";
                     $failureInvestigation->status = "HOD Review";
                     $failureInvestigation->submit_by = Auth::user()->name;
                     $failureInvestigation->submit_on = Carbon::now()->format('d-M-Y');
                     $failureInvestigation->submit_comment = $request->comment;
-                    
+
                     $history = new FailureInvestigationAuditTrail();
                     $history->failure_investigation_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -5703,14 +5703,14 @@ class FailureInvestigationController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
-    
-    
+
+
                     // $list = Helpers::getHodUserList();
                     // foreach ($list as $u) {
                     //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
-    
+
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
@@ -5726,13 +5726,13 @@ class FailureInvestigationController extends Controller
                     //         }
                     //     }
                     // }
-    
+
                     // $list = Helpers::getHeadoperationsUserList();
                     // foreach ($list as $u) {
                     //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
-    
+
                     //             Mail::send(
                     //                 'mail.Categorymail',
                     //                 ['data' => $failureInvestigation],
@@ -5749,16 +5749,16 @@ class FailureInvestigationController extends Controller
                     return back();
                 }
                 if ($failureInvestigation->stage == 2) {
-    
+
                     // Check HOD remark value
                     if (!$failureInvestigation->HOD_Remarks) {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
                             'message' => 'HOD Remarks is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -5767,7 +5767,7 @@ class FailureInvestigationController extends Controller
                             'message' => 'Sent for QA initial review state'
                         ]);
                     }
-    
+
                     $failureInvestigation->stage = "3";
                     $failureInvestigation->status = "QA Initial Review";
                     $failureInvestigation->HOD_Review_Complete_By = Auth::user()->name;
@@ -5809,8 +5809,8 @@ class FailureInvestigationController extends Controller
                     //         }
                     //     }
                     // }
-    
-    
+
+
                     $failureInvestigation->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -5823,7 +5823,7 @@ class FailureInvestigationController extends Controller
                             'title' => 'Mandatory Fields!',
                             'message' => 'QA initial review / CFT Mandatory Tab is yet to be filled!'
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -5832,10 +5832,10 @@ class FailureInvestigationController extends Controller
                             'message' => 'Sent for CFT review state'
                         ]);
                     }
-    
+
                     $failureInvestigation->stage = "4";
                     $failureInvestigation->status = "CFT Review";
-    
+
                     // Code for the CFT required
                     $stage = new FailureInvestigationCftResponse();
                     $stage->failure_investigation_id = $id;
@@ -5845,7 +5845,7 @@ class FailureInvestigationController extends Controller
                     $stage->comment = $request->comment;
                     $stage->is_required = 1;
                     $stage->save();
-    
+
                     $failureInvestigation->QA_Initial_Review_Complete_By = Auth::user()->name;
                     $failureInvestigation->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $failureInvestigation->QA_Initial_Review_Comments = $request->comment;
@@ -5884,7 +5884,7 @@ class FailureInvestigationController extends Controller
                     //         }
                     //     }
                     // }
-    
+
                     if ($request->failure_investigation_category == 'major' || $request->failure_investigation_category == 'minor' || $request->failure_investigation_category == 'critical') {
                         $list = Helpers::getHeadoperationsUserList();
                                 // foreach ($list as $u) {
@@ -5902,7 +5902,7 @@ class FailureInvestigationController extends Controller
                                 //                     );
                                 //                 } catch (\Exception $e) {
                                 //                 }
-    
+
                                 //         }
                                 //     }
                                 // }
@@ -5926,7 +5926,7 @@ class FailureInvestigationController extends Controller
                                         //                 } catch (\Exception $e) {
                                         //                     //log error
                                         //                 }
-    
+
                                         //         }
                                         //     }
                                         // }
@@ -5950,18 +5950,18 @@ class FailureInvestigationController extends Controller
                                                 //                 } catch (\Exception $e) {
                                                 //                     //log error
                                                 //                 }
-    
+
                                                 //         }
                                                 //     }
                                                 // }
                                             }
-    
+
                     $failureInvestigation->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
                 if ($failureInvestigation->stage == 4) {
-    
+
                     // CFT review state update form_progress
                     if ($failureInvestigation->form_progress !== 'cft')
                     {
@@ -5970,7 +5970,7 @@ class FailureInvestigationController extends Controller
                             'title' => 'Mandatory Fields!',
                             'message' => 'CFT Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -5979,17 +5979,17 @@ class FailureInvestigationController extends Controller
                             'message' => 'Sent for Investigation and CAPA review state'
                         ]);
                     }
-    
-    
+
+
                     $IsCFTRequired = FailureInvestigationCftResponse::withoutTrashed()->where(['is_required' => 1, 'failure_investigation_id' => $id])->latest()->first();
                     $cftUsers = DB::table('failure_investigation_cfts')->where(['failure_investigation_id' => $id])->first();
                     // Define the column names
                     $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
-    
+
                     // Initialize an array to store the values
                     $valuesArray = [];
-    
+
                     // Iterate over the columns and retrieve the values
                     foreach ($columns as $index => $column) {
                         $value = $cftUsers->$column;
@@ -6104,19 +6104,19 @@ class FailureInvestigationController extends Controller
                             $stage->save();
                         }
                     }
-    
+
                     $checkCFTCount = FailureInvestigationCftResponse::withoutTrashed()->where(['status' => 'Completed', 'failure_investigation_id' => $id])->count();
                     // dd(count(array_unique($valuesArray)), $checkCFTCount);
-    
-    
+
+
                     if (!$IsCFTRequired || $checkCFTCount) {
-    
+
                         $failureInvestigation->stage = "5";
                         $failureInvestigation->status = "QA Final Review";
                         $failureInvestigation->CFT_Review_Complete_By = Auth::user()->name;
                         $failureInvestigation->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
                         $failureInvestigation->CFT_Review_Comments = $request->comment;
-    
+
                         $history = new FailureInvestigationAuditTrail();
                         $history->failure_investigation_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -6157,9 +6157,9 @@ class FailureInvestigationController extends Controller
                     toastr()->success('Document Sent');
                     return back();
                 }
-    
+
                 if ($failureInvestigation->stage == 5) {
-    
+
                     if ($failureInvestigation->form_progress === 'capa' && !empty($failureInvestigation->QA_Feedbacks))
                     {
                         Session::flash('swal', [
@@ -6167,24 +6167,24 @@ class FailureInvestigationController extends Controller
                             'title' => 'Success',
                             'message' => 'Sent for QA Head/Manager Designee Approval'
                         ]);
-    
+
                     } else {
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
                             'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
-    
+
+
                     $failureInvestigation->stage = "6";
                     $failureInvestigation->status = "QA Head/Manager Designee Approval";
                     $failureInvestigation->QA_Final_Review_Complete_By = Auth::user()->name;
                     $failureInvestigation->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $failureInvestigation->QA_Final_Review_Comments = $request->comment;
-    
+
                     $history = new FailureInvestigationAuditTrail();
                     $history->failure_investigation_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -6225,16 +6225,16 @@ class FailureInvestigationController extends Controller
                     return back();
                 }
                 if ($failureInvestigation->stage == 6) {
-    
+
                     if ($failureInvestigation->form_progress !== 'qah')
                     {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields!',
                             'message' => 'QAH/Designee Approval Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -6243,39 +6243,39 @@ class FailureInvestigationController extends Controller
                             'message' => 'Failure Investigation sent to Intiator Update'
                         ]);
                     }
-    
+
                     $extension = Extension::where('parent_id', $failureInvestigation->id)->first();
-    
+
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($failureInvestigation->id, 4, 0, STR_PAD_LEFT))->first();
-    
+
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'Extension record pending!',
                             'message' => 'There is an Extension record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     if ($rca && $rca->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'RCA record pending!',
                             'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     // return "PAUSE";
-    
+
                     $failureInvestigation->stage = "7";
                     $failureInvestigation->status = "Pending Initiator Update";
                     $failureInvestigation->QA_head_approved_by = Auth::user()->name;
                     $failureInvestigation->QA_head_approved_on = Carbon::now()->format('d-M-Y');
                     $failureInvestigation->QA_head_approved_comment	 = $request->comment;
-    
+
                     $history = new FailureInvestigationAuditTrail();
                     $history->failure_investigation_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -6316,16 +6316,16 @@ class FailureInvestigationController extends Controller
                     return back();
                 }
                 if ($failureInvestigation->stage == 7) {
-    
+
                     if ($failureInvestigation->form_progress !== 'qah')
                     {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields!',
                             'message' => 'QAH/Designee Approval Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -6334,39 +6334,39 @@ class FailureInvestigationController extends Controller
                             'message' => 'Failure Investigation sent to QA Final Approval.'
                         ]);
                     }
-    
+
                     $extension = Extension::where('parent_id', $failureInvestigation->id)->first();
-    
+
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($failureInvestigation->id, 4, 0, STR_PAD_LEFT))->first();
-    
+
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'Extension record pending!',
                             'message' => 'There is an Extension record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     if ($rca && $rca->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'RCA record pending!',
                             'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     // return "PAUSE";
-    
+
                     $failureInvestigation->stage = "8";
                     $failureInvestigation->status = "QA Final Approval";
                     $failureInvestigation->pending_initiator_approved_by = Auth::user()->name;
                     $failureInvestigation->pending_initiator_approved_on = Carbon::now()->format('d-M-Y');
                     $failureInvestigation->pending_initiator_approved_comment = $request->comment;
-    
+
                     $history = new FailureInvestigationAuditTrail();
                     $history->failure_investigation_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -6406,19 +6406,19 @@ class FailureInvestigationController extends Controller
                     toastr()->success('Document Sent');
                     return back();
                 }
-    
-    
+
+
                 if ($failureInvestigation->stage == 8) {
-    
+
                     if ($failureInvestigation->form_progress !== 'qah')
                     {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields!',
                             'message' => 'QAH/Designee Approval Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -6427,39 +6427,39 @@ class FailureInvestigationController extends Controller
                             'message' => 'Failure Investigation sent to Closed/Done state'
                         ]);
                     }
-    
+
                     $extension = Extension::where('parent_id', $failureInvestigation->id)->first();
-    
+
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($failureInvestigation->id, 4, 0, STR_PAD_LEFT))->first();
-    
+
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'Extension record pending!',
                             'message' => 'There is an Extension record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     if ($rca && $rca->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'RCA record pending!',
                             'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     // return "PAUSE";
-    
+
                     $failureInvestigation->stage = "9";
                     $failureInvestigation->status = "Closed-Done";
                     $failureInvestigation->QA_final_approved_by = Auth::user()->name;
                     $failureInvestigation->QA_final_approved_on = Carbon::now()->format('d-M-Y');
                     $failureInvestigation->QA_final_approved_comment = $request->comment;
-    
+
                     $history = new FailureInvestigationAuditTrail();
                     $history->failure_investigation_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -6509,7 +6509,7 @@ class FailureInvestigationController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
-        
+
     }
 
     public function cftnotreqired(Request $request, $id)
@@ -6718,7 +6718,7 @@ class FailureInvestigationController extends Controller
         $today = Carbon::now()->format('d-m-y');
         $document = FailureInvestigation::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
-        
+
         return view('frontend.failure-investigation.audit-trail', compact('audit', 'document', 'today'));
     }
 
@@ -6882,7 +6882,7 @@ class FailureInvestigationController extends Controller
         }
     }
 
-    
+
     public function launchExtensionDeviation(Request $request, $id){
         $failureinvestigation = FailureInvestigation::find($id);
         $getCounter = FailureInvestigationlaunchExtension::where(['failure_investigation_id' => $failureinvestigation->id, 'extension_identifier' => "Failure Investigation"])->first();

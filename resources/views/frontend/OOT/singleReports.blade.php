@@ -200,15 +200,13 @@
                                 </div>
                                 <table>
                                     <tr>
-                                    <tr> {{ $data->created_at }} added by {{ $data->originator }}
+                                         {{ $data->created_at }} added by {{ $data->originator }}
                                         <th class="w-20">Site/Location Code</th>
-                                        <td class="w-30"> {{ Helpers::getDivisionName($data->division_id) }}
-                                        </td>
+                                        <td class="w-30"> {{ Helpers::getDivisionName($data->division_id) }} </td>
+
                                         <th class="w-20">Initiator</th>
                                         <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                                         </td>
-                                    </tr>
-
                                     </tr>
 
                                     <tr>
@@ -226,7 +224,8 @@
                                         </td>
 
                                     </tr>
-
+                                </table>
+                                <table>
                                     <tr>
                                         <th class="w-20">Initiated Through</th>
                                         <td class="w-30">
@@ -261,8 +260,6 @@
                                         <td class="w-80">
                                             {{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
                                     </tr>
-
-
                                 </table>
                                 <table>
                                     <tr>
@@ -300,14 +297,14 @@
 
                                     </tr>
                                     <tr>
-                                        <th class="w-20">Nature Of Change</th>
+                                        {{-- <th class="w-20">Nature Of Change</th>
                                         <td class="w-30">
                                             @if ($data->nature_of_change)
                                                 {{ $data->nature_of_change }}
                                             @else
                                                 Not Applicable
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         <th class="w-20">Occured On</th>
                                         <td class="w-30">
                                             @if ($data->oot_occured_on)
@@ -317,6 +314,46 @@
                                             @endif
                                         </td>
                                     </tr>
+                                    <tr>
+                                         <th class="w-20">OOT Observed On</th>
+                                        <td class="w-30">
+                                            @if ($data->oot_observed_on)
+                                                {{Helpers::getdateFormat($data->oot_observed_on) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+
+                                        <th class="w-20">OOT Reported On</th>
+                                        <td class="w-30">
+                                            @if ($data->oot_report_on)
+                                                {{ Helpers::getdateFormat($data->oot_observed_on) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="w-20">OOT Delay Justification</th>
+                                       <td class="w-80">
+                                           @if ($data->delay_justification)
+                                               {{ $data->delay_justification }}
+                                           @else
+                                               Not Applicable
+                                           @endif
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <th class="w-20">OOT immidiate action </th>
+                                       <td class="w-30">
+                                           @if ($data->immediate_action)
+                                               {{ $data->immediate_action }}
+                                           @else
+                                               Not Applicable
+                                           @endif
+                                       </td>
+                                   </tr>
                                 </table>
                                 <table>
                                     <tr>
@@ -711,11 +748,8 @@
 
                             <div class="block">
                                 <div class="head">
-
                                     <table>
-
                                         <tr>
-
                                             <th class="w-20">Specification Procedure Number </th>
                                             <td class="w-30">
                                                 <div>
@@ -748,9 +782,6 @@
                                                 </div>
                                             </td> --}}
                                         </tr>
-
-
-
                                     </table>
                                 </div>
                                 <div class="border-table">
