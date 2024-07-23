@@ -119,9 +119,6 @@ class OOSMicroController extends Controller
             $investigationExtention->investigation_extension_completed_on = $request->investigation_extension_completed_on;
             $investigationExtention->save();
         }
-      
-         
-    //    record update
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
@@ -2144,12 +2141,14 @@ if($lastDocument->$key != $request->$key){
             $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
             $oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
             $oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
-            
+            $instrument_details = $data->grids()->where('identifier', 'instrument_detail')->first();
+            $products_details = $data->grids()->where('identifier', 'products_details')->first();
+
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-           $pdf = PDF::loadview('frontend.OOS_Micro.comps_micro.singleReport', 
-            compact('data','checklist_lab_invs','phase_two_invs','oos_capas','oos_conclusions','oos_conclusion_reviews'))
+            $pdf = PDF::loadview('frontend.OOS_Micro.comps_micro.singleReport', 
+            compact('data','checklist_lab_invs','phase_two_invs','oos_capas','oos_conclusions','oos_conclusion_reviews','instrument_details','products_details'))
                            ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

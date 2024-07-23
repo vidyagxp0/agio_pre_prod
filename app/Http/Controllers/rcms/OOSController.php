@@ -1116,11 +1116,12 @@ class OOSController extends Controller
             $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
             $oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
             $oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
-    
+            $instrument_details = $data->grids()->where('identifier', 'instrument_detail')->first();
+            $products_details = $data->grids()->where('identifier', 'products_details')->first();
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data','checklist_lab_invs','phase_two_invs','oos_capas','oos_conclusions','oos_conclusion_reviews'))
+            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data','products_details','instrument_details','checklist_lab_invs','phase_two_invs','oos_capas','oos_conclusions','oos_conclusion_reviews'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

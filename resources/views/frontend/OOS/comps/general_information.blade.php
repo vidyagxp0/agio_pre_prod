@@ -23,7 +23,7 @@
                 <div class="group-input">
                     <label for="Initiator"> Record Number </label>
                      <input disabled type="text" name="record_number"
-                      value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Chemical/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}">
+                      value="{{ Helpers::getDivisionName($data->division_id) }}/OOS Chemical/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}">
                 </div>
             </div>
             <div class="col-lg-6">
@@ -31,7 +31,7 @@
                     <label disabled for="Short Description">Division Code<span
                             class="text-danger"></span></label>
                     <input disabled type="text" name="division_code"
-                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                        value="{{ Helpers::getDivisionName($data->division_id) }}">
                     <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                 </div>
             </div>
@@ -128,13 +128,13 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group">Repeat Nature</label>
                     <textarea type="text" name="repeat_nature_gi" {{Helpers::isOOSChemical($data->stage)}}>{{ $data->repeat_nature_gi }}</textarea>
                 </div>
             </div>
-            {{-- <div class="col-lg-6">
+           <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group">Nature of Change</label>
                     <select name="nature_of_change_gi" {{Helpers::isOOSChemical($data->stage)}}>
@@ -202,7 +202,7 @@
                 </div>
             </div>
             
-            <div class="col-lg-6 new-time-data-field">
+            <div class="col-lg-12 new-time-data-field">
                 {{-- @error('delay_justification') @else delayJustificationBlock @enderror --}}
                 <div class="group-input input-time ">
                     <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>

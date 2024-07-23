@@ -565,13 +565,13 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 mt-4">
+                       {{-- <div class="col-lg-6 mt-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Repeat Nature</label>
                                 <textarea name="repeat_nature_gi"></textarea>
                             </div>
-                        </div>
-                       {{-- <div class="col-lg-6">
+                        </div> 
+                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Nature of Change</label>
                                 <select name="nature_of_change_gi">
@@ -611,10 +611,9 @@ $users = DB::table('users')
                             <div class="group-input input-date">
                                 <label for="OOS Occurred On">OOS Occured On</label>
                                 <div class="calenderauditee">                                    
-                                    <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
+                                    <input type="text" id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
                                     <input type="date" name="deviation_occured_on_gi"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                    class="hide-input"
-                                    oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
+                                    class="hide-input" oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
                                 </div>
                             </div>
                         </div>
@@ -632,7 +631,7 @@ $users = DB::table('users')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="deviation_time">Delay Justification</label>
                                 <textarea id="delay_justification" name="delay_justification"></textarea>

@@ -523,14 +523,14 @@ $users = DB::table('users')
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
+                        {{--  <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group"></label>
                                 <label for="Repeat Nature">Repeat Nature</label>
                                  <textarea  name="repeat_nature_gi" ></textarea>
                             </div>
                         </div>
-                        {{-- <div class="col-lg-6">
+                        <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Nature of Change</label>
                                 <select name="nature_of_change_gi">
@@ -591,7 +591,7 @@ $users = DB::table('users')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="deviation_time">Delay Justification</label>
                                 <textarea id="delay_justification" name="delay_justification"></textarea>
@@ -674,7 +674,6 @@ $users = DB::table('users')
                                             oninput="addMultipleFiles(this, 'initial_attachment_gi')" multiple>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="sub-head pt-3">OOS Information</div>
@@ -766,7 +765,7 @@ $users = DB::table('users')
                                                     </div>
                                                 </div>
                                             </div>
-                                           </td>
+                                            </td>
                                             
                                             <td><input type="text" name="info_product_material[0][info_label_claim]" value=""></td>
                                             <td><input type="text" name="info_product_material[0][info_pack_size]" value=""></td>

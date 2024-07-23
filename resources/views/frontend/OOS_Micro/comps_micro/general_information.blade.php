@@ -22,13 +22,13 @@
                     <label for="Initiator"> Record Number </label>
                     <input type="hidden" name="record" value="{{ $record_number }}">
                         <input disabled type="text" name="record"
-                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro/{{ Helpers::year($micro_data->created_at) }}/{{ $micro_data->record ? str_pad($micro_data->record, 4, "0", STR_PAD_LEFT ) : '1' }}">
+                        value="{{ Helpers::getDivisionName($micro_data->division_id) }}/OOS Micro/{{ Helpers::year($micro_data->created_at) }}/{{ $micro_data->record ? str_pad($micro_data->record, 4, "0", STR_PAD_LEFT ) : '1' }}">
                 </div>
             </div>
             <div class="col-lg-6">
                <div class="group-input">
                 <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
-                <input disabled type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                <input disabled type="text" name="division_code" value="{{ Helpers::getDivisionName($micro_data->division_id) }}">
                 <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                 </div>
             </div> 
@@ -38,10 +38,9 @@
                     <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
                 </div>
             </div>
-
             <div class="col-md-6 ">
                 <div class="group-input ">
-                    <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
+                    <label for="due-date"> Date Of Initiation <span class="text-danger"></span></label>
                     <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                     <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                 </div>
@@ -69,20 +68,6 @@
                 </div>
             </div>
             <p id="docnameError" style="color:red">**Short Description is required</p>                                                                                 
-            {{-- <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Short Description"> Severity Level</label>
-                    <select name="severity_level_gi" {{Helpers::isOOSMicro($micro_data->stage)}} >
-                        <option value="">Enter Your Selection Here</option>
-                        <option value="Major" {{ $micro_data->severity_level_gi == 'Major' ? 'selected' :
-                            '' }}>Major</option>
-                        <option value="Minor" {{ $micro_data->severity_level_gi == 'Minor' ? 'selected' :
-                            '' }}>Minor</option>
-                        <option value="Critical" {{ $micro_data->severity_level_gi == 'Critical' ? 'selected' :
-                        '' }}>Critical</option>
-                    </select>
-                </div>
-            </div> --}}
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group"><b>Initiation Department </b></label>
@@ -137,13 +122,13 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-6 mt-4">
+            {{-- <div class="col-lg-6 mt-4">
                 <div class="group-input">
                     <label for="Initiator Group">Repeat Nature</label>
                     <textarea name="repeat_nature_gi" {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->repeat_nature_gi }}</textarea>
                 </div>
             </div>
-            {{-- <div class="col-lg-6">
+           <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group">Nature of Change</label>
                     <select name="nature_of_change_gi" {{Helpers::isOOSMicro($micro_data->stage)}}>
@@ -203,7 +188,7 @@
                 </div>
             </div>
             
-            <div class="col-lg-6 new-time-data-field">
+            <div class="col-lg-12 new-time-data-field">
                 {{-- @error('delay_justification') @else delayJustificationBlock @enderror --}}
                 <div class="group-input input-time ">
                     <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
