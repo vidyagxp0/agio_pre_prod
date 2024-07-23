@@ -23,7 +23,7 @@ use Helpers;
 use Illuminate\Support\Facades\Hash;
 
 class OOTController extends Controller
-{  
+{
     public function index(Request $request)
     {
         $cft = [];
@@ -59,20 +59,21 @@ class OOTController extends Controller
         $due_date= $formattedDate->format('Y-m-d');
         $changeControl = OpenStage::find(1);
          if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-    
+
         return view('frontend.OOT.OOT_form', compact('old_record', 'data','division', 'due_date'));
     }
 
     public function store(Request $request)
     {
-        
+
         $data = new Ootc();
         $data->initiator_id          = Auth::user()->id;
         $data->record_number         = ((RecordNumber::first()->value('counter')) + 1);
         $data->intiation_date        = $request->intiation_date;
         $data->due_date              = $request->due_date;
-        $data->division_id           = $request->division_id;  
-        $data->severity_level        = $request->severity_level;
+        $data->due_date              = Carbon::now()->addDays(30)->format('d-M-Y');
+        $data->division_id           = $request->division_id;
+        // $data->severity_level        = $request->severity_level;
         $data->initiator_group       = $request->initiator_group;
         $data->initiator_group_code  = $request->initiator_group_code;
         $data->initiated_through     = $request->initiated_through;
@@ -97,10 +98,19 @@ class OOTController extends Controller
         $data->analyst_name           = $request->analyst_name;
         $data->others                 = $request->others;
         $data->reference_record       = $request->reference_record;
-                
-        if (is_array($request->stability_for )) {
+        $data->delay_justification    = $request->delay_justification;
+        $data->oot_observed_on        = $request->oot_observed_on;
+        $data->oot_report_on          = $request->oot_report_on;
+        $data->immediate_action       = $request->immediate_action;
+
+        // if (is_array($request->stability_for)) {
+        //     $data->stability_for = implode(',', $request->stability_for);
+        // }
+
+        if ($request->stability_for) {
             $data->stability_for = implode(',', $request->stability_for);
         }
+
         $data-> specification_procedure_number    = $request->specification_procedure_number;
         $data-> specification_limit               = $request->specification_limit;
         if (!empty($request->Attachment) && $request->file('Attachment')) {
@@ -112,10 +122,10 @@ class OOTController extends Controller
             }
             // Save the file paths in the database
             $data->Attachment = json_encode($files);
-        }   
+        }
 
         $data->pli_finaly_validity_check          = $request->pli_finaly_validity_check;
-        $data->finaly_validity_check              = $request->finaly_validity_check;  
+        $data->finaly_validity_check              = $request->finaly_validity_check;
         $data->corrective_action                  = $request->corrective_action;
         $data->preventive_action                  = $request->preventive_action;
         $data->inv_comments                       = $request->inv_comments;
@@ -128,7 +138,7 @@ class OOTController extends Controller
             }
             // Save the file paths in the database
             $data->inv_file_attachment = json_encode($files);
-        } 
+        }
         $data->inv_head_designee                  = $request->inv_head_designee;
         $data->reason_for_stability               = $request->reason_for_stability;
         $data->description_of_oot_details         = $request->description_of_oot_details;
@@ -153,8 +163,8 @@ class OOTController extends Controller
             }
             // Save the file paths in the database
             $data->supporting_attechment = json_encode($files);
-        } 
-       
+        }
+
         $data->r_d_comments_part_b                = $request->r_d_comments_part_b;
         $data->a_d_l_comments                     = $request->a_d_l_comments;
         $data->regulatory_comments                = $request->regulatory_comments;
@@ -196,11 +206,9 @@ class OOTController extends Controller
             $data->doc_closure = json_encode($files);
         }
 
-        $data->status = 'Opened';                 
+        $data->status = 'Opened';
         $data->stage = 1;
         $data->save();
-        
-        
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter'))+1);
@@ -281,7 +289,7 @@ class OOTController extends Controller
          $checkList->l_e_i_oot                   = $request->l_e_i_oot;
          $checkList->elaborate_the_reson         = $request->elaborate_the_reson;
          $checkList->in_charge                   = $request->in_charge;
-         $checkList->pli_head_designee           = $request->pli_head_designee;	
+         $checkList->pli_head_designee           = $request->pli_head_designee;
          $checkList->data                        = $request->data;
         //   dd($checkList->data);
         $checkList->save();
@@ -299,19 +307,27 @@ class OOTController extends Controller
         $StabilityGrid->data = $request->details_of_stability;
         $StabilityGrid->save();
 
-        
+
         $OotResultGrid = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' => 'oot_result'])->firstOrCreate();
         $OotResultGrid->ootcs_id = $data->id;
         $OotResultGrid->identifier = 'oot_result';
         $OotResultGrid->data = $request->oot_result;
-        //  dd($OotResultGrid);        
+        //  dd($OotResultGrid);
         $OotResultGrid->save();
-        
+
+
+
         $InfoProductMat = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'info_product'])->firstOrCreate();
         $InfoProductMat->ootcs_id = $data->id;
         $InfoProductMat->identifier = 'info_product';
         $InfoProductMat->data = $request->info_product;
         $InfoProductMat->save();
+
+        $productDetail = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'product_detail'])->firstOrCreate();
+        $productDetail->ootcs_id = $data->id;
+        $productDetail->identifier = 'product_detail';
+        $productDetail->data = $request->product_detail;
+        $productDetail->save();
 
 
         if (!empty($data->division_code)) {
@@ -328,7 +344,7 @@ class OOTController extends Controller
             $history->save();
         }
 
-        
+
 
         if (!empty($data->due_date)) {
             $history = new OotAuditTrial();
@@ -342,7 +358,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -359,7 +375,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -376,7 +392,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -393,7 +409,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -410,7 +426,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -427,7 +443,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -444,12 +460,12 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
 
-        
+
         if (!empty($data->oot_occured_on)) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
@@ -462,7 +478,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -479,7 +495,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -496,7 +512,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -513,7 +529,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -530,7 +546,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -547,7 +563,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -564,12 +580,12 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
 
-        
+
 
         if (!empty($data->productmaterialname)) {
             $history = new OotAuditTrial();
@@ -583,7 +599,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -600,7 +616,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -617,7 +633,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -634,7 +650,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -651,7 +667,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -668,7 +684,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -685,7 +701,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -702,7 +718,7 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -719,11 +735,11 @@ class OOTController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
-       
+
 
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
@@ -734,50 +750,55 @@ class OOTController extends Controller
 
         $cft = [];
         $revised_date = "";
-        
+
         //dd($data);
-        
-        $data = Ootc::where('id',$id)->first();  
+
+        $data = Ootc::where('id',$id)->first();
         $old_record = Ootc::select('id', 'division_id', 'record_number')->get();
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
 
 
-       $formattedDate = Helpers::getdateFormat($data->due_date);    
-       $occuredDate = Helpers::getdateFormat($data->oot_occured_on); 
+       $formattedDate = Helpers::getdateFormat($data->due_date);
+       $occuredDate = Helpers::getdateFormat($data->oot_occured_on);
        $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
-    //    dd($grid_product_mat); 
+    //    dd($grid_product_mat);
        $gridStability = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'details_of_stability'])->first();
        $GridOotRes = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'oot_result'])->first();
     // dd($GridOotRes);
        $InfoProductMat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'info_product'])->first();
+       $productDetail = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_detail'])->first();
 
 
-       $checkList = OotChecklist::where(['ootcs_id' => $id ])->first();
-       
+
+       $checkList = OotChecklist::where(['ootcs_id' => $id,  ])->first();
+
        $record_number = ((RecordNumber::first()->value('counter')) + 1);
        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        return view('frontend.OOT.ootView',compact('data','record_number','grid_product_mat','checkList','gridStability','GridOotRes','InfoProductMat','formattedDate','occuredDate','old_record'));
+        return view('frontend.OOT.ootView',compact('data','record_number','grid_product_mat','checkList','gridStability','GridOotRes','InfoProductMat','formattedDate','occuredDate','old_record','productDetail'));
 
     }
 
     public function update( Request $request,$id){
         $lastDocument = Ootc::find($id);
-        
+
+
+
         $data = Ootc::find($id);
-        $data->division_id           = $request->division_id;
+        // $data->division_id           = $request->division_id;
         $data->record_number         = $lastDocument->record_number;
         // dd($lastDocument->record_number);
-        // $data->due_date              = $request->due_date;
-        $data->severity_level        = $request->severity_level;
+        $data->due_date              = $request->due_date;
+        // $data->severity_level        = $request->severity_level;
+        $data->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
         $data->initiator_group       = $request->initiator_group;
-        $data->initiator_group_code  =$request->initiator_group_code;
+        // $data->initiator_group_code  =$request->initiator_group_code;
         $data->initiated_through     = $request->initiated_through;
         $data->short_description     = $request->short_description;
         $data->if_others	         = $request->if_others;
         $data->is_repeat             = $request->is_repeat;
         $data->repeat_nature         = $request->repeat_nature;
         $data->nature_of_change      = $request->nature_of_change;
-        $data->oot_occured_on        = $request->oot_occured_on;
+         $data->oot_occured_on        = $request->oot_occured_on;
         $data->oot_details           = $request->oot_details;
         $data->producct_history      = $request->producct_history;
         $data->probble_cause         = $request->probble_cause;
@@ -792,8 +813,16 @@ class OOTController extends Controller
         $data->analyst_name          = $request->analyst_name;
         $data->others                = $request->others;
         $data->reference_record      = $request->reference_record;
-        
-        if (is_array($request->stability_for )) {
+
+        $data->delay_justification    = $request->delay_justification;
+        $data->oot_observed_on        = $request->oot_observed_on? $request->oot_observed_on : $data->oot_observed_on;
+        $data->oot_report_on          = $request->oot_report_on? $request->oot_report_on : $data->oot_report_on;
+        $data->immediate_action       = $request->immediate_action;
+
+        // if (is_array($request->stability_for )) {
+        //     $data->stability_for = implode(',', $request->stability_for);
+        // }
+        if ($request->stability_for) {
             $data->stability_for = implode(',', $request->stability_for);
         }
         $data->specification_procedure_number = $request->specification_procedure_number;
@@ -807,10 +836,10 @@ class OOTController extends Controller
             }
             // Save the file paths in the database
             $data->Attachment = json_encode($files);
-        }  
-        
+        }
+
         $data->pli_finaly_validity_check             = $request->pli_finaly_validity_check;
-        $data->finaly_validity_check                 = $request->finaly_validity_check; 
+        $data->finaly_validity_check                 = $request->finaly_validity_check;
         $data->corrective_action                     = $request->corrective_action;
         $data->preventive_action                     = $request->preventive_action;
         $data->inv_comments                          = $request->inv_comments;
@@ -823,7 +852,7 @@ class OOTController extends Controller
             }
             // Save the file paths in the database
             $data->inv_file_attachment = json_encode($files);
-        } 
+        }
         $data->inv_head_designee                     = $request->inv_head_designee;
         $data->reason_for_stability                  = $request->reason_for_stability;
         $data->description_of_oot_details            = $request->description_of_oot_details;
@@ -831,10 +860,10 @@ class OOTController extends Controller
         $data->sta_bat_probable_cause                = $request->sta_bat_probable_cause;
         $data->sta_bat_analyst_name                  = $request->sta_bat_analyst_name;
         $data->qa_head_designee                      = $request->qa_head_designee;
-        
-        $data->action_taken_result                = $request->action_taken_result;
-        $data->retraining_to_analyst_required     = $request->retraining_to_analyst_required;
-        $data->cheklist_part_b_remarks            = $request->cheklist_part_b_remarks;
+
+        $data->action_taken_result                   = $request->action_taken_result;
+        $data->retraining_to_analyst_required        = $request->retraining_to_analyst_required;
+        $data->cheklist_part_b_remarks               = $request->cheklist_part_b_remarks;
         $data->analysis_on_same_sample	          = $request->analysis_on_same_sample;
         $data->any_other_action                   = $request->any_other_action;
         $data->re_analysis_result                 = $request->re_analysis_result;
@@ -849,8 +878,8 @@ class OOTController extends Controller
             }
             // Save the file paths in the database
             $data->supporting_attechment = json_encode($files);
-        } 
-       
+        }
+
         $data->r_d_comments_part_b                = $request->r_d_comments_part_b;
         $data->a_d_l_comments                     = $request->a_d_l_comments;
         $data->regulatory_comments                = $request->regulatory_comments;
@@ -893,7 +922,7 @@ class OOTController extends Controller
         }
         $data->update();
 
-        
+
         $productGrid = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'product_materiel'])->firstOrCreate();
         $productGrid->ootcs_id = $data->id;
         $productGrid->identifier = 'product_materiel';
@@ -909,8 +938,8 @@ class OOTController extends Controller
         $StabilityGrid->data = $request->details_of_stability;
         $StabilityGrid->update();
         toastr()->success('Record is Update Successfully');
-        
-        
+
+
         $data->update();
         $OotResultGrid = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'oot_result'])->firstOrCreate();
         $OotResultGrid->ootcs_id = $data->id;
@@ -925,10 +954,19 @@ class OOTController extends Controller
         $InfoProductMat->identifier = 'info_product';
         $InfoProductMat->data = $request->info_product;
         $InfoProductMat->update();
+        toastr()->success('Record is Update Successfully');
+
+
+        $data->update();
+        $productDetail = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'product_detail'])->firstOrCreate();
+        $productDetail->ootcs_id = $data->id;
+        $productDetail->identifier = 'product_detail';
+        $productDetail->data = $request->product_detail;
+        $productDetail->update();
         // dd($InfoProductMat);
         toastr()->success('Record is Update Successfully');
-        
-        
+
+
         $checkList = OotChecklist::where(['ootcs_id' => $id])->first();
          $checkList->ootcs_id            = $id;
          $checkList->p_l_irequired      = $request->p_l_irequired;
@@ -1003,8 +1041,9 @@ class OOTController extends Controller
          $checkList->l_e_i_oot              = $request->l_e_i_oot;
          $checkList->elaborate_the_reson    = $request->elaborate_the_reson;
          $checkList->in_charge              = $request->in_charge;
+
          $checkList->pli_head_designee      = $request->pli_head_designee;
-         
+
          $checkList->data                        = $request->data;
         $checkList->update();
         // dd($checkList);
@@ -1147,7 +1186,7 @@ class OOTController extends Controller
             $history->save();
         }
 
-        
+
         if ($lastDocument->oot_occured_on != $data->oot_occured_on) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
@@ -1402,7 +1441,7 @@ class OOTController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-       
+
         toastr()->success('Record is Update Successfully');
         return back();
     }
@@ -1418,7 +1457,7 @@ class OOTController extends Controller
 
         return view('frontend.OOT.audit_trial',compact('document','audit','today'));
     }
-    
+
     public function OotAuditDetail($id){
         $detail = OotAuditTrial::find($id);
 
@@ -1433,7 +1472,9 @@ class OOTController extends Controller
 
     public function singleReport(Request $request, $id){
         $data = Ootc::find($id);
-       $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
+        $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
+        $productDetail = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_detail'])->first();
+
     //    dd($grid_product_mat);
        $gridStability = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'details_of_stability'])->first();
        $GridOotRes = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'oot_result'])->first();
@@ -1443,7 +1484,7 @@ class OOTController extends Controller
         if(!empty($data)){
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.OOT.singleReports', compact('data','grid_product_mat','gridStability','GridOotRes','InfoProductMat','checkList'))
+            $pdf = PDF::loadview('frontend.OOT.singleReports', compact('data','grid_product_mat','gridStability','GridOotRes','InfoProductMat','checkList','productDetail'))
                 ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,
@@ -1494,7 +1535,7 @@ class OOTController extends Controller
                             //         if($u->q_m_s_divisions_id == $changestage->division_id){
                             //             $email = Helpers::getInitiatorEmail($u->user_id);
                             //              if ($email !== null) {
-                                      
+
                             //               Mail::send(
                             //                   'mail.view-mail',
                             //                    ['data' => $changestage],
@@ -1504,7 +1545,7 @@ class OOTController extends Controller
                             //                 }
                             //               );
                             //             }
-                            //      } 
+                            //      }
                             //   }
                 $changestage->update();
                 // dd($changestage);
@@ -1528,7 +1569,7 @@ class OOTController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Preliminary Lab Investigation";
-                            $history->action = "Submit";
+                            $history->action = "Preliminary Lab Investigation";
                             $history->change_to = "Pending preliminary lab investigation";
                              $history->change_from = $lastDocument->status;
                              $history->action_name = $lastDocument->status;
@@ -1539,7 +1580,7 @@ class OOTController extends Controller
                     //         if($u->q_m_s_divisions_id == $changestage->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
                     //              if ($email !== null) {
-                            
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changestage],
@@ -1549,7 +1590,7 @@ class OOTController extends Controller
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1571,18 +1612,18 @@ class OOTController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Lab Error Identified";
-                            $history->action = "Submit";
+                            $history->action = "Lab Error Identified ";
                                 $history->change_to = "Pending Capa";
                                 $history->change_from = $lastDocument->status;
                                 $history->action_name = $lastDocument->status;
-                                
+
                             $history->save();
                         //     $list = Helpers::getLeadAuditeeUserList();
                         //     foreach ($list as $u) {
                         //         if($u->q_m_s_divisions_id == $changestage->division_id){
                         //             $email = Helpers::getInitiatorEmail($u->user_id);
                         //              if ($email !== null) {
-                                  
+
                         //               Mail::send(
                         //                   'mail.view-mail',
                         //                    ['data' => $changestage],
@@ -1592,7 +1633,7 @@ class OOTController extends Controller
                         //                 }
                         //               );
                         //             }
-                        //      } 
+                        //      }
                         //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1615,7 +1656,7 @@ class OOTController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Correction Complete";
-                            $history->action = "Submit";
+                            $history->action = "Correction Complete";
                                 $history->change_to = "Pending Final Approval";
                                 $history->change_from = $lastDocument->status;
                                 $history->action_name = $lastDocument->status;
@@ -1625,7 +1666,7 @@ class OOTController extends Controller
                         //         if($u->q_m_s_divisions_id == $changestage->division_id){
                         //             $email = Helpers::getInitiatorEmail($u->user_id);
                         //              if ($email !== null) {
-                                  
+
                         //               Mail::send(
                         //                   'mail.view-mail',
                         //                    ['data' => $changestage],
@@ -1635,13 +1676,13 @@ class OOTController extends Controller
                         //                 }
                         //               );
                         //             }
-                        //      } 
+                        //      }
                         //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-          
+
             if ($changestage->stage == 5) {
                 $changestage->stage = "4";
                 $changestage->status = "Pending CAPA";
@@ -1669,7 +1710,7 @@ class OOTController extends Controller
                     //         if($u->q_m_s_divisions_id == $changestage->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
                     //              if ($email !== null) {
-                            
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changestage],
@@ -1679,7 +1720,7 @@ class OOTController extends Controller
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1713,7 +1754,7 @@ class OOTController extends Controller
                 //         if($u->q_m_s_divisions_id == $changestage->division_id){
                 //             $email = Helpers::getInitiatorEmail($u->user_id);
                 //              if ($email !== null) {
-                        
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $changestage],
@@ -1723,7 +1764,7 @@ class OOTController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1826,13 +1867,14 @@ class OOTController extends Controller
                                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = "Lab Error Not Idenfied";
+                                $history->action = "Lab Error Not  Identified ";
                                 $history->save();
                             //     $list = Helpers::getLeadAuditeeUserList();
                             //     foreach ($list as $u) {
                             //         if($u->q_m_s_divisions_id == $changestage->division_id){
                             //             $email = Helpers::getInitiatorEmail($u->user_id);
                             //              if ($email !== null) {
-                                      
+
                             //               Mail::send(
                             //                   'mail.view-mail',
                             //                    ['data' => $changestage],
@@ -1842,12 +1884,12 @@ class OOTController extends Controller
                             //                 }
                             //               );
                             //             }
-                            //      } 
+                            //      }
                             //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
-            
+
         }
     }
 
@@ -1887,7 +1929,7 @@ class OOTController extends Controller
             //     if($u->q_m_s_divisions_id == $capa->division_id){
             //       $email = Helpers::getInitiatorEmail($u->user_id);
             //       if ($email !== null) {
-                    
+
             //         Mail::send(
             //             'mail.view-mail',
             //             ['data' => $capa],
@@ -1897,7 +1939,7 @@ class OOTController extends Controller
             //             }
             //          );
             //       }
-            //     } 
+            //     }
             // }
 
             toastr()->success('Document Sent');
@@ -1943,9 +1985,9 @@ class OOTController extends Controller
             -20
         );
         return $pdf->stream('SOP' . $id . '.pdf');
-        
+
         // return view('frontend.OOT.audit_trail_pdf');
 
     }
-    
+
 }

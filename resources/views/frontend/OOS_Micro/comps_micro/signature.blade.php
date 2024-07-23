@@ -1,11 +1,9 @@
 <!----- Signature ----->
             <div id="CCForm17" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">
-                        Activity Log
-                    </div>
+                    <center><div class="sub-head"> Activity Log </div></center>
                     <div class="row">
-                        <!-- Submit -->
+                        <div class="col-12 sub-head">  Initiator </div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Audit Agenda">Submited by</label>
@@ -24,7 +22,28 @@
                             <div class="Date">{{ $micro_data->comment_submit }}</div>
                            </div>
                         </div>
-                        <!-- Request More Info -->
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="cancelled by">Cancelled By :</label>
+                                <div class="static">{{ $micro_data->cancelled_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="cancelled on">Cancelled On :</label>
+                                <div class="Date">{{ $micro_data->cancelled_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Comment</label>
+                            <div class="Date">{{ $micro_data->comment_cancle }}</div>
+                           </div>
+                        </div>
+                    <div>
+                    <div class="row">
+                    <div class="col-12 sub-head">  Lab Supervisor </div>
+                     <!-- Request More Info -->
                         <!--  Initial Phase I Investigation  Done By -->
                         <div class="col-lg-4">
                             <div class="group-input">
@@ -44,6 +63,9 @@
                             <div class="Date">{{ $micro_data->comment_pending_initial_assessment }}</div>
                            </div>
                         </div>
+                    <div>
+                    <div class="row">
+                        <div class="col-12 sub-head">QC Head/Designee </div>
                         <!-- Request More Info -->
                         <!-- Assignable Cause Found -->
                         <div class="col-lg-4">
@@ -84,7 +106,10 @@
                             <div class="Date">{{ $micro_data->comment_assignable_cause_not_found }}</div>
                            </div>
                         </div>
-                        <!-- Request More Info -->
+                    <div>
+                    <div class="row">
+                        <div class="col-12 sub-head"> Lab Supervisor </div>
+                         <!-- Request More Info -->
                         <!-- Correction Completed -->
                         <div class="col-lg-4">
                             <div class="group-input">
@@ -162,6 +187,9 @@
                             <div class="Date">{{ $micro_data->comment_no_assignable_cause_found }}</div>
                            </div>
                         </div>
+                    <div>
+                    <div class="row">
+                        <div class="col-12 sub-head"> QA </div>
                         <!-- Request More Info -->
                         <!-- Repeat Analysis Completed -->
                         <div class="col-lg-4">
@@ -202,6 +230,9 @@
                             <div class="Date">{{ $micro_data->comment_full_scale_investigation }}</div>
                            </div>
                         </div>
+                    <div>
+                    <div class="row">
+                        <div class="col-12 sub-head"> Lab Supervisor </div>
                         <!-- Request More Info -->
                         <!-- Assignable Cause Found (Manufacturing Defect) -->
                         <div class="col-lg-4">
@@ -241,7 +272,7 @@
                             <div class="Date">{{ $micro_data->comment_no_assignable_manufacturing_defect }}</div>
                            </div>
                         </div>
-                        <!-- Request More Info -->
+                         <!-- Request More Info -->
                          <!-- Phase II Correction Completed  -->
                         <div class="col-lg-4">
                             <div class="group-input">
@@ -261,7 +292,8 @@
                             <div class="Date">{{ $micro_data->comment_phaseII_correction_complete }}</div>
                            </div>
                         </div>
-                        <!--  Phase II A Correction Inconclusive -->
+                    
+                         <!--  Phase II A Correction Inconclusive -->
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Reference Recores">Phase II A Correction Inconclusive Done By</label>
@@ -280,6 +312,7 @@
                             <div class="Date">{{ $micro_data->comment_phaseIIA_correction_inconclusive }}</div>
                            </div>
                         </div>
+                   
                         <!-- Request More Info -->
                          <!-- Retesting/resampling -->
                         <div class="col-lg-4">
@@ -300,6 +333,7 @@
                             <div class="Date">{{ $micro_data->comment_retesting_resampling }}</div>
                            </div>
                         </div>
+                    
                         <!-- Phase II B Correction Inconclusive -->
                         <div class="col-lg-4">
                             <div class="group-input">
@@ -319,6 +353,9 @@
                             <div class="Date">{{ $micro_data->comment_phaseIIB_correction_inconclusive }}</div>
                            </div>
                         </div>
+                    <div>
+                    <div class="row">
+                       <div class="col-12 sub-head"> Head QA/Designee </div>
                         <!-- Final Approval -->
                         <!-- Request More Info -->
                         <div class="col-lg-4">
@@ -360,26 +397,6 @@
                             <div class="Date">{{ $micro_data->comment_approval_completed }}</div>
                            </div>
                         </div>
-                        <!-- Cancelled By -->
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="cancelled by">Cancelled By :</label>
-                                <div class="static">{{ $micro_data->cancelled_by }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="cancelled on">Cancelled On :</label>
-                                <div class="Date">{{ $micro_data->cancelled_on }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                           <div class="group-input">
-                            <label for="Submitted on">Comment</label>
-                            <div class="Date">{{ $micro_data->comment_cancle }}</div>
-                           </div>
-                        </div>
-                        
                     </div>
 
                     <div class="button-block">

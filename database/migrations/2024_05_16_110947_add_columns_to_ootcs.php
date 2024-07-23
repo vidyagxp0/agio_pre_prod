@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('regulatory_comments')->nullable();
             $table->longText('manufacturing_comments')->nullable();
             $table->longText('technical_commitee_comments')->nullable();
-            $table->longText('supporting_documents')->nullable();
+            $table->string('supporting_documents')->nullable();
         });
     }
 

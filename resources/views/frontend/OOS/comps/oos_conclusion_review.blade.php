@@ -8,7 +8,8 @@
                 <div class="group-input">
                     <label for="Description Deviation">Conclusion Review Comments</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
+                    <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1" 
+                    {{Helpers::isOOSChemical($data->stage)}}>
                         {{ $data->conclusion_review_comments_ocr ? $data->conclusion_review_comments_ocr : '' }}
                     </textarea>
                 </div>

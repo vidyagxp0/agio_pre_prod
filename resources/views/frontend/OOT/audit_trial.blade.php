@@ -188,18 +188,19 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong> {{ str_pad($document->record_number, 4, '0', STR_PAD_LEFT) }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ Auth::user()->name }}</div>
+                            <div> <strong>Record ID.</strong> {{ str_pad($document->record_number, 4, '0', STR_PAD_LEFT) }}
+                            </div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;"> Originator:{{ Auth::user()->name }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
 
                         </div>
+                    </table>
         </div>
-        </table>
 
-        </header>
+
+
 
         <div class="inner-block">
             <div class="division">
@@ -233,8 +234,8 @@
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="{{ url('DeviationAuditTrialDetails', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                    <strong> Data Field Name
+                                        :</strong>{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')
@@ -248,11 +249,9 @@
                                 <br>
                                 <div>
                                     @if ($dataDemo->activity_type == 'Activity Log')
-                                        <strong>Change To
-                                            :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
+                                        <strong>Change To:</strong>{{ strip_tags($dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable') }}
                                     @else
-                                        <strong>Change To
-                                            :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
+                                        <strong>Change To:</strong>{{ strip_tags($dataDemo->current ? $dataDemo->current : 'Not Applicable') }}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">
@@ -272,7 +271,8 @@
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at : 'Not Applicable' }}
+                                        :</strong>
+                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d/M/Y') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>

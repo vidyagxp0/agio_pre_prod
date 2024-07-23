@@ -52,7 +52,7 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }}
+            {{ Helpers::getDivisionName($data->division_id) }}
             / OOT
         </div>
     </div>
@@ -66,8 +66,7 @@
                     <div class="d-flex" style="gap:20px;">
                         @php
                             $userRoles = DB::table('user_roles')
-                                ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
-                                ->get();
+                                ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         @endphp
                         <button class="button_theme1"> <a class="text-white"
@@ -198,11 +197,11 @@
             <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Under Addendum Approval</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button> --}}
+            <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>--}}
+            <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Extension</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Activity Log</button>
          </div>
- 
+
          <form action="{{ route('update', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
@@ -234,16 +233,14 @@
                                 <div class="group-input">
                                     <label for="record_number"><b>Record Number</b></label>
                                     <input disabled type="text" name="record_number" id="record_number"
-                                        value="{{ $data->initiator_group_code }}/LI/{{ date('y') }}/{{ $record_number }}">
+                                        value="{{ Helpers::getDivisionName($data->division_id) }}/OOT/{{ date('Y') }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}">
 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label disabled for="Short Description">Division Code</label>
-                                    <input disabled type="text" name="division_code"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                    <input disabled type="text" name="division_code"  value="{{ Helpers::getDivisionName($data->division_id) }}">
                                 </div>
                             </div>
 
@@ -257,8 +254,8 @@
                             <div class="col-md-6 ">
                                 <div class="group-input ">
                                     <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
-                                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                    <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                    <input readonly type="text"  value="{{ Helpers::getdateFormat($data->intiation_date) }}"  name="intiation_date" id="intiation_date"s>
+
                                 </div>
                             </div>
 
@@ -276,9 +273,9 @@
                                     {{-- <p class="text-primary"> last date this record should be closed by</p> --}}
 
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_date"  value="{{ Helpers::getdateFormat($data->due_date) }}" disabled />
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" disabled
-                                            oninput="handleDateInput(this, 'due_date')" />
+                                        <input type="text" id="due_date"  value="{{ Helpers::getdateFormat($data->due_date) }}" readonly/>
+                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'due_date')" readonly/>
                                     </div>
 
                                 </div>
@@ -286,101 +283,60 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Short Description">Severity Level <span
-                                            class="text-danger"></span></label>
+                                    <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
 
-                                    <select name="severity_level" id="severity_level">
-                                        <option>---select---</option>
-                                        <option value="major" @if ($data->severity_level == 'major') selected @endif>Major
+                                    <select name="initiator_group" id="initiator_group">
+                                        <option value="CQA"
+                                            @if ($data->initiator_group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                        <option value="QA"
+                                            @if ($data->initiator_group == 'QA') selected @endif>Quality Assurance</option>
+                                        <option value="QC"
+                                            @if ($data->initiator_group == 'QC') selected @endif>Quality Control</option>
+                                        <option value="QM"
+                                            @if ($data->initiator_group == 'QM') selected @endif>Quality Control (Microbiology department)
                                         </option>
-                                        <option value="minor" @if ($data->severity_level == 'minor') selected @endif>Minor
+                                        <option value="PG"
+                                            @if ($data->initiator_group == 'PG') selected @endif>Production General</option>
+                                        <option value="PL"
+                                            @if ($data->initiator_group == 'PL') selected @endif>Production Liquid Orals</option>
+                                        <option value="PT"
+                                            @if ($data->initiator_group == 'PT') selected @endif>Production Tablet and Powder</option>
+                                        <option value="PE"
+                                            @if ($data->initiator_group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
+                                        <option value="PC"  @if ($data->initiator_group == 'PC') selected @endif>Production Capsules</option>
+                                        <option value="PI"  @if ($data->initiator_group == 'PI') selected @endif>Production Injectable</option>
+                                        <option value="EN"  @if ($data->initiator_group == 'EN') selected @endif>Engineering</option>
+                                        <option value="HR"  @if ($data->initiator_group == 'HR') selected @endif>Human Resource</option>
+                                        <option value="ST"  @if ($data->initiator_group == 'ST') selected @endif>Store</option>
+                                        <option value="IT" @if ($data->initiator_group == 'IT') selected @endif>Electronic Data Processing
                                         </option>
-                                        <option value="critical" @if ($data->severity_level == 'critical') selected @endif>
-                                            critical </option>
-                                    </select>
+                                        <option value="FD" @if ($data->initiator_group == 'FD') selected @endif>Formulation  Development
+                                        </option>
+                                        <option value="AL"  @if ($data->initiator_group == 'AL') selected @endif>Analytical research and Development Laboratory
+                                        </option>
+                                        <option value="PD"   @if ($data->initiator_group == 'PD') selected @endif>Packaging Development
+                                        </option>
 
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Short Description">Initiator Group <span
-                                            class="text-danger"></span></label>
-                                    {{-- <select name="initiator_group">
-                                        <option selected disabled>---select---</option>
-                                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                           
-                                            <option value="initiator_group"
-                                                @if ($data->initiator_group == 'initiator_group') selected @endif>
-                                                {{ $data->$initiator_group }}</option>
-                                        @endforeach
-                                    </select> --}}
-
-                                    <select name="initiator_group"
-                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                        id="selectedOptions" {{ Helpers::disabledErrataFields($data->stage) }}>
-                                        <option value="CQA" @if ($data->Department == 'CQA') selected @endif>
-                                            Corporate
-                                            Quality Assurance</option>
-                                        <option value="QAB" @if ($data->Department == 'QAB') selected @endif>
-                                            Quality
-                                            Assurance Biopharma</option>
-                                        <option value="CQC" @if ($data->Department == 'CQC') selected @endif>
-                                            Central
-                                            Quality Control</option>
-                                        <option value="CQC" @if ($data->Department == 'CQC') selected @endif>
-                                            Manufacturing
+                                        <option value="PU"  @if ($data->initiator_group == 'PU') selected @endif>Purchase Department
                                         </option>
-                                        <option value="PSG" @if ($data->Department == 'PSG') selected @endif>
-                                            Plasma
-                                            Sourcing Group</option>
-                                        <option value="CS" @if ($data->Department == 'CS') selected @endif>
-                                            Central
-                                            Stores</option>
-                                        <option value="ITG" @if ($data->Department == 'ITG') selected @endif>
-                                            Information
-                                            Technology Group</option>
-                                        <option value="MM" @if ($data->Department == 'MM') selected @endif>
-                                            Molecular
-                                            Medicine</option>
-                                        <option value="CL" @if ($data->Department == 'CL') selected @endif>
-                                            Central
-                                            Laboratory</option>
-                                        <option value="TT" @if ($data->Department == 'TT') selected @endif>Tech
-                                            Team</option>
-                                        <option value="QA" @if ($data->Department == 'QA') selected @endif>
-                                            Quality
-                                            Assurance</option>
-                                        <option value="QM" @if ($data->Department == 'QM') selected @endif>
-                                            Quality
-                                            Management</option>
-                                        <option value="IA" @if ($data->Department == 'IA') selected @endif>IT
-                                            Administration</option>
-                                        <option value="ACC" @if ($data->Department == 'ACC') selected @endif>
-                                            Accounting
+                                        <option value="DC"   @if ($data->initiator_group == 'DC') selected @endif>Document Cell
                                         </option>
-                                        <option value="LOG" @if ($data->Department == 'LOG') selected @endif>
-                                            Logistics
+                                        <option value="RA"    @if ($data->initiator_group == 'RA') selected @endif>Regulatory Affairs
                                         </option>
-                                        <option value="SM" @if ($data->Department == 'SM') selected @endif>
-                                            Senior
-                                            Management</option>
-                                        <option value="BA" @if ($data->Department == 'BA') selected @endif>
-                                            Business
-                                            Administration</option>
-
+                                        <option value="PV"    @if ($data->initiator_group == 'PV') selected @endif>Pharmacovigilance
+                                        </option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Short Description">Initiator Group Code <span
-                                            class="text-danger"></span></label>
-                                    {{-- <input type="text" name="initiator_group_code" value="{{ $data->initiator_group_code }}" readonly> --}}
-                                    <input type="text"
-                                        name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                        value="{{ $data->initiator_group_code }}" id="initiator_group_code">
+                                    <label for="Initiation Group Code">Initiation Department Code</label>
+                                    <input type="text" name="initiator_group_code"
+                                        value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                        readonly>
+                                    {{-- <div class="default-name"> <span
+                                    id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
                                 </div>
                             </div>
 
@@ -443,49 +399,126 @@
                                     <label for="Short Description">Is Repeat?<span class="text-danger"></span></label>
                                     <select id="is_repeat" name="is_repeat">
                                         <option>select</option>
-
-                                        <option value="yes" @if ($data->is_repeat == 'yes') selected @endif>Yes
-                                        </option>
-                                        <option value="no" @if ($data->is_repeat == 'no') selected @endif>No
-                                        </option>
-
+                                        <option value="yes" @if ($data->is_repeat == 'yes') selected @endif>Yes </option>
+                                        <option value="no" @if ($data->is_repeat == 'no') selected @endif>No </option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> Repeat Nature</label>
-                                    <textarea class="summernote" name="repeat_nature" id="summernote-16" value="{{ $data->repeat_nature }}">{{ $data->repeat_nature }} </textarea>
-                                </div>
-                            </div>
 
-                            <div class="col-lg-12">
+                           {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Short Description">Nature Of Change<span
                                             class="text-danger"></span></label>
                                     <select multiple id="natureOfChange" name="nature_of_change">
-                                        <option>---select---</option>
-                                        <option value="temporary" @if ($data->nature_of_change == 'temporary') selected @endif>
-                                            Temporary</option>
 
-                                        <option value="permanent" @if ($data->nature_of_change == 'permanent') selected @endif>
-                                            Permanent</option>
+                                        <option value="temporary" @if ($data->nature_of_change == 'temporary') selected @endif> Temporary</option>
+
+                                        <option value="permanent" @if ($data->nature_of_change == 'permanent') selected @endif> Permanent</option>
 
                                     </select>
                                 </div>
+                            </div> --}}
+
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOt Observed On">OOT Occured On</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="oot_occured_on" value="{{ Helpers::getdateFormat($data->oot_occured_on) }}" readonly placeholder="DD-MMM-YYYY" />
+                                        {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                        <input type="date" name="oot_occured_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'oot_occured_on')" />
+                                    </div>
+                                </div>
+                                @error('oot_occured_on')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>OOT Occured On</label>
-                                    <input type="hidden" value="{{ $data->occuredDate }}" name="oot_occured_on">
-                                    <input disabled type="text" value="{{ $data->oot_occured_on }}"
-                                        name="oot_occured_on">
-                                    <input type="hidden" value="{{ Helpers::getdateFormat($data->oot_occured_on) }}"
-                                        name="oot_occured_on">
+
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOt Observed On">OOT Observed On</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="oot_observed_on" value="{{ Helpers::getdateFormat($data->oot_observed_on) }}" readonly placeholder="DD-MMM-YYYY" />
+                                        {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                        <input type="date" name="oot_observed_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'oot_observed_on')" />
+                                    </div>
+                                </div>
+                                @error('oot_observed_on')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-6 new-time-data-field">
+                                <div class="group-input input-time">
+                                    <label for="deviation_time">Delay Justification</label>
+                                    <textarea id="delay_justification"  name="delay_justification" value="{{$data->delay_justification}}" >{{ $data->delay_justification }}</textarea>
+                                </div>
+                                {{-- @error('Deviation_date')
+                                    <div class="text-danger">{{  $message  }}</div>
+                                @enderror --}}
+                            </div>
+                            <script>
+                                flatpickr("#deviation_time", {
+                                    enableTime: true,
+                                    noCalendar: true,
+                                    dateFormat: "H:i", // 24-hour format without AM/PM
+                                    minuteIncrement: 1 // Set minute increment to 1
+
+                                });
+                            </script>
+
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Audit Schedule End Date">OOt Reported on</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="oot_report_on" value="{{ Helpers::getdateFormat($data->oot_report_on) }}" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="oot_report_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                          class="hide-input" oninput="handleDateInput(this, 'oot_report_on')" />
+                                    </div>
                                 </div>
                             </div>
+                                <script>
+                                    $('.delayJustificationBlock').hide();
+
+                                    function calculateDateDifference() {
+                                        let deviationDate = $('input[name=Deviation_date]').val();
+                                        let reportedDate = $('input[name=Deviation_reported_date]').val();
+
+                                        if (!deviationDate || !reportedDate) {
+                                            console.error('Deviation date or reported date is missing.');
+                                            return;
+                                        }
+
+                                        let deviationDateMoment = moment(deviationDate);
+                                        let reportedDateMoment = moment(reportedDate);
+
+                                        let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
+
+                                        // if (diffInDays > 0) {
+                                        //     $('.delayJustificationBlock').show();
+                                        // } else {
+                                        //     $('.delayJustificationBlock').hide();
+                                        // }
+
+                                    }
+
+                                    $('input[name=Deviation_date]').on('change', function() {
+                                        calculateDateDifference();
+                                    })
+
+                                    $('input[name=Deviation_reported_date]').on('change', function() {
+                                        calculateDateDifference();
+                                    })
+                                </script>
+
+                                <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Reference Recores">Immediate action</label>
+                                    <input type="text" name="immediate_action"  id="immediate_action" value="{{$data->immediate_action}}">
+                                </div>
+                                 </div>
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -594,7 +627,6 @@
                                                 <th style="width: 15%">Expiry Date </th>
                                                 <th style="width: 15%">Label Claim</th>
                                                 <th style="width: 15%">Action</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -606,8 +638,7 @@
                                                         <td>{{ $loop->index + 1 }}</td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
-                                                                name="product_materiel[][item_product_code]"
-                                                                value="{{ isset($gridData['item_product_code']) ? $gridData['item_product_code'] : '' }}">
+                                                                name="product_materiel[][item_product_code]" value="{{ isset($gridData['item_product_code']) ? $gridData['item_product_code'] : '' }}">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
@@ -618,16 +649,35 @@
                                                             <input type="text" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][a_r_number]"value="{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : '' }}">
                                                         </td>
-                                                        <td>
-                                                            <input type="date" class="numberDetail"
+                                                        {{-- <td>
+                                                            <input type="month" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][m_f_g_date]" value="{{ isset($gridData['m_f_g_date']) ?  $gridData['m_f_g_date'] : '' }}">
                                                         </td>
-                                                        
+
                                                         <td>
-                                                            <input type="date" class="numberDetail"
-                                                                name="product_materiel[{{ $loop->index }}][expiry_date]"
-                                                                value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                                oninput="handleDateInput(this, 'expiry_date')">                                                            
+                                                            <input type="month" class="numberDetail"  name="product_materiel[{{ $loop->index }}][expiry_date]"   value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}"  class="hide-input" oninput="handleMonthInput(this, 'expiry_date')">
+                                                        </td> --}}
+
+                                                        <td>
+                                                            <div class="col-lg-6 new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input type="text" id="m_f_g_date{{ $loop->index }}" readonly placeholder="MM-YYYY" name="product_materiel[{{ $loop->index }}][m_f_g_date]"   value="{{ Helpers::getmonthFormat($gridData['m_f_g_date'] ?? '') }}"  />
+                                                                        <input  type="month" name="product_materiel[{{ $loop->index }}][m_f_g_date]"   value="{{ isset($gridData['m_f_g_date']) ? $gridData['m_f_g_date'] : '' }}" class="hide-input" oninput="handleMonthInput(this, 'm_f_g_date{{ $loop->index }}')">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="col-lg-6 new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input type="text" id="expiry_date{{ $loop->index }}" value="{{ Helpers::getmonthFormat($gridData['expiry_date'] ?? '') }}" readonly placeholder="MM-YYYY" />
+                                                                        <input  type="month" name="product_materiel[{{ $loop->index }}][expiry_date]"
+                                                                        value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}" class="hide-input" oninput="handleMonthInput(this, 'expiry_date{{ $loop->index }}')">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
 
                                                         <td>
@@ -636,7 +686,7 @@
                                                                 value="{{ isset($gridData['label_claim']) ? $gridData['label_claim'] : '' }}">
                                                         </td>
 
-                                                        <td><button type="text" class="removeRowBtn">Remove</button>
+                                                        <td><button type="button" class="removeRowBtn" name="Action[]">Remove</button>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -655,7 +705,104 @@
                                                         name="product_materiel[0][expiry_date]"></td>
                                                 <td><input type="text" class="Document_Remarks"
                                                         name="product_materiel[0][label_claim]"></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                {{-- <td><button type="text" class="removeRowBtn">Remove</button></td> --}}
+                                            @endif
+
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    Product Detail
+                                    <button type="button" name="audit-agenda-grid" id="productAdd">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#observation-field-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="product_details">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%">Row No.</th>
+                                                <th style="width: 12%">Product Name</th>
+                                                <th style="width: 15%">AR No.</th>
+                                                <th style="width: 16%">Sample On</th>
+                                                <th style="width: 15%">Sample By</th>
+                                                <th style="width: 15%">Analyzed On </th>
+                                                <th style="width: 15%">Observation On</th>
+                                                <th style="width: 15%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @if ($productDetail && is_array($productDetail->data))
+                                                @foreach ($productDetail->data as $gridData)
+                                                    <tr>
+
+                                                        <td>{{ $loop->index + 1 }}</td>
+                                                        <td>
+                                                            <input type="text" class="numberDetail" name="product_detail[][product_name]" value="{{ isset($gridData['product_name']) ? $gridData['product_name'] : '' }}">
+                                                        </td>
+
+                                                        <td>
+                                                            <input type="text" class="numberDetail" name="product_detail[{{ $loop->index }}][ar_num]"value="{{ isset($gridData['ar_num']) ? $gridData['ar_num'] : '' }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="month" class="numberDetail"  name="product_detail[{{ $loop->index }}][sample_on]" value="{{ isset($gridData['sample_on']) ?  $gridData['sample_on'] : '' }}">
+                                                        </td>
+
+                                                        <td>
+                                                            <input type="text" class="numberDetail" name="product_detail[{{ $loop->index }}][sample_by]"value="{{ isset($gridData['sample_by']) ? $gridData['sample_by'] : '' }}">
+                                                        </td>
+
+                                                        {{-- <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input   class="click_date"  id="date_{{ $loop->index }}analyzed_on" type="text" name="product_detail[{{ $loop->index }}][analyzed_on]"  placeholder="DD-MMM-YYYY"  value="{{ !empty($gridData['analyzed_on']) ? \Carbon\Carbon::parse($gridData['analyzed_on'])->format('d-M-Y') : '' }}"/>
+                                                                        <input type="date"   name="product_detail[{{ $loop->index }}][analyzed_on]"  value="{{ !empty($gridData['analyzed_on']) ? \Carbon\Carbon::parse($gridData['analyzed_on'])->format('Y-m-d') : '' }}"   id="date{{ $loop->index }}analyzed_on" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, 'date_{{ $loop->index   }}analyzed_on')" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td> --}}
+
+                                                        <td>
+                                                            <input type="month" class="numberDetail"  name="product_detail[{{ $loop->index }}][analyzed_on]" value="{{ isset($gridData['analyzed_on']) ?  $gridData['analyzed_on'] : '' }}">
+                                                        </td>
+
+                                                        <td>
+                                                            <input type="month" class="numberDetail"  name="product_detail[{{ $loop->index }}][observation_on]" value="{{ isset($gridData['observation_on']) ?  $gridData['observation_on'] : '' }}">
+                                                        </td>
+
+                                                        {{-- <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input   class="click_date"  id="date_{{ $loop->index }}observation_on" type="text" name="product_detail[{{ $loop->index }}][observation_on]"  placeholder="DD-MMM-YYYY"  value="{{ !empty($gridData['observation_on']) ? \Carbon\Carbon::parse($gridData['observation_on'])->format('d-M-Y') : '' }}"/>
+                                                                        <input type="date"   name="product_detail[{{ $loop->index }}][observation_on]"  value="{{ !empty($gridData['observation_on']) ? \Carbon\Carbon::parse($gridData['observation_on'])->format('Y-m-d') : '' }}"   id="date{{ $loop->index }}observation_on" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, 'date_{{ $loop->index   }}observation_on')" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </td> --}}
+
+                                                        <td><button type="button" class="removeRowBtn" name="Action[]">Remove</button></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                {{-- <td>{{ $serialNumber }}</td> --}}
+                                                <td><input type="text" class="numberDetail"     name="product_detail[0][product_name]"></td>
+                                                <td><input type="text" class="Document_Remarks" name="product_detail[0][ar_num]"></td>
+                                                <td><input type="month" class="Document_Remarks" name="product_detail[0][sample_on]"></td>
+                                                <td><input type="text" class="Document_Remarks" name="product_detail[0][sample_by]">  </td>
+                                                <td><input type="month" class="Document_Remarks" name="product_detail[0][analyzed_on]"></td>
+                                                <td><input type="month" class="Document_Remarks" name="product_detail[0][observation_on]"></td>
+                                                {{-- <td><button type="text" class="removeRowBtn">Remove</button></td> --}}
                                             @endif
 
                                         </tbody>
@@ -710,11 +857,21 @@
                                     <label for="Reference Recores">Stability For </label>
                                     <select multiple id="stability_for" name="stability_for[]">
 
-                                        <option value="">--Select---</option>
-                                        <option value="submission" @if ($data->stability_for == 'submission') selected @endif>Submission     </option>
-                                        <option value="commercial" @if ($data->stability_for == 'commercial') selected @endif>Commercial    </option>
-                                        <option value="pack_evalution" @if ($data->stability_for == 'pack_evalution') selected @endif>Pack  evalution </option>
-                                        <option value="n_a"           @if ($data->stability_for == 'n_a') selected @endif>Not Applicable    </option>
+                                        <option  value="submission"
+                                                    {{ strpos($data->stability_for, 'submission') !== false ? 'selected' : '' }}>
+                                                    Submission</option>
+
+                                        <option  value="commercial"
+                                                        {{ strpos($data->stability_for, 'commercial') !== false ? 'selected' : '' }}>
+                                                        Commercial</option>
+
+                                         <option  value="pack_evalution"
+                                                            {{ strpos($data->stability_for, 'pack_evalution') !== false ? 'selected' : '' }}>
+                                                            Pack Evalution</option>
+
+                                         <option  value="n_a"
+                                                                {{ strpos($data->stability_for, 'n_a') !== false ? 'selected' : '' }}>
+                                                                Not Applicable</option>
                                     </select>
                                 </div>
                             </div>
@@ -748,35 +905,24 @@
                                                     <tr>
                                                         <td>{{ $loop->index + 1 }}</td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="details_of_stability[{{ $loop->index }}][a_r_number]"
-                                                                value="{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : '' }}">
+                                                            <input type="text" class="numberDetail"  name="details_of_stability[{{ $loop->index }}][a_r_number]"    value="{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="details_of_stability[{{ $loop->index }}][temprature]"
-                                                                value="{{ isset($gridData['temprature']) ? $gridData['temprature'] : '' }}">
+                                                            <input type="text" class="numberDetail"  name="details_of_stability[{{ $loop->index }}][temprature]"    value="{{ isset($gridData['temprature']) ? $gridData['temprature'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="details_of_stability[{{ $loop->index }}][interval]"value="{{ isset($gridData['interval']) ? $gridData['interval'] : '' }}">
+                                                            <input type="text" class="numberDetail"  name="details_of_stability[{{ $loop->index }}][interval]"      value="{{ isset($gridData['interval']) ? $gridData['interval'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="details_of_stability[{{ $loop->index }}][orientation]"
-                                                                value="{{ isset($gridData['orientation']) ? $gridData['orientation'] : '' }}">
+                                                            <input type="text" class="numberDetail"  name="details_of_stability[{{ $loop->index }}][orientation]"   value="{{ isset($gridData['orientation']) ? $gridData['orientation'] : '' }}">
                                                         </td>
 
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="details_of_stability[{{ $loop->index }}][pack_details]"
-                                                                value="{{ isset($gridData['pack_details']) ? $gridData['pack_details'] : '' }}">
+                                                            <input type="text" class="numberDetail"  name="details_of_stability[{{ $loop->index }}][pack_details]"  value="{{ isset($gridData['pack_details']) ? $gridData['pack_details'] : '' }}">
                                                         </td>
 
                                                         <td><button type="text" class="removeRowBtn">Remove</button>
                                                         </td>
-
-
                                                     </tr>
                                                 @endforeach
                                             @else
@@ -785,10 +931,8 @@
                                                 <td><input type="text" name="details_of_stability[0][a_r_number]"></td>
                                                 <td><input type="text" name="details_of_stability[0][temprature]"></td>
                                                 <td><input type="text" name="details_of_stability[0][interval]"></td>
-                                                <td><input type="text" name="details_of_stability[0][orientation]">
-                                                </td>
-                                                <td><input type="text" name="details_of_stability[0][pack_details]">
-                                                </td>
+                                                <td><input type="text" name="details_of_stability[0][orientation]"></td>
+                                                <td><input type="text" name="details_of_stability[0][pack_details]">  </td>
                                                 <td><input type="text" class="removeRowBtn" name=""> Remove
                                                 </td>
                                             @endif
@@ -846,8 +990,7 @@
 
                                                         <td>{{ $loop->index + 1 }}</td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="oot_result[{{ $loop->index }}][a_r_number]"
+                                                            <input type="text" class="numberDetail"name="oot_result[{{ $loop->index }}][a_r_number]"
                                                                 value="{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : '' }}">
                                                         </td>
                                                         <td>
@@ -899,9 +1042,6 @@
                                             @endif
 
                                         </tbody>
-
-
-
                                     </table>
                                 </div>
                             </div>
@@ -938,9 +1078,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
@@ -1033,7 +1170,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="search"> Head QA/Designee <span class="text-danger"></span>  </label>
-                                
+
                                     <select id="select-state" placeholder="Select..." name="inv_head_designee">
                                         {{-- <option value="">Select a value</option> --}}
                                         @foreach ($users as $key => $value)
@@ -1089,7 +1226,6 @@
                                             </tr>
                                         </thead>
 
-
                                         <tbody>
 
                                             @if ($InfoProductMat && is_array($InfoProductMat->data))
@@ -1098,54 +1234,41 @@
 
                                                         <td>{{ $loop->index + 1 }}</td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="info_product[{{ $loop->index }}][batch_no]"
-                                                                value="{{ isset($gridData['batch_no']) ? $gridData['batch_no'] : '' }}">
+                                                            <input type="text" class="numberDetail" name="info_product[{{ $loop->index }}][batch_no]" value="{{ isset($gridData['batch_no']) ? $gridData['batch_no'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="date" class="numberDetail"
-                                                                name="info_product[{{ $loop->index }}][mfg_date]"
-                                                                value="{{ isset($gridData['mfg_date']) ? $gridData['mfg_date'] : '' }}">
+                                                            <input type="month" class="numberDetail" name="info_product[{{ $loop->index }}][mfg_date]"  value="{{ isset($gridData['mfg_date']) ? $gridData['mfg_date'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="date" class="numberDetail"
-                                                                name="info_product[{{ $loop->index }}][exp_date]"value="{{ isset($gridData['exp_date']) ? $gridData['exp_date'] : '' }}">
+                                                            <input type="month" class="numberDetail" name="info_product[{{ $loop->index }}][exp_date]"  value="{{ isset($gridData['exp_date']) ? $gridData['exp_date'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="info_product[{{ $loop->index }}][ar_number]"value="{{ isset($gridData['ar_number']) ? $gridData['ar_number'] : '' }}">
+                                                            <input type="text" class="numberDetail" name="info_product[{{ $loop->index }}][ar_number]" value="{{ isset($gridData['ar_number']) ? $gridData['ar_number'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="info_product[{{ $loop->index }}][pack_style]"
-                                                                value="{{ isset($gridData['pack_style']) ? $gridData['pack_style'] : '' }}">
+                                                            <input type="text" class="numberDetail"  name="info_product[{{ $loop->index }}][pack_style]" value="{{ isset($gridData['pack_style']) ? $gridData['pack_style'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text"
-                                                                class="numberDetail"name="info_product[{{ $loop->index }}][frequency]"
-                                                                value="{{ isset($gridData['frequency']) ? $gridData['frequency'] : '' }}">
+                                                            <input type="text" class="numberDetail"name="info_product[{{ $loop->index }}][frequency]"  value="{{ isset($gridData['frequency']) ? $gridData['frequency'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text"
-                                                                class="numberDetail"name="info_product[{{ $loop->index }}][condition]"
-                                                                value="{{ isset($gridData['condition']) ? $gridData['condition'] : '' }}">
+                                                            <input type="text" class="numberDetail"name="info_product[{{ $loop->index }}][condition]" value="{{ isset($gridData['condition']) ? $gridData['condition'] : '' }}">
                                                         </td>
 
-                                                        <td><button type="text" class="removeRowBtn">Remove</button>
-                                                        </td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button>  </td>
 
                                                     </tr>
-                                                @endforeach
-                                            @else
-                                                <td><input type="text" name="info_product[0][batch_no]"></td>
-                                                <td><input type="date" name="info_product[0][mfg_date]"></td>
-                                                <td><input type="date" name="info_product[0][exp_date]"></td>
-                                                <td><input type="text" name="info_product[0][ar_number]"></td>
-                                                <td><input type="text" name="info_product[0][pack_style]"></td>
-                                                <td><input type="text" name="info_product[0][frequency]"></td>
-                                                <td><input type="text" name="info_product[0][condition]"></td>
-                                                <td><input type="text" class="Action" name=""></td>
-                                            @endif
+                                                          @endforeach
+                                                    @else
+                                                        <td><input type="text" name="info_product[0][batch_no]"></td>
+                                                        <td><input type="date" name="info_product[0][mfg_date]"></td>
+                                                        <td><input type="date" name="info_product[0][exp_date]"></td>
+                                                        <td><input type="text" name="info_product[0][ar_number]"></td>
+                                                        <td><input type="text" name="info_product[0][pack_style]"></td>
+                                                        <td><input type="text" name="info_product[0][frequency]"></td>
+                                                        <td><input type="text" name="info_product[0][condition]"></td>
+                                                        <td><input type="text" class="Action" name=""></td>
+                                                    @endif
 
                                         </tbody>
 
@@ -1183,7 +1306,6 @@
                                     <label for="search">
                                         Analyst Name <span class="text-danger"></span>
                                     </label>
-                                   
                                     <select id="select-state" placeholder="Select..." name="sta_bat_analyst_name">
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key => $value)
@@ -1198,7 +1320,6 @@
                                     <label for="search">
                                         QC/QA Head/Designee <span class="text-danger"></span>
                                     </label>
-                                    
                                     <select id="select-state" placeholder="Select..." name="qa_head_designee">
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key => $value)
@@ -1227,7 +1348,7 @@
                                     <label for="Short Description"> Preliminary Laboratory Investigation Required ?<span
                                             class="text-danger"></span></label>
                                     <select name="p_l_irequired">
-                                        <option>Enter Your Selection Here</option>
+                                        <option value="0">Enter Your Selection Here</option>
                                         <option value="yes"@if ($checkList->p_l_irequired == 'yes') selected @endif>Yes
                                         </option>
                                         <option value="no"@if ($checkList->p_l_irequired == 'no') selected @endif>No
@@ -1796,7 +1917,7 @@
                                                         </div>
                                                     </td>
                                                     {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                             <textarea class="Remarks" name="who_will_not_be"></textarea>
                                                                                  </td> --}} <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -1827,9 +1948,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_eighteen" value="{{ $checkList->remark_eighteen }}"
@@ -1860,9 +1979,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_ninteen" value="{{ $checkList->remark_ninteen }}"
@@ -1893,9 +2010,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty" value="{{ $checkList->remark_twenty }}"
@@ -1926,9 +2041,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_one" value="{{ $checkList->remark_twenty_one }}"
@@ -1959,9 +2072,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_two" value="{{ $checkList->remark_twenty_two }}"
@@ -1991,9 +2102,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_three" value="{{ $checkList->remark_twenty_three }}"
@@ -2023,9 +2132,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_four" value="{{ $checkList->remark_twenty_four }}"
@@ -2063,8 +2170,6 @@
                                                                 style="border-radius: 7px; border: 1.5px solid black;">{{ $checkList->remark_twenty_five }}</textarea>
                                                         </div>
                                                     </td>
-                                                    
-
                                                 </tr>
                                                 <tr>
                                                     <td class="flex text-center">26</td>
@@ -2088,9 +2193,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                    <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_six" value="{{ $checkList->remark_twenty_six }}"
@@ -2120,9 +2223,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_seven" value="{{ $checkList->remark_twenty_seven }}"
@@ -2154,9 +2255,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_eight" value="{{ $checkList->remark_twenty_eight }}"
@@ -2186,9 +2285,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_nine" value="{{ $checkList->remark_twenty_nine }}"
@@ -2218,9 +2315,8 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+
+                                                    <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_thirty" value="{{ $checkList->remark_thirty }}"
@@ -2251,9 +2347,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                    <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_thirty_one" value="{{ $checkList->remark_thirty_one }}"
@@ -2283,9 +2377,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_thirty_one" value="{{ $checkList->remark_thirty_one }}"
@@ -2315,9 +2407,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                    <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_thirty_three" value="{{ $checkList->remark_thirty_three }}"
@@ -2347,9 +2437,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                   <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_thirty_four" value="{{ $checkList->remark_thirty_four }}"
@@ -2359,64 +2447,36 @@
 
                                                 </tr>
 
+
                                                 @if ($checkList && is_array($checkList->data))
-                                                    @foreach ($checkList->data as $gridData)
-                                                        <tr>
-
-                                                            <td class="flex text-center">{{ $loop->index + 35 }}</td>
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="data[{{ $loop->index }}][questions]"
-                                                                    value="{{ isset($gridData['questions']) ? $gridData['questions'] : '' }}">
-                                                            </td>
-                                                            {{-- <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="data[{{ $loop->index }}][response]"
-                                                                    value="{{ isset($gridData['response']) ? $gridData['response'] : '' }}">
-                                                            </td> --}}
-                                                            <td>
-
-                                                                <div
-                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="data[{{ $loop->index }}][response]"
-                                                                        id="response"
-                                                                        style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
-                                                                        <option value="">Select an Option</option>
-                                                                        <option value="yes"
-                                                                            @if (isset($gridData['response']) && $gridData['response'] == 'yes') selected @endif>
-                                                                            Yes
-                                                                        </option>
-                                                                        <option value="no"
-                                                                            @if (isset($gridData['response']) && $gridData['response'] == 'no') selected @endif>
-                                                                            No
-                                                                        </option>
-                                                                        <option value="n/a"
-                                                                            @if (isset($gridData['response']) && $gridData['response'] == 'n/a') selected @endif>
-                                                                            N/A
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-
-                                                            </td>
-
-                                                            <td>
-                                                                <textarea name="data[{{ $loop->index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;"> {{ isset($gridData['remarks']) ? $gridData['remarks'] : '' }}</textarea>
-                                                            </td>
-
-
-                                                            <td><input type="text" class="Action" name="">
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                @else
-                                                    {{-- <td>{{ $loop->index + 34 }}</td> --}}
-                                                    <td><input type="text" name="data[0][questions]"></td>
-                                                    <td><input type="text" name="data[0][response]"></td>
-                                                    <td><input type="text" name="data[0][remarks]"></td>
-                                                    <td><input type="text" class="Action" name=""></td>
-                                                @endif
-
-
+                                                @foreach ($checkList->data as $gridData)
+                                                    <tr>
+                                                        <td class="flex text-center">{{ $loop->index + 35 }}</td>
+                                                        <td>
+                                                            <input type="text" class="numberDetail" name="data[{{ $loop->index }}][questions]"
+                                                                   value="{{ isset($gridData['questions']) ? $gridData['questions'] : '' }}">
+                                                        </td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                                <select name="data[{{ $loop->index }}][response]" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125); background-color: #f0f0f0;">
+                                                                    <option value="">Select an Option</option>
+                                                                    <option value="yes" @if (isset($gridData['response']) && $gridData['response'] == 'yes') selected @endif>Yes</option>
+                                                                    <option value="no" @if (isset($gridData['response']) && $gridData['response'] == 'no') selected @endif>No</option>
+                                                                    <option value="n/a" @if (isset($gridData['response']) && $gridData['response'] == 'n/a') selected @endif>N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="data[{{ $loop->index }}][remarks]"
+                                                                      style="border-radius: 7px; border: 1.5px solid black;">{{ isset($gridData['remarks']) ? $gridData['remarks'] : '' }}</textarea>
+                                                        </td>
+                                                        <td><button type="button" class="removeRowBtn" name="">Remove</button></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <p>No data available.</p>
+                                            @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -2428,10 +2488,9 @@
                                         Result(s)<span class="text-danger"></span></label>
                                     <select name="l_e_i_oot">
                                         <option>Enter Your Selection Here</option>
-                                        <option value="no"@if ($checkList->l_e_i_oot == 'no') selected @endif>No
-                                        </option>
-                                        <option value="n/a"@if ($checkList->l_e_i_oot == 'n/a') selected @endif>N/A
-                                        </option>
+                                        <option value="yes"@if ($checkList->l_e_i_oot == 'yes') selected @endif>Yes   </option>
+                                        <option value="no"@if ($checkList->l_e_i_oot == 'no') selected @endif>No    </option>
+                                        <option value="n/a"@if ($checkList->l_e_i_oot == 'n/a') selected @endif>N/A    </option>
                                     </select>
                                 </div>
                             </div>
@@ -2445,12 +2504,10 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="search"> LabIn-Charge <span class="text-danger"></span> </label>
-
-
-                                    <select id="select-state" placeholder="Select..." name="in_charge">
-                                        <option value="">Select a value</option>
+                                    <select id="select-state" placeholder="" name="in_charge">
+                                        {{-- <option value="">Select a value</option> --}}
                                         @foreach ($users as $key => $value)
-                                            <option @if ($data->in_charge == $value->id) selected @endif   value="{{ $value->id }}">{{ $value->name }}</option>
+                                            <option @if ($data->in_charge == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -2467,7 +2524,7 @@
                                         </option>
                                     </select> --}}
                                     <select id="select-state" placeholder="Select..." name="pli_head_designee">
-                                        <option value="">Select a value</option>
+                                        {{-- <option value="">Select a value</option> --}}
                                         @foreach ($users as $key => $value)
                                             <option @if ($data->pli_head_designee == $value->id) selected @endif
                                                 value="{{ $value->id }}">{{ $value->name }}</option>
@@ -2507,9 +2564,7 @@
                                     <label>Retraining to Analyst Required ? <span class="text-danger"></span></label>
                                     <select name="retraining_to_analyst_required">
                                         <option>---select---</option>
-
-                                        <option value="yes" @if ($data->action_taken_result == 'yes') selected @endif>Yes
-                                        </option>
+                                        <option value="yes" @if ($data->action_taken_result == 'yes') selected @endif>Yes  </option>
                                         <option value="no" @if ($data->action_taken_result == 'no') selected @endif>No
                                         </option>
                                     </select>
@@ -2528,7 +2583,7 @@
                                     <label>Correct the Error and Repeat the analysis on same sample<span
                                             class="text-danger"></span></label>
                                     <select name="analysis_on_same_sample">
-                                        <option>---select---</option>
+                                        <option value="0">---select---</option>
                                         <option value="yes" @if ($data->analysis_on_same_sample == 'yes') selected @endif>Yes
                                         </option>
                                         <option value="no" @if ($data->analysis_on_same_sample == 'no') selected @endif>No
@@ -2553,7 +2608,7 @@
                                 <div class="group-input">
                                     <label>Is the Reanalysis results OOT <span class="text-danger"></span></label>
                                     <select name="reanalysis_result_oot">
-                                        <option>---select---</option>
+                                        <option value="0">---select---</option>
                                         <option value="yes" @if ($data->reanalysis_result_oot == 'yes') selected @endif>Yes
                                         </option>
                                         <option value="no" @if ($data->reanalysis_result_oot == 'no') selected @endif>No
@@ -2568,7 +2623,6 @@
                                     <textarea class="summernote" name="part_b_comments" value="{{ $data->part_b_comments }}" id="summernote-16">{{ $data->part_b_comments }}</textarea>
                                 </div>
                             </div>
-
 
 
                             <div class="col-lg-6">
@@ -2706,7 +2760,10 @@
                             <div class="col-md-6 ">
                                 <div class="group-input ">
                                     <label for="Last_due-date">Last Due Date <span class="text-danger"></span></label>
-                                    <input type="date" name="last_due_date" value="{{ $data->last_due_date }}">
+                                <input type="date" id="date" name="last_due_date" value="{{ $data->last_due_date ?? '' }}">
+
+                                    {{-- <input type="date" name="last_due_date" value="{{ $data->last_due_date }}"> --}}
+                                    {{-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" hidden oninput="handleDateInput(this, 'due_date')" /> --}}
                                 </div>
                             </div>
                             <div class="col-12">
@@ -2808,8 +2865,6 @@
                                     <div class="static">{{ $data->a_l_comments }}</div>
                                 </div>
                             </div>
-
-
                         </div>
 
                         <div class="row">
@@ -2847,8 +2902,7 @@
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Pending Preliminary Lab Investigation Submited
-                                        By</label>
+                                    <label for="Plan Proposed By">Pending Preliminary Lab Investigation Submited  By</label>
                                     <input type="hidden"
                                         name="ppli_completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                     <div class="static">{{ $data->ppli_submited_by }}</div>
@@ -2857,8 +2911,7 @@
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Plan Proposed On">Pending Preliminary Lab Investigation Submitted
-                                        On</label>
+                                    <label for="Plan Proposed On">Pending Preliminary Lab Investigation Submitted On</label>
                                     <input type="hidden"
                                         name="ppli_submited_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                     <div class="static">{{ $data->ppli_submited_on }}</div>
@@ -2980,14 +3033,11 @@
             <div id="CCForm4" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label>Finaly Validity Check <span class="text-danger"></span></label>
                                 <select name="finaly_validity_check">
                                     <option>---select---</option>
-
                                     <option value="valid" @if ($data->finaly_validity_check == 'valid') selected @endif>Valid
                                     </option>
                                     <option value="invalid" @if ($data->finaly_validity_check == 'invalid') selected @endif>Invalid
@@ -3043,13 +3093,11 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="closure attachment">Closure Attachment </label>
-                                <div><small class="text-primary">
-                                    </small>
-                                </div>
+
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="supporting_attechment">
-                                        @if ($data->supporting_attechment)
-                                            @foreach (json_decode($data->supporting_attechment) as $file)
+                                    <div class="file-attachment-list" id="doc_closure">
+                                        @if ($data->doc_closure)
+                                            @foreach (json_decode($data->doc_closure) as $file)
                                                 <h6 class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
@@ -3065,8 +3113,8 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="supporting_attechment[]"
-                                            oninput="addMultipleFiles(this, 'supporting_attechment')" multiple>
+                                        <input type="file" id="myfile" name="doc_closure[]"
+                                            oninput="addMultipleFiles(this, 'doc_closure')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -3082,7 +3130,7 @@
                 </div>
                 </di>
                 {{-- </div>
-                    
+
                 <!-- ==============Tab-4 start=============== -->
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -3126,15 +3174,12 @@
                                         </thead>
                                         <tbody>
                                             <td><input disabled type="text" name="serial[]" value="1"></td>
-
                                             <td><input type="text" name="OOTNo[]"></td>
                                             <td><input type="text" name="OOTReportedDate[]"></td>
                                             <td><input type="text" name="DescriptionOfOOT[]"></td>
                                             <td><input type="text" name="previousIntervalDetails[]"></td>
                                             <td><input type="text" name="CAPA[]"></td>
                                             <td><input type="text" name="ClosureDateOfCAPA[]"></td>
-
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -3188,10 +3233,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                            
-
 
 
                         </div>
@@ -3314,10 +3355,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                            
-
 
                         </div>
                         <div class="button-block">
@@ -3463,7 +3500,7 @@
                                 </div>
                             </div>
 
-                        
+
 
                         </div>
                         <div class="button-block">
@@ -3547,7 +3584,7 @@
                                 </div>
                             </div>
 
-                           
+
 
 
                         </div>
@@ -3731,7 +3768,7 @@
                                 </div>
                             </div>
 
-                          
+
 
 
 
@@ -3918,7 +3955,7 @@
                                 </div>
                             </div>
 
-                            
+
 
 
 
@@ -3996,8 +4033,6 @@
                             </div>
 
 
-
-
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="closure attachment">CQ Attachment </label>
@@ -4015,7 +4050,7 @@
                             </div>
 
 
-                       
+
 
                         </div>
                         <div class="button-block">
@@ -4107,15 +4142,11 @@
                                 </div>
                             </div>
 
-
-                            
-
-
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>                       
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -4193,7 +4224,7 @@
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>  
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -4366,15 +4397,11 @@
                                 </div>
                             </div>
 
-
-                          
-
-
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>   
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -4413,7 +4440,7 @@
                             </div>
 
 
-                           
+
 
 
                         </div>
@@ -5011,8 +5038,7 @@
 
     <script>
         $(document).ready(function() {
-            let indexDetail =
-                {{ $grid_product_mat && is_array($grid_product_mat->data) ? count($grid_product_mat->data) : 0 }};
+            let indexDetail = {{ $grid_product_mat && is_array($grid_product_mat->data) ? count($grid_product_mat->data) : 0 }};
             $('#addproduct').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
@@ -5021,11 +5047,31 @@
                         '"></td>' +
                         '<td><input type="text" name="product_materiel[' + indexDetail + '][item_product_code]"></td>' +
                         '<td><input type="text" name="product_materiel[' + indexDetail + '][lot_batch_no]"></td>' +
-                        ' <td><input type="text" name="product_materiel[' + indexDetail +'][a_r_number]"></td>' +
-                        '<td><input type="date" name="product_materiel[' + indexDetail + '][m_f_g_date]"></td>' +
-                        '<td><input type="date" name="product_materiel[' + indexDetail + '][expiry_date]"></td>' +
-                        '<td><input type="text" name="product_materiel[' + indexDetail + '][lable_claim]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td><input type="text" name="product_materiel[' + indexDetail +'][a_r_number]"></td>' +
+                        // '<td><input type="month" name="product_materiel[' + indexDetail + '][m_f_g_date]"></td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="m_f_g_date' + indexDetail + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="product_materiel[' + indexDetail + '][m_f_g_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'m_f_g_date' + indexDetail + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="expiry_date' + indexDetail + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="product_materiel[' + indexDetail + '][expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'expiry_date' + indexDetail + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        // '<td><input type="month" name="product_materiel[' + indexDetail + '][expiry_date]"></td>' +
+                        '<td><input type="text" name="product_materiel[' + indexDetail + '][label_claim]"></td>' +
+                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     '</tr>';
                     indexDetail++;
@@ -5041,6 +5087,36 @@
         });
     </script>
 
+<script>
+    $(document).ready(function() {
+        let indexDetail =  {{ $productDetail && is_array($productDetail->data) ? count($productDetail->data) : 0 }};
+        $('#productAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                    '<td><input type="text" name="product_detail[' + indexDetail + '][product_name]"></td>' +
+                    '<td><input type="text" name="product_detail[' + indexDetail + '][ar_num]"></td>' +
+                     ' <td><input type="month" name="product_detail[' + indexDetail +'][sample_on]"></td>' +
+                    // '<td> <div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_'+ indexDetail +'sample_on" type="text" name="product_detail[' + indexDetail + '][sample_on]" placeholder="DD-MMM-YYYY" /> <input type="date" name="product_detail[' + indexDetail + '][sample_on]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'sample_on" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'sample_on\')" /> </div> </div></div></td>' +
+                    '<td><input type="text" name="product_detail['+ indexDetail +'][sample_by]"></td>' +
+                    // '<td> <div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_'+ indexDetail +'analyzed_on" type="text" name="product_detail[' + indexDetail + '][analyzed_on]" placeholder="DD-MMM-YYYY" /> <input type="date" name="product_detail[' + indexDetail + '][analyzed_on]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'analyzed_on" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'analyzed_on\')" /> </div> </div></div></td>' +
+                     '<td><input type="month" name="product_detail[' + indexDetail + '][analyzed_on]"></td>' +
+                    // '<td> <div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_'+ indexDetail +'observation_on" type="text" name="product_detail[' + indexDetail + '][observation_on]" placeholder="DD-MMM-YYYY" /> <input type="date" name="product_detail[' + indexDetail + '][observation_on]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'observation_on" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'observation_on\')" /> </div> </div></div></td>' +
+                     '<td><input type="month" name="product_detail[' + indexDetail + '][observation_on]"></td>' +
+                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +  '</tr>';
+                '</tr>';
+                indexDetail++;
+                return html;
+            }
+            var tableBody = $('#product_details tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+    });
+</script>
+
 
     <script>
         $(document).ready(function() {
@@ -5052,17 +5128,12 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][a_r_number]"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][tempreture]"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][interval]"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][oriention]"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][pack_details]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][a_r_number]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][temprature]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][interval]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][orientation]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][pack_details]"></td>' +
+                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
 
                         '</tr>';
                     '</tr>';
@@ -5096,7 +5167,7 @@
                         '<td><input type="text" name="oot_result[' + ootIndex +
                         '][difference_of_result]"></td>' +
                         '<td><input type="text" name="oot_result[' + ootIndex + '][trend_limit]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
 
                         '</tr>';
                     '</tr>';
@@ -5123,17 +5194,15 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][batch_no]"></td>' +
-                        '<td><input type="date" name="info_product[' + infoProduct + '][mfg_date]"></td>' +
-                        '<td><input type="date" name="info_product[' + infoProduct + '][exp_date]"></td>' +
+                        '<td><input type="month" name="info_product[' + infoProduct + '][mfg_date]"></td>' +
+                        '<td><input type="month" name="info_product[' + infoProduct + '][exp_date]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][ar_number]"></td>' +
-                        '<td><input type="text" name="info_product[' + infoProduct +
-                        '][pack_style]"></td>' +
+                        '<td><input type="text" name="info_product[' + infoProduct + '][pack_style]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][frequency]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][condition]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     '</tr>';
-
                     infoProduct++;
                     return html;
                 }
@@ -5209,8 +5278,6 @@
         $(document).ready(function() {
             $('#impactedAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
-
-
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
@@ -5221,7 +5288,6 @@
                         '<td><input type="text" name="ActionTakenOnAffectedBatch[]"></td>' +
                         '</tr>';
                     '</tr>';
-
                     return html;
                 }
 
@@ -5240,17 +5306,13 @@
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                        '<td style=""><input style="margin-left: 25px;" disabled type="text" name="serial[]" value="' +
-                        serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="data[' + checkList + '][questions]"></td>' +
-                        '<td><select name="data[' + checkList +
-                        '][response]" id="" style="margin-top: 10px;margin-left: 28px; padding: 3px; width: 81%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;"> <option value="">Select an Option</option> <option value="yes">Yes</option> <option value="no">No</option><option value="n/a">N/A</option></select></td>' +
-                        ' <td> <textarea name="data[' + checkList +
-                        '][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td style=""><input style="margin-left: 25px;" disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
+                        '<td><input type="text" name="data[' + checkList + '][questions]"></td>'+
+                        '<td><select name="data[' + checkList +'][response]" id="" style="margin-top: 10px;margin-left: 28px; padding: 3px; width: 81%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;"> <option value="">Select an Option</option> <option value="yes">Yes</option> <option value="no">No</option><option value="n/a">N/A</option></select></td>'+
+                        '<td> <textarea name="data[' + checkList +'][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea></td>'+
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>'+
                         '</tr>';
-                    '</tr>';
+
                     checkList++;
                     return html;
                 }
