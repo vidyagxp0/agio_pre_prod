@@ -1688,6 +1688,7 @@ $(document).ready(function() {
         }
     }
 </script>
+
 <script>
     VirtualSelect.init({
         ele: '#reference_record, #notify_to'

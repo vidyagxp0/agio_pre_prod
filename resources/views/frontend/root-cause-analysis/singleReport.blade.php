@@ -8,7 +8,6 @@
     <title>Vidyagxp - Software</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
-
 <style>
     body {
         font-family: 'Roboto', sans-serif;
@@ -153,7 +152,17 @@
     .table_bg {
         background: #4274da57;
     }
+
+    /* Ensure table_bg is only applied to th elements */
+    .table_bg th {
+        background: #4274da57;
+    }
+
+    .table_bg td {
+        background: none;
+    }
 </style>
+
 
 <body>
 
@@ -304,389 +313,212 @@
 
 
 
-            <div class="block-head">
+            <div class="border-table" style="margin-bottom: 15px;">
+                <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
                     Root Cause
                 </div>
                 <table>
-                    <tr>
-                        <th class="w-20">Root Cause Category</th>
-                        <td class="w-80">
-
-                         @php
-                                $measurement1 = unserialize($data->Root_Cause_Category);
-                            @endphp
-                            @if(is_array($measurement1))
-                                @foreach($measurement1 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Root Cause Sub-Category</th>
-
-
-                        <td class="w-80">
-                        
-                         @php
-                                $measurement2 = unserialize($data->Root_Cause_Sub_Category);
-                            @endphp
-                            @if(is_array($measurement2))
-                                @foreach($measurement2 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        
-                      </tr>
-                    <tr>
-                        <th class="w-20">Probability</th>
-                        <td class="w-80">
-                         @php
-                                $measurement3 = unserialize($data->Probability);
-                            @endphp
-                            @if(is_array($measurement3))
-                                @foreach($measurement3 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        
-                         </tr>
-
-                      <tr>
-                        <th class="w-20">Remarks</th>
-
-                        <td class="w-80">
-                         @php
-                                $measurement4 = unserialize($data->Remarks);
-                            @endphp
-                            @if(is_array($measurement4))
-                                @foreach($measurement4 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        
-                       </tr>
+                    <thead>
+                        <tr class="table_bg">
+                            <th class="w-20">Row #</th>
+                            <th class="w-20">Root Cause Category</th>
+                            <th class="w-20">Root Cause Sub-Category</th>
+                            <th class="w-20">Probability</th>
+                            <th class="w-20">Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php $row_number = 1; @endphp
+                        @for ($i = 0; $i < count(unserialize($data->Root_Cause_Category)); $i++)
+                            <tr>
+                                <td class="w-20">{{ $row_number++ }}</td>
+                                <td class="w-20">
+                                    @php
+                                        $measurement1 = unserialize($data->Root_Cause_Category);
+                                    @endphp
+                                    @if(is_array($measurement1))
+                                        {{ htmlspecialchars($measurement1[$i] ?? 'Not Applicable') }}
+                                    @elseif(is_string($measurement1))
+                                        {{ htmlspecialchars($measurement1) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                                <td class="w-20">
+                                    @php
+                                        $measurement2 = unserialize($data->Root_Cause_Sub_Category);
+                                    @endphp
+                                    @if(is_array($measurement2))
+                                        {{ htmlspecialchars($measurement2[$i] ?? 'Not Applicable') }}
+                                    @elseif(is_string($measurement2))
+                                        {{ htmlspecialchars($measurement2) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                                <td class="w-20">
+                                    @php
+                                        $measurement3 = unserialize($data->Probability);
+                                    @endphp
+                                    @if(is_array($measurement3))
+                                        {{ htmlspecialchars($measurement3[$i] ?? 'Not Applicable') }}
+                                    @elseif(is_string($measurement3))
+                                        {{ htmlspecialchars($measurement3) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                                <td class="w-20">
+                                    @php
+                                        $measurement4 = unserialize($data->Remarks);
+                                    @endphp
+                                    @if(is_array($measurement4))
+                                        {{ htmlspecialchars($measurement4[$i] ?? 'Not Applicable') }}
+                                    @elseif(is_string($measurement4))
+                                        {{ htmlspecialchars($measurement4) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+                        @endfor
+                    </tbody>
                 </table>
+            </div>
 
 
-            <div class="block-head">
-                    Failure Mode and Effect Analysis
-                </div>
-                <table>
-                    <tr>
-                        <th class="w-20">Risk Factor</th>
-                        <td class="w-80">
-
-                         @php
-                                $measurement_1 = unserialize($data->risk_factor);
-                            @endphp
-                            @if(is_array($measurement_1))
-                                @foreach($measurement_1 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
 
 
-                        <th class="w-20">Risk element</th>
-                        <td class="w-80">
+<div class="border-table" style="margin-bottom: 15px;">
+    <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
+        Failure Mode and Effect Analysis
+    </div>
 
-                         @php
-                                $measurement_2 = unserialize($data->risk_element);
-                            @endphp
-                            @if(is_array($measurement_2))
-                                @foreach($measurement_2 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+    <table>
+        <thead>
+            <tr class="table_bg">
+                <th class="w-10">Row #</th>
+                <th class="w-15">Risk Factor</th>
+                <th class="w-15">Risk Element</th>
+                <th class="w-20">Probable Cause of Risk Element</th>
+                <th class="w-20">Existing Risk Controls</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php 
+                $measurement_1 = unserialize($data->risk_factor);
+                $measurement_2 = unserialize($data->risk_element);
+                $measurement_3 = unserialize($data->problem_cause);
+                $measurement_4 = unserialize($data->existing_risk_control);
+                $row_number = 1;
+            @endphp
 
-                     <tr>
-                        <th class="w-20">Probable cause of risk element</th>
-                        <td class="w-80">
+            @for ($i = 0; $i < count($measurement_1); $i++)
+                <tr>
+                    <td class="w-10">{{ $row_number++ }}</td>
+                    <td class="w-15">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
+                    <td class="w-15">{{ htmlspecialchars($measurement_2[$i] ?? 'Not Applicable') }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
+                </tr>
+            @endfor
+        </tbody>
+    </table>
 
-                         @php
-                                $measurement_3 = unserialize($data->problem_cause);
-                            @endphp
-                            @if(is_array($measurement_3))
-                                @foreach($measurement_3 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+    <table>
+        <thead>
+            <tr class="table_bg">
+                <th class="w-10">Row #</th>
+                <th class="w-20">Initial Severity- H(3)/M(2)/L(1)</th>
+                <th class="w-20">Initial Probability- H(3)/M(2)/L(1)</th>
+                <th class="w-20">Initial Detectability- H(1)/M(2)/L(3)</th>
+                <th class="w-20">Initial RPN</th>
+                <th class="w-20">Risk Acceptance (Y/N)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php 
+                $measurement_5 = unserialize($data->initial_severity);
+                $measurement_6 = unserialize($data->initial_probability);
+                $measurement_7 = unserialize($data->initial_detectability);
+                $measurement_8 = unserialize($data->initial_rpn);
+                $measurement_9 = unserialize($data->risk_acceptance);
+                $row_number = 1; // Reset row number
+            @endphp
 
+            @for ($i = 0; $i < count($measurement_5); $i++)
+                <tr>
+                    <td class="w-10">{{ $row_number++ }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_5[$i] ?? 'Not Applicable') }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_6[$i] ?? 'Not Applicable') }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_7[$i] ?? 'Not Applicable') }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_8[$i] ?? 'Not Applicable') }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_9[$i] ?? 'Not Applicable') }}</td>
+                </tr>
+            @endfor
+        </tbody>
+    </table>
 
-                        <th class="w-20">Existing Risk Controls</th>
-                        <td class="w-80">
+    <table>
+        <thead>
+            <tr class="table_bg">
+                <th class="w-10">Row #</th>
+                <th class="w-20">Proposed Additional Risk Control Measure</th>
+                <th class="w-20">Residual Severity- H(3)/M(2)/L(1)</th>
+                <th class="w-20">Residual Probability- H(3)/M(2)/L(1)</th>
+                <th class="w-20">Residual Detectability- H(1)/M(2)/L(3)</th>
+                <th class="w-20">Residual RPN</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php 
+                $measurement_10 = unserialize($data->risk_control_measure);
+                $measurement_11 = unserialize($data->residual_severity);
+                $measurement_12 = unserialize($data->residual_probability);
+                $measurement_13 = unserialize($data->residual_detectability);
+                $measurement_14 = unserialize($data->residual_rpn);
+                $row_number = 1; // Reset row number
+            @endphp
 
-                         @php
-                                $measurement_4 = unserialize($data->existing_risk_control);
-                            @endphp
-                            @if(is_array($measurement_4))
-                                @foreach($measurement_4 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+            @for ($i = 0; $i < count($measurement_10); $i++)
+                <tr>
+                    <td class="w-10">{{ $row_number++ }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_10[$i] ?? 'Not Applicable') }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_11[$i] ?? 'Not Applicable') }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_12[$i] ?? 'Not Applicable') }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_13[$i] ?? 'Not Applicable') }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_14[$i] ?? 'Not Applicable') }}</td>
+                </tr>
+            @endfor
+        </tbody>
+    </table>
 
-                     <tr>
-                        <th class="w-20">Initial Severity- H(3)/M(2)/L(1)</th>
-                        <td class="w-80">
+    <table>
+        <thead>
+            <tr class="table_bg">
+                <th class="w-10">Row #</th>
+                <th class="w-20">Risk Acceptance Second (Y/N)</th>
+                <th class="w-20">Mitigation Proposal (Mention Either CAPA Reference Number, IQ, OQ or PQ)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php 
+                $measurement_15 = unserialize($data->risk_acceptance2);
+                $measurement_16 = unserialize($data->mitigation_proposal);
+                $row_number = 1; // Reset row number
+            @endphp
 
-                         @php
-                                $measurement_5 = unserialize($data->initial_severity);
-                            @endphp
-                            @if(is_array($measurement_5))
-                                @foreach($measurement_5 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+            @for ($i = 0; $i < count($measurement_15); $i++)
+                <tr>
+                    <td class="w-10">{{ $row_number++ }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_15[$i] ?? 'Not Applicable') }}</td>
+                    <td class="w-20">{{ htmlspecialchars($measurement_16[$i] ?? 'Not Applicable') }}</td>
+                </tr>
+            @endfor
+        </tbody>
+    </table>
+</div>
 
-
-                        <th class="w-20">Initial Probability- H(3)/M(2)/L(1)</th>
-                        <td class="w-80">
-
-                         @php
-                                $measurement_6 = unserialize($data->initial_detectability);
-                            @endphp
-                            @if(is_array($measurement_6))
-                                @foreach($measurement_6 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Initial Detectability- H(1)/M(2)/L(3)</th>
-
-
-                        <td class="w-80">
-                        
-                         @php
-                                $measurement_7 = unserialize($data->initial_probability);
-                            @endphp
-                            @if(is_array($measurement_7))
-                                @foreach($measurement_7 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        
-
-                        <th class="w-20">Initial RPN</th>
-                        <td class="w-80">
-
-                         @php
-                                $measurement_8 = unserialize($data->initial_rpn);
-                            @endphp
-                            @if(is_array($measurement_8))
-                                @foreach($measurement_8 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                      </tr>
-                    <tr>
-                        <th class="w-20">Risk Acceptance (Y/N)</th>
-                        <td class="w-80">
-                         @php
-                                $measurement_9 = unserialize($data->risk_acceptance);
-                            @endphp
-                            @if(is_array($measurement_9))
-                                @foreach($measurement_9 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Proposed Additional Risk control measure (Mandatory for Risk elements having RPN>4)</th>
-                        <td class="w-80">
-
-                         @php
-                                $measurement_9 = unserialize($data->risk_control_measure);
-                            @endphp
-                            @if(is_array($measurement_9))
-                                @foreach($measurement_9 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        
-                         </tr>
-
-                      <tr>
-                        <th class="w-20">Residual Severity- H(3)/M(2)/L(1)</th>
-
-                        <td class="w-80">
-                         @php
-                                $measurement_10 = unserialize($data->residual_severity);
-                            @endphp
-                            @if(is_array($measurement_10))
-                                @foreach($measurement_10 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Residual Probability- H(3)/M(2)/L(1)</th>
-                        <td class="w-80">
-
-                         @php
-                                $measurement_11 = unserialize($data->residual_probability);
-                            @endphp
-                            @if(is_array($measurement_11))
-                                @foreach($measurement_11 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                       </tr>
-
-                          <tr>
-                        <th class="w-20">Residual Detectability- H(1)/M(2)/L(3)</th>
-
-                        <td class="w-80">
-                         @php
-                                $measurement_12 = unserialize($data->residual_detectability);
-                            @endphp
-                            @if(is_array($measurement_12))
-                                @foreach($measurement_12 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-
-                           <th class="w-20">Residual RPN</th>
-
-                        <td class="w-80">
-                         @php
-                                $measurementrpn = unserialize($data->residual_rpn);
-                            @endphp
-                            @if(is_array($measurementrpn))
-                                @foreach($measurementrpn as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                         
-                    
-                    
-                       </tr>
-                       <tr>
-                       
-                            <th class="w-20">Risk Acceptance Second (Y/N)</th>
-
-                        <td class="w-80">
-                         @php
-                                $measurement_13 = unserialize($data->risk_acceptance2);
-                            @endphp
-                            @if(is_array($measurement_13))
-                                @foreach($measurement_13 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                           <th class="w-20">Mitigation proposal (Mention either CAPA reference number, IQ, OQ or PQ)</th>
-
-                        <td class="w-80">
-                         @php
-                                $measurement_15 = unserialize($data->mitigation_proposal);
-                            @endphp
-                            @if(is_array($measurement_15))
-                                @foreach($measurement_15 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                       </tr>
-                </table>
 
                 <div class="block-head">
                     Fishbone or Ishikawa Diagram

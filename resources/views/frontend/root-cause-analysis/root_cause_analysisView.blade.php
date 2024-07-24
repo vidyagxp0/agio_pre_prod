@@ -819,14 +819,13 @@
                                                 Failure Mode and Effect Analysis<button type="button" name="agenda"
                                                     onclick="addRootCauseAnalysisRiskAssessment1('risk-assessment-risk-management')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                             </label>
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered" style="width: 200%"
-                                                    id="risk-assessment-risk-management">
+                                           <div class="table-responsive">
+                                                <table class="table table-bordered" style="width: 200%" id="risk-assessment-risk-management">
                                                     <thead>
                                                         <tr>
                                                             <th>Row #</th>
                                                             <th>Risk Factor</th>
-                                                            <th>Risk element </th>
+                                                            <th>Risk element</th>
                                                             <th>Probable cause of risk element</th>
                                                             <th>Existing Risk Controls</th>
                                                             <th>Initial Severity- H(3)/M(2)/L(1)</th>
@@ -834,27 +833,19 @@
                                                             <th>Initial Detectability- H(1)/M(2)/L(3)</th>
                                                             <th>Initial RPN</th>
                                                             <th>Risk Acceptance (Y/N)</th>
-                                                            <th>Proposed Additional Risk control measure (Mandatory for
-                                                                Risk
-                                                                elements having RPN>4)</th>
+                                                            <th>Proposed Additional Risk control measure (Mandatory for Risk elements having RPN>4)</th>
                                                             <th>Residual Severity- H(3)/M(2)/L(1)</th>
                                                             <th>Residual Probability- H(3)/M(2)/L(1)</th>
                                                             <th>Residual Detectability- H(1)/M(2)/L(3)</th>
                                                             <th>Residual RPN</th>
                                                             <th>Risk Acceptance (Y/N)</th>
-                                                            <th>Mitigation proposal (Mention either CAPA reference
-                                                                number, IQ,
-                                                                OQ or
-                                                                PQ)
-                                                            </th>
+                                                            <th>Mitigation proposal (Mention either CAPA reference number, IQ, OQ or PQ)</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @if (!empty($data->risk_factor))
                                                             @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
-                                                                 {{--  @dd($key, $riskFactor)  --}}
-                                                           
                                                                 <tr>
                                                                     <td>{{ $key + 1 }}</td>
                                                                     <td><input name="risk_factor[]" type="text" value="{{ $riskFactor }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></td>
@@ -870,15 +861,7 @@
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                        <select onchange="calculateInitialResult(this)" class="fieldP" name="initial_detectability[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="1" {{ (unserialize($data->initial_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>1</option>
-                                                                            <option value="2" {{ (unserialize($data->initial_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>2</option>
-                                                                            <option value="3" {{ (unserialize($data->initial_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>3</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <select onchange="calculateInitialResult(this)" class="fieldN" name="initial_probability[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                        <select onchange="calculateInitialResult(this)" class="fieldP" name="initial_probability[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1" {{ (unserialize($data->initial_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>1</option>
                                                                             <option value="2" {{ (unserialize($data->initial_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>2</option>
@@ -886,7 +869,15 @@
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                        <input name="initial_rpn[]" class='initial-rpn' disabled="text" value="{{ unserialize($data->initial_rpn)[$key] ?? null }}">
+                                                                        <select onchange="calculateInitialResult(this)" class="fieldN" name="initial_detectability[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="1" {{ (unserialize($data->initial_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>1</option>
+                                                                            <option value="2" {{ (unserialize($data->initial_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>2</option>
+                                                                            <option value="3" {{ (unserialize($data->initial_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>3</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input name="initial_rpn[]" class='initial-rpn' type="text" value="{{ unserialize($data->initial_rpn)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
@@ -923,7 +914,7 @@
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                        <input name="residual_rpn[]" class='residual-rpn' disabled="text" value="{{ unserialize($data->residual_rpn)[$key] ?? null }}">
+                                                                        <input name="residual_rpn[]" class='residual-rpn' type="text" value="{{ unserialize($data->residual_rpn)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
@@ -937,7 +928,6 @@
                                                                     </td>
                                                                     <td><button type="text" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Remove</button></td>
                                                                 </tr>
-
                                                             @endforeach
                                                         @endif
                                                     </tbody>

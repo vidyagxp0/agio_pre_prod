@@ -1645,7 +1645,7 @@ use Illuminate\Support\Facades\Hash;
         }
 
 
-
+      //dd($root);
         $root->update(); 
 
         
@@ -2636,6 +2636,8 @@ use Illuminate\Support\Facades\Hash;
     public function root_show($id)
     {
         $data = RootCauseAnalysis::find($id);
+
+      //  dd($data);
         if(empty($data)) {
             toastr()->error('Invalid ID.');
             return back();

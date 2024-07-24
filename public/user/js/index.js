@@ -477,7 +477,7 @@ function addRiskAssessmentdata(tableId) {
         "</select>";
 
     var cell9 = newRow.insertCell(7);
-    cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn'>";
+    cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
 
     var cell11 = newRow.insertCell(8);
     cell11.innerHTML = "<input name='risk_control_measure[]' type='text'>";
@@ -545,7 +545,6 @@ function addRiskAssessmentdata(tableId) {
 
     initializeRiskAcceptance();
 }
-
 function calculateResidualResult(element) {
     var row = element.closest('tr');
     var severity = parseInt(row.querySelector('.residual-fieldR').value) || 0;
@@ -562,20 +561,20 @@ function calculateResidualResult(element) {
 
 function updateRiskAcceptance(row) {
     var rpnValue = parseInt(row.querySelector('.residual-rpn').value, 10);
-    var selectElement = row.querySelector('.risk-acceptance');
+    var riskAcceptanceField = row.querySelector('.risk-acceptance');
 
     if (!isNaN(rpnValue)) {
         if (rpnValue >= 1 && rpnValue <= 24) {
-            selectElement.value = 'Low';
+            riskAcceptanceField.value = 'Low';
         } else if (rpnValue >= 25 && rpnValue <= 74) {
-            selectElement.value = 'Medium';
+            riskAcceptanceField.value = 'Medium';
         } else if (rpnValue >= 75 && rpnValue <= 125) {
-            selectElement.value = 'High';
+            riskAcceptanceField.value = 'High';
         } else {
-            selectElement.value = '';
+            riskAcceptanceField.value = '';
         }
     } else {
-        selectElement.value = '';
+        riskAcceptanceField.value = '';
     }
 }
 
@@ -587,6 +586,12 @@ function initializeRiskAcceptance() {
         updateRiskAcceptance(row);
     });
 }
+
+// Call initializeRiskAcceptance when the document is ready
+document.addEventListener('DOMContentLoaded', function() {
+    initializeRiskAcceptance();
+});
+
 
 
 

@@ -102,7 +102,7 @@
                 row.querySelector('.residual-rpn').value = result;
             }
         </script>  --}}
-        <script>
+        {{--  <script>
             function calculateRiskAnalysis(selectElement) {
                 // Get the row containing the changed select element
                 let row = selectElement.closest('tr');
@@ -118,7 +118,38 @@
                 // Update the result field within the row
                 document.getElementById('analysisRPN').value = result;
             }
-        </script>
+        </script>  --}}
+
+
+
+<script>
+    function calculateRiskAnalysis(selectElement) {
+        // Get values from select elements
+        let R = parseFloat(document.getElementById('analysisR').value) || 0;
+        let P = parseFloat(document.getElementById('analysisP').value) || 0;
+        let N = parseFloat(document.getElementById('analysisN').value) || 0;
+
+        // Perform the calculation
+        let result = R * P * N;
+
+        // Update the RPN field
+        document.getElementById('analysisRPN').value = result;
+
+        // Determine the risk level
+        let riskLevelInput = document.getElementById('riskLevel');
+        if (result >= 1 && result <= 24) {
+            riskLevelInput.value = 'Low';
+        } else if (result >= 25 && result <= 74) {
+            riskLevelInput.value = 'Medium';
+        } else if (result >= 75 && result <= 125) {
+            riskLevelInput.value = 'High';
+        } else {
+            riskLevelInput.value = ''; // Default value if no condition is met
+        }
+    }
+</script>
+
+
         <script>
             function calculateRiskAnalysis2(selectElement) {
                 // Get the row containing the changed select element
@@ -132,8 +163,20 @@
                 // Perform the calculation
                 let result = R * P * N;
 
-                // Update the result field within the row
-                document.getElementById('analysisRPN2').value = result;
+               
+                  document.getElementById('analysisRPN2').value = result;
+
+                    // Determine the risk level
+                    let riskLevelInput = document.getElementById('riskLevel_2');
+                    if (result >= 1 && result <= 24) {
+                        riskLevelInput.value = 'Low';
+                    } else if (result >= 25 && result <= 74) {
+                        riskLevelInput.value = 'Medium';
+                    } else if (result >= 75 && result <= 125) {
+                        riskLevelInput.value = 'High';
+                    } else {
+                        riskLevelInput.value = ''; // Default value if no condition is met
+                    }
             }
         </script>
         <style>
@@ -321,24 +364,8 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Department(s)">Department(s)</label>
-                                            {{--  <select name="departments[]" placeholder="Select Departments" data-search="false"
-                                                data-silent-initial-value-set="true" id="departments" multiple>
-                                                <option value="">Select Department</option>
-                                                <option value="1">QA</option>
-                                                <option value="2">QC</option>
-                                                <option value="3">R&D</option>
-                                                <option value="4">Wet Chemistry Area</option>
-                                                <option value="5">Warehouse</option>
-                                                <option value="6"> Molecular Area</option>
-                                                <option value="7"> Microbiology Area</option>
-                                                <option value="8"> Instrumental Area</option>
-                                                <option value="9"> Administration</option>
-                                                <option value="10"> Financial Department</option>
-                                            </select>  --}}
-
-
-                                            <select name="departments[]" placeholder="Select Departments" data-search="false"
-                                                    data-silent-initial-value-set="true" id="departments" multiple>
+                                           <select name="departments[]" placeholder="Select Departments" data-search="false"
+                                                    data-silent-initial-value-set="true" id="departments_2" multiple>
                                                 <option value="">Select Department</option>
                                                 <option value="QA">QA</option>
                                                 <option value="QC">QC</option>
@@ -463,6 +490,54 @@
                                             <textarea name=" Opportunity_description" id="Opportunitydescription"></textarea>
                                         </div>
                                     </div> --}}
+
+
+                                    <div class="col-md-12 mb-3">
+                                            <div class="group-input">
+                                                <label for="Impact Assessment">Purpose</label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                <textarea class="summernote" name="purpose" id="summernote-1">
+                                                    </textarea>
+                                            </div>
+                                    </div>
+
+                                     <div class="col-md-12 mb-3">
+                                            <div class="group-input">
+                                                <label for="Impact Assessment">Scope</label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                <textarea class="summernote" name="scope" id="summernote-1">
+                                                    </textarea>
+                                            </div>
+                                    </div>
+
+
+                                     <div class="col-md-12 mb-3">
+                                            <div class="group-input">
+                                                <label for="Impact Assessment">Reason for Revision</label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                <textarea class="summernote" name="reason_for_revision" id="summernote-1">
+                                                    </textarea>
+                                            </div>
+                                    </div>
+
+
+                                     <div class="col-md-12 mb-3">
+                                            <div class="group-input">
+                                                <label for="Impact Assessment">Brief Description / Procedure </label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                <textarea class="summernote" name="Brief_description" id="summernote-1">
+                                                    </textarea>
+                                            </div>
+                                    </div>
+
+                                     <div class="col-md-12 mb-3">
+                                            <div class="group-input">
+                                                <label for="Impact Assessment">Documents Used for Risk Management</label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                <textarea class="summernote" name="document_used_risk" id="summernote-1">
+                                                    </textarea>
+                                            </div>
+                                    </div>
                                    
                                     <div class="col-12">
                                         <div class="group-input">
@@ -480,7 +555,7 @@
                                                 <div class="file-attachment-list" id="capa_attachment"></div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input type="file" id="myfile" name="capa_attachment[]"
+                                                    <input type="file" id="myfile" name="risk_attachment[]"
                                                         oninput="addMultipleFiles(this, 'capa_attachment')" multiple>
                                                 </div>
                                             </div>
@@ -504,21 +579,6 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Department(s)">Department(s)</label>
-                                            {{--  <select multiple name="departments2[]" placeholder="Select Departments"
-                                                data-search="false" data-silent-initial-value-set="true" id="departments">
-                                                <option value="">Select Department</option>
-                                                <option value="1">QA</option>
-                                                <option value="2">QC</option>
-                                                <option value="3">R&D</option>
-                                                <option value="4">Wet Chemistry Area</option>
-                                                <option value="5">Warehouse</option>
-                                                <option value="6"> Molecular Area</option>
-                                                <option value="7"> Microbiology Area</option>
-                                                <option value="8"> Instrumental Area</option>
-                                                <option value="9"> Administration</option>
-                                                <option value="10"> Financial Department</option>
-                                            </select>  --}}
-
                                           <select multiple name="departments2[]" placeholder="Select Departments"
                                                 data-search="false" data-silent-initial-value-set="true" id="departments">
                                                 <option value="">Select Department</option>
@@ -950,22 +1010,22 @@
                                     RCA Results
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="root-cause-methodology">Root Cause Methodology</label>
-                                            <select name="root_cause_methodology[]" multiple placeholder="-- Select --"
-                                                data-search="false" data-silent-initial-value-set="true"
-                                                id="root-cause-methodology">
-                                                <option value="">-- Select --</option>
-                                                <option value="1">Why-Why Chart</option>
-                                                <option value="2">Failure Mode and Efect Analysis</option>
-                                                <option value="3">Fishbone or Ishikawa Diagram</option>
-                                                <option value="4">Is/Is Not Analysis</option>
-                                            </select>
-                                        </div>
+
+
+                                 <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="root-cause-methodology">Root Cause Methodology</label>
+                                        <select name="root_cause_methodology[]" multiple data-search="false" data-silent-initial-value-set="true" id="root-cause-methodology">
+                                            <option value="Why-Why Chart">Why-Why Chart</option>
+                                            <option value="Failure Mode and Effect Analysis">Failure Mode and Effect Analysis</option>
+                                            <option value="Fishbone or Ishikawa Diagram">Fishbone or Ishikawa Diagram</option>
+                                            <option value="Is/Is Not Analysis">Is/Is Not Analysis</option>
+                                        </select>
                                     </div>
-                                    <div class="col-12 sub-head"></div>
-                                     <div class="col-12 mb-4">
+                                </div>
+                                   
+                                
+                                     <div class="col-12 mb-4 "id="fmea-section" style="display:none;">
                                         <div class="group-input">
                                             <label for="agenda">
                                                 Failure Mode and Effect Analysis<button type="button" name="agenda"
@@ -992,7 +1052,7 @@
                                                             <th>Severity (S)</th>
                                                             <th>Probability (P)</th>
                                                             <th>Detection (D)</th>
-                                                            <th>Risk Level (RPN)</th>
+                                                            <th>RPN</th>
 
                                                             <th>Category of Risk Level (Low, Medium and High)</th> 
                                                             <th>Risk Acceptance (Y/N)</th>
@@ -1008,8 +1068,8 @@
                                     </div>
 
 
-                                    <div class="col-12 sub-head"></div>
-                                    <div class="col-12">
+                              
+                                    <div class="col-12" id="fishbone-section" style="display:none;">
                                         <div class="group-input">
                                             <label for="fishbone">
                                                 Fishbone or Ishikawa Diagram
@@ -1064,8 +1124,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 sub-head"></div>
-                                    <div class="col-12">
+                                    
+                                    <div class="col-12" id="why-why-chart-section" style="display:none;">
                                         <div class="group-input">
                                             <label for="why-why-chart">
                                                 Why-Why Chart
@@ -1150,8 +1210,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 sub-head"></div>
-                                    <div class="col-12">
+                                   
+                                    <div class="col-12" id="is-is-not-section" style="display:none;">
                                         <div class="group-input">
                                             <label for="why-why-chart">
                                                 Is/Is Not Analysis
@@ -1256,52 +1316,61 @@
                                 </div>
                                 <div class="row">
                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Severity Rate">Severity Rate</label>
-                                            <select name="severity_rate" id="analysisR"
-                                                onchange='calculateRiskAnalysis(this)'>
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="1">Negligible</option>
-                                                <option value="2">Moderate</option>
-                                                <option value="3">Major</option>
-                                                <option value="4">Fatal</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Occurrence">Occurrence</label>
-                                            <select name="occurrence" id="analysisP" onchange='calculateRiskAnalysis(this)'>
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="5">Extremely Unlikely</option>
-                                                <option value="4">Rare</option>
-                                                <option value="3">Unlikely</option>
-                                                <option value="2">Likely</option>
-                                                <option value="1">Very Likely</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Detection">Detection</label>
-                                            <select name="detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="5">Impossible</option>
-                                                <option value="4">Rare</option>
-                                                <option value="3">Unlikely</option>
-                                                <option value="2">Likely</option>
-                                                <option value="1">Very Likely</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="RPN">RPN</label>
-                                            <div><small class="text-primary">Auto - Calculated</small></div>
-                                            <input type="text" name="rpn" id="analysisRPN" value="" readonly>
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="group-input">
+        <label for="Severity Rate">Severity Rate</label>
+        <select name="severity_rate" class="severity_rate" id="analysisR" onchange='calculateRiskAnalysis(this)'>
+            <option value="">Enter Your Selection Here</option>
+            <option value='1'>1-Insignificant</option>
+            <option value='2'>2-Minor</option>
+            <option value='3'>3-Major</option>
+            <option value='4'>4-Critical</option>
+            <option value='5'>5-Catastrophic</option>
+        </select>
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="Occurrence">Occurrence</label>
+        <select name="occurrence" class="occurrence" id="analysisP" onchange='calculateRiskAnalysis(this)'>
+            <option value="">Enter Your Selection Here</option>
+            <option value='1'>1-Very rare</option>
+            <option value='2'>2-Unlikely</option>
+            <option value='3'>3-Possibly</option>
+            <option value='4'>4-Likely</option>
+            <option value='5'>5-Almost certain (every time)</option>
+        </select>
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="Detection">Detection</label>
+        <select name="detection" class="detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
+            <option value="">Enter Your Selection Here</option>
+            <option value='1'>1-Always detected</option>
+            <option value='2'>2-Likely to detect</option>
+            <option value='3'>3-Possible to detect</option>
+            <option value='4'>4-Unlikely to detect</option>
+            <option value='5'>5-Not detectable</option>
+        </select>
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="RPN">RPN</label>
+        <div><small class="text-primary">Auto - Calculated</small></div>
+        <input type="text" name="rpn" id="analysisRPN" value="" readonly>
+    </div>
+</div>
+
+<div class="col-lg-12">
+    <div class="group-input">
+        <label for="">Risk Level</label>
+        <input type="text" name="risk_level" id="riskLevel" readonly>
+    </div>
+</div>
+
+
+                              </div>
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1326,11 +1395,19 @@
                                             <label for="Residual Risk Impact">Residual Risk Impact</label>
                                             <select name="residual_risk_impact" id="analysisR2"
                                             onchange='calculateRiskAnalysis2(this)'>
-                                                <option value="">Enter Your Selection Here</option>
+                                                {{--  <option value="">Enter Your Selection Here</option>
                                                 <option value="1">High</option>
                                                 <option value="2">Low</option>
                                                 <option value="3">Medium</option>
-                                                <option value="4">None</option>
+                                                <option value="4">None</option>  --}}
+
+
+                                                 <option value="">Enter Your Selection Here</option>
+                                                <option value='1'>1-Insignificant</option>
+                                                <option value='2'>2-Minor</option>
+                                                <option value='3'>3-Major</option>
+                                                <option value='4'>4-Critical</option>
+                                                <option value='5'>5-Catastrophic</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1338,10 +1415,12 @@
                                         <div class="group-input">
                                             <label for="Residual Risk Probability">Residual Risk Probability</label>
                                             <select name="residual_risk_probability" id="analysisP2" onchange='calculateRiskAnalysis2(this)'>
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="1">High</option>
-                                                <option value="2">Medium</option>
-                                                <option value="3">Low</option>
+                                                 <option value="">Enter Your Selection Here</option>
+                                                    <option value='1'>1-Very rare</option>
+                                                    <option value='2'>2-Unlikely</option>
+                                                    <option value='3'>3-Possibly</option>
+                                                    <option value='4'>4-Likely</option>
+                                                    <option value='5'>5-Almost certain (every time)</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1349,12 +1428,12 @@
                                         <div class="group-input">
                                             <label for="Detection">Residual Detection</label>
                                             <select name="detection2" id="analysisN2" onchange='calculateRiskAnalysis2(this)'>
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="5">Impossible</option>
-                                                <option value="4">Rare</option>
-                                                <option value="3">Unlikely</option>
-                                                <option value="2">Likely</option>
-                                                <option value="1">Very Likely</option>
+                                                 <option value="">Enter Your Selection Here</option>
+                                                    <option value='1'>1-Always detected</option>
+                                                    <option value='2'>2-Likely to detect</option>
+                                                    <option value='3'>3-Possible to detect</option>
+                                                    <option value='4'>4-Unlikely to detect</option>
+                                                    <option value='5'>5-Not detectable</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1366,6 +1445,13 @@
                                         </div>
                                     </div>
 
+
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="">Residual Risk Level</label>
+                                                <input type="text" name="risk_level_2" id="riskLevel_2" readonly>
+                                            </div>
+                                        </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
@@ -1784,7 +1870,7 @@
 
         <script>
             VirtualSelect.init({
-                ele: '#departments, #team_members, #training-require, #impacted_objects'
+                ele: '#departments,#departments_2, #team_members, #training-require, #impacted_objects'
             });
         </script>
         <script>
@@ -1924,5 +2010,83 @@
     initializeRemoveButtons();
 </script>
 
+
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#root-cause-methodology').on('change', function() {
+            var selectedValues = $(this).val();
+            $('#why-why-chart-section').hide();
+            $('#fmea-section').hide();
+            $('#fishbone-section').hide();
+            $('#is-is-not-section').hide();
+
+            if (selectedValues.includes('Why-Why Chart')) {
+                $('#why-why-chart-section').show();
+            }
+            if (selectedValues.includes('Failure Mode and Effect Analysis')) {
+                $('#fmea-section').show();
+            }
+            if (selectedValues.includes('Fishbone or Ishikawa Diagram')) {
+                $('#fishbone-section').show();
+            }
+            if (selectedValues.includes('Is/Is Not Analysis')) {
+                $('#is-is-not-section').show();
+            }
+        });
+    });
+</script>
+
+<script>
+    VirtualSelect.init({
+        ele: '#reference_record, #notify_to'
+    });
+
+    $('#summernote').summernote({
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear', 'italic']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+
+    $('.summernote').summernote({
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear', 'italic']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+
+    let referenceCount = 1;
+
+    function addReference() {
+        referenceCount++;
+        let newReference = document.createElement('div');
+        newReference.classList.add('row', 'reference-data-' + referenceCount);
+        newReference.innerHTML = `
+            <div class="col-lg-6">
+                <input type="text" name="reference-text">
+            </div>
+            <div class="col-lg-6">
+                <input type="file" name="references" class="myclassname">
+            </div><div class="col-lg-6">
+                <input type="file" name="references" class="myclassname">
+            </div>
+        `;
+        let referenceContainer = document.querySelector('.reference-data');
+        referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
+    }
+</script>
 
 @endsection
