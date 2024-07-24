@@ -220,26 +220,24 @@
                             <div class="Date">{{ $data->comment_repeat_analysis_completed }}</div>
                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <!-- Request More Info -->
-                        <!-- Full Scale Investigation -->
+                         <!-- Request More Info -->
+                        <!-- Manufacturing Investigation -->
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Audit Attachments">Full Scale Investigation Done by</label>
-                                <div class=" static">{{ $data->completed_by_full_scale_investigation }}</div>
+                                <label for="Audit Attachments">Manufacturing Investigation  by</label>
+                                <div class=" static">{{ $data->completed_by_manufacturing_investigation }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Audit Attachments">Full Scale Investigation Done On</label>
-                                <div class="date">{{ $data->completed_on_full_scale_investigation }}</div>
+                                <label for="Audit Attachments">Manufacturing Investigation On</label>
+                                <div class="date">{{ $data->completed_on_manufacturing_investigation }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                            <div class="group-input">
                             <label for="Submitted on">Comment</label>
-                            <div class="Date">{{ $data->comment_full_scale_investigation }}</div>
+                            <div class="Date">{{ $data->comment_manufacturing_investigation }}</div>
                            </div>
                         </div>
                     </div>
@@ -288,7 +286,6 @@
                         </div>
                     </div>
                     <div class="row">
-
                         <!-- Request More Info -->
                          <!-- Phase II Correction Completed  -->
                         <div class="col-lg-4">
@@ -395,22 +392,17 @@
                             <div class="Date">{{ $data->comment_phaseIII_manufacturing_investigation }}</div>
                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                    <div class="col-12 sub-head">  Head QA/Designee </div>
-                    
-
                         <!-- batch_disposition -->
                         <!-- Request More Info -->
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="submitted by">Final Approval bY :</label>
+                                <label for="submitted by">Batch Disposition By :</label>
                                 <div class="static">{{ $data->completed_by_batch_disposition }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="submitted on">Final Approval On :</label>
+                                <label for="submitted on"> Batch Disposition On :</label>
                                 <div class="Date">{{ $data->completed_on_batch_disposition }}</div>
                             </div>
                         </div>
@@ -422,6 +414,7 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-12 sub-head">  Head QA/Designee </div>
                         <!-- Request More Info -->
                         <!-- Approval Completed -->
                         <div class="col-lg-4">

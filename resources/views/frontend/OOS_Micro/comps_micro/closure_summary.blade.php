@@ -148,8 +148,7 @@
                     <label for="Description Deviation">Justify for Delay in Activity</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="justify_for_delay_BI" id="summernote-1"
-                     {{Helpers::isOOSMicro($micro_data->stage)}}>
-                        {{ $micro_data->justify_for_delay_BI }}</textarea>
+                     {{Helpers::isOOSMicro($micro_data->stage)}}> {{ $micro_data->justify_for_delay_BI }}</textarea>
                 </div>
             </div>
             <div class="col-md-12 mb-4">

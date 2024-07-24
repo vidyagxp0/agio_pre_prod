@@ -183,8 +183,7 @@
                         <input type="text" id="deviation_occured_on_gi" readonly 
                         value="{{ Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
                         <input type="date" name="deviation_occured_on_gi"
-                         class="hide-input"
-                            oninput="handleDateInput(this, 'deviation_occured_on_gi')" />
+                         class="hide-input" oninput="handleDateInput(this, 'deviation_occured_on_gi')" />
                     </div>
                 </div>
             </div>
@@ -193,15 +192,11 @@
                     <label for="Deviation Occurred On"> OOS Observed On </label>
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
-                        <input type="text" id="oos_observed_on" readonly 
-                        value="{{ Helpers::getdateFormat($data['oos_observed_on'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
-                        <input type="date" name="oos_observed_on"
-                         class="hide-input"
-                            oninput="handleDateInput(this, 'oos_observed_on')" />
+                        <input type="text" id="oos_observed_on" readonly value="{{ Helpers::getdateFormat($data['oos_observed_on'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
+                        <input type="date" name="oos_observed_on" class="hide-input" oninput="handleDateInput(this, 'oos_observed_on')" />
                     </div>
                 </div>
             </div>
-            
             <div class="col-lg-12 new-time-data-field">
                 {{-- @error('delay_justification') @else delayJustificationBlock @enderror --}}
                 <div class="group-input input-time ">

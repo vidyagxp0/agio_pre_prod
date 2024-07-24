@@ -3,56 +3,56 @@
                 <div class="sub-head">
                     Checklist for Analyst Training and Procedure
                 </div>
-               @php
-                $check_analyst_training_procedures = [
-                [
-                    'question' => "Is the analyst trained/qualified BET test procedure?",
-                    'is_sub_question' => false,
-                    'input_type' => 'text'
-                ],
-                [
-                    'question' => "Reference procedure number :-",
-                    'is_sub_question' => true,
-                    'input_type' => 'number'
-                ],
-                [
-                    'question' => "Effective date",
-                    'is_sub_question' => true,
-                    'input_type' => 'date'
-                ],
-                [
-                    'question' => "Date of qualification:",
-                    'is_sub_question' => true,
-                    'input_type' => 'date'
-                ],
-                [
-                    'question' => "Were appropriate precaution taken by the analyst throughout the test?",
-                    'is_sub_question' => false,
-                    'input_type' => 'text'
-                ],
-                [
-                    'question' => "Analyst interview record",
-                    'is_sub_question' => true,
-                    'input_type' => 'number'
-                ],
-                [
-                    'question' => "Was an analyst/sampling persons suffering from any ailment such as cough/cold or open wound or skin infections?",
-                    'is_sub_question' => false,
-                    'input_type' => 'text'
-                ],
-                [
-                    'question' => "Analyst interview record",
-                    'is_sub_question' => true,
-                    'input_type' => 'number'
-                ],
-                [
-                    'question' => "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
-                    'is_sub_question' => false,
-                    'input_type' => 'text'
-                ]
-            ];
+                @php
+                    $check_analyst_training_procedures = [
+                    [
+                        'question' => "Is the analyst trained/qualified BET test procedure?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Reference procedure number :-",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Effective date",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Date of qualification:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Were appropriate precaution taken by the analyst throughout the test?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Analyst interview record",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Was an analyst/sampling persons suffering from any ailment such as cough/cold or open wound or skin infections?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Analyst interview record",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ]
+                 ];
 
-            @endphp
+                @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">

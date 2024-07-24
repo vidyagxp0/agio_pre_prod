@@ -8,12 +8,8 @@
 
                     <div class="col-lg-12">
                         <div class="inner-block">
-                            <div class="main-head">
-                                Record -{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}{{$doc->id}}
-                              
-                            </div>
+                            <div class="main-head"> Record -{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}{{$doc->id}} </div>
                             <div class="info-list">
-
                                 <div class="list-item">
                                     <div class="head">Document Stage</div>
                                     <div>:</div>
@@ -27,9 +23,7 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-                
                 @foreach($detail_data as $temp)
                     <div class="inner-block audit-main">
                         <div class="info-list">

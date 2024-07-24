@@ -364,7 +364,6 @@
                                 <div class="static">{{ $micro_data->completed_by_final_approval }}</div>
                             </div>
                         </div>
-
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="submitted on">Final Approval On :</label>
@@ -402,14 +401,13 @@
                     <div class="button-block">
                     @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
                         <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
+                            <div class="bg-danger">Workflow is already Closed-Done</div>
+                        </div>
                     @else
                     <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                      @endif 
-                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
+                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                     </div>
                 </div>
             </div>
