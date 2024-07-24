@@ -32,10 +32,10 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Immediate Actions</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Root cause and conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA Head/Designee Approval</button>
