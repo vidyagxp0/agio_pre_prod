@@ -874,6 +874,7 @@
                             $why_5 = unserialize($riskgrdwhy_chart->why_5);
                             @endphp
 
+                            
                             @if(is_array($why_5))
                             @foreach($why_5 as $value)
                             {{ htmlspecialchars($value) }}
@@ -1373,100 +1374,103 @@
             
 
             <div class="block">
-                <div class="block-head">
-                    Activity Log
-                </div>
-                <table>
-                    <tr>
-                        <th class="w-20">Submitted By</th>
-                        <td class="w-30">{{ $data->submitted_by }}</td>
-                        <th class="w-20">Submitted On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
-                    </tr>
+    <div class="block-head">
+        Activity Log
+    </div>
+    <table>
+        <tr>
+            <th class="w-20">Submitted By</th>
+            <td class="w-30">{{ $data->submitted_by ?? 'Not Applicable' }}</td>
+            <th class="w-20">Submitted On</th>
+            <td class="w-30">{{ $data->submitted_on ? Helpers::getdateFormat($data->submitted_on) : 'Not Applicable' }}</td>
+        </tr>
 
-                    <tr>
-                        <th class="w-20">Cancelled By</th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">Cancelled On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Evaluated Complete By</th>
-                        <td class="w-30">{{ $data->evaluated_by }}</td>
-                        <th class="w-20">Evaluated Complete On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->evaluated_on) }}</td>
-                    </tr>
+        <tr>
+            <th class="w-20">Cancelled By</th>
+            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+            <th class="w-20">Cancelled On</th>
+            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+        </tr>
 
-                    <tr>
-                        <th class="w-20">More Information Required(Risk Analysis & Work Group Assignment) By</th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">More Information Required(Risk Analysis & Work Group Assignment) On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                    </tr>
+        <tr>
+            <th class="w-20">Evaluated Complete By</th>
+            <td class="w-30">{{ $data->evaluated_by ?? 'Not Applicable' }}</td>
+            <th class="w-20">Evaluated Complete On</th>
+            <td class="w-30">{{ $data->evaluated_on ? Helpers::getdateFormat($data->evaluated_on) : 'Not Applicable' }}</td>
+        </tr>
 
-                    <tr>
-                        <th class="w-20">Risk Processing & Action Plan Complete By</th>
-                        <td class="w-30">{{ $data->evaluated_by }}</td>
-                        <th class="w-20">Risk Processing & Action Plan Complete On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->evaluated_on) }}</td>
-                    </tr>
+        <tr>
+            <th class="w-20">More Information Required(Risk Analysis & Work Group Assignment) By</th>
+            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+            <th class="w-20">More Information Required(Risk Analysis & Work Group Assignment) On</th>
+            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+        </tr>
 
-                    <tr>
-                        <th class="w-20">Risk Processing & Action Plan (Request More Info) By</th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">Risk Processing & Action Plan (Request more info) On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Pending HOD Approval(Action Plan Approved) By</th>
-                        <td class="w-30">{{ $data->plan_approved_by }}</td>
-                        <th class="w-20">Pending HOD Approval(Action Plan Approved) On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->plan_approved_on) }}</td>
-                    </tr>
+        <tr>
+            <th class="w-20">Risk Processing & Action Plan Complete By</th>
+            <td class="w-30">{{ $data->evaluated_by ?? 'Not Applicable' }}</td>
+            <th class="w-20">Risk Processing & Action Plan Complete On</th>
+            <td class="w-30">{{ $data->evaluated_on ? Helpers::getdateFormat($data->evaluated_on) : 'Not Applicable' }}</td>
+        </tr>
 
-                    <tr>
-                        <th class="w-20">Pending HOD Approval(Reject Action Plan) By</th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">Pending HOD Approval(Reject Action Plan) On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                    </tr>
+        <tr>
+            <th class="w-20">Risk Processing & Action Plan (Request More Info) By</th>
+            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+            <th class="w-20">Risk Processing & Action Plan (Request more info) On</th>
+            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+        </tr>
 
-                    <tr>
-                        <th class="w-20">Actions Items in Progress(All Action Completed) By</th>
-                        <td class="w-30">{{ $data->plan_approved_by }}</td>
-                        <th class="w-20">Actions Items in Progress(All Action Completed) On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->plan_approved_on) }}</td>
-                    </tr>
+        <tr>
+            <th class="w-20">Pending HOD Approval(Action Plan Approved) By</th>
+            <td class="w-30">{{ $data->plan_approved_by ?? 'Not Applicable' }}</td>
+            <th class="w-20">Pending HOD Approval(Action Plan Approved) On</th>
+            <td class="w-30">{{ $data->plan_approved_on ? Helpers::getdateFormat($data->plan_approved_on) : 'Not Applicable' }}</td>
+        </tr>
 
-                    <tr>
-                        <th class="w-20">Actions Items in Progress(Request More Info) By</th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">Actions Items in Progress(Request More Info) On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Residual Risk Evaluation Completed By</th>
-                        <td class="w-30">{{ $data->risk_analysis_completed_by }}</td>
-                        <th class="w-20">Residual Risk Evaluation Completed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->risk_analysis_completed_on) }}</td>
-                    </tr>
+        <tr>
+            <th class="w-20">Pending HOD Approval(Reject Action Plan) By</th>
+            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+            <th class="w-20">Pending HOD Approval(Reject Action Plan) On</th>
+            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+        </tr>
 
-                    <tr>
-                        <th class="w-20">Residual Risk Evaluation(More Action Needed) By</th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">Residual Risk Evaluation(More Action Needed) On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                    </tr>
+        <tr>
+            <th class="w-20">Actions Items in Progress(All Action Completed) By</th>
+            <td class="w-30">{{ $data->plan_approved_by ?? 'Not Applicable' }}</td>
+            <th class="w-20">Actions Items in Progress(All Action Completed) On</th>
+            <td class="w-30">{{ $data->plan_approved_on ? Helpers::getdateFormat($data->plan_approved_on) : 'Not Applicable' }}</td>
+        </tr>
 
-                    <tr>
-                        <th class="w-20">Cancelled By</th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">Cancelled On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                    </tr>
+        <tr>
+            <th class="w-20">Actions Items in Progress(Request More Info) By</th>
+            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+            <th class="w-20">Actions Items in Progress(Request More Info) On</th>
+            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+        </tr>
 
-                </table>
-            </div>
+        <tr>
+            <th class="w-20">Residual Risk Evaluation Completed By</th>
+            <td class="w-30">{{ $data->risk_analysis_completed_by ?? 'Not Applicable' }}</td>
+            <th class="w-20">Residual Risk Evaluation Completed On</th>
+            <td class="w-30">{{ $data->risk_analysis_completed_on ? Helpers::getdateFormat($data->risk_analysis_completed_on) : 'Not Applicable' }}</td>
+        </tr>
+
+        <tr>
+            <th class="w-20">Residual Risk Evaluation(More Action Needed) By</th>
+            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+            <th class="w-20">Residual Risk Evaluation(More Action Needed) On</th>
+            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+        </tr>
+
+        <tr>
+            <th class="w-20">Cancelled By</th>
+            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+            <th class="w-20">Cancelled On</th>
+            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+        </tr>
+    </table>
+</div>
+
         </div>
     </div>
 

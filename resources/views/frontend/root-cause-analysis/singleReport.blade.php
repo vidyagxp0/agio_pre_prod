@@ -338,9 +338,9 @@
 
 
             <div class="border-table" style="margin-bottom: 15px;">
-                <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
-                    Root Cause
-                </div>
+                        <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
+                            Root Cause
+                        </div>
                 <table>
                     <thead>
                         <tr class="table_bg">
@@ -948,9 +948,9 @@
                     <table>
                         <tr>
                             <th class="w-20">Acknowledge By</th>
-                            <td class="w-30">{{ $data->acknowledge_by }}</td>
+                            <td class="w-30">{{ $data->submitted_by }}</td>
                             <th class="w-20">Acknowledge On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->acknowledge_on) }}</td>
+                            <td class="w-30">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
                         </tr>
                         <tr>
                             <th class="w-20">Submitted By</th>
@@ -960,15 +960,15 @@
                         </tr>
                         <tr>
                             <th class="w-20">QA Review Completed By</th>
-                            <td class="w-30">{{ $data->qa_review_completed_by }}</td>
+                            <td class="w-30">{{ $data->submitted_by }}</td>
                             <th class="w-20">QA Review Completed On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->qa_review_completed_on) }}</td>
+                            <td class="w-30">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
                         </tr>
                         <tr>
                             <th class="w-20">QA Review More Information Required By</th>
-                            <td class="w-30">{{ $data->qa_review_more_info_by }}</td>
+                            <td class="w-30">{{ $data->submitted_by }}</td>
                             <th class="w-20">QA Review More Information Required On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->qa_review_more_info_on) }}</td>
+                            <td class="w-30">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
                         </tr>
                         <tr>
                             <th class="w-20">Cancelled By</th>

@@ -345,7 +345,7 @@ use Illuminate\Support\Facades\Hash;
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Assign Id';
+        $history->activity_type = 'Department Head';
         $history->previous = "Null";
         $history->current = $root->assign_to;
         $history->comment = "NA";
@@ -1731,7 +1731,7 @@ use Illuminate\Support\Facades\Hash;
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Assign Id';
+            $history->activity_type = 'Department Head';
             $history->previous = $lastDocument->assign_to;
             $history->current = $root->assign_to;
             $history->comment = $request->comment;

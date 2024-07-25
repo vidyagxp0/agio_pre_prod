@@ -570,11 +570,101 @@ class RiskManagementController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to =   "Opened";
-         $history->change_from = "Initiation";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
          
             $history->save();
         }
+
+
+        if (!empty($data->purpose)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Purpose';
+            $history->previous = "Null";
+            $history->current = $data->purpose;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
+
+
+        if (!empty($data->scope)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Scope';
+            $history->previous = "Null";
+            $history->current = $data->scope;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
+        if (!empty($data->reason_for_revision)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Reason for Revision';
+            $history->previous = "Null";
+            $history->current = $data->reason_for_revision;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
+        if (!empty($data->Brief_description)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Brief Description / Procedure';
+            $history->previous = "Null";
+            $history->current = $data->Brief_description;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
+        if (!empty($data->document_used_risk)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Documents Used for Risk Management';
+            $history->previous = "Null";
+            $history->current = $data->document_used_risk;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
+
 
         if (!empty($data->open_date)) {
             $history = new RiskAuditTrail();
@@ -2123,6 +2213,137 @@ class RiskManagementController extends Controller
       
             
  
+
+
+            if ($lastDocument->purpose != $data->purpose) {
+                $history = new RiskAuditTrail();
+
+        
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Purpose';
+            $history->previous = $lastDocument->purpose;
+            $history->current = $data->purpose;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->purpose) || $lastDocument->purpose === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          //  dd($history);
+            $history->save();
+            }
+
+
+            if ($lastDocument->scope != $data->scope) {
+                $history = new RiskAuditTrail();
+
+        
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Scope';
+            $history->previous = $lastDocument->scope;
+            $history->current = $data->scope;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->scope) || $lastDocument->scope === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          //  dd($history);
+            $history->save();
+            }
+
+
+
+            if ($lastDocument->reason_for_revision != $data->reason_for_revision) {
+                $history = new RiskAuditTrail();
+
+        
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Reason for Revision';
+            $history->previous = $lastDocument->reason_for_revision;
+            $history->current = $data->reason_for_revision;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->reason_for_revision) || $lastDocument->reason_for_revision === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          //  dd($history);
+            $history->save();
+            }
+
+
+
+            if ($lastDocument->Brief_description != $data->Brief_description) {
+                $history = new RiskAuditTrail();
+
+        
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Brief Description / Procedure';
+            $history->previous = $lastDocument->Brief_description;
+            $history->current = $data->Brief_description;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->Brief_description) || $lastDocument->Brief_description === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          //  dd($history);
+            $history->save();
+            }
+
+            if ($lastDocument->document_used_risk != $data->document_used_risk) {
+                $history = new RiskAuditTrail();
+
+        
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Documents Used for Risk Management';
+            $history->previous = $lastDocument->document_used_risk;
+            $history->current = $data->document_used_risk;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->document_used_risk) || $lastDocument->document_used_risk === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          //  dd($history);
+            $history->save();
+            }
 
         if ($lastDocument->open_date != $data->open_date || !empty($request->open_date_comment)) {
 
