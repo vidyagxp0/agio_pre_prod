@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('audit_programs', function (Blueprint $table) {
-            $table->id();
+             $table->id();
             $table->integer('record')->nullable();
-            // $table->integer('initiator_id')->nullable();
-            $table->string('division_id')->nullable();
             $table->integer('initiator_id')->nullable();
+            $table->string('division_id')->nullable();
+            // $table->integer('initiator_id')->nullable();
             $table->string('division_code')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('Initiator_Group')->nullable();
@@ -51,18 +51,25 @@ return new class extends Migration
             $table->string('City')->nullable();
             $table->string('state')->nullable();
             $table->string('severity1_level')->nullable();
+            $table->longText('comment')->nullable();
+            $table->string('file_attachments')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
             $table->string('submitted_by')->nullable();
+            $table->text('Submitted_comment')->nullable();
             $table->string('approved_by')->nullable();
             $table->string('submitted_on')->nullable();
+            $table->text('approved_comment')->nullable();
             $table->string('approved_on')->nullable();
             $table->string('Audit_Completed_By')->nullable();
+            $table->text('Audit_Completed_comment')->nullable();
+            $table->text('reject_comment')->nullable();
             $table->string('cancelled_by')->nullable();
             $table->string('cancelled_on')->nullable();
+            $table->text('Cancelled_comment')->nullable();
             $table->string('rejected_by')->nullable();
             $table->string('rejected_on')->nullable();
-            // $table->string('form_type')->nullable();
+            // // $table->string('form_type')->nullable();
             $table->string('Audit_Completed_On')->nullable();
             $table->timestamps();
         });

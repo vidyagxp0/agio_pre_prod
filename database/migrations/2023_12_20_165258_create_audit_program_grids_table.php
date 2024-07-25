@@ -22,7 +22,13 @@ return new class extends Migration
             $table->text('end_date')->nullable();
             $table->text('lead_investigator')->nullable();
             $table->text('comment')->nullable();
+
+            $table->unsignedBigInteger('ci_id')->nullable();
+            $table->string('identifier')->nullable();
+            $table->longText('data')->nullable();
             $table->timestamps();
+
+
         });
     }
 

@@ -154,6 +154,25 @@
         background: #4274da57;
     }
 </style>
+@php
+    $users = DB::table('users')->select('id', 'name')->get();
+
+@endphp
+<footer>
+    <table>
+        <tr>
+            <td class="w-30">
+                <strong>Printed On :</strong> {{ date('d-M-Y') }}
+            </td>
+            <td class="w-40">
+                <strong>Printed By :</strong> {{ Auth::user()->name }}
+            </td>
+            <td class="w-30">
+                <strong>Page :</strong> 1 of 1
+            </td>
+        </tr>
+    </table>
+</footer>
 
 <body>
 
@@ -165,7 +184,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -176,7 +195,7 @@
                     <strong>Audit Program No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -192,7 +211,7 @@
                     General Information
                 </div>
                 <table>
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
+                    <tr> {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
                         <th class="w-20">Date Initiation</th>
@@ -200,59 +219,207 @@
                     </tr>
                     <tr>
                         <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
-                        <th class="w-20">Initiator Group</th>
-                        <td class="w-30">@if($data->Initiator_Group){{$data->Initiator_Group}} @else Not Applicable @endif</td>
+                        <td class="w-30">
+                            @if ($data->division_code)
+                                {{ $data->division_code }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Initiator Department</th>
+                        <td class="w-30">
+                            @if ($data->Initiator_Group)
+                                {{ $data->Initiator_Group }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                     <tr>
-                        
+
                         <th class="w-20">Assigned To</th>
-                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
-                        <th class="w-20">Initiator Group Code</th>
-                        <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
-                       
+                        <td class="w-30">
+                            @if ($data->assign_to)
+                                {{ $data->assign_to }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Department code</th>
+                        <td class="w-30">
+                            @if ($data->initiator_group_code)
+                                {{ $data->initiator_group_code }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
                     </tr>
                     <tr>
                         <th class="w-20">Due Date</th>
-                        <td class="w-80" > @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>\
-                        <th class="w-20">Short Description</th>
-                        <td class="w-80" > @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
+                        <td class="w-30">
+                            @if ($data->due_date)
+                                {{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+
+                        {{-- <th class="w-20">Short Description</th>
+                        <td class="w-80">
+                            @if ($data->short_description)
+                                {{ $data->short_description }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td> --}}
                     </tr>
+                </table>
+                <div class="inner-block">
+                    <label class="Summer" style="font-weight: bold; font-size: 13px;">Short Description
+                    </label>
+                    <div style="font-size: 0.8rem">
+                        @if ($data->short_description)
+                            {{ $data->short_description }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </div>
+                </div>
+                <table>
                     <tr>
                         <th class="w-20">Type</th>
-                        <td class="w-30">@if($data->type){{ $data->type }}@else Not Applicable @endif</td>
-                        <th class="w-20">Due Date Extension Justification</th>
-                        <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension}}@else Not Applicable @endif</td>
-                    </tr>                     
-                        <tr>
-                         <th class="w-20">Quarter</th>
-                         <td class="w-30">@if($data->Quarter){{ $data->Quarter }}@else Not Applicable @endif</td>
-                         <th class="w-20">Year</th>
-                         <td class="w-30">@if($data->year){{ $data->year }}@else Not Applicable @endif</td>
-                         </tr>                    
-                        <tr>
-                          <th class="w-20">URl's description</th>
-                          <td class="w-30">@if($data->url_description){{ $data->url_description }}@else Not Applicable @endif</td>
-                          <th class="w-20">Severity Level</th>
-                          <td class="w-30">@if($data->severity1_level){{ $data->severity1_level }}@else Not Applicable @endif</td>
-                        </tr>   
-                        <tr>  
-                            <th class="w-20">Comments</th>
-                            <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
-                            <th class="w-20">Others</th>
-                            <td class="w-30">@if($data->initiated_through_req){{ $data->initiated_through_req }} @else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Related URl </th>
-                            <td class="w-80">@if($data->related_url){{ $data->related_url }}@else Not Applicable @endif</td>
-                            <th class="w-20">Initiated Through</th>
-                            <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
-                        </tr>
-                                            
-                     </table>
-                     <div class="border-table">
+                        <td class="">
+                            @if ($data->type)
+                                {{ $data->type }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        {{-- <th class="w-20">Due Date Extension Justification</th>
+                        <td class="w-30">
+                            @if ($data->due_date_extension)
+                                {{ $data->due_date_extension }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td> --}}
+                    </tr>
+                </table>
+                <div class="inner-block">
+                    <label class="Summer" style="font-weight: bold; font-size: 13px;">Due Date Extension Justification
+                    </label>
+                    <div style="font-size: 0.8rem">
+                        @if ($data->due_date_extension)
+                            {{ $data->due_date_extension }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </div>
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">Quarter</th>
+                        <td class="w-30">
+                            @if ($data->Quarter)
+                                {{ $data->Quarter }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Year</th>
+                        <td class="w-30">
+                            @if ($data->year)
+                                {{ $data->year }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">URl's description</th>
+                        <td class="w-30">
+                            @if ($data->url_description)
+                                {{ $data->url_description }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Severity Level</th>
+                        <td class="w-30">
+                            @if ($data->severity1_level)
+                                {{ $data->severity1_level }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+                <div class="inner-block">
+                    <label class="Summer" style="font-weight: bold; font-size: 13px;">Others
+                    </label>
+                    <div style="font-size: 0.8rem">
+                        @if ($data->initiated_through_req)
+                            {{ $data->initiated_through_req }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </div>
+                </div>
+                <div class="inner-block">
+                    <label class="Summer" style="font-weight: bold; font-size: 13px;">Comments
+                    </label>
+                    <div style="font-size: 0.8rem">
+                        @if ($data->comments)
+                            {{ $data->comments }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </div>
+                </div>
+                <table>
+                    {{-- <tr>
+                        <th class="w-20">Comments</th>
+                        <td class="w-80">
+                            @if ($data->comments)
+                                {{ $data->comments }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Others</th>
+                        <td class="w-30">
+                            @if ($data->initiated_through_req)
+                                {{ $data->initiated_through_req }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr> --}}
+                    <tr>
+                        <th class="w-20">Related URl </th>
+                        <td class="w-30">
+                            @if ($data->related_url)
+                                {{ $data->related_url }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Initiated Through</th>
+                        <td class="w-30">
+                            @if ($data->initiated_through)
+                                {{ $data->initiated_through }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                </table>
+                <div class="border-table">
                     <div class="block-head">
-                    Attached Files
+                        Attached Files
                     </div>
                     <table>
 
@@ -260,76 +427,38 @@
                             <th class="w-20">S.N.</th>
                             <th class="w-60">Batch No</th>
                         </tr>
-                            @if($data->attachments)
-                            @foreach(json_decode($data->attachments) as $key => $file)
-                        <tr>
-                            <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                        </tr>
+                        @if ($data->attachments)
+                            @foreach (json_decode($data->attachments) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
                             @endforeach
-                            @else
-                        <tr>
-                            <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
-                        </tr>
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
                         @endif
 
                     </table>
-                </div>
-            </div>
+
                 </div>
             </div>
         </div>
-              
-             
-     <!-- ------------------------------- audit program grid--------------------------------------- -->
-            <!-- <div class="block">
-                <div class="block-head">
-                Audit Program
-                </div>
-                <div class="border-table">
-                    <table>
-                        <tr class="table_bg">
-                        <th class="w-20">Row #</th>
-                            <th class="w-20">Auditees</th>
-                            <th class="w-20">Date Start	</th>
-                            <th class="w-20">Date End</th>
-                            <th class="w-20">Lead Investigator</th>
-                            <th class="w-20">Comment</th>
-                        </tr>
-                        @if($data->Auditees)
-                        @foreach (unserialize($data->Auditees) as $key => $dataDemo)
-                        <tr>
-                            <td class="w-15">{{ $dataDemo ? $key + 1  : "Not Applicable" }}</td>
-                            <td class="w-15">{{ unserialize($data->Audit_Program->Auditees)[$key] ?  unserialize($data->Audit_Program->Auditees)[$key]: "Not Applicable"}}</td>
-                            <td class="w-15">{{unserialize($data->Audit_Program->start_date)[$key] ?  unserialize($data->Audit_Program->start_date)[$key] : "Not Applicable" }}</td>
-                            <td class="w-5">{{unserialize($data->Audit_Program->end_date)[$key] ?  unserialize($data->Audit_Program->end_date)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Audit_Program->lead_investigator)[$key] ?  unserialize($data->Audit_Program->lead_investigator)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Audit_Program->comment)[$key] ?  unserialize($data->Audit_Program->comment)[$key] : "Not Applicable" }}</td>  
-                            
-                        </tr>
-                        @endforeach
-                        @else
-                        <tr>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td
-                        </tr>
-                        @endif
-                    </table>
-                </div>
-            </div> -->
-     <!--  ------------------------------- audit program grid--------------------------------------- -->
+    </div>
+    </div>
 
 
-        <div class="inner-block">
+
+
+
+    <div class="inner-block">
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    Activity log
+                    Signatures
                 </div>
                 <table>
                     <tr>
@@ -339,13 +468,10 @@
                             Submitted On</th>
                         <td class="w-30">{{ $data->submitted_on }}</td>
                     </tr>
-                   
                     <tr>
-                        <th class="w-20">Audit Completed By</th>
-                        <td class="w-30">{{ $data->Audit_Completed_By }}</td>
                         <th class="w-20">
-                        Audit Completed On</th>
-                        <td class="w-30">{{ $data->Audit_Completed_On }}</td>
+                            Submitted Comment</th>
+                        <td class="w-30">{{ $data->Submitted_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Approved By</th>
@@ -354,10 +480,35 @@
                         <td class="w-30">{{ $data->approved_on }}</td>
                     </tr>
                     <tr>
+                        <th class="w-20">
+                            Approved Comment</th>
+                        <td class="w-30">{{ $data->approved_comment }}</td>
+                    </tr>
+
+
+                    <tr>
+                        <th class="w-20">Audit Completed By</th>
+                        <td class="w-30">{{ $data->Audit_Completed_By }}</td>
+                        <th class="w-20">
+                            Audit Completed On</th>
+                        <td class="w-30">{{ $data->Audit_Completed_On }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">
+                            Audit Completed Comment</th>
+                        <td class="w-30">{{ $data->Audit_Completed_comment }}</td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Rejected By</th>
                         <td class="w-30">{{ $data->rejected_by }}</td>
                         <th class="w-20">Rejected On</th>
                         <td class="w-30">{{ $data->rejected_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">
+                            Rejected Comment</th>
+                        <td class="w-30">{{ $data->reject_comment }}</td>
                     </tr>
 
                     <tr>
@@ -366,10 +517,132 @@
                         <th class="w-20">Cancelled On</th>
                         <td class="w-30">{{ $data->cancelled_on }}</td>
                     </tr>
+                    <tr>
+                        <th class="w-20">
+                            Cancelled Comment</th>
+                        <td class="w-30">{{ $data->Cancelled_comment }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- ------------------------------- audit program grid--------------------------------------- -->
+
+
+            <div class="block">
+                <div class="block-head">
+                    Audit Program
+                </div>
+                <div class="border-table">
+                    <table style="margin-top: 20px; width:100%;table-layout:fixed;">
+                        <thead>
+                            <tr class="table_bg">
+                                <th style="width: 5%">Row#</th>
+                                <th style="width: 12%">Auditees</th>
+                                <th style="width: 15%">Date Start</th>
+                                <th style="width: 15%"> Date End</th>
+                                <th style="width: 15%"> Lead Investigator</th>
+                                <th style="width: 15%">Comment</th>
+                            </tr>
+                        </thead>
+                        <?php if ($grid_Data3 && is_array($grid_Data3->data)): ?>
+                        <?php $index2 = 0; ?>
+                        <?php foreach ($grid_Data3->data as $data): ?>
+                        <tr>
+                            <td><?php echo $index2 + 1; ?></td>
+                            <td><?php echo isset($data['Auditees']) ? $data['Auditees'] : 'N/A'; ?></td>
+                            <td><?php echo isset($data['Due_Date']) ? \Carbon\Carbon::parse($data['Due_Date'])->format('d-M-Y') : 'N/A'; ?></td>
+                            <td><?php echo isset($data['End_date']) ? \Carbon\Carbon::parse($data['End_date'])->format('d-M-Y') : 'N/A'; ?></td>
+                            <td><?php echo isset($data['Lead_Investigator']) ? $data['Lead_Investigator'] : 'N/A'; ?></td>
+                            <td><?php echo isset($data['Comment']) ? $data['Comment'] : 'N/A'; ?></td>
+
+                        </tr>
+                        <?php $index2++; ?>
+                        <?php endforeach; ?>
+                        <?php else: ?>
+                        <tr>
+                            <td colspan="4">N/A</td>
+                        </tr>
+                        <?php endif; ?>
+
                     </table>
                 </div>
             </div>
+            <div class="block">
+                <div class="block-head">
+                    Self Inspection Planner
+
+
+                </div>
+
+                <div class="border-table">
+                    <table style="margin-top: 20px; width:100%;table-layout:fixed;">
+                        <thead>
+                            <tr class="table_bg">
+                                <th style="width: 5%">Row#</th>
+                                <th style="width: 12%">Department</th>
+                                <th style="width: 15%">Months</th>
+                                <th style="width: 16%">Remarks</th>
+                            </tr>
+                        </thead>
+                        <?php if ($grid_Data4 && is_array($grid_Data4->data)): ?>
+                        <?php $index2 = 0; ?>
+                        <?php foreach ($grid_Data4->data as $data): ?>
+                        <tr>
+                            <td><?php echo $index2 + 1; ?></td>
+                            <td><?php echo isset($data['department']) ? $data['department'] : 'N/A'; ?></td>
+                            <td><?php echo isset($data['Months']) ? $data['Months'] : 'N/A'; ?></td>
+                            <td><?php echo isset($data['Remarked']) ? $data['Remarked'] : 'N/A'; ?></td>
+                        </tr>
+                        <?php $index2++; ?>
+                        <?php endforeach; ?>
+                        <?php else: ?>
+                        <tr>
+                            <td colspan="4">N/A</td>
+                        </tr>
+                        <?php endif; ?>
+
+                    </table>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-head">
+                    Self Inspection Circular
+                </div>
+
+                <div class="border-table">
+                    <table style="margin-top: 20px; width:100%;table-layout:fixed;">
+                        <thead>
+                            <tr class="table_bg">
+                                <th style="width: 5%">Row#</th>
+                                <th style="width: 12%">Department</th>
+                                <th style="width: 15%">Audit Date</th>
+                                <th style="width: 16%">Name of Auditors</th>
+                            </tr>
+                        </thead>
+                        <?php if ($grid_Data2 && is_array($grid_Data2->data)): ?>
+                        <?php $index2 = 0; ?>
+                        <?php foreach ($grid_Data2->data as $data): ?>
+                        <tr>
+                            <td><?php echo $index2 + 1; ?></td>
+                            <td><?php echo isset($data['departments']) ? $data['departments'] : 'N/A'; ?></td>
+                            <td><?php echo isset($data['info_mfg_date']) ? \Carbon\Carbon::parse($data['info_mfg_date'])->format('d-M-Y') : 'N/A'; ?></td>
+                            <td><?php echo isset($data['Auditor']) ? $data['Auditor'] : 'N/A'; ?></td>
+                        </tr>
+                        <?php $index2++; ?>
+                        <?php endforeach; ?>
+                        <?php else: ?>
+                        <tr>
+                            <td colspan="4">N/A</td>
+                        </tr>
+                        <?php endif; ?>
+
+                    </table>
+                </div>
+            </div>
+
         </div>
+    </div>
+    <!--  ------------------------------- audit program grid--------------------------------------- -->
     <footer>
         <table>
             <tr>
@@ -385,7 +658,6 @@
             </tr>
         </table>
     </footer>
-
 </body>
 
 </html>

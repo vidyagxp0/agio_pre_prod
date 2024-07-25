@@ -22,8 +22,17 @@ return new class extends Migration
             $table->longText('comment')->nullable();
             $table->string('user_id');
             $table->string('user_name');
-            $table->string('origin_state');
+            $table->string('origin_state')->nullable();
             $table->string('user_role');
+            $table->string('change_to')->nullable();
+            $table->string('change_from')->nullable();
+            $table->string('action_name')->nullable();
+            $table->string('action')->nullable();
+            $table->text('Submitted_comment')->nullable();
+            $table->text('approved_comment')->nullable();
+            $table->text('reject_comment')->nullable();
+            $table->text('Cancelled_comment')->nullable();
+            $table->text('Audit_Completed_comment')->nullable();
             $table->string('stage')->nullable();
             $table->softDeletes();
             $table->timestamps();
