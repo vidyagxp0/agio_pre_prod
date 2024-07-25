@@ -226,6 +226,19 @@
                                 @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
                             </td>
                         </tr>
+                        @php 
+                                $userMap = $users->pluck('name', 'id')->toArray();
+                        @endphp
+
+                        <tr>
+                            <th class="w-20">Department Head</th>
+                            <td class="w-30">@if($data->assign_to)
+                                {{$userMap[$data->assign_to ] ?? 'Not Applicable'}} 
+                                @else Not Applicable @endif</td>
+                            <th class="w-20">QA Reviewer</th>
+                            <td class="w-30">@if($data->qa_reviewer)
+                                {{ $userMap[$data->qa_reviewer ?? 'Not Applicable']  }} @else Not Applicable @endif</td>
+                        </tr>
                         <tr>
                             <th class="w-20">Initiator Group Code</th>
                             <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td>
@@ -233,22 +246,39 @@
                         <tr>
                             <th class="w-20">Due Date</th>
                             <td class="w-30">@if($data->due_date) {{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }} @else Not Applicable @endif</td>
-                            <th class="w-20">Assigned To</th>
-                            <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
+                            {{--  <th class="w-20">Assigned To</th>
+                            <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>  --}}
+                             <th class="w-20">Type</th>
+                            <td class="w-30">@if($data->Type){{ $data->Type }} @else Not Applicable @endif</td>
+                       
+                        
                         </tr>
-                        <tr>
-                            <th class="w-20">Others</th>
-                            <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
-                        </tr>
+                        
                         <tr>
                             <th class="w-20">Priority Level</th>
                             <td class="w-30">@if($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
-                            <th class="w-20">Department(s)</th>
+                            <th class="w-20">Responsible Department</th>
                             <td class="w-30">@if($data->department){{ $data->department }}@else Not Applicable @endif</td>
                         </tr>
+                       
                         <tr>
+                            <th class="w-20">Initiated Through</th>
+                            <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
+                            {{--  <th class="w-20">Related URL</th>  --}}
+                            {{--  <td class="w-30">@if($data->related_url){{ $data->related_url }}@else Not Applicable @endif</td>  --}}
+                        </tr>
+                    </table>
+               
+
+                <div class="border">
+                    <table>
+                    <tr>
+                            <th class="w-20">Others</th>
+                            <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
+                        </tr>
+                    <tr>
                             <th class="w-20">Description</th>
                             <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
                         </tr>
@@ -256,15 +286,9 @@
                             <th class="w-20">Comments</th>
                             <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
                         </tr>
-                        <tr>
-                            <th class="w-20">Initiated Through</th>
-                            <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
-                            <th class="w-20">Related URL</th>
-                            <td class="w-30">@if($data->related_url){{ $data->related_url }}@else Not Applicable @endif</td>
-                        </tr>
                     </table>
                 </div>
-
+                </div>
                 <div class="border-table">
                     <div class="block-head">
                         File Attachment, if any
@@ -309,7 +333,7 @@
                         <td class="w-80">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
-
+            </div>
 
 
 
@@ -620,11 +644,19 @@
                             @endif
                         </td>
                     </tr>
+                    
+                </table>
+
+
+                <div class="border">
+                    <table>
                     <tr>
                         <th class="w-20">Problem Statement 1</th>
                         <td class="w-80">@if($data->problem_statement){{ $data->problem_statement }}@else Not Applicable @endif</td>
                     </tr>
-                </table>
+                    </table>
+                  </div>
+                
 
                 <div class="block-head">
                     Why-Why Chart

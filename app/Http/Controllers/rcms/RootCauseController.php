@@ -3051,12 +3051,13 @@ use Illuminate\Support\Facades\Hash;
 
     public static function singleReport($id)
     {    
+        $users = User::all();
         $data = RootCauseAnalysis::find($id);
         if (!empty($data)) {
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.root-cause-analysis.singleReport', compact('data'))
+            $pdf = PDF::loadview('frontend.root-cause-analysis.singleReport', compact('data','users'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

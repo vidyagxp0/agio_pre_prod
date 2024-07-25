@@ -232,13 +232,7 @@
                         <td class="w-80"> @if($data->due_date) {{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Risk/Opportunity Description</th>
-                        <td class="w-80">@if($data->description){{ $data->description }} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Risk/Opportunity Comments</th>
-                        <td class="w-80">@if($data->comments){{ $data->comments }} @else Not Applicable @endif</td>
-                    </tr>
+                   
                     <tr>
                         <th class="w-20">Department(s)</th>
                         <td class="w-80">@if($data->departments){{ ($data->departments) }}@else Not Applicable @endif</td>
@@ -249,11 +243,7 @@
                         <th class="w-20">Type</th>
                         <td class="w-80">@if($data->type){{ $data->type }}@else Not Applicable @endif</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">Risk/Opportunity Comments</th>
-                        <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
-
-                    </tr>
+                  
                     <tr>
                         <th class="w-20">Priority Level</th>
                         <td class="w-80">@if($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>
@@ -261,8 +251,78 @@
                         <td class="w-80">@if($data->source_of_risk){{ $data->source_of_risk }}@else Not Applicable @endif</td>
                     </tr>
 
+
                 </table>
             </div>
+
+
+          <div class="border">
+            <table>
+                    
+                    <tr>
+                        <th class="w-20">Risk/Opportunity Description</th>
+                        <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
+
+                    </tr>
+                    <tr>
+                        <th class="w-20">Purpose</th>
+                        <td class="w-80">@if($data->purpose){{ $data->purpose }}@else Not Applicable @endif</td>
+                    </tr>
+
+
+                    <tr>
+                        <th class="w-20">Scope</th>
+                        <td class="w-80">@if($data->purpose){{ $data->purpose }}@else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Reason for Revision</th>
+                        <td class="w-80">@if($data->purpose){{ $data->purpose }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Brief Description / Procedure</th>
+                        <td class="w-80">@if($data->purpose){{ $data->purpose }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Documents Used for Risk Management</th>
+                        <td class="w-80">@if($data->purpose){{ $data->purpose }}@else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Risk/Opportunity Comments</th>
+                        <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
+
+                    </tr>
+            </table>
+          </div>
+
+            <div class="border-table">
+                    <div class="block-head">
+                    Risk Attachments
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->risk_attachment)
+                            @foreach(json_decode($data->risk_attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+
+
 
 
             <div class="block">
@@ -314,7 +374,7 @@
 
                 </table>
             </div>
-        </div>
+        
 
         <div class="block">
             <div class="block-head">
@@ -348,7 +408,7 @@
 
     
 
-    <div class="block">
+    {{--  <div class="block">
         <div class="block-head">
                 Action Plan
             </div>
@@ -369,199 +429,101 @@
                     <th class="w-20">Currency</th>
                     <td class="w-30">@if($data->currency){{ $data->currency }}@else Not Applicable @endif</td>
                 </tr>
-                <tr>
+                
+            </table>
+        </div>  --}}
+
+        <div class="border">
+            <table>
+            <tr>
                     <th class="w-20">Justification/Rationale</th>
                     <td class="w-80">@if($data->justification){{ $data->justification }}@else Not Applicable @endif</td>
 
                 </tr>
             </table>
         </div>
+        
 
 
 
            <div class="border-table">
-    <div class="block-head">
-        Action Plan
-    </div>
-    <table>
-        <thead>
-            <tr class="table_bg">
-                <th class="w-20">Row #</th>
-                <th class="w-20">Action</th>
-                <th class="w-20">Responsible</th>
-                <th class="w-20">Deadline</th>
-                <th class="w-20">Item Static</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php 
-                $measurement_1 = unserialize($action_plan->action);
-                $measurement_2 = unserialize($action_plan->responsible);
-                $measurement_3 = unserialize($action_plan->deadline);
-                $measurement_4 = unserialize($action_plan->item_static);
-                $row_number = 1;
+                <div class="block-head">
+                    Action Plan
+                </div>
+                        <table>
+                            <thead>
+                                <tr class="table_bg">
+                                    <th class="w-20">Row #</th>
+                                    <th class="w-20">Action</th>
+                                    <th class="w-20">Responsible</th>
+                                    <th class="w-20">Deadline</th>
+                                    <th class="w-20">Item Static</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php 
+                                    $measurement_1 = unserialize($action_plan->action);
+                                    $measurement_2 = unserialize($action_plan->responsible);
+                                    $measurement_3 = unserialize($action_plan->deadline);
+                                    $measurement_4 = unserialize($action_plan->item_static);
+                                    $row_number = 1;
 
-                // Create a map of user IDs to user names for quick lookup
-                $userMap = $users->pluck('name', 'id')->toArray();
-            @endphp
+                                    // Create a map of user IDs to user names for quick lookup
+                                    $userMap = $users->pluck('name', 'id')->toArray();
+                                @endphp
 
-            @for ($i = 0; $i < count($measurement_1); $i++)
-                <tr>
-                    <td class="w-10">{{ $row_number++ }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
-                    <td class="w-20">
-                        {{ $userMap[$measurement_2[$i]] ?? 'Not Applicable' }}
-                    </td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
-                </tr>
-            @endfor
-        </tbody>
-    </table>
-</div>
+                                @for ($i = 0; $i < count($measurement_1); $i++)
+                                    <tr>
+                                        <td class="w-10">{{ $row_number++ }}</td>
+                                        <td class="w-20">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
+                                        <td class="w-20">
+                                            {{ $userMap[$measurement_2[$i]] ?? 'Not Applicable' }}
+                                        </td>
+                                        <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
+                                        <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
+                                    </tr>
+                                @endfor
+                            </tbody>
+                        </table>
+                   </div>
+
+
+
+            <div class="border-table">
+                    <div class="block-head">
+                        Work Group Attachments
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->reference)
+                            @foreach(json_decode($data->reference) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
+            
+
 
 
        <div class="block">
-    <div class="block-head">
-        Failure Mode and Effect Analysis
-    </div>
-    <table>
-        <thead>
-            <tr class="table_bg">
-                <th class="w-20">Row #</th>
-                <th class="w-20">Activity</th>
-                <th class="w-20">Possible Risk/Failure (Identified Risk)</th>
-                <th class="w-20">Consequences of Risk/Potential Causes</th>
-              
-            </tr>
-        </thead>
-        <tbody>
-            @php 
-                $measurement_1 = unserialize($failure_mode->risk_factor);
-                $measurement_2 = unserialize($failure_mode->problem_cause);
-                $measurement_3 = unserialize($failure_mode->existing_risk_control);
-                $row_number = 1;
-            @endphp
-
-            @for ($i = 0; $i < count($measurement_1); $i++)
-                <tr>
-                    <td class="w-10">{{ $row_number++ }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_2[$i] ?? 'Not Applicable') }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
-                </tr>
-            @endfor
-        </tbody>
-    </table>
-
-    <table>
-        <thead>
-            <tr class="table_bg">
-                <th class="w-10">Row #</th>
-                <th class="w-20">Initial Severity (S)</th>
-                <th class="w-20">Initial Probability (P)</th>
-                <th class="w-20">Initial Detectability (D)</th>
-                <th class="w-20">RPN</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php 
-                $measurement_4 = unserialize($failure_mode->initial_severity);
-                $measurement_5 = unserialize($failure_mode->initial_probability);
-                $measurement_6 = unserialize($failure_mode->initial_detectability);
-                $measurement_7 = unserialize($failure_mode->initial_rpn);
-                $row_number = 1; // Reset row number
-            @endphp
-
-            @for ($i = 0; $i < count($measurement_4); $i++)
-                <tr>
-                    <td class="w-10">{{ $row_number++ }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_5[$i] ?? 'Not Applicable') }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_6[$i] ?? 'Not Applicable') }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_7[$i] ?? 'Not Applicable') }}</td>
-                </tr>
-            @endfor
-        </tbody>
-    </table>
-
-    <table>
-        <thead>
-            <tr class="table_bg">
-                <th class="w-10">Row #</th>
-                <th class="w-20">Control Measures recommended/ Risk mitigation proposed</th>
-                <th class="w-20">Residual Severity (S)</th>
-                <th class="w-20">Residual Probability (P)</th>
-                <th class="w-20">Residual Detectability (D)</th>
-                <th class="w-20">Risk Level (RPN)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php 
-                $measurement_8 = unserialize($failure_mode->risk_control_measure);
-                $measurement_9 = unserialize($failure_mode->residual_severity);
-                $measurement_10 = unserialize($failure_mode->residual_probability);
-                $measurement_11 = unserialize($failure_mode->residual_detectability);
-                $measurement_12 = unserialize($failure_mode->residual_rpn);
-                $row_number = 1; // Reset row number
-            @endphp
-
-            @for ($i = 0; $i < count($measurement_8); $i++)
-                <tr>
-                    <td class="w-10">{{ $row_number++ }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_8[$i] ?? 'Not Applicable') }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_9[$i] ?? 'Not Applicable') }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_10[$i] ?? 'Not Applicable') }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_11[$i] ?? 'Not Applicable') }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_12[$i] ?? 'Not Applicable') }}</td>
-                </tr>
-            @endfor
-        </tbody>
-    </table>
-
-   <table>
-    <thead>
-        <tr class="table_bg">
-            <th class="w-10">Row #</th>
-            <th class="w-20">Category of Risk Level (Low, Medium, and High)</th>
-            <th class="w-20">Risk Acceptance (Y/N)</th>
-            <th class="w-20">Traceability document</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @php 
-            $measurement_13 = unserialize($failure_mode->risk_acceptance);
-            $measurement_14 = unserialize($failure_mode->mitigation_proposal);
-            $measurement_15 = unserialize($failure_mode->risk_acceptance2);
-            $max_count = max(count($measurement_13), count($measurement_14), count($measurement_15));
-            $row_number = 1;
-        @endphp
-
-        @for ($i = 0; $i < $max_count; $i++)
-            <tr>
-                <td class="w-10">{{ $row_number++ }}</td>
-                <td class="w-20">{{ htmlspecialchars($measurement_13[$i] ?? 'Not Applicable') }}</td>
-                <td class="w-20">{{ htmlspecialchars($measurement_14[$i] ?? 'Not Applicable') }}</td>
-                <td class="w-20">{{ htmlspecialchars($measurement_15[$i] ?? 'Not Applicable') }}</td>
-            </tr>
-        @endfor
-    </tbody>
-</table>
-
-</div>
-
-
-        <div class="block">
-            <div class="head">
                 <div class="block-head">
-                    Risk/Opportunity Analysis
+                    Failure Mode and Effect Analysis
                 </div>
+                <table>
 
-                <div>
-                    <table>
-
-                        <tr>
+                   <tr>
                             <th class="w-20">Root Cause Methodology</th>
                             <td class="w-80">
                                 @if($data->root_cause_methodology)
@@ -573,124 +535,134 @@
 
                             </td>
                         </tr>
-                        <tr>
-                            <th class="w-20">Root Cause Description</th>
-                            <td class="w-80">@if($data->root_cause_description){{ $data->root_cause_description}}@else Not Applicable @endif</td>
+                    <thead>
+                        <tr class="table_bg">
+                            <th class="w-20">Row #</th>
+                            <th class="w-20">Activity</th>
+                            <th class="w-20">Possible Risk/Failure (Identified Risk)</th>
+                            <th class="w-20">Consequences of Risk/Potential Causes</th>
+                        
                         </tr>
-                        <tr>
-                            <th class="w-20">Investigation Summary</th>
-                            <td class="w-80">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
-                        </tr>
+                    </thead>
+                    <tbody>
+                        @php 
+                            $measurement_1 = unserialize($failure_mode->risk_factor);
+                            $measurement_2 = unserialize($failure_mode->problem_cause);
+                            $measurement_3 = unserialize($failure_mode->existing_risk_control);
+                            $row_number = 1;
+                        @endphp
 
-                        <tr>
-                            <th class="w-20">Severity Rate</th>
-                            <td class="w-80">
-                                <div>
-                                    @if($data->severity_rate)
-                                    @switch($data->severity_rate)
-                                    @case(1)
-                                    1-Insignificant
-                                    @break
-                                    @case(2)
-                                    2-Minor
-                                    @break
-                                    @case(3)
-                                    3-Major
-                                    @break
-                                    @case(4)
-                                    4-Critical
-                                    @break
-                                    @case(5)
-                                    5-Catastrophic
-                                    @break
+                        @for ($i = 0; $i < count($measurement_1); $i++)
+                            <tr>
+                                <td class="w-10">{{ $row_number++ }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_2[$i] ?? 'Not Applicable') }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
+                            </tr>
+                        @endfor
+                    </tbody>
+                </table>
 
-                                    @default
-                                    Not Applicable
-                                    @endswitch
-                                    @else
-                                    Not Applicable
-                                    @endif
-                                </div>
-                            </td>
-
-                            <th class="w-20">Occurrence</th>
-                            <td class="w-80">
-                                <div>
-                                    @if($data->occurrence)
-                                    @switch($data->occurrence)
-                                    @case(1)
-                                    1-Very rare
-                                    @break
-                                    @case(2)
-                                    2-Unlikely
-                                    @break
-                                    @case(3)
-                                    3-Possibly
-                                    @break
-                                    @case(4)
-                                    4-Likely
-                                    @break
-                                    @case(5)
-                                    5-Almost certain (every time)
-                                    @break
-                                    @default
-                                    Not Applicable
-                                    @endswitch
-                                    @else
-                                    Not Applicable
-                                    @endif
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-
-                        </tr>
-                        <tr>
-                            <th class="w-20">Detection</th>
-                            <td class="w-80">
-                                <div>
-                                    @if($data->detection)
-                                    @switch($data->detection)
-                                    @case(5)
-                                    5-Not detectable
-                                    @break
-                                    @case(4)
-                                    4-Unlikely to detect
-                                    @break
-                                    @case(3)
-                                    3-Possible to detect
-                                    @break
-                                    @case(2)
-                                    2-Likely to detect
-                                    @break
-                                    @case(1)
-                                    1-Always detected
-                                    @break
-                                    @default
-                                    Not Applicable
-                                    @endswitch
-                                    @else
-                                    Not Applicable
-                                    @endif
-                                </div>
-                            </td>
+                <table>
+                    <thead>
+                        <tr class="table_bg">
+                            <th class="w-10">Row #</th>
+                            <th class="w-20">Initial Severity (S)</th>
+                            <th class="w-20">Initial Probability (P)</th>
+                            <th class="w-20">Initial Detectability (D)</th>
                             <th class="w-20">RPN</th>
-                            <td class="w-80">
-                                <div>
-                                    @if($data->rpn)
-                                    {{ $data->rpn }}
-                                    @else
-                                    Not Applicable
-                                    @endif
-                                </div>
-                            </td>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @php 
+                            $measurement_4 = unserialize($failure_mode->initial_severity);
+                            $measurement_5 = unserialize($failure_mode->initial_probability);
+                            $measurement_6 = unserialize($failure_mode->initial_detectability);
+                            $measurement_7 = unserialize($failure_mode->initial_rpn);
+                            $row_number = 1; // Reset row number
+                        @endphp
+
+                        @for ($i = 0; $i < count($measurement_4); $i++)
+                            <tr>
+                                <td class="w-10">{{ $row_number++ }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_5[$i] ?? 'Not Applicable') }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_6[$i] ?? 'Not Applicable') }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_7[$i] ?? 'Not Applicable') }}</td>
+                            </tr>
+                        @endfor
+                    </tbody>
+                </table>
+
+                <table>
+                    <thead>
+                        <tr class="table_bg">
+                            <th class="w-10">Row #</th>
+                            <th class="w-20">Control Measures recommended/ Risk mitigation proposed</th>
+                            <th class="w-20">Residual Severity (S)</th>
+                            <th class="w-20">Residual Probability (P)</th>
+                            <th class="w-20">Residual Detectability (D)</th>
+                            <th class="w-20">Risk Level (RPN)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php 
+                            $measurement_8 = unserialize($failure_mode->risk_control_measure);
+                            $measurement_9 = unserialize($failure_mode->residual_severity);
+                            $measurement_10 = unserialize($failure_mode->residual_probability);
+                            $measurement_11 = unserialize($failure_mode->residual_detectability);
+                            $measurement_12 = unserialize($failure_mode->residual_rpn);
+                            $row_number = 1; // Reset row number
+                        @endphp
+
+                        @for ($i = 0; $i < count($measurement_8); $i++)
+                            <tr>
+                                <td class="w-10">{{ $row_number++ }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_8[$i] ?? 'Not Applicable') }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_9[$i] ?? 'Not Applicable') }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_10[$i] ?? 'Not Applicable') }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_11[$i] ?? 'Not Applicable') }}</td>
+                                <td class="w-20">{{ htmlspecialchars($measurement_12[$i] ?? 'Not Applicable') }}</td>
+                            </tr>
+                        @endfor
+                    </tbody>
+                </table>
+
+            <table>
+                <thead>
+                    <tr class="table_bg">
+                        <th class="w-10">Row #</th>
+                        <th class="w-20">Category of Risk Level (Low, Medium, and High)</th>
+                        <th class="w-20">Risk Acceptance (Y/N)</th>
+                        <th class="w-20">Traceability document</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @php 
+                        $measurement_13 = unserialize($failure_mode->risk_acceptance);
+                        $measurement_14 = unserialize($failure_mode->mitigation_proposal);
+                        $measurement_15 = unserialize($failure_mode->risk_acceptance2);
+                        $max_count = max(count($measurement_13), count($measurement_14), count($measurement_15));
+                        $row_number = 1;
+                    @endphp
+
+                    @for ($i = 0; $i < $max_count; $i++)
                         <tr>
-                            <th class="w-20">Risk Level</th>
-                            <td class="w-80">@if($data->risk_level){{ $data->risk_level }}@else Not Applicable @endif</td>
+                            <td class="w-10">{{ $row_number++ }}</td>
+                            <td class="w-20">{{ htmlspecialchars($measurement_13[$i] ?? 'Not Applicable') }}</td>
+                            <td class="w-20">{{ htmlspecialchars($measurement_14[$i] ?? 'Not Applicable') }}</td>
+                            <td class="w-20">{{ htmlspecialchars($measurement_15[$i] ?? 'Not Applicable') }}</td>
                         </tr>
-                    </table>
-                </div>
+                    @endfor
+                </tbody>
+            </table>
+
+            </div>
+
+
+       
+
                 <div class="block-head">
                     Fishbone or Ishikawa Diagram
                 </div>
@@ -993,10 +965,148 @@
 
                 </table>
 
-            </div>
+         
+           <div class="border">
+            <table>
+                        <tr>
+                            <th class="w-20">Root Cause Description</th>
+                            <td class="w-80">@if($data->root_cause_description){{ $data->root_cause_description}}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Investigation Summary</th>
+                            <td class="w-80">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
+                        </tr>
+
+
+            </table>
+           </div>
+
+
+
+
+          <div class="block">
+            
+                <div class="block-head">
+                   Risk Analysis
+                </div>
+
+                
+                    <table>
+
+                     
+                        <tr>
+                            <th class="w-20">Severity Rate</th>
+                            <td class="w-80">
+                                <div>
+                                    @if($data->severity_rate)
+                                    @switch($data->severity_rate)
+                                    @case(1)
+                                    1-Insignificant
+                                    @break
+                                    @case(2)
+                                    2-Minor
+                                    @break
+                                    @case(3)
+                                    3-Major
+                                    @break
+                                    @case(4)
+                                    4-Critical
+                                    @break
+                                    @case(5)
+                                    5-Catastrophic
+                                    @break
+
+                                    @default
+                                    Not Applicable
+                                    @endswitch
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+
+                            <th class="w-20">Occurrence</th>
+                            <td class="w-80">
+                                <div>
+                                    @if($data->occurrence)
+                                    @switch($data->occurrence)
+                                    @case(1)
+                                    1-Very rare
+                                    @break
+                                    @case(2)
+                                    2-Unlikely
+                                    @break
+                                    @case(3)
+                                    3-Possibly
+                                    @break
+                                    @case(4)
+                                    4-Likely
+                                    @break
+                                    @case(5)
+                                    5-Almost certain (every time)
+                                    @break
+                                    @default
+                                    Not Applicable
+                                    @endswitch
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+
+                        </tr>
+                        <tr>
+                            <th class="w-20">Detection</th>
+                            <td class="w-80">
+                                <div>
+                                    @if($data->detection)
+                                    @switch($data->detection)
+                                    @case(5)
+                                    5-Not detectable
+                                    @break
+                                    @case(4)
+                                    4-Unlikely to detect
+                                    @break
+                                    @case(3)
+                                    3-Possible to detect
+                                    @break
+                                    @case(2)
+                                    2-Likely to detect
+                                    @break
+                                    @case(1)
+                                    1-Always detected
+                                    @break
+                                    @default
+                                    Not Applicable
+                                    @endswitch
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                            <th class="w-20">RPN</th>
+                            <td class="w-80">
+                                <div>
+                                    @if($data->rpn)
+                                    {{ $data->rpn }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Risk Level</th>
+                            <td class="w-80">@if($data->risk_level){{ $data->risk_level }}@else Not Applicable @endif</td>
+                        </tr>
+                    </table>
+                </div>
+
 
             <div class="block">
-                <div class="head">
+              
                     <div class="block-head">
                         Residual Risk
                     </div>
@@ -1106,65 +1216,23 @@
                         </tr>
 
 
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">@if($data->comments2){{ $data->comments2 }}@else Not Applicable @endif</td>
-
-                        </tr>
+                        
 
                     </table>
-                </div>
+                
             </div>
 
+        <div class="border">
+            <table>
+            <tr>
+                <th class="w-20">Comments</th>
+                <td class="w-80">@if($data->comments2){{ $data->comments2 }}@else Not Applicable @endif</td>
 
+              </tr>
+            </table>
+        </div>
 
-            
-         
-            <div class="block">
-                <div class="head">
-                    <div class="block-head">
-                        Risk Mitigation
-                    </div>
-                    <table>
-                        <tr>
-                            <th class="w-20">Mitigation Required</th>
-                            <td class="w-30">@if($data->mitigation_required){{ $data->mitigation_required }}@else Not Applicable @endif</td>
-                            <th class="w-20">Mitigation Plan</th>
-                            <td class="w-30">@if($data->mitigation_plan){{ $data->mitigation_plan}}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Scheduled End Date</th>
-                            <td class="w-30">@if($data->mitigation_due_date){{ $data->mitigation_due_date }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Status of Mitigation</th>
-                            <td class="w-30">@if($data->mitigation_status){{ $data->mitigation_status }}@else Not Applicable @endif</td>
-                            <th class="w-20">Mitigation Status Comments</th>
-                            <td class="w-30">@if($data->mitigation_status_comments){{ $data->mitigation_status_comments}}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Impact</th>
-                            <td class="w-30">@if($data->impact){{ $data->impact }}@else Not Applicable @endif</td>
-                            <th class="w-20">Criticality</th>
-                            <td class="w-30">@if($data->criticality){{ $data->criticality}}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Impact Analysis</th>
-                            <td class="w-80">@if($data->impact_analysis){{ $data->impact_analysis }}@else Not Applicable @endif</td>
-                            <th class="w-20">Risk Analysis</th>
-                            <td class="w-80">@if($data->risk_analysis){{ $data->risk_analysis}}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Reference Record</th>
-                            <td class="w-30">@if($data->refrence_record){{ Helpers::getDivisionName($data->refrence_record) }}/RA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
-                            <th class="w-20">Due Date Extension Justification</th>
-                            <td class="w-80">@if($data->due_date_extension){{ $data->due_date_extension}}@else Not Applicable @endif</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-              <div class="border-table">
+        <div class="border-table">
     <div class="block-head">
    Mitigation Plan Details
     </div>
@@ -1207,6 +1275,102 @@
         </tbody>
     </table>
 </div>
+         
+            <div class="block">
+                <div class="head">
+                    <div class="block-head">
+                        Risk Mitigation
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">Mitigation Required</th>
+                            <td class="w-30">@if($data->mitigation_required){{ $data->mitigation_required }}@else Not Applicable @endif</td>
+                          
+                            </tr>
+                        <tr>
+
+                           <th class="w-20">Scheduled End Date</th>
+                            <td class="w-30">@if($data->mitigation_due_date){{ $data->mitigation_due_date }}@else Not Applicable @endif</td>
+                        
+                            <th class="w-20">Status of Mitigation</th>
+                            <td class="w-30">@if($data->mitigation_status){{ $data->mitigation_status }}@else Not Applicable @endif</td>
+                            
+                       
+                        </tr>
+                        
+                       
+                        
+                    </table>
+            <div class="border">
+                <table>
+                        <tr>
+                            <th class="w-20">Mitigation Plan</th>
+                            <td class="w-80">@if($data->mitigation_plan){{ $data->mitigation_plan}}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                        <th class="w-20">Mitigation Status Comments</th>
+                            <td class="w-80">@if($data->mitigation_status_comments){{ $data->mitigation_status_comments}}@else Not Applicable @endif</td>
+                     
+                        </tr>
+                </table>
+            </div>
+
+
+
+
+
+            <div class="block">
+                <div class="head">
+                    <div class="block-head">
+                    Overall Assessment
+                    </div>
+                    <table>
+                        
+                      
+                        <tr>
+                            <th class="w-20">Impact</th>
+                            <td class="w-30">@if($data->impact){{ $data->impact }}@else Not Applicable @endif</td>
+                            <th class="w-20">Criticality</th>
+                            <td class="w-30">@if($data->criticality){{ $data->criticality}}@else Not Applicable @endif</td>
+                        </tr>
+                       
+                        <tr>
+                            <th class="w-20">Reference Record</th>
+                            <td class="w-30">@if($data->refrence_record){{ Helpers::getDivisionName($data->refrence_record) }}/RA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
+                         </tr>
+                    </table>
+
+
+
+
+            <div class="border">
+                <table>
+                        <tr>
+                            <th class="w-20">Impact Analysis</th>
+                            <td class="w-80">@if($data->impact_analysis){{ $data->impact_analysis }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>   
+                           
+                            <th class="w-20">Risk Analysis</th>
+                            <td class="w-80">@if($data->risk_analysis){{ $data->risk_analysis}}@else Not Applicable @endif</td>
+                        </tr>
+                </table>
+            </div>
+            
+            <div class="border">
+                        <div class="block-head">
+                        Extension Justification
+                        </div>
+                     <table>
+                        <tr>
+                        <th class="w-20">Due Date Extension Justification</th>
+                            <td class="w-80">@if($data->due_date_extension){{ $data->due_date_extension}}@else Not Applicable @endif</td>
+                     
+                        </tr>
+                     </table>
+
+            </div>
+            
 
             <div class="block">
                 <div class="block-head">

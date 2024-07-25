@@ -715,68 +715,52 @@
                                                 <textarea name="description" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="description">{{ $data->description }}</textarea>
                                             </div>
                                         </div>
-                                       
 
-
-                                   <div class="col-md-12 mb-3">
-                                            <div class="group-input">
-                                                <label for="Impact Assessment">Purpose </label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea class="summernote" name="purpose" id="summernote-1">
-                                                       {{$data->purpose}}    </textarea>
-                                            </div>
-                                    </div>
-
-                                     <div class="col-md-12 mb-3">
-                                            <div class="group-input">
-                                                <label for="Impact Assessment">Scope</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea class="summernote" name="scope" id="summernote-1">
-                                                 {{$data->scope}}    </textarea>
-                                            </div>
+                                         <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Comments">Purpose</label>
+                                            <textarea name="purpose" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="comments">{{ $data->purpose }}</textarea>
+                                        </div>
                                     </div>
 
 
-                                     <div class="col-md-12 mb-3">
-                                            <div class="group-input">
-                                                <label for="Impact Assessment">Reason for Revision</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea class="summernote" name="reason_for_revision" 
-                                                id="summernote-1">
-                                                   {{$data->reason_for_revision}} </textarea>
-                                            </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Comments">Scope</label>
+                                            <textarea name="scope" id="comments" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $data->scope }}</textarea>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Comments">Reason for Revision</label>
+                                            <textarea name="reason_for_revision" id="comments" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $data->reason_for_revision }}</textarea>
+                                        </div>
+                                    </div>
+                                    
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Comments">Brief Description / Procedure </label>
+                                            <textarea name="Brief_description" id="comments" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} >{{ $data->Brief_description }}</textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                     <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Comments">Documents Used for Risk Management</label>
+                                            <textarea name="document_used_risk" id="comments" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} >{{ $data->document_used_risk }}</textarea>
+                                        </div>
                                     </div>
 
 
-                                     <div class="col-md-12 mb-3">
-                                            <div class="group-input">
-                                                <label for="Impact Assessment">Brief Description / Procedure </label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea class="summernote" name="Brief_description" id="summernote-1">
-                                                   {{$data->Brief_description}}  </textarea>
-                                            </div>
-                                    </div>
-
-                                     <div class="col-md-12 mb-3">
-                                            <div class="group-input">
-                                                <label for="Impact Assessment">Documents Used for Risk Management</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea class="summernote" name="document_used_risk" id="summernote-1">
-                                                  {{$data->document_used_risk}}   </textarea>
-                                            </div>
-                                    </div>
-
-
-
-
-
-
-                                        <div class="col-12">
+                                   <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Comments">Risk/Opportunity Comments</label>
                                                 <textarea name="comments" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="comments">{{ $data->comments }}</textarea>
                                             </div>
-                                        </div>
+                                    </div>
 
 
 
@@ -2973,8 +2957,7 @@
     });
 </script>
 
-
-<script>
+  <script>
     $(document).ready(function() {
         $('.summernote').summernote({
             toolbar: [
@@ -2988,9 +2971,12 @@
             ]
         });
     });
-</script>  
+</script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
  @endsection

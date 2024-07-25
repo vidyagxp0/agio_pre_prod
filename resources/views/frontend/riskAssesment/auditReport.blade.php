@@ -170,8 +170,7 @@
                     <strong> Risk Assesment No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::getDivisionName($doc->division_id) }}/RA/{{ Helpers::year($doc->created_at) }}/{{ $doc->record }}
-
+                   {{ Helpers::getDivisionName($doc->division_id) }}/RA/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
 
                      {{--  {{ Helpers::divisionNameForQMS($doc->division_id) }} /RCA/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}  --}}
 
