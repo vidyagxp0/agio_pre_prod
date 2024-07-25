@@ -243,7 +243,50 @@
     border-radius: 10px;
 }
 
+.filter-container {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between elements */
+            padding: 10px;
+            background-color: #4274da;
+            border-radius: 5px;
+            margin: 20px;
+            flex-wrap: wrap; /* Allow wrapping if needed */
+        }
 
+        .group-input {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .group-input label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .group-input input,
+        .group-input select {
+            padding: 5px;
+            font-size: 14px;
+            width: 375px; /* Set width for consistency */
+        }
+
+        .filter-button {
+            padding: 8px 16px;
+            background-color: #111;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 5px;
+            margin-top: 18px; /* Align button with inputs */
+        }
+
+        /* .filter-button:hover {
+            background-color: #4682b4;
+        } */
+       
+        
             </style>
 
             <body>
@@ -282,16 +325,59 @@
                                 use Carbon\Carbon;
                                 @endphp
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Carbon::parse($document->due_date_gi)->format('j F Y') }}</div>
-
-                        </div>
-        </div>
-        </table>
+                            {{-- <div class="group-input">
+                                <label for="query">Type</label>
+                                <select id="query" name="type" onchange="toggleDateInputs(this.value)">
+                                    <option value="">Select Type</option>
+                                    <option value="date">Date</option>
+                                </select>
+                            </div> --}}
+                            
+                           
+                    
+                     </table>
 
         </header>
+        <div class="filter-container">
+            <div class="group-input">
+                <label for="query">Type</label>
+                <select id="query" name="type">
+                    <option value="">Select Type</option>
+                    <option value="cft">CFT Review</option>
+                    <option value="notification">Notification</option>
+                    <option value="business">Business Rules</option>
+                    <option value="stage">Stage Change</option>
+                    <option value="user_action">User Action</option>
 
-        <div class="inner-block">
-            <div class="division">
+
+                    <!-- Add more options as needed -->
+                </select>
             </div>
+        
+            <div class="group-input">
+                <label for="performed_by">Performed By</label>
+                <select id="performed_by" name="performed_by">
+                    @foreach($audit->unique('user_name') as $performer)
+                        <option value="{{ $performer->user_name }}">{{ $performer->user_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+        
+            <div class="group-input">
+                <label for="from_date">From Date</label>
+                <input type="date" id="from_date" name="from_date"  >
+            </div>
+        
+            <div class="group-input">
+                <label for="to_date">To Date</label>
+                <input type="date" id="to_date" name="to_date">
+            </div>
+        
+            <button class="button_theme1" onclick="filterRecords()">Filter</button>
+        </div>
+        
+        <div class="inner-block">
             <div class="second-table">
                 <table>
                     <tr class="table_bg">
@@ -302,71 +388,49 @@
                         <th>Action Type</th>
                         <th>Performer</th>
                     </tr>
-
-                    <tr>
-                        @php
-                            $previousItem = null;
-                        @endphp
-
-                        @foreach ($audit as $audits => $dataDemo)
-                            <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
-                            </td>
-
+        
+                    @foreach ($audit as $audits => $dataDemo)
+                        <tr class="record-row" data-type="{{ $dataDemo->type }}" data-performed-by="{{ $dataDemo->user_name }}" data-performed-on="{{ \Carbon\Carbon::parse($dataDemo->created_at)->format('Y-m-d') }}">
+                            <td>{{ ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 }}</td>
+                            <td><div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div></td>
+                            <td><div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div></td>
                             <td>
-                                <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
-                            </td>
-
-                            <td>
-                                <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
-                                </div>
+                                <div><strong>Data Field Name :</strong>{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable'  }}</div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change From :</strong>{!! $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' !!}
+                                        <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
                                     @else
-                                        <strong>Change From :</strong>{!! $dataDemo->previous ? $dataDemo->previous : 'Null' !!}
+                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
                                     @endif
                                 </div>
                                 <br>
                                 <div>
                                     @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change To :</strong>{!! $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' !!}
+                                        <strong>Change To :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
                                     @else
-                                        <strong>Change To :</strong>{!! $dataDemo->current ? $dataDemo->current : 'Not Applicable' !!}
+                                        <strong>Change To :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
                                     @endif
                                 </div>
-                                <div style="margin-top: 5px;">
-                                    <strong>Change Type :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
-                                </div>
+                                
+                                <div style="margin-top: 5px;"><strong>Change Type :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}</div>
                             </td>
                             <td>
-                                <div>
-                                    <strong> Action Name
-                                        :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
-
-                                </div>
+                                <div><strong>Action Name :</strong>{{ $dataDemo->action }}</div>
                             </td>
                             <td>
-                                <div><strong> Peformed By
-                                        :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
-                                </div>
+                                <div><strong>Performed By :</strong>{{ $dataDemo->user_name }}</div>
                                 <div style="margin-top: 5px;">
                                     <strong>Performed On:</strong>
-                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('j F Y H:i') : 'Not Applicable' }}
+                                    {{ \Carbon\Carbon::parse($dataDemo->created_at)->format('j F Y H:i') }}
                                 </div>
-                                <div style="margin-top: 5px;"><strong> Comments
-                                        :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
-
+                                <div style="margin-top: 5px;"><strong>Comments :</strong>{{ $dataDemo->comment }}</div>
                             </td>
-                    </tr>
+                        </tr>
                     @endforeach
                 </table>
             </div>
         </div>
+        
         <!-- Pagination links -->
         <div style="float: inline-end; margin: 10px;">
             <style>
@@ -468,4 +532,61 @@
 
         });
     </script>
+<script>
+     function formatDate(date) {
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        return new Intl.DateTimeFormat('en-GB', options).format(date);
+    }
+
+    // Function to filter records based on selected type, performer, and date range
+    function filterRecords() {
+        var fromDate = document.getElementById('from_date').value;
+        var toDate = document.getElementById('to_date').value;
+        var selectedType = document.getElementById('query').value;
+        var selectedPerformer = document.getElementById('performed_by').value;
+
+        var from = fromDate ? new Date(fromDate) : null;
+        var to = toDate ? new Date(toDate) : null;
+
+        // Get all records
+        var records = document.querySelectorAll('.record-row');
+
+        records.forEach(function(record) {
+            var recordDate = new Date(record.getAttribute('data-performed-on'));
+            var recordType = record.getAttribute('data-type');
+            var recordPerformer = record.getAttribute('data-performed-by');
+
+            // Check if record matches the selected type, performer, and date range
+            var matchesType = selectedType ? recordType === selectedType : true;
+            var matchesPerformer = selectedPerformer ? recordPerformer === selectedPerformer : true;
+            var matchesDate = (!from || recordDate >= from) && (!to || recordDate <= to);
+
+            if (matchesType && matchesPerformer && matchesDate) {
+                record.style.display = 'table-row'; // Show the record
+            } else {
+                record.style.display = 'none'; // Hide the record
+            }
+        });
+    }
+
+     // Display formatted dates for filtering
+     function displayFormattedDates() {
+        var fromDate = document.getElementById('from_date').value;
+        var toDate = document.getElementById('to_date').value;
+
+        if (fromDate) {
+            var from = new Date(fromDate);
+            console.log("From Date: " + formatDate(from));
+        }
+
+        if (toDate) {
+            var to = new Date(toDate);
+            console.log("To Date: " + formatDate(to));
+        }
+    }
+
+    // Call displayFormattedDates if needed
+    document.getElementById('from_date').addEventListener('change', displayFormattedDates);
+    document.getElementById('to_date').addEventListener('change', displayFormattedDates);
+</script>
 @endsection

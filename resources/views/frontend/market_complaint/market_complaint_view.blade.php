@@ -816,8 +816,8 @@
                             <div class="col-md-6 ">
                                 <div class="group-input ">
                                     <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
-                                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                    <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                    <input disabled type="text" value="{{ \Carbon\Carbon::parse($data->intiation_date)->format('d-M-Y') }}" name="intiation_date">
+                                    <input type="hidden" value="{{ $data->intiation_date }}" name="intiation_date">
                                 </div>
                             </div>
 
@@ -827,7 +827,7 @@
                                         class="text-danger">*</span></label>
                                         <span id="rchars">255</span> Characters remaining
                                   
-                                    <input  name="description_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="docname" required value="{{ $data->description_gi }}"  maxlength="255" >
+                                    <input  name="description_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="docname"  value="{{ $data->description_gi }}"  maxlength="255" >
                                 
                                 </div>
                             </div>

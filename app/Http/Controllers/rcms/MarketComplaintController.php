@@ -204,6 +204,76 @@ class MarketComplaintController extends Controller
 
             // ----------------------------------autid show  fileds ----------------------------------------------------------
           
+            if (!empty($marketComplaint->due_date_gi)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Due Date';
+                $history->previous = "Null";
+                $history->current = Carbon::parse($marketComplaint->due_date_gi)->format('j-F-Y');
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+                $history->save();
+            }
+
+            if (!empty($marketComplaint->initiator_id)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Initiator';
+                $history->previous = "Null";
+                $initior_name =Auth::user()->name;
+                $history->current = $initior_name;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+                $history->save();
+            }
+           
+            if (!empty($marketComplaint->intiation_date)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Intiation Date';
+                $history->previous = "Null";
+                $history->current = $marketComplaint->intiation_date;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+                $history->save();
+            }
+            if (!empty($marketComplaint->division_id)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Division';
+                $history->previous = "Null";
+                $divisioncode=  Helpers::getDivisionName(session()->get('division'));
+                $history->current = $divisioncode;
+                // $history->current = $marketComplaint->division_id;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+                $history->save();
+            }
+
 
             if (!empty($marketComplaint->description_gi)) {
                 $history = new MarketComplaintAuditTrial();
@@ -1346,6 +1416,31 @@ public function update(Request $request,$id)
 
 
         // -------------------------audit show conditon--codestart----------------------------------
+
+        if ( $lastmarketComplaint->due_date_gi != $marketComplaint->due_date_gi ) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Due Date';
+            // $history->previous = $lastmarketComplaint->due_date_gi;
+            $history->previous = Carbon::parse($lastmarketComplaint->due_date_gi)->format('j-F-Y');
+            $history->current = Carbon::parse($marketComplaint->due_date_gi)->format('j-F-Y');
+            $history->comment = $request->due_date_gi_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+        
+            // New condition added here
+            if (is_null($lastmarketComplaint->due_date_gi) || $lastmarketComplaint->due_date_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+        
+            $history->save();
+        }
         if ( $lastmarketComplaint->initiator_group_code_gi != $marketComplaint->initiator_group_code_gi ) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
