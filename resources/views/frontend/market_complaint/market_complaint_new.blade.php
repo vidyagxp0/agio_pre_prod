@@ -234,6 +234,17 @@
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                            class="text-danger">*</span></label>
+                                            <span id="rchars">255</span> Characters remaining
+                                        
+                                        <input  name="description_gi" id="docname" maxlength="255" required >
+                                    
+                                    </div>
+                                </div>
                                 {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -248,18 +259,51 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-md-6 new-date-data-field">
+                                {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                         <div class="calenderauditee">
                                             <!-- Display the formatted date in a readonly input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="" />
                                            
-                                            <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                            <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input"  />
+                                        </div>
+                                    </div>
+                                </div> --}}
+
+
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Due Date </label>{{-- <span class="text-danger">*</span> --}}
+                                        <div class="calenderauditee">
+                                            <!-- Display the formatted date in a readonly input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="" class="form-control"    />
+                                            <!-- Hidden input date format ke sath -->
+                                            <input type="date" id="due_date_input" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control hide-input" onchange="updateDueDateDisplay()"  />
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <script>
+                                    function updateDueDateDisplay() {
+                                        var dateInput = document.getElementById('due_date_input').value;
+                                        if (dateInput) {
+                                            var date = new Date(dateInput);
+                                            var options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                            var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                            document.getElementById('due_date_display').value = formattedDate;
+                                        } else {
+                                            document.getElementById('due_date_display').value = '';
+                                        }
+                                    }
+                                
+                                    // To show the existing value if it's already set (for example, in an edit form)
+                                    $(document).ready(function() {
+                                        updateDueDateDisplay();
+                                    });
+                                </script>
+                                
+                                {{-- <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
                                         const options = { day: '2-digit', month: 'short', year: 'numeric' };
@@ -277,24 +321,14 @@
                                     .hide-input {
                                         display: none;
                                     }
-                                    </style>
+                                    </style> --}}
 
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                            class="text-danger">*</span></label>
-                                            <span id="rchars">255</span>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <input  name="description_gi" id="docname" maxlength="255" required >
-                                    
-                                    </div>
-                                </div>
+                                
 
-
+{{-- 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group"><b>Initiator Group</b></label>
+                                        <label for="Initiator Group"><b>Initiator Department</b></label>
                                         <select name="initiator_group" id="initiator_group">
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
@@ -342,13 +376,65 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <label for="Initiator Group Code">Department code</label>
                                         <input type="text" name="initiator_group_code_gi" id="initiator_group_code"
                                             value="" readonly>
                                     </div>
-                                </div>
+                                </div> --}}
 
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"><b>Initiator Department</b></label>
+                                        <select name="initiator_group" id="initiator_group">
+                                            <option value="" data-code="">-- Select --</option>
+                                            <option value="Corporate Quality Assurance" data-code="CQA" @if (old('initiator_group') == 'Corporate Quality Assurance') selected @endif>Corporate Quality Assurance</option>
+                                            <option value="Quality Assurance Biopharma" data-code="QAB" @if (old('initiator_group') == 'Quality Assurance Biopharma') selected @endif>Quality Assurance Biopharma</option>
+                                            <option value="Central Quality Control" data-code="CQC" @if (old('initiator_group') == 'Central Quality Control') selected @endif>Central Quality Control</option>
+                                            <option value="Manufacturing" data-code="MANU" @if (old('initiator_group') == 'Manufacturing') selected @endif>Manufacturing</option>
+                                            <option value="Plasma Sourcing Group" data-code="PSG" @if (old('initiator_group') == 'Plasma Sourcing Group') selected @endif>Plasma Sourcing Group</option>
+                                            <option value="Central Stores" data-code="CS" @if (old('initiator_group') == 'Central Stores') selected @endif>Central Stores</option>
+                                            <option value="Information Technology Group" data-code="ITG" @if (old('initiator_group') == 'Information Technology Group') selected @endif>Information Technology Group</option>
+                                            <option value="Molecular Medicine" data-code="MM" @if (old('initiator_group') == 'Molecular Medicine') selected @endif>Molecular Medicine</option>
+                                            <option value="Central Laboratory" data-code="CL" @if (old('initiator_group') == 'Central Laboratory') selected @endif>Central Laboratory</option>
+                                            <option value="Tech team" data-code="TT" @if (old('initiator_group') == 'Tech team') selected @endif>Tech team</option>
+                                            <option value="Quality Assurance" data-code="QA" @if (old('initiator_group') == 'Quality Assurance') selected @endif>Quality Assurance</option>
+                                            <option value="Quality Management" data-code="QM" @if (old('initiator_group') == 'Quality Management') selected @endif>Quality Management</option>
+                                            <option value="IT Administration" data-code="IA" @if (old('initiator_group') == 'IT Administration') selected @endif>IT Administration</option>
+                                            <option value="Accounting" data-code="ACC" @if (old('initiator_group') == 'Accounting') selected @endif>Accounting</option>
+                                            <option value="Logistics" data-code="LOG" @if (old('initiator_group') == 'Logistics') selected @endif>Logistics</option>
+                                            <option value="Senior Management" data-code="SM" @if (old('initiator_group') == 'Senior Management') selected @endif>Senior Management</option>
+                                            <option value="Business Administration" data-code="BA" @if (old('initiator_group') == 'Business Administration') selected @endif>Business Administration</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
                                 <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Department code</label>
+                                        <input type="text" name="initiator_group_code_gi" id="initiator_group_code" value="{{ old('initiator_group_code_gi') }}" readonly>
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                    document.getElementById('initiator_group').addEventListener('change', function() {
+                                        var selectedOption = this.options[this.selectedIndex];
+                                        var selectedCode = selectedOption.getAttribute('data-code');
+                                        document.getElementById('initiator_group_code').value = selectedCode;
+                                    });
+                                
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        var initiatorGroupElement = document.getElementById('initiator_group');
+                                        if (initiatorGroupElement.value) {
+                                            var selectedOption = initiatorGroupElement.options[initiatorGroupElement.selectedIndex];
+                                            var selectedCode = selectedOption.getAttribute('data-code');
+                                            document.getElementById('initiator_group_code').value = selectedCode;
+                                        }
+                                    });
+                                </script>
+                                
+
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
                                         <div><small class="text-primary">Please select related information</small></div>
@@ -364,9 +450,9 @@
                                             <option value="others">Others</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-md-12 mb-3">
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="If Other">If Other</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -374,31 +460,9 @@
                                         <textarea  name="if_other_gi" id="summernote-1">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Initiator Group">Is Repeat</label>
-                                        <select name="is_repeat_gi" onchange="">
-                                            <option value="">-- select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-
-
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Repeat Nature">Repeat Nature</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="repeat_nature_gi" id="summernote-1">
-
-                                    </textarea>
-                                    </div>
-                                </div>
+                               
 
 
 
@@ -427,7 +491,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Complainant</label>
                                         <select id="select-state" placeholder="Select..." name="complainant_gi">
@@ -439,6 +503,15 @@
                                         @error('assign_to')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
+                                    </div>
+                                </div> --}}
+
+                            {{-- ===changes according client requerement ======= --}}
+                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group">Complainant</label>
+                                      <input type="text" name="complainant_gi" >  
+                                
                                     </div>
                                 </div>
 
@@ -459,44 +532,44 @@
                                         <label for="complaint_reported_on">Complaint Reported On</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="complaint_dat" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="complaint_date_picker" name="complaint_reported_on_gi"
-                                                value=""
-                                                class="hide-input" oninput="handleDateInput(this, 'complaint_dat')" />
+                                            <input type="date" id="complaint_date_picker" name="complaint_reported_on_gi" value="" class="hide-input" oninput="handleDateInput(this, 'complaint_dat')" />
                                         </div>
                                     </div>
                                 </div>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', (event) => {
-                                const dateInput = document.getElementById('complaint_date_picker');
-                                const today = new Date().toISOString().split('T')[0];
-                                dateInput.setAttribute('max', today);
-                        
-                                // Show the date picker when clicking on the readonly input
-                                const readonlyInput = document.getElementById('complaint_dat');
-                                readonlyInput.addEventListener('click', () => {
-                                    dateInput.style.display = 'block';
-                                    dateInput.focus();
-                                });
-                        
-                                // Update the readonly input when a date is selected
-                                dateInput.addEventListener('change', () => {
-                                    const selectedDate = new Date(dateInput.value);
-                                    readonlyInput.value = formatDate(selectedDate);
-                                    dateInput.style.display = 'none';
-                                });
-                            });
-                        
-                            function handleDateInput(dateInput, readonlyInputId) {
-                                const readonlyInput = document.getElementById(readonlyInputId);
-                                const selectedDate = new Date(dateInput.value);
-                                readonlyInput.value = formatDate(selectedDate);
-                            }
-                        
-                            function formatDate(date) {
-                                const options = { day: 'numeric', month: 'long', year: 'numeric' };
-                                return date.toLocaleDateString('en-GB', options);
-                            }
-                        </script>
+                                
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', (event) => {
+                                        const dateInput = document.getElementById('complaint_date_picker');
+                                        const today = new Date().toISOString().split('T')[0];
+                                        dateInput.setAttribute('max', today);
+                                
+                                        // Show the date picker when clicking on the readonly input
+                                        const readonlyInput = document.getElementById('complaint_dat');
+                                        readonlyInput.addEventListener('click', () => {
+                                            dateInput.style.display = 'block';
+                                            dateInput.focus();
+                                        });
+                                
+                                        // Update the readonly input when a date is selected
+                                        dateInput.addEventListener('change', () => {
+                                            const selectedDate = new Date(dateInput.value);
+                                            readonlyInput.value = formatDate(selectedDate);
+                                            dateInput.style.display = 'none';
+                                        });
+                                    });
+                                
+                                    function handleDateInput(dateInput, readonlyInputId) {
+                                        const readonlyInput = document.getElementById(readonlyInputId);
+                                        const selectedDate = new Date(dateInput.value);
+                                        readonlyInput.value = formatDate(selectedDate);
+                                    }
+                                
+                                    function formatDate(date) {
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        return date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+                                </script>
+                                
                                 
                                 {{-- <script>
                                     document.addEventListener('DOMContentLoaded', (event) => {
@@ -540,7 +613,7 @@
                                 </div>
 
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Product Details
@@ -666,8 +739,87 @@
                                             tableBody.append(newRow);
                                         });
                                     });
+                                </script> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="root_cause">
+                                            Product Details
+                                            <button type="button" id="product_details">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                  data-bs-target="#document-details-field-instruction-modal"
+                                                  style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="product_details_details" style="width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 100px;">Row #</th>
+                                                        <th>Product Name</th>
+                                                        <th>Batch No.</th>
+                                                        <th>Mfg. Date</th>
+                                                        <th>Exp. Date</th>
+                                                        <th>Batch Size</th>
+                                                        <th>Pack Size</th>
+                                                        <th>Dispatch Quantity</th>
+                                                        <th>Remarks</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input disabled type="text" name="serial_number_gi[0][serial]" value="1"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_product_name]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_batch_no]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_mfg_date]" placeholder="DD-MMM-YYYY"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_expiry_date]" placeholder="DD-MMM-YYYY"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_batch_size]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_pack_size]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_dispatch_quantity]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_remarks]"></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                
+                                    $(document).ready(function() {
+                                        $('#product_details').click(function(e) {
+                                            e.preventDefault();
+                                            
+                                            function generateTableRow(serialNumber) {
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="serial_number_gi[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_no]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" placeholder="DD-MMM-YYYY"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" placeholder="DD-MMM-YYYY"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_dispatch_quantity]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_remarks]"></td>' +
+                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                    '</tr>';
+                                                return html;
+                                            }
+                                
+                                            var tableBody = $('#product_details_details tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
                                 </script>
-
+                                
 
                                                                 {{-- {{ ---end s code }} --}}
                             <div class="col-12">
@@ -751,6 +903,69 @@
                                         </select>
                                     </div>
                                 </div>
+                               
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="is_repeat_gi">Is Repeat</label>
+                                        <select name="is_repeat_gi" id="is_repeat_gi">
+                                            <option value="">-- select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-12 mb-3" id="repeat_nature_div" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="repeat_nature_gi">Repeat Nature</label>
+                                        <div>
+                                            <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                        </div>
+                                        <textarea name="repeat_nature_gi" id="repeat_nature_gi"></textarea>
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        // Handle the change event for the select element
+                                        var isRepeatSelect = document.getElementById('is_repeat_gi');
+                                        var repeatNatureDiv = document.getElementById('repeat_nature_div');
+                                
+                                        isRepeatSelect.addEventListener('change', function() {
+                                            if (isRepeatSelect.value === 'yes') {
+                                                repeatNatureDiv.style.display = 'block';
+                                            } else {
+                                                repeatNatureDiv.style.display = 'none';
+                                            }
+                                        });
+                                    });
+                                </script>
+                                
+                                
+                                
+                                {{-- <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group">Is Repeat</label>
+                                        <select name="is_repeat_gi" onchange="">
+                                            <option value="">-- select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Repeat Nature">Repeat Nature</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="summernote" name="repeat_nature_gi" id="summernote-1">
+
+                                    </textarea>
+                                    </div>
+                                </div> --}}
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -773,6 +988,24 @@
                                 </div>
 
 
+                               
+
+
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                            Exit </a> </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="CCForm2" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="sub-head col-12">Investigation</div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
@@ -1008,21 +1241,6 @@
                                     });
                                 </script>
 
-
-                                <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
-                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                            Exit </a> </button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="CCForm2" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
                                 <div class="sub-head col-12">HOD/Supervisor Review</div>
 
 
@@ -1580,7 +1798,6 @@
                                 Proposal to accomplish investigation:
                             </div>
                             <div class="col-12">
-                                {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
                                 <div class="group-input">
                                     <div class="why-why-chart">
                                         <table class="table table-bordered">
@@ -1588,15 +1805,215 @@
                                                 <tr>
                                                     <th style="width: 5%;">Sr. No.</th>
                                                     <th style="width: 40%;">Requirements</th>
-                                                    <th style="width: 20%;">Expected date of investigation completion
-                                                    </th>
+                                                    <th style="width: 10%;">Yes/No</th> 
+                                                    <th style="width: 20%;">Expected date of investigation completion</th>
                                                     <th>Remarks</th>
                                                 </tr>
                                             </thead>
+                                            <style>
+                                                .main-head{
+                                                   display: flex; 
+                                                   justify-content: space-around;
+                                                   gap: 12px;
+                                                }
+                                                .label-head{
+                                                   display: flex !important;
+                                                    gap: 14px;
+                                                }
+                                                .input-head{
+                                                   margin-top: 4px;
+                                                }
+                                            </style>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="flex text-center">1</td>
+                                                    <td>Complaint sample Required</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <span class="input-head"><input type="radio" name="csr1_yesno" value="yes" onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')"></span>
+                                                            <span>Yes</span>
+                                                        </label>
+                                                        <label class="label-head">
+                                                            <span class="input-head"><input type="radio" name="csr1_yesno" value="no" onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')"></span>
+                                                            <span>No</span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="csr1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="csr2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">2</td>
+                                                    <td>Additional info. From Complainant</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <input type="radio" name="afc1_yesno" value="yes" onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')"> Yes
+                                                        </label>
+                                                        <label class="label-head">
+                                                            <input type="radio" name="afc1_yesno" value="no" onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')"> No
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="afc1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="afc2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">3</td>
+                                                    <td>Analysis of complaint Sample</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <input type="radio" name="acs1_yesno" value="yes" onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')"> Yes
+                                                        </label>
+                                                        <label class="label-head">
+                                                            <input type="radio" name="acs1_yesno" value="no" onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')"> No
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="acs1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="acs2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">4</td>
+                                                    <td>QRM Approach</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <input type="radio" name="qrm1_yesno" value="yes" onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')"> Yes
+                                                        </label>
+                                                        <label class="label-head">
+                                                            <input type="radio" name="qrm1_yesno" value="no" onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')"> No
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="qrm1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="qrm2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">5</td>
+                                                    <td>Others</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <input type="radio" name="oth1_yesno" value="yes" onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')"> Yes
+                                                        </label>
+                                                        <label class="label-head">
+                                                            <input type="radio" name="oth1_yesno" value="no" onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')"> No
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="oth1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="oth2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <script>
+                                function toggleInputs(radioName, textarea1, textarea2) {
+                                    const radios = document.getElementsByName(radioName);
+                                    let enableInputs = false;
+                            
+                                    for (const radio of radios) {
+                                        if (radio.checked && radio.value === 'yes') {
+                                            enableInputs = true;
+                                            break;
+                                        }
+                                    }
+                            
+                                    document.getElementsByName(textarea1)[0].disabled = !enableInputs;
+                                    document.getElementsByName(textarea2)[0].disabled = !enableInputs;
+                                }
+                            
+                                // Call toggleInputs for each set of radio buttons to initialize the state on page load
+                                document.addEventListener('DOMContentLoaded', () => {
+                                    toggleInputs('csr1_yesno', 'csr1', 'csr2');
+                                    toggleInputs('afc1_yesno', 'afc1', 'afc2');
+                                    toggleInputs('acs1_yesno', 'acs1', 'acs2');
+                                    toggleInputs('qrm1_yesno', 'qrm1', 'qrm2');
+                                    toggleInputs('oth1_yesno', 'oth1', 'oth2');
+                                });
+                            </script>
+                            
+
+                            {{-- <div class="sub-head">
+                                Proposal to accomplish investigation:
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <div class="why-why-chart">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 5%;">Sr. No.</th>
+                                                    <th style="width: 40%;">Requirements</th>
+                                                    <th style="width: 10%;">Yes/No</th> 
+                                                    <th style="width: 20%;">Expected date of investigation completion</th>
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <style>
+                                                .main-head{
+                                                   display: flex; 
+                                                   justify-content: space-around;
+                                                   gap: 12px;
+                                                }
+                                                .label-head{
+                                                   display: flex !important;
+                                                    gap: 14px;
+                                                }
+                                                .input-head{
+                                                   margin-top: 4px;
+                                                }
+                                               </style>
                                             <tbody>
                                                 <tr>
                                                     <td class="flex text-center" name="">1</td>
                                                     <td>Complaint sample Required</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <span class="input-head"><input type="radio" name="csr1_yesno" value="yes"></span>
+                                                            <span>Yes</span>
+                                                        </label>
+                                                        <label class="label-head" >
+                                                           <span class="input-head"> <input type="radio" name="csr1_yesno" value="no"></span>
+                                                          <span>  No</span>
+                                                        </label>
+                                                    </td>
                                                     <td>
 
                                                         <div style="margin: auto; display: flex; justify-content: center;">
@@ -1619,6 +2036,14 @@
                                                 <tr>
                                                     <td class="flex text-center">2</td>
                                                     <td>Additional info. From Complainant</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <input type="radio" name="afc1_yesno" value="yes"> Yes
+                                                        </label>
+                                                        <label class="label-head">
+                                                            <input type="radio" name="afc1_yesno" value="no"> No
+                                                        </label>
+                                                    </td>
                                                     <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="afc1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -1631,13 +2056,18 @@
                                             <textarea name="afc2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
-
-
-
                                     </tr>
                                     <tr>
                                         <td class="flex text-center">3</td>
                                         <td>Analysis of complaint Sample</td>
+                                        <td class="main-head">
+                                            <label class="label-head">
+                                                <input type="radio" name="acs1_yesno" value="yes"> Yes
+                                            </label>
+                                            <label class="label-head">
+                                                <input type="radio" name="acs1_yesno" value="no"> No
+                                            </label>
+                                        </td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                 <textarea name="acs1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -1657,6 +2087,14 @@
                                     <tr>
                                         <td class="flex text-center">4</td>
                                         <td>QRM Approach</td>
+                                        <td class="main-head">
+                                            <label class="label-head">
+                                                <input type="radio" name="qrm1_yesno" value="yes"> Yes
+                                            </label>
+                                            <label class="label-head">
+                                                <input type="radio" name="qrm1_yesno" value="no"> No
+                                            </label>
+                                        </td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                 <textarea name="qrm1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -1675,6 +2113,14 @@
                                     <tr>
                                         <td class="flex text-center">5</td>
                                         <td>Others</td>
+                                        <td class="main-head">
+                                            <label class="label-head">
+                                                <input type="radio" name="oth1_yesno" value="yes"> Yes
+                                            </label>
+                                            <label class="label-head">
+                                                <input type="radio" name="oth1_yesno" value="no"> No
+                                            </label>
+                                        </td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                 <textarea name="oth1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -1695,7 +2141,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
 
                         <div class="col-12">
@@ -2040,7 +2486,7 @@
         });
     </script>
 
-<script>
+{{-- <script>
     document.getElementById('initiator_group').addEventListener('change', function() {
         var selectedValue = this.value;
         document.getElementById('initiator_group_code').value = selectedValue;
@@ -2054,7 +2500,7 @@
             $('#effect_check_date').val('');
         }
     }
-</script>
+</script> --}}
 
 
 

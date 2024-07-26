@@ -221,11 +221,10 @@ class MarketComplaintController extends Controller
                 $history->action_name = "Create";
                 $history->save();
             }
-
             if (!empty($marketComplaint->initiator_group)) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
-                $history->activity_type = 'Initiator Group';
+                $history->activity_type = 'Initiator Department';
                 $history->previous = "Null";
                 $history->current = $marketComplaint->initiator_group;
                 $history->comment = "Not Applicable";
@@ -233,11 +232,44 @@ class MarketComplaintController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
-                 $history->change_to = "Opened";
-                    $history->change_from = "Initiation";
-                    $history->action_name = "Create";
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
                 $history->save();
             }
+            if (!empty($marketComplaint->initiator_group_code_gi)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Department Code';
+                $history->previous = "Null";
+                $history->current = $marketComplaint->initiator_group_code_gi;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+                $history->save();
+            }
+
+            // if (!empty($marketComplaint->initiator_group)) {
+            //     $history = new MarketComplaintAuditTrial();
+            //     $history->market_id = $marketComplaint->id;
+            //     $history->activity_type = 'Initiator Group';
+            //     $history->previous = "Null";
+            //     $history->current = $marketComplaint->initiator_group;
+            //     $history->comment = "Not Applicable";
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $marketComplaint->status;
+            //      $history->change_to = "Opened";
+            //         $history->change_from = "Initiation";
+            //         $history->action_name = "Create";
+            //     $history->save();
+            // }
 
               if (!empty($marketComplaint->initiated_through_gi)) {
                 $history = new MarketComplaintAuditTrial();
@@ -1051,11 +1083,11 @@ class MarketComplaintController extends Controller
 
             // Create MarketComplaintGrids record for Proposal to accomplish investigation
             $investigationData = [
-                'Complaint sample Required' => ['csr1' => $request->csr1, 'csr2' => $request->csr2],
-                'Additional info. From Complainant' => ['afc1' => $request->afc1, 'afc2' => $request->afc2],
-                'Analysis of complaint Sample' => ['acs1' => $request->acs1, 'acs2' => $request->acs2],
-                'QRM Approach' => ['qrm1' => $request->qrm1, 'qrm2' => $request->qrm2],
-                'Others' => ['oth1' => $request->oth1, 'oth2' => $request->oth2]
+                'Complaint sample Required' => ['csr1' => $request->csr1, 'csr2' => $request->csr2,'csr3' => $request->csr1_yesno ],
+                'Additional info. From Complainant' => ['afc1' => $request->afc1, 'afc2' => $request->afc2,'afc3' => $request->afc1_yesno],
+                'Analysis of complaint Sample' => ['acs1' => $request->acs1, 'acs2' => $request->acs2,'acs3' => $request->acs1_yesno],
+                'QRM Approach' => ['qrm1' => $request->qrm1, 'qrm2' => $request->qrm2,'qrm3' => $request->qrm1_yesno],
+                'Others' => ['oth1' => $request->oth1, 'oth2' => $request->oth2,'oth3' => $request->oth1_yesno]
             ];
 
             $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Proposal_to_accomplish_investigation'])->firstOrNew();
@@ -1075,7 +1107,7 @@ class MarketComplaintController extends Controller
 
     public function show($id)
 {
-                $data = MarketComplaint::find($id);
+            $data = MarketComplaint::find($id);
             $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifer','ProductDetails')->first();
             $traceability_gi = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Traceability')->first();
             $investing_team = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Investing_team')->first();
@@ -1092,7 +1124,7 @@ class MarketComplaintController extends Controller
             $proposalData = $proposal_to_accomplish_investigation ? json_decode($proposal_to_accomplish_investigation->data, true) : [];
 
 
-            // dd( $brain_stroming_session);
+            //  dd($proposalData );
                 return view('frontend.market_complaint.market_complaint_view',compact(
                     'data','productsgi','traceability_gi','investing_team','brain_stroming_details','team_members','report_approval','product_materialDetails','proposalData'));
 
@@ -1121,9 +1153,10 @@ public function update(Request $request,$id)
     }
     $marketComplaint->if_other_gi = $request->input('if_other_gi');
     $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
+    $marketComplaint->initiator_group = $request->initiator_group;
     // $marketComplaint->record =((RecordNumber::first()->value('counter')) + 1);
     $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
-    // $marketComplaint->due_date_gi = $request->due_date_gi;
+    $marketComplaint->due_date_gi = $request->due_date_gi;
 
     $marketComplaint->if_other_gi = $request->if_other_gi;
     $marketComplaint->is_repeat_gi = $request->is_repeat_gi;
@@ -1313,7 +1346,51 @@ public function update(Request $request,$id)
 
 
         // -------------------------audit show conditon--codestart----------------------------------
-
+        if ( $lastmarketComplaint->initiator_group_code_gi != $marketComplaint->initiator_group_code_gi ) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Department Code';
+            $history->previous = $lastmarketComplaint->initiator_group_code_gi;
+            $history->current = $marketComplaint->initiator_group_code_gi;
+            $history->comment = $request->initiator_group_code_gi_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+        
+            // New condition added here
+            if (is_null($lastmarketComplaint->initiator_group_code_gi) || $lastmarketComplaint->initiator_group_code_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+        
+            $history->save();
+        } if ( $lastmarketComplaint->initiator_group != $marketComplaint->initiator_group ) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Initiator Department';
+            $history->previous = $lastmarketComplaint->initiator_group;
+            $history->current = $marketComplaint->initiator_group;
+            $history->comment = $request->initiator_group_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+        
+            // New condition added here
+            if (is_null($lastmarketComplaint->initiator_group) || $lastmarketComplaint->initiator_group === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+        
+            $history->save();
+        }
 
         if ( $lastmarketComplaint->review_of_past_history_of_product_gi != $marketComplaint->review_of_past_history_of_product_gi ) {
             $history = new MarketComplaintAuditTrial();
@@ -1570,29 +1647,29 @@ public function update(Request $request,$id)
 
 
 
-            if ( $lastmarketComplaint->initiator_group != $marketComplaint->initiator_group ) {
-                $history = new MarketComplaintAuditTrial();
-                $history->market_id = $marketComplaint->id;
-                $history->activity_type = 'Initiator Group';
-                $history->previous = $lastmarketComplaint->initiator_group;
-                $history->current = $marketComplaint->initiator_group;
-                $history->comment = $request->initiator_group_comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastmarketComplaint->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastmarketComplaint->status;
+            // if ( $lastmarketComplaint->initiator_group != $marketComplaint->initiator_group ) {
+            //     $history = new MarketComplaintAuditTrial();
+            //     $history->market_id = $marketComplaint->id;
+            //     $history->activity_type = 'Initiator Group';
+            //     $history->previous = $lastmarketComplaint->initiator_group;
+            //     $history->current = $marketComplaint->initiator_group;
+            //     $history->comment = $request->initiator_group_comment;
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $lastmarketComplaint->status;
+            //     $history->change_to = "Not Applicable";
+            //     $history->change_from = $lastmarketComplaint->status;
             
-                // New condition added here
-                if (is_null($lastmarketComplaint->initiator_group) || $lastmarketComplaint->initiator_group === '') {
-                    $history->action_name = "New";
-                } else {
-                    $history->action_name = "Update";
-                }
+            //     // New condition added here
+            //     if (is_null($lastmarketComplaint->initiator_group) || $lastmarketComplaint->initiator_group === '') {
+            //         $history->action_name = "New";
+            //     } else {
+            //         $history->action_name = "Update";
+            //     }
             
-                $history->save();
-            }
+            //     $history->save();
+            // }
             
             if ( $lastmarketComplaint->initiated_through_gi != $marketComplaint->initiated_through_gi ) {
                 $history = new MarketComplaintAuditTrial();
@@ -2374,11 +2451,11 @@ if ( $lastmarketComplaint->initial_attachment_c != $marketComplaint->initial_att
 
         // Create MarketComplaintGrids record for Proposal to accomplish investigation
         $investigationData = [
-            'Complaint sample Required' => ['csr1' => $request->csr1, 'csr2' => $request->csr2],
-            'Additional info. From Complainant' => ['afc1' => $request->afc1, 'afc2' => $request->afc2],
-            'Analysis of complaint Sample' => ['acs1' => $request->acs1, 'acs2' => $request->acs2],
-            'QRM Approach' => ['qrm1' => $request->qrm1, 'qrm2' => $request->qrm2],
-            'Others' => ['oth1' => $request->oth1, 'oth2' => $request->oth2]
+            'Complaint sample Required' => ['csr1' => $request->csr1, 'csr2' => $request->csr2,'csr3' => $request->csr1_yesno],
+            'Additional info. From Complainant' => ['afc1' => $request->afc1, 'afc2' => $request->afc2,'afc3' => $request->afc1_yesno],
+            'Analysis of complaint Sample' => ['acs1' => $request->acs1, 'acs2' => $request->acs2,'acs3' => $request->acs1_yesno],
+            'QRM Approach' => ['qrm1' => $request->qrm1, 'qrm2' => $request->qrm2,'qrm3' => $request->qrm1_yesno],
+            'Others' => ['oth1' => $request->oth1, 'oth2' => $request->oth2,'oth3' => $request->oth1_yesno]
         ];
 
         $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Proposal_to_accomplish_investigation'])->firstOrNew();
@@ -2809,11 +2886,13 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         
         $cc = MarketComplaint::find($id);
         $cft = [];
-        $parent_id = $id;
+        
         $parent_type = "Capa";
         $old_records = Capa::select('id', 'division_id', 'record')->get();
-        $record = ((RecordNumber::first()->value('counter')) + 1);
+        // $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record =$cc->record;
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $parent_id = $record;
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -2844,11 +2923,13 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
             
             $cc = MarketComplaint::find($id);
             $cft = [];
-            $parent_id = $id;
+           
             $parent_type = "Capa";
             $old_records = Capa::select('id', 'division_id', 'record')->get();
-            $record = ((RecordNumber::first()->value('counter')) + 1);
+            // $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = $cc->record;
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $parent_id = $record;
             $currentDate = Carbon::now();
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
@@ -3012,6 +3093,33 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         return $pdf->stream('Market-Audit_Trail' . $id . '.pdf');
     }
 
+    public function reopenStage(Request $request, $id)
+    {
+        $lastmarketComplaint = MarketComplaint::find($id);
+        $marketComplaint = MarketComplaint::findOrFail($id);
+        $history = new MarketComplaintAuditTrial();
+        if($marketComplaint->stage == '8'){
+        $history->market_id = $id;
+        $history->activity_type = 'Activity Log';
+        $history->action = 'Reopen';     
+    
+        $history->change_from = "Close-Done";
+        $history->change_to = "Opened";
+        $history->save();
+        }
+        $marketComplaint->stage = 1;
+      
+        // $history->action_name = "Reopen";
+//    call function update  so how can do this 
+        $marketComplaint->status = "Opened";
+
+        $this->show($request, $id);
+    // $history->change_to = "Opened";
+  
+
+        $marketComplaint->save();
+    return redirect()->route('marketcomplaint.marketcomplaint_view', $id);
+    }
 
 
 

@@ -245,10 +245,10 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Immediate Actions</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA Review</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button> --}}
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Head Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA Head/Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">System Suitability Failure Incidence</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Closure</button>
@@ -298,7 +298,7 @@
                                          value="{{ Helpers::getdateFormat($data->intiation_date)}}" >
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
@@ -312,9 +312,9 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due"> Due Date</label>
                                         <div><small class="text-primary">Please mention expected date of completion</small>
@@ -326,9 +326,41 @@
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-lg-6">
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Due Date</label>
+                                        <div class="calenderauditee">
+                                            <!-- Format ki hui date dikhane ke liye readonly input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate123($data->intiation_date, true) }}" />
+                                            <!-- Hidden input date format ke sath -->
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate123($data->intiation_date, true, 'Y-m-d') }}" class="hide-input" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+                                    
+                                    // Call this function initially to ensure the correct format is shown on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        handleDateInput(dateInput, 'due_date_display');
+                                    });
+                                    </script>
+                                    
+                                    <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                    </style>
+
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b><span class="text-danger">*</span></label>
                                         <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}
@@ -393,7 +425,7 @@
                                         <label for="Initiator Group Code">Initiator Group Code</label>
                                         <input type="text" id="initiator_group_code"  name="initiator_group_code" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value="{{$data->initiator_group_code}}" readonly>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -696,12 +728,12 @@
                         <div class="col-md-6">
                             <div class="group-input">
                                 <label for="search">
-                                    Analyst Name <span class="text-danger"></span>
+                                    Reported By <span class="text-danger"></span>
                                 </label>
                                 <select id="select-state" placeholder="Select..." name="analyst_sign_date_gi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                                     {{-- <option value="">Select a value</option> --}}
                                     @foreach ($users as $key=> $value)
-                                        <option  @if ($data->analyst_sign_date_gi == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                        <option  @if ($data->analyst_sign_date_gi == $value->id) selected @endif  value="{{ $value->name }}">{{ $value->name }}</option>
                                     @endforeach
                                 </select>
                                 <input type="hidden" id="analyst_sign_date_gi_changed" name="analyst_sign_date_gi_changed" value="0">
@@ -719,7 +751,7 @@
                                 <select id="select-state" placeholder="Select..." name="section_sign_date_gi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} onchange="markFieldAsChanged('section_sign_date_gi_changed')">
                                     {{-- <option value="">Select a value</option> --}}
                                     @foreach ($users as $key => $value)
-                                        <option @if ($data->section_sign_date_gi == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
+                                        <option @if ($data->section_sign_date_gi == $value->id) selected @endif value="{{ $value->name }}">{{ $value->name }}</option>
                                     @endforeach
                                 </select>
                                 <input type="hidden" id="section_sign_date_gi_changed" name="section_sign_date_gi_changed" value="0">
@@ -745,7 +777,7 @@
                 
 
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
                                         <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
@@ -756,7 +788,7 @@
                                             <option @if ($data->severity_level2=='critical') selected @endif value="critical">Critical</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <!-- <div class="col-lg-6">
                              <div class="col-lg-6">
@@ -782,23 +814,7 @@
                                     </div>
                                 </div>
                                 </div>-->
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Incident Category">Incident Category</label>
-                                        <select {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="Incident_Category">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="Biological" @if ($data->Incident_Category== 'Biological') selected @endif>
-                                                Biological
-                                            </option>
-                                            <option value="Chemical" @if ($data->Incident_Category== 'Chemical') selected @endif>
-                                                Chemical
-                                            </option>
-                                            <option value="Others" @if ($data->Incident_Category== 'Others') selected @endif>
-                                                Others
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
+                               
                                 <div class="col-lg-6">
                                             <div class="group-input" id="initiated_through_req1">
                                                 <label for="Incident_Category_others">Others<span
@@ -806,7 +822,7 @@
                                                 <textarea name="Incident_Category_others" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Incident_Category_others }}</textarea>
                                             </div>
                                         </div>
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Invocation Type">Invocation Type</label>
                                         <select  name="Invocation_Type" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
@@ -819,17 +835,15 @@
                                             </option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initial Attachments">Initial Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                            value="{{ $data->Initial_Attachment }}"> --}}
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="attachments_gi">
-                                                    @if ($data->attachments_gi)
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attachments_gi">
+                                                @if ($data->attachments_gi)
                                                     @foreach (json_decode($data->attachments_gi) as $file)
                                                         <h6 type="button" class="file-container text-dark"
                                                             style="background-color: rgb(243, 242, 240);">
@@ -844,18 +858,72 @@
                                                         </h6>
                                                     @endforeach
                                                 @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="attachments_gi" name="attachments_gi[]"
-                                                        oninput="addMultipleFiles(this, 'attachments_gi')" multiple>
-                                                </div>
                                             </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="attachments_gi" name="attachments_gi[]"
+                                                    oninput="addMultipleFiles(this, 'attachments_gi')" multiple>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
                                 
-
+                                <input type="hidden" name="removed_files" id="removed_files">
+                                
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const removeFileLinks = document.querySelectorAll('.remove-file');
+                                        const removedFilesInput = document.getElementById('removed_files');
+                                
+                                        removeFileLinks.forEach(link => {
+                                            link.addEventListener('click', function() {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                this.parentElement.remove();
+                                
+                                                // Add the file name to the removed files input
+                                                let removedFiles = removedFilesInput.value ? JSON.parse(removedFilesInput.value) : [];
+                                                removedFiles.push(fileName);
+                                                removedFilesInput.value = JSON.stringify(removedFiles);
+                                            });
+                                        });
+                                    });
+                                </script>
+                                 --}}
+                                {{-- --------------------------------by sunil  code file attchemnt  --}}
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attachments_gi">
+                                        @if ($data->attachments_gi)
+                                        @foreach(json_decode($data->attachments_gi) as $file)
+                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="attachments_gi[]" value="{{$data->attachments_gi}}" oninput="addMultipleFiles(this, 'attachments_gi')" multiple>
+                                    </div>
+                                </div>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+                                
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+                                
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
 
 
                             </div>
@@ -948,7 +1016,7 @@
 
     {{-- type of incidence --}}
 
-    <div class="col-lg-12">
+    {{-- <div class="col-lg-12">
         <div class="group-input">
             <label for="Type Of Incidence"><b>Type Of Incidence</b></label>
             <select name="type_incidence_ia" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} id="initiator_group">
@@ -956,9 +1024,54 @@
                 <option value="Analyst Error" {{ $data->type_incidence_ia == 'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
                 <option value="Instrument Error" {{ $data->type_incidence_ia == 'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
                 <option value="Atypical Error" {{ $data->type_incidence_ia == 'Atypical Error' ? 'selected' : '' }}>Atypical Error</option>
+                {{-- <option value="" {{ $data->type_incidence_ia == 'Atypical Error' ? 'selected' : '' }}>Atypical Error</option> --}}
+
+            {{-- </select>
+        </div>
+    </div>  --}}
+
+
+
+    <div class="col-lg-12">
+        <div class="group-input">
+            <label for="Type Of Incidence"><b>Type Of Incidence</b></label>
+            <select name="type_incidence_ia" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} id="type_incidence">
+                <option value="NA" {{ $data->type_incidence_ia == 'NA' ? 'selected' : '' }}>-- Select --</option>
+                <option value="Analyst Error" {{ $data->type_incidence_ia == 'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
+                <option value="Instrument Error" {{ $data->type_incidence_ia == 'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
+                <option value="Atypical Error" {{ $data->type_incidence_ia == 'Atypical Error' ? 'selected' : '' }}>Atypical Error</option>
+                <option value="Other" {{ $data->type_incidence_ia == 'Other' ? 'selected' : '' }}>Other</option>
             </select>
         </div>
     </div>
+    
+    <div class="col-lg-12" id="other_incidence_div" style="display: none;">
+        <div class="group-input">
+            <label for="Other Incidence"><b>Other Incidence</b></label>
+            <input type="text" name="other_incidence" id="other_incidence" value="{{ $data->other_incidence ?? '' }}" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} />
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const typeIncidenceSelect = document.getElementById('type_incidence');
+            const otherIncidenceDiv = document.getElementById('other_incidence_div');
+    
+            function toggleOtherIncidence() {
+                if (typeIncidenceSelect.value === 'Other') {
+                    otherIncidenceDiv.style.display = 'block';
+                } else {
+                    otherIncidenceDiv.style.display = 'none';
+                }
+            }
+    
+            typeIncidenceSelect.addEventListener('change', toggleOtherIncidence);
+    
+            // Initial check on page load
+            toggleOtherIncidence();
+        });
+    </script>
+    
     
     {{-- type of incidence --}}
 
@@ -1061,420 +1174,11 @@
                     </div>
 
                      {{-- extension --}}
-                     <div id="CCForm3" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                         <div class="row">
-                             <div class="group-input">
-                                 <div class="col-12 sub-head">
-                                     First Extension
-                                 </div>
-
-                             </div>
-
-                             <div class="col-12">
-                                 <div class="group-input">
-                                     <label for="Incident Details">Reason For Extension</label>
-                                     <textarea name="reasoon_for_extension_e">{{$data->reasoon_for_extension_e}}</textarea>
-                                 </div>
-                             </div>
- 
-                             {{-- <div class="col-6">
-                                 <div class="group-input">
-                                 <label for="extension date">Extension Date (if required)</label>
-                                 <input type="date" name="extension_date_esc" id="extension_date" value="{{$data->extension_date_esc}}">
-                                 </div>
-                             </div> --}}
-
-                             <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="Date Due"> Extension Date</label>
-                                    <div><small class="text-primary">Please mention expected date of completion</small>
-                                    </div>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="extension_date_esc" readonly
-                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_esc) }}"/>
-                                        <input type="date" name="extension_date_esc"  class="hide-input"
-                                            oninput="handleDateInput(this, 'extension_date_esc')" />
-                                    </div>
-                                </div>
-                            </div>
+                    
 
 
 
-                            
-                                
-                             {{-- <div class="col-6">
-                                 <div class="group-input">
-                                 <label for="extension date">Extension Initiator Date</label>
-                                 <input type="date" name="extension_date_initiator" id="extension_date" value="{{$data->extension_date_initiator}}">
-                                 </div>
-                             </div> --}}
-
-
-                             <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="Date Due"> Extension Initiator Date</label>
-                                    <div><small class="text-primary">Please mention expected date of completion</small>
-                                    </div>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="extension_date_initiator" readonly
-                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_initiator) }}" />
-                                        <input type="date" name="extension_date_initiator" class="hide-input"
-                                            oninput="handleDateInput(this, 'extension_date_initiator')" />
-                                    </div>
-                                </div>
-                            </div>
-                             {{-- person field --}}
-
-                             {{-- <div class="col-md-6">
-                                <div class="group-input">
-                                    <label for="search">
-                                        Extension HOD <span class="text-danger"></span>
-                                    </label>
-                                    <select id="select-state" placeholder="Select..." name="assign_to" >
-                                        <option value="">Select a value</option>
-                                        @foreach ($users as $key=> $value)
-                                            <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('assign_to')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div> --}}
-
-                            {{-- <div class="col-md-6">
-                                <div class="group-input">
-                                    <label for="search">
-                                        Extension Approved By <span class="text-danger"></span>
-                                    </label>
-                                    <select id="select-state" placeholder="Select..." name="assign_to" >
-                                        <option value="">Select a value</option>
-                                        @foreach ($users as $key=> $value)
-                                            <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('assign_to')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div> --}}
-
-
-
-
-
-
-                           </div>
-                           <div class="row">
-                                <div class="group-input">
-                                      <div class="col-12 sub-head">
-                                    Second Extension
-                                    </div>
-                                </div>
-                              <div class="col-12">
-                                  <div class="group-input">
-                                 <label for="reason for extension sc">Reason For Extension</label>
-                                 <textarea name="reasoon_for_extension_esc">{{$data->reasoon_for_extension_esc}}</textarea>
-                                 </div>
-                              </div>
- 
-                           
-                              {{-- <div class="col-6">
-                                 <div class="group-input">
-                                  <label for="extension date">Extension Date (if required)</label>
-                                   <input type="date" name="extension_date_e" id="extension_date__sc" value="{{$data->extension_date_e}}">
-                                 </div>
-                              </div> --}}
-
-                              <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="Date Due"> Extension Date</label>
-                                    <div><small class="text-primary">Please mention expected date of completion</small>
-                                    </div>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="extension_date_e" readonly
-                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_e) }}" />
-                                        <input type="date" name="extension_date_e"  class="hide-input"
-                                            oninput="handleDateInput(this, 'extension_date_e')" />
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="Date Due"> Extension Initiator Date</label>
-                                    <div><small class="text-primary">Please mention expected date of completion</small>
-                                    </div>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="extension_date_idsc" readonly
-                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_idsc) }}" >
-                                        <input type="date" name="extension_date_idsc"  class="hide-input"
-                                            oninput="handleDateInput(this, 'extension_date_idsc')" />
-                                    </div>
-                                </div>
-                            </div>
-
-                                 {{-- <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="extension_date_idsc">Extension Initiator Date <span class="text-danger"></span></label> --}}
-                                        {{-- <p class="text-primary">Last date this record should be closed by</p> --}}
-                                
-                                        {{-- <div class="calenderauditee">
-                                            <input type="date" id="extension_date_idsc_display" 
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="extension_date_idsc" name="extension_date_idsc"
-                                                class="hide-input" oninput="handleDateInput(this)" />
-                                        </div>
-                                        
-                                    </div> --}}
-                      {{--           </div> --}}
-                      
-
-
-                                    
-    
-                                                {{-- person field --}}
-                                                
-
-                                                {{-- <div class="col-md-6">
-                                                    <div class="group-input">
-                                                        <label for="search">
-                                                            Extension Approved By <span class="text-danger"></span>
-                                                        </label>
-                                                        <select id="select-state" placeholder="Select..." name="qc_approved_to" >
-                                                            <option value="">Select a value</option>
-                                                            @foreach ($users as $key=> $value)
-                                                                <option  @if ($data->qc_approved_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @error('qc_approved_to')
-                                                            <p class="text-danger">{{ $message }}</p>
-                                                        @enderror
-                                                    </div>
-                                                </div> --}}
-
-                           </div>
-
-                           {{-- third section --}}
-
-                           <div class="row">
-                             <div class="group-input">
-                                   <div class="col-12 sub-head">
-                                 Third Extension
-                                 </div>
-                             </div>
-                           <div class="col-12">
-                               <div class="group-input">
-                              <label for="reason for extension tc">Reason For Extension</label>
-                              <textarea name="reasoon_for_extension_tc">{{$data->reasoon_for_extension_tc}}</textarea>
-                              </div>
-                           </div>
- 
-                        
-                           
-                           <div class="col-lg-6 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="Date Due"> Extension Date</label>
-                                <div><small class="text-primary">Please mention expected date of completion</small>
-                                </div>
-                                <div class="calenderauditee">
-                                    <input type="text" id="extension_date__tc" readonly
-                                        placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date__tc) }}"/>
-                                    <input type="date" name="extension_date__tc"   class="hide-input"
-                                        oninput="handleDateInput(this, 'extension_date__tc')" />
-                                </div>
-                            </div>
-                        </div>
-                         
-                              
-
-                              <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="Date Due"> Extension Initiator Date</label>
-                                    <div><small class="text-primary">Please mention expected date of completion</small>
-                                    </div>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="extension_date_idtc" readonly
-                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_idtc) }}" />
-                                        <input type="date" name="extension_date_idtc"  class="hide-input"
-                                            oninput="handleDateInput(this, 'extension_date_idtc')" />
-                                    </div>
-                                </div>
-                            </div>
-                                    {{-- person field --}}
-
-                                    <div class="col-md-6">
-                                        {{-- <div class="group-input">
-                                            <label for="search">
-                                                Extension Approved By QA <span class="text-danger"></span>
-                                            </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to" >
-                                                <option value="">Select a value</option>
-                                                @foreach ($users as $key=> $value)
-                                                    <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('assign_to')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
-                                        </div> --}}
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        {{-- <div class="group-input">
-                                            <label for="search">
-                                                Extension Approved By CQA <span class="text-danger"></span>
-                                            </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to" >
-                                                <option value="">Select a value</option>
-                                                @foreach ($users as $key=> $value)
-                                                    <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('assign_to')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
-                                        </div> --}}
-                                    </div>
-                        </div>
-                        <div class="col-12">
-                         <div class="group-input">
-                             <label for="Attachments">Extension Attachments</label>
-                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="extension_attachments_e">
-                                    @if ($data->extension_attachments_e)
-                                    @foreach (json_decode($data->extension_attachments_e) as $file)
-                                        <h6 type="button" class="file-container text-dark"
-                                            style="background-color: rgb(243, 242, 240);">
-                                            <b>{{ $file }}</b>
-                                            <a href="{{ asset('upload/' . $file) }}"
-                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file"
-                                                data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark"
-                                                    style="color:red; font-size:20px;"></i></a>
-                                        </h6>
-                                    @endforeach
-                                @endif
-                                </div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input  type="file" id="extension_attachments_e" name="extension_attachments_e[]"
-                                        oninput="addMultipleFiles(this, 'extension_attachments_e')" multiple>
-                                </div>
-                            </div>
-                         </div>
-                     </div>
-                     <div class="button-block">
-                         <button type="submit" class="saveButton">Save</button>
-                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                     </div>
-
-
-
-                        </div>
-                     </div>
-
-
-
-
-
-                    <!-- Incident Details content -->
-                    <div id="CCForm8" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Incident Details">Incident Details</label>
-                                        <textarea name="Incident_Details" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Incident_Details }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Document Details ">Document Details</label>
-                                        <textarea name="Document_Details" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Document_Details }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Instrument Details">Instrument Details</label>
-                                        <textarea name="Instrument_Details" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Instrument_Details }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Involved Personnel">Involved Personnel</label>
-                                        <textarea name="Involved_Personnel" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Involved_Personnel }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Product Details,If Any">Product Details,If Any</label>
-                                        <textarea name="Product_Details" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Product_Details }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Supervisor Review Comments">Supervisor Review Comments</label>
-                                        <textarea name="Supervisor_Review_Comments" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Supervisor_Review_Comments }}</textarea>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="ccf_attachments">Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                            value="{{ $data->Initial_Attachment }}"> --}}
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="ccf_attachments">
-                                                    @if ($data->ccf_attachments)
-                                                    @foreach (json_decode($data->ccf_attachments) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}"
-                                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                                </div>
-                                                <div class="add-btn ">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="ccf_attachments" name="ccf_attachments[]"
-                                                        oninput="addMultipleFiles(this, 'ccf_attachments')" multiple>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-12 sub-head">
-                                    Cancelation
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Cancelation Remarks">Cancelation Remarks</label>
-                                        <textarea name="Cancelation_Remarks" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Cancelation_Remarks }}</textarea>
-                                    </div>
-                                </div> --}}
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
+                  
 
                     <!-- Investigation Details content -->
                     <div id="CCForm9" class="inner-block cctabcontent">
@@ -1549,86 +1253,28 @@
                         </div>
                     </div>
 
-                    <!-- CAPA content -->
-                    <div id="CCForm4" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                               
-                                    
-
-
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Currective Action">Capa</label>
-                                        <textarea name="capa_capa" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->capa_capa }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Currective Action">Corrective Action</label>
-                                        <textarea name="Currective_Action" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Currective_Action }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Preventive Action">Preventive Action</label>
-                                        <textarea name="Preventive_Action" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Preventive_Action }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
-                                        <textarea name="Corrective_Preventive_Action" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Corrective_Preventive_Action }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="CAPA Attachments">CAPA Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="CAPA_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                            value="{{ $data->CAPA_Attachment }}"> --}}
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="CAPA_Attachment">
-                                                    @if ($data->CAPA_Attachment)
-                                                    @foreach (json_decode($data->CAPA_Attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}"
-                                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="myfile" name="CAPA_Attachment[]"
-                                                        oninput="addMultipleFiles(this, 'CAPA_Attachment')" multiple>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
-
+                  
                     <!-- QA Review content -->
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Incident Category">Incident Category</label>
+                                        <select {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="Incident_Category">
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="Biological" @if ($data->Incident_Category== 'Biological') selected @endif>
+                                                Biological
+                                            </option>
+                                            <option value="Chemical" @if ($data->Incident_Category== 'Chemical') selected @endif>
+                                                Chemical
+                                            </option>
+                                            <option value="Others" @if ($data->Incident_Category== 'Others') selected @endif>
+                                                Others
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Review Comments">QA Review Comments</label>
@@ -1721,7 +1367,7 @@
                                         </div>
                                     </div>
                                 </div>  -->
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Incident Type">Incident Type</label>
                                         <select name="Incident_Type" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
@@ -1734,7 +1380,7 @@
                                             </option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Conclusion">Conclusion</label>
@@ -2962,6 +2608,495 @@
                             <button type="button" data-bs-dismiss="modal">Close</button>
                         </div>
                     </form>
+
+                      {{-- <!-- CAPA content -->
+                    <div id="CCForm4" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                               
+                                    
+
+
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Currective Action">Capa</label>
+                                        <textarea name="capa_capa" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->capa_capa }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Currective Action">Corrective Action</label>
+                                        <textarea name="Currective_Action" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Currective_Action }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Preventive Action">Preventive Action</label>
+                                        <textarea name="Preventive_Action" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Preventive_Action }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
+                                        <textarea name="Corrective_Preventive_Action" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Corrective_Preventive_Action }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="CAPA Attachments">CAPA Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        {{-- <input type="file" id="myfile" name="CAPA_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                            value="{{ $data->CAPA_Attachment }}"> --}}
+                                            {{-- <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="CAPA_Attachment">
+                                                    @if ($data->CAPA_Attachment)
+                                                    @foreach (json_decode($data->CAPA_Attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}"
+                                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="myfile" name="CAPA_Attachment[]"
+                                                        oninput="addMultipleFiles(this, 'CAPA_Attachment')" multiple>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div> --}} 
+                      <!-- Incident Details content -->
+                    {{-- <div id="CCForm8" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Incident Details">Incident Details</label>
+                                        <textarea name="Incident_Details" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Incident_Details }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Document Details ">Document Details</label>
+                                        <textarea name="Document_Details" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Document_Details }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Instrument Details">Instrument Details</label>
+                                        <textarea name="Instrument_Details" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Instrument_Details }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Involved Personnel">Involved Personnel</label>
+                                        <textarea name="Involved_Personnel" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Involved_Personnel }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Product Details,If Any">Product Details,If Any</label>
+                                        <textarea name="Product_Details" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Product_Details }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Supervisor Review Comments">Supervisor Review Comments</label>
+                                        <textarea name="Supervisor_Review_Comments" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Supervisor_Review_Comments }}</textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="ccf_attachments">Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                            value="{{ $data->Initial_Attachment }}"> --}}
+                                            {{-- <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="ccf_attachments">
+                                                    @if ($data->ccf_attachments)
+                                                    @foreach (json_decode($data->ccf_attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}"
+                                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                                </div>
+                                                <div class="add-btn ">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="ccf_attachments" name="ccf_attachments[]"
+                                                        oninput="addMultipleFiles(this, 'ccf_attachments')" multiple>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-12 sub-head">
+                                    Cancelation
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Cancelation Remarks">Cancelation Remarks</label>
+                                        <textarea name="Cancelation_Remarks" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Cancelation_Remarks }}</textarea>
+                                    </div>
+                                </div> --}}
+                            {{-- </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div> --}}  
+
+                    {{-- <div id="CCForm3" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                         <div class="row">
+                             <div class="group-input">
+                                 <div class="col-12 sub-head">
+                                     First Extension
+                                 </div>
+
+                             </div>
+
+                             <div class="col-12">
+                                 <div class="group-input">
+                                     <label for="Incident Details">Reason For Extension</label>
+                                     <textarea name="reasoon_for_extension_e">{{$data->reasoon_for_extension_e}}</textarea>
+                                 </div>
+                             </div>
+ 
+                             {{-- <div class="col-6">
+                                 <div class="group-input">
+                                 <label for="extension date">Extension Date (if required)</label>
+                                 <input type="date" name="extension_date_esc" id="extension_date" value="{{$data->extension_date_esc}}">
+                                 </div>
+                             </div> 
+
+                             <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Date Due"> Extension Date</label>
+                                    <div><small class="text-primary">Please mention expected date of completion</small>
+                                    </div>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="extension_date_esc" readonly
+                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_esc) }}"/>
+                                        <input type="date" name="extension_date_esc"  class="hide-input"
+                                            oninput="handleDateInput(this, 'extension_date_esc')" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            
+                                
+                             {{-- <div class="col-6">
+                                 <div class="group-input">
+                                 <label for="extension date">Extension Initiator Date</label>
+                                 <input type="date" name="extension_date_initiator" id="extension_date" value="{{$data->extension_date_initiator}}">
+                                 </div>
+                             </div> 
+
+
+                             <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Date Due"> Extension Initiator Date</label>
+                                    <div><small class="text-primary">Please mention expected date of completion</small>
+                                    </div>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="extension_date_initiator" readonly
+                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_initiator) }}" />
+                                        <input type="date" name="extension_date_initiator" class="hide-input"
+                                            oninput="handleDateInput(this, 'extension_date_initiator')" />
+                                    </div>
+                                </div>
+                            </div>
+                             {{-- person field --}}
+
+                             {{-- <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                        Extension HOD <span class="text-danger"></span>
+                                    </label>
+                                    <select id="select-state" placeholder="Select..." name="assign_to" >
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $key=> $value)
+                                            <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('assign_to')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div> --}}
+
+                            {{-- <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                        Extension Approved By <span class="text-danger"></span>
+                                    </label>
+                                    <select id="select-state" placeholder="Select..." name="assign_to" >
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $key=> $value)
+                                            <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('assign_to')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div> 
+
+
+
+
+
+
+                           </div>
+                           <div class="row">
+                                <div class="group-input">
+                                      <div class="col-12 sub-head">
+                                    Second Extension
+                                    </div>
+                                </div>
+                              <div class="col-12">
+                                  <div class="group-input">
+                                 <label for="reason for extension sc">Reason For Extension</label>
+                                 <textarea name="reasoon_for_extension_esc">{{$data->reasoon_for_extension_esc}}</textarea>
+                                 </div>
+                              </div>
+ 
+                           
+                              {{-- <div class="col-6">
+                                 <div class="group-input">
+                                  <label for="extension date">Extension Date (if required)</label>
+                                   <input type="date" name="extension_date_e" id="extension_date__sc" value="{{$data->extension_date_e}}">
+                                 </div>
+                              </div> 
+
+                              <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Date Due"> Extension Date</label>
+                                    <div><small class="text-primary">Please mention expected date of completion</small>
+                                    </div>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="extension_date_e" readonly
+                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_e) }}" />
+                                        <input type="date" name="extension_date_e"  class="hide-input"
+                                            oninput="handleDateInput(this, 'extension_date_e')" />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Date Due"> Extension Initiator Date</label>
+                                    <div><small class="text-primary">Please mention expected date of completion</small>
+                                    </div>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="extension_date_idsc" readonly
+                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_idsc) }}" >
+                                        <input type="date" name="extension_date_idsc"  class="hide-input"
+                                            oninput="handleDateInput(this, 'extension_date_idsc')" />
+                                    </div>
+                                </div>
+                            </div>
+
+                                 {{-- <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="extension_date_idsc">Extension Initiator Date <span class="text-danger"></span></label> --}}
+                                        {{-- <p class="text-primary">Last date this record should be closed by</p> --}}
+                                
+                                        {{-- <div class="calenderauditee">
+                                            <input type="date" id="extension_date_idsc_display" 
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" id="extension_date_idsc" name="extension_date_idsc"
+                                                class="hide-input" oninput="handleDateInput(this)" />
+                                        </div>
+                                        
+                                    </div> --}}
+                      {{--           </div> --}}
+                      
+
+
+                                    
+    
+                                                {{-- person field --}}
+                                                
+
+                                                {{-- <div class="col-md-6">
+                                                    <div class="group-input">
+                                                        <label for="search">
+                                                            Extension Approved By <span class="text-danger"></span>
+                                                        </label>
+                                                        <select id="select-state" placeholder="Select..." name="qc_approved_to" >
+                                                            <option value="">Select a value</option>
+                                                            @foreach ($users as $key=> $value)
+                                                                <option  @if ($data->qc_approved_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('qc_approved_to')
+                                                            <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
+                                                    </div>
+                                                </div> 
+
+                           </div>
+
+                           {{-- third section 
+
+                           <div class="row">
+                             <div class="group-input">
+                                   <div class="col-12 sub-head">
+                                 Third Extension
+                                 </div>
+                             </div>
+                           <div class="col-12">
+                               <div class="group-input">
+                              <label for="reason for extension tc">Reason For Extension</label>
+                              <textarea name="reasoon_for_extension_tc">{{$data->reasoon_for_extension_tc}}</textarea>
+                              </div>
+                           </div>
+ 
+                        
+                           
+                           <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Date Due"> Extension Date</label>
+                                <div><small class="text-primary">Please mention expected date of completion</small>
+                                </div>
+                                <div class="calenderauditee">
+                                    <input type="text" id="extension_date__tc" readonly
+                                        placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date__tc) }}"/>
+                                    <input type="date" name="extension_date__tc"   class="hide-input"
+                                        oninput="handleDateInput(this, 'extension_date__tc')" />
+                                </div>
+                            </div>
+                        </div>
+                         
+                              
+
+                              <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Date Due"> Extension Initiator Date</label>
+                                    <div><small class="text-primary">Please mention expected date of completion</small>
+                                    </div>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="extension_date_idtc" readonly
+                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_idtc) }}" />
+                                        <input type="date" name="extension_date_idtc"  class="hide-input"
+                                            oninput="handleDateInput(this, 'extension_date_idtc')" />
+                                    </div>
+                                </div>
+                            </div>
+                                    {{-- person field 
+
+                                    <div class="col-md-6">
+                                        {{-- <div class="group-input">
+                                            <label for="search">
+                                                Extension Approved By QA <span class="text-danger"></span>
+                                            </label>
+                                            <select id="select-state" placeholder="Select..." name="assign_to" >
+                                                <option value="">Select a value</option>
+                                                @foreach ($users as $key=> $value)
+                                                    <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('assign_to')
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                        </div> 
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        {{-- <div class="group-input">
+                                            <label for="search">
+                                                Extension Approved By CQA <span class="text-danger"></span>
+                                            </label>
+                                            <select id="select-state" placeholder="Select..." name="assign_to" >
+                                                <option value="">Select a value</option>
+                                                @foreach ($users as $key=> $value)
+                                                    <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('assign_to')
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                        </div> 
+                                    </div>
+                        </div>
+                        <div class="col-12">
+                         <div class="group-input">
+                             <label for="Attachments">Extension Attachments</label>
+                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                             <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="extension_attachments_e">
+                                    @if ($data->extension_attachments_e)
+                                    @foreach (json_decode($data->extension_attachments_e) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+                                @endif
+                                </div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input  type="file" id="extension_attachments_e" name="extension_attachments_e[]"
+                                        oninput="addMultipleFiles(this, 'extension_attachments_e')" multiple>
+                                </div>
+                            </div>
+                         </div>
+                     </div>
+                     <div class="button-block">
+                         <button type="submit" class="saveButton">Save</button>
+                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                     </div>
+
+
+
+                        </div>
+                     </div> --}}
+
+
+
                 </div>
             </div>
         </div>

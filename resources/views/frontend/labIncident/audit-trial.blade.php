@@ -169,7 +169,13 @@
             </style>
 
             <body>
-
+                <div style="display: flex; justify-content: flex-end;">
+                    
+                    <a class="text-white" href="{{ route('ShowLabIncident', $document->id) }}"><button  class="button_theme1" style="margin-right: 10px"> Back  </button></a>
+                    
+               
+                    <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">Exit</button>
+               </a> </div>
                 <header>
                     <table>
                         <tr>

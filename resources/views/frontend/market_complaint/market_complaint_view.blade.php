@@ -270,10 +270,14 @@
                             Child
                         </button></a>
 
-                         
+                        {{-- @elseif($data->stage == 8 )
+                        <a href="{{ route('reopen.stage', $data->id) }}">
+                            <button class="button_theme1"> Re Open </button>
+                        </a>
+                      --}}
                         @endif
                          <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"><button class="button_theme1"> Exit
-                            </button> </a>
+                            </button> </a> 
 
 
                     </div>
@@ -794,14 +798,32 @@
                                     <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                 </div>
                             </div> --}}
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Date Due"><b>Date of Initiation</b></label>
                                     @php
-                                        $formattedDate = \Carbon\Carbon::parse($data->intiation_date)->format('j F Y');
+                                        $formattedDate = \Carbon\Carbon::parse($data->intiation_date)->format('j-F-Y');
                                     @endphp
                                     <input disabled type="text" value="{{ $formattedDate }}" name="intiation_date_display">
                                     <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
+                                </div>
+                            </div> --}}
+                            <div class="col-md-6 ">
+                                <div class="group-input ">
+                                    <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
+                                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                    <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Short Description">Short Description<span
+                                        class="text-danger">*</span></label>
+                                        <span id="rchars">255</span> Characters remaining
+                                  
+                                    <input  name="description_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="docname" required value="{{ $data->description_gi }}"  maxlength="255" >
+                                
                                 </div>
                             </div>
 
@@ -836,38 +858,86 @@
                                     display: none;
                                 }
                                 </style> --}}
-                                <div class="col-md-6 new-date-data-field">
+                                {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                         <div class="calenderauditee">
                                             <!-- Format ki hui date dikhane ke liye readonly input -->
                                             <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate123($data->intiation_date, true) }}" />
                                             <!-- Hidden input date format ke sath -->
-                                            <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate123($data->intiation_date, true, 'Y-m-d') }}" class="hide-input" readonly />
+                                            <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate123($data->intiation_date, true, 'Y-m-d') }}" class="hide-input"  />
+                                        </div>
+                                    </div>
+                                </div> --}}
+
+                                {{-- <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
+                                        <div class="calenderauditee">
+                                            <!-- Display the formatted date in a readonly input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{$data->due_date_gi}}" />
+                                            <!-- Hidden input date format ke sath -->
+                                            <input type="date" id="due_date_input" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('j-F-Y') }}" class="hide-input" onchange="updateDueDateDisplay()" value="{{ $data->due_date_gi }}"/>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Due Date </label>{{--<span class="text-danger">*</span> --}}
+                                        <div class="calenderauditee">
+                                            <!-- Display the formatted date in a readonly input -->
+                                            <input type="text" id="due_date_display" placeholder="DD-MMM-YYYY" value="" class="form-control" />
+                                            <!-- Hidden input date format ke sath -->
+                                            <input type="date" id="due_date_input" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->due_date_gi }}" class="form-control hide-input" onchange="updateDueDateDisplay()" />
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <script>
+                                    function updateDueDateDisplay() {
+                                        var dateInput = document.getElementById('due_date_input').value;
+                                        if (dateInput) {
+                                            var date = new Date(dateInput);
+                                            var options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                            var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                            document.getElementById('due_date_display').value = formattedDate;
+                                        } else {
+                                            document.getElementById('due_date_display').value = '';
+                                            document.getElementById('due_date_display').placeholder = 'DD-MMM-YYYY';
+                                        }
+                                    }
+                                
+                                    // To show the existing value if it's already set (for example, in an edit form)
+                                    $(document).ready(function() {
+                                        updateDueDateDisplay();
+                                    });
+                                </script>
+                                
+                                {{-- <script>
+                                    function updateDueDateDisplay() {
+                                        var dateInput = document.getElementById('due_date_input').value;
+                                        var date = new Date(dateInput);
+                                        var options = { day: '2-digit', month: 'long', year: 'numeric' };
+                                        var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                        document.getElementById('due_date_display').value = formattedDate;
+                                    }
+                                
+                                    // To show the existing value if it's already set (for example, in an edit form)
+                                    $(document).ready(function() {
+                                        updateDueDateDisplay();
+                                    });
+                                </script> --}}
 
-                        <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                            class="text-danger">*</span></label>
-                                            <span id="rchars">255</span>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <input  name="description_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="docname" required value="{{ $data->description_gi }}"  maxlength="255" >
-                                    
-                                    </div>
-                                </div>
+                                
 
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
+                                    <label for="Short Description">Initiator Department  <span class="text-danger"></span></label>
                                     <select name="initiator_group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
-                                        <option selected disabled>---select---</option>
-                                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                            <option value="{{ $code }}" @if ($data->initiator_group == $code) selected @endif>
+                                        <option selected disabled value="">---select---</option>
+                                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_groups)
+                                            <option value="{{ $initiator_group}}" @if ($data->initiator_group == $initiator_groups) selected @endif>
                                                 {{ $initiator_group }}
                                             </option>
                                         @endforeach
@@ -877,7 +947,7 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Initiator Group Code">Initiator Group Code</label>
+                                    <label for="Initiator Group Code">Department Code</label>
                                     <input readonly type="text" name="initiator_group_code_gi" id="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi ?? '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                 </div>
                             </div>
@@ -895,9 +965,50 @@
                                         document.getElementById('initiator_group_code_gi').value = initiatorGroupElement.value;
                                     }
                                 });
-                            </script>
+                            </script> --}}
 
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Short Description">Initiator Department <span class="text-danger"></span></label>
+                                    <select name="initiator_group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                        <option selected disabled value="">---select---</option>
+                                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
+                                            <option value="{{ $initiator_group }}" data-code="{{ $code }}" @if ($data->initiator_group == $initiator_group) selected @endif>
+                                                {{ $initiator_group }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            
                             <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Initiator Group Code">Department Code</label>
+                                    <input readonly type="text" name="initiator_group_code_gi" id="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi ?? '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                </div>
+                            </div>
+                            
+                            <script>
+                                document.getElementById('initiator_group').addEventListener('change', function() {
+                                    var selectedOption = this.options[this.selectedIndex];
+                                    var selectedCode = selectedOption.getAttribute('data-code');
+                                    document.getElementById('initiator_group_code_gi').value = selectedCode;
+                                });
+                            
+                                // Set the group code on page load if a value is already selected
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    var initiatorGroupElement = document.getElementById('initiator_group');
+                                    if (initiatorGroupElement.value) {
+                                        var selectedOption = initiatorGroupElement.options[initiatorGroupElement.selectedIndex];
+                                        var selectedCode = selectedOption.getAttribute('data-code');
+                                        document.getElementById('initiator_group_code_gi').value = selectedCode;
+                                    }
+                                });
+                            </script>
+                            
+
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group">Initiated Through</label>
                                     <div><small class="text-primary">Please select related information</small></div>
@@ -928,7 +1039,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12 mb-3">
+                            <div class="col-md-12 mb-3">    
                                 <div class="group-input">
                                     <label for="If Other">If Other</label>
                                     <div>
@@ -936,7 +1047,7 @@
                                     </div>
                                     <textarea  name="if_other_gi" id="summernote-1" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->if_other_gi }}</textarea>
                                 </div>
-                            </div>
+                            </div> --}}
                             
                             {{-- <script>
                                 $(document).ready(function() {
@@ -955,31 +1066,7 @@
                             
                             
 
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="is_repeat_gi">Is Repeat</label>
-                                    <select name="is_repeat_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
-                                        <option value="" {{ $data->is_repeat_gi == '0' ? 'selected' : '' }}>--
-                                            select --</option>
-                                        <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes
-                                        </option>
-                                        <option value="no" {{ $data->is_repeat_gi == 'no' ? 'selected' : '' }}>No
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
 
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Repeat Nature">Repeat Nature</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="repeat_nature_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="summernote-1">{{ $data->repeat_nature_gi }}
-
-                                    </textarea>
-                                </div>
-                            </div>
 
 
 
@@ -1022,7 +1109,7 @@
                             </div>
                        </div>
 
-                <div class="col-lg-6">
+                {{-- <div class="col-lg-6">
                     <div class="group-input">
                         <label for="Initiator Group">Complainant</label>
                         <select id="select-state" placeholder="Select..." name="complainant_gi">
@@ -1036,105 +1123,59 @@
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+                </div> --}}
+
+                <div class="col-lg-6">
+                    <div class="group-input">
+                        <label for="Initiator Group">Complainant</label>
+                      <input type="text" name="complainant_gi" value="{{ $data->complainant_gi }}">  
+                
+                    </div>
                 </div>
 
-
-                            {{-- <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On"> Complaint Reported On </label>
-
-                                    <div class="calenderauditee">
-                                        <input type="text" id="due_date"
-                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly
-                                            placeholder="DD-MM-YYYY" name="complaint_reported_on_gi"
-                                            value="{{ $data->complaint_reported_on_gi }}" />
-
-                                    </div>
-
-
-                                </div>
-                            </div> --}}
-                            {{-- <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Complaint Reported On</label>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="compalint_dat" readonly placeholder="DD-MMM-YYYY" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('d-M-Y') : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} />
-                                        <input type="date" name="complaint_reported_on_gi"
-                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                        value="{{ $data->complaint_reported_on_gi }}"  class="hide-input" oninput="handleDateInput(this, 'compalint_dat')" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <script>
-                                document.addEventListener('DOMContentLoaded', (event) => {
-                                    const dateInput = document.getElementById('complaint_date_picker');
-                                    const today = new Date().toISOString().split('T')[0];
-                                    dateInput.setAttribute('max', today);
-
-                                    // Show the date picker when clicking on the readonly input
-                                    const readonlyInput = document.getElementById('compalint_dat');
-                                    readonlyInput.addEventListener('click', () => {
-                                        dateInput.style.display = 'block';
-                                        dateInput.focus();
-                                    });
-
-                                    // Update the readonly input when a date is selected
-                                    dateInput.addEventListener('change', () => {
-                                        readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
-                                        dateInput.style.display = 'none';
-                                    });
-
-                                    // If there is an existing date, set the readonly input's value
-                                    if (dateInput.value) {
-                                        readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
-                                    }
-                                });
-                            </script> --}}
-
-
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="complaint_reported_on">Complaint Reported On</label>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="complaint_dat" readonly placeholder="DD-MMM-YYYY" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('j F Y') : '' }}" />
-                                        <input type="date" id="complaint_date_picker" name="complaint_reported_on_gi" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('Y-m-d') : '' }}" class="hide-input" oninput="handleDateInput(this, 'complaint_dat')" />
-                                    </div>
-                                </div>
-                            </div>
-                    
-                    <script>
-                        document.addEventListener('DOMContentLoaded', (event) => {
-                            const dateInput = document.getElementById('complaint_date_picker');
-                            const today = new Date().toISOString().split('T')[0];
-                            dateInput.setAttribute('max', today);
-                    
-                            // Show the date picker when clicking on the readonly input
-                            const readonlyInput = document.getElementById('complaint_dat');
-                            readonlyInput.addEventListener('click', () => {
-                                dateInput.style.display = 'block';
-                                dateInput.focus();
-                            });
-                    
-                            // Update the readonly input when a date is selected
-                            dateInput.addEventListener('change', () => {
-                                const selectedDate = new Date(dateInput.value);
-                                readonlyInput.value = formatDate(selectedDate);
-                                dateInput.style.display = 'none';
-                            });
+                <div class="col-lg-6 new-date-data-field">
+                    <div class="group-input input-date">
+                        <label for="complaint_reported_on">Complaint Reported On</label>
+                        <div class="calenderauditee">
+                            <input type="text" id="complaint_dat" readonly placeholder="DD-MMM-YYYY" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('d-M-Y') : '' }}" />
+                            <input type="date" id="complaint_date_picker" name="complaint_reported_on_gi" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('Y-m-d') : '' }}" class="hide-input" oninput="handleDateInput(this, 'complaint_dat')" />
+                        </div>
+                    </div>
+                </div>
+                
+                <script>
+                    document.addEventListener('DOMContentLoaded', (event) => {
+                        const dateInput = document.getElementById('complaint_date_picker');
+                        const today = new Date().toISOString().split('T')[0];
+                        dateInput.setAttribute('max', today);
+                
+                        // Show the date picker when clicking on the readonly input
+                        const readonlyInput = document.getElementById('complaint_dat');
+                        readonlyInput.addEventListener('click', () => {
+                            dateInput.style.display = 'block';
+                            dateInput.focus();
                         });
-                    
-                        function handleDateInput(dateInput, readonlyInputId) {
-                            const readonlyInput = document.getElementById(readonlyInputId);
+                
+                        // Update the readonly input when a date is selected
+                        dateInput.addEventListener('change', () => {
                             const selectedDate = new Date(dateInput.value);
                             readonlyInput.value = formatDate(selectedDate);
-                        }
-                    
-                        function formatDate(date) {
-                            const options = { day: 'numeric', month: 'long', year: 'numeric' };
-                            return date.toLocaleDateString('en-GB', options);
-                        }
-                    </script>
+                            dateInput.style.display = 'none';
+                        });
+                    });
+                
+                    function handleDateInput(dateInput, readonlyInputId) {
+                        const readonlyInput = document.getElementById(readonlyInputId);
+                        const selectedDate = new Date(dateInput.value);
+                        readonlyInput.value = formatDate(selectedDate);
+                    }
+                
+                    function formatDate(date) {
+                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                        return date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                    }
+                </script>
+                
                     
                             
                             <div class="col-md-12 mb-3">
@@ -1148,7 +1189,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
                                         Product Details
@@ -1159,7 +1200,7 @@
                                             (Launch Instruction)
                                         </span>
                                     </label>
-                                    {{-- <div class="table-responsive"> --}}
+                                   
                                     <table class="table table-bordered" id="ProductsDetails" style="width: 100%;">
                                         <thead>
                                             <tr>
@@ -1251,12 +1292,12 @@
                                         
                                         </tbody>
                                     </table>
-                                    {{-- </div> --}}
+                                    
                                 </div>
-                            </div>
+                            </div> --}} 
 
 
-                            <script>
+                            {{-- <script>
                                 $(document).ready(function() {
                                     let indexDetail = {{ ($productsgi && is_array($productsgi->data)) ? count($productsgi->data) : 0 }};
                                     $('#Details').click(function(e) {
@@ -1286,8 +1327,103 @@
                                         tableBody.append(newRow);
                                     });
                                 });
-                            </script>
+                            </script> --}}
 
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="root_cause">
+                                        Product Details
+                                        <button type="button" id="Details" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                              data-bs-target="#document-details-field-instruction-modal"
+                                              style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <table class="table table-bordered" id="ProductsDetails" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 100px;">Row #</th>
+                                                <th>Product Name</th>
+                                                <th>Batch No.</th>
+                                                <th>Mfg. Date</th>
+                                                <th>Exp. Date</th>
+                                                <th>Batch Size</th>
+                                                <th>Pack Size</th>
+                                                <th>Dispatch Quantity</th>
+                                                <th>Remarks</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php $productsdetails = 1; @endphp
+                                            @if (!empty($productsgi) && is_array($productsgi->data))
+                                                @foreach ($productsgi->data as $index => $detail)
+                                                    <tr>
+                                                        <td>{{ $productsdetails++ }}</td>
+                                                        <td><input type="text" name="serial_number_gi[{{ $index }}][info_product_name]" value="{{ array_key_exists('info_product_name', $detail) ? $detail['info_product_name'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
+                                                        <td><input type="text" name="serial_number_gi[{{ $index }}][info_batch_no]" value="{{ array_key_exists('info_batch_no', $detail) ? $detail['info_batch_no'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
+                                                        <td>
+                                                            <input type="text" name="serial_number_gi[{{ $index }}][info_mfg_date]" value="{{ array_key_exists('info_mfg_date', $detail) ? $detail['info_mfg_date'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} placeholder="DD-MMM-YYYY">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="serial_number_gi[{{ $index }}][info_expiry_date]" value="{{ array_key_exists('info_expiry_date', $detail) ? $detail['info_expiry_date'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} placeholder="DD-MMM-YYYY">
+                                                        </td>
+                                                        <td><input type="text" name="serial_number_gi[{{ $index }}][info_batch_size]" value="{{ array_key_exists('info_batch_size', $detail) ? $detail['info_batch_size'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
+                                                        <td><input type="text" name="serial_number_gi[{{ $index }}][info_pack_size]" value="{{ array_key_exists('info_pack_size', $detail) ? $detail['info_pack_size'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
+                                                        <td><input type="text" name="serial_number_gi[{{ $index }}][info_dispatch_quantity]" value="{{ array_key_exists('info_dispatch_quantity', $detail) ? $detail['info_dispatch_quantity'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
+                                                        <td><input type="text" name="serial_number_gi[{{ $index }}][info_remarks]" value="{{ array_key_exists('info_remarks', $detail) ? $detail['info_remarks'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
+                                                        <td><button type="button" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Remove</button></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="9">No product details found</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <script>
+                                $(document).ready(function() {
+                                    let indexDetail = {{ ($productsgi && is_array($productsgi->data)) ? count($productsgi->data) : 0 }};
+                                    
+                                    $('#Details').click(function(e) {
+                                        e.preventDefault();
+                            
+                                        function generateTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td>' + (serialNumber + 1) + '</td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_product_name]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_no]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" placeholder="DD-MMM-YYYY"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_size]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_pack_size]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_dispatch_quantity]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_remarks]"></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+                                            indexDetail++;
+                                            return html;
+                                        }
+                            
+                                        var tableBody = $('#ProductsDetails tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+                            
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                });
+                            </script>
+                            
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
@@ -1313,7 +1449,9 @@
                                                 @php
                                                     $traceabilityIndex = 1;
                                                 @endphp
-                                                @if (!empty($traceability_gi))
+                                                {{-- @if (!empty($traceability_gi)) --}}
+                                                @if (!empty($traceability_gi) && is_array($traceability_gi->data))
+
                                                     @foreach ($traceability_gi->data as $index => $tracebil)
                                                         <tr>
                                                             <td><input disabled type="text" name="trace_ability[{{ $index }}][serial]" value="{{ $traceabilityIndex++ }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}></td>
@@ -1376,6 +1514,75 @@
                                 </div>
                             </div>
 
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="is_repeat_gi">Is Repeat</label>
+                                    <select name="is_repeat_gi" id="is_repeat_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                        <option value="" {{ $data->is_repeat_gi == '0' ? 'selected' : '' }}>-- select --</option>
+                                        <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes</option>
+                                        <option value="no" {{ $data->is_repeat_gi == 'no' ? 'selected' : '' }}>No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 mb-3" id="repeat_nature_div" style="display: none;">
+                                <div class="group-input">
+                                    <label for="repeat_nature_gi">Repeat Nature</label>
+                                    <div>
+                                        <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                    </div>
+                                    <textarea name="repeat_nature_gi" id="repeat_nature_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->repeat_nature_gi }}</textarea>
+                                </div>
+                            </div>
+                            
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    var isRepeatSelect = document.getElementById('is_repeat_gi');
+                                    var repeatNatureDiv = document.getElementById('repeat_nature_div');
+                            
+                                    // Handle the change event for the select element
+                                    isRepeatSelect.addEventListener('change', function() {
+                                        if (isRepeatSelect.value === 'yes') {
+                                            repeatNatureDiv.style.display = 'block';
+                                        } else {
+                                            repeatNatureDiv.style.display = 'none';
+                                        }
+                                    });
+                            
+                                    // Check the current value and show/hide the repeat nature div on page load
+                                    if (isRepeatSelect.value === 'yes') {
+                                        repeatNatureDiv.style.display = 'block';
+                                    }
+                                });
+                            </script>
+                            
+
+                            {{-- <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="is_repeat_gi">Is Repeat</label>
+                                    <select name="is_repeat_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                        <option value="" {{ $data->is_repeat_gi == '0' ? 'selected' : '' }}>--
+                                            select --</option>
+                                        <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes
+                                        </option>
+                                        <option value="no" {{ $data->is_repeat_gi == 'no' ? 'selected' : '' }}>No
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Repeat Nature">Repeat Nature</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="summernote" name="repeat_nature_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="summernote-1">{{ $data->repeat_nature_gi }}
+
+                                    </textarea>
+                                </div>
+                            </div> --}}
+
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
@@ -1398,6 +1605,42 @@
                             </div>
 
 
+                         
+
+
+                            <div class="button-block">
+                                <button type="submit" class="saveButton" id="saveButton"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} >Save</button>
+
+                        
+                           
+
+                        {{-- <script>
+                            function showAlert(event) {
+                                event.preventDefault(); // Prevent form submission
+                                var alertMessage = document.getElementById('alert-message').innerText;
+                                alert(alertMessage);
+                            }
+                        
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var stage = {{ $data->stage }};
+                                
+                              
+                            });
+                        </script> --}}
+                        
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                        Exit </a> </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="CCForm2" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="sub-head col-12"> Investigation</div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
@@ -1423,7 +1666,9 @@
                                                 @php
                                                     $investingTeamIndex = 1;
                                                 @endphp
-                                                @if (!empty($investing_team))
+                                                {{-- @if (!empty($investing_team)) --}}
+                                                @if (!empty($investing_team) && is_array($investing_team->data))
+
                                                     @foreach ($investing_team->data as $index => $inves)
                                                         <tr>
                                                             <td><input disabled type="text" name="Investing_team[{{ $index }}][serial]" value="{{ $investingTeamIndex++ }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}></td>
@@ -1600,7 +1845,9 @@
                                                 @php
                                                     $brainindex = 1;
                                                 @endphp
-                                                @if (!empty($brain_stroming_details))
+                                                {{-- @if (!empty($brain_stroming_details)) --}}
+                                                @if (!empty($brain_stroming_details) && is_array($brain_stroming_details->data))
+
                                                     @foreach ($brain_stroming_details->data as $index => $bra_st_s)
                                                         <tr>
                                                             <td><input disabled type="text" name="brain_stroming_details[{{ $index }}][serial]" value="{{ $brainindex++ }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}></td>
@@ -1649,40 +1896,6 @@
                                     });
                                 });
                             </script>
-
-
-                            <div class="button-block">
-                                <button type="submit" class="saveButton" id="saveButton"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} >Save</button>
-
-                        
-                           
-
-                        {{-- <script>
-                            function showAlert(event) {
-                                event.preventDefault(); // Prevent form submission
-                                var alertMessage = document.getElementById('alert-message').innerText;
-                                alert(alertMessage);
-                            }
-                        
-                            document.addEventListener('DOMContentLoaded', function () {
-                                var stage = {{ $data->stage }};
-                                
-                              
-                            });
-                        </script> --}}
-                        
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-
-                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                        Exit </a> </button>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="CCForm2" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
                             <div class="sub-head col-12">HOD/Supervisor Review</div>
 
 
@@ -1825,10 +2038,10 @@
                                             
                                                 </tr>
                                                 @endforeach
-                                            @else
+                                            {{-- @else
                                                 <tr>
                                                     <td colspan="9">No product details found</td>
-                                                </tr>
+                                                </tr> --}}
                                             @endif
                                             
 
@@ -2085,8 +2298,19 @@
             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-
-
+                       
+                        
+                        <button id="printButton" onclick="printTabContent()" style="margin-left: 110rem; width:60px">Print</button>
+                        <script>
+                            function printTabContent() {
+                                var printContents = document.getElementById('CCForm3').innerHTML;
+                                var originalContents = document.body.innerHTML;
+                        
+                                document.body.innerHTML = printContents;
+                                window.print();
+                                document.body.innerHTML = originalContents;
+                            }
+                        </script>
                         <div class="sub-head">Acknowledgement</div>
 
 
@@ -2345,7 +2569,7 @@
                                 </textarea>
                             </div>
                         </div>
-                        <div class="sub-head">
+                        {{-- <div class="sub-head">
                             Proposal to accomplish investigation:
                         </div>
                         <div class="col-12">
@@ -2356,6 +2580,7 @@
                                             <tr>
                                                 <th style="width: 5%;">Sr. No.</th>
                                                 <th style="width: 40%;">Requirements</th>
+                                                <th style="width: 8%;">Yes/No</th>
                                                 <th style="width: 20%;">Expected date of investigation completion</th>
                                                 <th>Remarks</th>
                                             </tr>
@@ -2364,6 +2589,7 @@
                                             <tr>
                                                 <td class="flex text-center">1</td>
                                                 <td>Complaint sample Required</td>
+                                                <td></td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="csr1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Complaint sample Required']['csr1'] ?? '' }}</textarea>
@@ -2378,6 +2604,8 @@
                                             <tr>
                                                 <td class="flex text-center">2</td>
                                                 <td>Additional info. From Complainant</td>
+                                                <td></td>
+
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}name="afc1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Additional info. From Complainant']['afc1'] ?? '' }}</textarea>
@@ -2392,6 +2620,7 @@
                                             <tr>
                                                 <td class="flex text-center">3</td>
                                                 <td>Analysis of complaint Sample</td>
+                                                <td></td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="acs1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? '' }}</textarea>
@@ -2406,6 +2635,7 @@
                                             <tr>
                                                 <td class="flex text-center">4</td>
                                                 <td>QRM Approach</td>
+                                                <td></td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}name="qrm1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['QRM Approach']['qrm1'] ?? '' }}</textarea>
@@ -2420,6 +2650,7 @@
                                             <tr>
                                                 <td class="flex text-center">5</td>
                                                 <td>Others</td>
+                                                <td></td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="oth1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Others']['oth1'] ?? '' }}</textarea>
@@ -2436,8 +2667,196 @@
                                 </div>
                             </div>
                         </div>
+                    </div> --}}
+                     
+                   
+                    <div class="sub-head">
+                        Proposal to accomplish investigation:
                     </div>
-
+                    <div class="col-12">
+                        <div class="group-input">
+                            <div class="why-why-chart">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr. No.</th>
+                                            <th style="width: 40%;">Requirements</th>
+                                            <th style="width: 10%;">Yes/No</th>
+                                            <th style="width: 20%;">Expected date of investigation completion</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <style>
+                                        .main-head{
+                                           display: flex; 
+                                           justify-content: space-around;
+                                           gap: 12px;
+                                        }
+                                        .label-head{
+                                           display: flex !important;
+                                            gap: 14px;
+                                        }
+                                        .input-head{
+                                           margin-top: 4px;
+                                        }
+                                    </style>
+                                    <tbody>
+                                        <tr>
+                                            <td class="flex text-center">1</td>
+                                            <td>Complaint sample Required</td>
+                                            <td class="main-head">
+                                                <label class="label-head">
+                                                    <span class="input-head">
+                                                        <input type="radio" name="csr1_yesno" value="yes" {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'yes' ? 'checked' : '' }} onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
+                                                    </span>
+                                                    <span>Yes</span>
+                                                </label>
+                                                <label class="label-head">
+                                                    <span class="input-head">
+                                                        <input type="radio" name="csr1_yesno" value="no" {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'no' ? 'checked' : '' }} onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
+                                                    </span>
+                                                    <span>No</span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="csr1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Complaint sample Required']['csr1'] ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align: middle;">
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="csr2" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Complaint sample Required']['csr2'] ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="flex text-center">2</td>
+                                            <td>Additional info. From Complainant</td>
+                                            <td class="main-head">
+                                                <label class="label-head">
+                                                    <input type="radio" name="afc1_yesno" value="yes" {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'yes' ? 'checked' : '' }} onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')">
+                                                    <span>Yes</span>
+                                                </label>
+                                                <label class="label-head">
+                                                    <input type="radio" name="afc1_yesno" value="no" {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'no' ? 'checked' : '' }} onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')">
+                                                    <span>No</span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="afc1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Additional info. From Complainant']['afc1'] ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align: middle;">
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="afc2" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Additional info. From Complainant']['afc2'] ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="flex text-center">3</td>
+                                            <td>Analysis of complaint Sample</td>
+                                            <td class="main-head">
+                                                <label class="label-head">
+                                                    <input type="radio" name="acs1_yesno" value="yes" {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'yes' ? 'checked' : '' }} onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')">
+                                                    <span>Yes</span>
+                                                </label>
+                                                <label class="label-head">
+                                                    <input type="radio" name="acs1_yesno" value="no" {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'no' ? 'checked' : '' }} onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')">
+                                                    <span>No</span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="acs1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align: middle;">
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="acs2" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="flex text-center">4</td>
+                                            <td>QRM Approach</td>
+                                            <td class="main-head">
+                                                <label class="label-head">
+                                                    <input type="radio" name="qrm1_yesno" value="yes" {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'yes' ? 'checked' : '' }} onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')">
+                                                    <span>Yes</span>
+                                                </label>
+                                                <label class="label-head">
+                                                    <input type="radio" name="qrm1_yesno" value="no" {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'no' ? 'checked' : '' }} onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')">
+                                                    <span>No</span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="qrm1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['QRM Approach']['qrm1'] ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align: middle;">
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="qrm2" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['QRM Approach']['qrm2'] ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="flex text-center">5</td>
+                                            <td>Others</td>
+                                            <td class="main-head">
+                                                <label class="label-head">
+                                                    <input type="radio" name="oth1_yesno" value="yes" {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'yes' ? 'checked' : '' }} onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')">
+                                                    <span>Yes</span>
+                                                </label>
+                                                <label class="label-head">
+                                                    <input type="radio" name="oth1_yesno" value="no" {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'no' ? 'checked' : '' }} onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')">
+                                                    <span>No</span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="oth1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Others']['oth1'] ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align: middle;">
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="oth2" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Others']['oth2'] ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <script>
+                        function toggleInputs(radioName, textarea1, textarea2) {
+                            const radios = document.getElementsByName(radioName);
+                            let selectedValue = '';
+                            for (const radio of radios) {
+                                if (radio.checked) {
+                                    selectedValue = radio.value;
+                                    break;
+                                }
+                            }
+                            
+                            document.getElementsByName(textarea1)[0].disabled = selectedValue !== 'yes';
+                            document.getElementsByName(textarea2)[0].disabled = selectedValue !== 'yes';
+                        }
+                    
+                        // Call toggleInputs for each row on page load
+                        document.addEventListener('DOMContentLoaded', function() {
+                            toggleInputs('csr1_yesno', 'csr1', 'csr2');
+                            toggleInputs('afc1_yesno', 'afc1', 'afc2');
+                            toggleInputs('acs1_yesno', 'acs1', 'acs2');
+                            toggleInputs('qrm1_yesno', 'qrm1', 'qrm2');
+                            toggleInputs('oth1_yesno', 'oth1', 'oth2');
+                        });
+                    </script>
+                    
+                    
 
                     <div class="col-12">
                         <div class="group-input">

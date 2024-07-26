@@ -34,10 +34,10 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Immediate Actions</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA Review</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button> --}}
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Head Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA Head/Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">System Suitability Failure Inicidence</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Closure</button>
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
@@ -107,8 +107,8 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field">
+                                </div> --}}
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due"> Due Date</label>
                                         <div><small class="text-primary">Please mention expected date of completion</small>
@@ -120,8 +120,40 @@
                                                 oninput="handleDateInput(this, 'due_date')"  />
                                         </div>
                                     </div>
+                                </div> --}}
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
+                                        <div class="calenderauditee">
+                                            <!-- Display the formatted date in a readonly input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                           
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+                                    
+                                    // Call this function initially to ensure the correct format is shown on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        handleDateInput(dateInput, 'due_date_display');
+                                    });
+                                    </script>
+                                    
+                                    <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                    </style>
+
+
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b><span
                                             class="text-danger">*</span></label>
@@ -147,12 +179,12 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly required>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
 
                                 <div class="col-12">
@@ -216,7 +248,7 @@
                                        {{-- @endforeach --}}
                                      </tbody>
                                 </table>
-                            </div>
+                        </div>
                             </div>
 
 
@@ -422,7 +454,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" id="Incident_name_analyst_no_gi">
-                                        <label for="Incident_name_analyst_no">Name Of Analyst<span
+                                        <label for="Incident_name_analyst_no">Name Of Reported By<span
                                                 class="text-danger d-none">*</span></label>
                                         <input type="text" name="Incident_name_analyst_no_gi">
                                     </div>
@@ -451,12 +483,12 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Analyst Name <span class="text-danger"></span>
+                                            Reported By <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="section_sign_date_gi">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                <option value="{{ $data->name }}">{{ $data->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('section_sign_date_gi')
@@ -483,12 +515,12 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Analyst Name <span class="text-danger"></span>
+                                            Section Head Name <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="analyst_sign_date_gi">
+                                        <select id="select-state" placeholder="Select..." name="section_sign_date_gi">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                <option value="{{ $data->name }}">{{ $data->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('analyst_sign_date_gi')
@@ -498,7 +530,7 @@
                                 </div>
                                 {{-- New Added --}}
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
                                         <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
@@ -509,7 +541,7 @@
                                             <option value="critical">Critical</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <!-- <div class="col-lg-6">
                                             <div class="group-input" id="initiated_through_req">
                                                 <label for="If Other">Others<span
@@ -541,17 +573,7 @@
                                         </select>
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Incident Category">Incident Category</label>
-                                        <select name="Incident_Category">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="Biological">Biological</option>
-                                            <option value="Chemical">Chemical</option>
-                                            <option value="Others">Others</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input" id="Incident_Category_others">
                                         <label for="Incident_Category">Others<span
@@ -559,7 +581,7 @@
                                         <textarea name="Incident_Category_others"></textarea>
                                     </div>
                                 </div>
-                                 <div class="col-lg-12">
+                                 {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Invocation Type">Invocation Type</label>
                                         <select name="Invocation_Type">
@@ -569,7 +591,7 @@
                                             <option value="3">3</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -673,7 +695,7 @@
 
     {{-- type of incidence --}}
 
-    <div class="col-lg-12">
+    {{-- <div class="col-lg-12">
         <div class="group-input">
             <label for="Type Of Incidence"><b>Type Of Incidence</b></label>
             <select name="type_incidence_ia" id="initiator_group">
@@ -681,10 +703,48 @@
                 <option value="Analyst Error">Analyst Error</option>
                 <option value="Instrument Error">Instrument Error</option>
                 <option value="Atypical Error">Atypical Error</option>
+                <option value="">Other</option>
+
 
             </select>
         </div>
+    </div> --}}
+
+    <div class="col-lg-12">
+        <div class="group-input">
+            <label for="Type Of Incidence"><b>Type Of Incidence</b></label>
+            <select name="type_incidence_ia" id="type_incidence_ia">
+                <option value="0">-- Select --</option>
+                <option value="Analyst Error">Analyst Error</option>
+                <option value="Instrument Error">Instrument Error</option>
+                <option value="Atypical Error">Atypical Error</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
     </div>
+    
+    <div class="col-lg-12" id="other_incidence_div" style="display: none;">
+        <div class="group-input">
+            <label for="other_incidence"><b>Other:</b></label>
+            <input type="text" name="other_incidence" id="other_incidence" placeholder="Specify other type of incidence">
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var typeIncidenceSelect = document.getElementById('type_incidence_ia');
+            var otherIncidenceDiv = document.getElementById('other_incidence_div');
+    
+            typeIncidenceSelect.addEventListener('change', function() {
+                if (typeIncidenceSelect.value === 'Other') {
+                    otherIncidenceDiv.style.display = 'block';
+                } else {
+                    otherIncidenceDiv.style.display = 'none';
+                }
+            });
+        });
+    </script>
+        
+
     {{-- type of incidence --}}
 
 
@@ -768,79 +828,7 @@
                         </div>
                     </div>
 
-                      <!-- Incident Details content -->
-                      <div id="CCForm8" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Incident Details">Incident Details</label>
-                                        <textarea name="Incident_Details"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Document Details ">Document Details</label>
-                                        <textarea name="Document_Details"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Instrument Details">Instrument Details</label>
-                                        <textarea name="Instrument_Details"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Involved Personnel">Involved Personnel</label>
-                                        <textarea name="Involved_Personnel"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Product Details,If Any">Product Details,If Any</label>
-                                        <textarea name="Product_Details"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Supervisor Review Comments">Supervisor Review Comments</label>
-                                        <textarea name="Supervisor_Review_Comments"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="ccf_attachments">File Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="ccf_attachments"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="ccf_attachments" name="ccf_attachments[]"
-                                                    oninput="addMultipleFiles(this, 'ccf_attachments')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-12 sub-head">
-                                    Cancelation
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Cancelation Remarks">Cancelation Remarks</label>
-                                        <textarea name="Cancelation_Remarks"></textarea>
-                                    </div>
-                                </div> --}}
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
+                     
                     <!-- Investigation Details content -->
                     <div id="CCForm9" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -899,65 +887,24 @@
                     </div>
 
 
-                    <!-- CAPA content -->
-                    <div id="CCForm4" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                
-                                
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="capa">Capa</label>
-                                        <textarea name="capa_capa"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Currective Action">Corrective Action</label>
-                                        <textarea name="Currective_Action"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Preventive Action">Preventive Action</label>
-                                        <textarea name="Preventive_Action"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
-                                        <textarea name="Corrective_Preventive_Action"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="CAPA Attachments">CAPA Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="CAPA_Attachment"> --}}
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="CAPA_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="CAPA_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'CAPA_Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
+
 
                     <!-- QA Review content -->
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Incident Category">Incident Category</label>
+                                        <select name="Incident_Category">
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="Biological">Biological</option>
+                                            <option value="Chemical">Chemical</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Review Comments">QA Review Comments</label>
@@ -1029,7 +976,7 @@
                                         </div>
                                     </div>
                                 </div> -->
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Incident Type">Incident Type</label>
                                         <select name="Incident_Type">
@@ -1039,7 +986,7 @@
                                             <option value="3">Type C</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Conclusion">Conclusion</label>
@@ -1802,6 +1749,135 @@
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit">Submit</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" href="#"> Exit </a></button>
+
+                                 <!-- Incident Details content -->
+                      {{-- <div id="CCForm8" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Incident Details">Incident Details</label>
+                                        <textarea name="Incident_Details"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Document Details ">Document Details</label>
+                                        <textarea name="Document_Details"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Instrument Details">Instrument Details</label>
+                                        <textarea name="Instrument_Details"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Involved Personnel">Involved Personnel</label>
+                                        <textarea name="Involved_Personnel"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Product Details,If Any">Product Details,If Any</label>
+                                        <textarea name="Product_Details"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Supervisor Review Comments">Supervisor Review Comments</label>
+                                        <textarea name="Supervisor_Review_Comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="ccf_attachments">File Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                        {{-- <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="ccf_attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="ccf_attachments" name="ccf_attachments[]"
+                                                    oninput="addMultipleFiles(this, 'ccf_attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                                {{-- <div class="col-12 sub-head">
+                                    Cancelation
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Cancelation Remarks">Cancelation Remarks</label>
+                                        <textarea name="Cancelation_Remarks"></textarea>
+                                    </div>
+                                </div> --}}
+                            {{-- </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div> --}}
+
+                                        <!-- CAPA content -->
+                    {{-- <div id="CCForm4" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                
+                                
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="capa">Capa</label>
+                                        <textarea name="capa_capa"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Currective Action">Corrective Action</label>
+                                        <textarea name="Currective_Action"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Preventive Action">Preventive Action</label>
+                                        <textarea name="Preventive_Action"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
+                                        <textarea name="Corrective_Preventive_Action"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="CAPA Attachments">CAPA Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        {{-- <input type="file" id="myfile" name="CAPA_Attachment"> --}}
+                                        {{-- <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="CAPA_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="CAPA_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'CAPA_Attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div> --}} 
                             </div>
                         </div>
                     </div>

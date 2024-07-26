@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\OpenStage;
 use App\Models\LabIncident;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\File;
+
 
 class LabIncidentController extends Controller
 {
@@ -45,28 +47,28 @@ class LabIncidentController extends Controller
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
         }
-        if (!$request->Initiator_Group) {
-            toastr()->info("Initiator Group is required");
-            return redirect()->back()->withInput();
-        }
-        $departments = [
-            'CQA' => 'Corporate Quality Assurance',
-            'QAB' => 'Quality Assurance Biopharma',
-            'CQC' => 'Central Quality Control',
-            'PSG' => 'Plasma Sourcing Group',
-            'CS' => 'Central Stores',
-            'ITG' => 'Information Technology Group',
-            'MM' => 'Molecular Medicine',
-            'CL' => 'Central Laboratory',
-            'TT' => 'Tech Team',
-            'QA' => 'Quality Assurance',
-            'QM' => 'Quality Management',
-            'IA' => 'IT Administration',
-            'ACC' => 'Accounting',
-            'LOG' => 'Logistics',
-            'SM' => 'Senior Management',
-            'BA' => 'Business Administration',
-        ];
+        // if (!$request->Initiator_Group) {
+        //     toastr()->info("Initiator Group is required");
+        //     return redirect()->back()->withInput();
+        // }
+        // $departments = [
+        //     'CQA' => 'Corporate Quality Assurance',
+        //     'QAB' => 'Quality Assurance Biopharma',
+        //     'CQC' => 'Central Quality Control',
+        //     'PSG' => 'Plasma Sourcing Group',
+        //     'CS' => 'Central Stores',
+        //     'ITG' => 'Information Technology Group',
+        //     'MM' => 'Molecular Medicine',
+        //     'CL' => 'Central Laboratory',
+        //     'TT' => 'Tech Team',
+        //     'QA' => 'Quality Assurance',
+        //     'QM' => 'Quality Management',
+        //     'IA' => 'IT Administration',
+        //     'ACC' => 'Accounting',
+        //     'LOG' => 'Logistics',
+        //     'SM' => 'Senior Management',
+        //     'BA' => 'Business Administration',
+        // ];
 
         $data = new LabIncident();
         $data->Form_Type = "lab-incident";
@@ -176,6 +178,7 @@ class LabIncidentController extends Controller
         $data->qc_approved_to = $request->qc_approved_to;
         $data->qc_review_to = $request->qc_review_to;
         $data->suit_qc_review_to =$request->suit_qc_review_to;
+        $data->other_incidence =$request->other_incidence;
 
 
         // $data->assign_to_qc_reviewer = $request->assign_to_qc_reviewer;
@@ -450,7 +453,7 @@ class LabIncidentController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -468,7 +471,7 @@ class LabIncidentController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -484,7 +487,23 @@ class LabIncidentController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+        if (!empty($data->other_incidence)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Other Ref.Doc.No';
+            $history->previous = "Null";
+            $history->current = $data->other_incidence;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
         }
@@ -500,7 +519,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -517,7 +536,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -534,7 +553,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -551,7 +570,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -567,7 +586,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -583,7 +602,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -599,7 +618,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -616,7 +635,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -632,7 +651,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role =RoleGroup::where('id',Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -648,7 +667,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role =RoleGroup::where('id',Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -664,7 +683,7 @@ class LabIncidentController extends Controller
             $history->user_name =Auth::user()->name;
             $history->user_role =RoleGroup::where('id',Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -680,7 +699,7 @@ class LabIncidentController extends Controller
             $history->user_name =Auth::user()->name;
             $history->user_role =RoleGroup::where('id',Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -696,7 +715,7 @@ class LabIncidentController extends Controller
             $history->user_name =Auth::user()->name;
             $history->user_role =RoleGroup::where('id',Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -712,7 +731,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -728,7 +747,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -744,7 +763,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -760,7 +779,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -776,7 +795,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -792,7 +811,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -808,7 +827,7 @@ class LabIncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -826,6 +845,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -841,6 +862,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -856,6 +879,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -871,6 +896,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -886,6 +913,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -901,6 +930,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -916,6 +947,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -931,6 +964,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -946,6 +981,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -961,6 +998,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -976,6 +1015,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -991,6 +1032,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1006,6 +1049,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1021,6 +1066,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1036,6 +1083,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1051,6 +1100,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1066,6 +1117,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1080,6 +1133,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1095,6 +1150,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1110,6 +1167,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1125,6 +1184,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1140,6 +1201,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1155,6 +1218,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1170,6 +1235,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1185,6 +1252,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1199,6 +1268,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1213,6 +1284,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1227,6 +1300,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1242,6 +1317,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1257,6 +1334,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1271,6 +1350,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1286,6 +1367,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1301,6 +1384,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1316,6 +1401,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1331,6 +1418,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1346,6 +1435,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1361,6 +1452,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1375,6 +1468,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1390,6 +1485,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1405,6 +1502,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1420,6 +1519,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1435,6 +1536,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1450,11 +1553,12 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
         }
-
         if (!empty($data->ccf_attachments)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -1465,6 +1569,8 @@ class LabIncidentController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
             $history->save();
@@ -1482,6 +1588,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1497,6 +1605,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1512,6 +1622,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1527,6 +1639,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1542,6 +1656,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1557,6 +1673,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1572,6 +1690,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1587,6 +1707,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1602,6 +1724,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1617,6 +1741,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1632,6 +1758,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1647,6 +1775,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1662,6 +1792,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1677,6 +1809,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1692,6 +1826,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1707,6 +1843,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1722,6 +1860,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1737,6 +1877,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1752,6 +1894,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1767,6 +1911,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1782,6 +1928,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1797,6 +1945,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1812,6 +1962,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1827,6 +1979,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1842,6 +1996,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1857,6 +2013,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1872,6 +2030,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1887,6 +2047,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1902,6 +2064,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1917,6 +2081,8 @@ class LabIncidentController extends Controller
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = "Opened";
+        $history->change_from = "Initiation";
         $history->action_name = "Create";
         $history->origin_state = $data->status;
         $history->save();
@@ -1931,7 +2097,9 @@ class LabIncidentController extends Controller
 
         toastr()->success('Record is created Successfully');
 
-        return redirect('rcms/qms-dashboard');
+        // return redirect('rcms/qms-dashboard');
+        return redirect()->to('rcms/qms-dashboard')->with('success', 'Market Complaint created successfully.');
+
     }
     public function updateLabIncident(request $request, $id)
     {
@@ -1988,6 +2156,8 @@ class LabIncidentController extends Controller
         $data->qc_approved_to = $request->qc_approved_to;
         $data->qc_review_to = $request->qc_review_to;
         $data->qc_head_closure= $request->qc_head_closure;
+        $data->other_incidence= $request->other_incidence;
+
 
 
 
@@ -2071,12 +2241,54 @@ class LabIncidentController extends Controller
         }
 
 
+// ==========================attachment with remove kp =========================
+//   // Initialize attachments as an array
+//   $attachments = json_decode($data->attachments_gi, true) ?? [];
+
+//   // Handle file attachments removal
+//   if ($request->has('removed_files')) {
+//       $removedFiles = json_decode($request->input('removed_files'), true);
+
+//       foreach ($removedFiles as $fileName) {
+//           // Remove the file from the server
+//           $filePath = public_path('upload/' . $fileName);
+//           if (File::exists($filePath)) {
+//               File::delete($filePath);
+//           }
+
+//           // Remove the file name from the attachments array
+//           if (($key = array_search($fileName, $attachments)) !== false) {
+//               unset($attachments[$key]);
+//           }
+//       }
+//       // Re-index the array to remove gaps
+//       $attachments = array_values($attachments);
+//   }
+
+//   // Handle file attachments addition
+//   if ($request->hasFile('attachments_gi')) {
+//       foreach ($request->file('attachments_gi') as $file) {
+//           // Generate a unique name for the file
+//           $name = $request->name . 'attachments_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+//           // Move the file to the upload directory
+//           $file->move(public_path('upload/'), $name);
+
+//           // Add the file name to the array
+//           $attachments[] = $name;
+//       }
+//   }
+
+//   // Encode the file names array to JSON and assign it to the model
+//   $data->attachments_gi = json_encode($attachments);
+// ==================================
+
         if (!empty($request->attachments_gi)) {
             $files = [];
             if ($request->hasFile('attachments_gi')) {
                 foreach ($request->file('attachments_gi') as $file) {
                     // Generate a unique name for the file
-                    $name = $request->name . 'attachments_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attachments_gi' . rand(1,100) . '.' . $file->getClientOriginalExtension();
 
                     // Move the file to the upload directory
                     $file->move(public_path('upload/'), $name);
@@ -2183,9 +2395,36 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->incident_interval_others_gi) || $lastDocument->incident_interval_others_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
+           
         }
+        if ($lastDocument->other_incidence != $data->other_incidence ) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Interval';
+            $history->previous = $lastDocument->other_incidence;
+            $history->current = $data->other_incidence;
+            $history->comment = $request->other_incidence_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->other_incidence) || $lastDocument->other_incidence === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+            
+        }
+
         if ($lastDocument->test_gi != $data->test_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -2199,8 +2438,13 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->test_gi) || $lastDocument->test_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
+           
         }
 
 if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_gi) {
@@ -2217,7 +2461,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
     $history->origin_state = $lastDocument->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->incident_date_analysis_gi) || $lastDocument->incident_date_analysis_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
     $history->save();
 }
 
@@ -2234,9 +2483,13 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->incident_specification_no_gi) || $lastDocument->incident_specification_no_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
-
+           
         }
 
         if ($lastDocument->incident_stp_no_gi != $data->incident_stp_no_gi ) {
@@ -2252,8 +2505,13 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->incident_stp_no_gi) || $lastDocument->incident_stp_no_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
+          
         }
         if ($lastDocument->Incident_name_analyst_no_gi != $data->Incident_name_analyst_no_gi ) {
             $history = new LabIncidentAuditTrial();
@@ -2268,8 +2526,13 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Incident_name_analyst_no_gi) || $lastDocument->Incident_name_analyst_no_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
+          
         }
         if ($lastDocument->incident_date_incidence_gi != $data->incident_date_incidence_gi ) {
             $history = new LabIncidentAuditTrial();
@@ -2284,7 +2547,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->incident_date_incidence_gi) || $lastDocument->incident_date_incidence_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->save();
         }
         if ($lastDocument->description_incidence_gi != $data->description_incidence_gi ) {
@@ -2300,8 +2568,13 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->description_incidence_gi) || $lastDocument->description_incidence_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
+           
         }
 
 
@@ -2321,8 +2594,13 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->analyst_sign_date_gi) || $lastDocument->analyst_sign_date_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
+           
         }
         $previousSectionHeadName = User::find($lastDocument->section_sign_date_gi);
         $currentSectionHeadName = User::find($data['section_sign_date_gi']);
@@ -2340,7 +2618,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->section_sign_date_gi_changed) || $lastDocument->section_sign_date_gi_changed === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->save();
         }
 
@@ -2357,7 +2640,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->severity_level2) || $lastDocument->severity_level2 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->save();
         }
         if ($lastDocument->Incident_Category_others != $data->Incident_Category_others ) {
@@ -2373,7 +2661,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Incident_Category_others) || $lastDocument->Incident_Category_others === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->save();
         }
         if ($lastDocument->attachments_gi != $data->attachments_gi ) {
@@ -2389,7 +2682,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->attachments_gi) || $lastDocument->attachments_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->save();
         }
 
@@ -2508,8 +2806,13 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->short_desc) || $lastDocument->short_desc === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
+           
         }
 
         $department = [
@@ -2547,8 +2850,13 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Initiator_Group) || $lastDocument->Initiator_Group === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
+           
         }
 
         if ($lastDocument->Other_Ref != $data->Other_Ref ) {
@@ -2565,7 +2873,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Other_Ref) || $lastDocument->Other_Ref === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->save();
         }
         if ($lastDocument->due_date != $data->due_date ) {
@@ -2582,7 +2895,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'update';
+             if (is_null($lastDocument->due_date) || $lastDocument->due_date === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->save();
         }
         $previousAssignedToName = User::find($lastDocument->assign_to);
@@ -2597,10 +2915,16 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->assign_to) || $lastDocument->assign_to === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->action_name = "Update";
+            
             $history->save();
         }
 
@@ -2618,7 +2942,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Incident_Category) || $lastDocument->Incident_Category === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
             $history->save();
         }
         if ($lastDocument->Invocation_Type != $data->Invocation_Type ) {
@@ -2635,7 +2964,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Invocation_Type) || $lastDocument->Invocation_Type === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->save();
         }
         if ($lastDocument->incident_involved_others_gi != $data->incident_involved_others_gi ) {
@@ -2651,7 +2985,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->incident_involved_others_gi) || $lastDocument->incident_involved_others_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->save();
         }
         if ($lastDocument->stage_stage_gi != $data->stage_stage_gi ) {
@@ -2667,7 +3006,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->stage_stage_gi) || $lastDocument->stage_stage_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->save();
         }
         if ($lastDocument->incident_stability_cond_gi != $data->incident_stability_cond_gi ) {
@@ -2683,7 +3027,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->incident_stability_cond_gi) || $lastDocument->incident_stability_cond_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
             $history->save();
         }
         if ($lastDocument->Incident_Details != $data->Incident_Details ) {
@@ -2699,8 +3048,13 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Incident_Details) || $lastDocument->Incident_Details === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
+          
         }
         if ($lastDocument->Document_Details != $data->Document_Details ) {
 
@@ -2715,7 +3069,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Document_Details) || $lastDocument->Document_Details === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->save();
         }
         if ($lastDocument->Instrument_Details != $data->Instrument_Details ) {
@@ -2731,7 +3090,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Instrument_Details) || $lastDocument->Instrument_Details === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
             $history->save();
         }
         if ($lastDocument->Involved_Personnel != $data->Involved_Personnel ) {
@@ -2747,7 +3111,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Involved_Personnel) || $lastDocument->Involved_Personnel === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->save();
         }
         if ($lastDocument->Product_Details != $data->Product_Details) {
@@ -2763,7 +3132,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Product_Details) || $lastDocument->Product_Details === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->save();
         }
         if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Comments ) {
@@ -2779,7 +3153,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Supervisor_Review_Comments) || $lastDocument->Supervisor_Review_Comments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
             $history->save();
         }
         if ($lastDocument->Cancelation_Remarks != $data->Cancelation_Remarks ) {
@@ -2795,7 +3174,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Cancelation_Remarks) || $lastDocument->Cancelation_Remarks === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->save();
         }
         if ($lastDocument->Investigation_Details != $data->Investigation_Details ) {
@@ -2811,7 +3195,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Investigation_Details) || $lastDocument->Investigation_Details === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->save();
         }
         if ($lastDocument->Action_Taken != $data->Action_Taken ) {
@@ -2827,7 +3216,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Action_Taken) || $lastDocument->Action_Taken === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->save();
         }
         if ($lastDocument->Root_Cause != $data->Root_Cause ) {
@@ -2843,7 +3237,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Root_Cause) || $lastDocument->Root_Cause === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->save();
         }
 
@@ -2860,7 +3259,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Preventive_Action) || $lastDocument->Preventive_Action === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->save();
         }
 
@@ -2877,7 +3281,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Corrective_Preventive_Action) || $lastDocument->Corrective_Preventive_Action === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->save();
         }
 
@@ -2894,7 +3303,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->QA_Review_Comments) || $lastDocument->QA_Review_Comments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->save();
         }
         if ($lastDocument->QA_Head != $data->QA_Head ) {
@@ -2910,7 +3324,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->QA_Head) || $lastDocument->QA_Head === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->save();
         }
         if ($lastDocument->Effectiveness_Check != $data->Effectiveness_Check ) {
@@ -2926,8 +3345,13 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Effectiveness_Check) || $lastDocument->Effectiveness_Check === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
+           
         }
         if ($lastDocument->Incident_Type != $data->Incident_Type ) {
 
@@ -2941,7 +3365,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Incident_Type) || $lastDocument->Incident_Type === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          ;
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -2957,7 +3386,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Conclusion) || $lastDocument->Conclusion === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -2973,7 +3407,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Initial_Attachment) || $lastDocument->Initial_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -2989,7 +3428,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Attachments) || $lastDocument->Attachments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3005,7 +3449,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Inv_Attachment) || $lastDocument->Inv_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3021,7 +3470,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->CAPA_Attachment) || $lastDocument->CAPA_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3037,7 +3491,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->QA_Head_Attachment) || $lastDocument->QA_Head_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3053,7 +3512,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->effect_check_date) || $lastDocument->effect_check_date === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3069,7 +3533,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->occurance_date) || $lastDocument->occurance_date === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3087,7 +3556,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Inv_Attachment) || $lastDocument->Inv_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3103,7 +3577,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Investigation_Details) || $lastDocument->Investigation_Details === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3119,7 +3598,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Action_Taken) || $lastDocument->Action_Taken === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3135,7 +3619,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Root_Cause) || $lastDocument->Root_Cause === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3151,7 +3640,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->capa_capa) || $lastDocument->capa_capa === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3167,7 +3661,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Currective_Action) || $lastDocument->Currective_Action === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3186,7 +3685,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->CAPA_Attachment) || $lastDocument->CAPA_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+         
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3202,7 +3706,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->QA_Review_Comments) || $lastDocument->QA_Review_Comments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3218,7 +3727,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->QA_Head_Attachment) || $lastDocument->QA_Head_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3234,7 +3748,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->QA_Head) || $lastDocument->QA_Head === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3252,7 +3771,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Conclusion) || $lastDocument->Conclusion === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3268,7 +3792,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->due_date_extension) || $lastDocument->due_date_extension === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3284,7 +3813,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->involved_ssfi) || $lastDocument->involved_ssfi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3300,7 +3834,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->stage_stage_ssfi) || $lastDocument->stage_stage_ssfi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+         
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3316,7 +3855,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Incident_stability_cond_ssfi) || $lastDocument->Incident_stability_cond_ssfi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3332,7 +3876,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Incident_interval_ssfi) || $lastDocument->Incident_interval_ssfi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3348,7 +3897,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->test_ssfi) || $lastDocument->test_ssfi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3364,7 +3918,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Incident_date_analysis_ssfi) || $lastDocument->Incident_date_analysis_ssfi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3380,7 +3939,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->initial_attachment_hodsr) || $lastDocument->initial_attachment_hodsr === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3396,7 +3960,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Incident_stp_ssfi) || $lastDocument->Incident_stp_ssfi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3412,7 +3981,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Incident_date_incidence_ssfi) || $lastDocument->Incident_date_incidence_ssfi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3431,7 +4005,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->suit_qc_review_to) || $lastDocument->suit_qc_review_to === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+         
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3448,7 +4027,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = "Update";
+             if (is_null($lastDocument->Description_incidence_ssfi) || $lastDocument->Description_incidence_ssfi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3465,7 +4049,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->Detail_investigation_ssfi) || $lastDocument->Detail_investigation_ssfi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3482,7 +4071,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->proposed_corrective_ssfi) || $lastDocument->proposed_corrective_ssfi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3499,7 +4093,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->root_cause_ssfi) || $lastDocument->root_cause_ssfi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3516,7 +4115,12 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->incident_summary_ssfi) || $lastDocument->incident_summary_ssfi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -3533,7 +4137,12 @@ if ($lastDocument->type_incidence_ia != $data->type_incidence_ia) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->type_incidence_ia) || $lastDocument->type_incidence_ia === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -3551,7 +4160,12 @@ if ($lastDocument->investigation_summary_ia != $data->investigation_summary_ia) 
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->investigation_summary_ia) || $lastDocument->investigation_summary_ia === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -3569,7 +4183,12 @@ if ($lastDocument->capa_number_im != $data->capa_number_im) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->capa_number_im) || $lastDocument->capa_number_im === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -3587,7 +4206,12 @@ if ($lastDocument->corrective_and_preventive_action_ia != $data->corrective_and_
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->corrective_and_preventive_action_ia) || $lastDocument->corrective_and_preventive_action_ia === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -3605,7 +4229,12 @@ if ($lastDocument->result_of_repeat_analysis_ia != $data->result_of_repeat_analy
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->initial_attachment_hodsr) || $lastDocument->initial_attachment_hodsr === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -3623,7 +4252,12 @@ if ($lastDocument->repeat_analysis_plan_ia != $data->repeat_analysis_plan_ia) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->repeat_analysis_plan_ia) || $lastDocument->repeat_analysis_plan_ia === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -3641,7 +4275,12 @@ if ($lastDocument->proposed_correctivei_ia != $data->proposed_correctivei_ia) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->proposed_correctivei_ia) || $lastDocument->proposed_correctivei_ia === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+         
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -3659,7 +4298,12 @@ if ($lastDocument->Incident_Details != $data->Incident_Details) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->Incident_Details) || $lastDocument->Incident_Details === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+         
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -3677,7 +4321,12 @@ if ($lastDocument->Document_Details != $data->Document_Details) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->Document_Details) || $lastDocument->Document_Details === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -3695,6 +4344,12 @@ if ($lastDocument->Instrument_Details != $data->Instrument_Details) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
+     if (is_null($lastDocument->Instrument_Details) || $lastDocument->Instrument_Details === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
     $history->action_name = "Update";
     $history->origin_state = $lastDocument->status;
     $history->save();
@@ -3713,7 +4368,12 @@ if ($lastDocument->Involved_Personnel != $data->Involved_Personnel) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->Involved_Personnel) || $lastDocument->Involved_Personnel === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -3731,7 +4391,12 @@ if ($lastDocument->Product_Details != $data->Product_Details) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->Product_Details) || $lastDocument->Product_Details === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -3749,7 +4414,12 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->Supervisor_Review_Comments) || $lastDocument->Supervisor_Review_Comments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -3767,7 +4437,12 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-    $history->action_name = "Update";
+     if (is_null($lastDocument->ccf_attachments) || $lastDocument->ccf_attachments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
