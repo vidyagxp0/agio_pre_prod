@@ -52,7 +52,7 @@ return new class extends Migration
             $table->string('state')->nullable();
             $table->string('severity1_level')->nullable();
             $table->longText('comment')->nullable();
-            $table->string('file_attachments')->nullable();
+            $table->string('Attached_File')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
             $table->string('submitted_by')->nullable();

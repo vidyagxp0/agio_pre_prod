@@ -88,7 +88,7 @@ class AuditProgramController extends Controller
         $data->City = $request->City;
         $data->state = $request->state;
         $data->severity1_level = $request->severity1_level;
-        $data->comments = $request->comments;
+        $data->comment = $request->comment;
         
         
 
@@ -495,12 +495,12 @@ class AuditProgramController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-          if (!empty($data->comments)) {
+          if (!empty($data->comment)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
             $history->activity_type = 'Comment';
             $history->previous = "Null";
-            $history->current = $data->comments;
+            $history->current = $data->comment;
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -581,7 +581,7 @@ class AuditProgramController extends Controller
         $data->City = $request->City;
         $data->state = $request->state;
         $data->severity1_level = $request->severity1_level;
-        $data->comments = $request->comments;
+        $data->comment = $request->comment;
         
             if (!empty($request->Attached_File)) {
             $files = [];
@@ -1055,16 +1055,16 @@ class AuditProgramController extends Controller
             $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
             $history->save();
         }
-         if($lastDocument->comments !=$data->comments || !empty($request->comments_comment)) {
+         if($lastDocument->comment !=$data->comment || !empty($request->comment_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
                             ->where('activity_type', 'Comments')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
             $history->activity_type = 'Comments';
-            $history->previous =  $lastDocument->comments;
-            $history->current = $data->comments;
-            $history->comment = $request->comments_comment;
+            $history->previous =  $lastDocument->comment;
+            $history->current = $data->comment;
+            $history->comment = $request->comment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

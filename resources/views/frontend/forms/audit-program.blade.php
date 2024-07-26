@@ -279,6 +279,8 @@
                                             required>
                                     </div>
                                 </div>
+
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Department</b></label>
@@ -333,13 +335,17 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Department code</label>
+                                        <label for="initiator_group_code">Department Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             value="{{ old('initiator_group_code') }}" readonly>
                                     </div>
                                 </div>
+
+
+
                                 <script>
                                     document.getElementById('Initiator_Group').addEventListener('change', function() {
                                         var selectedOption = this.options[this.selectedIndex];
@@ -356,12 +362,12 @@
                                     });
                                 </script>
                                 <!-- <div class="col-12">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <label for="Short Description"><b>Short Description <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span></b></label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div><small class="text-primary">Please mention brief summary</small></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <textarea name="short_description"></textarea>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="Short Description"><b>Short Description <span
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span></b></label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <textarea name="short_description"></textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>                                                                                                                                                                                                                                                                                                                    </div> -->
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -381,7 +387,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
                                         <div><small class="text-primary">Please select related information</small></div>
-                                        <select name="initiated_through"
+                                        <select nam="einitiated_through"
                                             onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="recall">Recall</option>
@@ -682,7 +688,7 @@
                                                 <td><input disabled type="text" name="serial[]" value="1">
                                                 </td>
                                                 <td>
-                                                    <select id="" placeholder="Select..."
+                                                    {{-- <select id="" placeholder="Select..."
                                                         name="Self_Inspection[0][department]">
                                                         <option value="">Select a department</option>
                                                         <option value="Corporate Quality Assurance">Corporate Quality
@@ -742,6 +748,17 @@
                                                         </option>
                                                         <option value="Pharmacovigilance">Pharmacovigilance
                                                         </option>
+                                                    </select> --}}
+                                                    <select name="Self_Inspection[0][department]" id="department"
+                                                        {{ isset($data->stage) && ($data->stage == 0 || $data->stage == 8) ? 'disabled' : '' }}>
+                                                        <option selected disabled value="">---select---
+                                                        </option>
+                                                        @foreach (Helpers::getDepartments() as $department)
+                                                            <option value="{{ $department }}"
+                                                                @if (isset($data->department) && $data->department == $department) selected @endif>
+                                                                {{ $department }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </td>
                                                 <td>
@@ -773,23 +790,15 @@
                                                         </option>
                                                     </select>
                                                 </td>
-
                                                 <td><input type="text" name="Self_Inspection[0][Remarked]">
                                                 </td>
                                                 <td>
                                                     <button type="button" class="removeBtn">remove</button>
                                                 </td>
-
-
-
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-
-
-
-
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="comments">Comments</label>
@@ -884,7 +893,7 @@
                                                 <td><input disabled type="text" name="serial[]" value="1">
                                                 </td>
                                                 <td>
-                                                    <select id="" placeholder="Select..."
+                                                    {{-- <select id="" placeholder="Select..."
                                                         name="Self_Inspection_circular[0][departments]">
                                                         <option value="">Select a department</option>
                                                         <option value="Corporate Quality Assurance">Corporate Quality
@@ -916,7 +925,6 @@
                                                             Development Laboratory / Kilo lab
                                                         </option>
                                                         <option value="Production Capsules">Production Capsules
-
                                                         </option>
                                                         <option value="Production Injectable">Production Injectable
                                                         </option>
@@ -944,11 +952,21 @@
                                                         </option>
                                                         <option value="Pharmacovigilance">Pharmacovigilance
                                                         </option>
-
+                                                    </select> --}}
+                                                    <select name="Self_Inspection_circular[0][departments]"
+                                                        id="departments"
+                                                        {{ isset($data->stage) && ($data->stage == 0 || $data->stage == 8) ? 'disabled' : '' }}>
+                                                        <option selected disabled value="">---select---
+                                                        </option>
+                                                        @foreach (Helpers::getDepartments() as $departments)
+                                                            <option value="{{ $departments }}"
+                                                                @if (isset($data->departments) && $data->departments == $departments) selected @endif>
+                                                                {{ $departments }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </td>
                                                 <td>
-
                                                     <div class="new-date-data-field">
                                                         <div class="group-input input-date">
                                                             <div class="calenderauditee">
@@ -966,23 +984,15 @@
                                                         </div>
                                                     </div>
                                                 </td>
-
                                                 <td><input type="text" name="Self_Inspection_circular[0][Auditor]">
                                                 </td>
                                                 <td>
                                                     <button type="button" class="removeBtns">remove</button>
                                                 </td>
-
-
-
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-
-
-
-
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="comment">Comments</label>
@@ -1006,9 +1016,8 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -1287,41 +1296,29 @@
         $(document).ready(function() {
             // Function to generate a new row in the Self Inspection Planner table
             function generateTableRow(serialNumber) {
+                var departments = @json(Helpers::getDepartments());
+                var disabled = @json(isset($data->stage) && ($data->stage == 0 || $data->stage == 8));
+                var selectedDepartment = @json(isset($data->department) ? $data->department : '');
+
+                var departmentOptions = '<option selected disabled value="">---select---</option>';
+                for (var key in departments) {
+                    var selected = (departments[key] === selectedDepartment) ? 'selected' : '';
+                    departmentOptions += '<option value="' + departments[key] + '" ' + selected + '>' + departments[
+                        key] + '</option>';
+                }
+
                 var html = '<tr>' +
                     '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
                     '<td>' +
-                    '<select name="Self_Inspection[' + serialNumber + '][department]">' +
-                    '<option value="">Select a department</option>' +
-                    '<option value="Corporate Quality Assurance">Corporate Quality Assurance</option>' +
-                    '<option value="Quality Assurance">Quality Assurance</option>' +
-                    '<option value="Quality Control">Quality Control</option>' +
-                    '<option value="Quality Control (Microbiology department)">Quality Control (Microbiology department)</option>' +
-                    '<option value="Production General">Production General</option>' +
-                    '<option value="Production Liquid Orals">Production Liquid Orals</option>' +
-                    '<option value="Production Tablet and Powder">Production Tablet and Powder</option>' +
-                    '<option value="Production External (Ointment, Gels, Creams and Liquid)">Production External (Ointment, Gels, Creams and Liquid)</option>' +
-                    '<option value="Analytical Development Laboratory">Analytical Development Laboratory</option>' +
-                    '<option value="Process Development Laboratory / Kilo lab">Process Development Laboratory / Kilo lab</option>' +
-                    '<option value="Production Capsules">Production Capsules</option>' +
-                    '<option value="Production Injectable">Production Injectable</option>' +
-                    '<option value="Engineering">Engineering</option>' +
-                    '<option value="Human Resource">Human Resource</option>' +
-                    '<option value="Store">Store</option>' +
-                    '<option value="Electronic Data Processing">Electronic Data Processing</option>' +
-                    '<option value="Formulation Development">Formulation Development</option>' +
-                    '<option value="Analytical research and Development Laboratory">Analytical research and Development Laboratory</option>' +
-                    '<option value="Packaging Development">Packaging Development</option>' +
-                    '<option value="Purchase Department">Purchase Department</option>' +
-                    '<option value="Document Cell">Document Cell</option>' +
-                    '<option value="Regulatory Affairs">Regulatory Affairs</option>' +
-                    '<option value="Pharmacovigilance">Pharmacovigilance</option>' +
+                    '<select name="Self_Inspection[' + serialNumber + '][department]" id="department"' + (disabled ?
+                        ' disabled' : '') + '>' +
+                    departmentOptions +
                     '</select>' +
                     '</td>' +
                     '<td>' +
                     '<select id="Months' + serialNumber + '" multiple placeholder="Select..." ' +
                     'data-search="false" data-silent-initial-value-set="true" ' +
                     'name="Self_Inspection[' + serialNumber + '][Months]">' +
-                    // '<option value="">Select a month</option>' +
                     '<option value="Jan">January</option>' +
                     '<option value="Feb">February</option>' +
                     '<option value="Mar">March</option>' +
@@ -1335,9 +1332,8 @@
                     '<option value="Nov">November</option>' +
                     '<option value="Dec">December</option>' +
                     '</select>' +
-                    '</td>';
-
-                '<td><input type="text" name="Self_Inspection[' + serialNumber + '][Remarked]"></td>' +
+                    '</td>' +
+                    '<td><input type="text" name="Self_Inspection[' + serialNumber + '][Remarked]"></td>' +
                     '<td><button type="button" class="removeBtn">Remove</button></td>' +
                     '</tr>';
                 return html;
@@ -1364,6 +1360,7 @@
             });
         });
     </script>
+
     <script>
         $(document).on('click', '.removeBtnaid', function() {
             $(this).closest('tr').remove();
@@ -1386,34 +1383,24 @@
         $(document).ready(function() {
             // Function to generate a new row in the Self Inspection Planner table
             function generateTableRow(serialNumber) {
+                var departments = @json(Helpers::getDepartments());
+                var disabled = @json(isset($data->stage) && ($data->stage == 0 || $data->stage == 8));
+                var selectedDepartment = @json(isset($data->departments) ? $data->departments : '');
+
+                var departmentOptions = '<option selected disabled value="">---select---</option>';
+                for (var key in departments) {
+                    var selected = (departments[key] === selectedDepartment) ? 'selected' : '';
+                    departmentOptions += '<option value="' + departments[key] + '" ' + selected + '>' + departments[
+                        key] + '</option>';
+                }
+
                 var html = '<tr>' +
                     '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
                     '<td>' +
-                    '<select name="Self_Inspection_circular[' + serialNumber + '][department]">' +
-                    '<option value="">Select a department</option>' +
-                    '<option value="Corporate Quality Assurance">Corporate Quality Assurance</option>' +
-                    '<option value="Quality Assurance">Quality Assurance</option>' +
-                    '<option value="Quality Control">Quality Control</option>' +
-                    '<option value="Quality Control (Microbiology department)">Quality Control (Microbiology department)</option>' +
-                    '<option value="Production General">Production General</option>' +
-                    '<option value="Production Liquid Orals">Production Liquid Orals</option>' +
-                    '<option value="Production Tablet and Powder">Production Tablet and Powder</option>' +
-                    '<option value="Production External (Ointment, Gels, Creams and Liquid)">Production External (Ointment, Gels, Creams and Liquid)</option>' +
-                    '<option value="Analytical Development Laboratory">Analytical Development Laboratory</option>' +
-                    '<option value="Process Development Laboratory / Kilo lab">Process Development Laboratory / Kilo lab</option>' +
-                    '<option value="Production Capsules">Production Capsules</option>' +
-                    '<option value="Production Injectable">Production Injectable</option>' +
-                    '<option value="Engineering">Engineering</option>' +
-                    '<option value="Human Resource">Human Resource</option>' +
-                    '<option value="Store">Store</option>' +
-                    '<option value="Electronic Data Processing">Electronic Data Processing</option>' +
-                    '<option value="Formulation Development">Formulation Development</option>' +
-                    '<option value="Analytical research and Development Laboratory">Analytical research and Development Laboratory</option>' +
-                    '<option value="Packaging Development">Packaging Development</option>' +
-                    '<option value="Purchase Department">Purchase Department</option>' +
-                    '<option value="Document Cell">Document Cell</option>' +
-                    '<option value="Regulatory Affairs">Regulatory Affairs</option>' +
-                    '<option value="Pharmacovigilance">Pharmacovigilance</option>' +
+                    '<select name="Self_Inspection_circular[' + serialNumber + '][departments]" id="departments"' +
+                    (
+                        disabled ? ' disabled' : '') + '>' +
+                    departmentOptions +
                     '</select>' +
                     '</td>' +
                     '<td>' +

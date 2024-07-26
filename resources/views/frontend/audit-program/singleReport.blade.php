@@ -528,6 +528,7 @@
             <!-- ------------------------------- audit program grid--------------------------------------- -->
 
 
+
             <div class="block">
                 <div class="block-head">
                     Audit Program
@@ -536,7 +537,7 @@
                     <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                         <thead>
                             <tr class="table_bg">
-                                <th style="width: 5%">Row#</th>
+                                <th style="width: 8%">Row#</th>
                                 <th style="width: 12%">Auditees</th>
                                 <th style="width: 15%">Date Start</th>
                                 <th style="width: 15%"> Date End</th>
@@ -554,13 +555,17 @@
                             <td><?php echo isset($data['End_date']) ? \Carbon\Carbon::parse($data['End_date'])->format('d-M-Y') : 'N/A'; ?></td>
                             <td><?php echo isset($data['Lead_Investigator']) ? $data['Lead_Investigator'] : 'N/A'; ?></td>
                             <td><?php echo isset($data['Comment']) ? $data['Comment'] : 'N/A'; ?></td>
-
                         </tr>
                         <?php $index2++; ?>
                         <?php endforeach; ?>
                         <?php else: ?>
                         <tr>
-                            <td colspan="4">N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
                         </tr>
                         <?php endif; ?>
 
@@ -570,8 +575,6 @@
             <div class="block">
                 <div class="block-head">
                     Self Inspection Planner
-
-
                 </div>
 
                 <div class="border-table">
