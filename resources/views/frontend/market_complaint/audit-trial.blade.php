@@ -348,8 +348,6 @@
                     <option value="business">Business Rules</option>
                     <option value="stage">Stage Change</option>
                     <option value="user_action">User Action</option>
-
-
                     <!-- Add more options as needed -->
                 </select>
             </div>
@@ -362,19 +360,16 @@
                     @endforeach
                 </select>
             </div>
-            
         
             <div class="group-input">
                 <label for="from_date">From Date</label>
-                <input type="date" id="from_date" name="from_date"  >
+                <input type="date" id="from_date" name="from_date">
             </div>
         
             <div class="group-input">
                 <label for="to_date">To Date</label>
                 <input type="date" id="to_date" name="to_date">
             </div>
-        
-            <button class="button_theme1" onclick="filterRecords()">Filter</button>
         </div>
         
         <div class="inner-block">
@@ -395,7 +390,7 @@
                             <td><div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div></td>
                             <td><div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div></td>
                             <td>
-                                <div><strong>Data Field Name :</strong>{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable'  }}</div>
+                                <div><strong>Data Field Name :</strong>{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")
                                         <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
@@ -411,7 +406,7 @@
                                         <strong>Change To :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
                                     @endif
                                 </div>
-                                
+        
                                 <div style="margin-top: 5px;"><strong>Change Type :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}</div>
                             </td>
                             <td>
@@ -533,11 +528,6 @@
         });
     </script>
 <script>
-     function formatDate(date) {
-        const options = { day: 'numeric', month: 'long', year: 'numeric' };
-        return new Intl.DateTimeFormat('en-GB', options).format(date);
-    }
-
     // Function to filter records based on selected type, performer, and date range
     function filterRecords() {
         var fromDate = document.getElementById('from_date').value;
@@ -569,24 +559,8 @@
         });
     }
 
-     // Display formatted dates for filtering
-     function displayFormattedDates() {
-        var fromDate = document.getElementById('from_date').value;
-        var toDate = document.getElementById('to_date').value;
-
-        if (fromDate) {
-            var from = new Date(fromDate);
-            console.log("From Date: " + formatDate(from));
-        }
-
-        if (toDate) {
-            var to = new Date(toDate);
-            console.log("To Date: " + formatDate(to));
-        }
-    }
-
-    // Call displayFormattedDates if needed
-    document.getElementById('from_date').addEventListener('change', displayFormattedDates);
-    document.getElementById('to_date').addEventListener('change', displayFormattedDates);
+    // Event listeners to trigger filtering when the date inputs change
+    document.getElementById('from_date').addEventListener('change', filterRecords);
+    document.getElementById('to_date').addEventListener('change', filterRecords);
 </script>
 @endsection
