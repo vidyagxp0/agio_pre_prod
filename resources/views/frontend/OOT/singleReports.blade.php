@@ -2,7 +2,7 @@
 <html lang="en">
     @php
     $users = DB::table('users')->get();
-@endphp
+  @endphp
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -200,15 +200,13 @@
                                 </div>
                                 <table>
                                     <tr>
-                                    <tr> {{ $data->created_at }} added by {{ $data->originator }}
+                                         {{ $data->created_at }} added by {{ $data->originator }}
                                         <th class="w-20">Site/Location Code</th>
-                                        <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}
-                                        </td>
+                                        <td class="w-30"> {{ Helpers::getDivisionName($data->division_id) }} </td>
+
                                         <th class="w-20">Initiator</th>
                                         <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                                         </td>
-                                    </tr>
-
                                     </tr>
 
                                     <tr>
@@ -226,7 +224,8 @@
                                         </td>
 
                                     </tr>
-
+                                </table>
+                                <table>
                                     <tr>
                                         <th class="w-20">Initiated Through</th>
                                         <td class="w-30">
@@ -260,19 +259,6 @@
                                         @endphp
                                         <td class="w-80">
                                             {{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th class="w-20">Severity Level</th>
-                                        <td class="w-80">
-                                            @if ($data->severity_level)
-                                                {{ $data->severity_level }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </td>
-
-
                                     </tr>
                                 </table>
                                 <table>
@@ -308,24 +294,17 @@
                                                 Not Applicable
                                             @endif
                                         </td>
-                                        <th class="w-20"> Repeat Nature</th>
-                                        <td class="w-30">
-                                            @if ($data->nature_of_repeat)
-                                                {{ $data->nature_of_repeat }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </td>
+
                                     </tr>
                                     <tr>
-                                        <th class="w-20">Nature Of Change</th>
+                                        {{-- <th class="w-20">Nature Of Change</th>
                                         <td class="w-30">
                                             @if ($data->nature_of_change)
                                                 {{ $data->nature_of_change }}
                                             @else
                                                 Not Applicable
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         <th class="w-20">Occured On</th>
                                         <td class="w-30">
                                             @if ($data->oot_occured_on)
@@ -335,7 +314,46 @@
                                             @endif
                                         </td>
                                     </tr>
+                                    <tr>
+                                         <th class="w-20">OOT Observed On</th>
+                                        <td class="w-30">
+                                            @if ($data->oot_observed_on)
+                                                {{Helpers::getdateFormat($data->oot_observed_on) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
 
+                                        <th class="w-20">OOT Reported On</th>
+                                        <td class="w-30">
+                                            @if ($data->oot_report_on)
+                                                {{ Helpers::getdateFormat($data->oot_observed_on) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="w-20">OOT Delay Justification</th>
+                                       <td class="w-80">
+                                           @if ($data->delay_justification)
+                                               {{ $data->delay_justification }}
+                                           @else
+                                               Not Applicable
+                                           @endif
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <th class="w-20">OOT immidiate action </th>
+                                       <td class="w-30">
+                                           @if ($data->immediate_action)
+                                               {{ $data->immediate_action }}
+                                           @else
+                                               Not Applicable
+                                           @endif
+                                       </td>
+                                   </tr>
                                 </table>
                                 <table>
                                     <tr>
@@ -388,8 +406,6 @@
                                                 Not Applicable
                                             @endif
                                         </td>
-
-
                                     </tr>
 
                                     <tr>
@@ -407,8 +423,6 @@
                             </div>
                         </div>
 
-
-
                     </div>
 
                     <div class="block">
@@ -419,7 +433,7 @@
                                 </div>
                                 <table>
                                     <tr>
-                                        <th class="w-20">Product Material NAme </th>
+                                        <th class="w-20">Product Material Name </th>
                                         <td class="w-80">
                                             <div>
                                                 @if ($data->productmaterialname)
@@ -447,7 +461,6 @@
                                 <table>
 
                                     <tr>
-
                                         <th class="w-20"> Sample Location Point </th>
                                         <td class="w-80">
                                             <div>
@@ -548,6 +561,68 @@
                         </div>
 
                     </div>
+
+
+                    <div class="block">
+                        <div class="block-head"> Product Detail </div>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-10">Sr. No.</th>
+                                    <th class="w-25">Product Number</th>
+                                    <th class="w-25">AR Number</th>
+                                    <th class="w-25">Sample On</th>
+                                    <th class="w-25">Sample By</th>
+                                    <th class="w-25">Analyzed On</th>
+                                    <th class="w-25">Observation On</th>
+
+                                </tr>
+                                @if ($productDetail && is_array($productDetail->data))
+                                    @php
+                                        $serialNumber = 1;
+                                    @endphp
+                                    @foreach ($productDetail->data as $gridData)
+                                        <tr>
+                                            <td class="w-15">{{ $serialNumber++ }}</td>
+                                            <td class="w-15">
+                                                {{ isset($gridData['product_name']) ? $gridData['product_name'] : 'Not Applicable' }}
+                                            </td>
+                                            <td class="w-15">
+                                                {{ isset($gridData['ar_num']) ? $gridData['ar_num'] : 'Not Applicable' }}
+                                            </td>
+                                            <td class="w-15">
+                                                {{ isset($gridData['sample_on']) ? $gridData['sample_on'] : 'Not Applicable' }}
+                                            </td>
+                                            <td class="w-15">
+                                                {{ isset($gridData['sample_by']) ? $gridData['sample_by'] : 'Not Applicable' }}
+                                            </td>
+                                            <td class="w-15">
+                                                {{ isset($gridData['analyzed_on']) ? $gridData['analyzed_on'] : 'Not Applicable' }}
+                                            </td>
+                                            <td class="w-15">
+                                                {{ isset($gridData['observation_on']) ? $gridData['observation_on'] : 'Not Applicable' }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+
+                                    </tr>
+                                @endif
+                            </table>
+
+                        </div>
+                    </div>
+
+
 
                     <div class="block">
                         <div class="head">
@@ -673,11 +748,8 @@
 
                             <div class="block">
                                 <div class="head">
-
                                     <table>
-
                                         <tr>
-
                                             <th class="w-20">Specification Procedure Number </th>
                                             <td class="w-30">
                                                 <div>
@@ -710,9 +782,6 @@
                                                 </div>
                                             </td> --}}
                                         </tr>
-
-
-
                                     </table>
                                 </div>
                                 <div class="border-table">
@@ -819,7 +888,7 @@
                                     <table>
 
                                         <tr>
-                                            <th class="w-20">Preliminary Laboratory Investigation Required </th>
+                                            <th class="w-80">Preliminary Laboratory Investigation Required </th>
                                             <td class="w-80">
                                                 <div>
                                                     @if ($data->pli_finaly_validity_check)
@@ -976,7 +1045,7 @@
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->sta_bat_analyst_name)
-                                                        {{ $data->sta_bat_analyst_name }}
+                                                        {{ Helpers::getInitiatorName ($data->sta_bat_analyst_name) }}
                                                     @else
                                                         Not Applicable
                                                     @endif
@@ -986,7 +1055,7 @@
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->qa_head_designee)
-                                                        {{ $data->qa_head_designee }}
+                                                        {{ Helpers::getInitiatorName($data->qa_head_designee) }}
                                                     @else
                                                         Not Applicable
                                                     @endif
@@ -1777,7 +1846,6 @@
                                     <table>
                                         <tr>
                                             <th>24. Analyst understood the testing procedure?</th>
-                                            <th>Remark</th>
                                         </tr>
                                     </table>
                                     <table>

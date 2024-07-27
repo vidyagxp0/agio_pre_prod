@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Incident Report
+                    Incident Single Report
                 </td>
 
                     <td class="w-30">
@@ -178,7 +178,7 @@
                     <strong> Incident No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($data->division_id) }}/INC/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -196,7 +196,8 @@
                 <table>
                     <tr>
                         <th class="w-20">Site/Location Code</th>
-                        <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}</td>
+                        <td class="w-30"> {{ Helpers::getDivisionName($data->division_id) }}</td>
+
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                         </td>
@@ -220,12 +221,15 @@
                         <th class="w-20">Department</th>
                         <td class="w-80">
                             @if ($data->Initiator_Group)
-                                {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
+                            {{($data->Initiator_Group) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                     </tr>
+
+                </table>
+
                     <table>
                         <tr>
                             <th class="w-20">Equipment Name</th>
@@ -236,6 +240,7 @@
                                     Not Applicable
                                 @endif
                             </td>
+
                             <th class="w-20">Instrument Name</th>
                             <td class="w-30">
                                 @if ($data->instrument_name)
@@ -255,6 +260,7 @@
                                     Not Applicable
                                 @endif
                             </td>
+
                             <th class="w-20"> Incident Observed On (Time)</th>
                             <td class="w-30">
                                 @if ($data->incident_time)
@@ -267,6 +273,7 @@
                         </tr>
                     </table>
 
+                <table>
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">
@@ -627,9 +634,6 @@
 
                         </table>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
@@ -759,7 +763,6 @@
                                     </div>
                                 </td>
                             </tr>
-
 
                             <tr>
 

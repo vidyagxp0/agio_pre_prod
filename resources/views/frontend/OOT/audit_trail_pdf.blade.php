@@ -178,9 +178,6 @@
     <div class="inner-block">
 
         <div class="head">Audit Trial Histroy Configuration Report</div>
-
-
-
         <div class="first-table">
             <table>
                 <tr>
@@ -202,7 +199,7 @@
                         @endif
                     </td>
                 </tr>
-               
+
             </table>
         </div>
 
@@ -246,7 +243,7 @@
                                 @if($datas->activity_type == "Activity Log")
                                     <div><strong>Changed To :</strong></div>
                                     @if(!empty($datas->change_to))
-                                        <div>{{ $datas->change_to }}</div>
+                                        <div>{{ strip_tags($datas->change_to) }}</div>
                                     @else
                                         <div>Not Applicable</div>
                                     @endif
@@ -275,7 +272,6 @@
                 @endforeach
             </table>
         </div>
-
     </div>
 
     <footer>

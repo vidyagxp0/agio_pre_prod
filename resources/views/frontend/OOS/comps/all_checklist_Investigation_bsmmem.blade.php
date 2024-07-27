@@ -1,58 +1,58 @@
-<div id="CCForm18" class="inner-block cctabcontent">
+<div id="CCForm24" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
                     Checklist for Analyst Training and Procedure
                 </div>
-                @php
-                    $check_analyst_training_procedures = [
-                    [
-                        'question' => "Is the analyst trained/qualified BET test procedure?",
-                        'is_sub_question' => false,
-                        'input_type' => 'text'
-                    ],
-                    [
-                        'question' => "Reference procedure number :-",
-                        'is_sub_question' => true,
-                        'input_type' => 'number'
-                    ],
-                    [
-                        'question' => "Effective date",
-                        'is_sub_question' => true,
-                        'input_type' => 'date'
-                    ],
-                    [
-                        'question' => "Date of qualification:",
-                        'is_sub_question' => true,
-                        'input_type' => 'date'
-                    ],
-                    [
-                        'question' => "Were appropriate precaution taken by the analyst throughout the test?",
-                        'is_sub_question' => false,
-                        'input_type' => 'text'
-                    ],
-                    [
-                        'question' => "Analyst interview record",
-                        'is_sub_question' => true,
-                        'input_type' => 'number'
-                    ],
-                    [
-                        'question' => "Was an analyst/sampling persons suffering from any ailment such as cough/cold or open wound or skin infections?",
-                        'is_sub_question' => false,
-                        'input_type' => 'text'
-                    ],
-                    [
-                        'question' => "Analyst interview record",
-                        'is_sub_question' => true,
-                        'input_type' => 'number'
-                    ],
-                    [
-                        'question' => "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
-                        'is_sub_question' => false,
-                        'input_type' => 'text'
-                    ]
-                 ];
+               @php
+                $check_analyst_training_procedures = [
+                [
+                    'question' => "Is the analyst trained/qualified BET test procedure?",
+                    'is_sub_question' => false,
+                    'input_type' => 'text'
+                ],
+                [
+                    'question' => "Reference procedure number :-",
+                    'is_sub_question' => true,
+                    'input_type' => 'number'
+                ],
+                [
+                    'question' => "Effective date",
+                    'is_sub_question' => true,
+                    'input_type' => 'date'
+                ],
+                [
+                    'question' => "Date of qualification:",
+                    'is_sub_question' => true,
+                    'input_type' => 'date'
+                ],
+                [
+                    'question' => "Were appropriate precaution taken by the analyst throughout the test?",
+                    'is_sub_question' => false,
+                    'input_type' => 'text'
+                ],
+                [
+                    'question' => "Analyst interview record",
+                    'is_sub_question' => true,
+                    'input_type' => 'number'
+                ],
+                [
+                    'question' => "Was an analyst/sampling persons suffering from any ailment such as cough/cold or open wound or skin infections?",
+                    'is_sub_question' => false,
+                    'input_type' => 'text'
+                ],
+                [
+                    'question' => "Analyst interview record",
+                    'is_sub_question' => true,
+                    'input_type' => 'number'
+                ],
+                [
+                    'question' => "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
+                    'is_sub_question' => false,
+                    'input_type' => 'text'
+                ]
+            ];
 
-                @endphp
+            @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -88,20 +88,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="analyst_training_proce[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'analyst_training_proce', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="analyst_training_proce[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'analyst_training_proce', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="analyst_training_proce[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'analyst_training_proce', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'analyst_training_proce', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'analyst_training_proce', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -109,7 +109,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="analyst_training_proce[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'analyst_training_proce', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -188,20 +188,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="sample_receiving_verification_lab[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'sample_receiving_verification_lab', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'sample_receiving_verification_lab', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="sample_receiving_verification_lab[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'sample_receiving_verification_lab', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'sample_receiving_verification_lab', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="sample_receiving_verification_lab[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'sample_receiving_verification_lab', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'sample_receiving_verification_lab', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'sample_receiving_verification_lab', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'sample_receiving_verification_lab', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'sample_receiving_verification_lab', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'sample_receiving_verification_lab', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -209,7 +209,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="sample_receiving_verification_lab[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'sample_receiving_verification_lab', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'sample_receiving_verification_lab', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -400,20 +400,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="method_procedure_used_during_analysis[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'method_procedure_used_during_analysis', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'method_procedure_used_during_analysis', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="method_procedure_used_during_analysis[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'method_procedure_used_during_analysis', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'method_procedure_used_during_analysis', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="method_procedure_used_during_analysis[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'method_procedure_used_during_analysis', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'method_procedure_used_during_analysis', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'method_procedure_used_during_analysis', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'method_procedure_used_during_analysis', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'method_procedure_used_during_analysis', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'method_procedure_used_during_analysis', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -421,7 +421,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="method_procedure_used_during_analysis[{{ $index }}][remark]"
-                                                        style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'method_procedure_used_during_analysis', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                        style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'method_procedure_used_during_analysis', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -563,20 +563,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="Instrument_Equipment_Det[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Instrument_Equipment_Det', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Instrument_Equipment_Det', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="Instrument_Equipment_Det[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Instrument_Equipment_Det', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Instrument_Equipment_Det', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="Instrument_Equipment_Det[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'Instrument_Equipment_Det', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'Instrument_Equipment_Det', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'Instrument_Equipment_Det', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Instrument_Equipment_Det', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'Instrument_Equipment_Det', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Instrument_Equipment_Det', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -584,7 +584,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Instrument_Equipment_Det[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'Instrument_Equipment_Det', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Instrument_Equipment_Det', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -656,20 +656,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="Results_and_Calculat[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Results_and_Calculat', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Results_and_Calculat', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="Results_and_Calculat[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Results_and_Calculat', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Results_and_Calculat', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="Results_and_Calculat[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'Results_and_Calculat', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'Results_and_Calculat', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'Results_and_Calculat', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Results_and_Calculat', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'Results_and_Calculat', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Results_and_Calculat', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -677,7 +677,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Results_and_Calculat[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'Results_and_Calculat', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Results_and_Calculat', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -698,8 +698,8 @@
 
                         <div class="file-attachment-field">
                             <div class="file-attachment-list" id="attachment_details_cibet">
-                                @if ($micro_data->attachment_details_cibet)
-                                @foreach ($micro_data->attachment_details_cibet as $file)
+                                @if ($data->attachment_details_cibet)
+                                @foreach ($data->attachment_details_cibet as $file)
                                     <h6 type="button" class="file-container text-dark"
                                         style="background-color: rgb(243, 242, 240);">
                                         <b>{{ $file }}</b>
@@ -727,7 +727,7 @@
 
 
                 <div class="button-block">
-                @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                @if ($data->stage == 0  || $data->stage >= 14)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -743,7 +743,7 @@
             </div>
         </div>
 
-        <div id="CCForm19" class="inner-block cctabcontent">
+        <div id="CCForm25" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
                     Checklist for Review of Training records Analyst Involved in Testing
@@ -816,20 +816,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="Training_records_Analyst_Involved[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Training_records_Analyst_Involved', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="Training_records_Analyst_Involved[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Training_records_Analyst_Involved', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="Training_records_Analyst_Involved[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'Training_records_Analyst_Involved', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'Training_records_Analyst_Involved', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'Training_records_Analyst_Involved', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -837,7 +837,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Training_records_Analyst_Involved[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'Training_records_Analyst_Involved', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -923,20 +923,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="sample_intactness_before_analysis[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'sample_intactness_before_analysis', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="sample_intactness_before_analysis[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'sample_intactness_before_analysis', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="sample_intactness_before_analysis[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'sample_intactness_before_analysis', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'sample_intactness_before_analysis', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'sample_intactness_before_analysis', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -944,7 +944,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="sample_intactness_before_analysis[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'sample_intactness_before_analysis', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1025,20 +1025,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="test_methods_Procedure[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'test_methods_Procedure', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'test_methods_Procedure', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="test_methods_Procedure[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'test_methods_Procedure', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'test_methods_Procedure', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="test_methods_Procedure[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'test_methods_Procedure', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'test_methods_Procedure', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'test_methods_Procedure', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'test_methods_Procedure', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'test_methods_Procedure', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'test_methods_Procedure', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -1046,7 +1046,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="test_methods_Procedure[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'test_methods_Procedure', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'test_methods_Procedure', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1156,20 +1156,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="Review_of_Media_Buffer_Standards_prep[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Review_of_Media_Buffer_Standards_prep', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="Review_of_Media_Buffer_Standards_prep[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Review_of_Media_Buffer_Standards_prep', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="Review_of_Media_Buffer_Standards_prep[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'Review_of_Media_Buffer_Standards_prep', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'Review_of_Media_Buffer_Standards_prep', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'Review_of_Media_Buffer_Standards_prep', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -1177,7 +1177,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Review_of_Media_Buffer_Standards_prep[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'Review_of_Media_Buffer_Standards_prep', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1267,20 +1267,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -1288,7 +1288,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1388,20 +1388,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="check_for_disinfectant_detail[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'check_for_disinfectant_detail', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_detail', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="check_for_disinfectant_detail[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'check_for_disinfectant_detail', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_detail', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="check_for_disinfectant_detail[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'check_for_disinfectant_detail', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'check_for_disinfectant_detail', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'check_for_disinfectant_detail', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_detail', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_detail', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_detail', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -1409,7 +1409,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="check_for_disinfectant_detail[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'check_for_disinfectant_detail', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_detail', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1505,20 +1505,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="Checklist_for_Review_of_instrument_equip[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_instrument_equip', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="Checklist_for_Review_of_instrument_equip[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_instrument_equip', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="Checklist_for_Review_of_instrument_equip[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_instrument_equip', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_instrument_equip', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_instrument_equip', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -1526,7 +1526,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Checklist_for_Review_of_instrument_equip[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_instrument_equip', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1542,8 +1542,8 @@
                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
                         <div class="file-attachment-field">
                             <div class="file-attachment-list" id="attachment_details_cis">
-                                @if ($micro_data->attachment_details_cis)
-                                @foreach ($micro_data->attachment_details_cis as $file)
+                                @if ($data->attachment_details_cis)
+                                @foreach ($data->attachment_details_cis as $file)
                                     <h6 type="button" class="file-container text-dark"
                                         style="background-color: rgb(243, 242, 240);">
                                         <b>{{ $file }}</b>
@@ -1569,7 +1569,7 @@
                     </div>
                 </div>
                 <div class="button-block">
-                @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                @if ($data->stage == 0  || $data->stage >= 14)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -1584,7 +1584,7 @@
                 </div>
             </div>
         </div>
-        <div id="CCForm20" class="inner-block cctabcontent">
+        <div id="CCForm26" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
                 Checklist for Review of Training records Analyst Involved in Testing
@@ -1672,20 +1672,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="Checklist_for_Review_of_Training_records_Analyst[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_Training_records_Analyst', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="Checklist_for_Review_of_Training_records_Analyst[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_Training_records_Analyst', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="Checklist_for_Review_of_Training_records_Analyst[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_Training_records_Analyst', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_Training_records_Analyst', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_Training_records_Analyst', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -1693,7 +1693,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Checklist_for_Review_of_Training_records_Analyst[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_Training_records_Analyst', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1819,20 +1819,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="Checklist_for_Review_of_sampling_and_Transport[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_sampling_and_Transport', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="Checklist_for_Review_of_sampling_and_Transport[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_sampling_and_Transport', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="Checklist_for_Review_of_sampling_and_Transport[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_sampling_and_Transport', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_sampling_and_Transport', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_sampling_and_Transport', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -1840,7 +1840,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Checklist_for_Review_of_sampling_and_Transport[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'Checklist_for_Review_of_sampling_and_Transport', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1962,20 +1962,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($Checklist_Review_of_Test_Method_proced['input_type'] == 'date')
                                                     <input type="date" name="Checklist_Review_of_Test_Method_proced[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Checklist_Review_of_Test_Method_proced', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proced', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($Checklist_Review_of_Test_Method_proced['input_type'] == 'number')
                                                     <input type="number" name="Checklist_Review_of_Test_Method_proced[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Checklist_Review_of_Test_Method_proced', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proced', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="Checklist_Review_of_Test_Method_proced[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'Checklist_Review_of_Test_Method_proced', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'Checklist_Review_of_Test_Method_proced', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'Checklist_Review_of_Test_Method_proced', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proced', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proced', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proced', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -1983,7 +1983,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Checklist_Review_of_Test_Method_proced[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'Checklist_Review_of_Test_Method_proced', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proced', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -2364,20 +2364,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($Checklist_for_Review_Media_prepara_RTU_media['input_type'] == 'date')
                                                     <input type="date" name="media_prepara_RTU[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'media_prepara_RTU', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'media_prepara_RTU', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($Checklist_for_Review_Media_prepara_RTU_media['input_type'] == 'number')
                                                     <input type="number" name="media_prepara_RTU[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'media_prepara_RTU', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'media_prepara_RTU', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="media_prepara_RTU[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'media_prepara_RTU', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'media_prepara_RTU', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'media_prepara_RTU', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'media_prepara_RTU', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'media_prepara_RTU', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'media_prepara_RTU', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -2385,7 +2385,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Checklist_for_Review_Media_prepara_RTU_medias[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'media_prepara_RTU', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'media_prepara_RTU', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -2472,20 +2472,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($Checklist_Review_Environment_condition_in_test['input_type'] == 'date')
                                                     <input type="date" name="Checklist_Review_Environment_condition_in_test[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Checklist_Review_Environment_condition_in_test', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_test', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($Checklist_Review_Environment_condition_in_test['input_type'] == 'number')
                                                     <input type="number" name="Checklist_Review_Environment_condition_in_test[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Checklist_Review_Environment_condition_in_test', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_test', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="Checklist_Review_Environment_condition_in_test[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'Checklist_Review_Environment_condition_in_test', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'Checklist_Review_Environment_condition_in_test', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'Checklist_Review_Environment_condition_in_test', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_test', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_test', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_test', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -2493,7 +2493,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Checklist_Review_Environment_condition_in_test[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'Checklist_Review_Environment_condition_in_test', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_test', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -2624,20 +2624,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="review_of_instrument_bioburden_and_waters[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'review_of_instrument_bioburden_and_waters', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="review_of_instrument_bioburden_and_waters[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'review_of_instrument_bioburden_and_waters', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="review_of_instrument_bioburden_and_waters[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'review_of_instrument_bioburden_and_waters', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'review_of_instrument_bioburden_and_waters', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'review_of_instrument_bioburden_and_waters', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -2645,7 +2645,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="review_of_instrument_bioburden_and_waters[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'review_of_instrument_bioburden_and_waters', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -2723,20 +2723,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($disinfectant_detail['input_type'] == 'date')
                                                     <input type="date" name="disinfectant_details_of_bioburden_and_water_test[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_of_bioburden_and_water_test', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_test', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($disinfectant_detail['input_type'] == 'number')
                                                     <input type="number" name="disinfectant_details_of_bioburden_and_water_test[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_of_bioburden_and_water_test', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_test', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="disinfectant_details_of_bioburden_and_water_test[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_of_bioburden_and_water_test', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_of_bioburden_and_water_test', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_of_bioburden_and_water_test', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_test', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_test', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_test', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -2744,7 +2744,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="disinfectant_details_of_bioburden_and_water_test[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_of_bioburden_and_water_test', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_test', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -2765,8 +2765,8 @@
                                 </small> --}}
                         <div class="file-attachment-field">
                             <div class="file-attachment-list" id="attachment_details_cimlbwt">
-                                @if ($micro_data->attachment_details_cimlbwt)
-                                @foreach ($micro_data->attachment_details_cimlbwt as $file)
+                                @if ($data->attachment_details_cimlbwt)
+                                @foreach ($data->attachment_details_cimlbwt as $file)
                                     <h6 type="button" class="file-container text-dark"
                                         style="background-color: rgb(243, 242, 240);">
                                         <b>{{ $file }}</b>
@@ -2794,7 +2794,7 @@
 
 
                 <div class="button-block">
-                   @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                   @if ($data->stage == 0  || $data->stage >= 14)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -2875,20 +2875,20 @@
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
                                                         <input type="date" name="training_records_analyst_involvedIn_testing_microbial_asssay[{{ $index }}][response]"
-                                                            value="{{ Helpers::getMicroGridData($micro_data, 'training_records_analyst_involvedIn_testing_microbial_asssay', true, 'response', true, $index) ?? '' }}"
+                                                            value="{{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssay', true, 'response', true, $index) ?? '' }}"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
                                                         <input type="number" name="training_records_analyst_involvedIn_testing_microbial_asssay[{{ $index }}][response]"
-                                                            value="{{ Helpers::getMicroGridData($micro_data, 'training_records_analyst_involvedIn_testing_microbial_asssay', true, 'response', true, $index) ?? '' }}"
+                                                            value="{{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssay', true, 'response', true, $index) ?? '' }}"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
                                                         <select name="training_records_analyst_involvedIn_testing_microbial_asssay[{{ $index }}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'training_records_analyst_involvedIn_testing_microbial_asssay', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                            <option value="No" {{ Helpers::getMicroGridData($micro_data, 'training_records_analyst_involvedIn_testing_microbial_asssay', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                            <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'training_records_analyst_involvedIn_testing_microbial_asssay', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssay', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssay', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssay', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                         @endif
                                                     </div>
@@ -2896,7 +2896,7 @@
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="training_records_analyst_involvedIn_testing_microbial_asssay[{{ $index }}][remark]"
-                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'training_records_analyst_involvedIn_testing_microbial_asssay', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssay', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -3001,20 +3001,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="sample_intactness_before_analysis[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'sample_intactness_before_analysis', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="sample_intactness_before_analysis[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'sample_intactness_before_analysis', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="sample_intactness_before_analysis[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'sample_intactness_before_analysis', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'sample_intactness_before_analysis', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'sample_intactness_before_analysis', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -3022,7 +3022,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="sample_intactness_before_analysis[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'sample_intactness_before_analysis', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -3143,20 +3143,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="checklist_for_review_of_test_method_IMA[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_review_of_test_method_IMA', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="checklist_for_review_of_test_method_IMA[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_review_of_test_method_IMA', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="checklist_for_review_of_test_method_IMA[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_review_of_test_method_IMA', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_review_of_test_method_IMA', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_review_of_test_method_IMA', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -3164,7 +3164,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="checklist_for_review_of_test_method_IMA[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_review_of_test_method_IMA', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -3373,20 +3373,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="cr_of_media_buffer_st_IMA[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'cr_of_media_buffer_st_IMA', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="cr_of_media_buffer_st_IMA[{{ $index }}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'cr_of_media_buffer_st_IMA', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="cr_of_media_buffer_st_IMA[{{ $index }}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'cr_of_media_buffer_st_IMA', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'cr_of_media_buffer_st_IMA', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'cr_of_media_buffer_st_IMA', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -3394,7 +3394,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="cr_of_media_buffer_st_IMA[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'cr_of_media_buffer_st_IMA', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -3504,20 +3504,20 @@
                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                 @if ($review_item['input_type'] == 'date')
                                                 <input type="date" name="CR_of_microbial_cultures_inoculation_IMA[{{ $index }}][response]"
-                                                    value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_microbial_cultures_inoculation_IMA', true, 'response', true, $index) ?? '' }}"
+                                                    value="{{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA', true, 'response', true, $index) ?? '' }}"
                                                     style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @elseif ($review_item['input_type'] == 'number')
                                                 <input type="number" name="CR_of_microbial_cultures_inoculation_IMA[{{ $index }}][response]"
-                                                    value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_microbial_cultures_inoculation_IMA', true, 'response', true, $index) ?? '' }}"
+                                                    value="{{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA', true, 'response', true, $index) ?? '' }}"
                                                     style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @else
                                                 <select name="CR_of_microbial_cultures_inoculation_IMA[{{ $index }}][response]"
                                                         id="response"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'CR_of_microbial_cultures_inoculation_IMA', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                    <option value="No" {{ Helpers::getMicroGridData($micro_data, 'CR_of_microbial_cultures_inoculation_IMA', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                    <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'CR_of_microbial_cultures_inoculation_IMA', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                    <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                    <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                    <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                 </select>
                                                 @endif
                                             </div>
@@ -3525,7 +3525,7 @@
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                 <textarea name="CR_of_microbial_cultures_inoculation_IMA[{{ $index }}][remark]"
-                                                          style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'CR_of_microbial_cultures_inoculation_IMA', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                          style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA', true, 'remark', true, $index) ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -3625,20 +3625,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="CR_of_Environmental_condition_in_testing_IMA[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_Environmental_condition_in_testing_IMA', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="CR_of_Environmental_condition_in_testing_IMA[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_Environmental_condition_in_testing_IMA', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="CR_of_Environmental_condition_in_testing_IMA[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'CR_of_Environmental_condition_in_testing_IMA', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'CR_of_Environmental_condition_in_testing_IMA', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'CR_of_Environmental_condition_in_testing_IMA', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -3646,7 +3646,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="CR_of_Environmental_condition_in_testing_IMA[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'CR_of_Environmental_condition_in_testing_IMA', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -3798,20 +3798,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="CR_of_instru_equipment_IMA[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_instru_equipment_IMA', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="CR_of_instru_equipment_IMA[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_instru_equipment_IMA', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="CR_of_instru_equipment_IMA[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'CR_of_instru_equipment_IMA', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'CR_of_instru_equipment_IMA', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'CR_of_instru_equipment_IMA', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -3819,7 +3819,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="CR_of_instru_equipment_IMA[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'CR_of_instru_equipment_IMA', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -3906,20 +3906,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="disinfectant_details_IMA[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_IMA', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="disinfectant_details_IMA[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_IMA', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="disinfectant_details_IMA[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_IMA', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_IMA', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_IMA', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -3927,7 +3927,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="disinfectant_details_IMA[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_IMA', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -3954,8 +3954,8 @@
                         <div class="file-attachment-field">
 
                             <div class="file-attachment-list" id="attachment_details_cima">
-                                @if ($micro_data->attachment_details_cima)
-                                @foreach ($micro_data->attachment_details_cima as $file)
+                                @if ($data->attachment_details_cima)
+                                @foreach ($data->attachment_details_cima as $file)
                                     <h6 type="button" class="file-container text-dark"
                                         style="background-color: rgb(243, 242, 240);">
                                         <b>{{ $file }}</b>
@@ -4004,7 +4004,7 @@
 
                 <div class="button-block">
 
-                   @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                   @if ($data->stage == 0  || $data->stage >= 14)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -4110,20 +4110,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="CR_of_training_rec_anaylst_in_monitoring_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="CR_of_training_rec_anaylst_in_monitoring_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="CR_of_training_rec_anaylst_in_monitoring_CIEM[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -4131,7 +4131,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="CR_of_training_rec_anaylst_in_monitoring_CIEM[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -4211,20 +4211,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="Check_for_Sample_details_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Check_for_Sample_details_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="Check_for_Sample_details_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Check_for_Sample_details_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="Check_for_Sample_details_CIEM[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'Check_for_Sample_details_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'Check_for_Sample_details_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'Check_for_Sample_details_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -4232,7 +4232,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Check_for_Sample_details_CIEM[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'Check_for_Sample_details_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -4327,20 +4327,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="Check_for_comparision_of_results_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Check_for_comparision_of_results_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="Check_for_comparision_of_results_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Check_for_comparision_of_results_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="Check_for_comparision_of_results_CIEM[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'Check_for_comparision_of_results_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'Check_for_comparision_of_results_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'Check_for_comparision_of_results_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -4348,7 +4348,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Check_for_comparision_of_results_CIEM[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'Check_for_comparision_of_results_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -4429,20 +4429,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($checklist_for_media_dehydrated_CIEM['input_type'] == 'date')
                                                     <input type="date" name="checklist_for_media_dehydrated_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_media_dehydrated_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($checklist_for_media_dehydrated_CIEM['input_type'] == 'number')
                                                     <input type="number" name="checklist_for_media_dehydrated_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_media_dehydrated_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="checklist_for_media_dehydrated_CIEM[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_media_dehydrated_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_media_dehydrated_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_media_dehydrated_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -4450,7 +4450,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="checklist_for_media_dehydrated_CIEM[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_media_dehydrated_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -4544,20 +4544,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="checklist_for_media_prepara_sterilization_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="checklist_for_media_prepara_sterilization_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="checklist_for_media_prepara_sterilization_CIEM[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -4565,7 +4565,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="checklist_for_media_prepara_sterilization_CIEM[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -4635,20 +4635,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="CR_of_En_condition_in_testing_CIEMs[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_En_condition_in_testing_CIEMs', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEMs', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="CR_of_En_condition_in_testing_CIEMs[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_En_condition_in_testing_CIEMs', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEMs', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="CR_of_En_condition_in_testing_CIEMs[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'CR_of_En_condition_in_testing_CIEMs', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'CR_of_En_condition_in_testing_CIEMs', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'CR_of_En_condition_in_testing_CIEMs', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEMs', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEMs', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEMs', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -4656,7 +4656,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="CR_of_En_condition_in_testing_CIEMs[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'CR_of_En_condition_in_testing_CIEMs', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEMs', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -4730,20 +4730,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="check_for_disinfectant_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'check_for_disinfectant_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="check_for_disinfectant_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'check_for_disinfectant_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="check_for_disinfectant_CIEM[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'check_for_disinfectant_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'check_for_disinfectant_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'check_for_disinfectant_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -4751,7 +4751,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="check_for_disinfectant_CIEM[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'check_for_disinfectant_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -4826,20 +4826,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="checklist_for_fogging_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_fogging_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="checklist_for_fogging_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_fogging_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="checklist_for_fogging_CIEM[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_fogging_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_fogging_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_fogging_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -4847,7 +4847,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="checklist_for_fogging_CIEM[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_fogging_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -4911,20 +4911,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="CR_of_test_method_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_test_method_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="CR_of_test_method_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_test_method_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="CR_of_test_method_CIEM[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'CR_of_test_method_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'CR_of_test_method_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'CR_of_test_method_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -4932,7 +4932,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="CR_of_test_method_CIEM[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'CR_of_test_method_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -5016,20 +5016,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="CR_microbial_isolates_contamination_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_microbial_isolates_contamination_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="CR_microbial_isolates_contamination_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_microbial_isolates_contamination_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="CR_microbial_isolates_contamination_CIEM[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'CR_microbial_isolates_contamination_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'CR_microbial_isolates_contamination_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'CR_microbial_isolates_contamination_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -5037,7 +5037,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="CR_microbial_isolates_contamination_CIEM[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'CR_microbial_isolates_contamination_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -5173,20 +5173,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="CR_of_instru_equip_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_instru_equip_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="CR_of_instru_equip_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'CR_of_instru_equip_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="CR_of_instru_equip_CIEM[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'CR_of_instru_equip_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'CR_of_instru_equip_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'CR_of_instru_equip_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -5194,7 +5194,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="CR_of_instru_equip_CIEM[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'CR_of_instru_equip_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -5259,20 +5259,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="Ch_Trend_analysis_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Ch_Trend_analysis_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="Ch_Trend_analysis_CIEM[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'Ch_Trend_analysis_CIEM', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="Ch_Trend_analysis_CIEM[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'Ch_Trend_analysis_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'Ch_Trend_analysis_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'Ch_Trend_analysis_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -5280,7 +5280,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="Ch_Trend_analysis_CIEM[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'Ch_Trend_analysis_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -5301,8 +5301,8 @@
                             <div class="file-attachment-field">
 
                                 <div class="file-attachment-list" id="attachment_details_ciem">
-                                    @if ($micro_data->attachment_details_ciem)
-                                    @foreach ($micro_data->attachment_details_ciem as $file)
+                                    @if ($data->attachment_details_ciem)
+                                    @foreach ($data->attachment_details_ciem as $file)
                                         <h6 type="button" class="file-container text-dark"
                                             style="background-color: rgb(243, 242, 240);">
                                             <b>{{ $file }}</b>
@@ -5337,7 +5337,7 @@
 
                     </div>
                     <div class="button-block">
-                    @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                    @if ($data->stage == 0  || $data->stage >= 14)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -5427,20 +5427,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="checklist_for_analyst_training_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="checklist_for_analyst_training_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="checklist_for_analyst_training_CIMT[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -5448,7 +5448,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="checklist_for_analyst_training_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -5541,20 +5541,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="checklist_for_comp_results_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="checklist_for_comp_results_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="checklist_for_comp_results_CIMT[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -5562,7 +5562,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="checklist_for_comp_results_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -5656,20 +5656,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="checklist_for_Culture_verification_CIMTs[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="checklist_for_Culture_verification_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="checklist_for_Culture_verification_CIMTs[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, '$checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, '$checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -5677,7 +5677,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="checklist_for_Culture_verification_CIMT[{{$index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, '$checklist_for_Culture_verification_CIMTs', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                            style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, '$checklist_for_Culture_verification_CIMTs', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -5755,20 +5755,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="sterilize_accessories_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="sterilize_accessories_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="sterilize_accessories_CIMT[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -5776,7 +5776,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="sterilize_accessories_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -5920,20 +5920,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="checklist_for_intrument_equip_last_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="checklist_for_intrument_equip_last_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="checklist_for_intrument_equip_last_CIMT[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -5941,7 +5941,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="checklist_for_intrument_equip_last_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMTs', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMTs', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -6021,20 +6021,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="disinfectant_details_last_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="disinfectant_details_last_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="disinfectant_details_last_CIMT[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -6042,7 +6042,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="disinfectant_details_last_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -6117,20 +6117,20 @@
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
                                                     <input type="date" name="checklist_for_result_calculation_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="checklist_for_result_calculation_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="checklist_for_result_calculation_CIMT[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -6138,7 +6138,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="checklist_for_result_calculation_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -6179,7 +6179,7 @@
                     </div>
 
         <div class="button-block">
-        @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+        @if ($data->stage == 0  || $data->stage >= 14)
             <div class="progress-bars">
                     <div class="bg-danger">Workflow is already Closed-Done</div>
                 </div>

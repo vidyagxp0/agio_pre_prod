@@ -184,8 +184,15 @@
                 <table>
                     <div class="heading">
 
-                        <div class="heading-new">
-                            Audit Trail
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="heading-new">
+                                Audit Trail
+                            </div>
+                            <div class="d-flex" style="gap:15px; margin-right: 20px;"><button type="button"> <a class="text-white" href="{{route('trainer_qualification.show', $trainer->id) }}">
+                                        Back </a>
+                                </button> <button type="button"> <a class="text-white" href="{{ url('TMS') }}">
+                                        Exit </a> </button>
+                            </div>
                         </div>
 
                         <div> <strong>Record ID.</strong> {{ str_pad($document->record_number, 4, '0', STR_PAD_LEFT) }}</div>
@@ -194,12 +201,8 @@
                         <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                             {{ $document->short_description }}
                         </div>
-                        <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
+                        <div style="margin-bottom: 5px;  font-weight: bold;">Due Date :{{ \Carbon\Carbon::parse( $document->due_date)->format('d-M-Y') }}</div>
 
-                        <div class="" style="display:flex; justify-content:flex-end">
-                            <button type="button"> <a class="text-white" href="{{ route('trainer_qualification.show', $trainer->id) }}">
-                                    Exit </a> </button>
-                        </div>
                     </div>
     </div>
     </table>
@@ -271,7 +274,7 @@
                                 :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                         </div>
                         <div style="margin-top: 5px;"> <strong>Performed On
-                                :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at : 'Not Applicable' }}
+                                :</strong>{{ \Carbon\Carbon::parse($dataDemo->created_at )->format('d-M-Y h:i A') }}
                         </div>
                         <div style="margin-top: 5px;"><strong> Comments
                                 :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>

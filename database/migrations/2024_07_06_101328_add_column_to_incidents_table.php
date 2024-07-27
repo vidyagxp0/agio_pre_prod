@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('incidents', function (Blueprint $table) {
-            $table->text('equipment_name')->nullabe();
+            $table->text('equipment_name')->nullable();
             $table->text('product_quality_imapct')->nullable();
             $table->text('process_performance_impact')->nullable();
             $table->text('yield_impact')->nullable();

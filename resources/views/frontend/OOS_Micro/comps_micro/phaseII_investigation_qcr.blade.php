@@ -15,6 +15,17 @@
                     </textarea>
                 </div>
             </div>
+            <div class="col-md-12 mb-4">
+                <div class="group-input">
+                    <label for="Description Deviation">Reason for manufacturing</label>
+                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                    <textarea class="summernote" name="reason_manufacturing_piii"
+                        id="summernote-1" {{Helpers::isOOSMicro($micro_data->stage)}}>
+                        {{ $micro_data->reason_manufacturing_piii }}
+                    </textarea>
+                </div>
+            </div>
+            
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Report Attachments"> Manufact. Invest. Required? </label>
@@ -269,6 +280,12 @@ $phase_II_OOS_investigations = [
                         <div class="group-input">
                             <label for="Audit Preparation Completed On">Others (OOS category)</label>
                             <input  {{Helpers::isOOSMicro($micro_data->stage)}} type="string" name="others_oos_category_piiqcr" value="{{ $micro_data->others_oos_category_piiqcr }}">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Details of Obvious Error">Details of Obvious Error</label>
+                            <input  {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_details_obvious_error" value="{{ $micro_data->oos_details_obvious_error }}">
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">

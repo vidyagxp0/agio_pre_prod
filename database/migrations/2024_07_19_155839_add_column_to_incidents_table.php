@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('employees', function (Blueprint $table) {
-            $table->string('employee_name')->nullable();
-            $table->string('site_division')->nullable();
-            $table->string('qualification')->nullable();
-            $table->string('experience')->nullable();
+        Schema::table('incidents', function (Blueprint $table) {
+            $table->text('impact_ass')->nullable();
+
         });
     }
 
@@ -28,8 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('employees', function (Blueprint $table) {
-            //
+        Schema::table('incidents', function (Blueprint $table) {
+            $table->dropColumn('impact_ass')->nullable();
+
         });
     }
 };

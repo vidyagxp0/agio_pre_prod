@@ -292,7 +292,6 @@
                         '<td><input type="text" name="ReferenceDocumentName[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
                         '<td><input type="text" name="Document_Remarks[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
-
                         '</tr>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -328,9 +327,6 @@
 
                         '<td><input type="text" name="batch_no[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
-
-
-
                         '</tr>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -636,7 +632,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }}/Incident
+            {{ Helpers::getDivisionName($data->division_id) }}/Incident
         </div>
     </div>
 
@@ -1033,9 +1029,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                            <input readonly type="text"
-                                                value="{{ Helpers::getdateFormat($data->intiation_date) }}"
-                                                name="intiation_date" id="intiation_date">
+                                            <input readonly type="text" value="{{ Helpers::getdateFormat($data->intiation_date) }}" name="intiation_date" id="intiation_date">
 
                                         </div>
                                     </div>
@@ -1138,7 +1132,7 @@
                                             @enderror
                                         </div>
 
-                                    <div class="col-lg-6">
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Document Details Required">Equipment Name<span
                                                     class="text-danger">*</span></label>
@@ -1199,7 +1193,7 @@
                                         @error('instrument_name')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
 
                                     <div class="col-12">
@@ -1501,7 +1495,6 @@
                                                 inputsToToggle.push(facilityNameInputs[i]);
                                             }
 
-
                                             selectField.addEventListener('change', function() {
                                                 // var isRequired = this.value === 'Anyother(specify)';
                                                 var isRequired = this.value.includes('Anyother(specify)');
@@ -1651,10 +1644,8 @@
                                                             <tr>
                                                                 <td><input disabled type="text" name="serial[]"
                                                                         value="{{ $key + 1 }}"></td>
-                                                                <td><input type="text" name="facility_name[]"
-                                                                        value="{{ isset(unserialize($grid_data->facility_name)[$key]) ? unserialize($grid_data->facility_name)[$key] : '' }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                                </td>
+                                                                <td><input type="text" name="facility_name[]"     value="{{ isset(unserialize($grid_data->facility_name)[$key]) ? unserialize($grid_data->facility_name)[$key] : '' }}"
+                                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>                                                               </td>
                                                                 <td><input class="id-number" type="text"
                                                                         name="IDnumber[]"
                                                                         value="{{ isset(unserialize($grid_data->IDnumber)[$key]) ? unserialize($grid_data->IDnumber)[$key] : '' }}"
@@ -1841,8 +1832,6 @@
                                             for (var k = 0; k < remarksInputs.length; k++) {
                                                 inputsToToggle.push(remarksInputs[k]);
                                             }
-
-
                                             selectField.addEventListener('change', function() {
                                                 var isRequired = this.value === 'yes';
                                                 console.log(this.value, isRequired, 'value');
@@ -1879,7 +1868,6 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
 
                                     <div class="col-lg-12">
                                         <div class="col-lg-12">
@@ -2194,7 +2182,6 @@
                                         });
                                     </script>
 
-
                                 </div>
                                 <div class="button-block">
 
@@ -2260,8 +2247,6 @@
                             // Call the function initially to set the initial visibility of the button
 
 
-
-
                             // Function to handle the change event of the Initial Incident Category dropdown
                             function handleincidentCategoryChange() {
                                 var selectElement = document.getElementById("incident_category");
@@ -2309,8 +2294,6 @@
                                     document.getElementById("Investigation_button").style.display = "none";
                                     document.getElementById("CAPA_button").style.display = "none";
                                     document.getElementById("QRM_button").style.display = "none";
-
-
 
                                 }
 
@@ -2511,24 +2494,7 @@
                                             </div>
                                         </div> -->
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Capa Required">CAPA Required ? <span
-                                                class="text-danger">*</span></label>
-                                        <select
-                                            name="capa_required"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                            id="capa_required" value="{{ $data->capa_required }}">
-                                            <option value="select">-- Select --</option>
-                                            <option @if ($data->capa_required == 'yes') selected @endif value='yes'>
-                                                Yes</option>
-                                            <option @if ($data->capa_required == 'no') selected @endif value='no'>
-                                                No</option>
-                                        </select>
-                                        <!-- @error('capa_required')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror -->
-                                    </div>
-                                </div>
+
 
                                 <!-- <div class="col-lg-6">
                                             <div class="group-input">
@@ -2543,7 +2509,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="QRM Required">QRM Required? <span class="text-danger">*</span></label>
+                                        <label for="QRM Required">QRM Required ? <span class="text-danger">*</span></label>
                                         <select
                                             name="qrm_required"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                             id="qrm_required" value="{{ $data->qrm_required }}">
@@ -2554,8 +2520,8 @@
                                                 No</option>
                                         </select>
                                         <!-- @error('qrm_required')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror -->
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror -->
                                     </div>
                                 </div>
 
@@ -2995,14 +2961,14 @@
                                         <div class="group-input">
                                             <label for="Production notification">Production Person <span
                                                     id="asteriskProduction"
-                                                    style="display: {{ $data1->Production_Review == 'yes' ? 'inline' : 'none' }}"
+                                                    style="display: {{ $data->Production_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
                                             <select @if ($data->stage == 4) disabled @endif
                                                 name="Production_person" class="Production_person"
                                                 id="Production_person">
                                                 <option value=""> Select</option>
-                                                @foreach ($users as $user)
+                                                @foreach ($userData as $user)
                                                     <option value="{{ $user->id }}"
                                                         @if ($user->id == $data1->Production_person) selected @endif>
                                                         {{ $user->name }}</option>
@@ -3252,8 +3218,6 @@
                                                 By</label>
                                             <input readonly type="text" value="{{ $data1->Production_by }}"
                                                 name="production_by" id="production_by">
-
-
                                         </div>
                                     </div>
                                     <div class="col-lg-6 p_erson">
@@ -4205,7 +4169,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3 analytical_development">
+                                <div class="col-md-6 mb-3  analytical_development">
                                     <div class="group-input">
                                         <label for="Analytical Development Laboratory Review Completed By">Analytical
                                             Development Laboratory Review Completed By</label>
@@ -8154,6 +8118,16 @@
                         </div>
                     </div>
 
+                    <div class="col-md-12 mb-3">
+                        <div class="group-input">
+                            <label for="Root Cause">Impact Assesment</label>
+                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                    completion</small></div>
+                            <textarea class="tiny" name="impact_ass" id="summernote-10">{{ $data->impact_ass }}</textarea>
+                        </div>
+                    </div>
+
+
                     <div class="col-lg-12">
                         <div class="group-input" id="documentsRowna">
                             <label for="audit-agenda-grid">
@@ -8209,7 +8183,7 @@
                                                             name="investigationTeam[{{ $loop->index }}][remarks]"
                                                             value="{{ isset($investigation_data['remarks']) ? $investigation_data['remarks'] : '' }}">
                                                     </td>
-                                                    <td><input type="text" class="Action" name=""></td>
+                                                    <td><input type="button" class="Action" name=""></td>
                                                 </tr>
                                             @endforeach
                                         @else
@@ -9648,6 +9622,26 @@
 
                             </table>
                         </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6">
+                    <div class="group-input">
+                        <label for="Capa Required">CAPA Required ? <span
+                                class="text-danger">*</span></label>
+                        <select
+                            name="capa_required"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                            id="capa_required" value="{{ $data->capa_required }}">
+                            <option value="select">-- Select --</option>
+                            <option @if ($data->capa_required == 'yes') selected @endif value='yes'>
+                                Yes</option>
+                            <option @if ($data->capa_required == 'no') selected @endif value='no'>
+                                No</option>
+                        </select>
+                        <!-- @error('capa_required')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror -->
                     </div>
                 </div>
 

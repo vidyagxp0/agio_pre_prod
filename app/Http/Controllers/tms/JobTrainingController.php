@@ -152,8 +152,6 @@ class JobTrainingController extends Controller
         $jobTraining->department = $request->input('department');
         $jobTraining->location = $request->input('location');
         $jobTraining->hod = $request->input('hod');
-        // $jobTraining->startdate = $request->input('startdate');
-        // $jobTraining->enddate = $request->input('enddate');
 
         for ($i = 1; $i <= 5; $i++) {
             $jobTraining->{"subject_$i"} = $request->input("subject_$i");
@@ -263,22 +261,24 @@ class JobTrainingController extends Controller
                 $jobTraining = JobTraining::find($id);
                 $lastjobTraining = JobTraining::find($id);
 
-                // if ($jobTraining->stage == 1) {
-                //     $jobTraining->stage = "2";
-                //     $jobTraining->status = "Active";
-                //     $jobTraining->activated_by = Auth::user()->name;
-                //     $jobTraining->activated_on = Carbon::now()->format('d-m-Y');
-                //     $jobTraining->activated_comment = $request->comment;
-                //     $jobTraining->update();
-                //     return back();
-                // }
-
                 if ($jobTraining->stage == 1) {
                     $jobTraining->stage = "2";
                     $jobTraining->status = "Closed-Retired";
-                    // $jobTraining->retired_by = Auth::user()->name;
-                    // $jobTraining->retired_on = Carbon::now()->format('d-m-Y');
-                    // $jobTraining->retired_comment = $request->comment;
+
+                    $history = new JobTrainingAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $jobTraining->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "Closed-Retired";
+                    $history->change_from = $lastjobTraining->status;
+                    $history->action = 'Retire';
+                    $history->stage = 'Submited';
+                    $history->save();
+
                     $jobTraining->update();
                     return back();
                 }

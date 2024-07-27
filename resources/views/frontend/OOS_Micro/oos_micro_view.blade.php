@@ -1,5 +1,8 @@
 @extends('frontend.layout.main')
 @section('container')
+@php
+        $users = DB::table('users')->get();
+@endphp
     <style>
         textarea.note-codable {
             display: none !important;
@@ -23,8 +26,8 @@
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                        '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -33,8 +36,8 @@
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                        '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -101,7 +104,6 @@
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_test_name]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_results_obtained]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
-                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
                             '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
                             '<td>' +
                             '<div class="col-lg-6 new-date-data-field">' +
@@ -127,6 +129,86 @@
             });
         });
     </script>
+<!-- ------------------------------grid-4 products_details-------------------------script -->
+<script>
+        $(document).ready(function() {
+            $('#products_details').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                            '<td><input disabled type="text" name="products_details['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="products_details['+ serialNumber +'][product_name]"></td>'+
+                            '<td><input type="text" name="products_details['+ serialNumber +'][product_AR_No]"></td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="sampled_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][sampled_on]" value="" class="hide-input" oninput="handleDateInput(this, \'sampled_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                            '<td><input type="text" name="products_details['+ serialNumber +'][sample_by]"></td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="analyzed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][analyzed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'analyzed_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="observed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][observed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'observed_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
+                        '</tr>'; 
+                    return html;
+                }
+
+                var tableBody = $('#products_details_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+    <!-- ------------------------------grid-5 instrument_details-------------------------script -->
+    <script>
+        $(document).ready(function() {
+            $('#instrument_details').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                            '<td><input disabled type="text" name="instrument_detail['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_name]"></td>'+
+                            '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_id_number]"></td>' +
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
+                        '</tr>'; 
+                    return html;
+                }
+
+                var tableBody = $('#instrument_details_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+    
 <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
     <script>
         $(document).ready(function() {
@@ -273,9 +355,11 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button> -->
+                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Closure Summary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Extension</button>
+
+                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
             </div>
             <!-- General Information -->
             <form action="{{ route('oos_micro.update', $micro_data->id) }}" method="POST" enctype="multipart/form-data">
@@ -298,9 +382,11 @@
                 <!-- oos_conclusion_cq_review -->
                 @include('frontend.OOS_Micro.comps_micro.oos_conclusion_cq_review')
                 <!-- batch_disposition -->
-                @include('frontend.OOS_Micro.comps_micro.batch_disposition') 
-                <!-- reopen -->
-                @include('frontend.OOS_Micro.comps_micro.reopen')
+                {{-- @include('frontend.OOS_Micro.comps_micro.batch_disposition') --}}
+                <!-- closure_summary -->
+                @include('frontend.OOS_Micro.comps_micro.closure_summary')
+                 <!-- oos_extension -->
+                @include('frontend.OOS_Micro.comps_micro.oos_extension') 
                 <!-- Signature  -->
                 @include('frontend.OOS_Micro.comps_micro.signature')
         </div>

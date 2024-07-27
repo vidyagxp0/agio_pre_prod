@@ -260,7 +260,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         <tr>
                             <td><a href="{{ url('employee_view', $employee->id) }}">{{ $employee->employee_id }}</a></td>
                             <td>{{ $employee->employee_name ? $employee->employee_name : 'NA' }}</td>
-                            <td>{{ $employee->department_record ? $employee->department_record->name : 'NA' }}</td>
+                            <td>{{Helpers::getFullDepartmentName($employee->department) ? Helpers::getFullDepartmentName($employee->department) : 'NA' }}</td>
                             <td>{{ $employee->job_title ? $employee->job_title : 'NA' }}</td>
                             <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td>
                             <td>{{ Helpers::getdateFormat($employee->joining_date) }}</td>
@@ -289,7 +289,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <tr>
                                 <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">000{{ $trainer->id }}</a></td>
                                 <td>{{ $trainer->trainer_name ? $trainer->trainer_name : 'NA' }}</td>
-                                <td>{{ $trainer->department_record ? $trainer->department_record->name : 'NA' }}</td>
+                                <td>{{ Helpers::getFullDepartmentName($trainer->department) ? Helpers::getFullDepartmentName($trainer->department) : 'NA' }}</td>
                                 <td>{{ Helpers::getdateFormat($trainer->due_date) }}</td>
                                 <td>{{ $trainer->status }}</td>
                             </tr>
@@ -298,14 +298,13 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                     </table>
                 </div>
                 <br>
-
                 <!-- second table for qualification trainer -->
                 <div>
                     <table class="table table-bordered">
                         <h4>Qualified Trainer</h4>
                         <thead>
                             <tr>
-                                <th>Sr. No</th>
+                                <th>Sr.No</th>
                                 <th>Qualified Trainer Name</th>
                                 <th>Designation</th>
                                 <th>Department</th>
@@ -316,20 +315,20 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         </thead>
                         <tbody>
                             @foreach ($trainers->sortbyDesc('id') as $trainer)
-                            <!-- @if ($trainer->trainer=='Qualified') -->
 
+                            <!-- @if ($trainer->trainer=='Qualified') -->
                             <tr>
                                 <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">000{{ $trainer->id }}</a></td>
                                 <td>{{ $trainer->trainer_name ? $trainer->trainer_name : 'NA' }}</td>
                                 <td>{{ $trainer->designation ? $trainer->designation : 'NA' }}</td>
-                                <td>{{ $trainer->department_record ? $trainer->department_record->name : 'NA' }}</td>
-                                <!-- <td>{{ $trainer->trainer ? $trainer->trainer: 'NA' }}</td> -->
+                                <td>{{ Helpers::getFullDepartmentName($trainer->department) ? Helpers::getFullDepartmentName($trainer->department) : 'NA' }}</td>
+                                {{-- <td>{{ $trainer->trainer ? $trainer->trainer: 'NA' }}</td> --}}
                                 <td>{{ $trainer->status }}</td>
 
                                 <td>
-                                    @if($employee->certification)
-                                    <a href="{{ asset('upload/' . $employee->certification) }}" target="_blank" download>
-                                        {{ $employee->certification }} <i class="fas fa-download"></i>
+                                    @if($trainer->initial_attachment)
+                                    <a href="{{ asset('upload/' . $trainer->initial_attachment) }}" target="_blank" download>
+                                        {{ $trainer->initial_attachment }} <i class="fas fa-download"></i>
                                     </a>
                                     @else
                                     NA
@@ -358,18 +357,18 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                                 <th>Location</th>
                                 <th>Start Date of Training</th>
                                 <th>End Date of Training</th>
-
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($jobTrainings as $job_training)
                             <tr>
-                                <td>{{ DB::table('employees')->where('id', $job_training->name)->value('employee_name') }}</td>
-                                <td>{{ DB::table('departments')->where('id', $job_training->department)->value('name') }}</td>
+                                <td>{{ DB::table('job_trainings')->where('id', $job_training->id)->value('name') }}</td>
+                                {{-- <td>{{ DB::table('departments')->where('id', $job_training->department)->value('name') }}</td> --}}
+                                <td>{{$job_training->department}}</td>
                                 <td>{{ $job_training->location}}</td>
-                                @for ($i = 1; $i <= 1; $i++) <td>{{ ($job_training->{"startdate_$i"}) }}</td>
-                                    <td>{{ ($job_training->{"enddate_$i"}) }}</td>
+                                @for ($i = 1; $i <= 1; $i++) <td>{{ \Carbon\Carbon::parse($job_training->{"startdate_$i"})->format('d-M-Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($job_training->{"enddate_$i"})->format('d-M-Y') }}</td>
                                     @endfor
 
                                     <td>
@@ -393,8 +392,8 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <tr>
                                 <th>Employee ID</th>
                                 <th>Name Of Employee</th>
-                                <th>Department/Location</th>
-
+                                <th>Department</th>
+                                <th>Location</th>
                                 <th>Qualification</th>
                                 <th>Date Of Joining</th>
 
@@ -407,12 +406,14 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <tr>
                                 <td>{{ $induction->employee_id }}</td>
                                 <td>{{ $induction->name_employee }}</td>
-                                <td>{{ $induction->department_location }}</td>
+                                <td>{{ $induction->department }}</td>
+                                <td>{{ $induction->location }}</td>
                                 <td>{{ $induction->qualification }}</td>
-                                <td>{{ $induction->date_joining }}</td>
+                                <td>{{ \Carbon\Carbon::parse($induction->{"date_joining"})->format('d-M-Y')}}</td>
 
                                 <td> <a href="{{ route('induction_training_view', $induction->id) }}">
-                                        <i style="margin-left: 25px;" class="fa-solid fa-pencil"></i></td>
+                                        <i style="margin-left: 25px;" class="fa-solid fa-pencil"></i>
+                                </td>
                             </tr>
                             @endforeach
 

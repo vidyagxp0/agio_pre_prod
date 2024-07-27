@@ -31,8 +31,8 @@ $users = DB::table('users')
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                        '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -41,8 +41,8 @@ $users = DB::table('users')
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                        '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -122,7 +122,6 @@ $users = DB::table('users')
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_test_name]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_results_obtained]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
-                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
                             '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
                             '<td>' +
@@ -148,7 +147,87 @@ $users = DB::table('users')
             });
         });
     </script>
+    
+    <!-- ------------------------------grid-4 products_details-------------------------script -->
+    <script>
+        $(document).ready(function() {
+            $('#products_details').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                            '<td><input disabled type="text" name="products_details['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="products_details['+ serialNumber +'][product_name]"></td>'+
+                            '<td><input type="text" name="products_details['+ serialNumber +'][product_AR_No]"></td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="sampled_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][sampled_on]" value="" class="hide-input" oninput="handleDateInput(this, \'sampled_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                        
+                            '<td><input type="text" name="products_details['+ serialNumber +'][sample_by]"></td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="analyzed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][analyzed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'analyzed_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="observed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][observed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'observed_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                           '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
+                        '</tr>'; 
+                    return html;
+                }
+
+                var tableBody = $('#products_details_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+    <!-- ------------------------------grid-5 instrument_details-------------------------script -->
+    <script>
+        $(document).ready(function() {
+            $('#instrument_details').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                            '<td><input disabled type="text" name="instrument_detail['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_name]"></td>'+
+                            '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_id_number]"></td>' +
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
+                        '</tr>'; 
+                    return html;
+                }
+
+                var tableBody = $('#instrument_details_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
     <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
 
     <script>
@@ -295,6 +374,14 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm18')">CheckList - Preliminary Lab. Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Inv. Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button>
+                <!-- checklist start -->
+                <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist - Investigation of Bacterial Endotoxin Test (BET)</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Checklist - Investigation of Sterility</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Checklist - Investigation of Microbial limit test (MLT)</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Investigation of Chemical assay</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Residual solvent (RS)</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Dissolution </button>
+                <!-- checklist closed -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button>
@@ -302,9 +389,11 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
+                
             </div>
           <form action="{{ route('oos.oosstore') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -326,7 +415,7 @@ $users = DB::table('users')
                                 <select id="dynamicSelectType" name="type">
                                     <option value="{{ route('oos.index') }}">OOS Chemical</option>
                                     <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
-                                    <option value="{{ route('oot.index');  }}">OOT</option>
+                                    <option value="{{ route('oot.index')  }}">OOT</option>
                                 </select>
                             </div>
                         </div>
@@ -368,18 +457,14 @@ $users = DB::table('users')
                                 <label for="Due Date"> Due Date </label>
                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                 <div class="calenderauditee">
-                                <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDate123(null, false, 'd-M-Y') }}" />
+                                <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ $due_date }}" />
                                 <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                 class="hide-input"
                                 oninput="handleDateInput(this, 'due_date')"  value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}"/>
                                 </div>
-
-                                
                             </div>
                         </div>
-                        
-                       
-                        <div class="col-lg-6">
+                       {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description"> Severity Level</label>
                                 <select name="severity_level_gi" >
@@ -389,8 +474,8 @@ $users = DB::table('users')
                                     <option value="Critical">Critical</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
+                        </div>--}} 
+                        <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Short Description">Short Description
                                     <span class="text-danger">*</span></label>
@@ -404,7 +489,7 @@ $users = DB::table('users')
                         <p id="docnameError" style="color:red">**Short Description is required</p>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
+                                <label for="Short Description">Initiation department Group  <span class="text-danger"></span></label>
                                 
                                 <select name="initiator_group" id="initiator_group">
                                 <option value="">Enter Your Selection Here</option>
@@ -416,12 +501,11 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group Code">Initiator Group Code <span class="text-danger"></span></label>
-                                <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                     value="">
+                                <label for="Initiator Group Code">Initiation department Code <span class="text-danger"></span></label>
+                                <input type="text" name="initiator_group_code" id="initiator_group_code" value="">
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="If Others">If Others
                                     <span class="text-danger">*</span></label>
@@ -436,11 +520,10 @@ $users = DB::table('users')
                                     <option value="yes">yes</option>
                                     <option value="No">No</option>
                                 </select>
-
                             </div>
                         </div>
 
-                        <div class="col-lg-6 mt-4">
+                        {{--  <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group"></label>
                                 <label for="Repeat Nature">Repeat Nature</label>
@@ -456,40 +539,10 @@ $users = DB::table('users')
                                     <option value="permanent">Permanent</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="due-date">Deviation Occured On</label>
-                                        <div class="calenderauditee">                                    
-                                            <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="deviation_occured_on_gi"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
-                                        </div>
-                                    </div>
-                                </div>
-
+                        </div>--}}
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Attachments">Initial Attachments</label>
-                                <small class="text-primary">
-                                    Please Attach all relevant or supporting documents
-                                </small>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="initial_attachment_gi"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="initial_attachment_gi[]"
-                                            oninput="addMultipleFiles(this, 'initial_attachment_gi')" multiple>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                       
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Source Document Type">Source Document Type</label>
+                                <label for="Tnitiaror Grouo">Source Document Type</label>
                                 <select name="source_document_type_gi">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="OOT">OOT</option>
@@ -504,11 +557,123 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Reference System Document</label>
-                                <select multiple id="reference_record" name="reference_system_document_gi" id="">
-                                    <option value="">Enter Your Selection Here</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
+                                <input type="text" name="reference_system_document_gi"  id="reference_system_document_gi" value="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Document">Reference document</label>
+                                <input type="text" name="reference_document"  id="reference_document" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="due-date">OOS occurred On</label>
+                                <div class="calenderauditee">                                    
+                                    <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
+                                    <input type="date" name="deviation_occured_on_gi"   value=""
+                                    class="hide-input"
+                                    oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOS Observed On">OOS Observed On</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="oos_observed_on" readonly placeholder="DD-MMM-YYYY" />
+                                    {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                    <input type="date" name="oos_observed_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'oos_observed_on')" />
+                                </div>
+                            </div>
+                            @error('Deviation_date')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-lg-12 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="deviation_time">Delay Justification</label>
+                                <textarea id="delay_justification" name="delay_justification"></textarea>
+                            </div>
+                            {{-- @error('Deviation_date')
+                                <div class="text-danger">{{  $message  }}</div>
+                            @enderror --}}
+                        </div>
+                        <script>
+                            flatpickr("#deviation_time", {
+                                enableTime: true,
+                                noCalendar: true,
+                                dateFormat: "H:i", // 24-hour format without AM/PM
+                                minuteIncrement: 1 // Set minute increment to 1
+
+                            });
+                        </script>
+                                
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Audit Schedule End Date">OOS Reported on</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="oos_reported_date" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="oos_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                                      class="hide-input" oninput="handleDateInput(this, 'oos_reported_date')" />
+                                </div>
+                            </div>
+                        </div>
+                            <script>
+                                $('.delayJustificationBlock').hide();
+
+                                function calculateDateDifference() {
+                                    let deviationDate = $('input[name=Deviation_date]').val();
+                                    let reportedDate = $('input[name=Deviation_reported_date]').val();
+
+                                    if (!deviationDate || !reportedDate) {
+                                        console.error('Deviation date or reported date is missing.');
+                                        return;
+                                    }
+
+                                    let deviationDateMoment = moment(deviationDate);
+                                    let reportedDateMoment = moment(reportedDate);
+
+                                    let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
+
+                                    // if (diffInDays > 0) {
+                                    //     $('.delayJustificationBlock').show();
+                                    // } else {
+                                    //     $('.delayJustificationBlock').hide();
+                                    // }
+
+                                }
+
+                                $('input[name=Deviation_date]').on('change', function() {
+                                    calculateDateDifference();
+                                })
+
+                                $('input[name=Deviation_reported_date]').on('change', function() {
+                                    calculateDateDifference();
+                                })
+                            </script>
+                            
+                            <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Immediate action</label>
+                                <input type="text" name="immediate_action"  id="immediate_action" value="">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Initial Attachments</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="initial_attachment_gi"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="initial_attachment_gi[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_gi')" multiple>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="sub-head pt-3">OOS Information</div>
@@ -528,28 +693,21 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description ">Product / Material Name</label>
-
-                                <input type="text" name="product_material_name_gi">
+                                <input type="text" name="product_material_name_gi" placeholder="Enter your Product / Material Name">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input ">
                                 <label for="Short Description ">Market</label>
-                                <input type="text" name="market_gi">
+                                <input type="text" name="market_gi" placeholder="Enter your Market">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Customer*</label>
-                                <select name="customer_gi">
-                                    <option value="">Enter Your Selection Here</option>
-                                    <option name="yes">Yes</option>
-                                    <option name="no">No</option>
-                                </select>
+                                <input type="text" name="customer_gi" placeholder="Enter your Customer">
                             </div>
                         </div>
-
-
                         <!-- ---------------------------grid-1 -------------------------------- -->
                         <div class="group-input">
                             <label for="audit-agenda-grid">
@@ -590,10 +748,9 @@ $users = DB::table('users')
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
-                                                        <input type="text" id="info_mfg_date" readonly 
-                                                        placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="info_product_material[0][info_mfg_date]" value="" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        class="hide-input" oninput="handleDateInput(this, 'info_mfg_date')">
+                                                        <input type="text" id="info_mfg_date" readonly placeholder="MM-YYYY" />
+                                                        <input type="month"  name="info_product_material[0][info_mfg_date]" value=""
+                                                        class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date')">
                                                     </div>
                                                 </div>
                                             </div>
@@ -602,14 +759,13 @@ $users = DB::table('users')
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
-                                                        <input type="text" id="info_expiry_date" readonly 
-                                                        placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="info_product_material[0][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        class="hide-input" oninput="handleDateInput(this, 'info_expiry_date')">
+                                                        <input type="text" id="info_expiry_date" readonly placeholder="MM-YYYY" />
+                                                        <input type="month"  name="info_product_material[0][info_expiry_date]"
+                                                        class="hide-input" oninput="handleMonthInput(this, 'info_expiry_date')">
                                                     </div>
                                                 </div>
                                             </div>
-                                           </td>
+                                            </td>
                                             
                                             <td><input type="text" name="info_product_material[0][info_label_claim]" value=""></td>
                                             <td><input type="text" name="info_product_material[0][info_pack_size]" value=""></td>
@@ -684,7 +840,7 @@ $users = DB::table('users')
                                 </table>
                             </div>
                         </div>
-        <!----------------grid-3----------------------------------- -->
+                    <!----------------grid-3----------------------------------- -->
 
                         <div class="group-input">
                             <label for="audit-agenda-grid">
@@ -705,7 +861,6 @@ $users = DB::table('users')
                                             <th style="width: 8%">Test Name of OOS</th>
                                             <th style="width: 8%">Results Obtained</th>
                                             <th style="width: 8%">Specification Limit</th>
-                                            <th style="width: 8%">Details of Obvious Error</th>
                                             <th style="width: 16%">File Attachment</th>
                                             <th style="width: 8%">Submit By</th>
                                             <th style="width: 16%">Submit On</th>
@@ -719,11 +874,10 @@ $users = DB::table('users')
                                             <td><input type="text" name="oos_detail[0][oos_test_name]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_results_obtained]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_specification_limit]"></td>
-                                            <td><input type="text" name="oos_detail[0][oos_details_obvious_error]"></td>
                                             <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_submit_by]"></td>
                                             <td>
-                                                <div class="col-lg-6 new-date-data-field">
+                                            <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="oos_submit_on" readonly 
@@ -734,6 +888,109 @@ $users = DB::table('users')
                                                 </div>
                                             </div>
                                             </td>
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!---------------- grid-4 Products_details----------------------------------- -->
+
+                        <div class="group-input">
+                            <label for="audit-agenda-grid">
+                            Products details
+                                <button type="button" name="audit-agenda-grid" id="products_details">+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#document-details-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="products_details_details" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 4%">Row#</th>
+                                            <th style="width: 8%"> Name of Product</th>
+                                            <th style="width: 8%"> A.R.No </th>
+                                            <th style="width: 8%"> Sampled on </th>
+                                            <th style="width: 8%"> Sample by</th>
+                                            <th style="width: 8%"> Analyzed on</th>
+                                            <th style="width: 8%"> Observed on </th>
+                                            <th style="width: 5%"> Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input disabled type="text" name="products_details[0][serial]" value="1"></td>
+                                            <td><input type="text" name="products_details[0][product_name]"></td>
+                                            <td><input type="text" name="products_details[0][product_AR_No]"></td> 
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="sampled_on" readonly placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="products_details[0][sampled_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'sampled_on')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
+                                            <td><input type="text" name="products_details[0][sample_by]"></td>
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="analyzed_on" readonly placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="products_details[0][analyzed_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'analyzed_on')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="observed_on" readonly placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="products_details[0][observed_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'observed_on')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                         <!---------------- grid-5 instrument_details----------------------------------- -->
+
+                         <div class="group-input">
+                            <label for="audit-agenda-grid">
+                            Instrument details
+                                <button type="button" name="audit-agenda-grid" id="instrument_details">+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#document-details-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="instrument_details_details" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 4%">Row#</th>
+                                            <th style="width: 8%"> Name of instrument</th>
+                                            <th style="width: 8%"> Instrument Id Number</th>
+                                            <th style="width: 5%"> Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input disabled type="text" name="instrument_detail[0][serial]" value="1"></td>
+                                            <td><input type="text" name="instrument_detail[0][instrument_name]"></td>
+                                            <td><input type="text" name="instrument_detail[0][instrument_id_number]"></td>
                                             <td><button type="text" class="removeRowBtn">Remove</button></td>
                                         </tr>
                                     </tbody>
@@ -964,12 +1221,9 @@ $users = DB::table('users')
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">Summary of Preliminary Investigation.</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1"></textarea>
                             </div>
                         </div>
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Lead Auditor">Root Cause Identified</label>
@@ -1199,6 +1453,7 @@ $users = DB::table('users')
                 </div>
             </div>
         </div>
+        @include('frontend.OOS.oos_allchecklist')
 
         <!--Phase II Investigation -->
         <div id="CCForm5" class="inner-block cctabcontent">
@@ -1211,7 +1466,14 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="Description Deviation">QA Approver Comments</label>
                             <textarea class="summernote" name="qa_approver_comments_piii" id="summernote-1">
-                                    </textarea>
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Reason for manufacturing </label>
+                            <textarea class="summernote" name="reason_manufacturing_piii" id="summernote-1">
+                            </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -1425,6 +1687,20 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="Audit Preparation Completed On">Others (OOS category)</label>
                             <input type="text" name="others_oos_category_piiqcr">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Details of Obvious Error">Details of Obvious Error</label>
+                            <input type="text" name="oos_details_obvious_error">
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Details of Root Cause</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                            <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
+                            </textarea>
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
@@ -1898,12 +2174,89 @@ $users = DB::table('users')
 
             </div>
         </div>
-        <!-- Batch Disposition -->
-        <div id="CCForm11" class="inner-block cctabcontent">
+       
+        <!-- Re-Open -->
+        <div id="CCForm12" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                    Batch Disposition
+                    Reopen Request
                 </div>
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Other Action (Specify)</label>
+                            <textarea class="summernote" name="other_action_specify_ro" id="summernote-1">
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="group-input">
+                            <label for="Reference Recores">Reopen Attachment</label>
+                            <small class="text-primary">
+                                Please Attach all relevant or supporting documents
+                            </small>
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="reopen_attachment_ro"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="reopen_attachment_ro[]"
+                                        oninput="addMultipleFiles(this, 'reopen_attachment_ro')" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" id="ChangeNextButton" class="nextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--QA Head/Designee Approval -->
+        <div id="CCForm13" class="inner-block cctabcontent">
+            <div class="inner-block-content">
+                <div class="sub-head">
+                QA Head/Designee Approval
+                </div>
+                <div class="row">
+                <div class="col-md-12 mb-4">
+                    <div class="group-input">
+                        <label for="Description Deviation"> FAR (Field alert) </label>
+                        <textarea class="summernote" name="Field_alert_QA_initial_approval" id="summernote-1">
+                        </textarea>
+                    </div>
+                </div>   
+                <div class="col-md-12 mb-4">
+                    <div class="group-input">
+                        <label for="Description Deviation"> Approval Comments </label>
+                        <textarea class="summernote" name="reopen_approval_comments_uaa" id="summernote-1">
+                        </textarea>
+                    </div>
+                </div>
+                    <div class="col-12">
+                        <div class="group-input">
+                            <label for="Reference Recores">Approval Attachment</label>
+                            <small class="text-primary">
+                                Please Attach all relevant or supporting documents
+                            </small>
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="addendum_attachment_uaa"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="addendum_attachment_uaa[]"
+                                        oninput="addMultipleFiles(this, 'addendum_attachment_uaa')" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-head"> Batch Disposition </div>
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="group-input">
@@ -2046,91 +2399,6 @@ $users = DB::table('users')
                         </div>
                     </div>
 
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!-- Re-Open -->
-        <div id="CCForm12" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Reopen Request
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Other Action (Specify)</label>
-                            <textarea class="summernote" name="other_action_specify_ro" id="summernote-1">
-                            </textarea>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Reopen Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="reopen_attachment_ro"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="reopen_attachment_ro[]"
-                                        oninput="addMultipleFiles(this, 'reopen_attachment_ro')" multiple>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!--QA Head/Designee Approval -->
-        <div id="CCForm13" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                QA Head/Designee Approval
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation"> Approval Comments </label>
-                            <textarea class="summernote" name="reopen_approval_comments_uaa" id="summernote-1">
-                            </textarea>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Approval Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="addendum_attachment_uaa"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="addendum_attachment_uaa[]"
-                                        oninput="addMultipleFiles(this, 'addendum_attachment_uaa')" multiple>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -2370,7 +2638,213 @@ $users = DB::table('users')
                 </div>
             </div>
         </div>
+      
+        <!-- Extention add -->
 
+        <div id="CCForm20" class="inner-block cctabcontent">
+            <div class="inner-block-content">
+                <div class="row">
+                    <div class="sub-head"> OOS Extension </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="Audit Schedule End Date">Proposed Due Date (OOS)</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="oos_proposed_due_date" placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="oos_proposed_due_date"
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    oninput="handleDateInput(this, 'oos_proposed_due_date')"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="group-input">
+                            <label for="oos_extension_justification">Extension Justification (OOS)</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                    not require completion</small></div> -->
+                            <textarea class="tiny" name="oos_extension_justification" id="summernote-10">
+                        </textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for=" oos_extension_completed_by"> OOS Extension Completed By
+                            </label>
+                            <select name="oos_extension_completed_by" id="oos_extension_completed_by" >
+                                <option value="">-- Select --</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="Audit Schedule End Date">OOS Extension Completed On</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="oos_extension_completed_on" readonly placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="oos_extension_completed_on"
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    oninput="handleDateInput(this, 'oos_extension_completed_on')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-head"> CAPA Extension </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="capa_proposed_due_date">Proposed Due Date (CAPA)</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="capa_proposed_due_date" readonly placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="capa_proposed_due_date"
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    oninput="handleDateInput(this, 'capa_proposed_due_date')"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="group-input">
+                            <label for="capa_extension_justification">Extension Justification (CAPA)</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                    not require completion</small></div> -->
+                            <textarea class="tiny" name="capa_extension_justification" id="summernote-10">
+                        </textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for=" capa_extension_completed_by"> CAPA Extension Completed By
+                                </label>
+                                <select name="capa_extension_completed_by" id="capa_extension_completed_by" >
+                                    <option value="">-- Select --</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Audit Schedule End Date">CAPA Extension Completed On</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="capa_extension_completed_on" readonly placeholder="DD-MMM-YYYY"  />
+                                    <input type="date" name="capa_extension_completed_on" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                        oninput="handleDateInput(this, 'capa_extension_completed_on')"   class="hide-input"/>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- row_end --}}
+                    </div>
+                    <div class="sub-head"> Quality Risk Management Extension </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="qrm_proposed_due_date">Proposed Due Date (Quality Risk Management)</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="qrm_proposed_due_date" readonly placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="qrm_proposed_due_date"
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                    oninput="handleDateInput(this, 'qrm_proposed_due_date')"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="group-input">
+                            <label for="qrm_extension_justification">Extension Justification (Quality Risk Management)</label>
+                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                            <textarea class="tiny" name="qrm_extension_justification" id="summernote-10"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for=" Quality_Risk_Management_Extension_Completed_By"> Quality Risk Management Extension Completed By </label>
+                                <select name="qrm_extension_completed_by" id="qrm_extension_completed_by">
+                                    <option value="">-- Select --</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="qrm_extension_completed_on">Quality Risk Management Extension Completed On</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="qrm_extension_completed_on" readonly placeholder="DD-MMM-YYYY"  />
+                                    <input type="date"name="qrm_extension_completed_on"
+                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'qrm_extension_completed_on')"  />
+                                </div>
+                            </div>
+                        </div>
+                        {{-- row_end --}}
+                    </div>
+                    <div class="sub-head">Investigation Extension </div>
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="investigation_proposed_due_date">Proposed Due Date (Investigation)</label>
+                            <div class="calenderauditee">
+                                <input type="text" id="investigation_proposed_due_date" readonly placeholder="DD-MMM-YYYY"  />
+                                <input type="date" name="investigation_proposed_due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                 class="hide-input" oninput="handleDateInput(this, 'investigation_proposed_due_date')"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="group-input">
+                            <label for="investigation_extension_justification">Extension Justification (Investigation)</label>
+                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                    not require completion</small></div>
+                            <textarea class="tiny" name="investigation_extension_justification" id="summernote-10">
+                        </textarea>
+                        </div>
+                    </div>
+                    {{-- row --}}
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for=" investigation_extension_completed_by"> Investigation Extension Completed By </label>
+                                <select name="investigation_extension_completed_by"id="investigation_extension_completed_by" >
+                                    <option value="">-- Select --</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="investigation_extension_completed_on">Investigation Extension Completed On</label>
+                                <div class="calenderauditee">
+                                    <input type="text" id="investigation_extension_completed_on" readonly placeholder="DD-MMM-YYYY"  />
+                                    <input type="date" name="investigation_extension_completed_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                        class="hide-input" oninput="handleDateInput(this, 'investigation_extension_completed_on')"  />
+                                </div>
+                            </div>
+                        </div>
+                        {{-- row-end --}}
+                    </div>
+                       
+                </div>
+                <div class="button-block">
+                    <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;" class="saveButton">Save</button>
+                    <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: 1px;">
+                        <button type="button"  class="backButton">Back</button>
+                    </a>
+                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;" class="nextButton" onclick="nextStep()">Next</button>
+                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"> <a href="{{ url('rcms/qms-dashboard') }}"
+                            class="text-white">
+                            Exit </a> </button>
+                        <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
+                            class="button  launch_extension" data-bs-toggle="modal"
+                            data-bs-target="#launch_extension">
+                            Launch Extension
+                        </a>  -->
+                </div>
+                </div>
+            </div>
+        </div>
+
+       
         <!----- Signature ----->
         <div id="CCForm17" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -2593,7 +3067,7 @@ $users = DB::table('users')
                             <div class="date"></div>
                         </div>
                     </div>
-<!-- ====================================================================== -->
+<!-- ==================================Activity Log==================================== -->
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="submitted by">Submitted By :</label>

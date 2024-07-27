@@ -99,12 +99,6 @@ class TrainerController extends Controller
         $trainerListGrid->data = $request->trainer_listOfAttachment;
         $trainerListGrid->save();
 
-        // } catch (\Exception $e) {
-        //     $res['status'] = 'error';
-        //     $res['message'] = $e->getMessage();
-
-        // }
-
 
         //Audit Trails 
         if (!empty($request->short_description)) {
@@ -710,7 +704,11 @@ class TrainerController extends Controller
         $trainer_skill = TrainerGrid::where(['trainer_qualification_id' => $id, 'identifier' => 'trainerSkillSet'])->first();
         $trainer_list = TrainerGrid::where(['trainer_qualification_id' => $id, 'identifier' => 'listOfAttachment'])->first();
 
-        return view('frontend.TMS.Trainer_qualification.trainer_qualification_view', compact('trainer', 'trainer_skill', 'trainer_list'));
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('Y-m-d');
+
+        return view('frontend.TMS.Trainer_qualification.trainer_qualification_view', compact('trainer', 'due_date', 'trainer_skill', 'trainer_list'));
     }
 
     public function sendStage(Request $request, $id)
@@ -736,7 +734,7 @@ class TrainerController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastEmployee->status;
+                    // $history->origin_state = $lastEmployee->status;
                     $history->action = 'submit';
                     $history->change_to = "Pending HOD Review";
                     $history->change_from = $lastEmployee->status;
@@ -763,6 +761,7 @@ class TrainerController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     // $history->origin_state = $lastEmployee->status;
+                    $history->action = 'Qualified';
                     $history->change_to = "Closed-Done";
                     $history->change_from = $lastEmployee->status;
                     $history->stage = 'Qualified';
@@ -793,6 +792,23 @@ class TrainerController extends Controller
                     $trainer->rejected_by = Auth::user()->name;
                     $trainer->rejected_on = Carbon::now()->format('d-m-Y');
                     $trainer->rejected_comment = $request->comment;
+
+                    $history = new TrainerQualificationAuditTrial();
+                    $history->trainer_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $trainer->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    // $history->origin_state = $lastEmployee->status;
+                    $history->action = 'Qualified';
+                    $history->change_to = "Closed-Done";
+                    $history->change_from = $lastEmployee->status;
+                    $history->stage = 'Qualified';
+                    $history->save();
+
+
                     $trainer->update();
                     return back();
                 }

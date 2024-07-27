@@ -172,11 +172,10 @@ $users = DB::table('users')->get();
                     <div class="inner-block-content">
                         <div class="row">
                             {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="RLS Record Number">Employee ID</label>
-                                        <input  type="text" name="employee_id" 
-                                            value="">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}
+                                <div class="group-input">
+                                    <label for="RLS Record Number">Employee ID</label>
+                                    <input type="text" name="employee_id" value="">
+                                    {{<div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}
                         </div>
                     </div>
                 </div> --}}
@@ -192,10 +191,17 @@ $users = DB::table('users')->get();
                         <label for="Department">Department</label>
                         <select name="department">
                             <option value="">-- Select Dept --</option>
-                            @foreach ($departments as $department)
+                            {{-- @foreach ($departments as $department)
                             <option value="{{ $department->id }}" {{ $department->id == old('department', $jobTraining->department) ? 'selected' : '' }}>
-                                {{ $department->name }}
+                            {{ $department->name }}
                             </option>
+                            @endforeach --}}
+                            @php
+                            $savedDepartmentId = old('department', $jobTraining->department);
+                            @endphp
+
+                            @foreach (Helpers::getDepartments() as $code => $department)
+                            <option value="{{ $code }}" @if ($savedDepartmentId==$code) selected @endif>{{ $department }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -227,114 +233,110 @@ $users = DB::table('users')->get();
 
 
 
-                <!-- <div class="col-md-6 new-date-data-field">
+                {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Start Date of Training</label>
                                         <div class="calenderauditee">                                     
                                             <input type="text"  id="startdate"  value="{{ Helpers::getdateFormat($jobTraining->startdate) }}" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="startdate" value="{{ Helpers::getdateFormat($jobTraining->startdate) }}"
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'startdate')"/>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="due-date">End Date of Training</label>
-                                        <div class="calenderauditee">                                     
-                                            <input type="text"  id="enddate" value="{{ Helpers::getdateFormat($jobTraining->enddate) }}" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="enddate"  value="{{ Helpers::getdateFormat($jobTraining->enddate) }}"
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'enddate')"/>
-                                        </div>
-                                    </div>
-                                </div>-->
-
-
-
-
-
-
-
-
-                <div class="col-12">
-                    <div class="group-input">
-                        <div class="why-why-chart">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 5%;">Sr.No.</th>
-                                        <th style="width: 30%;">Subject</th>
-                                        <th>Type of Training</th>
-                                        <th>Reference Document No.</th>
-                                        <th>Trainee Name</th>
-                                        <th>Trainer</th>
-                                        <th>Start Date of Training</th>
-                                        <th>End Date of Training</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php
-                                    // Fetch the trainers' IDs
-                                    $trainerIds = DB::table('user_roles')->where('q_m_s_roles_id', 6)->pluck('user_id');
-                                    $usersDetails = DB::table('users')->select('id', 'name')->get();
-                                    $trainers = DB::table('users')->whereIn('id', $trainerIds)->select('id', 'name')->get();
-                                    @endphp
-
-                                    @for ($i = 1; $i <= 5; $i++) <tr>
-                                        <td>{{ $i }}</td>
-                                        <td>
-                                            <input type="text" name="subject_{{ $i }}" value="{{ $jobTraining->{'subject_' . $i} }}">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="type_of_training_{{ $i }}" value="{{ $jobTraining->{'type_of_training_' . $i} }}">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="reference_document_no_{{ $i }}" value="{{ $jobTraining->{'reference_document_no_' . $i} }}">
-                                        </td>
-                                        <td>
-                                            <select name="trainee_name_{{ $i }}" id="">
-                                                <option value="">-- Select --</option>
-                                                @foreach ($trainers as $trainer)
-                                                <option value="{{ $trainer->id }}" {{ $jobTraining->{'trainee_name_' . $i} == $trainer->id ? 'selected' : '' }}>{{ $trainer->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select name="trainer_{{ $i }}" id="">
-                                                <option value="">-- Select --</option>
-                                                @foreach ($usersDetails as $u)
-                                                <option value="{{ $u->id }}" {{ $jobTraining->{'trainer_' . $i} == $u->id ? 'selected' : '' }}>{{ $u->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="date" name="startdate_{{ $i }}" value="{{ $jobTraining->{'startdate_' . $i} }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
-                                        </td>
-                                        <td>
-                                            <input type="date" name="enddate_{{ $i }}" value="{{ $jobTraining->{'enddate_' . $i} }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                        </td>
-                                        </tr>
-                                        @endfor
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
+                <input type="date" name="startdate" value="{{ Helpers::getdateFormat($jobTraining->startdate) }}" class="hide-input" oninput="handleDateInput(this, 'startdate')" />
             </div>
-            <div class="button-block">
-                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
-                <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                        Exit </a> </button>
 
-            </div>
     </div>
+</div>
+<div class="col-md-6 new-date-data-field">
+    <div class="group-input input-date">
+        <label for="due-date">End Date of Training</label>
+        <div class="calenderauditee">
+            <input type="text" id="enddate" value="{{ Helpers::getdateFormat($jobTraining->enddate) }}" readonly placeholder="DD-MMM-YYYY" />
+            <input type="date" name="enddate" value="{{ Helpers::getdateFormat($jobTraining->enddate) }}" class="hide-input" oninput="handleDateInput(this, 'enddate')" />
+        </div>
+    </div>
+</div>--}}
+
+
+
+
+
+
+
+
+<div class="col-12">
+    <div class="group-input">
+        <div class="why-why-chart">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">Sr.No.</th>
+                        <th style="width: 30%;">Subject</th>
+                        <th>Type of Training</th>
+                        <th>Reference Document No.</th>
+                        {{-- <th>Trainee Name</th> --}}
+                        <th>Trainer</th>
+                        <th>Start Date of Training</th>
+                        <th>End Date of Training</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                    // Fetch the trainers' IDs
+                    $trainerIds = DB::table('user_roles')->where('q_m_s_roles_id', 6)->pluck('user_id');
+                    $usersDetails = DB::table('users')->select('id', 'name')->get();
+                    $trainers = DB::table('users')->whereIn('id', $trainerIds)->select('id', 'name')->get();
+                    @endphp
+
+                    @for ($i = 1; $i <= 5; $i++) <tr>
+                        <td>{{ $i }}</td>
+                        <td>
+                            <input type="text" name="subject_{{ $i }}" value="{{ $jobTraining->{'subject_' . $i} }}">
+                        </td>
+                        <td>
+                            <input type="text" name="type_of_training_{{ $i }}" value="{{ $jobTraining->{'type_of_training_' . $i} }}">
+                        </td>
+                        <td>
+                            <input type="text" name="reference_document_no_{{ $i }}" value="{{ $jobTraining->{'reference_document_no_' . $i} }}">
+                        </td>
+                        {{-- <td>
+                        <select name="trainee_name_{{ $i }}" id="">
+                        <option value="">-- Select --</option>
+                        @foreach ($trainers as $trainer)
+                        <option value="{{ $trainer->id }}" {{ $jobTraining->{'trainee_name_' . $i} == $trainer->id ? 'selected' : '' }}>{{ $trainer->name }}</option>
+                        @endforeach
+                        </select>
+                        </td> --}}
+                        <td>
+                            <select name="trainer_{{ $i }}" id="">
+                                <option value="">-- Select --</option>
+                                @foreach ($usersDetails as $u)
+                                <option value="{{ $u->id }}" {{ $jobTraining->{'trainer_' . $i} == $u->id ? 'selected' : '' }}>{{ $u->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <input type="date" name="startdate_{{ $i }}" value="{{ $jobTraining->{'startdate_' . $i} }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
+                        </td>
+                        <td>
+                            <input type="date" name="enddate_{{ $i }}" value="{{ $jobTraining->{'enddate_' . $i} }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
+                        </td>
+                        </tr>
+                        @endfor
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+</div>
+<div class="button-block">
+    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+    {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+    <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+            Exit </a> </button>
+
+</div>
+</div>
 </div>
 
 </div>
@@ -487,7 +489,7 @@ $users = DB::table('users')->get();
                 <h4 class="modal-title">E-Signature</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ url('tms/job_trainer/sendstage', $jobTraining->id) }}" method="POST" id="signatureModalForm">
+            <form action="{{ url('rcms/job_trainer_send', $jobTraining->id) }}" method="POST" id="signatureModalForm">
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3 text-justify">
@@ -495,18 +497,22 @@ $users = DB::table('users')->get();
                         and password for this task. You are performing an electronic signature,
                         which is legally binding equivalent of a hand written signature.
                     </div>
+
                     <div class="group-input">
                         <label for="username">Username <span class="text-danger">*</span></label>
                         <input type="text" name="username" required>
                     </div>
+
                     <div class="group-input">
                         <label for="password">Password <span class="text-danger">*</span></label>
                         <input type="password" name="password" required>
                     </div>
+
                     <div class="group-input">
                         <label for="comment">Comment</label>
                         <input type="comment" name="comment">
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="signatureModalButton">

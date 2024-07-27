@@ -81,8 +81,7 @@
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
             @endif
-                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                        Exit </a> </button>
+                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
             </div>
 
         </div>

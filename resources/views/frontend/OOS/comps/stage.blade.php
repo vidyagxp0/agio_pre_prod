@@ -34,6 +34,7 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>  
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Found</button>  
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Assignable Cause Not Found</button>
+               <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
             @elseif($data->stage == 4 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>  
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Correction Completed</button> 
@@ -43,7 +44,6 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Proposed Hypothesis Experiment</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
             @elseif($data->stage == 6 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>   -->
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Obvious Error Found</button> 
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">No Assignable Cause Found</button> 
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button> 
@@ -56,7 +56,6 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Menufacturing Investigation</button> 
             @elseif($data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>  
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">To Under Hypothesis Experiment State</button> 
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Found (Menufacturing Defect)</button> 
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">No Assignable Cause Found (No Menufacturing Defect)</button> 
             @elseif($data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -73,7 +72,7 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Batch Disposition</button>  
             @elseif($data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>  
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II Manufacturing Investigation</button> 
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase III Manufacturing Investigation</button> 
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button> 
                 
             @elseif($data->stage == 14 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -243,6 +242,33 @@
                 <div class="modal-footer">
                     <button type="submit">Submit</button>
                     <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- child-modal-rootcause-analysis -->
+<div class="modal fade" id="child-modal-rootcause-analysis">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <form action="{{ route('oos.child', $data->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="group-input">
+                        <label style="display: flex; align-items: baseline;" for="major">
+                        <input style="width: 10px;" type="radio" name="child_type" value="Rootcause_Analysis">   Rootcause Analysis
+                        </label>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                    <button type="submit">Continue</button>
                 </div>
             </form>
         </div>

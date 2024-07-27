@@ -323,15 +323,11 @@
                     <table>
                         <div class="heading">
 
-                            <div class="heading-new">
-                                Audit Trail
-                            </div>
+                            <div class="heading-new"> Audit Trail </div>
 
                             <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
-                            <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
-                                {{ $document->short_description }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;"> Originator :{{ Auth::user()->name }}</div>
+                            <div style="margin-bottom: 5px; font-weight: bold;">Short Description : {{ $document->short_description }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
 
                         </div>

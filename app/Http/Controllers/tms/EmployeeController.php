@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\EmployeeAudit;
 use App\Models\EmployeeGrid;
+use App\Models\RecordNumber;
 use App\Models\RoleGroup;
+use App\Models\Training;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,7 +26,6 @@ class EmployeeController extends Controller
             'body' => [],
         ];
 
-
         // return $request->all();
         // try {
         $employee = new Employee();
@@ -38,6 +39,8 @@ class EmployeeController extends Controller
         $employee->employee_name = $request->employee_name;
         $employee->gender = $request->gender;
         $employee->department = $request->department;
+        $employee->qualification = $request->qualification;
+        $employee->experience = $request->experience;
         $employee->job_title = $request->job_title;
 
         if ($request->hasFile('attached_cv')) {
@@ -80,6 +83,7 @@ class EmployeeController extends Controller
         $employee->hod = is_array($request->hod) ? implode(',', $request->hod) : '';
         $employee->designee = is_array($request->designee) ? implode(',', $request->designee) : '';
         $employee->comment = $request->comment;
+        $employee->site_division = $request->site_division;
 
         if ($request->hasFile('file_attachment')) {
             $file = $request->file('file_attachment');
@@ -132,30 +136,30 @@ class EmployeeController extends Controller
 
         // }
 
-        if (!empty($request->short_description)) {
-            $validation2 = new EmployeeAudit();
-            $validation2->emp_id = $employee->id;
-            $validation2->previous = "Null";
-            $validation2->current = $request->short_description;
-            $validation2->activity_type = 'Short Description';
-            $validation2->user_id = Auth::user()->id;
-            $validation2->user_name = Auth::user()->name;
-            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // if (!empty($request->short_description)) {
+        //     $validation2 = new EmployeeAudit();
+        //     $validation2->emp_id = $employee->id;
+        //     $validation2->previous = "Null";
+        //     $validation2->current = $request->short_description;
+        //     $validation2->activity_type = 'Short Description';
+        //     $validation2->user_id = Auth::user()->id;
+        //     $validation2->user_name = Auth::user()->name;
+        //     $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 
-            $validation2->change_to =   "Opened";
-            $validation2->change_from = "Initiation";
-            $validation2->action_name = 'Create';
-            // $validation2->comment = "Not Applicable";
-            $validation2->save();
-        }
+        //     $validation2->change_to =   "Opened";
+        //     $validation2->change_from = "Initiation";
+        //     $validation2->action_name = 'Create';
+        //     // $validation2->comment = "Not Applicable";
+        //     $validation2->save();
+        // }
 
 
-        if (!empty($request->assign_to)) {
+        if (!empty($request->assigned_to)) {
             $validation2 = new EmployeeAudit();
             $validation2->emp_id = $employee->id;
             $validation2->activity_type = 'Assign To';
             $validation2->previous = "Null";
-            $validation2->current = $request->assign_to;
+            $validation2->current = $request->assigned_to;
             $validation2->comment = "NA";
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -202,12 +206,12 @@ class EmployeeController extends Controller
             $validation2->save();
         }
 
-        if (!empty($request->emp_id)) {
+        if (!empty($request->employee_id)) {
             $validation2 = new EmployeeAudit();
             $validation2->emp_id = $employee->id;
             $validation2->activity_type = 'Employee ID';
             $validation2->previous = "Null";
-            $validation2->current = $request->emp_id;
+            $validation2->current = $request->employee_id;
             $validation2->comment = "NA";
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -562,6 +566,24 @@ class EmployeeController extends Controller
             $validation2->save();
         }
 
+        if (!empty($request->site_division)) {
+            $validation2 = new EmployeeAudit();
+            $validation2->emp_id = $employee->id;
+            $validation2->activity_type = 'Site Division/Project';
+            $validation2->previous = "Null";
+            $validation2->current = $request->site_division;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+
+            $validation2->save();
+        }
+
         if (!empty($request->file_attachment)) {
             $validation2 = new EmployeeAudit();
             $validation2->emp_id = $employee->id;
@@ -635,7 +657,6 @@ class EmployeeController extends Controller
         $lastDocument = Employee::findOrFail($id);
 
         $employee->division_id = $request->division_id;
-        // dd($request->division_id);
         $employee->assigned_to = $request->assigned_to;
         $employee->start_date = $request->start_date;
         $employee->joining_date = $request->joining_date;
@@ -643,6 +664,8 @@ class EmployeeController extends Controller
         $employee->employee_name = $request->employee_name;
         $employee->gender = $request->gender;
         $employee->department = $request->department;
+        $employee->qualification = $request->qualification;
+        $employee->experience = $request->experience;
         $employee->job_title = $request->job_title;
 
         if ($request->hasFile('attached_cv')) {
@@ -685,6 +708,7 @@ class EmployeeController extends Controller
         $employee->hod = is_array($request->hod) ? implode(',', $request->hod) : '';
         $employee->designee = is_array($request->designee) ? implode(',', $request->designee) : '';
         $employee->comment = $request->comment;
+        $employee->site_division = $request->site_division;
 
         if ($request->hasFile('file_attachment')) {
             $file = $request->file('file_attachment');
@@ -751,7 +775,7 @@ class EmployeeController extends Controller
             $validation2->user_name = Auth::user()->name;
             $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 
-            $validation2->change_to =   "Not Applicable";
+            $validation2->change_to = "Not Applicable";
             $validation2->change_from = $lastDocument->status;
             if (is_null($lastDocument->short_description) || $lastDocument->short_description === '') {
                 $validation2->action_name = 'New';
@@ -1212,6 +1236,7 @@ class EmployeeController extends Controller
             $validation2->save();
         }
 
+
         if ($lastDocument->designee != $request->designee) {
             $validation2 = new EmployeeAudit();
             $validation2->emp_id = $employee->id;
@@ -1234,6 +1259,7 @@ class EmployeeController extends Controller
             $validation2->save();
         }
 
+
         if ($lastDocument->comment != $request->comment) {
             $validation2 = new EmployeeAudit();
             $validation2->emp_id = $employee->id;
@@ -1248,6 +1274,29 @@ class EmployeeController extends Controller
             $validation2->change_to =   "Not Applicable";
             $validation2->change_from = $lastDocument->status;
             if (is_null($lastDocument->comment) || $lastDocument->comment === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+
+            $validation2->save();
+        }
+
+
+        if ($lastDocument->site_division != $request->site_division) {
+            $validation2 = new EmployeeAudit();
+            $validation2->emp_id = $employee->id;
+            $validation2->activity_type = 'Site Division/Project';
+            $validation2->previous = $lastDocument->site_division;
+            $validation2->current = $request->site_division;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastDocument->status;
+            if (is_null($lastDocument->site_division) || $lastDocument->site_division === '') {
                 $validation2->action_name = 'New';
             } else {
                 $validation2->action_name = 'Update';
@@ -1333,7 +1382,6 @@ class EmployeeController extends Controller
     {
 
         $employee = Employee::find($id);
-        // dd($employee);
         $employee_grid_data = EmployeeGrid::where(['employee_id' => $id, 'identifier' => 'jobResponsibilites'])->first();
         $external_grid_data = EmployeeGrid::where(['employee_id' => $id, 'identifier' => 'external_training'])->first();
 
@@ -1354,6 +1402,19 @@ class EmployeeController extends Controller
                     $employee->activated_by = Auth::user()->name;
                     $employee->activated_on = Carbon::now()->format('d-m-Y');
                     $employee->activated_comment = $request->comment;
+
+                    $history = new EmployeeAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $employee->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "Active";
+                    $history->change_from = $lastEmployee->status;
+                    $history->action = 'Retire';
+                    $history->stage = 'Submited';
                     $employee->update();
                     return back();
                 }
@@ -1364,6 +1425,20 @@ class EmployeeController extends Controller
                     $employee->retired_by = Auth::user()->name;
                     $employee->retired_on = Carbon::now()->format('d-m-Y');
                     $employee->retired_comment = $request->comment;
+
+                    $history = new EmployeeAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $employee->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "Closed-Retired";
+                    $history->change_from = $lastEmployee->status;
+                    $history->action = 'Retire';
+                    $history->stage = 'Submited';
+
                     $employee->update();
                     return back();
                 }
@@ -1385,5 +1460,20 @@ class EmployeeController extends Controller
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
 
         return view('frontend.TMS.Employee.employee_audit', compact('audit', 'document', 'employee', 'today'));
+    }
+
+    public function Employee_Child(Request $request, $id)
+    {
+        $employee = Employee::find($id);
+
+
+        if ($request->child_type == 'correspondence') {
+
+            return view('frontend.forms.classroom-training', compact('employee'));
+        } elseif ($request->child_type == 'variation') {
+            return view('frontend.TMS.induction_training.induction_training');
+        } else {
+            return view('frontend.forms.classroom-training');
+        }
     }
 }

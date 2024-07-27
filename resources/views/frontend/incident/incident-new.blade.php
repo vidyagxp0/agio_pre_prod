@@ -611,7 +611,7 @@
                         '][responsibility]"></td>' +
                         '<td><input type="text" name="investigationTeam[' + investigationTeamIndex +
                         '][remarks]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     '</tr>';
 
@@ -715,10 +715,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="initiation_date"
-                                            id="initiation_date"
+                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="intiation_date"
+                                            id="intiation_date"
                                             style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date_hidden">
                                     </div>
                                 </div>
 
@@ -856,7 +856,7 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="short_description_required">Equipment Name</label>
                                         <select name="equipment_name" id="equipment_name" required>
@@ -899,10 +899,7 @@
                                     @error('inc_facility_name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
-
-
-
+                                </div> --}}
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1233,22 +1230,11 @@
                                             </thead>
                                             <tbody>
                                                 <td><input disabled type="text" name="serial[]" value="1"></td>
-                                                {{-- <td> <select name="facility_name[]" id="facility_name"
-                                                        class="facility-name">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="Facility">Facility</option>
-                                                        <option value="Equipment"> Equipment</option>
-                                                        <option value="Instrument">Instrument</option>
-                                                    </select> </td> --}}
-                                                <td><input type="text" name="facility_name[]" class="facilityName">
-                                                </td>
-
+                                                <td><input type="text" name="facility_name[]" class="facilityName"></td>
                                                 <td><input type="text" name="IDnumber[]" class="id-number"></td>
                                                 <td><input type="text" name="Remarks[]" class="remarks"></td>
                                                 <td><input type="text" name="Action[]" class="action" readonly></td>
-
                                             </tbody>
-
                                         </table>
                                     </div>
                                 </div>
@@ -1323,9 +1309,7 @@
                                                     <th style="width: 12%">Document Number</th>
                                                     <th style="width: 16%"> Reference Document Name</th>
                                                     <th style="width: 16%"> Remarks</th>
-
                                                     <th style="width: 8%"> Action</th>
-
 
                                                 </tr>
                                             </thead>
@@ -1423,9 +1407,6 @@
                                                         <th style="width: 16%"> Stage</th>
                                                         <th style="width: 16%">Batch No</th>
                                                         <th style="width: 8%">Action</th>
-
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1638,8 +1619,6 @@
                     <div id="CCForm8" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-
-
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="HOD Remarks">HOD Remarks</label>
@@ -1663,8 +1642,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
@@ -1696,8 +1673,6 @@
                             <div class="row">
                                 <script>
                                     handleInvestigationRequiredChange();
-
-
                                     function handleInvestigationRequiredChange() {
                                         var investigationSelect = document.getElementById("Investigation_required");
                                         var investigationButton = document.getElementById("Investigation_button");
@@ -1873,7 +1848,6 @@
                                     class="saveButton">Save</button>
 
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-
 
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="nextButton" onclick="nextStep()">Next</button>
@@ -2646,7 +2620,6 @@
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
-
                                         </select>
 
                                     </div>
@@ -3335,7 +3308,6 @@
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
 
-
                                         </select>
 
                                     </div>
@@ -3469,8 +3441,6 @@
                                                 Administration</option>
                                             <option value="Information Technology">Information Technology</option>
                                             <option value="Project management">Project management</option>
-
-
 
                                         </select>
 
@@ -3795,7 +3765,6 @@
                                             <option value="na">NA</option>
 
                                         </select>
-
                                     </div>
                                 </div>
                                 @php
@@ -4083,6 +4052,15 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Root Cause">Impact Assesment</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="tiny" name="impact_ass" id="summernote-10">    </textarea>
+                                    </div>
+                                </div>
+
 
                                 <div class="col-lg-12">
                                     <div class="group-input" id="documentsRowna">
@@ -4126,7 +4104,7 @@
                                                             name="investigationTeam[0][responsibility]"></td>
                                                     <td><input type="text" class="Document_Remarks"
                                                             name="investigationTeam[0][remarks]"></td>
-                                                    <td><input type="text" class="Action" name="Action[]"></td>
+                                                    <td><input type="button" class="Action" name="Action[]"></td>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -4145,12 +4123,9 @@
                                             </option>
                                             <option value="Is/Is Not Analysis">Is/Is Not Analysis</option>
                                             <option value="Brainstorming">Brainstorming</option>
-
-
                                         </select>
                                     </div>
                                 </div>
-
 
                                 <div class="col-12 sub-head"></div>
                                 <div class="col-12">
@@ -4657,7 +4632,6 @@
                                                         <option value="">Procedural</option>
                                                         <option value="">Behavioral</option>
                                                         <option value="">Skill</option>
-
                                                         <option value="">Inattention to task</option>
                                                         <option value="">Lack of Process</option>
                                                         <option value="">Methods</option>
@@ -4671,17 +4645,10 @@
                                                     <input type="text" class="ifOthers"
                                                         name="rootCauseData[0][ifOthers]">
                                                 </td>
-                                                <td>
-                                                    <input type="text" class="Document_Remarks"
-                                                        name="rootCauseData[0][probability]">
+                                                <td> <input type="text" class="Document_Remarks"  name="rootCauseData[0][probability]"> </td>
+                                                <td> <input type="text" class="Document_Remarks"  name="rootCauseData[0][remarks]">
                                                 </td>
-                                                <td>
-                                                    <input type="text" class="Document_Remarks"
-                                                        name="rootCauseData[0][remarks]">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="Removebtn" name="Action[]">
-                                                </td>
+                                                <td> <input type="text" class="Removebtn" name="Action[]">  </td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -4984,18 +4951,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial[]" value="1">
-                                                    </td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Risk_Assessment[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Review_Schedule[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Actual_Reviewed[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Recorded_By[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Remarks[]"></td>
+                                                    <td><input disabled type="text" name="serial[]" value="1">  </td>
+                                                    <td><input type="text" class="Document_Remarks" name="Risk_Assessment[]"></td>
+                                                    <td><input type="text" class="Document_Remarks" name="Review_Schedule[]"></td>
+                                                    <td><input type="text" class="Document_Remarks" name="Actual_Reviewed[]"></td>
+                                                    <td><input type="text" class="Document_Remarks" name="Recorded_By[]"></td>
+                                                    <td><input type="text" class="Document_Remarks" name="Remarks[]"></td>
                                                     <td><input type="text" class="Removebtn" name="Action[]"></td>
                                                 </tbody>
                                             </table>
