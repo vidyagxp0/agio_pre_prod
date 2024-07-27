@@ -31,6 +31,8 @@ return new class extends Migration
             // $table->string('due_date')->nullable();
             $table->string('type')->nullable();
             $table->string('year')->nullable();
+            $table->string('Months')->nullable();
+            $table->longText('through_req')->nullable();
             $table->string('Quarter')->nullable();
             $table->text('description')->nullable();
 

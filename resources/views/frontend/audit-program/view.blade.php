@@ -53,164 +53,11 @@
     </script>
 
 
-
-    {{-- <script>
-        $(document).ready(function() {
-            $('#audit_program').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    console.log(users);
-                    var html =
-                        '<tr>' +
-                        '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
-                        '<td><select name="Auditees[]">' +
-                        '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-                        // '<td><input type="date" name="start_date[]"></td>' +
-                        '<td><div class="group-input new-date-data-field mb-0"> <
-                    div class = "input-date " > < div class = "calenderauditee" >
-                    <
-                    input type = "text"
-                    id = "start_date' + serialNumber +'"
-                    readonly placeholder = "DD-MMM-YYYY" / >
-                        <
-                        input type = "date"
-                    class = "hide-input"
-                    name = "start_date[]"
-                    min = "{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id =
-                        "start_date' + serialNumber +'_checkdate"
-                    oninput =
-                        "handleDateInput(this, `start_date' + serialNumber +'`);checkDate(`start_date' + serialNumber +'_checkdate`,`end_date' + serialNumber +'_checkdate`)" /
-                        >
-                        <
-                        /div></div > < /div></td > ' +
-
-                    // '<td><input type="date" name="end_date[]"></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"> <
-                    div class = "input-date " > < div class = "calenderauditee" >
-                    <
-                    input type = "text"
-                    id = "end_date' + serialNumber +'"
-                    readonly placeholder = "DD-MMM-YYYY" / >
-                        <
-                        input type = "date"
-                    name = "end_date[]"
-                    min = "{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                    id = "end_date'+ serialNumber +'_checkdate"
-                    class = "hide-input"
-                    oninput =
-                        "handleDateInput(this, `end_date' + serialNumber +'`);checkDate(`start_date' + serialNumber +'_checkdate`,`end_date' + serialNumber +'_checkdate`)" /
-                        >
-                        <
-                        /div></div > < /div></td > ' 
-
-                    '<td><select name="lead_investigator[]">' +
-                    '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-                    html += '</select></td>' +
-                        '<td><input type="text" name="comment[]"></td>' +
-                        '</tr>';
-
-                    return html;
-                }
-
-                var tableBody = $('#audit_program_body tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
-        });
-    </script> --}}
-    {{-- <script>
-        $(document).ready(function() {
-            $('#audit_program').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    console.log(users);
-                    var html =
-                        '<tr>' +
-                        '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
-                        '<td><select name="Auditees[]">' +
-                        '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-                        '<td><div class="group-input new-date-data-field mb-0">' +
-                        '<div class="input-date">' +
-                        '<div class="calenderauditee">' +
-                        '<input type="text" id="start_date' + serialNumber +
-                        '" readonly placeholder="DD-MMM-YYYY" />' +
-                        '<input type="date" class="hide-input" name="start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id="start_date' +
-                        serialNumber + '_checkdate" oninput="handleDateInput(this, \'start_date' +
-                        serialNumber + '\');checkDate(\'start_date' + serialNumber +
-                        '_checkdate\', \'end_date' + serialNumber + '_checkdate\')" />' +
-                        '</div></div></div></td>' +
-                        '<td><div class="group-input new-date-data-field mb-0">' +
-                        '<div class="input-date">' +
-                        '<div class="calenderauditee">' +
-                        '<input type="text" id="end_date' + serialNumber +
-                        '" readonly placeholder="DD-MMM-YYYY" />' +
-                        '<input type="date" name="end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date' +
-                        serialNumber +
-                        '_checkdate" class="hide-input" oninput="handleDateInput(this, \'end_date' +
-                        serialNumber + '\');checkDate(\'start_date' + serialNumber +
-                        '_checkdate\', \'end_date' + serialNumber + '_checkdate\')" />' +
-                        '</div></div></div></td>' +
-                        '<td><select name="lead_investigator[]">' +
-                        '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-                    html += '</select></td>' +
-                        '<td><input type="text" name="comment[]"></td>' +
-                        '<td><button type="text" class="removeRowBtncd">remove</button></td>' +
-                        '</tr>';
-
-
-
-                    return html;
-                }
-
-                var tableBody = $('#audit_program_body tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
-
-            $(document).on('input', '.hide-input', function() {
-                var dateInputId = $(this).attr('id');
-                var displayInputId = dateInputId.replace('_checkdate', '');
-                var selectedDate = $(this).val();
-                $('#' + displayInputId).val(formatDate(selectedDate));
-            });
-
-            function formatDate(dateString) {
-                var date = new Date(dateString);
-                var day = ('0' + date.getDate()).slice(-2);
-                var month = date.toLocaleString('default', {
-                    month: 'short'
-                });
-                var year = date.getFullYear();
-                return `${day}-${month}-${year}`;
-            }
-        });
-    </script> --}}
     <script>
         $(document).ready(function() {
             $('#audit_program').click(function(e) {
+                e.preventDefault();
+
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
@@ -218,52 +65,96 @@
                         '"></td>' +
                         '<td><div class="group-input"><select name="audit_program[' + serialNumber +
                         '][Auditees]"><option value="">Select a value</option>@foreach ($users as $value)<option value="{{ $value->name }}">{{ $value->name }}</option>@endforeach</select></div></td>' +
-                        '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input class="click_date" id="due_date_display_' +
-                        serialNumber + '" type="text" name="audit_program[' + serialNumber +
-                        '][Due_Date_display]" placeholder="DD-MMM-YYYY" readonly /><input type="date" name="audit_program[' +
-                        serialNumber +
-                        '][Due_Date]" id="due_date_input_' +
-                        serialNumber +
-                        '" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'due_date_display_' +
-                        serialNumber + '\')"></div></div></div></td>' +
-
-                        '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input class="click_date" id="date_closed_display_' +
-                        serialNumber + '" type="text" name="audit_program[' + serialNumber +
-                        '][Date_Closed_display]" placeholder="DD-MMM-YYYY" readonly /><input type="date" name="audit_program[' +
-                        serialNumber +
-                        '][End_date]" id="date_closed_input_' +
-                        serialNumber +
-                        '" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'date_closed_display_' +
-                        serialNumber + '\')"></div></div></div></td>' +
-
+                        '<td><div class="new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input class="click_date" id="Due_Date_' + serialNumber +
+                        '" type="text" name="audit_program[' + serialNumber +
+                        '][Due_Date]" placeholder="DD-MMM-YYYY" readonly />' +
+                        '<input type="date" name="audit_program[' + serialNumber +
+                        '][Due_Date]" id="Due_Date_' + serialNumber +
+                        '_input"min="' + new Date().toISOString().split('T')[0] +
+                        '"  class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'Due_Date_' +
+                        serialNumber + '\'); updateEndDateMin(\'Due_Date_' + serialNumber +
+                        '_input\', \'End_date_' + serialNumber + '_input\')" />' +
+                        '</div>' +
+                        '</div>' +
+                        '</div></td>' +
+                        '<td><div class="new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input class="click_date" id="End_date_' + serialNumber +
+                        '" type="text" name="audit_program[' + serialNumber +
+                        '][End_date]" placeholder="DD-MMM-YYYY" readonly />' +
+                        '<input type="date" name="audit_program[' + serialNumber +
+                        '][End_date]" id="End_date_' + serialNumber +
+                        '_input" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'End_date_' +
+                        serialNumber + '\')" />' +
+                        '</div>' +
+                        '</div>' +
+                        '</div></td>' +
                         '<td><div class="group-input"><select name="audit_program[' + serialNumber +
                         '][Lead_Investigator]"><option value="">Select a value</option>@foreach ($users as $value)<option value="{{ $value->name }}">{{ $value->name }}</option>@endforeach</select></div></td>' +
-
-
-                        '<td><input type="text" name="audit_program[' + serialNumber +
-                        '][Comment]"></td>' +
-                        '<td><button type="text" class="removeBtnaid">remove</button></td>' +
+                        '<td><input type="text" name="audit_program[' + serialNumber + '][Comment]"></td>' +
+                        '<td><button type="button" class="removeBtnaid">remove</button></td>' +
                         '</tr>';
-                    '</tr>';
+
                     return html;
                 }
+
                 var tableBody = $('#audit_program-field-instruction-modal tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
+
+                // Reattach date picker event listeners for newly added rows
+                reattachDatePickers();
+            });
+
+            // Attach date picker event listeners for the initial rows
+            reattachDatePickers();
+
+            function reattachDatePickers() {
+                $('.click_date').off('click').on('click', function() {
+                    $(this).siblings('.show_date').click();
+                });
+            }
+
+            window.handleDateInput = function(input, displayId) {
+                var dateValue = input.value;
+                var displayInput = document.getElementById(displayId);
+                if (displayInput) {
+                    displayInput.value = new Date(dateValue).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    }).replace(/ /g, '-');
+                }
+            };
+
+            window.updateEndDateMin = function(startDateId, endDateId) {
+                var startDateInput = document.getElementById(startDateId);
+                var endDateInput = document.getElementById(endDateId);
+
+                if (startDateInput && endDateInput) {
+                    var startDate = new Date(startDateInput.value);
+                    if (startDate) {
+                        endDateInput.min = startDate.toISOString().split('T')[0];
+                    }
+                }
+            };
+
+            // Initialize the date constraints for existing rows
+            $('input[id^="Due_Date_"]').each(function() {
+                var startDateId = $(this).attr('id') + '_input';
+                var endDateId = $(this).attr('id').replace('Due_Date_', 'End_date_') + '_input';
+                updateEndDateMin(startDateId, endDateId);
             });
         });
-
-        function handleDateInput(dateInput, displayId) {
-            var date = new Date(dateInput.value);
-            var formattedDate = date.toLocaleDateString('en-GB', {
-                day: '2-digit',
-                month: 'short',
-                year: 'numeric'
-            }).replace(/ /g, '-');
-            document.getElementById(displayId).value = formattedDate;
-        }
     </script>
+
+
+
     <script>
         $(document).on('click', '.removeBtnaid', function() {
             $(this).closest('tr').remove();
@@ -396,24 +287,6 @@
                     '<tr>' +
                     '<td><input disabled type="text" name="Self_Inspection_circular[' + serialNumber +
                     '][serial_number]" value="' + serialNumber + '"></td>' +
-                    // '<td>' +
-                    // '<select name="Self_Inspection_circular[' + serialNumber + '][departments]">' +
-                    // '<option value="">Select a department</option>' +
-                    // '<option value="Production">Production</option>' +
-                    // '<option value="Warehouse">Warehouse</option>' +
-                    // '<option value="Quality Control">Quality Control</option>' +
-                    // '<option value="Engineering">Engineering</option>' +
-                    // '<option value="Information Technology">Information Technology</option>' +
-                    // '<option value="Project Management">Project Management</option>' +
-                    // '<option value="Environment Health & Safety">Environment Health & Safety</option>' +
-                    // '<option value="Human Resource & Administration">Human Resource & Administration</option>' +
-                    // '<option value="Quality Assurance">Quality Assurance</option>' +
-                    // '<option value="Analytical Development Laboratory">Analytical Development Laboratory</option>' +
-                    // '<option value="Process Development Laboratory / Kilo lab">Process Development Laboratory / Kilo lab</option>' +
-                    // '<option value="Technology transfer design">Technology transfer design</option>' +
-                    // '<option value="Any other_____">Any other_____</option>' +
-                    // '</select>' +
-                    // '</td>' +
                     '<td>' +
                     '<select name="Self_Inspection_circular[' + serialNumber + '][departments]" id="departments_' +
                     serialNumber + '" ' +
@@ -430,13 +303,12 @@
                     '<div class="new-date-data-field">' +
                     '<div class="group-input input-date">' +
                     '<div class="calenderauditee">' +
-                    '<input class="click_date" id="date_data' + serialNumber +
+                    '<input class="click_date" id="date_display_' + serialNumber +
                     '" type="text" name="Self_Inspection_circular[' + serialNumber +
                     '][info_mfg_date]" placeholder="DD-MMM-YYYY" readonly />' +
                     '<input type="date" name="Self_Inspection_circular[' + serialNumber +
-                    '][info_mfg_date]" min="" id="date_data' +
-                    serialNumber +
-                    '" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'date_0_mfg_date' +
+                    '][info_mfg_date]" id="date_input_' + serialNumber +
+                    '" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'date_display_' +
                     serialNumber + '\')">' +
                     '</div>' +
                     '</div>' +
@@ -465,10 +337,13 @@
                 VirtualSelect.init({
                     ele: '[id^=Months], #team_members, #training-require, #impacted_objects'
                 });
+
+                // Reattach date picker event listeners for newly added rows
+                reattachDatePickers();
             });
 
             // Event delegation for remove button
-            $('#Self_Inspection_circular-field-instruction-modal').on('click', '.removeBtns', function() {
+            $('#Self_Inspection_circular-field-instruction-modal').on('click', '.removeBtn', function() {
                 $(this).closest('tr').remove();
             });
 
@@ -483,6 +358,15 @@
                 var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                 $('#' + displayInputId).val(formattedDate);
             };
+
+            // Attach date picker event listeners for the initial row
+            reattachDatePickers();
+
+            function reattachDatePickers() {
+                $('.click_date').off('click').on('click', function() {
+                    $(this).siblings('.show_date').click();
+                });
+            }
         });
     </script>
 
@@ -787,6 +671,10 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="due_date">Due Date</label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention
+                                                        revision
+                                                        reason in "Due Date Extension Justification" data field.</small>
+                                                </div>
                                                 <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
                                                     value="{{ \Carbon\Carbon::parse($due_date)->format('d-M-Y') }}" />
                                                 <input type="hidden" name="due_date" id="due_date_input"
@@ -799,6 +687,7 @@
                                                         class="text-danger">*</span></label>
                                                 <span id="rchars">255</span> characters remaining
                                                 <input type="text" name="short_description" id="short_description"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     value="{{ $data->short_description }}" maxlength="255" required>
                                             </div>
                                         </div>
@@ -809,7 +698,7 @@
                                                 <label for="Short Description">Initiator Department <span
                                                         class="text-danger"></span></label>
                                                 <select name="Initiator_Group" id="Initiator_Group"
-                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                     <option selected disabled value="">---select---</option>
                                                     @foreach (Helpers::getInitiatorGroups() as $code => $Initiator_Group)
                                                         <option value="{{ $Initiator_Group }}"
@@ -849,14 +738,90 @@
                                                 }
                                             });
                                         </script>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="severity-level">Severity Level</label>
+                                                <span class="text-primary">Severity levels in a QMS record gauge issue
+                                                    seriousness, guiding priority for corrective actions. Ranging from low
+                                                    to high, they ensure quality standards and mitigate critical
+                                                    risks.</span>
+                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                    name="severity1_level">
+                                                    <option value="0">-- Select --</option>
+                                                    <option @if ($data->severity1_level == 'minor') selected @endif
+                                                        value="minor">Minor</option>
+                                                    <option @if ($data->severity1_level == 'major') selected @endif
+                                                        value="major">Major</option>
+                                                    <option @if ($data->severity1_level == 'critical') selected @endif
+                                                        value="critical">Critical</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator Group">Initiated Through</label>
+                                                <div><small class="text-primary">Please select related information</small>
+                                                </div>
+                                                <select name="initiated_through"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                    onchange="toggleInitiatedThroughField(this)">
+                                                    <option value="">Enter Your Selection Here</option>
+                                                    <option @if ($data->initiated_through == 'recall') selected @endif
+                                                        value="recall">Recall</option>
+                                                    <option @if ($data->initiated_through == 'return') selected @endif
+                                                        value="return">Return</option>
+                                                    <option @if ($data->initiated_through == 'deviation') selected @endif
+                                                        value="deviation">Deviation</option>
+                                                    <option @if ($data->initiated_through == 'complaint') selected @endif
+                                                        value="complaint">Complaint</option>
+                                                    <option @if ($data->initiated_through == 'regulatory') selected @endif
+                                                        value="regulatory">Regulatory</option>
+                                                    <option @if ($data->initiated_through == 'lab-incident') selected @endif
+                                                        value="lab-incident">Lab Incident</option>
+                                                    <option @if ($data->initiated_through == 'improvement') selected @endif
+                                                        value="improvement">Improvement</option>
+                                                    <option @if ($data->initiated_through == 'others') selected @endif
+                                                        value="others">Others</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6" id="initiated_through_req_container"
+                                            style="display: none;">
+                                            <div class="group-input">
+                                                <label for="initiated_through">Others<span
+                                                        class="text-danger">*</span></label>
+                                                <textarea name="initiated_through_req" id="initiated_through_req_textarea"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->initiated_through_req }}</textarea>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            function toggleInitiatedThroughField(selectElement) {
+                                                var initiatedThroughReqContainer = document.getElementById('initiated_through_req_container');
+                                                var initiatedThroughReqTextarea = document.getElementById('initiated_through_req_textarea');
+                                                if (selectElement.value === 'others') {
+                                                    initiatedThroughReqContainer.style.display = 'block';
+                                                    initiatedThroughReqTextarea.setAttribute('required', 'required');
+                                                } else {
+                                                    initiatedThroughReqContainer.style.display = 'none';
+                                                    initiatedThroughReqTextarea.removeAttribute('required');
+                                                }
+                                            }
+
+                                            // Call the function on page load to set the initial state
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                var initiatedThroughSelect = document.querySelector('select[name="initiated_through"]');
+                                                toggleInitiatedThroughField(initiatedThroughSelect);
+                                            });
+                                        </script>
 
 
-
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Type">Type</label>
                                                 <select name="type"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                    onchange="toggleOtherField(this)">
                                                     <option value="">-- Select --</option>
                                                     <option value="other"
                                                         @if ($data->type == 'other') selected @endif>other
@@ -873,7 +838,38 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6" id="through_req_container" style="display: none;">
+                                            <div class="group-input">
+                                                <label for="through_req">Type(Others)<span
+                                                        class="text-danger">*</span></label>
+                                                <textarea name="through_req" id="through_req_textarea"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->through_req }}</textarea>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            function toggleOtherField(selectElement) {
+                                                var throughReqContainer = document.getElementById('through_req_container');
+                                                var throughReqTextarea = document.getElementById('through_req_textarea');
+                                                if (selectElement.value === 'other') {
+                                                    throughReqContainer.style.display = 'block';
+                                                    throughReqTextarea.setAttribute('required', 'required');
+                                                } else {
+                                                    throughReqContainer.style.display = 'none';
+                                                    throughReqTextarea.removeAttribute('required');
+                                                }
+                                            }
+
+                                            // Call the function on page load to set the initial state
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                var typeSelect = document.querySelector('select[name="type"]');
+                                                toggleOtherField(typeSelect);
+                                            });
+                                        </script>
+
+
+
+                                        <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Year">Year</label>
                                                 <select name="year"
@@ -916,7 +912,44 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Months">Months</label>
+                                                <select name="Months"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                    <option value="">-- Select --</option>
+                                                    <option value="January"
+                                                        @if ($data->Months == 'January') selected @endif>January</option>
+                                                    <option value="February"
+                                                        @if ($data->Months == 'February') selected @endif>February
+                                                    </option>
+                                                    <option value="March"
+                                                        @if ($data->Months == 'March') selected @endif>March</option>
+                                                    <option value="April"
+                                                        @if ($data->Months == 'April') selected @endif>April</option>
+                                                    <option value="May"
+                                                        @if ($data->Months == 'May') selected @endif>May</option>
+                                                    <option value="June"
+                                                        @if ($data->Months == 'June') selected @endif>June</option>
+                                                    <option value="July"
+                                                        @if ($data->Months == 'July') selected @endif>July</option>
+                                                    <option value="August"
+                                                        @if ($data->Months == 'August') selected @endif>August</option>
+                                                    <option value="September"
+                                                        @if ($data->Months == 'September') selected @endif>September
+                                                    </option>
+                                                    <option value="October"
+                                                        @if ($data->Months == 'October') selected @endif>October</option>
+                                                    <option value="November"
+                                                        @if ($data->Months == 'November') selected @endif>November
+                                                    </option>
+                                                    <option value="December"
+                                                        @if ($data->Months == 'December') selected @endif>December
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Quarter">Quarter</label>
                                                 <select name="Quarter"
@@ -1068,8 +1101,8 @@
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
                                                 Audit Program
-                                                <button type="button" name="audit-agenda-grid"
-                                                    id="audit_program">+</button>
+                                                <button type="button" name="audit-agenda-grid" id="audit_program"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 <span class="text-primary" data-bs-toggle="modal"
                                                     data-bs-target="#observation-field-instruction-modal"
                                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1084,8 +1117,8 @@
                                                             <th style="width: 5%">Row#</th>
                                                             <th style="width: 12%">Auditees</th>
                                                             <th style="width: 15%">Date Start</th>
-                                                            <th style="width: 15%"> Date End</th>
-                                                            <th style="width: 15%"> Lead Investigator</th>
+                                                            <th style="width: 15%">Date End</th>
+                                                            <th style="width: 15%">Lead Investigator</th>
                                                             <th style="width: 15%">Comment</th>
                                                             <th style="width: 5%">Action</th>
                                                         </tr>
@@ -1096,13 +1129,16 @@
                                                                 <tr>
                                                                     <td><input disabled type="text"
                                                                             name="audit_program[{{ $loop->index }}][serial_number]"
+                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                             value="{{ $loop->index + 1 }}"></td>
                                                                     <td>
                                                                         <div class="col-lg-6">
                                                                             <div class="group-input">
                                                                                 <select
-                                                                                    name="audit_program[{{ $loop->index }}][Auditees]">
-                                                                                    <option value="">Select a value
+                                                                                    name="audit_program[{{ $loop->index }}][Auditees]"
+                                                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                                    <option value="">
+                                                                                        Select a value
                                                                                     </option>
                                                                                     @if ($users->isNotEmpty())
                                                                                         @foreach ($users as $value)
@@ -1122,20 +1158,24 @@
                                                                             <div class="group-input input-date">
                                                                                 <div class="calenderauditee">
                                                                                     <input class="click_date"
-                                                                                        id="due_date_display_{{ $loop->index }}"
+                                                                                        id="Due_Date_{{ $loop->index }}"
+                                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                                         type="text"
-                                                                                        name="audit_program[{{ $loop->index }}][Due_Date_display]"
+                                                                                        name="audit_program[{{ $loop->index }}][Due_Date]"
                                                                                         value="{{ isset($grid['Due_Date']) ? \Carbon\Carbon::parse($grid['Due_Date'])->format('d-M-Y') : '' }}"
                                                                                         placeholder="DD-MMM-YYYY"
                                                                                         readonly />
                                                                                     <input type="date"
                                                                                         name="audit_program[{{ $loop->index }}][Due_Date]"
-                                                                                        min=""
-                                                                                        id="due_date_input_{{ $loop->index }}"
+                                                                                        id="Due_Date_{{ $loop->index }}_input"
+                                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                                         value="{{ isset($grid['Due_Date']) ? $grid['Due_Date'] : '' }}"
+                                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                                        class="hide-input"
+                                                                                        class="hide-input"
                                                                                         class="hide-input show_date"
                                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                        onchange="handleDateInput(this, 'due_date_display_{{ $loop->index }}')" />
+                                                                                        onchange="handleDateInput(this, 'Due_Date_{{ $loop->index }}'); updateEndDateMin('Due_Date_{{ $loop->index }}_input', 'End_date_{{ $loop->index }}_input')" />
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1145,30 +1185,31 @@
                                                                             <div class="group-input input-date">
                                                                                 <div class="calenderauditee">
                                                                                     <input class="click_date"
-                                                                                        id="date_closed_display_{{ $loop->index }}"
+                                                                                        id="End_date_{{ $loop->index }}"
+                                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                                         type="text"
-                                                                                        name="audit_program[{{ $loop->index }}][Date_Closed_display]"
+                                                                                        name="audit_program[{{ $loop->index }}][End_date]"
                                                                                         value="{{ isset($grid['End_date']) ? \Carbon\Carbon::parse($grid['End_date'])->format('d-M-Y') : '' }}"
                                                                                         placeholder="DD-MMM-YYYY"
                                                                                         readonly />
                                                                                     <input type="date"
                                                                                         name="audit_program[{{ $loop->index }}][End_date]"
-                                                                                        min=""
-                                                                                        id="End_date_input_{{ $loop->index }}"
+                                                                                        id="End_date_{{ $loop->index }}_input"
+                                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                                         value="{{ isset($grid['End_date']) ? $grid['End_date'] : '' }}"
                                                                                         class="hide-input show_date"
                                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                        onchange="handleDateInput(this, 'date_closed_display_{{ $loop->index }}')" />
+                                                                                        onchange="handleDateInput(this, 'End_date_{{ $loop->index }}')" />
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </td>
-
                                                                     <td>
                                                                         <div class="col-lg-6">
                                                                             <div class="group-input">
                                                                                 <select
-                                                                                    name="audit_program[{{ $loop->index }}][Lead_Investigator]">
+                                                                                    name="audit_program[{{ $loop->index }}][Lead_Investigator]"
+                                                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                                                     <option value="">Select a value
                                                                                     </option>
                                                                                     @if ($users->isNotEmpty())
@@ -1184,15 +1225,17 @@
                                                                             </div>
                                                                         </div>
                                                                     </td>
-
-
                                                                     <td><input type="text"
                                                                             name="audit_program[{{ $loop->index }}][Comment]"
+                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                             value="{{ isset($grid['Comment']) ? $grid['Comment'] : '' }}">
                                                                     </td>
                                                                     <td>
                                                                         <button type="button"
-                                                                            class="removeBtnaid">remove</button>
+                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                            class="removeBtnaid">remove
+
+                                                                        </button>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -1202,11 +1245,12 @@
                                             </div>
                                         </div>
 
+
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
                                                 Self Inspection Planner
-                                                <button type="button" name="audit-agenda-grid"
-                                                    id="Self_Inspection">+</button>
+                                                <button type="button" name="audit-agenda-grid" id="Self_Inspection"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 <span class="text-primary" data-bs-toggle="modal"
                                                     data-bs-target="#observation-field-instruction-modal"
                                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1245,7 +1289,7 @@
                                                                                 <select
                                                                                     name="Self_Inspection[{{ $loop->index }}][department]"
                                                                                     id="department_{{ $loop->index }}"
-                                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                                                     <option selected disabled
                                                                                         value="">---select---
                                                                                     </option>
@@ -1266,7 +1310,8 @@
                                                                             name="Self_Inspection[{{ $loop->index }}][Months]"
                                                                             placeholder="Select" data-search="false"
                                                                             data-silent-initial-value-set="true"
-                                                                            id="Months" multiple>
+                                                                            id="Months" multiple
+                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                                             {{-- <option value="" disabled>Select a month
                                                                             </option> --}}
                                                                             @php
@@ -1316,11 +1361,12 @@
                                                                     </td>
                                                                     <td><input type="text"
                                                                             name="Self_Inspection[{{ $loop->index }}][Remarked]"
+                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                             value="{{ $grid4['Remarked'] ?? '' }}">
                                                                     </td>
                                                                     <td>
-                                                                        <button type="button"
-                                                                            class="removeBtn">remove</button>
+                                                                        <button type="button" class="removeBtn"
+                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>remove</button>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -1353,60 +1399,7 @@
 
                                         </div> --}}
 
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="severity-level">Severity Level</label>
-                                                <span class="text-primary">Severity levels in a QMS record gauge issue
-                                                    seriousness, guiding priority for corrective actions. Ranging from low
-                                                    to high, they ensure quality standards and mitigate critical
-                                                    risks.</span>
-                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                    name="severity1_level">
-                                                    <option value="0">-- Select --</option>
-                                                    <option @if ($data->severity1_level == 'minor') selected @endif
-                                                        value="minor">Minor</option>
-                                                    <option @if ($data->severity1_level == 'major') selected @endif
-                                                        value="major">Major</option>
-                                                    <option @if ($data->severity1_level == 'critical') selected @endif
-                                                        value="critical">Critical</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Initiator Group">Initiated Through</label>
-                                                <div><small class="text-primary">Please select related information</small>
-                                                </div>
-                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                    name="initiated_through"
-                                                    onchange="otherController(this.value, 'others', 'initiated_through_req')">
-                                                    <option value="">Enter Your Selection Here</option>
-                                                    <option @if ($data->initiated_through == 'recall') selected @endif
-                                                        value="recall">Recall</option>
-                                                    <option @if ($data->initiated_through == 'return') selected @endif
-                                                        value="return">Return</option>
-                                                    <option @if ($data->initiated_through == 'deviation') selected @endif
-                                                        value="deviation">Deviation</option>
-                                                    <option @if ($data->initiated_through == 'complaint') selected @endif
-                                                        value="complaint">Complaint</option>
-                                                    <option @if ($data->initiated_through == 'regulatory') selected @endif
-                                                        value="regulatory">Regulatory</option>
-                                                    <option @if ($data->initiated_through == 'lab-incident') selected @endif
-                                                        value="lab-incident">Lab Incident</option>
-                                                    <option @if ($data->initiated_through == 'improvement') selected @endif
-                                                        value="improvement">Improvement</option>
-                                                    <option @if ($data->initiated_through == 'others') selected @endif
-                                                        value="others">Others</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input" id="initiated_through_req">
-                                                <label for="initiated_through">Others<span
-                                                        class="text-danger d-none">*</span></label>
-                                                <textarea name="initiated_through_req"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->initiated_through_req }}</textarea>
-                                            </div>
-                                        </div>
+
                                         {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="repeat">Repeat</label>
@@ -1473,6 +1466,7 @@
                                             </div>
                                         </div>
 
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="related_url">Related URL</label>
@@ -1535,7 +1529,8 @@
                                                 <label for="audit-agenda-grid">
                                                     Self Inspection Circular
                                                     <button type="button" name="audit-agenda-grid"
-                                                        id="Self_Inspection_circular">+</button>
+                                                        id="Self_Inspection_circular"
+                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                     <span class="text-primary" data-bs-toggle="modal"
                                                         data-bs-target="#observation-field-instruction-modal"
                                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1561,7 +1556,7 @@
                                                                         <td><input disabled type="text"
                                                                                 name="Self_Inspection_circular[{{ $loop->index }}][serial_number]"
                                                                                 value="{{ $loop->index + 1 }}"></td>
-                                                                       
+
                                                                         <td>
                                                                             <div class="col-lg-6">
                                                                                 <div class="group-input">
@@ -1575,7 +1570,7 @@
                                                                                     <select
                                                                                         name="Self_Inspection_circular[{{ $loop->index }}][departments]"
                                                                                         id="departments_{{ $loop->index }}"
-                                                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                                                         <option selected disabled
                                                                                             value="">---select---
                                                                                         </option>
@@ -1600,6 +1595,7 @@
                                                                                     <div class="calenderauditee">
                                                                                         <input class="click_date"
                                                                                             id="date_data{{ $loop->index }}"
+                                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                                             type="text"
                                                                                             name="Self_Inspection_circular[{{ $loop->index }}][info_mfg_date]"
                                                                                             value="{{ isset($grid2['info_mfg_date']) ? \Carbon\Carbon::parse($grid2['info_mfg_date'])->format('d-M-Y') : '' }}"
@@ -1609,6 +1605,7 @@
                                                                                             name="Self_Inspection_circular[{{ $loop->index }}][info_mfg_date]"
                                                                                             {{-- min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}}
                                                                                             id="date_data{{ $loop->index }}"
+                                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                                             value="{{ isset($grid2['info_mfg_date']) ? $grid2['info_mfg_date'] : '' }}"
                                                                                             class="hide-input show_date"
                                                                                             style="position: absolute; top: 0; left: 0; opacity: 0;"
@@ -1622,11 +1619,12 @@
 
                                                                         <td><input type="text"
                                                                                 name="Self_Inspection_circular[{{ $loop->index }}][Auditor]"
+                                                                                {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                                 value="{{ $grid2['Auditor'] ?? '' }}">
                                                                         </td>
                                                                         <td>
-                                                                            <button type="button"
-                                                                                class="removeBtn">remove</button>
+                                                                            <button type="button" class="removeBtn"
+                                                                                {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>remove</button>
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach
@@ -1874,9 +1872,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1920,9 +1918,9 @@
                             </div>
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1969,9 +1967,9 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2007,9 +2005,9 @@
                                         External Audit
                                     </label>
                                     <!-- <label for="minor">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <input type="radio" name="child_type" value="extension">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Extension
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </label> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input type="radio" name="child_type" value="extension">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Extension
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </label> -->
 
                                 </div>
 
@@ -2042,7 +2040,7 @@
                                         <input type="hidden" name="parent_name" value="Audit_program">
                                         <input type="hidden" name="due_date" value="{{ $data->due_date }}">
                                         <!-- <input type="radio" name="child_type" value="extension">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Extension -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Extension -->
                                     </label>
 
                                 </div>
@@ -2069,64 +2067,7 @@
                     display: block;
                 }
             </style>
-            <script>
-                function addAuditProgram(tableId) {
-                    var table = document.getElementById(tableId);
-                    var currentRowCount = table.rows.length;
-                    var newRow = table.insertRow(currentRowCount);
-                    newRow.setAttribute("id", "row" + currentRowCount);
-                    var cell1 = newRow.insertCell(0);
-                    cell1.innerHTML = currentRowCount;
 
-                    var cell2 = newRow.insertCell(1);
-                    cell2.innerHTML =
-                        '<select name="Auditees[]"><option value="">-- Select --</option>@foreach ($users as $data)<option value="{{ $data->id }}">{{ $data->name }}</option>@endforeach</select>';
-
-                    var cell3 = newRow.insertCell(2);
-                    cell3.innerHTML =
-                        '<div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="start_date' +
-                        currentRowCount +
-                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="start_date' +
-                        currentRowCount + '_checkdate" class="hide-input" oninput="handleDateInput(this, `start_date' +
-            currentRowCount + '`);checkDate(`start_date' + currentRowCount + '_checkdate`,`end_date' + currentRowCount +
-            '_checkdate`)" /></div></div></div>';
-
-                    var cell4 = newRow.insertCell(3);
-                    cell4.innerHTML =
-                        '<div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="end_date' +
-                        currentRowCount +
-                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date' +
-                        currentRowCount + '_checkdate" class="hide-input" oninput="handleDateInput(this, `end_date' +
-            currentRowCount + '`);checkDate(`start_date' + currentRowCount + '_checkdate`,`end_date' + currentRowCount +
-            '_checkdate`)" /></div></div></div>';
-
-                    var cell5 = newRow.insertCell(4);
-                    cell5.innerHTML =
-                        '<select name="lead_investigator[]"><option value="">-- Select --</option>@foreach ($users as $data)<option value="{{ $data->id }}">{{ $data->name }}</option>@endforeach</select>';
-
-                    var cell6 = newRow.insertCell(5);
-                    cell6.innerHTML = "<input type='text' name='comment[]'>";
-
-                    var cell7 = newRow.insertCell(6);
-                    cell7.innerHTML = '<button type="button" class="removeRowBtncd" onclick="removeRow(this)">remove</button>';
-
-                    for (var i = 1; i < currentRowCount; i++) {
-                        var row = table.rows[i];
-                        row.cells[0].innerHTML = i;
-                    }
-                }
-
-                function removeRow(button) {
-                    var row = button.parentNode.parentNode;
-                    row.parentNode.removeChild(row);
-                    var table = document.getElementById("tableId");
-                    var currentRowCount = table.rows.length;
-                    for (var i = 1; i < currentRowCount; i++) {
-                        var row = table.rows[i];
-                        row.cells[0].innerHTML = i;
-                    }
-                }
-            </script>
             <script>
                 VirtualSelect.init({
                     ele: '#Months,#Months2, #team_members, #training-require, #impacted_objects'
