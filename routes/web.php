@@ -16,7 +16,7 @@ use App\Http\Controllers\rcms\DesktopController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\MytaskController;
 use App\Http\Controllers\CabinateController;
-use App\Http\Controllers\rcms\{CCController,DeviationController, IncidentController};
+use App\Http\Controllers\rcms\{CCController, DeviationController, IncidentController};
 use App\Http\Controllers\rcms\EffectivenessCheckController;
 use App\Http\Controllers\rcms\ObservationController;
 use App\Http\Controllers\DashboardController;
@@ -331,8 +331,8 @@ Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer
 
 // // Route::view('induction_training', 'frontend.TMS.Induction_training.induction_training')->name('induction_training');
 // Route::view('job_training', 'frontend.TMS.Job_Training.job_training')->name('job_training');
-Route::get('job_training',[JobTrainingController::class ,'index'])->name('job_training');
-Route::get('job_training/show/{id}',[JobTrainingController::class ,'edit'])->name('job_training_view');
+Route::get('job_training', [JobTrainingController::class, 'index'])->name('job_training');
+Route::get('job_training/show/{id}', [JobTrainingController::class, 'edit'])->name('job_training_view');
 
 Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
 Route::put('job_trainingupdate/{id}', [JobTrainingController::class, 'update'])->name('job_trainingupdate');
@@ -345,6 +345,7 @@ Route::get('induction_training', [InductionTrainingcontroller::class, 'index'])-
 Route::get('induction_training/show/{id}', [InductionTrainingcontroller::class, 'edit'])->name('induction_training_view');
 Route::post('induction_training', [InductionTrainingcontroller::class, 'store'])->name('induction_training.store');
 Route::put('induction_training/{id}', [InductionTrainingcontroller::class, 'update'])->name('induction_training.update');
+Route::get('/employees/{id}', [InductionTrainingcontroller::class, 'getEmployeeDetails']);
 
 
 //! ============================================
