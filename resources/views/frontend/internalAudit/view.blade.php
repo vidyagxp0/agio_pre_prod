@@ -9691,6 +9691,20 @@ $checklistqualitycontrol = [
 
 </div>
 
+@php
+    $auditAssessmentChecklist = $auditAssessmentChecklist ?? (object) ['data' => []];
+    $auditPersonnelChecklist = $auditPersonnelChecklist ?? (object) ['data' => []];
+    $auditfacilityChecklist = $auditfacilityChecklist ?? (object) ['data' => []];
+    $auditMachinesChecklist = $auditMachinesChecklist ?? (object) ['data' => []];
+    $auditProductionChecklist = $auditProductionChecklist ?? (object) ['data' => []];
+    $auditMaterialsChecklist = $auditMaterialsChecklist ?? (object) ['data' => []];
+    $auditQualityControlChecklist = $auditQualityControlChecklist ?? (object) ['data' => []];
+    $auditQualityAssuranceChecklist = $auditQualityAssuranceChecklist ?? (object) ['data' => []];
+    $auditPackagingChecklist = $auditPackagingChecklist ?? (object) ['data' => []];
+    $auditSheChecklist = $auditSheChecklist ?? (object) ['data' => []];
+    
+@endphp
+
 <div id="CCForm24" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="row">
@@ -9716,12 +9730,12 @@ $checklistqualitycontrol = [
                                             <td>How long has company been manufacturing the material /s being audited? in Years</td>
                                             <td>
                                                 <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <input type="number" name="auditAssessmentChecklist[0][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[0]) ? $auditAssessmentChecklist->data[0]['response'] : '' }}" placeholder="Year" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                <input type="number" name="auditAssessmentChecklist[0][response]" value="{{ $auditAssessmentChecklist->data[0]['response'] ?? '' }}" placeholder="Year" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
                                             </div>
                                             </td>
                                             <td style="vertical-align: middle;">
                                                 <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditAssessmentChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[0]) ? $auditAssessmentChecklist->data[0]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditAssessmentChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{$auditAssessmentChecklist->data[0]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -9732,39 +9746,38 @@ $checklistqualitycontrol = [
 
                                     <td>
                                         <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                        <input type="number"  name="auditAssessmentChecklist[1][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[1]) ? $auditAssessmentChecklist->data[1]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                        <input type="number"  name="auditAssessmentChecklist[1][response]" value="{{$auditAssessmentChecklist->data[1]['response'] ?? '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
                                     </div>
                                     </td>
                                      <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[1]) ? $auditAssessmentChecklist->data[1]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{$auditAssessmentChecklist->data[1]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
                                 </tr>
                                    
                                 <tr>
                                     <td class="flex text-center">1.3</td>
-                                    <td> Have the inspectional issues been resolved?</td>
+                                    <td>Have the inspectional issues been resolved?</td>
                                     <td>
-                                        <div
-                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select  name="auditAssessmentChecklist[2][response]"  id="auditAssessmentChecklist[2][response]"
-                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                        <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px">
+                                            <select name="auditAssessmentChecklist[2][response]" id="auditAssessmentChecklist[2][response]"
+                                                style="padding: 2px; width: 80%; border: 1px solid black; background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditAssessmentChecklist->data[2]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditAssessmentChecklist->data[2]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditAssessmentChecklist->data[2]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditAssessmentChecklist->data[2]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditAssessmentChecklist->data[2]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditAssessmentChecklist->data[2]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             </select>
                                         </div>
                                     </td>
-                                     <td style="vertical-align: middle;">
-                                        <div
-                                            style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[2]) ? $auditAssessmentChecklist->data[2]['remarks'] : '' }}</textarea>
+                                    <td style="vertical-align: middle;">
+                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="auditAssessmentChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[2]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <td class="flex text-center">1.4</td>
                                     <td>Is there an FDA Drug Master File?
@@ -9776,16 +9789,16 @@ $checklistqualitycontrol = [
                                             <select name="auditAssessmentChecklist[3][response]"  id="auditAssessmentChecklist[3][response]"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if(isset($auditAssessmentChecklist->data[3]['response']) && $auditAssessmentChecklist->data[3]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if(isset($auditAssessmentChecklist->data[3]['response']) && $auditAssessmentChecklist->data[3]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if(isset($auditAssessmentChecklist->data[3]['response']) && $auditAssessmentChecklist->data[3]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditAssessmentChecklist->data[3]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditAssessmentChecklist->data[3]['response'] ?? '') == "Yes") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditAssessmentChecklist->data[3]['response'] ?? '') == "Yes") selected @endif>N/A</option>
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[3]) ? $auditAssessmentChecklist->data[3]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{$auditAssessmentChecklist->data[3]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -9802,9 +9815,9 @@ $checklistqualitycontrol = [
                                             <select name="auditAssessmentChecklist[4][response]" id="auditAssessmentChecklist[4][response]"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditAssessmentChecklist->data[4]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditAssessmentChecklist->data[4]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditAssessmentChecklist->data[4]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditAssessmentChecklist->data[4]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditAssessmentChecklist->data[4]['response'] ?? '') == "Yes") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditAssessmentChecklist->data[4]['response'] ?? '') == "Yes") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -9812,7 +9825,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[4]) ? $auditAssessmentChecklist->data[4]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[4]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -9843,7 +9856,7 @@ $checklistqualitycontrol = [
                                         <div style="display: flex;   margin: 5%; gap:5px">
                                             <div style="display: flex; flex-direction: column; width: 300px;">
                                                 <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="number"  name="auditAssessmentChecklist[5][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[5]) ? $auditAssessmentChecklist->data[5]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                    <input type="number"  name="auditAssessmentChecklist[5][response]" value="{{ $auditAssessmentChecklist->data[5]['response'] ?? '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                 </div>
                                             </div>
                                         </div>
@@ -9851,7 +9864,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[5]) ? $auditAssessmentChecklist->data[5]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[5]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
                                 </tr> 
@@ -9866,7 +9879,7 @@ $checklistqualitycontrol = [
                                             <div style="display: flex; flex-direction: column; width: 300px;">
 
                                                 <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="number"  name="auditAssessmentChecklist[6][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[6]) ? $auditAssessmentChecklist->data[6]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                    <input type="number"  name="auditAssessmentChecklist[6][response]" value="{{ $auditAssessmentChecklist->data[6]['response'] ?? '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                 </div>
 
 
@@ -9877,7 +9890,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[6]) ? $auditAssessmentChecklist->data[6]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[6]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -9892,7 +9905,7 @@ $checklistqualitycontrol = [
                                           <div style="display: flex;   margin: 5%; gap:5px">
                                             <div style="display: flex; flex-direction: column; width: 300px;">
                                                 <div  style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="number"  name="auditAssessmentChecklist[7][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[7]) ? $auditAssessmentChecklist->data[7]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                    <input type="number"  name="auditAssessmentChecklist[7][response]" value="{{ $auditAssessmentChecklist->data[7]['response'] ?? '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                 </div>
                                             </div>
 
@@ -9901,7 +9914,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[7]) ? $auditAssessmentChecklist->data[7]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[7]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -9918,9 +9931,9 @@ $checklistqualitycontrol = [
                                             <select name="auditAssessmentChecklist[8][response]" id="auditAssessmentChecklist[8][response]"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Permanent" @if($auditAssessmentChecklist->data[8]['response'] == "Permanent") selected @endif>Yes</option>
-                                                <option value="Temporary" @if($auditAssessmentChecklist->data[8]['response'] == "Temporary") selected @endif>No</option>
-                                                <option value="Casual" @if($auditAssessmentChecklist->data[8]['response'] == "Casual") selected @endif>N/A</option>
+                                                <option value="Permanent" @if(($auditAssessmentChecklist->data[8]['response'] ?? '') == "Permanent") selected @endif>Yes</option>
+                                                <option value="Temporary" @if(($auditAssessmentChecklist->data[8]['response'] ?? '') == "Temporary") selected @endif>No</option>
+                                                <option value="Casual" @if(($auditAssessmentChecklist->data[8]['response'] ?? '') == "Casual") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -9928,7 +9941,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[8]) ? $auditAssessmentChecklist->data[8]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[8]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -9943,9 +9956,9 @@ $checklistqualitycontrol = [
                                             <select name="auditAssessmentChecklist[9][response]" id="auditAssessmentChecklist[9][response]"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditAssessmentChecklist->data[9]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditAssessmentChecklist->data[9]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditAssessmentChecklist->data[9]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditAssessmentChecklist->data[9]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditAssessmentChecklist->data[9]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditAssessmentChecklist->data[9]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -9953,7 +9966,7 @@ $checklistqualitycontrol = [
                                <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[9][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[9]) ? $auditAssessmentChecklist->data[9]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[9][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[9]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -9969,16 +9982,16 @@ $checklistqualitycontrol = [
                                             <select name="auditAssessmentChecklist[10][response]" id="auditAssessmentChecklist[10][response]"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Urban" @if($auditAssessmentChecklist->data[10]['response'] == "Urban") selected @endif>Yes</option>
-                                                <option value="Rural" @if($auditAssessmentChecklist->data[10]['response'] == "Rural") selected @endif>No</option>
-                                                <option value="Industrial" @if($auditAssessmentChecklist->data[10]['response'] == "Industrial") selected @endif>N/A</option>
+                                                <option value="Urban" @if(($auditAssessmentChecklist->data[10]['response'] ?? '') == "Urban") selected @endif>Yes</option>
+                                                <option value="Rural" @if(($auditAssessmentChecklist->data[10]['response'] ?? '') == "Rural") selected @endif>No</option>
+                                                <option value="Industrial" @if(($auditAssessmentChecklist->data[10]['response'] ?? '') == "Industrial") selected @endif>N/A</option>
                                             </select>
                                         </div>
                                     </td>
                                    <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[10][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[10]) ? $auditAssessmentChecklist->data[10]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[10][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[10]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -10001,7 +10014,7 @@ $checklistqualitycontrol = [
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[11][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[11]) ? $auditAssessmentChecklist->data[4]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[11][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[4]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -10019,7 +10032,7 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                        <input type="number"  name="auditAssessmentChecklist[12][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[12]) ? $auditAssessmentChecklist->data[12]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                        <input type="number"  name="auditAssessmentChecklist[12][response]" value="{{ $auditAssessmentChecklist->data[12]['response'] ?? '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
 
                                     </div>
 
@@ -10028,7 +10041,7 @@ $checklistqualitycontrol = [
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[12][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[12]) ? $auditAssessmentChecklist->data[12]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[12][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[12]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -10045,7 +10058,7 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                        <input type="number"  name="auditAssessmentChecklist[13][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[13]) ? $auditAssessmentChecklist->data[13]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                        <input type="number"  name="auditAssessmentChecklist[13][response]" value="{{ $auditAssessmentChecklist->data[13]['response'] ?? '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
 
                                     </div>
 
@@ -10053,7 +10066,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[13][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[13]) ? $auditAssessmentChecklist->data[13]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[13][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[13]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -10070,7 +10083,7 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="number"  name="auditAssessmentChecklist[14][response]" value="{{ array_key_exists('response', $auditAssessmentChecklist->data[14]) ? $auditAssessmentChecklist->data[14]['response'] : '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                <input type="number"  name="auditAssessmentChecklist[14][response]" value="{{ $auditAssessmentChecklist->data[14]['response'] ?? '' }}" placeholder="Enter  value here" style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
 
                             </div>
 
@@ -10078,7 +10091,7 @@ $checklistqualitycontrol = [
                                    <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[14][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[14]) ? $auditAssessmentChecklist->data[14]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[14][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[14]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -10097,9 +10110,9 @@ $checklistqualitycontrol = [
                                             <select name="auditAssessmentChecklist[15][response]" id="auditAssessmentChecklist[15][response]"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditAssessmentChecklist->data[15]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditAssessmentChecklist->data[15]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditAssessmentChecklist->data[15]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditAssessmentChecklist->data[15]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditAssessmentChecklist->data[15]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditAssessmentChecklist->data[15]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -10108,7 +10121,7 @@ $checklistqualitycontrol = [
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[15][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[15]) ? $auditAssessmentChecklist->data[15]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[15][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[15]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -10125,9 +10138,9 @@ $checklistqualitycontrol = [
                                             <select name="auditAssessmentChecklist[16][response]" id="auditAssessmentChecklist[16][response]"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditAssessmentChecklist->data[16]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditAssessmentChecklist->data[16]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditAssessmentChecklist->data[16]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditAssessmentChecklist->data[16]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditAssessmentChecklist->data[16]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditAssessmentChecklist->data[16]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -10136,7 +10149,7 @@ $checklistqualitycontrol = [
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[16][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[16]) ? $auditAssessmentChecklist->data[16]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[16][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[16]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -10153,9 +10166,9 @@ $checklistqualitycontrol = [
                                             <select name="auditAssessmentChecklist[17][response]" id="auditAssessmentChecklist[17][response]"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditAssessmentChecklist->data[17]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditAssessmentChecklist->data[17]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditAssessmentChecklist->data[17]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditAssessmentChecklist->data[17]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditAssessmentChecklist->data[17]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditAssessmentChecklist->data[17]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -10163,7 +10176,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditAssessmentChecklist[17][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[17]) ? $auditAssessmentChecklist->data[17]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditAssessmentChecklist[17][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditAssessmentChecklist->data[17]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -10202,9 +10215,9 @@ $checklistqualitycontrol = [
                                             <select name="auditPersonnelChecklist[0][response]" 
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditPersonnelChecklist->data[0]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditPersonnelChecklist->data[0]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditPersonnelChecklist->data[0]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditPersonnelChecklist->data[0]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditPersonnelChecklist->data[0]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditPersonnelChecklist->data[0]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -10216,7 +10229,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditPersonnelChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditPersonnelChecklist->data[0]) ? $auditPersonnelChecklist->data[0]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditPersonnelChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditPersonnelChecklist->data[0]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -10232,9 +10245,9 @@ $checklistqualitycontrol = [
                                             <select name="auditPersonnelChecklist[1][response]"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditPersonnelChecklist->data[1]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditPersonnelChecklist->data[1]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditPersonnelChecklist->data[1]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditPersonnelChecklist->data[1]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditPersonnelChecklist->data[1]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditPersonnelChecklist->data[1]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -10243,7 +10256,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">  
-                                            <textarea name="auditPersonnelChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditPersonnelChecklist->data[1]) ? $auditPersonnelChecklist->data[1]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditPersonnelChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditPersonnelChecklist->data[1]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -10259,9 +10272,9 @@ $checklistqualitycontrol = [
                                             <select name="auditPersonnelChecklist[2][response]" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditPersonnelChecklist->data[2]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditPersonnelChecklist->data[2]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditPersonnelChecklist->data[2]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditPersonnelChecklist->data[2]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditPersonnelChecklist->data[2]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditPersonnelChecklist->data[2]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -10270,7 +10283,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditPersonnelChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditPersonnelChecklist->data[2]) ? $auditPersonnelChecklist->data[2]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditPersonnelChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditPersonnelChecklist->data[2]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
 
@@ -10298,9 +10311,9 @@ $checklistqualitycontrol = [
                                             <select name="auditPersonnelChecklist[3][response]"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditPersonnelChecklist->data[3]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditPersonnelChecklist->data[3]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditPersonnelChecklist->data[3]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditPersonnelChecklist->data[3]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditPersonnelChecklist->data[3]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditPersonnelChecklist->data[3]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -10309,7 +10322,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditPersonnelChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditPersonnelChecklist->data[3]) ? $auditPersonnelChecklist->data[3]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditPersonnelChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditPersonnelChecklist->data[3]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
                                 </tr>  <tr>
@@ -10326,9 +10339,9 @@ $checklistqualitycontrol = [
                                             <select name="auditPersonnelChecklist[4][response]" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditPersonnelChecklist->data[4]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditPersonnelChecklist->data[4]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditPersonnelChecklist->data[4]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditPersonnelChecklist->data[4]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditPersonnelChecklist->data[4]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditPersonnelChecklist->data[4]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -10337,7 +10350,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditPersonnelChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditPersonnelChecklist->data[4]) ? $auditPersonnelChecklist->data[4]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditPersonnelChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditPersonnelChecklist->data[4]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
                                 </tr>  <tr>
@@ -10354,9 +10367,9 @@ $checklistqualitycontrol = [
                                             <select name="auditPersonnelChecklist[5][response]" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditPersonnelChecklist->data[5]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditPersonnelChecklist->data[5]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditPersonnelChecklist->data[5]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditPersonnelChecklist->data[5]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditPersonnelChecklist->data[5]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditPersonnelChecklist->data[5]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -10365,7 +10378,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditPersonnelChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditPersonnelChecklist->data[5]) ? $auditPersonnelChecklist->data[5]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditPersonnelChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditPersonnelChecklist->data[5]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
                                 </tr>  <tr>
@@ -10382,9 +10395,9 @@ $checklistqualitycontrol = [
                                             <select name="auditPersonnelChecklist[6][response]" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditPersonnelChecklist->data[6]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditPersonnelChecklist->data[6]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditPersonnelChecklist->data[6]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditPersonnelChecklist->data[6]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditPersonnelChecklist->data[6]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditPersonnelChecklist->data[6]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -10393,7 +10406,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditPersonnelChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditPersonnelChecklist->data[6]) ? $auditPersonnelChecklist->data[6]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditPersonnelChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditPersonnelChecklist->data[6]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
                                 </tr>  <tr>
@@ -10410,9 +10423,9 @@ $checklistqualitycontrol = [
                                             <select name="auditPersonnelChecklist[7][response]" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditPersonnelChecklist->data[7]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditPersonnelChecklist->data[7]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditPersonnelChecklist->data[7]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditPersonnelChecklist->data[7]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditPersonnelChecklist->data[7]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditPersonnelChecklist->data[7]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -10421,7 +10434,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditPersonnelChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditPersonnelChecklist->data[7]) ? $auditPersonnelChecklist->data[7]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditPersonnelChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditPersonnelChecklist->data[7]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
                                 </tr>  <tr>
@@ -10436,9 +10449,9 @@ $checklistqualitycontrol = [
                                             <select name="auditPersonnelChecklist[8][response]" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditPersonnelChecklist->data[8]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditPersonnelChecklist->data[8]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditPersonnelChecklist->data[8]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditPersonnelChecklist->data[8]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditPersonnelChecklist->data[8]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditPersonnelChecklist->data[8]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -10447,7 +10460,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="auditPersonnelChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditPersonnelChecklist->data[8]) ? $auditPersonnelChecklist->data[8]['remarks'] : '' }}</textarea>
+                                            <textarea name="auditPersonnelChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditPersonnelChecklist->data[8]['remarks'] ?? '' }}</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -10486,8 +10499,8 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[0][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[0]['response'] == "Yes") selected @endif>Designed</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[0]['response'] == "No") selected @endif>Adapted</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[0]['response'] ?? '') == "Yes") selected @endif>Designed</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[0]['response'] ?? '') == "No") selected @endif>Adapted</option>
                                                     {{-- <option value="N/A" @if($auditfacilityChecklist->data[8]['response'] == "N/A") selected @endif>N/A</option> --}}
                                                 
 
@@ -10501,7 +10514,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[0]) ? $auditfacilityChecklist->data[0]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[0]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
 
@@ -10537,9 +10550,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[1][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                <option value="Yes" @if($auditfacilityChecklist->data[1]['response'] == "Yes") selected @endif>Yes</option>
-                                                <option value="No" @if($auditfacilityChecklist->data[1]['response'] == "No") selected @endif>No</option>
-                                                <option value="N/A" @if($auditfacilityChecklist->data[1]['response'] == "N/A") selected @endif>N/A</option>
+                                                <option value="Yes" @if(($auditfacilityChecklist->data[1]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                <option value="No" @if(($auditfacilityChecklist->data[1]['response'] ?? '') == "No") selected @endif>No</option>
+                                                <option value="N/A" @if(($auditfacilityChecklist->data[1]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                             
                                                 </select>
                                             </div>
@@ -10548,7 +10561,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[1]) ? $auditfacilityChecklist->data[1]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[1]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
 
@@ -10568,9 +10581,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[2][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[2]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[2]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[2]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[2]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[2]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[2]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10579,7 +10592,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[2]) ? $auditfacilityChecklist->data[2]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[2]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
 
@@ -10599,9 +10612,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[3][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[3]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[3]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[3]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[3]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[3]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[3]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10610,7 +10623,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[3]) ? $auditfacilityChecklist->data[3]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[3]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
 
@@ -10630,9 +10643,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[4][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[4]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[4]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[4]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[4]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[4]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[4]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10641,7 +10654,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[4]) ? $auditfacilityChecklist->data[4]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[4]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
 
@@ -10661,9 +10674,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[5][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[5]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[5]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[5]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[5]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[5]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[5]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10672,7 +10685,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[5]) ? $auditfacilityChecklist->data[5]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[5]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
 
@@ -10691,9 +10704,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[6][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[6]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[6]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[6]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[6]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[6]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[6]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10702,7 +10715,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[6]) ? $auditfacilityChecklist->data[6]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[6]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
 
@@ -10740,9 +10753,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[7][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[7]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[7]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[7]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[7]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[7]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[7]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10751,7 +10764,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[7]) ? $auditfacilityChecklist->data[7]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[7]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -10767,9 +10780,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[8][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[8]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[8]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[8]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[8]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[8]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[8]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10778,7 +10791,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[8]) ? $auditfacilityChecklist->data[8]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[8]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -10794,9 +10807,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[9][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[9]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[9]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[9]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[9]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[9]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[9]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10805,7 +10818,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[9][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[9]) ? $auditfacilityChecklist->data[9]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[9][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[9]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -10838,9 +10851,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[10][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[10]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[10]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[10]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[10]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[10]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[10]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10849,7 +10862,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[10][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[10]) ? $auditfacilityChecklist->data[10]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[10][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[10]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -10865,9 +10878,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[11][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[11]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[11]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[11]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[11]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[11]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[11]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10876,7 +10889,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[11][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[11]) ? $auditfacilityChecklist->data[11]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[11][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[11]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -10891,9 +10904,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[12][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[12]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[12]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[12]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[12]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[12]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[12]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10902,7 +10915,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[12][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[12]) ? $auditfacilityChecklist->data[12]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[12][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[12]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -10918,9 +10931,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[13][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[13]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[13]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[13]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[13]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[13]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[13]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10929,7 +10942,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[13][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[13]) ? $auditfacilityChecklist->data[13]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[13][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[13]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -10944,9 +10957,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[14][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[14]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[14]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[14]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[14]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[14]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[14]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10955,7 +10968,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[14][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[14]) ? $auditfacilityChecklist->data[14]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[14][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[14]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -10971,9 +10984,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[15][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[15]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[15]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[15]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[15]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[15]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[15]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -10982,7 +10995,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[15][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[15]) ? $auditfacilityChecklist->data[15]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[15][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[15]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -10998,9 +11011,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[16][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[16]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[16]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[16]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[16]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[16]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[16]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -11009,7 +11022,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[16][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[16]) ? $auditfacilityChecklist->data[16]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[16][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[16]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -11025,9 +11038,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[17][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[17]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[17]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[17]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[17]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[17]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[17]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -11036,7 +11049,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[17][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[17]) ? $auditfacilityChecklist->data[17]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[17][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[17]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -11052,9 +11065,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[18][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[18]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[18]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[18]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[18]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[18]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[18]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -11063,7 +11076,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[18][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[18]) ? $auditfacilityChecklist->data[18]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[18][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[18]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -11079,9 +11092,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[19][response]"  id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[19]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[19]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[19]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[19]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[19]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[19]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -11090,7 +11103,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[19][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[19]) ? $auditfacilityChecklist->data[19]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[19][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[19]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -11106,9 +11119,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[20][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[20]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[20]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[20]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[20]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[20]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[20]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -11117,7 +11130,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[20][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[20]) ? $auditfacilityChecklist->data[20]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[20][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[20]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -11133,9 +11146,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[21][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[21]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[21]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[21]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[21]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[21]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[21]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -11144,7 +11157,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[21][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[21]) ? $auditfacilityChecklist->data[21]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[21][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[21]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -11160,9 +11173,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[22][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[22]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[22]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[22]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[22]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[22]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[22]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -11171,7 +11184,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[22][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[22]) ? $auditfacilityChecklist->data[22]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[22][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[22]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -11187,9 +11200,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[23][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[23]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[23]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[23]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[23]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[23]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[23]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -11198,7 +11211,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[23][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[23]) ? $auditfacilityChecklist->data[23]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[23][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[23]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -11214,9 +11227,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[24][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[24]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[24]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[24]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[24]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[24]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[24]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -11225,7 +11238,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[24][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[24]) ? $auditfacilityChecklist->data[24]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[24][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[24]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -11241,9 +11254,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[25][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[25]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[25]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[25]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[25]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[25]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[25]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -11252,7 +11265,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[25][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[25]) ? $auditfacilityChecklist->data[25]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[25][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[25]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -11268,9 +11281,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[26][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[26]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[26]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[26]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[26]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[26]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[26]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -11279,7 +11292,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[26][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[26]) ? $auditfacilityChecklist->data[26]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[26][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[26]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -11295,9 +11308,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[27][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[27]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[27]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[27]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[27]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[27]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[27]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -11306,7 +11319,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[27][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[27]) ? $auditfacilityChecklist->data[27]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[27][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[27]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -11322,9 +11335,9 @@ $checklistqualitycontrol = [
                                                 <select name="auditfacilityChecklist[28][response]" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" @if($auditfacilityChecklist->data[28]['response'] == "Yes") selected @endif>Yes</option>
-                                                    <option value="No" @if($auditfacilityChecklist->data[28]['response'] == "No") selected @endif>No</option>
-                                                    <option value="N/A" @if($auditfacilityChecklist->data[28]['response'] == "N/A") selected @endif>N/A</option>
+                                                    <option value="Yes" @if(($auditfacilityChecklist->data[28]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                    <option value="No" @if(($auditfacilityChecklist->data[28]['response'] ?? '') == "No") selected @endif>No</option>
+                                                    <option value="N/A" @if(($auditfacilityChecklist->data[28]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                 
                                                 </select>
                                             </div>
@@ -11333,7 +11346,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditfacilityChecklist[28][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditfacilityChecklist->data[28]) ? $auditfacilityChecklist->data[28]['remarks'] : '' }}</textarea>
+                                                <textarea name="auditfacilityChecklist[28][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditfacilityChecklist->data[28]['remarks'] ?? '' }}</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -11376,8 +11389,8 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[0][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[0]['response'] == "Yes") selected @endif>Multi</option>
-                                                    <option value="No" @if($auditMachinesChecklist->data[0]['response'] == "No") selected @endif>Single</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[0]['response'] ?? '') == "Yes") selected @endif>Multi</option>
+                                                    <option value="No" @if(($auditMachinesChecklist->data[0]['response'] ?? '') == "No") selected @endif>Single</option>
                                                     {{-- <option value="N/A" @if($auditMachinesChecklist->data[28]['response'] == "N/A") selected @endif>N/A</option> --}}
                                                 
                                                     </select>
@@ -11390,7 +11403,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[0]) ? $auditMachinesChecklist->data[0]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[0]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
 
@@ -11409,9 +11422,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[1][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[1]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[1]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[1]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[1]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[1]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[1]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11420,7 +11433,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[1]) ? $auditMachinesChecklist->data[1]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[1]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
 
@@ -11439,9 +11452,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[2][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[2]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[2]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[2]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[2]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[2]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[2]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11450,7 +11463,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[2]) ? $auditMachinesChecklist->data[2]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[2]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -11466,9 +11479,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[3][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[3]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[3]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[3]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[3]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[3]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[3]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11477,7 +11490,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[3]) ? $auditMachinesChecklist->data[3]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[3]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -11493,9 +11506,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[4][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[4]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[4]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[4]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[4]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[4]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[4]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11504,7 +11517,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[4]) ? $auditMachinesChecklist->data[4]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[4]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -11520,9 +11533,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[5][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[5]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[5]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[5]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[5]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[5]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[5]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11531,7 +11544,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[5]) ? $auditMachinesChecklist->data[5]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[5]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -11547,9 +11560,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[6][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[6]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[6]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[6]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[6]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[6]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[6]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11558,7 +11571,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[6]) ? $auditMachinesChecklist->data[6]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[6]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -11574,9 +11587,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[7][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[7]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[7]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[7]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[7]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[7]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[7]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11585,7 +11598,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[7]) ? $auditMachinesChecklist->data[7]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[7]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -11601,9 +11614,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[8][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[8]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[8]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[8]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[8]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[8]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[8]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11612,7 +11625,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[8]) ? $auditMachinesChecklist->data[8]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[8]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -11628,9 +11641,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[9][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[9]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[9]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[9]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[9]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[9]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[9]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11639,7 +11652,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[9][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[9]) ? $auditMachinesChecklist->data[9]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[9][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[9]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -11655,9 +11668,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[10][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[10]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[10]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[10]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[10]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[10]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[10]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11666,7 +11679,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[10][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[10]) ? $auditMachinesChecklist->data[10]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[10][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[10]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -11682,9 +11695,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[11][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[11]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[11]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[11]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[11]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[11]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[11]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11693,7 +11706,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[11][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[11]) ? $auditMachinesChecklist->data[11]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[11][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[11]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -11727,9 +11740,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[12][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[12]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[12]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[12]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[12]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[12]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[12]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11738,7 +11751,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[12][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[12]) ? $auditMachinesChecklist->data[12]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[12][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[12]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr> <tr>
@@ -11754,9 +11767,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[13][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[13]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[13]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[13]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[13]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[13]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[13]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11765,7 +11778,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[13][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[13]) ? $auditMachinesChecklist->data[13]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[13][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[13]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr> <tr>
@@ -11782,9 +11795,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[14][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[14]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[14]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[14]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[14]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[14]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[14]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11793,7 +11806,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[14][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[14]) ? $auditMachinesChecklist->data[14]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[14][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[14]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr> <tr>
@@ -11809,9 +11822,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[15][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[15]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[15]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[15]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[15]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[15]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[15]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11820,7 +11833,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[15][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[15]) ? $auditMachinesChecklist->data[15]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[15][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[15]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -11854,9 +11867,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[16][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[16]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[16]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[16]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[16]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[16]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[16]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11865,7 +11878,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[16][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[16]) ? $auditMachinesChecklist->data[16]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[16][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[16]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr> <tr>
@@ -11881,9 +11894,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[17][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[17]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[17]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[17]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[17]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[17]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[17]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11892,7 +11905,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[17][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[17]) ? $auditMachinesChecklist->data[17]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[17][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[17]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -11908,9 +11921,9 @@ $checklistqualitycontrol = [
                                                     <select name="auditMachinesChecklist[18][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" @if($auditMachinesChecklist->data[18]['response'] == "Yes") selected @endif>Yes</option>
-                                                        <option value="No" @if($auditMachinesChecklist->data[18]['response'] == "No") selected @endif>No</option>
-                                                        <option value="N/A" @if($auditMachinesChecklist->data[18]['response'] == "N/A") selected @endif>N/A</option>
+                                                        <option value="Yes" @if(($auditMachinesChecklist->data[18]['response'] ?? '') == "Yes") selected @endif>Yes</option>
+                                                        <option value="No" @if(($auditMachinesChecklist->data[18]['response'] ?? '') == "No") selected @endif>No</option>
+                                                        <option value="N/A" @if(($auditMachinesChecklist->data[18]['response'] ?? '') == "N/A") selected @endif>N/A</option>
                                                     
                                                     </select>
                                                 </div>
@@ -11919,7 +11932,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditMachinesChecklist[18][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditMachinesChecklist->data[18]) ? $auditMachinesChecklist->data[18]['remarks'] : '' }}</textarea>
+                                                    <textarea name="auditMachinesChecklist[18][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ $auditMachinesChecklist->data[18]['remarks'] ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -11997,9 +12010,9 @@ $checklistqualitycontrol = [
                                                     <td>
                                                         <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                             @if(isset($question['input_type']) && $question['input_type'] == 'date')
-                                                            <input type="date" name="auditProductionChecklist[{{ $index }}][response]" value="{{ $auditProductionChecklist->data[$index]['response']  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="auditProductionChecklist[{{ $index }}][response]" value="{{ $auditProductionChecklist->data[$index]['response'] ?? '' }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             @elseif(isset($question['input_type']) && $question['input_type'] == 'text')
-                                                            <input type="text" name="auditProductionChecklist[{{ $index }}][response]" value="{{ $auditProductionChecklist->data[$index]['response']  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="text" name="auditProductionChecklist[{{ $index }}][response]" value="{{ $auditProductionChecklist->data[$index]['response'] ?? ''  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             @else
                                                             <select name="auditProductionChecklist[{{ $index }}][response]" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                 <option value="">Select an Option</option>
@@ -12013,7 +12026,7 @@ $checklistqualitycontrol = [
                                                     </td>
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="auditProductionChecklist[{{ $index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;"> {{ array_key_exists('remarks', $auditProductionChecklist->data[$index]) ? $auditProductionChecklist->data[$index]['remarks'] : '' }} </textarea>  </div>
+                                                            <textarea name="auditProductionChecklist[{{ $index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;"> {{ $auditProductionChecklist->data[$index]['remarks'] ?? '' }} </textarea>  </div>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -12081,17 +12094,17 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                 @if($question['input_type'] == 'date')
-                                                <input type="date" name="auditMaterialsChecklist[{{ $index }}][response]" value="{{ $auditMaterialsChecklist->data[$index]['response']  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                <input type="date" name="auditMaterialsChecklist[{{ $index }}][response]" value="{{ $auditMaterialsChecklist->data[$index]['response'] ?? '' }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @elseif($question['input_type'] == 'text')
-                                                <input type="text" name="auditMaterialsChecklist[{{ $index }}][response]" value="{{ $auditMaterialsChecklist->data[$index]['response']  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                <input type="text" name="auditMaterialsChecklist[{{ $index }}][response]" value="{{ $auditMaterialsChecklist->data[$index]['response'] ?? '' }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @elseif($question['input_type'] == 'number')
-                                                <input type="number" name="auditMaterialsChecklist[{{ $index }}][response]" value="{{ $auditMaterialsChecklist->data[$index]['response']  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                <input type="number" name="auditMaterialsChecklist[{{ $index }}][response]" value="{{ $auditMaterialsChecklist->data[$index]['response'] ?? '' }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @elseif($question['input_type'] == 'select')
                                                 <select name="auditMaterialsChecklist[{{ $index }}][response]" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" {{ isset($auditMaterialsChecklist->data[$index]['response']) && $auditMaterialsChecklist->data[$index]['response'] == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                    <option value="No" {{ isset($auditMaterialsChecklist->data[$index]['response']) && $auditMaterialsChecklist->data[$index]['response'] == "No" ? 'selected' : '' }}>No</option>
-                                                    <option value="N/A" {{ isset($auditMaterialsChecklist->data[$index]['response']) && $auditMaterialsChecklist->data[$index]['response'] == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                    <option value="Yes" {{ ($auditMaterialsChecklist->data[$index]['response'] ?? '') == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                    <option value="No" {{ ($auditMaterialsChecklist->data[$index]['response'] ?? '') == "No" ? 'selected' : '' }}>No</option>
+                                                    <option value="N/A" {{ ($auditMaterialsChecklist->data[$index]['response'] ?? '') == "N/A" ? 'selected' : '' }}>N/A</option>
                                                 </select>
                                                 @else
                                                 <label>{{ $question['question'] }}</label>
@@ -12100,7 +12113,7 @@ $checklistqualitycontrol = [
                                         </td>
                                         <td style="vertical-align: middle;">
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="auditMaterialsChecklist[{{ $index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;"> {{ array_key_exists('remarks', $auditMaterialsChecklist->data[$index]) ? $auditMaterialsChecklist->data[$index]['remarks'] : '' }} </textarea>  </div>
+                                                <textarea name="auditMaterialsChecklist[{{ $index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;"> {{ $auditMaterialsChecklist->data[$index]['remarks'] ?? '' }} </textarea>  </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -12172,17 +12185,17 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if($question['input_type'] == 'date')
-                                                    <input type="date" name="auditQualityControlChecklist[{{ $index }}][response]"  value="{{ $auditQualityControlChecklist->data[$index]['response']  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    <input type="date" name="auditQualityControlChecklist[{{ $index }}][response]"  value="{{ $auditQualityControlChecklist->data[$index]['response'] ?? ''  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif($question['input_type'] == 'text')
-                                                    <input type="text" name="auditQualityControlChecklist[{{ $index }}][response]" value="{{ $auditQualityControlChecklist->data[$index]['response']  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    <input type="text" name="auditQualityControlChecklist[{{ $index }}][response]" value="{{ $auditQualityControlChecklist->data[$index]['response'] ?? ''  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif($question['input_type'] == 'number')
-                                                    <input type="number" name="auditQualityControlChecklist[{{ $index }}][response]" placeholder="Enter value here" value="{{ $auditQualityControlChecklist->data[$index]['response']  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    <input type="number" name="auditQualityControlChecklist[{{ $index }}][response]" placeholder="Enter value here" value="{{ $auditQualityControlChecklist->data[$index]['response'] ?? ''  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif($question['input_type'] == 'select')
                                                     <select name="auditQualityControlChecklist[{{ $index }}][response]" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ isset($auditQualityControlChecklist->data[$index]['response']) && $auditQualityControlChecklist->data[$index]['response'] == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ isset($auditQualityControlChecklist->data[$index]['response']) && $auditQualityControlChecklist->data[$index]['response'] == "No" ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ isset($auditQualityControlChecklist->data[$index]['response']) && $auditQualityControlChecklist->data[$index]['response'] == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ ($auditQualityControlChecklist->data[$index]['response'] ?? '') == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ ($auditQualityControlChecklist->data[$index]['response'] ?? '') == "No" ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ ($auditQualityControlChecklist->data[$index]['response'] ?? '') == "N/A" ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @else
                                                     <label>{{ $question['question'] }}</label>
@@ -12191,7 +12204,7 @@ $checklistqualitycontrol = [
                                             </td>
                                             <td style="vertical-align: middle;">
                                                 <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="auditQualityControlChecklist[{{ $index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;"> {{ array_key_exists('remarks', $auditQualityControlChecklist->data[$index]) ? $auditQualityControlChecklist->data[$index]['remarks'] : '' }} </textarea>  </div>
+                                                    <textarea name="auditQualityControlChecklist[{{ $index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;"> {{ $auditQualityControlChecklist->data[$index]['remarks'] ?? '' }} </textarea>  </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -12245,17 +12258,17 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                 @if($question['input_type'] == 'date')
-                                                <input type="date" name="auditQualityAssuranceChecklist[{{ $index }}][response]"  value="{{ $auditQualityAssuranceChecklist->data[$index]['response']  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                <input type="date" name="auditQualityAssuranceChecklist[{{ $index }}][response]"  value="{{ $auditQualityAssuranceChecklist->data[$index]['response'] ?? ''  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @elseif($question['input_type'] == 'text')
-                                                <input type="text" name="auditQualityAssuranceChecklist[{{ $index }}][response]" value="{{ $auditQualityAssuranceChecklist->data[$index]['response']  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                <input type="text" name="auditQualityAssuranceChecklist[{{ $index }}][response]" value="{{ $auditQualityAssuranceChecklist->data[$index]['response'] ?? ''  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @elseif($question['input_type'] == 'number')
-                                                <input type="number" name="auditQualityAssuranceChecklist[{{ $index }}][response]" value="{{ $auditQualityAssuranceChecklist->data[$index]['response']  }}" placeholder="Enter value here" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                <input type="number" name="auditQualityAssuranceChecklist[{{ $index }}][response]" value="{{ $auditQualityAssuranceChecklist->data[$index]['response'] ?? ''  }}" placeholder="Enter value here" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @elseif($question['input_type'] == 'select')
                                                 <select name="auditQualityAssuranceChecklist[{{ $index }}][response]" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" {{ isset($auditQualityAssuranceChecklist->data[$index]['response']) && $auditQualityAssuranceChecklist->data[$index]['response'] == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                    <option value="No" {{ isset($auditQualityAssuranceChecklist->data[$index]['response']) && $auditQualityAssuranceChecklist->data[$index]['response'] == "No" ? 'selected' : '' }}>No</option>
-                                                    <option value="N/A" {{ isset($auditQualityAssuranceChecklist->data[$index]['response']) && $auditQualityAssuranceChecklist->data[$index]['response'] == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                    <option value="Yes" {{ ($auditQualityAssuranceChecklist->data[$index]['response'] ?? '') == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                    <option value="No" {{ ($auditQualityAssuranceChecklist->data[$index]['response'] ?? '') == "No" ? 'selected' : '' }}>No</option>
+                                                    <option value="N/A" {{ ($auditQualityAssuranceChecklist->data[$index]['response'] ?? '') == "N/A" ? 'selected' : '' }}>N/A</option>
                                                 </select>
                                                 @endif
                                             </div>
@@ -12321,23 +12334,23 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                 @if($question['input_type'] == 'date')
-                                                <input type="date" name="auditPackagingChecklist[{{ $index }}][response]" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                <input type="date" name="auditPackagingChecklist[{{ $index }}][response]" value="{{ $auditPackagingChecklist->data[$index]['response'] ?? ''  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @elseif($question['input_type'] == 'text')
-                                                <input type="text" name="auditPackagingChecklist[{{ $index }}][response]" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                <input type="text" name="auditPackagingChecklist[{{ $index }}][response]" value="{{ $auditPackagingChecklist->data[$index]['response'] ?? ''  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @elseif($question['input_type'] == 'number')
-                                                <input type="number" name="auditPackagingChecklist[{{ $index }}][response]" placeholder="Enter value here" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                <input type="number" name="auditPackagingChecklist[{{ $index }}][response]" value="{{ $auditPackagingChecklist->data[$index]['response'] ?? ''  }}" placeholder="Enter value here" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @elseif($question['input_type'] == 'select')
                                                 <select name="auditPackagingChecklist[{{ $index }}][response]" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" {{ isset($auditPackagingChecklist->data[$index]['response']) && $auditPackagingChecklist->data[$index]['response'] == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                    <option value="No" {{ isset($auditPackagingChecklist->data[$index]['response']) && $auditPackagingChecklist->data[$index]['response'] == "No" ? 'selected' : '' }}>No</option>
-                                                    <option value="N/A" {{ isset($auditPackagingChecklist->data[$index]['response']) && $auditPackagingChecklist->data[$index]['response'] == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                    <option value="Yes" {{ ($auditPackagingChecklist->data[$index]['response'] ?? '') == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                    <option value="No" {{ ($auditPackagingChecklist->data[$index]['response'] ?? '') == "No" ? 'selected' : '' }}>No</option>
+                                                    <option value="N/A" {{ ($auditPackagingChecklist->data[$index]['response'] ?? '') == "N/A" ? 'selected' : '' }}>N/A</option>
                                                 </select>
                                                 @elseif($question['input_type'] == 'select_special')
                                                 <select name="auditPackagingChecklist[{{ $index }}][response]" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" {{ isset($auditPackagingChecklist->data[$index]['response']) && $auditPackagingChecklist->data[$index]['response'] == "Supplier-Contractor" ? 'selected' : '' }}>Supplier-Contractor</option>
-                                                    <option value="No" {{ isset($auditPackagingChecklist->data[$index]['response']) && $auditPackagingChecklist->data[$index]['response'] == "Owned" ? 'selected' : '' }}>Owned</option>
+                                                    <option value="Supplier-Contractor" {{ ($auditPackagingChecklist->data[$index]['response'] ?? '') == "Supplier-Contractor" ? 'selected' : '' }}>Supplier-Contractor</option>
+                                                    <option value="Owned" {{ ($auditPackagingChecklist->data[$index]['response'] ?? '') == "Owned" ? 'selected' : '' }}>Owned</option>
                                                 </select>
                                                 @endif
                                             </div>
@@ -12407,17 +12420,17 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                 @if($question['input_type'] == 'date')
-                                                <input type="date" name="auditSheChecklist[{{ $index }}][response]" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                <input type="date" name="auditSheChecklist[{{ $index }}][response]" value="{{ $auditSheChecklist->data[$index]['response'] ?? ''  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @elseif($question['input_type'] == 'text')
-                                                <input type="text" name="auditSheChecklist[{{ $index }}][response]" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                <input type="text" name="auditSheChecklist[{{ $index }}][response]" value="{{ $auditSheChecklist->data[$index]['response'] ?? ''  }}" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @elseif($question['input_type'] == 'number')
-                                                <input type="number" name="auditSheChecklist[{{ $index }}][response]" placeholder="Enter value here" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                <input type="number" name="auditSheChecklist[{{ $index }}][response]" value="{{ $auditSheChecklist->data[$index]['response'] ?? ''  }}" placeholder="Enter value here" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                 @elseif($question['input_type'] == 'select')
                                                 <select name="auditSheChecklist[{{ $index }}][response]" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes" {{ isset($auditSheChecklist->data[$index]['response']) && $auditSheChecklist->data[$index]['response'] == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                    <option value="No" {{ isset($auditSheChecklist->data[$index]['response']) && $auditSheChecklist->data[$index]['response'] == "No" ? 'selected' : '' }}>No</option>
-                                                    <option value="N/A" {{ isset($auditSheChecklist->data[$index]['response']) && $auditSheChecklist->data[$index]['response'] == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                    <option value="Yes" {{ ($auditSheChecklist->data[$index]['response'] ?? '') == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                    <option value="No" {{ ($auditSheChecklist->data[$index]['response'] ?? '') == "No" ? 'selected' : '' }}>No</option>
+                                                    <option value="N/A" {{ ($auditSheChecklist->data[$index]['response'] ?? '') == "N/A" ? 'selected' : '' }}>N/A</option>
                                                 </select>
                                                 @endif
                                             </div>
@@ -12434,13 +12447,12 @@ $checklistqualitycontrol = [
                             </table>
                         </div>
                     </div>
-                </div>
                 
-                            </div>
+                           
                                 <div class="col-md-12 mb-4">
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
-                                    <textarea class="summernote" name="auditSheChecklist_comment" id="summernote-1"> {{ $gridcomment->auditSheChecklist_comment }}</textarea>
+                                    <textarea class="summernote" name="auditSheChecklist_comment_main" id="summernote-1"> {{ $data->auditSheChecklist_comment_main }}</textarea>
 
                                 </div>
                             </div>
@@ -12451,8 +12463,8 @@ $checklistqualitycontrol = [
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="auditSheChecklist_attachment">
-                                                @if ($data->auditSheChecklist_attachment)
-                                                @foreach(json_decode($data->auditSheChecklist_attachment) as $file)
+                                                @if ($data->auditSheChecklist_attachment_main)
+                                                @foreach(json_decode($data->auditSheChecklist_attachment_main) as $file)
                                                 <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
@@ -12463,12 +12475,13 @@ $checklistqualitycontrol = [
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="auditSheChecklist_attachment[]"
+                                                <input type="file" id="myfile" name="auditSheChecklist_attachment_main[]"
                                                     oninput="addMultipleFiles(this, 'auditSheChecklist_attachment')" multiple>
                                             </div>
                                         </div>
                                 </div>
                             </div>
+                    </div>  
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
