@@ -17,10 +17,6 @@ return new class extends Migration
             $table->longText('through_req')->nullable();
             $table->string('Months')->nullable();
         });
-        Schema::table('audit_program_grids', function (Blueprint $table) {
-            $table->longText('through_req')->nullable();
-            $table->string('Months')->nullable();
-        });
     }
 
     /**
