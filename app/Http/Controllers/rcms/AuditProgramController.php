@@ -77,6 +77,8 @@ class AuditProgramController extends Controller
         $data->due_date = $request->due_date;
         $data->type = $request->type;
         $data->year = $request->year;
+        $data->through_req = $request->through_req;
+        $data->Months = $request->Months;
         $data->Quarter = $request->Quarter;
         $data->description = $request->description;
         $data->comments = $request->comments;
@@ -124,30 +126,7 @@ class AuditProgramController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-       // ----------------grid-------
-        $data1 = new AuditProgramGrid();
-        $data1->audit_program_id = $data->id;
 
-        if (!empty($request->serial_number)) {
-            $data1->serial_number = serialize($request->serial_number);
-        }
-        if (!empty($request->Auditees)) {
-            $data1->auditor = serialize($request->Auditees);
-        }
-        if (!empty($request->start_date)) {
-            $data1->start_date = serialize($request->start_date);
-        }
-        if (!empty($request->end_date)) {
-            $data1->end_date = serialize($request->end_date);
-        }
-        if (!empty($request->lead_investigator)) {
-            $data1->lead_investigator = serialize($request->lead_investigator);
-        }
-        
-        if (!empty($request->comment)) {
-            $data1->comment = serialize($request->comment);
-        }
-        $data1->save();
 
 
         if (!empty($data->short_description)) {
@@ -511,6 +490,36 @@ class AuditProgramController extends Controller
             $history->save();
           
         }
+        if (!empty($data->Months)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Months';
+            $history->previous = "Null";
+            $history->current = $data->Months;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+          
+        }
+        if (!empty($data->through_req)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'type(Others)';
+            $history->previous = "Null";
+            $history->current = $data->through_req;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+          
+        }
            $audit_program_id = $data->id;
         $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program' ])->firstOrCreate();
         $newDataMeetingManagement->ci_id = $audit_program_id;
@@ -544,6 +553,7 @@ class AuditProgramController extends Controller
 
         return redirect('rcms/qms-dashboard');
     }
+
     public function UpdateAuditProgram(request $request, $id)
     {
 
@@ -570,6 +580,8 @@ class AuditProgramController extends Controller
         $data->initiator_group_code = $request->initiator_group_code;
         $data->type = $request->type;
         $data->year = $request->year;
+        $data->through_req = $request->through_req;
+        $data->Months = $request->Months;
         $data->Quarter = $request->Quarter;
         $data->description = $request->description; 
         $data->comments = $request->comments;
@@ -1074,6 +1086,45 @@ class AuditProgramController extends Controller
             $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
             $history->save();
         }
+         if($lastDocument->Months !=$data->Months || !empty($request->Months_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'Months')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Months';
+            $history->previous =  $lastDocument->Months;
+            $history->current = $data->Months;
+            $history->comment = $request->Months_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+         if($lastDocument->through_req !=$data->through_req || !empty($request->through_req_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'Type(Others)')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Type(Others)';
+            $history->previous =  $lastDocument->through_req;
+            $history->current = $data->through_req;
+            $history->comment = $request->through_req_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+        
            $audit_program_id = $data->id;
         $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program' ])->firstOrCreate();
         $newDataMeetingManagement->ci_id = $audit_program_id;
@@ -1535,4 +1586,5 @@ class AuditProgramController extends Controller
             return $pdf->stream('AuditProgram-AuditTrial' . $id . '.pdf');
         }
     }
+    
 }
