@@ -817,4 +817,16 @@ class Helpers
             return 'NA';
         }
     }
+    public static function getmonthFormat($date)
+    {
+        if(empty($date)) {
+            return ''; // or any default value you prefer
+        }
+       else{
+            $date = Carbon::parse($date);
+            $formatted_date = $date->format("M-Y");
+            return $formatted_date;
+        }
+
+    }
 }

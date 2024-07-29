@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('ci_id')->nullable();
             $table->string('identifier')->nullable();
             $table->longText('data')->nullable();
+            $table->longText('comment')->nullable();
             $table->timestamps();
         });
     }
