@@ -80,6 +80,7 @@ class ObservationController extends Controller
         // $data->attach_files_gi = json_encode($files);
 
         $data->recomendation_capa_date_due = $request->recomendation_capa_date_due;
+        $data->audit_response_date = $request->audit_response_date;
         $data->non_compliance = $request->non_compliance;
         $data->recommend_action = $request->recommend_action;
         $data->date_Response_due2 = $request->date_Response_due2;
@@ -440,6 +441,22 @@ if(!empty($request->attach_files2)){
         $history->activity_type = 'Recomendation Due Date for CAPA';
         $history->previous = "Null";
         $history->current = $data->recomendation_capa_date_due;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+        $history->save();
+    }
+    if (!empty($data->audit_response_date)) {
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Recomendation Due Date for CAPA';
+        $history->previous = "Null";
+        $history->current = $data->audit_response_date;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -874,6 +891,7 @@ if(!empty($request->attach_files2)){
 
 
         $data->recomendation_capa_date_due = $request->recomendation_capa_date_due;
+        $data->audit_response_date = $request->audit_response_date;
         $data->non_compliance = $request->non_compliance;
         $data->recommend_action = $request->recommend_action;
         $data->date_Response_due2 = $request->date_Response_due2;
@@ -1254,6 +1272,23 @@ if(!empty($request->attach_files2)){
             $history->previous = $lastDocument->recomendation_capa_date_due;
             $history->current = $data->recomendation_capa_date_due;
             $history->comment = $request->recomendation_capa_date_due_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        if ($lastDocument->audit_response_date != $data->audit_response_date || !empty($request->audit_response_date_comment)) {
+
+            $history = new AuditTrialObservation();
+            $history->Observation_id = $id;
+            $history->activity_type = 'Recomendation Capa Date Due';
+            $history->previous = $lastDocument->audit_response_date;
+            $history->current = $data->audit_response_date;
+            $history->comment = $request->audit_response_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

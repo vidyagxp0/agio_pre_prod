@@ -101,7 +101,8 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('documents/generatePdf/{id}', [DocumentController::class, 'createPDF']);
 
     Route::get('documents/reviseCreate/{id}', [DocumentController::class, 'revise_create']);
-
+    Route::get('documents/printPDFAnx/{id}', [DocumentController::class, 'printPDFAnx'])->name('document.print.pdf');
+    Route::get('documents/printAnnexure/{document}/{annexure}', [DocumentController::class, 'printAnnexure'])->name('document.print.annexure');
     Route::get('documents/printPDF/{id}', [DocumentController::class, 'printPDF']);
     Route::get('documents/viewpdf/{id}', [DocumentController::class, 'viewPdf']);
     Route::resource('documentsContent', DocumentContentController::class);

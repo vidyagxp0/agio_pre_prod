@@ -259,6 +259,8 @@
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date"> Due Date </label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                reason in "Due Date Extension Justification" data field.</small></div>
                                         <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
                                             value="{{ \Carbon\Carbon::parse($due_date)->format('d-M-Y') }}" />
                                         <input type="hidden" name="due_date" id="due_date_input"
@@ -362,12 +364,12 @@
                                     });
                                 </script>
                                 <!-- <div class="col-12">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="Short Description"><b>Short Description <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span></b></label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div><small class="text-primary">Please mention brief summary</small></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <textarea name="short_description"></textarea>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="Short Description"><b>Short Description <span
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span></b></label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <textarea name="short_description"></textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>                                                                                                                                                                                                                                                                                                                    </div> -->
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -383,11 +385,12 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
                                         <div><small class="text-primary">Please select related information</small></div>
-                                        <select nam="einitiated_through"
+                                        <select name="initiated_through"
                                             onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="recall">Recall</option>
@@ -402,35 +405,16 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="initiated_through_req">
-                                        <label for="initiated_through">Others<span
-                                                class="text-danger d-none">*</span></label>
-                                        <textarea name="initiated_through_req"></textarea>
+                                    <div class="group-input" id="initiated_through_req" style="display: none;">
+                                        <label for="initiated_through">Others<span class="text-danger">*</span></label>
+                                        <textarea name="initiated_through_req" id="initiated_through_req_textarea"></textarea>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="repeat">Repeat</label>
-                                        <select name="repeat"
-                                            onchange="otherController(this.value, 'yes', 'repeat_nature')">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input" id="repeat_nature">
-                                        <label for="repeat_nature">Repeat Nature<span
-                                                class="text-danger d-none">*</span></label>
-                                        <textarea name="repeat_nature"></textarea>
-                                    </div>
-                                </div> --}}
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Type">Type</label>
-                                        <select name="type">
+                                        <select name="type" id="type">
                                             <option value="">-- Select --</option>
                                             <option value="other">Other</option>
                                             <option value="annual">Annual</option>
@@ -440,12 +424,39 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="initiated_through_req">
-                                        <label for="type">Type(Others)<span
-                                                class="text-danger d-none">*</span></label>
-                                        <textarea name="initiated_through_req"></textarea>
+                                    <div class="group-input" id="through_req" style="display: none;">
+                                        <label for="type">Type(Others)<span class="text-danger">*</span></label>
+                                        <textarea name="through_req" id="through_req_textarea"></textarea>
                                     </div>
                                 </div>
+
+                                <script>
+                                    function otherController(value, triggerValue, targetId) {
+                                        var targetElement = document.getElementById(targetId);
+                                        var textarea = targetElement.querySelector('textarea');
+                                        if (value === triggerValue) {
+                                            targetElement.style.display = 'block';
+                                            textarea.setAttribute('required', 'required');
+                                        } else {
+                                            targetElement.style.display = 'none';
+                                            textarea.removeAttribute('required');
+                                        }
+                                    }
+
+                                    $(document).ready(function() {
+                                        $('#type').change(function() {
+                                            if ($(this).val() === 'other') {
+                                                $('#through_req').show();
+                                                $('#through_req_textarea').prop('required', true);
+                                            } else {
+                                                $('#through_req').hide();
+                                                $('#through_req_textarea').prop('required', false);
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Year">Year</label>
@@ -468,6 +479,26 @@
                                             <option value="2038">2038</option>
                                             <option value="2039">2039</option>
                                             <option value="2040">2040</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Months">Months</label>
+                                        <select name="Months">
+                                            <option value="">-- Select --</option>
+                                            <option value="January">January</option>
+                                            <option value="February">February</option>
+                                            <option value="March">March</option>
+                                            <option value="April">April</option>
+                                            <option value="May">May</option>
+                                            <option value="June">June</option>
+                                            <option value="July">July</option>
+                                            <option value="August">August</option>
+                                            <option value="September">September</option>
+                                            <option value="October">October</option>
+                                            <option value="November">November</option>
+                                            <option value="December">December</option>
                                         </select>
                                     </div>
                                 </div>
@@ -588,79 +619,77 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial[]" value="1">
-                                                </td>
-                                                <td>
-                                                    <div class="group-input">
-
-                                                        <select name="audit_program[0][Auditees]" onchange="">
-
-                                                            <option value="">Select a value</option>
-                                                            @if ($users->isNotEmpty())
-                                                                @foreach ($users as $value)
-                                                                    <option value='{{ $value->name }}'>
-                                                                        {{ $value->name }}</option>
-                                                                @endforeach
-                                                            @endif
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                {{-- <td><input type="date" name="audit_program[0][Due_Date]"></td> --}}
-                                                <td>
-                                                    <div class="new-date-data-field">
-                                                        <div class="group-input input-date">
-                                                            <div class="calenderauditee">
-                                                                <input class="click_date" id="Due_Date" type="text"
-                                                                    name="audit_program[0][Due_Date]"
-                                                                    placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" name="audit_program[0][Due_Date]"
-                                                                    min="" id="Due_Date"
-                                                                    class="hide-input show_date"
-                                                                    style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                    oninput="handleDateInput(this, 'Due_Date')" />
+                                                <tr>
+                                                    <td><input disabled type="text" name="serial[]" value="1">
+                                                    </td>
+                                                    <td>
+                                                        <div class="group-input">
+                                                            <select name="audit_program[0][Auditees]">
+                                                                <option value="">Select a value</option>
+                                                                @if ($users->isNotEmpty())
+                                                                    @foreach ($users as $value)
+                                                                        <option value='{{ $value->name }}'>
+                                                                            {{ $value->name }}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <div class="calenderauditee">
+                                                                    <input class="click_date" id="Due_Date_0"
+                                                                        type="text" name="audit_program[0][Due_Date]"
+                                                                        placeholder="DD-MMM-YYYY" readonly />
+                                                                    <input type="date"
+                                                                        name="audit_program[0][Due_Date]"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                        class="hide-input" id="Due_Date_0_input"
+                                                                        class="hide-input show_date"
+                                                                        style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                        onchange="handleDateInput(this, 'Due_Date_0'); checkDate('Due_Date_0_input', 'End_date_0_input')" />
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="new-date-data-field">
-                                                        <div class="group-input input-date">
-                                                            <div class="calenderauditee">
-                                                                <input class="click_date" id="End_date" type="text"
-                                                                    name="audit_program[0][End_date]"
-                                                                    placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" name="audit_program[0][End_date]"
-                                                                    min="" id="End_date"
-                                                                    class="hide-input show_date"
-                                                                    style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                    oninput="handleDateInput(this, 'End_date')" />
+                                                    </td>
+                                                    <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <div class="calenderauditee">
+                                                                    <input class="click_date" id="End_date_0"
+                                                                        type="text" name="audit_program[0][End_date]"
+                                                                        placeholder="DD-MMM-YYYY" readonly />
+                                                                    <input type="date"
+                                                                        name="audit_program[0][End_date]" min=""
+                                                                        id="End_date_0_input" class="hide-input show_date"
+                                                                        style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                        onchange="handleDateInput(this, 'End_date_0'); checkDate('Due_Date_0_input', 'End_date_0_input')" />
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="group-input">
-
-                                                        <select name="audit_program[0][Lead_Investigator]" onchange="">
-
-                                                            <option value="">Select a value</option>
-                                                            @if ($users->isNotEmpty())
-                                                                @foreach ($users as $value)
-                                                                    <option value='{{ $value->name }}'>
-                                                                        {{ $value->name }}</option>
-                                                                @endforeach
-                                                            @endif
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td><input type="text" name="audit_program[0][Comment]"></td>
-                                                <td><button type="text" class="removeBtnaid">remove</button>
-                                                </td>
+                                                    </td>
+                                                    <td>
+                                                        <div class="group-input">
+                                                            <select name="audit_program[0][Lead_Investigator]">
+                                                                <option value="">Select a value</option>
+                                                                @if ($users->isNotEmpty())
+                                                                    @foreach ($users as $value)
+                                                                        <option value='{{ $value->name }}'>
+                                                                            {{ $value->name }}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td><input type="text" name="audit_program[0][Comment]"></td>
+                                                    <td><button type="button" class="removeBtnaid">remove</button></td>
+                                                </tr>
                                             </tbody>
-
                                         </table>
                                     </div>
                                 </div>
+
 
 
                                 <div class="group-input">
@@ -688,67 +717,7 @@
                                                 <td><input disabled type="text" name="serial[]" value="1">
                                                 </td>
                                                 <td>
-                                                    {{-- <select id="" placeholder="Select..."
-                                                        name="Self_Inspection[0][department]">
-                                                        <option value="">Select a department</option>
-                                                        <option value="Corporate Quality Assurance">Corporate Quality
-                                                            Assurance
-                                                        </option>
-                                                        <option value="Quality Assurance">Quality Assurance</option>
-                                                        <option value="Quality Control">Quality Control
-                                                        </option>
-                                                        <option value="Quality Control (Microbiology department)'">Quality
-                                                            Control (Microbiology department)'
-                                                        </option>
-                                                        <option value="Production General">Production General
-                                                        </option>
-                                                        <option value="Production Liquid Orals">Production Liquid Orals
-                                                        </option>
-                                                        <option value="Production Tablet and Powder">
-                                                            Production Tablet and Powder
-                                                        </option>
-                                                        <option
-                                                            value="Production External (Ointment, Gels, Creams and Liquid)">
-                                                            Production External (Ointment, Gels, Creams and Liquid)
-                                                        </option>
-                                                        <option value="Quality Assurance">Quality Assurance
-                                                        </option>
-                                                        <option value="Analytical Development Laboratory">Analytical
-                                                            Development Laboratory
-                                                        </option>
-                                                        <option value="Process Development Laboratory / Kilo lab">Process
-                                                            Development Laboratory / Kilo lab
-                                                        </option>
-                                                        <option value="Production Capsules">Production Capsules
 
-                                                        </option>
-                                                        <option value="Production Injectable">Production Injectable
-                                                        </option>
-                                                        <option value="Engineering">Engineering
-                                                        </option>
-                                                        <option value="Human Resource">Human Resource
-                                                        </option>
-                                                        <option value="Store">Store
-                                                        </option>
-                                                        <option value="Electronic Data Processing">Electronic Data
-                                                            Processing
-                                                        </option>
-                                                        <option value="Formulation Development">Formulation Development
-                                                        </option>
-                                                        <option value="Analytical research and Development Laboratory">
-                                                            Analytical research and Development Laboratory
-                                                        </option>
-                                                        <option value="Packaging Development">Packaging Development
-                                                        </option>
-                                                        <option value="Purchase Department">Purchase Department
-                                                        </option>
-                                                        <option value="Document Cell">Document Cell
-                                                        </option>
-                                                        <option value="Regulatory Affairs">Regulatory Affairs
-                                                        </option>
-                                                        <option value="Pharmacovigilance">Pharmacovigilance
-                                                        </option>
-                                                    </select> --}}
                                                     <select name="Self_Inspection[0][department]" id="department"
                                                         {{ isset($data->stage) && ($data->stage == 0 || $data->stage == 8) ? 'disabled' : '' }}>
                                                         <option selected disabled value="">---select---
@@ -865,35 +834,34 @@
                                 <div class="col-12">
                                     <div class="sub-head">Self Inspection Circular
                                     </div>
-                                </div>
-                                <div class="group-input">
-                                    <label for="audit-agenda-grid">
-                                        Self Inspection Circular
-                                        <button type="button" name="audit-agenda-grid"
-                                            id="Self_Inspection_circular">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered"
-                                            id="Self_Inspection_circular-field-instruction-modal">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 1%">Row#</th>
-                                                    <th style="width: 15%">Department</th>
-                                                    <th style="width: 15%">Audit Date</th>
-                                                    <th style="width: 16%">Name of Auditors</th>
-                                                    <th style="width: 3%">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <td><input disabled type="text" name="serial[]" value="1">
-                                                </td>
-                                                <td>
-                                                    {{-- <select id="" placeholder="Select..."
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Self Inspection Circular
+                                            <button type="button" name="audit-agenda-grid"
+                                                id="Self_Inspection_circular">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#observation-field-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered"
+                                                id="Self_Inspection_circular-field-instruction-modal">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 1%">Row#</th>
+                                                        <th style="width: 15%">Department</th>
+                                                        <th style="width: 15%">Audit Date</th>
+                                                        <th style="width: 16%">Name of Auditors</th>
+                                                        <th style="width: 3%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <td><input disabled type="text" name="serial[]" value="1">
+                                                    </td>
+                                                    <td>
+                                                        {{-- <select id="" placeholder="Select..."
                                                         name="Self_Inspection_circular[0][departments]">
                                                         <option value="">Select a department</option>
                                                         <option value="Corporate Quality Assurance">Corporate Quality
@@ -953,181 +921,183 @@
                                                         <option value="Pharmacovigilance">Pharmacovigilance
                                                         </option>
                                                     </select> --}}
-                                                    <select name="Self_Inspection_circular[0][departments]"
-                                                        id="departments"
-                                                        {{ isset($data->stage) && ($data->stage == 0 || $data->stage == 8) ? 'disabled' : '' }}>
-                                                        <option selected disabled value="">---select---
-                                                        </option>
-                                                        @foreach (Helpers::getDepartments() as $departments)
-                                                            <option value="{{ $departments }}"
-                                                                @if (isset($data->departments) && $data->departments == $departments) selected @endif>
-                                                                {{ $departments }}
+                                                        <select name="Self_Inspection_circular[0][departments]"
+                                                            id="departments"
+                                                            {{ isset($data->stage) && ($data->stage == 0 || $data->stage == 8) ? 'disabled' : '' }}>
+                                                            <option selected disabled value="">---select---
                                                             </option>
-                                                        @endforeach
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <div class="new-date-data-field">
-                                                        <div class="group-input input-date">
-                                                            <div class="calenderauditee">
-                                                                <input class="click_date" id="date_0_mfg_date"
-                                                                    type="text"
-                                                                    name="Self_Inspection_circular[0][info_mfg_date]"
-                                                                    placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"
-                                                                    name="Self_Inspection_circular[0][info_mfg_date]"
-                                                                    min="" id="date_0_mfg_date"
-                                                                    class="hide-input show_date"
-                                                                    style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                    oninput="handleDateInput(this, 'date_0_mfg_date')" />
+                                                            @foreach (Helpers::getDepartments() as $departments)
+                                                                <option value="{{ $departments }}"
+                                                                    @if (isset($data->departments) && $data->departments == $departments) selected @endif>
+                                                                    {{ $departments }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <div class="calenderauditee">
+                                                                    <input class="click_date" id="date_0_mfg_date"
+                                                                        type="text"
+                                                                        name="Self_Inspection_circular[0][info_mfg_date]"
+                                                                        placeholder="DD-MMM-YYYY" />
+                                                                    <input type="date"
+                                                                        name="Self_Inspection_circular[0][info_mfg_date]"
+                                                                        min="" id="date_0_mfg_date"
+                                                                        class="hide-input show_date"
+                                                                        style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                        oninput="handleDateInput(this, 'date_0_mfg_date')" />
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td><input type="text" name="Self_Inspection_circular[0][Auditor]">
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="removeBtns">remove</button>
-                                                </td>
-                                            </tbody>
-                                        </table>
+                                                    </td>
+                                                    <td><input type="text" name="Self_Inspection_circular[0][Auditor]">
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="removeBtns">remove</button>
+                                                    </td>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="comment">Comments</label>
-                                        <textarea name="comment"></textarea>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="comment">Comments</label>
+                                            <textarea name="comment"></textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Inv Attachments">File Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Attached_File"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attached_File[]"
-                                                    oninput="addMultipleFiles(this, 'Attached_File')" multiple>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Inv Attachments">File Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="Attached_File"></div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile" name="Attached_File[]"
+                                                        oninput="addMultipleFiles(this, 'Attached_File')" multiple>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="button-block">
+                                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white">
+                                            Exit </a> </button>
+                                </div>
                             </div>
-                            <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
+                        </div>
+                        <div id="CCForm3" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Submitted_By..">Submitted By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Submitted_On">Submitted On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Submitted_By..">Submitted Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Approved_By">Approved By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Approved_On">Approved On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Approved_On">Approved Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit_Completed_By">Audit Completed By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit_Completed_On">Audit Completed On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit_Completed_On">Audit Completed Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Rejected_By">Rejected By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Rejected_On">Rejected On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Rejected_On">Rejected Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Cancelled_By">Cancelled By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Cancelled_On">Cancelled On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Cancelled_On">Cancelled Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="button-block">
+                                    {{-- <button type="submit" class="saveButton">Save</button> --}}
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    {{-- <button type="submit">Submit</button> --}}
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white">
+                                            Exit </a> </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div id="CCForm3" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted_By..">Submitted By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted_On">Submitted On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted_By..">Submitted Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Approved_By">Approved By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Approved_On">Approved On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Approved_On">Approved Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Audit_Completed_By">Audit Completed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Audit_Completed_On">Audit Completed On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Audit_Completed_On">Audit Completed Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Rejected_By">Rejected By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Rejected_On">Rejected On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Rejected_On">Rejected Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancelled_By">Cancelled By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancelled_On">Cancelled On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancelled_On">Cancelled Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                {{-- <button type="submit" class="saveButton">Save</button> --}}
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                {{-- <button type="submit">Submit</button> --}}
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </form>
         </div>
     </div>
@@ -1231,13 +1201,15 @@
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
                         '<input class="click_date" id="Due_Date_' + serialNumber +
-                        '_display" type="text" name="audit_program[' + serialNumber +
-                        '][Due_Date_display]" placeholder="DD-MMM-YYYY" readonly />' +
+                        '" type="text" name="audit_program[' + serialNumber +
+                        '][Due_Date]" placeholder="DD-MMM-YYYY" readonly />' +
                         '<input type="date" name="audit_program[' + serialNumber +
-                        '][Due_Date]" id="Due_Date_' +
-                        serialNumber +
-                        '" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'Due_Date_' +
-                        serialNumber + '_display\')" />' +
+                        '][Due_Date]" id="Due_Date_' + serialNumber +
+                        '_input"min="' + new Date().toISOString().split('T')[0] +
+                        '"  class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'Due_Date_' +
+                        serialNumber + '\'); checkDate(\'Due_Date_' + serialNumber +
+                        '_input\', \'End_date_' +
+                        serialNumber + '_input\')" />' +
                         '</div>' +
                         '</div>' +
                         '</div></td>' +
@@ -1245,21 +1217,21 @@
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
                         '<input class="click_date" id="End_date_' + serialNumber +
-                        '_display" type="text" name="audit_program[' + serialNumber +
-                        '][End_date_display]" placeholder="DD-MMM-YYYY" readonly />' +
+                        '" type="text" name="audit_program[' + serialNumber +
+                        '][End_date]" placeholder="DD-MMM-YYYY" readonly />' +
                         '<input type="date" name="audit_program[' + serialNumber +
-                        '][End_date_]" id="End_date_' +
-                        serialNumber +
-                        '" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'End_date_' +
-                        serialNumber + '_display\')" />' +
+                        '][End_date]" id="End_date_' + serialNumber +
+                        '_input" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'End_date_' +
+                        serialNumber + '\'); checkDate(\'Due_Date_' + serialNumber +
+                        '_input\', \'End_date_' +
+                        serialNumber + '_input\')" />' +
                         '</div>' +
                         '</div>' +
                         '</div></td>' +
                         '<td><div class="group-input"><select name="audit_program[' + serialNumber +
                         '][Lead_Investigator]"><option value="">Select a value</option>@foreach ($users as $value)<option value="{{ $value->name }}">{{ $value->name }}</option>@endforeach</select></div></td>' +
-                        '<td><input type="text" name="audit_program[' + serialNumber +
-                        '][Comment]"></td>' +
-                        '<td><button type="text" class="removeBtnaid">remove</button></td>' +
+                        '<td><input type="text" name="audit_program[' + serialNumber + '][Comment]"></td>' +
+                        '<td><button type="button" class="removeBtnaid">remove</button></td>' +
                         '</tr>';
 
                     return html;
@@ -1282,22 +1254,45 @@
                     $(this).siblings('.show_date').click();
                 });
             }
-        });
 
-        function handleDateInput(input, displayId) {
-            var dateValue = input.value;
-            var displayInput = document.getElementById(displayId);
-            if (displayInput) {
-                displayInput.value = dateValue;
-            }
-        }
+            window.handleDateInput = function(input, displayId) {
+                var dateValue = input.value;
+                var displayInput = document.getElementById(displayId);
+                if (displayInput) {
+                    displayInput.value = new Date(dateValue).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    }).replace(/ /g, '-');
+                }
+            };
+
+            window.checkDate = function(startDateId, endDateId) {
+                var startDateInput = document.getElementById(startDateId);
+                var endDateInput = document.getElementById(endDateId);
+
+                if (startDateInput && endDateInput) {
+                    var startDate = new Date(startDateInput.value);
+                    if (startDate) {
+                        endDateInput.min = startDate.toISOString().split('T')[0];
+                    }
+                }
+            };
+
+            // Initialize the date constraints for existing rows
+            $('input[id^="Due_Date_"]').each(function() {
+                var startDateId = $(this).attr('id') + '_input';
+                var endDateId = $(this).attr('id').replace('Due_Date_', 'End_date_') + '_input';
+                checkDate(startDateId, endDateId);
+            });
+        });
     </script>
     <script>
         $(document).ready(function() {
             // Function to generate a new row in the Self Inspection Planner table
             function generateTableRow(serialNumber) {
                 var departments = @json(Helpers::getDepartments());
-                var disabled = @json(isset($data->stage) && ($data->stage == 0 || $data->stage == 8));
+                var disabled = @json(isset($data->stage) && ($data->stage == 0 || $data->stage == 4));
                 var selectedDepartment = @json(isset($data->department) ? $data->department : '');
 
                 var departmentOptions = '<option selected disabled value="">---select---</option>';
@@ -1310,8 +1305,8 @@
                 var html = '<tr>' +
                     '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
                     '<td>' +
-                    '<select name="Self_Inspection[' + serialNumber + '][department]" id="department"' + (disabled ?
-                        ' disabled' : '') + '>' +
+                    '<select name="Self_Inspection[' + serialNumber + '][department]" id="department' +
+                    serialNumber + '"' + (disabled ? ' disabled' : '') + '>' +
                     departmentOptions +
                     '</select>' +
                     '</td>' +
@@ -1360,6 +1355,7 @@
             });
         });
     </script>
+
 
     <script>
         $(document).on('click', '.removeBtnaid', function() {

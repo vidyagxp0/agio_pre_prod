@@ -30,6 +30,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('attach_files1')->nullable();
             $table->string('recomendation_capa_date_due')->nullable();
+            $table->string('audit_response_date')->nullable();
             $table->text('non_compliance')->nullable();
             $table->text('recommend_action')->nullable();
             $table->text('related_observations')->nullable();

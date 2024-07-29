@@ -650,6 +650,21 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-6 new-date-data-field">
+                                            <div class="group-input input-date ">
+                                                <label for="capa_date_due">Audit Response Date</label>
+                                                <div class="calenderauditee">
+                                                    <input type="text" name="audit_response_date"
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        id="audit_response_date" readonly
+                                                        placeholder="DD-MMM-YYYY"
+                                                        value="{{ Helpers::getdateFormat($data->audit_response_date) }}" />
+                                                    <input type="date" class="hide-input"
+                                                        value="{{ Helpers::getdateFormat($data->audit_response_date) }}"
+                                                        oninput="handleDateInput(this, 'audit_response_date')" />
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="non_compliance">Non Compliance</label>
