@@ -26,10 +26,8 @@ return new class extends Migration
             $table->string('user_role');
             $table->string('change_to')->nullable();
             $table->string('change_from')->nullable();
-            $table->longText('through_req')->nullable();
             $table->string('action_name')->nullable();
             $table->string('action')->nullable();
-            $table->string('Months')->nullable();
             $table->text('Submitted_comment')->nullable();
             $table->text('approved_comment')->nullable();
             $table->text('reject_comment')->nullable();

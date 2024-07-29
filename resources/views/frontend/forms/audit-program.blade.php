@@ -364,12 +364,12 @@
                                     });
                                 </script>
                                 <!-- <div class="col-12">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="Short Description"><b>Short Description <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span></b></label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div><small class="text-primary">Please mention brief summary</small></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <textarea name="short_description"></textarea>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="Short Description"><b>Short Description <span
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span></b></label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <textarea name="short_description"></textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>                                                                                                                                                                                                                                                                                                                    </div> -->
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -834,35 +834,34 @@
                                 <div class="col-12">
                                     <div class="sub-head">Self Inspection Circular
                                     </div>
-                                </div>
-                                <div class="group-input">
-                                    <label for="audit-agenda-grid">
-                                        Self Inspection Circular
-                                        <button type="button" name="audit-agenda-grid"
-                                            id="Self_Inspection_circular">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered"
-                                            id="Self_Inspection_circular-field-instruction-modal">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 1%">Row#</th>
-                                                    <th style="width: 15%">Department</th>
-                                                    <th style="width: 15%">Audit Date</th>
-                                                    <th style="width: 16%">Name of Auditors</th>
-                                                    <th style="width: 3%">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <td><input disabled type="text" name="serial[]" value="1">
-                                                </td>
-                                                <td>
-                                                    {{-- <select id="" placeholder="Select..."
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Self Inspection Circular
+                                            <button type="button" name="audit-agenda-grid"
+                                                id="Self_Inspection_circular">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#observation-field-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered"
+                                                id="Self_Inspection_circular-field-instruction-modal">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 1%">Row#</th>
+                                                        <th style="width: 15%">Department</th>
+                                                        <th style="width: 15%">Audit Date</th>
+                                                        <th style="width: 16%">Name of Auditors</th>
+                                                        <th style="width: 3%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <td><input disabled type="text" name="serial[]" value="1">
+                                                    </td>
+                                                    <td>
+                                                        {{-- <select id="" placeholder="Select..."
                                                         name="Self_Inspection_circular[0][departments]">
                                                         <option value="">Select a department</option>
                                                         <option value="Corporate Quality Assurance">Corporate Quality
@@ -922,181 +921,183 @@
                                                         <option value="Pharmacovigilance">Pharmacovigilance
                                                         </option>
                                                     </select> --}}
-                                                    <select name="Self_Inspection_circular[0][departments]"
-                                                        id="departments"
-                                                        {{ isset($data->stage) && ($data->stage == 0 || $data->stage == 8) ? 'disabled' : '' }}>
-                                                        <option selected disabled value="">---select---
-                                                        </option>
-                                                        @foreach (Helpers::getDepartments() as $departments)
-                                                            <option value="{{ $departments }}"
-                                                                @if (isset($data->departments) && $data->departments == $departments) selected @endif>
-                                                                {{ $departments }}
+                                                        <select name="Self_Inspection_circular[0][departments]"
+                                                            id="departments"
+                                                            {{ isset($data->stage) && ($data->stage == 0 || $data->stage == 8) ? 'disabled' : '' }}>
+                                                            <option selected disabled value="">---select---
                                                             </option>
-                                                        @endforeach
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <div class="new-date-data-field">
-                                                        <div class="group-input input-date">
-                                                            <div class="calenderauditee">
-                                                                <input class="click_date" id="date_0_mfg_date"
-                                                                    type="text"
-                                                                    name="Self_Inspection_circular[0][info_mfg_date]"
-                                                                    placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"
-                                                                    name="Self_Inspection_circular[0][info_mfg_date]"
-                                                                    min="" id="date_0_mfg_date"
-                                                                    class="hide-input show_date"
-                                                                    style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                    oninput="handleDateInput(this, 'date_0_mfg_date')" />
+                                                            @foreach (Helpers::getDepartments() as $departments)
+                                                                <option value="{{ $departments }}"
+                                                                    @if (isset($data->departments) && $data->departments == $departments) selected @endif>
+                                                                    {{ $departments }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <div class="calenderauditee">
+                                                                    <input class="click_date" id="date_0_mfg_date"
+                                                                        type="text"
+                                                                        name="Self_Inspection_circular[0][info_mfg_date]"
+                                                                        placeholder="DD-MMM-YYYY" />
+                                                                    <input type="date"
+                                                                        name="Self_Inspection_circular[0][info_mfg_date]"
+                                                                        min="" id="date_0_mfg_date"
+                                                                        class="hide-input show_date"
+                                                                        style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                        oninput="handleDateInput(this, 'date_0_mfg_date')" />
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td><input type="text" name="Self_Inspection_circular[0][Auditor]">
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="removeBtns">remove</button>
-                                                </td>
-                                            </tbody>
-                                        </table>
+                                                    </td>
+                                                    <td><input type="text" name="Self_Inspection_circular[0][Auditor]">
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="removeBtns">remove</button>
+                                                    </td>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="comment">Comments</label>
-                                        <textarea name="comment"></textarea>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="comment">Comments</label>
+                                            <textarea name="comment"></textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Inv Attachments">File Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Attached_File"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attached_File[]"
-                                                    oninput="addMultipleFiles(this, 'Attached_File')" multiple>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Inv Attachments">File Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="Attached_File"></div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile" name="Attached_File[]"
+                                                        oninput="addMultipleFiles(this, 'Attached_File')" multiple>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="button-block">
+                                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white">
+                                            Exit </a> </button>
+                                </div>
                             </div>
-                            <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
+                        </div>
+                        <div id="CCForm3" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Submitted_By..">Submitted By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Submitted_On">Submitted On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Submitted_By..">Submitted Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Approved_By">Approved By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Approved_On">Approved On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Approved_On">Approved Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit_Completed_By">Audit Completed By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit_Completed_On">Audit Completed On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit_Completed_On">Audit Completed Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Rejected_By">Rejected By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Rejected_On">Rejected On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Rejected_On">Rejected Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Cancelled_By">Cancelled By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Cancelled_On">Cancelled On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Cancelled_On">Cancelled Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="button-block">
+                                    {{-- <button type="submit" class="saveButton">Save</button> --}}
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    {{-- <button type="submit">Submit</button> --}}
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white">
+                                            Exit </a> </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div id="CCForm3" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted_By..">Submitted By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted_On">Submitted On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted_By..">Submitted Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Approved_By">Approved By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Approved_On">Approved On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Approved_On">Approved Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Audit_Completed_By">Audit Completed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Audit_Completed_On">Audit Completed On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Audit_Completed_On">Audit Completed Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Rejected_By">Rejected By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Rejected_On">Rejected On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Rejected_On">Rejected Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancelled_By">Cancelled By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancelled_On">Cancelled On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Cancelled_On">Cancelled Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                {{-- <button type="submit" class="saveButton">Save</button> --}}
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                {{-- <button type="submit">Submit</button> --}}
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </form>
         </div>
     </div>
@@ -1291,7 +1292,7 @@
             // Function to generate a new row in the Self Inspection Planner table
             function generateTableRow(serialNumber) {
                 var departments = @json(Helpers::getDepartments());
-                var disabled = @json(isset($data->stage) && ($data->stage == 0 || $data->stage == 8));
+                var disabled = @json(isset($data->stage) && ($data->stage == 0 || $data->stage == 4));
                 var selectedDepartment = @json(isset($data->department) ? $data->department : '');
 
                 var departmentOptions = '<option selected disabled value="">---select---</option>';
@@ -1304,8 +1305,8 @@
                 var html = '<tr>' +
                     '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
                     '<td>' +
-                    '<select name="Self_Inspection[' + serialNumber + '][department]" id="department"' + (disabled ?
-                        ' disabled' : '') + '>' +
+                    '<select name="Self_Inspection[' + serialNumber + '][department]" id="department' +
+                    serialNumber + '"' + (disabled ? ' disabled' : '') + '>' +
                     departmentOptions +
                     '</select>' +
                     '</td>' +
@@ -1354,6 +1355,7 @@
             });
         });
     </script>
+
 
     <script>
         $(document).on('click', '.removeBtnaid', function() {

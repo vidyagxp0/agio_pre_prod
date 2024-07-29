@@ -496,7 +496,6 @@ class AuditProgramController extends Controller
             $history->activity_type = 'Months';
             $history->previous = "Null";
             $history->current = $data->Months;
-            $history->Months ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -512,7 +511,6 @@ class AuditProgramController extends Controller
             $history->activity_type = 'type(Others)';
             $history->previous = "Null";
             $history->current = $data->through_req;
-            $history->through_req ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
