@@ -64,12 +64,12 @@
                                     Cancel
                                 </button>
                             @elseif($data->stage == 2 && (in_array(14, $userRoleIds) || in_array(18, $userRoleIds)))
-                                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                 <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Effective
                                 </button>
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                     Not Effective
-                                </button> --}}
+                                </button>  -->
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Acknowledge Complete
                                 </button>
@@ -84,12 +84,12 @@
                                     More Information Required
                                 </button>
                             @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Effective Approval Completed
-                                </button> --}}
-                                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                </button> 
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                     More Information Required
-                                </button> --}}
+                                </button>  -->
                                   <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Effective
                                 </button>
@@ -113,6 +113,7 @@
                             @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                     </div>
+
 
                 </div>
                 <div class="status">
@@ -986,6 +987,7 @@
             </div>
         </div>
     </div>
+
 
     <style>
         #step-form>div {
