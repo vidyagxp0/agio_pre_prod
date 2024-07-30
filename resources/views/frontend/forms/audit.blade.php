@@ -138,6 +138,108 @@
             });
         });
     </script>
+
+<script>
+        $(document).ready(function() {
+            $('#internalaudit-observation').click(function(e) {
+
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="observations[0][serial_number]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="observations[' + serialNumber + '][observation]"></td>' +
+                        '<td><input type="text" name="observations[' + serialNumber + '][category]"></td>' +
+                        '<td><input type="text" name="observations[' + serialNumber + '][remarks]"></td>' +
+                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                        '</tr>';
+
+                    return html;
+                }
+
+                var tableBody = $('#internalaudit-odtable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
+<script>
+        $(document).ready(function() {
+            $('#internalaudit-auditorroles').click(function(e) {
+
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+
+                    var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="auditorroles[0][serial_number]" value="' + serialNumber +
+                    '"></td>' +
+                    '<td><input type="text" name="auditorroles[' + serialNumber + '][role]"></td>' +
+                    '<td><input type="text" name="auditorroles[' + serialNumber + '][name]"></td>' +
+                    '<td>' +
+                    '<div class="group-input new-date-data-field mb-0">' +
+                    '<div class="input-date ">' +
+                    '<div class="calenderauditee">' +
+                    '<input type="text" class="test" id="internal_start_date_' + serialNumber + '" readonly placeholder="DD-MMM-YYYY" />' +
+                    '<input type="date" id="internal_start_date_input_' + serialNumber + '" name="auditorroles[' + serialNumber + '][internal_start_date]" class="hide-input" oninput="handleDateInput(this, \'internal_start_date_' + serialNumber + '\'); checkDate(\'internal_start_date_' + serialNumber + '\',\'internal_start_date_checkdate_' + serialNumber + '\')" />' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</td>' +
+                    '<td><input type="text" name="auditorroles[' + serialNumber + '][remarks]"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+
+                return html;
+                }
+
+                var tableBody = $('#internalaudit-rolestab tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+      <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
+    </script>
+
+<script>
+        $(document).ready(function() {
+            $('#internalaudit-initial').click(function(e) {
+
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="Initial[0][serial_number]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][observation]"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][impact_assesment]"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][responsiblity]"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][remarks]"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][closure_date]"></td>' +
+                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                        '</tr>';
+
+                    return html;
+                }
+
+                var tableBody = $('#internalaudit-initialtable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
     <script>
         $(document).ready(function() {
             $('#ObservationAdd').click(function(e) {
@@ -204,7 +306,6 @@
             });
         });
     </script>
-
     <style>
         .calenderauditee {
             position: relative;
@@ -230,6 +331,13 @@
             width: 100%;
         }
     </style>
+<!-- 
+        <style>
+            .data  {
+                display: none;
+            }
+        </style> -->
+    
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -257,6 +365,7 @@
                       <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Audit Response & Closure</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
                       Granulation</button>
@@ -627,6 +736,18 @@
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+
+                            <!-- <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="checklists">Checklists</label>
+                                    <select multiple id="checklists" name="checklists[]" onchange="showData()">
+                                        <option value="CCForm11">Checklist - Tablet Dispensing & Granulation</option>
+                                        <option value="CCForm12">Checklist - Tablet Compression</option>
+                                        <option value="CCForm13">Checklist - Tablet Coating</option>
+                                    </select>
+                                </div>
+                            </div> -->
+
                                 <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Audit  Start </label>
@@ -1119,6 +1240,97 @@
                         </div>
                     </div>
 
+                    <div id="CCForm25" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                               
+                            <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Internal Audit (Observations/Discrepancy)<button type="button" name="audit-agenda-grid"
+                                                id="internalaudit-observation">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="internalaudit-odtable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 120px;">Sr. No</th>
+                                                    <th>Observations/Discrepancy</th>
+                                                    <th>Category</th>
+                                                    <th>Remarks</th>
+                                                    <th style="width: 15%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="observations[0][serial_number]" value="1">
+                                                </td>
+                                                <td><input type="text" name="observations[0][observation]"></td>
+                                                <td><input type="text" name="observations[0][category]"></td>
+                                                <td><input type="text" name="observations[0][remarks]"></td>
+                                                <td>
+                                                    <button type="text"class="removeRowBtn">Remove</button>
+                                                </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Auditors Roles(Names)<button type="button" name="audit-agenda-grid"
+                                                id="internalaudit-auditorroles">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="internalaudit-rolestab">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 120px;">Sr. No</th>
+                                                    <th>Role</th>
+                                                    <th>Name</th>
+                                                    <th>Date</th>
+                                                    <th>Remarks</th>
+                                                    <th style="width: 15%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="auditorroles[0][serial_number]" value="1">
+                                                </td>
+                                                <td><input type="text" name="auditorroles[0][role]"></td>
+                                                <td><input type="text" name="auditorroles[0][name]"></td>
+                                                <td>
+                                                <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" class="test"
+                                                                    id="internal_start_date" readonly
+                                                                    placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" id="internal_start_date"
+                                                                    name="auditorroles[0][internal_start_date]"
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, `internal_start_date`);checkDate('internal_start_date','internal_start_date_checkdate')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><input type="text" name="auditorroles[0][remarks]"></td>
+                                                <td>
+                                                    <button type="text"class="removeRowBtn">Remove</button>
+                                                </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Audit Response & Closure content -->
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1135,7 +1347,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record</label>
-                                        <select multiple id="reference_record" name="refrence_record[]" id="">
+                                        <select multiple id="refrence_record" name="refrence_record[]" id="">
                                             <option value="">--Select---</option>
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
@@ -1145,6 +1357,41 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Initial Response<button type="button" name="audit-agenda-grid"
+                                                id="internalaudit-initial">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="internalaudit-initialtable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Sr. No</th>
+                                                    <th>Observation</th>
+                                                    <th>Response with impact assesment & CAPA (If Applicable)</th>
+                                                    <th>Responsibility</th>
+                                                    <th>Remarks</th>
+                                                    <th>Proposed Closure Date</th>
+                                                    <th style="width: 8%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="Initial[0][serial_number]" value="1">
+                                                </td>
+                                                <td><input type="text" name="Initial[0][observation]"></td>
+                                                <td><input type="text" name="Initial[0][impact_assesment]"></td>
+                                                <td><input type="text" name="Initial[0][responsiblity]"></td>
+                                                <td><input type="text" name="Initial[0][remarks]"></td>
+                                                <td><input type="text" name="Initial[0][closure_date]"></td>
+                                                <td>
+                                                    <button type="text"class="removeRowBtn">Remove</button>
+                                                </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Report Attachments">Report Attachments</label>
@@ -30031,7 +30278,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #checklists'
         });
 
         function openCity(evt, cityName) {

@@ -344,7 +344,8 @@ function addMultipleFiles(input, block_id) {
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Audit Response & Closure</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Audit Response & Closure</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
                             Granulation</button>
                            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Checklist - Tablet Compression</button>
@@ -1500,6 +1501,120 @@ function addMultipleFiles(input, block_id) {
                                 </div>
                             </div>
 
+
+                            
+                    <div id="CCForm25" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                               
+                            <div class="col-12">
+    <div class="group-input">
+        <label for="audit-agenda-grid">
+            Internal Audit (Observations/Discrepancy)
+            <button type="button" name="audit-agenda-grid" id="internalaudit-observation">+</button>
+        </label>
+        <table class="table table-bordered" id="internalaudit-odtable">
+            <thead>
+                <tr>
+                    <th style="width: 120px;">Sr. No</th>
+                    <th>Observations/Discrepancy</th>
+                    <th>Category</th>
+                    <th>Remarks</th>
+                    <th style="width: 15%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($grid_Data3 && is_array($grid_Data3->data))
+                    @foreach ($grid_Data3->data as $item)
+                        <tr>
+                            <td>
+                                <input disabled type="text" name="observations[{{ $loop->index }}][serial_number]" value="{{ $loop->index + 1 }}">
+                            </td>
+                            <td>
+                                <input type="text" name="observations[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}">
+                            </td>
+                            <td>
+                                <input type="text" name="observations[{{ $loop->index }}][category]" value="{{ isset($item['category']) ? $item['category'] : '' }}">
+                            </td>
+                            <td>
+                                <input type="text" name="observations[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}">
+                            </td>
+                            <td>
+                                <button type="button" class="removeRowBtn">Remove</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Auditors Roles(Names)<button type="button" name="audit-agenda-grid"
+                                                id="internalaudit-auditorroles">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="internalaudit-rolestab">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 120px;">Sr. No</th>
+                                                    <th>Role</th>
+                                                    <th>Name</th>
+                                                    <th>Date</th>
+                                                    <th>Remarks</th>
+                                                    <th style="width: 15%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @if ($grid_Data4 && is_array($grid_Data4->data))
+                                            @foreach ($grid_Data4->data as $item)
+                                              <tr>
+                                              <td><input disabled type="text" name="auditorroles[{{ $loop->index }}][serial_number]" value="{{ $loop->index + 1 }}" value="1">
+                                                </td>
+                                                <td><input type="text" name="auditorroles[{{ $loop->index }}][role]" value="{{ isset($item['role']) ? $item['role'] : '' }}" ></td>
+                                                <td><input type="text" name="auditorroles[{{ $loop->index }}][name]" value="{{ isset($item['name']) ? $item['name'] : '' }}"></td>
+                                                <td>
+                                                <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" class="test"
+                                                                    id="internal_start_date" readonly
+                                                                    placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" id="internal_start_date"
+                                                                    name="auditorroles[{{ $loop->index }}][internal_start_date]"
+                                                                    value="{{ isset($item['internal_start_date']) ? $item['internal_start_date'] : '' }}"
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, `internal_start_date`);checkDate('internal_start_date','internal_start_date_checkdate')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><input type="text" name="auditorroles[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}"></td>
+                                                <td>
+                                                    <button type="text"class="removeRowBtn">Remove</button>
+                                                </td>
+                                              </tr>
+                                              @endforeach
+                                              @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+
                             <!-- Audit Response & Closure content -->
                             <div id="CCForm5" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
@@ -1526,6 +1641,48 @@ function addMultipleFiles(input, block_id) {
                                                 </select>
                                             </div>
                                         </div>
+
+                                        
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Initial Response<button type="button" name="audit-agenda-grid"
+                                                id="internalaudit-initial">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="internalaudit-initialtable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Sr. No</th>
+                                                    <th>Observation</th>
+                                                    <th>Response with impact assesment & CAPA (If Applicable)</th>
+                                                    <th>Responsibility</th>
+                                                    <th>Remarks</th>
+                                                    <th>Proposed Closure Date</th>
+                                                    <th style="width: 8%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                @if ($grid_Data5 && is_array($grid_Data5->data))
+                                                    @foreach ($grid_Data5->data as $item)
+                                                <td><input disabled type="text" name="Initial[0][serial_number]" value="1">
+                                                </td>             
+                                                <td><input type="text" name="Initial[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}"></td>
+                                                <td><input type="text" name="Initial[{{ $loop->index }}][impact_assesment]" value="{{ isset($item['impact_assesment']) ? $item['impact_assesment'] : '' }}"></td>
+                                                <td><input type="text" name="Initial[{{ $loop->index }}][responsiblity]" value="{{ isset($item['responsiblity']) ? $item['responsiblity'] : '' }}"></td>
+                                                <td><input type="text" name="Initial[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}"></td>
+                                                <td><input type="text" name="Initial[{{ $loop->index }}][closure_date]" value="{{ isset($item['closure_date']) ? $item['closure_date'] : '' }}"></td>
+                                                <td>
+                                                    <button type="text"class="removeRowBtn">Remove</button>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Report Attachments">Report Attachments</label>
@@ -12863,6 +13020,111 @@ $checklistqualitycontrol = [
                     display: block;
                 }
             </style>
+
+
+<script>
+        $(document).ready(function() {
+            $('#internalaudit-observation').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var data = @json($grid_Data3);
+                    var html = ''; 
+                    html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="observations[0][serial_number]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="observations[' + serialNumber + '][observation]"></td>' +
+                        '<td><input type="text" name="observations[' + serialNumber + '][category]"></td>' +
+                        '<td><input type="text" name="observations[' + serialNumber + '][remarks]"></td>' +
+                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                        '</tr>';
+
+
+                    return html;
+                }
+
+                var tableBody = $('#internalaudit-odtable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
+<script>
+        $(document).ready(function() {
+            $('#internalaudit-auditorroles').click(function(e) {
+
+                function generateTableRow(serialNumber) {
+                    var users = @json($grid_Data4);
+
+                    var html = ''; 
+                    html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="auditorroles[0][serial_number]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="auditorroles[' + serialNumber + '][role]"></td>' +
+                        '<td><input type="text" name="auditorroles[' + serialNumber + '][name]"></td>' +
+                        '<td>' +
+                    '<div class="group-input new-date-data-field mb-0">' +
+                    '<div class="input-date ">' +
+                    '<div class="calenderauditee">' +
+                    '<input type="text" class="test" id="internal_start_date_' + serialNumber + '" readonly placeholder="DD-MMM-YYYY" />' +
+                    '<input type="date" id="internal_start_date_input_' + serialNumber + '" name="auditorroles[' + serialNumber + '][internal_start_date]" class="hide-input" oninput="handleDateInput(this, \'internal_start_date_' + serialNumber + '\'); checkDate(\'internal_start_date_' + serialNumber + '\',\'internal_start_date_checkdate_' + serialNumber + '\')" />' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</td>' +
+                     '<td><input type="text" name="auditorroles[' + serialNumber + '][remarks]"></td>' +
+                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                        '</tr>';
+
+                    return html;
+                }
+
+                var tableBody = $('#internalaudit-rolestab tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+      <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
+    </script>
+
+
+
+<script>
+   $(document).ready(function() {
+            $('#internalaudit-initial').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var data = @json($grid_Data5);
+                    var html = ''; 
+                    html =
+                    '<tr>' +
+                        '<td><input disabled type="text" name="Initial[0][serial_number]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][observation]"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][impact_assesment]"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][responsiblity]"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][remarks]"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][closure_date]"></td>' +
+                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                        '</tr>';
+
+
+                    return html;
+                }
+
+                var tableBody = $('#internalaudit-initialtable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
 
             <script>
                 VirtualSelect.init({

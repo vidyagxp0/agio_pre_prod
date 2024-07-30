@@ -10,6 +10,7 @@ use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_
 use App\Models\{IA_checklist_capsule_paking};
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
+use App\Models\InternalAuditObservationGrid;
 use App\Models\InternalAuditStageHistory;
 use App\Models\User;
 use App\Models\IA_checklist_compression;
@@ -228,6 +229,30 @@ class InternalauditController extends Controller
         $internalAudit->remark_63 = $request->remark_63;
         
         $internalAudit->save();
+
+        $internal_id = $internalAudit->id;
+        $newDataGridInternalAudit = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrCreate();
+        // dd($newDataGridInternalAudit);
+        $newDataGridInternalAudit->io_id = $internal_id;
+        $newDataGridInternalAudit->identifier = 'observations';
+        $newDataGridInternalAudit->data = $request->observations;
+        $newDataGridInternalAudit->save();
+
+        $internal_id = $internalAudit->id;
+        $newDataGridInternalAuditRoles = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
+        $newDataGridInternalAuditRoles->io_id = $internal_id;
+        $newDataGridInternalAuditRoles->identifier = 'auditorroles';
+        $newDataGridInternalAuditRoles->data = $request->auditorroles;
+        $newDataGridInternalAuditRoles->save();
+
+        $internal_id = $internalAudit->id;
+        $newDataGridInitialClosure = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
+        $newDataGridInitialClosure->io_id = $internal_id;
+        $newDataGridInitialClosure->identifier = 'Initial';
+        $newDataGridInitialClosure->data = $request->Initial;
+        $newDataGridInitialClosure->save();
+
+
 //------------------------------------response and remarks input---------------------------------
 //$internalaudit   = new table_cc_impactassement();
 
@@ -1644,6 +1669,29 @@ $Checklist_Capsule->save();
         }
 
         $internalAudit->update();
+        
+        $internal_id = $internalAudit->id;
+        $newDataGridInternalAudit = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrCreate();
+        // dd($newDataGridInternalAudit);
+        $newDataGridInternalAudit->io_id = $internal_id;
+        $newDataGridInternalAudit->identifier = 'observations';
+        $newDataGridInternalAudit->data = $request->observations;
+        $newDataGridInternalAudit->save();
+
+        $internal_id = $internalAudit->id;
+        $newDataGridInternalAuditRoles = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
+        $newDataGridInternalAuditRoles->io_id = $internal_id;
+        $newDataGridInternalAuditRoles->identifier = 'auditorroles';
+        $newDataGridInternalAuditRoles->data = $request->auditorroles;
+        $newDataGridInternalAuditRoles->save();
+
+        
+        $internal_id = $internalAudit->id;
+        $newDataGridInitialClosure = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
+        $newDataGridInitialClosure->io_id = $internal_id;
+        $newDataGridInitialClosure->identifier = 'Initial';
+        $newDataGridInitialClosure->data = $request->Initial;
+        $newDataGridInitialClosure->save();
 
         $ia_id = $internalAudit->id;
         // dd($ia_id);
@@ -2331,6 +2379,7 @@ $Checklist_Capsule->save();
 
     public function internalAuditShow($id)
     {
+        $internal_id = $id;
         $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
         $data = InternalAudit::find($id);
         $checklist1 = IA_checklist_tablet_compression::where('ia_id', $id)->first();
@@ -2370,10 +2419,14 @@ $Checklist_Capsule->save();
         $auditQualityAssuranceChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditQualityAssuranceChecklist'])->firstOrNew();
         $auditPackagingChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPackagingChecklist'])->firstOrNew();
         $auditSheChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditSheChecklist'])->firstOrNew();
-        $gridcomment = InternalAuditChecklistGrid::where(['ia_id' => $id])->first();
+        $gridcomment = InternalAuditChecklistGrid::where(['ia_id' => $id])->first();        
+        $grid_Data3 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrCreate();
+        $grid_Data4 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
+        $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
+
             // dd($gridcomment);
-        // return $gridcomment;
-        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist','gridcomment'));
+        // return $grid_Data2;
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist','gridcomment','grid_Data3','grid_Data4','grid_Data5'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)
