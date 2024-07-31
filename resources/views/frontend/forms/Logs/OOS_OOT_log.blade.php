@@ -22,61 +22,126 @@
         }
     </script>
 
-    <style>
+<style>
         header .header_rcms_bottom {
             display: none;
         }
 
-        .filter-sub {
+        .process-groups {
             display: flex;
-            gap: 16px;
-            margin-left: 13px
+        }
+
+        .process-groups > div {
+            flex: 1;
+            text-align: center;
+            background-color: white;
+        }
+
+        .process-groups .scope-bar {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .process-groups .scope-bar .print-btn {
+            margin-left: 5px;
+        }
+
+        .mt-1 {
+            margin-top: 1rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+
+        .bg-white {
+            background-color: white;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+
+        .flex-grow-2 {
+            flex: 2;
         }
 
         .filter-bar {
+            width: 100%;
             background-color: #f8f9fa;
             padding: 10px;
             border-radius: 5px;
+            display: flex;
+            flex-wrap: wrap;
         }
 
         .filter-item {
+            flex: 1 1 150px;
+            margin: 5px;
             display: flex;
             align-items: center;
-            margin-right: 20px;
-        }
-
-        .table-responsive {
-            height: 100vh;
-            overflow-x: scroll;
         }
 
         .filter-item label {
             margin-right: 10px;
         }
 
+        .form-control, .custom-select {
+            width: 100%;
+        }
+
+        .table-responsive {
+            height: 100vh;
+            overflow-x: auto;
+        }
+
         table {
-            overflow: scroll;
+            width: 100%;
+            table-layout: auto;
+        }
+
+        #spinner {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .filter-item {
+                flex: 1 1 100%;
+                margin: 5px 0;
+            }
         }
     </style>
 
     <div id="rcms-desktop">
-        <div class="process-groups">
-            <div class="active" onclick="openTab('internal-audit', this)">OOS / OOT Log</div>
+    <div class="process-groups">
+            <div class="scope-bar">
+                <button class="print-btn btn btn-primary">Print</button>
+            </div>
+            <div class="active" onclick="openTab('internal-audit', this)">OOS OOT Log</div>
+            <div class="third-div">Third Div Content</div>
         </div>
         <div class="main-content">
             <div class="container-fluid">
                 <div class="process-tables-list">
                     <div class="process-table active" id="internal-audit">
-                        <div class="mt-1 mb-2 bg-white" style="height: 65px">
+                        <div class="mt-1 mb-2 bg-white" style="height: auto; padding: 10px; margin: 5px;">
                             <div class="d-flex align-items-center">
                                 <div class="scope-bar ml-3">
-                                    <button style="width: 70px;margin-left:5px" class="print-btn btn btn-primary">Print</button>
+                                    <!-- <button style="width: 70px;margin-left:5px" class="print-btn btn btn-primary">Print</button> -->
                                 </div>
                                 <div class="flex-grow-2" style="margin-left:-50px; margin-bottom:12px">
                                     <div class="filter-bar d-flex justify-content-between">
                                         <div class="filter-item">
-                                            <label for="initiator_group">Department</label>
-                                            <select name="Initiator_Group" id="initiator_group" class="form-control">
+                                            <label for="initiator_group" >Department</label>
+                                            <select name="Initiator_Group" id="initiator_group" class="form-control w-100">
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="CQA">Corporate Quality Assurance</option>
                                                 <option value="QAB">Quality Assurance Biopharma</option>
