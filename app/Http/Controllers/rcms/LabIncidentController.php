@@ -2098,7 +2098,7 @@ class LabIncidentController extends Controller
         toastr()->success('Record is created Successfully');
 
         // return redirect('rcms/qms-dashboard');
-        return redirect()->to('rcms/qms-dashboard')->with('success', 'Market Complaint created successfully.');
+        return redirect()->to('rcms/qms-dashboard');
 
     }
     public function updateLabIncident(request $request, $id)
