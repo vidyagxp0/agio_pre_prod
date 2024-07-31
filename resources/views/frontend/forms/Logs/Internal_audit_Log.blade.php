@@ -323,7 +323,7 @@
                                     </thead>
                                     <tbody>
                                         <tbody id="tableData">
-                                            @include('frontend.forms.logs.filterData.internal_audit_data');
+                                            @include('frontend.forms.logs.filterData.internal_audit_data')
                                             
                                           </tbody>
 

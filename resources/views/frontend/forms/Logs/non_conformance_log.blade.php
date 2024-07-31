@@ -299,7 +299,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tableData">
-                                        @include('frontend.forms.Logs.filterData.nonconformancedata');
+                                        @include('frontend.forms.Logs.filterData.nonconformancedata')
                                     </tbody>
                                 </table>
                                 <div  style="margin-top: 10px; display: flex;  justify-content: center;">

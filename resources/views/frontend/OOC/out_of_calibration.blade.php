@@ -1620,8 +1620,8 @@ standard: Physical appearance, validity",
                         <option value="">Select Option</option>
                         <option value="Corrective Action">Corrective Action</option>
                         <option value="Preventive Action">Preventive Action</option>
-                        <option value="Correction">Correction</option>
-                        <option value="Preventive Measure">Preventive Measure</option>
+                        <option value="Correction">Correction & Preventive Action</option>
+                        <!-- <option value="Preventive Measure">Preventive Measure</option> -->
                     </select>
                 </div>
             </div>

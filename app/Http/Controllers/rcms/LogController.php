@@ -11,6 +11,7 @@ use App\Models\FailureInvestigation;
 use App\Models\lab_incidents_grid;
 use App\Models\MarketComplaintGrids;
 use App\Models\NonConformance;
+use App\Models\OOS_micro;
 use App\Models\LabIncident;
 use App\Models\Ootc;
 use App\Models\MarketComplaint;
@@ -95,9 +96,32 @@ class LogController extends Controller
                                               
             case 'oot':
             
-            $oots =  Ootc::get();
+                $oots =  Ootc::with('ProductGridOot')->get();
 
-            return view('frontend.forms.logs.OOS_OOT_log' , compact('oots'));
+                $ootss=[];
+                 // foreach($oots as $oo)
+            // {
+                // return $oo;
+
+            //     $gridata=$oo->ProductGridOot;
+            //     foreach ($gridata['data'] as $data) {
+            //         $ootss=[];
+            //         return[
+            //             'item_product_code'=>$data['item_product_code']
+            //         ];
+            //     }
+            // }
+            
+            // foreach($oots['data'] as $aaaa) {
+            //     return $aaaa;
+            // }
+            
+            
+                
+            $oosmicro = OOS_micro::get();
+
+            return view('frontend.forms.logs.OOS_OOT_log' , compact('oots','oosmicro'));
+
 
 
             case 'risk-management':

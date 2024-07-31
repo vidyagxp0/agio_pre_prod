@@ -32,9 +32,13 @@ $rowSpanCount = $incidentReportsCollection->sum(function($secondIncident) {
 <td>{{ isset($dataaas['name_of_product']) ? $dataaas['name_of_product'] : '' }}</td>
 <td>{{ isset($dataaas['batch_no']) ? $dataaas['batch_no'] : '' }}</td>
 
-@if($lablog->due_date)
-                <td>{{ Carbon::createFromFormat('Y-m-d', $lablog->due_date)->format('d-M-Y') }}</td>
- @endif
+<td>
+                    @if($lablog->due_date)
+                        {{ Carbon::createFromFormat('Y-m-d', $lablog->due_date)->format('d-M-Y') }}
+                    @else
+                        NA
+                    @endif
+                </td>
                 <td>{{ $lablog->closure_completed_on }}</td>
                 <td>{{ $lablog->status }}</td>
  
