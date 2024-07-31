@@ -34,20 +34,12 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Effectiveness check Results</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Closure Comments</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Reference Info/Comments</button>
                  <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button> 
             </div>
 
             <form action="{{ route('effectiveness.store') }}" method="post" , enctype="multipart/form-data">
                 @csrf
-
-                @if(!empty($parent_id))
-                    <input type="hidden" name="parent_id" value="{{ $parent_id }}">
-                    <input type="hidden" name="parent_type" value="{{ $parent_type }}">
-                    <input type="hidden" name="parent_record" value="{{ $parent_record }}">
-                @else 
-                    
-                @endif
                 <div id="step-form">
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -69,7 +61,7 @@
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                        {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -182,11 +174,19 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- Effectiveness check Results -->
-                                
+                                <div class="col-12 sub-head">
+                                    Effectiveness Summary
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness Summary">Effectiveness Summary</label>
+                                        <textarea type="text" name="effect_summary"></textarea>
+                                    </div>
+                                </div>
                                 <div class="col-12 sub-head">
                                     Effectiveness Check Results
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
                                         <textarea type="text" name="Effectiveness_Results"></textarea>
@@ -199,7 +199,7 @@
                                         <input type="file" id="myfile" name="Effectiveness_check_Attachment">
                                     </div>
                                 </div> -->
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -214,30 +214,21 @@
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
-                                    Effectiveness Summary
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <textarea type="text" name="effect_summary"></textarea>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-12 sub-head">
                                     Reopen
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Comments"><b>Addendum Comments</b></label>
                                         <textarea type="text" name="Addendum_Comments"></textarea>
                                     </div>
-                                </div> --}}
+                                </div>
                                 <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
                                         <input type="file" id="myfile" name="Addendum_Attachment">
                                     </div>
                                 </div> -->
-                                {{-- <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Attachments">Addendum Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -252,7 +243,7 @@
                                         </div>
 
                                     </div>
-                                </div> --}}
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -268,11 +259,11 @@
                             <div class="row">
                                 <!-- Reference Info comments -->
                                 <div class="col-12 sub-head">
-                                    Closure comments
+                                    Reference Info comments
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"><b> QA Comments</b></label>
+                                        <label for="Comments"><b>Comments</b></label>
                                         <textarea name="Comments"></textarea>
                                     </div>
                                 </div>
@@ -284,7 +275,7 @@
                                 </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Attachments">Closure Attachment</label>
+                                        <label for="Attachments">Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -305,7 +296,7 @@
                                         <input type="file" id="myfile" name="refer_record">
                                     </div>
                                 </div> -->
-                                {{-- <div class="col-12">
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Records</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -319,7 +310,7 @@
                                         </div>
 
                                     </div>
-                                </div> --}}
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
