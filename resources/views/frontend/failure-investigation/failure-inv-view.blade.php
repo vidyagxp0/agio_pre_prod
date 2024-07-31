@@ -1946,13 +1946,13 @@
                                     <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                             class="text-white"> Exit </a>
                                         </button>
-                                        @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
+                                        {{--  @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
                                             <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                                 class="button  launch_extension" data-bs-toggle="modal"
                                                 data-bs-target="#launch_extension">
                                                 Launch Extension
                                             </a>
-                                        @endif
+                                        @endif  --}}
                                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
@@ -2596,13 +2596,13 @@
                                     class="nextButton" onclick="nextStep()">Next</button>
                                 <button  style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                        @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
+                                        {{--  @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
                                         <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                             class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#launch_extension">
                                             Launch Extension
                                         </a>
-                                        @endif
+                                        @endif  --}}
                                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
@@ -2655,7 +2655,9 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                      @if($data1->RA_Review!=='yes')
                                         $('.ra_review').hide();
+
 
                                         $('[name="RA_Review"]').change(function() {
                                             if ($(this).val() === 'yes') {
@@ -2667,6 +2669,7 @@
                                                 $('.ra_review span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -2694,7 +2697,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -2974,7 +2977,9 @@
                                     Quality Assurance
                                 </div>
                                 <script>
-                                    $(document).ready(function() {
+                                    $(document).ready(function() 
+                                    {
+                                          @if($data1->Quality_Assurance_Review!=='yes')
                                         $('.QualityAssurance').hide();
 
                                         $('[name="Quality_Assurance_Review"]').change(function() {
@@ -2987,6 +2992,7 @@
                                                 $('.QualityAssurance span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -3288,6 +3294,7 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                          @if($data1->Production_Table_Review!=='yes')
                                         $('.productionTable').hide();
 
                                         $('[name="Production_Table_Review"]').change(function() {
@@ -3300,6 +3307,7 @@
                                                 $('.productionTable span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -3617,6 +3625,7 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                    @if($data1->ProductionLiquid_Review!=='yes')
                                         $('.productionLiquid').hide();
 
                                         $('[name="ProductionLiquid_Review"]').change(function() {
@@ -3629,6 +3638,7 @@
                                                 $('.productionLiquid span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -3932,6 +3942,7 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                          @if($data1->Production_Injection_Review!=='yes')
                                         $('.productionInjection').hide();
 
                                         $('[name="Production_Injection_Review"]').change(function() {
@@ -3944,6 +3955,7 @@
                                                 $('.productionInjection span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -4263,6 +4275,8 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+
+                                    @if($data1->Store_Review!=='yes')
                                         $('.store').hide();
 
                                         $('[name="Store_Review"]').change(function() {
@@ -4275,6 +4289,7 @@
                                                 $('.store span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -4572,6 +4587,7 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                          @if($data1->Quality_review!=='yes')
                                         $('.qualityControl').hide();
 
                                         $('[name="Quality_review"]').change(function() {
@@ -4584,6 +4600,7 @@
                                                 $('.qualityControl span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -4880,6 +4897,8 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+
+                                          @if($data1->ResearchDevelopment_Review!=='yes')
                                         $('.researchDevelopment').hide();
 
                                         $('[name="ResearchDevelopment_Review"]').change(function() {
@@ -4892,6 +4911,7 @@
                                                 $('.researchDevelopment span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -5199,6 +5219,7 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                          @if($data1->Engineering_review!=='yes')
                                         $('.Engineering').hide();
 
                                         $('[name="Engineering_review"]').change(function() {
@@ -5211,6 +5232,7 @@
                                                 $('.Engineering span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -5509,6 +5531,8 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+
+                                          @if($data1->Human_Resource_review!=='yes')
                                         $('.Human_Resource').hide();
 
                                         $('[name="Human_Resource_review"]').change(function() {
@@ -5521,6 +5545,7 @@
                                                 $('.Human_Resource span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -5819,6 +5844,7 @@
                                 <script>
                                     $(document).ready(function() {
                                         $('.Microbiology').hide();
+                                          @if($data1->Microbiology_Review!=='yes')
 
                                         $('[name="Microbiology_Review"]').change(function() {
                                             if ($(this).val() === 'yes') {
@@ -5830,6 +5856,7 @@
                                                 $('.Microbiology span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -6128,6 +6155,7 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                         @if($data1->RegulatoryAffair_Review!=='yes')
                                         $('.RegulatoryAffair').hide();
 
                                         $('[name="RegulatoryAffair_Review"]').change(function() {
@@ -6140,6 +6168,7 @@
                                                 $('.RegulatoryAffair span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -6442,6 +6471,7 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                           @if($data1->CorporateQualityAssurance_Review!=='yes')
                                         $('.CQA').hide();
 
                                         $('[name="CorporateQualityAssurance_Review"]').change(function() {
@@ -6454,6 +6484,7 @@
                                                 $('.CQA span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -6772,6 +6803,7 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                    @if($data1->Environment_Health_review!=='yes')
                                         $('.safety').hide();
 
                                         $('[name="Environment_Health_review"]').change(function() {
@@ -6784,6 +6816,7 @@
                                                 $('.safety span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -7090,6 +7123,7 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                        @if($data1->Information_Technology_review!=='yes')
                                         $('.Information_Technology').hide();
 
                                         $('[name="Information_Technology_review"]').change(function() {
@@ -7102,6 +7136,7 @@
                                                 $('.Information_Technology span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -7410,6 +7445,7 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                          @if($data1->ContractGiver_Review!=='yes')
                                         $('.ContractGiver').hide();
 
                                         $('[name="ContractGiver_Review"]').change(function() {
@@ -7422,6 +7458,7 @@
                                                 $('.ContractGiver span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -7720,6 +7757,7 @@
                                     </div>
                                     <script>
                                         $(document).ready(function() {
+                                          @if($data1->Other1_review!=='yes')
                                             $('.other1_reviews').hide();
 
                                             $('[name="Other1_review"]').change(function() {
@@ -7731,6 +7769,7 @@
                                                     $('.other1_reviews span').hide();
                                                 }
                                             });
+                                            @endif
                                         });
                                     </script>
                                     <div class="col-lg-6">
@@ -7937,6 +7976,7 @@
                                     </div>
                                     <script>
                                         $(document).ready(function() {
+                                            @if($data1->Other2_review!=='yes')
                                             $('.Other2_reviews').hide();
 
                                             $('[name="Other2_review"]').change(function() {
@@ -7948,6 +7988,7 @@
                                                     $('.Other2_reviews span').hide();
                                                 }
                                             });
+                                            @endif
                                         });
                                     </script>
                                     <div class="col-lg-6">
@@ -8155,6 +8196,7 @@
                                     </div>
                                     <script>
                                         $(document).ready(function() {
+                                          @if($data1->Other3_review!=='yes')
                                             $('.Other3_reviews').hide();
 
                                             $('[name="Other3_review"]').change(function() {
@@ -8166,6 +8208,7 @@
                                                     $('.Other3_reviews span').hide();
                                                 }
                                             });
+                                            @endif
                                         });
                                     </script>
                                     <div class="col-lg-6">
@@ -8374,6 +8417,7 @@
                                     </div>
                                     <script>
                                         $(document).ready(function() {
+                                         @if($data1->Other4_review!=='yes')
                                             $('.Other4_reviews').hide();
 
                                             $('[name="Other4_review"]').change(function() {
@@ -8385,6 +8429,7 @@
                                                     $('.Other4_reviews span').hide();
                                                 }
                                             });
+                                            @endif
                                         });
                                     </script>
                                     <div class="col-lg-6">
@@ -8595,6 +8640,7 @@
                                     </div>
                                     <script>
                                         $(document).ready(function() {
+                                            @if($data1->Other5_review!=='yes')
                                             $('.Other5_reviews').hide();
 
                                             $('[name="Other5_review"]').change(function() {
@@ -8606,6 +8652,7 @@
                                                     $('.Other5_reviews span').hide();
                                                 }
                                             });
+                                            @endif
                                         });
                                     </script>
                                     <div class="col-lg-6">
@@ -10735,13 +10782,13 @@
                     <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button" class="nextButton" onclick="nextStep()">Next</button>
                     <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                             Exit </a> </button>
-                            @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
+                            {{--  @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
                             <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                             class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#launch_extension">
                                             Launch Extension
                                         </a>
-                                        @endif
+                                        @endif  --}}
                                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
@@ -11292,13 +11339,13 @@
                     <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button" class="nextButton" onclick="nextStep()">Next</button>
                     <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                             Exit </a> </button>
-                            @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
+                            {{--  @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
                             <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                             class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#launch_extension">
                                             Launch Extension
                                         </a>
-                                        @endif
+                                        @endif  --}}
                                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
@@ -11609,13 +11656,13 @@
                 <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button" class="nextButton" onclick="nextStep()">Next</button>
                 <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>
-                        @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
+                        {{--  @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
                         <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                             class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#launch_extension">
                                             Launch Extension
                                         </a>
-                                        @endif
+                                        @endif  --}}
                                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
@@ -12037,13 +12084,13 @@
                     <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                             Exit </a> </button>
 
-                            @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
+                            {{--  @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
                             <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                             class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#launch_extension">
                                             Launch Extension
                                         </a>
-                                        @endif
+                                        @endif  --}}
                                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
@@ -12167,13 +12214,13 @@
                         class="nextButton" onclick="nextStep()">Next</button>
                     <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                             Exit </a> </button>
-                            @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
+                            {{--  @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
                             <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                             class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#launch_extension">
                                             Launch Extension
                                         </a>
-                                        @endif
+                                        @endif  --}}
                                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
@@ -12950,13 +12997,13 @@
                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button" class="nextButton" onclick="nextStep()">Next</button>
                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                 Exit </a> </button>
-                                @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
+                                {{--  @if ($data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 )
                                 <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                             class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#launch_extension">
                                             Launch Extension
                                         </a>
-                                        @endif
+                                        @endif  --}}
                                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check

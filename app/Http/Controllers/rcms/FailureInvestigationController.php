@@ -5691,7 +5691,7 @@ class FailureInvestigationController extends Controller
                 if ($failureInvestigation->stage == 1) {
                     if ($failureInvestigation->form_progress !== 'general-open')
                     {
-                        dd('emnter');
+                       // dd('emnter');
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
