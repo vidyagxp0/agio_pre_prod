@@ -34,8 +34,8 @@ class CapaController extends Controller
         $cft = [];
         $old_records = Capa::select('id', 'division_id', 'record')->get();
         // Record number ko pad karke 4 digits ka bana rahe hain
-        $record = ((RecordNumber::first()->value('counter')) + 1);
-        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
     
         // Division ke hisaab se latest record check kar rahe hain
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
@@ -60,7 +60,7 @@ class CapaController extends Controller
             $cft = explode(',', $changeControl->cft);
         }
     
-        return view("frontend.forms.capa", compact('due_date', 'record', 'old_records', 'cft'));
+        return view("frontend.forms.capa", compact('due_date', 'record_number', 'old_records', 'cft'));
     }
     
     public function capastore(Request $request)

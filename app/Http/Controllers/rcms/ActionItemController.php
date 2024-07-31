@@ -77,7 +77,7 @@ class ActionItemController extends Controller
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
         //  $openState->Reference_Recores1 = implode(',', $request->related_records);
-         $openState->related_records = $request->related_records;
+         $openState->related_records = implode(',', $request->related_records);
 
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;

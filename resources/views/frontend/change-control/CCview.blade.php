@@ -8524,6 +8524,10 @@
                                 <input type="radio" name="revision" id="minor" value="Extension">
                                 Extension
                             </label>
+                            <label for="minor">
+                                <input type="radio" name="revision" id="minor" value="Action-Item">
+                                Action Item
+                            </label>
                             @if($data->stage == 3)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="RCA">
