@@ -104,7 +104,6 @@
                         @if (!empty($parent_id))
                                     <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                                     <input type="hidden" name="parent_type" value="{{ $parent_type }}">
-                                    <input type="hidden" name="parent_record" id="parent_record" value="{{ $parent_record }}">
                                 @endif
                         <div class="col-lg-6">
                             <div class="group-input">

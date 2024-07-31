@@ -11,6 +11,7 @@ use App\Models\RecordNumber;
 use App\Models\ExtensionAuditTrail;
 use App\Models\QMSDivision;
 use App\Models\User;
+use App\Models\ActionItem;
 use App\Models\RoleGroup;
 use App\Services\DocumentService;
 use PDF;
@@ -29,12 +30,15 @@ class ExtensionController extends Controller
 {
 
 
-    public function extension_child(Request $request)
+    public function extension_child(Request $request, $id)
     {
         
+        $data = ActionItem::find($id);
         $parent_due_date = "";
-        $parent_id = '';
-        $parent_name = $request->parent_name;
+        $parent_id = $data->id;
+        $parent_name = "Action-Item";
+        $parent_type = "Action-Item";
+        $actionItemDivision = $data->division_id;
         if ($request->due_date) {
             $parent_due_date = $request->due_date;
         }
@@ -57,7 +61,7 @@ class ExtensionController extends Controller
         if($request->child_type=='documents'){
             return redirect('documents/create');
         }
-        return view('frontend.forms.extension', compact('parent_id', 'parent_name','old_record', 'record_number', 'parent_due_date'));
+        return view('frontend.extension.extension_new', compact('parent_id', 'parent_name','old_record', 'record_number', 'parent_due_date','parent_type','actionItemDivision'));
     }
     public function index()
     {
