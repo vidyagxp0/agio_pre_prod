@@ -2809,30 +2809,31 @@
                                     </tr>
 
                                     <tbody>
-                                    @if($root_cause_data && is_array($root_cause_data))
+                                        @if($root_cause_data && is_array($root_cause_data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
                                         @foreach($root_cause_data as $rootCause_data)
                                             <tr>
                                                 <td class="w-20">{{ $serialNumber++ }}</td>
-                                                <td class="w-20">{{ $rootCause_data['rootCauseCategory'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['rootCauseSubCategory'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['ifOthers'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['probability'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['remarks'] }}</td>
+                                                <td class="w-20">{{ $rootCause_data['rootCauseCategory'] ?? '' }}</td>
+                                                <td class="w-20">{{ $rootCause_data['rootCauseSubCategory'] ?? '' }}</td>
+                                                <td class="w-20">{{ $rootCause_data['ifOthers'] ?? '' }}</td>
+                                                <td class="w-20">{{ $rootCause_data['probability'] ?? '' }}</td>
+                                                <td class="w-20">{{ $rootCause_data['remarks'] ?? '' }}</td>
                                             </tr>
                                         @endforeach
                                     @else
-                                            <tr>
-                                                <td class="w-20">1</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                            </tr>
+                                        <tr>
+                                            <td class="w-20">1</td>
+                                            <td class="w-20">Not Applicable</td>
+                                            <td class="w-20">Not Applicable</td>
+                                            <td class="w-20">Not Applicable</td>
+                                            <td class="w-20">Not Applicable</td>
+                                            <td class="w-20">Not Applicable</td>
+                                        </tr>
                                     @endif
+                                    
                                 </tbody>
                                 </table>
                             </div>

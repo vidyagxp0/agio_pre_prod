@@ -7710,6 +7710,7 @@ class CCController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $openState = CC::find($id);
+            $lastDocument = CC::find($id);
 
             $changeControl->stage = "0";
             $changeControl->status = "Closed-Cancelled";
@@ -7751,7 +7752,6 @@ class CCController extends Controller
     }
     public function child(Request $request, $id)
     {
-        // return "hiii";
         $cc = CC::find($id);
         $parent_id = $id;
         $parent_name = "CC";
@@ -7786,7 +7786,7 @@ class CCController extends Controller
         }
         if ($request->revision == "Extension") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.extension.extension_new', compact('parent_name','parent_id', 'record_number', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc'));
+            return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc'));
         }
         if ($request->revision == "New Document") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');

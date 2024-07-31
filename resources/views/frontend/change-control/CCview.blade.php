@@ -1592,11 +1592,11 @@
                                                             style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="QualityAssurance_Person"
-                                                        class="QualityAssurance_Person" id="QualityAssurance_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="QualityAssurance_person"
+                                                        class="QualityAssurance_person" id="QualityAssurance_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->QualityAssurance_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->QualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -1611,7 +1611,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote QualityAssurance_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->QualityAssurance_Person) && Auth::user()->id != $data1->QualityAssurance_Person)) readonly @endif 
+                                                    @if ($data->stage == 3 || (isset($data1->QualityAssurance_person) && Auth::user()->id != $data1->QualityAssurance_person)) readonly @endif 
                                                         name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
                                                 </div>
                                             </div>
@@ -1622,7 +1622,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote QualityAssurance_feedback" @if ($data->stage == 3 || (isset($data1->QualityAssurance_Person) && Auth::user()->id != $data1->QualityAssurance_Person)) readonly @endif
+                                                    <textarea class="summernote QualityAssurance_feedback" @if ($data->stage == 3 || (isset($data1->QualityAssurance_person) && Auth::user()->id != $data1->QualityAssurance_person)) readonly @endif
                                                         name="QualityAssurance_feedback" id="summernote-18" @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->QualityAssurance_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -1684,7 +1684,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('QualityAssurance_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('QualityAssurance_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -1742,10 +1742,10 @@
                                                 <div class="group-input">
                                                     <label for="Quality Assurance notification">Quality Assurance Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="QualityAssurance_Person" disabled id="QualityAssurance_Person">
+                                                    <select name="QualityAssurance_person" disabled id="QualityAssurance_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->QualityAssurance_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->QualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2213,11 +2213,11 @@
                                                             style="display: {{ $data1->ProductionLiquid_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="ProductionLiquid_Person"
-                                                        class="ProductionLiquid_Person" id="ProductionLiquid_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="ProductionLiquid_person"
+                                                        class="ProductionLiquid_person" id="ProductionLiquid_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ProductionLiquid_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ProductionLiquid_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2232,7 +2232,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 4) required @endif class="summernote ProductionLiquid_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->ProductionLiquid_Person) && Auth::user()->id != $data1->ProductionLiquid_Person)) readonly @endif name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->ProductionLiquid_person) && Auth::user()->id != $data1->ProductionLiquid_person)) readonly @endif name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 productionLiquid">
@@ -2242,7 +2242,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote ProductionLiquid_feedback"  @if ($data->stage == 3 || (isset($data1->ProductionLiquid_Person) && Auth::user()->id != $data1->ProductionLiquid_Person)) readonly @endif
+                                                    <textarea class="summernote ProductionLiquid_feedback"  @if ($data->stage == 3 || (isset($data1->ProductionLiquid_person) && Auth::user()->id != $data1->ProductionLiquid_person)) readonly @endif
                                                         name="ProductionLiquid_feedback" id="summernote-18" @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ProductionLiquid_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -2304,7 +2304,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('ProductionLiquid_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('ProductionLiquid_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -2362,10 +2362,10 @@
                                                 <div class="group-input">
                                                     <label for="Production Liquid notification">Production Liquid Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="ProductionLiquid_Person" disabled id="ProductionLiquid_Person">
+                                                    <select name="ProductionLiquid_person" disabled id="ProductionLiquid_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ProductionLiquid_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ProductionLiquid_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2837,11 +2837,11 @@
                                                             style="display: {{ $data1->Store_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="Store_Person"
-                                                        class="Store_Person" id="Store_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="Store_person"
+                                                        class="Store_person" id="Store_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Store_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Store_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2856,7 +2856,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif class="summernote Store_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Store_Person) && Auth::user()->id != $data1->Store_Person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->id != $data1->Store_person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 store">
@@ -2866,7 +2866,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Store_feedback" @if ($data->stage == 3 || (isset($data1->Store_Person) && Auth::user()->id != $data1->Store_Person)) readonly @endif
+                                                    <textarea class="summernote Store_feedback" @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->id != $data1->Store_person)) readonly @endif
                                                         name="Store_feedback" id="summernote-18" @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Store_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -2928,7 +2928,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('Store_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('Store_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -2986,10 +2986,10 @@
                                                 <div class="group-input">
                                                     <label for="Store notification">Store Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="Store_Person" disabled id="Store_Person">
+                                                    <select name="Store_person" disabled id="Store_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Store_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Store_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3445,10 +3445,10 @@
                                                             class="text-danger">*</span>
                                                     </label>
                                                     <select @if ($data->stage == 4) disabled @endif name="ResearchDevelopmentStore_Person"
-                                                        class="ResearchDevelopment_Person" id="ResearchDevelopment_Person">
+                                                        class="ResearchDevelopment_person" id="ResearchDevelopment_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ResearchDevelopment_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ResearchDevelopment_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3535,7 +3535,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('ResearchDevelopment_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('ResearchDevelopment_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -3593,10 +3593,10 @@
                                                 <div class="group-input">
                                                     <label for="Research Development notification">Research Development Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="ResearchDevelopment_Person" disabled id="ResearchDevelopment_Person">
+                                                    <select name="ResearchDevelopment_person" disabled id="ResearchDevelopment_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ResearchDevelopment_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ResearchDevelopment_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3748,11 +3748,11 @@
                                                             style="display: {{ $data1->Engineering_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="Engineering_Person"
-                                                        class="Engineering_Person" id="Engineering_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="Engineering_person"
+                                                        class="Engineering_person" id="Engineering_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Engineering_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Engineering_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3767,7 +3767,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif class="summernote Engineering_assessment"
-                                                        @if ($data->stage == 3 || (isset($data1->Engineering_Person) && Auth::user()->id != $data1->Engineering_Person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                        @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->id != $data1->Engineering_person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 Engineering">
@@ -3777,7 +3777,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Engineering_feedback" @if ($data->stage == 3 || (isset($data1->Engineering_Person) && Auth::user()->id != $data1->Engineering_Person)) readonly @endif
+                                                    <textarea class="summernote Engineering_feedback" @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->id != $data1->Engineering_person)) readonly @endif
                                                         name="Engineering_feedback" id="summernote-18" @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Engineering_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -3839,7 +3839,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('Engineering_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('Engineering_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -3897,10 +3897,10 @@
                                                 <div class="group-input">
                                                     <label for="Engineering notification">Engineering Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="Engineering_Person" disabled id="Engineering_Person">
+                                                    <select name="Engineering_person" disabled id="Engineering_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Engineering_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Engineering_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4053,11 +4053,11 @@
                                                             style="display: {{ $data1->Human_Resource_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="Human_Resource_Person"
-                                                        class="Human_Resource_Person" id="Human_Resource_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="Human_Resource_person"
+                                                        class="Human_Resource_person" id="Human_Resource_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Human_Resource_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Human_Resource_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4072,7 +4072,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif class="summernote Human_Resource_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Human_Resource_Person) && Auth::user()->id != $data1->Human_Resource_Person)) readonly @endif name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Human_Resource_person) && Auth::user()->id != $data1->Human_Resource_person)) readonly @endif name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 Human_Resource">
@@ -4082,7 +4082,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Human_Resource_feedback" @if ($data->stage == 3 || (isset($data1->Human_Resource_Person) && Auth::user()->id != $data1->Human_Resource_Person)) readonly @endif
+                                                    <textarea class="summernote Human_Resource_feedback" @if ($data->stage == 3 || (isset($data1->Human_Resource_person) && Auth::user()->id != $data1->Human_Resource_person)) readonly @endif
                                                         name="Human_Resource_feedback" id="summernote-18" @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Human_Resource_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -4144,7 +4144,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('Human_Resource_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('Human_Resource_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -4202,10 +4202,10 @@
                                                 <div class="group-input">
                                                     <label for="Human Resource notification">Human Resource Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="Human_Resource_Person" disabled id="Human_Resource_Person">
+                                                    <select name="Human_Resource_person" disabled id="Human_Resource_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Human_Resource_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Human_Resource_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4356,11 +4356,11 @@
                                                             style="display: {{ $data1->Microbiology_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="Microbiology_Person"
-                                                        class="Microbiology_Person" id="Microbiology_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="Microbiology_person"
+                                                        class="Microbiology_person" id="Microbiology_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Microbiology_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Microbiology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4375,7 +4375,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Microbiology_Review == 'yes' && $data->stage == 4) required @endif class="summernote Microbiology_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Microbiology_Person) && Auth::user()->id != $data1->Microbiology_Person)) readonly @endif name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Microbiology_person) && Auth::user()->id != $data1->Microbiology_person)) readonly @endif name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 Microbiology">
@@ -4385,7 +4385,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Microbiology_feedback" @if ($data->stage == 3 || (isset($data1->Microbiology_Person) && Auth::user()->id != $data1->Microbiology_Person)) readonly @endif
+                                                    <textarea class="summernote Microbiology_feedback" @if ($data->stage == 3 || (isset($data1->Microbiology_person) && Auth::user()->id != $data1->Microbiology_person)) readonly @endif
                                                         name="Microbiology_feedback" id="summernote-18" @if ($data1->Microbiology_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Microbiology_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -4447,7 +4447,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('Microbiology_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('Microbiology_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -4505,10 +4505,10 @@
                                                 <div class="group-input">
                                                     <label for="Microbiology notification">Microbiology Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="Microbiology_Person" disabled id="Microbiology_Person">
+                                                    <select name="Microbiology_person" disabled id="Microbiology_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Microbiology_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Microbiology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4660,11 +4660,11 @@
                                                             style="display: {{ $data1->RegulatoryAffair_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="RegulatoryAffair_Person"
-                                                        class="RegulatoryAffair_Person" id="RegulatoryAffair_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="RegulatoryAffair_person"
+                                                        class="RegulatoryAffair_person" id="RegulatoryAffair_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->RegulatoryAffair_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->RegulatoryAffair_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4679,7 +4679,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4) required @endif class="summernote RegulatoryAffair_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->RegulatoryAffair_Person) && Auth::user()->id != $data1->RegulatoryAffair_Person)) readonly @endif name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->RegulatoryAffair_person) && Auth::user()->id != $data1->RegulatoryAffair_person)) readonly @endif name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 RegulatoryAffair">
@@ -4689,7 +4689,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote RegulatoryAffair_feedback" @if ($data->stage == 3 || (isset($data1->RegulatoryAffair_Person) && Auth::user()->id != $data1->RegulatoryAffair_Person)) readonly @endif
+                                                    <textarea class="summernote RegulatoryAffair_feedback" @if ($data->stage == 3 || (isset($data1->RegulatoryAffair_person) && Auth::user()->id != $data1->RegulatoryAffair_person)) readonly @endif
                                                         name="RegulatoryAffair_feedback" id="summernote-18" @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -4751,7 +4751,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('RegulatoryAffair_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('RegulatoryAffair_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -4809,10 +4809,10 @@
                                                 <div class="group-input">
                                                     <label for="Regulatory Affair notification">Regulatory Affair Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="RegulatoryAffair_Person" disabled id="RegulatoryAffair_Person">
+                                                    <select name="RegulatoryAffair_person" disabled id="RegulatoryAffair_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->RegulatoryAffair_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->RegulatoryAffair_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4964,11 +4964,11 @@
                                                             style="display: {{ $data1->CorporateQualityAssurance_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="CorporateQualityAssurance_Person"
-                                                        class="CorporateQualityAssurance_Person" id="CorporateQualityAssurance_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="CorporateQualityAssurance_person"
+                                                        class="CorporateQualityAssurance_person" id="CorporateQualityAssurance_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->CorporateQualityAssurance_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->CorporateQualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4983,7 +4983,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote CorporateQualityAssurance_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->CorporateQualityAssurance_Person) && Auth::user()->id != $data1->CorporateQualityAssurance_Person)) readonly @endif name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->CorporateQualityAssurance_person) && Auth::user()->id != $data1->CorporateQualityAssurance_person)) readonly @endif name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 CQA">
@@ -4993,7 +4993,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote CorporateQualityAssurance_feedback" @if ($data->stage == 3 || (isset($data1->CorporateQualityAssurance_Person) && Auth::user()->id != $data1->CorporateQualityAssurance_Person)) readonly @endif
+                                                    <textarea class="summernote CorporateQualityAssurance_feedback" @if ($data->stage == 3 || (isset($data1->CorporateQualityAssurance_person) && Auth::user()->id != $data1->CorporateQualityAssurance_person)) readonly @endif
                                                         name="CorporateQualityAssurance_feedback" id="summernote-18" @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -5055,7 +5055,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('CorporateQualityAssurance_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('CorporateQualityAssurance_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -5113,10 +5113,10 @@
                                                 <div class="group-input">
                                                     <label for="Corporate Quality Assurance notification">Corporate Quality Assurance Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="CorporateQualityAssurance_Person" disabled id="CorporateQualityAssurance_Person">
+                                                    <select name="CorporateQualityAssurance_person" disabled id="CorporateQualityAssurance_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->CorporateQualityAssurance_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->CorporateQualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5877,11 +5877,11 @@
                                                             style="display: {{ $data1->ContractGiver_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="ContractGiver_Person"
-                                                        class="ContractGiver_Person" id="ContractGiver_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="ContractGiver_person"
+                                                        class="ContractGiver_person" id="ContractGiver_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ContractGiver_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ContractGiver_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5896,7 +5896,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif class="summernote ContractGiver_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->ContractGiver_Person) && Auth::user()->id != $data1->ContractGiver_Person)) readonly @endif name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->id != $data1->ContractGiver_person)) readonly @endif name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 store">
@@ -5906,7 +5906,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 3 || (isset($data1->ContractGiver_Person) && Auth::user()->id != $data1->ContractGiver_Person)) readonly @endif
+                                                    <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->id != $data1->ContractGiver_person)) readonly @endif
                                                         name="ContractGiver_feedback" id="summernote-18" @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ContractGiver_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -5968,7 +5968,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('ContractGiver_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('ContractGiver_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -6026,10 +6026,10 @@
                                                 <div class="group-input">
                                                     <label for="Contract Giver notification">Contract Giver Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="ContractGiver_Person" disabled id="ContractGiver_Person">
+                                                    <select name="ContractGiver_person" disabled id="ContractGiver_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ContractGiver_Person) selected @endif>
+                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ContractGiver_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>

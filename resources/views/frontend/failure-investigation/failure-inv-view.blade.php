@@ -1,3 +1,4 @@
+
 @extends('frontend.layout.main')
 @section('container')
     @php
@@ -236,7 +237,7 @@
             });
         });
     </script>
-    <script>
+    {{--  <script>
         $(document).ready(function() {
             $('#ObservationAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -247,6 +248,8 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td> <select name="facility_name[]" id="facility_name"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>  <option value="">-- Select --</option>  <option value="Facility">Facility</option>  <option value="Equipment"> Equipment</option> <option value="Instrument">Instrument</option></select> </td>' +
+                        '<td><input type="text" name="datatype[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
+                       
                         '<td><input type="text" name="IDnumber[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
                         '<td><input type="text" name="Remarks[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
@@ -270,9 +273,9 @@
                 tableBody.append(newRow);
             });
         });
-    </script>
+    </script>  --}}
 
-    <script>
+    {{--  <script>
         $(document).ready(function() {
             $('#ReferenceDocument').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -306,8 +309,8 @@
                 tableBody.append(newRow);
             });
         });
-    </script>
-    <script>
+    </script>  --}}
+    {{--  <script>
         $(document).ready(function() {
             $('#Product_Details').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -318,7 +321,10 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="product_name[]"></td>' +
-                        '<td> <select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' +
+
+                        '<td><input type="text" name="product_stage[]"></td>' +
+
+                        '<td> <select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' + 
 
                         '<td><input type="text" name="batch_no[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
@@ -344,7 +350,7 @@
                 tableBody.append(newRow);
             });
         });
-    </script>
+    </script>  --}}
 
 
 
@@ -897,12 +903,12 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="record_number"><b>Record Number</b></label>
-                                            @if ($data->stage >= 3)
+                                            {{--  @if ($data->stage >= 3)  --}}
                                                 <input disabled type="text"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}/Failure Investigation/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
-                                            @else
-                                                <input disabled type="text" name="record">
-                                            @endif
+                                            {{--  @else  --}}
+                                                {{--  <input disabled type="text" name="record">  --}}
+                                            {{--  @endif  --}}
                                         </div>
                                     </div>
 
@@ -968,72 +974,22 @@
                                         document.getElementById('due_date').value = dueDateFormatted;
                                     </script>
 
-                                    <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="Initiator Group"><b>Department</b> <span
-                                                    class="text-danger">*</span></label>
-                                            <select name="Initiator_Group"
-                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                  <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"><b>Department</b><span class="text-danger">*</span></label>
+                                        <select name="Initiator_Group" 
+                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} 
                                                 id="initiator_group">
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif>
-                                                    Corporate
-                                                    Quality Assurance</option>
-                                                <option value="QAB" @if ($data->Initiator_Group == 'QAB') selected @endif>
-                                                    Quality
-                                                    Assurance Biopharma</option>
-                                                <option value="CQC" @if ($data->Initiator_Group == 'CQC') selected @endif>
-                                                    Central
-                                                    Quality Control</option>
-                                                <option value="MANU" @if ($data->Initiator_Group == 'MANU') selected @endif>
-                                                    Manufacturing
-                                                </option>
-                                                <option value="PSG" @if ($data->Initiator_Group == 'PSG') selected @endif>
-                                                    Plasma
-                                                    Sourcing Group</option>
-                                                <option value="CS" @if ($data->Initiator_Group == 'CS') selected @endif>
-                                                    Central
-                                                    Stores</option>
-                                                <option value="ITG" @if ($data->Initiator_Group == 'ITG') selected @endif>
-                                                    Information
-                                                    Technology Group</option>
-                                                <option value="MM" @if ($data->Initiator_Group == 'MM') selected @endif>
-                                                    Molecular
-                                                    Medicine</option>
-                                                <option value="CL" @if ($data->Initiator_Group == 'CL') selected @endif>
-                                                    Central
-                                                    Laboratory</option>
-                                                <option value="TT" @if ($data->Initiator_Group == 'TT') selected @endif>
-                                                    Tech
-                                                    team</option>
-                                                <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif>
-                                                    Quality
-                                                    Assurance</option>
-                                                <option value="QM" @if ($data->Initiator_Group == 'QM') selected @endif>
-                                                    Quality
-                                                    Management</option>
-                                                <option value="IA" @if ($data->Initiator_Group == 'IA') selected @endif>
-                                                    IT
-                                                    Administration</option>
-                                                <option value="ACC" @if ($data->Initiator_Group == 'ACC') selected @endif>
-                                                    Accounting
-                                                </option>
-                                                <option value="LOG" @if ($data->Initiator_Group == 'LOG') selected @endif>
-                                                    Logistics
-                                                </option>
-                                                <option value="SM" @if ($data->Initiator_Group == 'SM') selected @endif>
-                                                    Senior
-                                                    Management</option>
-                                                <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif>
-                                                    Business
-                                                    Administration</option>
-
-                                            </select>
-                                        </div>
+                                            <option value="">Enter Your Selection Here</option>
+                                            @foreach (Helpers::getDepartments() as $key => $value)
+                                                <option value="{{ $key }}" @if ($data->Initiator_Group == $key) selected @endif>{{ $value }}</option>
+                                            @endforeach
+                                        </select>
                                         @error('Initiator_Group')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                </div>
 
                                     <div class="col-12">
                                         <div class="group-input">
@@ -1166,15 +1122,17 @@
                                         @enderror
                                     </div>
 
-                                    <script>
-                                        flatpickr("#failure_investigation_time", {
-                                            enableTime: true,
-                                            noCalendar: true,
-                                            dateFormat: "H:i", // 24-hour format without AM/PM
-                                            minuteIncrement: 1 // Set minute increment to 1
-
-                                        });
-                                    </script>
+                                     <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    flatpickr("#failure_investigation_time", {
+                                        enableTime: true,
+                                        noCalendar: true,
+                                        dateFormat: "H:i", // 24-hour format without AM/PM
+                                        time_24hr: true, // Ensure 24-hour time format
+                                        minuteIncrement: 1 // Set minute increment to 1
+                                    });
+                                });
+                            </script>
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -1318,7 +1276,15 @@
                                             @enderror
                                         </div>
                                     </div>
-
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Process"><b>Process</b><span class="text-danger">*</span></label>
+                                        <input type="text" name="process" id="process" value="{{ old('process', $data->process ?? '') }}" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                        @error('process')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('audit_type');
@@ -1349,451 +1315,417 @@
                                             });
                                         });
                                     </script>
-                                    <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="Facility/Equipment"> Facility/ Equipment/ Instrument/ System
-                                                Details Required? <span class="text-danger">*</span></label>
-                                            <select name="Facility_Equipment"
-                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                id="Facility_Equipment" value="{{ $data->Facility_Equipment }}">
-                                                <option value="">-- Select --</option>
-                                                <option @if ($data->Facility_Equipment == 'yes' || old('Facility_Equipment') == 'yes') selected @endif value="yes">
-                                                    Yes</option>
-                                                <option @if ($data->Facility_Equipment == 'no' || old('Facility_Equipment') == 'no') selected @endif value="no">
-                                                    No</option>>
-                                            </select>
-                                            @error('Facility_Equipment')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="group-input" id="facilityRow"
-                                        @if ($data->Facility_Equipment == 'no') style="display: none" @endif>
-                                        <label for="audit-agenda-grid">
-                                            Facility/ Equipment/ Instrument/ System Details <span id="asteriskInvifaci"
-                                                style="display: {{ $data->Facility_Equipment == 'yes' ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span>
-                                            <button type="button"
-                                                name="audit-agenda-grid"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="audit-agenda-grid" id="ObservationAdd">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="onservation-field-table"
-                                                style="width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 5%">Row#</th>
-                                                        <th style="width: 12%">Name</th>
-                                                        <th style="width: 16%">ID Number</th>
-                                                        <th style="width: 15%">Remarks</th>
-                                                        <th style="width: 8%">Action</th>
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if (!empty($grid_data->Remarks))
-                                                        @foreach (unserialize($grid_data->Remarks) as $key => $temps)
-                                                            <tr>
-                                                                <td><input disabled type="text"
-                                                                        name="serial[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                                        value="{{ $key + 1 }}"></td>
-                                                                <td>
-                                                                    <select class="facility-name"
-                                                                        name="facility_name[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                                        id="facility_name">
-                                                                        @if (isset($grid_data->facility_name))
-                                                                            @php
-                                                                                $facility_name = unserialize(
-                                                                                    $grid_data->facility_name,
-                                                                                );
-                                                                            @endphp
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="Facility"
-                                                                                {{ isset($facility_name[$key]) && $facility_name[$key] == 'Facility' ? 'selected' : 'Facility' }}>
-                                                                                Facility</option>
-                                                                            <option value="Equipment"
-                                                                                {{ isset($facility_name[$key]) && $facility_name[$key] == 'Equipment' ? 'selected' : 'Equipment' }}>
-                                                                                Equipment</option>
-                                                                            <option value="Instrument"
-                                                                                {{ isset($facility_name[$key]) && $facility_name[$key] == 'Instrument' ? 'selected' : 'Instrument' }}>
-                                                                                Instrument</option>
-                                                                        @endif
-
-                                                                    </select>
-                                                                </td>
-                                                                <td><input class="id-number" type="text"
-                                                                        name="IDnumber[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                                        value="{{ isset(unserialize($grid_data->IDnumber)[$key]) ? unserialize($grid_data->IDnumber)[$key] : '' }}">
-                                                                </td>
-                                                                <td><input class="remarks" type="text"
-                                                                        name="Remarks[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                                        value="{{ unserialize($grid_data->Remarks)[$key] ? unserialize($grid_data->Remarks)[$key] : '' }}">
-                                                                </td>
-                                                                <td><input type="text" class="Removebtn"
-                                                                        name="Action[]" readonly></td>
-
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="main-danger-block">
-
-
-                                            @error('facility_name')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                            @error('IDnumber')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-
-                                        </div>
-                                    </div>
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            var selectField = document.getElementById('Facility_Equipment');
-                                            var inputsToToggle = [];
-
-                                            // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('facility-name');
-                                            for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                inputsToToggle.push(facilityNameInputs[i]);
-                                            }
-
-                                            // Add elements with class 'id-number' to inputsToToggle
-                                            var idNumberInputs = document.getElementsByClassName('id-number');
-                                            for (var j = 0; j < idNumberInputs.length; j++) {
-                                                inputsToToggle.push(idNumberInputs[j]);
-                                            }
-
-                                            // Add elements with class 'remarks' to inputsToToggle
-                                            var remarksInputs = document.getElementsByClassName('remarks');
-                                            for (var k = 0; k < remarksInputs.length; k++) {
-                                                inputsToToggle.push(remarksInputs[k]);
-                                            }
-
-
-                                            selectField.addEventListener('change', function() {
-                                                var isRequired = this.value === 'yes';
-                                                console.log(this.value, isRequired, 'value');
-
-                                                inputsToToggle.forEach(function(input) {
-                                                    input.required = isRequired;
-                                                    console.log(input.required, isRequired, 'input req');
-                                                });
-
-                                                // Show or hide the asterisk icon based on the selected value
-                                                var asteriskIcon = document.getElementById('asteriskInvifaci');
-                                                document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
-                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                            });
-                                        });
-                                    </script>
-                                    <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="Document Details Required">Document Details Required? <span
-                                                    class="text-danger">*</span></label>
-                                            <select
-                                                name="Document_Details_Required"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                id="Document_Details_Required"
-                                                value="{{ $data->Document_Details_Required }}">
-                                                <option value="">-- Select --</option>
-                                                <option @if ($data->Document_Details_Required == 'yes' || old('Document_Details_Required') == 'yes') selected @endif value="yes">
-                                                    Yes</option>
-                                                <option @if ($data->Document_Details_Required == 'no' || old('Document_Details_Required') == 'no') selected @endif value="no">
-                                                    No</option>>
-                                            </select>
-                                        </div>
-                                        @error('Document_Details_Required')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="group-input" id="documentsRow"
-                                        @if ($data->Document_Details_Required == 'no') style="display: none" @endif>
-                                        <label for="audit-agenda-grid">
-                                            Document Details <span id="asteriskInvidoc"
-                                                style="display: {{ $data->Document_Details_Required == 'yes' ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span>
-                                            <button type="button"
-                                                name="audit-agenda-grid"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="audit-agenda-grid" id="ReferenceDocument">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="ReferenceDocument_details"
-                                                style="width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 4%">Row#</th>
-                                                        <th style="width: 12%">Document Number</th>
-
-                                                        <th style="width: 16%"> Reference Document Name</th>
-                                                        <th style="width: 16%"> Remarks</th>
-                                                        <th style="width: 8%"> Action</th>
-
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if ($grid_data1->ReferenceDocumentName)
-                                                        @foreach (unserialize($grid_data1->ReferenceDocumentName) as $key => $temps)
-                                                            <tr>
-                                                                <td><input disabled type="text"
-                                                                        name="serial[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                        value="{{ $key + 1 }}"></td>
-                                                                <td><input class="numberDetail" type="text"
-                                                                        name="Number[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                                        value="{{ unserialize($grid_data1->Number)[$key] ? unserialize($grid_data1->Number)[$key] : '' }}">
-                                                                </td>
-                                                                <td><input class="ReferenceDocumentName" type="text"
-                                                                        name="ReferenceDocumentName[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                                        value="{{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : '' }}">
-                                                                </td>
-                                                                <td><input class="Document_Remarks" type="text"
-                                                                        name="Document_Remarks[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                                        value="{{ unserialize($grid_data1->Document_Remarks)[$key] ? unserialize($grid_data1->Document_Remarks)[$key] : '' }}">
-                                                                </td>
-                                                                <td><input type="text" class="Removebtn"
-                                                                        name="Action[]" readonly></td>
-
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
-                                                </tbody>
-
-                                            </table>
-                                        </div>
-                                        @error('Number')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                        @error('ReferenceDocumentName')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            // note-codable
-
-                                            var selectField = document.getElementById('Document_Details_Required');
-                                            var inputsToToggle = [];
-
-                                            // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('numberDetail');
-                                            for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                inputsToToggle.push(facilityNameInputs[i]);
-                                            }
-
-                                            // Add elements with class 'id-number' to inputsToToggle
-                                            var idNumberInputs = document.getElementsByClassName('Document_Remarks');
-                                            for (var j = 0; j < idNumberInputs.length; j++) {
-                                                inputsToToggle.push(idNumberInputs[j]);
-                                            }
-
-                                            // Add elements with class 'remarks' to inputsToToggle
-                                            var remarksInputs = document.getElementsByClassName('ReferenceDocumentName');
-                                            for (var k = 0; k < remarksInputs.length; k++) {
-                                                inputsToToggle.push(remarksInputs[k]);
-                                            }
-
-
-                                            selectField.addEventListener('change', function() {
-                                                var isRequired = this.value === 'yes';
-                                                console.log(this.value, isRequired, 'value');
-
-                                                inputsToToggle.forEach(function(input) {
-                                                    input.required = isRequired;
-                                                    console.log(input.required, isRequired, 'input req');
-                                                });
-
-                                                // Show or hide the asterisk icon based on the selected value
-                                                document.getElementById('documentsRow').style.display = isRequired ? 'block' : 'none';
-                                                var asteriskIcon = document.getElementById('asteriskInvidoc');
-                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                            });
-                                        });
-                                    </script>
-
-                                        <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="Document Details Required">Product/Batch Required? <span
-                                                        class="text-danger">*</span></label>
-                                                <select
-                                                    name="Product_Details_Required"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    id="Product_Details_Required"
-                                                    value="{{ $data->Product_Details_Required }}">
-                                                    <option value="">-- Select --</option>
-                                                    <option @if ($data->Product_Details_Required == 'yes' || old('Product_Details_Required') == 'yes') selected @endif value="yes">
-                                                        Yes</option>
-                                                    <option @if ($data->Product_Details_Required == 'no' || old('Product_Details_Required') == 'no') selected @endif value="no">
-                                                        No</option>>
-                                                </select>
-                                            </div>
-                                            @error('Product_Details_Required')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-
-
-                                    <div class="col-lg-12">
-                                        <div class="col-lg-12">
-                                            <div class="group-input" id="productRow"  @if ($data->Product_Details_Required == 'no') style="display: none" @endif>
-                                                <label for="audit-agenda-grid">
-                                                    Product/Batch Details
-                                                    <button type="button" name="audit-agenda-grid"
-                                                        id="Product_Details">+</button>
-                                                    <span class="text-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#product-batch-grid"
-                                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                        (Launch Instruction)
-                                                    </span>
-                                                </label>
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered" id="Product_Details_Details"
-                                                        style="width: 100%;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="width: 4%">Row#</th>
-                                                                <th style="width: 12%">Product</th>
-                                                                <th style="width: 16%"> Stage</th>
-                                                                <th style="width: 16%">Batch No</th>
-                                                                <th style="width: 8%">Action</th>
 
 
 
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @if ($grid_data2->product_name)
-                                                                @foreach (unserialize($grid_data2->product_name) as $key => $temps)
-                                                                <tr>
-                                                                <td><input disabled type="text"
-                                                                            name="serial[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                                            value="{{ $key + 1 }}"></td>
-                                                                    <td><input class="productName" type="text"
-                                                                            name="product_name[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                                            value="{{ isset(unserialize($grid_data2->product_name)[$key]) ? unserialize($grid_data2->product_name)[$key] : '' }}">
-                                                                    </td>
-                                                                    <td>
-                                                                        <select class="productStage"
-                                                                            name="product_stage[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                                            id="product_stage">
-                                                                            @if (isset($grid_data2->product_stage))
-                                                                                @php
-                                                                                    $product_stage = unserialize(
-                                                                                        $grid_data2->product_stage,
-                                                                                    );
-                                                                                @endphp
-                                                                                <option value="">-- Select --
-                                                                                </option>
-                                                                                <option value="1"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '1' ? 'selected' : '1' }}>
-                                                                                    1</option>
-                                                                                <option value="2"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '2' ? 'selected' : '2' }}>
-                                                                                    2</option>
-                                                                                <option value="3"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '3' ? 'selected' : '3' }}>
-                                                                                    3</option>
-                                                                                <option value="4"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '4' ? 'selected' : '4' }}>
-                                                                                    4</option>
-                                                                                <option value="5"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '5' ? 'selected' : '5' }}>
-                                                                                    5</option>
-                                                                                <option value="6"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '6' ? 'selected' : '6' }}>
-                                                                                    6</option>
-                                                                                <option value="7"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '7' ? 'selected' : '7' }}>
-                                                                                    7</option>
-                                                                                <option value="8"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '8' ? 'selected' : '8' }}>
-                                                                                    8</option>
-                                                                                <option value="9"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == '9' ? 'selected' : '9' }}>
-                                                                                    9</option>
-                                                                                <option value="Final"
-                                                                                    {{ isset($product_stage[$key]) && $product_stage[$key] == 'Final' ? 'selected' : 'Final' }}>
-                                                                                    Final</option>
-                                                                            @endif
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input class="productBatchNo" type="text"
-                                                                            name="batch_no[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                                            value="{{ isset(unserialize($grid_data2->batch_no)[$key]) ? unserialize($grid_data2->batch_no)[$key] : '' }}">
-                                                                    </td>
-                                                                    <td><input type="text" class="Removebtn"
-                                                                            name="Action[]" readonly></td>
-                                                                </tr>
-                                                                    
-                                                                @endforeach
-                                                            @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            @error('product_name')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                            @error('product_stage')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                            @error('batch_no')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
 
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                // note-codable
-                                                var selectField = document.getElementById('Product_Details_Required');
-                                                var inputsToToggle = [];
 
-                                                // Add elements with class 'productName' to inputsToToggle
-                                                var productNameInput = document.getElementsByClassName('productName');
-                                                for (var i = 0; i < productNameInput.length; i++) {
-                                                    inputsToToggle.push(productNameInput[i]);
-                                                }
 
-                                                // Add elements with class 'productStage' to inputsToToggle
-                                                var productStageInput = document.getElementsByClassName('productStage');
-                                                for (var j = 0; j < productStageInput.length; j++) {
-                                                    inputsToToggle.push(productStageInput[j]);
-                                                }
 
-                                                // Add elements with class 'productBatchNo' to inputsToToggle
-                                                var batchNoInput = document.getElementsByClassName('productBatchNo');
-                                                for (var k = 0; k < batchNoInput.length; k++) {
-                                                    inputsToToggle.push(batchNoInput[k]);
-                                                }
 
-                                                selectField.addEventListener('change', function() {
-                                                var isRequired = this.value === 'yes';
-                                                console.log(this.value, isRequired, 'value');
+<div class="col-lg-12">
+    <div class="group-input">
+        <label for="Facility/Equipment"> Facility/ Equipment/ Instrument/ System Details Required? <span class="text-danger">*</span></label>
+        <select name="Facility_Equipment" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="Facility_Equipment" value="{{ $data->Facility_Equipment }}">
+            <option value="">-- Select --</option>
+            <option @if ($data->Facility_Equipment == 'yes' || old('Facility_Equipment') == 'yes') selected @endif value="yes">Yes</option>
+            <option @if ($data->Facility_Equipment == 'no' || old('Facility_Equipment') == 'no') selected @endif value="no">No</option>
+        </select>
+        @error('Facility_Equipment')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+<div class="group-input" id="facilityRow" @if ($data->Facility_Equipment == 'no') style="display: none" @endif>
+    <label for="audit-agenda-grid">
+        Facility/ Equipment/ Instrument/ System Details <span id="asteriskInvifaci" style="display: {{ $data->Facility_Equipment == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span>
+        <button type="button" name="audit-agenda-grid" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="audit-agenda-grid" id="ObservationAdd">+</button>
+        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+            (Launch Instruction)
+        </span>
+    </label>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="onservation-field-table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="width: 5%">Row#</th>
+                    <th style="width: 12%">Name</th>
+                    <th style="width: 12%">Type</th>
+                    <th style="width: 16%">ID Number</th>
+                    <th style="width: 15%">Remarks</th>
+                    <th style="width: 8%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!empty($grid_data->Remarks))
+                    @foreach (unserialize($grid_data->Remarks) as $key => $temps)
+                        <tr>
+                            <td><input disabled type="text" name="serial[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
+                            <td>
+                                <select class="facility-name" name="facility_name[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="facility_name">
+                                    @if (isset($grid_data->facility_name))
+                                        @php
+                                            $facility_name = unserialize($grid_data->facility_name);
+                                        @endphp
+                                        <option value="">-- Select --</option>
+                                        <option value="Facility" {{ isset($facility_name[$key]) && $facility_name[$key] == 'Facility' ? 'selected' : 'Facility' }}>Facility</option>
+                                        <option value="Equipment" {{ isset($facility_name[$key]) && $facility_name[$key] == 'Equipment' ? 'selected' : 'Equipment' }}>Equipment</option>
+                                        <option value="Instrument" {{ isset($facility_name[$key]) && $facility_name[$key] == 'Instrument' ? 'selected' : 'Instrument' }}>Instrument</option>
+                                    @endif
+                                </select>
+                            </td>
+                            <td><input class="id-number" type="text" name="datatype[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ isset(unserialize($grid_data->datatype)[$key]) ? unserialize($grid_data->datatype)[$key] : '' }}"></td>
+                            <td><input class="id-number" type="text" name="IDnumber[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ isset(unserialize($grid_data->IDnumber)[$key]) ? unserialize($grid_data->IDnumber)[$key] : '' }}"></td>
+                            <td><input class="remarks" type="text" name="Remarks[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ unserialize($grid_data->Remarks)[$key] ? unserialize($grid_data->Remarks)[$key] : '' }}"></td>
+                            <td><button type="button" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Remove</button></td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
+    <div class="main-danger-block">
+        @error('facility_name')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+        @error('IDnumber')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
-                                                inputsToToggle.forEach(function(input) {
-                                                    input.required = isRequired;
-                                                    console.log(input.required, isRequired, 'input req');
-                                                });
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectField = document.getElementById('Facility_Equipment');
+        var inputsToToggle = [];
 
-                                                // Show or hide the asterisk icon based on the selected value
-                                                document.getElementById('productRow').style.display = isRequired ? 'block' : 'none';
-                                                var asteriskIcon = document.getElementById('asteriskInvidoc');
-                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                            });
-                                            });
-                                        </script>
-                                    </div>
+        // Add elements with class 'facility-name' to inputsToToggle
+        var facilityNameInputs = document.getElementsByClassName('facility-name');
+        for (var i = 0; i < facilityNameInputs.length; i++) {
+            inputsToToggle.push(facilityNameInputs[i]);
+        }
+
+        // Add elements with class 'id-number' to inputsToToggle
+        var idNumberInputs = document.getElementsByClassName('id-number');
+        for (var j = 0; j < idNumberInputs.length; j++) {
+            inputsToToggle.push(idNumberInputs[j]);
+        }
+
+        // Add elements with class 'remarks' to inputsToToggle
+        var remarksInputs = document.getElementsByClassName('remarks');
+        for (var k = 0; k < remarksInputs.length; k++) {
+            inputsToToggle.push(remarksInputs[k]);
+        }
+
+        selectField.addEventListener('change', function() {
+            var isRequired = this.value === 'yes';
+            inputsToToggle.forEach(function(input) {
+                input.required = isRequired;
+            });
+
+            // Show or hide the asterisk icon based on the selected value
+            var asteriskIcon = document.getElementById('asteriskInvifaci');
+            document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
+            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+        });
+    });
+
+    $(document).ready(function() {
+        $('#ObservationAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var users = @json($users);
+
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                    '<td> <select name="facility_name[]" id="facility_name" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>  <option value="">-- Select --</option>  <option value="Facility">Facility</option>  <option value="Equipment"> Equipment</option> <option value="Instrument">Instrument</option></select> </td>' +
+                    '<td><input type="text" name="datatype[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
+                    '<td><input type="text" name="IDnumber[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
+                    '<td><input type="text" name="Remarks[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
+                    '<td><button type="button" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Remove</button></td>' +
+                    '</tr>';
+
+                return html;
+            }
+
+            var tableBody = $('#onservation-field-table tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+
+        $('#onservation-field-table').on('click', '.removeRowBtn', function(e) {
+            $(this).closest('tr').remove();
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-lg-12">
+    <div class="group-input">
+        <label for="Document Details Required">Document Details Required? <span class="text-danger">*</span></label>
+        <select name="Document_Details_Required" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="Document_Details_Required" value="{{ $data->Document_Details_Required }}">
+            <option value="">-- Select --</option>
+            <option @if ($data->Document_Details_Required == 'yes' || old('Document_Details_Required') == 'yes') selected @endif value="yes">Yes</option>
+            <option @if ($data->Document_Details_Required == 'no' || old('Document_Details_Required') == 'no') selected @endif value="no">No</option>
+        </select>
+    </div>
+    @error('Document_Details_Required')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
+<div class="group-input" id="documentsRow" @if ($data->Document_Details_Required == 'no') style="display: none" @endif>
+    <label for="audit-agenda-grid">
+        Document Details <span id="asteriskInvidoc" style="display: {{ $data->Document_Details_Required == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span>
+        <button type="button" name="audit-agenda-grid" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="audit-agenda-grid" id="ReferenceDocument">+</button>
+        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+            (Launch Instruction)
+        </span>
+    </label>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="ReferenceDocument_details" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="width: 4%">Row#</th>
+                    <th style="width: 12%">Document Number</th>
+                    <th style="width: 16%">Reference Document Name</th>
+                    <th style="width: 16%">Remarks</th>
+                    <th style="width: 8%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($grid_data1->ReferenceDocumentName)
+                    @foreach (unserialize($grid_data1->ReferenceDocumentName) as $key => $temps)
+                        <tr>
+                            <td><input disabled type="text" name="serial[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
+                            <td><input class="numberDetail" type="text" name="Number[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ unserialize($grid_data1->Number)[$key] ? unserialize($grid_data1->Number)[$key] : '' }}"></td>
+                            <td><input class="ReferenceDocumentName" type="text" name="ReferenceDocumentName[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : '' }}"></td>
+                            <td><input class="Document_Remarks" type="text" name="Document_Remarks[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ unserialize($grid_data1->Document_Remarks)[$key] ? unserialize($grid_data1->Document_Remarks)[$key] : '' }}"></td>
+                            <td><button type="button" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Remove</button></td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
+    @error('Number')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+    @error('ReferenceDocumentName')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectField = document.getElementById('Document_Details_Required');
+        var inputsToToggle = [];
+
+        var numberDetailInputs = document.getElementsByClassName('numberDetail');
+        for (var i = 0; i < numberDetailInputs.length; i++) {
+            inputsToToggle.push(numberDetailInputs[i]);
+        }
+
+        var remarksInputs = document.getElementsByClassName('Document_Remarks');
+        for (var j = 0; j < remarksInputs.length; j++) {
+            inputsToToggle.push(remarksInputs[j]);
+        }
+
+        var referenceDocumentNameInputs = document.getElementsByClassName('ReferenceDocumentName');
+        for (var k = 0; k < referenceDocumentNameInputs.length; k++) {
+            inputsToToggle.push(referenceDocumentNameInputs[k]);
+        }
+
+        selectField.addEventListener('change', function() {
+            var isRequired = this.value === 'yes';
+            inputsToToggle.forEach(function(input) {
+                input.required = isRequired;
+            });
+
+            document.getElementById('documentsRow').style.display = isRequired ? 'block' : 'none';
+            var asteriskIcon = document.getElementById('asteriskInvidoc');
+            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+        });
+    });
+
+    $(document).ready(function() {
+        $('#ReferenceDocument').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                    '<td><input type="text" name="Number[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
+                    '<td><input type="text" name="ReferenceDocumentName[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
+                    '<td><input type="text" name="Document_Remarks[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
+                    '<td><button type="button" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Remove</button></td>' +
+                    '</tr>';
+
+                return html;
+            }
+
+            var tableBody = $('#ReferenceDocument_details tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+
+        $('#ReferenceDocument_details').on('click', '.removeRowBtn', function(e) {
+            $(this).closest('tr').remove();
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                       <div class="col-lg-12">
+    <div class="group-input">
+        <label for="Product Details Required">Product/Batch Required? <span class="text-danger">*</span></label>
+        <select name="Product_Details_Required" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="Product_Details_Required" value="{{ $data->Product_Details_Required }}">
+            <option value="">-- Select --</option>
+            <option @if ($data->Product_Details_Required == 'yes' || old('Product_Details_Required') == 'yes') selected @endif value="yes">Yes</option>
+            <option @if ($data->Product_Details_Required == 'no' || old('Product_Details_Required') == 'no') selected @endif value="no">No</option>
+        </select>
+    </div>
+    @error('Product_Details_Required')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
+
+<div class="col-lg-12">
+    <div class="col-lg-12">
+        <div class="group-input" id="productRow" @if ($data->Product_Details_Required == 'no') style="display: none" @endif>
+            <label for="audit-agenda-grid">
+                Product/Batch Details
+                <button type="button" name="audit-agenda-grid" id="Product_Details">+</button>
+                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#product-batch-grid" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                    (Launch Instruction)
+                </span>
+            </label>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="Product_Details_Details" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th style="width: 4%">Row#</th>
+                            <th style="width: 12%">Product</th>
+                            <th style="width: 16%">Stage</th>
+                            <th style="width: 16%">Batch No</th>
+                            <th style="width: 8%">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($grid_data2->product_name)
+                            @foreach (unserialize($grid_data2->product_name) as $key => $temps)
+                                <tr>
+                                    <td><input disabled type="text" name="serial[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
+                                    <td><input class="productName" type="text" name="product_name[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ isset(unserialize($grid_data2->product_name)[$key]) ? unserialize($grid_data2->product_name)[$key] : '' }}"></td>
+                                    <td><input class="product_stage" type="text" name="product_stage[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ isset(unserialize($grid_data2->product_stage)[$key]) ? unserialize($grid_data2->product_stage)[$key] : '' }}"></td>
+                                    <td><input class="productBatchNo" type="text" name="batch_no[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ isset(unserialize($grid_data2->batch_no)[$key]) ? unserialize($grid_data2->batch_no)[$key] : '' }}"></td>
+                                    <td><button type="button" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Remove</button></td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @error('product_name')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+        @error('product_stage')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+        @error('batch_no')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectField = document.getElementById('Product_Details_Required');
+        var inputsToToggle = [];
+
+        var productNameInputs = document.getElementsByClassName('productName');
+        for (var i = 0; i < productNameInputs.length; i++) {
+            inputsToToggle.push(productNameInputs[i]);
+        }
+
+        var productStageInputs = document.getElementsByClassName('product_stage');
+        for (var j = 0; j < productStageInputs.length; j++) {
+            inputsToToggle.push(productStageInputs[j]);
+        }
+
+        var batchNoInputs = document.getElementsByClassName('productBatchNo');
+        for (var k = 0; k < batchNoInputs.length; k++) {
+            inputsToToggle.push(batchNoInputs[k]);
+        }
+
+        selectField.addEventListener('change', function() {
+            var isRequired = this.value === 'yes';
+            inputsToToggle.forEach(function(input) {
+                input.required = isRequired;
+            });
+
+            document.getElementById('productRow').style.display = isRequired ? 'block' : 'none';
+        });
+    });
+
+    $(document).ready(function() {
+        $('#Product_Details').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                    '<td><input type="text" name="product_name[]"></td>' +
+                    '<td><input type="text" name="product_stage[]"></td>' +
+                    '<td><input type="text" name="batch_no[]"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+
+                return html;
+            }
+
+            var tableBody = $('#Product_Details_Details tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+
+        $('#Product_Details_Details').on('click', '.removeRowBtn', function(e) {
+            $(this).closest('tr').remove();
+        });
+    });
+</script>
+
+
+
+                               
 
                                    
                                     <div class="col-md-12">
@@ -3096,12 +3028,12 @@
                                                     style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 4) disabled @endif name="QualityAssurance_Person"
-                                                class="QualityAssurance_Person" id="QualityAssurance_Person">
+                                            <select @if ($data->stage == 4) disabled @endif name="QualityAssurance_person"
+                                                class="QualityAssurance_person" id="QualityAssurance_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->QualityAssurance_Person) selected @endif>
+                                                        @if ($user->id == $data1->QualityAssurance_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -3118,7 +3050,7 @@
                                             <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote QualityAssurance_assessment"
                                                 @if (
                                                     $data->stage == 3 ||
-                                                        (isset($data1->QualityAssurance_Person) && Auth::user()->id != $data1->QualityAssurance_Person)) readonly @endif name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
+                                                        (isset($data1->QualityAssurance_person) && Auth::user()->id != $data1->QualityAssurance_person)) readonly @endif name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 QualityAssurance">
@@ -3130,7 +3062,7 @@
                                                     does not require completion</small></div>
                                             <textarea class="summernote QualityAssurance_feedback" @if (
                                                 $data->stage == 3 ||
-                                                    (isset($data1->QualityAssurance_Person) && Auth::user()->id != $data1->QualityAssurance_Person)) readonly @endif
+                                                    (isset($data1->QualityAssurance_person) && Auth::user()->id != $data1->QualityAssurance_person)) readonly @endif
                                                 name="QualityAssurance_feedback" id="summernote-18" @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->QualityAssurance_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -3194,7 +3126,7 @@
                                             var inputsToToggle = [];
 
                                             // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('QualityAssurance_Person');
+                                            var facilityNameInputs = document.getElementsByClassName('QualityAssurance_person');
                                             for (var i = 0; i < facilityNameInputs.length; i++) {
                                                 inputsToToggle.push(facilityNameInputs[i]);
                                             }
@@ -3252,11 +3184,11 @@
                                         <div class="group-input">
                                             <label for="Quality Assurance notification">Quality Assurance Person <span id="asteriskInvi11"
                                                     style="display: none" class="text-danger">*</span></label>
-                                            <select name="QualityAssurance_Person" disabled id="QualityAssurance_Person">
+                                            <select name="QualityAssurance_person" disabled id="QualityAssurance_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->QualityAssurance_Person) selected @endif>
+                                                        @if ($user->id == $data1->QualityAssurance_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -3738,12 +3670,12 @@
                                                     style="display: {{ $data1->ProductionLiquid_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 4) disabled @endif name="ProductionLiquid_Person"
-                                                class="ProductionLiquid_Person" id="ProductionLiquid_Person">
+                                            <select @if ($data->stage == 4) disabled @endif name="ProductionLiquid_person"
+                                                class="ProductionLiquid_person" id="ProductionLiquid_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->ProductionLiquid_Person) selected @endif>
+                                                        @if ($user->id == $data1->ProductionLiquid_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -3760,7 +3692,7 @@
                                             <textarea @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 4) required @endif class="summernote ProductionLiquid_assessment"
                                                 @if (
                                                     $data->stage == 3 ||
-                                                        (isset($data1->ProductionLiquid_Person) && Auth::user()->id != $data1->ProductionLiquid_Person)) readonly @endif name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
+                                                        (isset($data1->ProductionLiquid_person) && Auth::user()->id != $data1->ProductionLiquid_person)) readonly @endif name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 productionLiquid">
@@ -3772,7 +3704,7 @@
                                                     does not require completion</small></div>
                                             <textarea class="summernote ProductionLiquid_feedback" @if (
                                                 $data->stage == 3 ||
-                                                    (isset($data1->ProductionLiquid_Person) && Auth::user()->id != $data1->ProductionLiquid_Person)) readonly @endif
+                                                    (isset($data1->ProductionLiquid_person) && Auth::user()->id != $data1->ProductionLiquid_person)) readonly @endif
                                                 name="ProductionLiquid_feedback" id="summernote-18" @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ProductionLiquid_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -3836,7 +3768,7 @@
                                             var inputsToToggle = [];
 
                                             // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('ProductionLiquid_Person');
+                                            var facilityNameInputs = document.getElementsByClassName('ProductionLiquid_person');
                                             for (var i = 0; i < facilityNameInputs.length; i++) {
                                                 inputsToToggle.push(facilityNameInputs[i]);
                                             }
@@ -3894,11 +3826,11 @@
                                         <div class="group-input">
                                             <label for="Production Liquid notification">Production Liquid Person <span id="asteriskInvi11"
                                                     style="display: none" class="text-danger">*</span></label>
-                                            <select name="ProductionLiquid_Person" disabled id="ProductionLiquid_Person">
+                                            <select name="ProductionLiquid_person" disabled id="ProductionLiquid_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->ProductionLiquid_Person) selected @endif>
+                                                        @if ($user->id == $data1->ProductionLiquid_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -4383,12 +4315,12 @@
                                                     style="display: {{ $data1->Store_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 4) disabled @endif name="Store_Person"
-                                                class="Store_Person" id="Store_Person">
+                                            <select @if ($data->stage == 4) disabled @endif name="Store_person"
+                                                class="Store_person" id="Store_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Store_Person) selected @endif>
+                                                        @if ($user->id == $data1->Store_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -4402,7 +4334,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif class="summernote Store_assessment"
-                                                @if ($data->stage == 3 || (isset($data1->Store_Person) && Auth::user()->id != $data1->Store_Person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
+                                                @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->id != $data1->Store_person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 store">
@@ -4412,7 +4344,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class="summernote Store_feedback" @if ($data->stage == 3 || (isset($data1->Store_Person) && Auth::user()->id != $data1->Store_Person)) readonly @endif name="Store_feedback"
+                                            <textarea class="summernote Store_feedback" @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->id != $data1->Store_person)) readonly @endif name="Store_feedback"
                                                 id="summernote-18" @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Store_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -4476,7 +4408,7 @@
                                             var inputsToToggle = [];
 
                                             // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('Store_Person');
+                                            var facilityNameInputs = document.getElementsByClassName('Store_person');
                                             for (var i = 0; i < facilityNameInputs.length; i++) {
                                                 inputsToToggle.push(facilityNameInputs[i]);
                                             }
@@ -4534,11 +4466,11 @@
                                         <div class="group-input">
                                             <label for="Store notification">Store Person <span id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
-                                            <select name="Store_Person" disabled id="Store_Person">
+                                            <select name="Store_person" disabled id="Store_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Store_Person) selected @endif>
+                                                        @if ($user->id == $data1->Store_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -5003,12 +4935,12 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select @if ($data->stage == 4) disabled @endif
-                                                name="ResearchDevelopmentStore_Person" class="ResearchDevelopment_Person"
-                                                id="ResearchDevelopment_Person">
+                                                name="ResearchDevelopmentStore_person" class="ResearchDevelopment_person"
+                                                id="ResearchDevelopment_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->ResearchDevelopment_Person) selected @endif>
+                                                        @if ($user->id == $data1->ResearchDevelopment_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -5025,7 +4957,7 @@
                                             <textarea @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif class="summernote ResearchDevelopment_assessment"
                                                 @if (
                                                     $data->stage == 3 ||
-                                                        (isset($data1->ResearchDevelopmentStore_Person) && Auth::user()->id != $data1->ResearchDevelopmentStore_Person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
+                                                        (isset($data1->ResearchDevelopmentStore_person) && Auth::user()->id != $data1->ResearchDevelopmentStore_person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 researchDevelopment">
@@ -5038,7 +4970,7 @@
                                                     does not require completion</small></div>
                                             <textarea class="summernote ResearchDevelopment_feedback" @if (
                                                 $data->stage == 3 ||
-                                                    (isset($data1->ResearchDevelopmentStore_Person) && Auth::user()->id != $data1->ResearchDevelopmentStore_Person)) readonly @endif
+                                                    (isset($data1->ResearchDevelopmentStore_person) && Auth::user()->id != $data1->ResearchDevelopmentStore_person)) readonly @endif
                                                 name="ResearchDevelopment_feedback" id="summernote-18" @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -5102,7 +5034,7 @@
                                             var inputsToToggle = [];
 
                                             // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('ResearchDevelopment_Person');
+                                            var facilityNameInputs = document.getElementsByClassName('ResearchDevelopment_person');
                                             for (var i = 0; i < facilityNameInputs.length; i++) {
                                                 inputsToToggle.push(facilityNameInputs[i]);
                                             }
@@ -5160,11 +5092,11 @@
                                         <div class="group-input">
                                             <label for="Research Development notification">Research Development Person <span
                                                     id="asteriskInvi11" style="display: none" class="text-danger">*</span></label>
-                                            <select name="ResearchDevelopment_Person" disabled id="ResearchDevelopment_Person">
+                                            <select name="ResearchDevelopment_person" disabled id="ResearchDevelopment_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->ResearchDevelopment_Person) selected @endif>
+                                                        @if ($user->id == $data1->ResearchDevelopment_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -5319,12 +5251,12 @@
                                                     style="display: {{ $data1->Engineering_review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 4) disabled @endif name="Engineering_Person"
-                                                class="Engineering_Person" id="Engineering_Person">
+                                            <select @if ($data->stage == 4) disabled @endif name="Engineering_person"
+                                                class="Engineering_person" id="Engineering_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Engineering_Person) selected @endif>
+                                                        @if ($user->id == $data1->Engineering_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -5339,7 +5271,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif class="summernote Engineering_assessment"
-                                                @if ($data->stage == 3 || (isset($data1->Engineering_Person) && Auth::user()->id != $data1->Engineering_Person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->id != $data1->Engineering_person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 Engineering">
@@ -5349,7 +5281,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class="summernote Engineering_feedback" @if ($data->stage == 3 || (isset($data1->Engineering_Person) && Auth::user()->id != $data1->Engineering_Person)) readonly @endif
+                                            <textarea class="summernote Engineering_feedback" @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->id != $data1->Engineering_person)) readonly @endif
                                                 name="Engineering_feedback" id="summernote-18" @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Engineering_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -5413,7 +5345,7 @@
                                             var inputsToToggle = [];
 
                                             // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('Engineering_Person');
+                                            var facilityNameInputs = document.getElementsByClassName('Engineering_person');
                                             for (var i = 0; i < facilityNameInputs.length; i++) {
                                                 inputsToToggle.push(facilityNameInputs[i]);
                                             }
@@ -5471,11 +5403,11 @@
                                         <div class="group-input">
                                             <label for="Engineering notification">Engineering Person <span id="asteriskInvi11"
                                                     style="display: none" class="text-danger">*</span></label>
-                                            <select name="Engineering_Person" disabled id="Engineering_Person">
+                                            <select name="Engineering_person" disabled id="Engineering_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Engineering_Person) selected @endif>
+                                                        @if ($user->id == $data1->Engineering_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -5630,12 +5562,12 @@
                                                     style="display: {{ $data1->Human_Resource_review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 4) disabled @endif name="Human_Resource_Person"
-                                                class="Human_Resource_Person" id="Human_Resource_Person">
+                                            <select @if ($data->stage == 4) disabled @endif name="Human_Resource_person"
+                                                class="Human_Resource_person" id="Human_Resource_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Human_Resource_Person) selected @endif>
+                                                        @if ($user->id == $data1->Human_Resource_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -5650,7 +5582,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif class="summernote Human_Resource_assessment"
-                                                @if ($data->stage == 3 || (isset($data1->Human_Resource_Person) && Auth::user()->id != $data1->Human_Resource_Person)) readonly @endif name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
+                                                @if ($data->stage == 3 || (isset($data1->Human_Resource_person) && Auth::user()->id != $data1->Human_Resource_person)) readonly @endif name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 Human_Resource">
@@ -5660,7 +5592,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class="summernote Human_Resource_feedback" @if ($data->stage == 3 || (isset($data1->Human_Resource_Person) && Auth::user()->id != $data1->Human_Resource_Person)) readonly @endif
+                                            <textarea class="summernote Human_Resource_feedback" @if ($data->stage == 3 || (isset($data1->Human_Resource_person) && Auth::user()->id != $data1->Human_Resource_person)) readonly @endif
                                                 name="Human_Resource_feedback" id="summernote-18" @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Human_Resource_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -5724,7 +5656,7 @@
                                             var inputsToToggle = [];
 
                                             // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('Human_Resource_Person');
+                                            var facilityNameInputs = document.getElementsByClassName('Human_Resource_person');
                                             for (var i = 0; i < facilityNameInputs.length; i++) {
                                                 inputsToToggle.push(facilityNameInputs[i]);
                                             }
@@ -5782,11 +5714,11 @@
                                         <div class="group-input">
                                             <label for="Human Resource notification">Human Resource Person <span id="asteriskInvi11"
                                                     style="display: none" class="text-danger">*</span></label>
-                                            <select name="Human_Resource_Person" disabled id="Human_Resource_Person">
+                                            <select name="Human_Resource_person" disabled id="Human_Resource_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Human_Resource_Person) selected @endif>
+                                                        @if ($user->id == $data1->Human_Resource_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -5939,12 +5871,12 @@
                                                     style="display: {{ $data1->Microbiology_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 4) disabled @endif name="Microbiology_Person"
-                                                class="Microbiology_Person" id="Microbiology_Person">
+                                            <select @if ($data->stage == 4) disabled @endif name="Microbiology_person"
+                                                class="Microbiology_person" id="Microbiology_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Microbiology_Person) selected @endif>
+                                                        @if ($user->id == $data1->Microbiology_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -5959,7 +5891,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea @if ($data1->Microbiology_Review == 'yes' && $data->stage == 4) required @endif class="summernote Microbiology_assessment"
-                                                @if ($data->stage == 3 || (isset($data1->Microbiology_Person) && Auth::user()->id != $data1->Microbiology_Person)) readonly @endif name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
+                                                @if ($data->stage == 3 || (isset($data1->Microbiology_person) && Auth::user()->id != $data1->Microbiology_person)) readonly @endif name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 Microbiology">
@@ -5969,7 +5901,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class="summernote Microbiology_feedback" @if ($data->stage == 3 || (isset($data1->Microbiology_Person) && Auth::user()->id != $data1->Microbiology_Person)) readonly @endif
+                                            <textarea class="summernote Microbiology_feedback" @if ($data->stage == 3 || (isset($data1->Microbiology_person) && Auth::user()->id != $data1->Microbiology_person)) readonly @endif
                                                 name="Microbiology_feedback" id="summernote-18" @if ($data1->Microbiology_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Microbiology_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -6033,7 +5965,7 @@
                                             var inputsToToggle = [];
 
                                             // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('Microbiology_Person');
+                                            var facilityNameInputs = document.getElementsByClassName('Microbiology_person');
                                             for (var i = 0; i < facilityNameInputs.length; i++) {
                                                 inputsToToggle.push(facilityNameInputs[i]);
                                             }
@@ -6091,11 +6023,11 @@
                                         <div class="group-input">
                                             <label for="Microbiology notification">Microbiology Person <span id="asteriskInvi11"
                                                     style="display: none" class="text-danger">*</span></label>
-                                            <select name="Microbiology_Person" disabled id="Microbiology_Person">
+                                            <select name="Microbiology_person" disabled id="Microbiology_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Microbiology_Person) selected @endif>
+                                                        @if ($user->id == $data1->Microbiology_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -6249,12 +6181,12 @@
                                                     style="display: {{ $data1->RegulatoryAffair_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 4) disabled @endif name="RegulatoryAffair_Person"
-                                                class="RegulatoryAffair_Person" id="RegulatoryAffair_Person">
+                                            <select @if ($data->stage == 4) disabled @endif name="RegulatoryAffair_person"
+                                                class="RegulatoryAffair_person" id="RegulatoryAffair_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->RegulatoryAffair_Person) selected @endif>
+                                                        @if ($user->id == $data1->RegulatoryAffair_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -6271,7 +6203,7 @@
                                             <textarea @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4) required @endif class="summernote RegulatoryAffair_assessment"
                                                 @if (
                                                     $data->stage == 3 ||
-                                                        (isset($data1->RegulatoryAffair_Person) && Auth::user()->id != $data1->RegulatoryAffair_Person)) readonly @endif name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
+                                                        (isset($data1->RegulatoryAffair_person) && Auth::user()->id != $data1->RegulatoryAffair_person)) readonly @endif name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 RegulatoryAffair">
@@ -6283,7 +6215,7 @@
                                                     does not require completion</small></div>
                                             <textarea class="summernote RegulatoryAffair_feedback" @if (
                                                 $data->stage == 3 ||
-                                                    (isset($data1->RegulatoryAffair_Person) && Auth::user()->id != $data1->RegulatoryAffair_Person)) readonly @endif
+                                                    (isset($data1->RegulatoryAffair_person) && Auth::user()->id != $data1->RegulatoryAffair_person)) readonly @endif
                                                 name="RegulatoryAffair_feedback" id="summernote-18" @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -6347,7 +6279,7 @@
                                             var inputsToToggle = [];
 
                                             // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('RegulatoryAffair_Person');
+                                            var facilityNameInputs = document.getElementsByClassName('RegulatoryAffair_person');
                                             for (var i = 0; i < facilityNameInputs.length; i++) {
                                                 inputsToToggle.push(facilityNameInputs[i]);
                                             }
@@ -6405,11 +6337,11 @@
                                         <div class="group-input">
                                             <label for="Regulatory Affair notification">Regulatory Affair Person <span
                                                     id="asteriskInvi11" style="display: none" class="text-danger">*</span></label>
-                                            <select name="RegulatoryAffair_Person" disabled id="RegulatoryAffair_Person">
+                                            <select name="RegulatoryAffair_person" disabled id="RegulatoryAffair_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->RegulatoryAffair_Person) selected @endif>
+                                                        @if ($user->id == $data1->RegulatoryAffair_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -6565,12 +6497,12 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select @if ($data->stage == 4) disabled @endif
-                                                name="CorporateQualityAssurance_Person" class="CorporateQualityAssurance_Person"
-                                                id="CorporateQualityAssurance_Person">
+                                                name="CorporateQualityAssurance_person" class="CorporateQualityAssurance_person"
+                                                id="CorporateQualityAssurance_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->CorporateQualityAssurance_Person) selected @endif>
+                                                        @if ($user->id == $data1->CorporateQualityAssurance_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -6587,8 +6519,8 @@
                                             <textarea @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif
                                                 class="summernote CorporateQualityAssurance_assessment" @if (
                                                     $data->stage == 3 ||
-                                                        (isset($data1->CorporateQualityAssurance_Person) &&
-                                                            Auth::user()->id != $data1->CorporateQualityAssurance_Person)) readonly @endif
+                                                        (isset($data1->CorporateQualityAssurance_person) &&
+                                                            Auth::user()->id != $data1->CorporateQualityAssurance_person)) readonly @endif
                                                 name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                         </div>
                                     </div>
@@ -6602,8 +6534,8 @@
                                                     does not require completion</small></div>
                                             <textarea class="summernote CorporateQualityAssurance_feedback" @if (
                                                 $data->stage == 3 ||
-                                                    (isset($data1->CorporateQualityAssurance_Person) &&
-                                                        Auth::user()->id != $data1->CorporateQualityAssurance_Person)) readonly @endif
+                                                    (isset($data1->CorporateQualityAssurance_person) &&
+                                                        Auth::user()->id != $data1->CorporateQualityAssurance_person)) readonly @endif
                                                 name="CorporateQualityAssurance_feedback" id="summernote-18"
                                                 @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                         </div>
@@ -6669,7 +6601,7 @@
                                             var inputsToToggle = [];
 
                                             // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('CorporateQualityAssurance_Person');
+                                            var facilityNameInputs = document.getElementsByClassName('CorporateQualityAssurance_person');
                                             for (var i = 0; i < facilityNameInputs.length; i++) {
                                                 inputsToToggle.push(facilityNameInputs[i]);
                                             }
@@ -6728,12 +6660,12 @@
                                         <div class="group-input">
                                             <label for="Corporate Quality Assurance notification">Corporate Quality Assurance Person <span
                                                     id="asteriskInvi11" style="display: none" class="text-danger">*</span></label>
-                                            <select name="CorporateQualityAssurance_Person" disabled
-                                                id="CorporateQualityAssurance_Person">
+                                            <select name="CorporateQualityAssurance_person" disabled
+                                                id="CorporateQualityAssurance_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->CorporateQualityAssurance_Person) selected @endif>
+                                                        @if ($user->id == $data1->CorporateQualityAssurance_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -7531,12 +7463,12 @@
                                                     style="display: {{ $data1->ContractGiver_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 4) disabled @endif name="ContractGiver_Person"
-                                                class="ContractGiver_Person" id="ContractGiver_Person">
+                                            <select @if ($data->stage == 4) disabled @endif name="ContractGiver_person"
+                                                class="ContractGiver_person" id="ContractGiver_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->ContractGiver_Person) selected @endif>
+                                                        @if ($user->id == $data1->ContractGiver_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -7551,7 +7483,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif class="summernote ContractGiver_assessment"
-                                                @if ($data->stage == 3 || (isset($data1->ContractGiver_Person) && Auth::user()->id != $data1->ContractGiver_Person)) readonly @endif name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
+                                                @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->id != $data1->ContractGiver_person)) readonly @endif name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 store">
@@ -7561,7 +7493,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 3 || (isset($data1->ContractGiver_Person) && Auth::user()->id != $data1->ContractGiver_Person)) readonly @endif
+                                            <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->id != $data1->ContractGiver_person)) readonly @endif
                                                 name="ContractGiver_feedback" id="summernote-18" @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ContractGiver_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -7625,7 +7557,7 @@
                                             var inputsToToggle = [];
 
                                             // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('ContractGiver_Person');
+                                            var facilityNameInputs = document.getElementsByClassName('ContractGiver_person');
                                             for (var i = 0; i < facilityNameInputs.length; i++) {
                                                 inputsToToggle.push(facilityNameInputs[i]);
                                             }
@@ -7683,11 +7615,11 @@
                                         <div class="group-input">
                                             <label for="Contract Giver notification">Contract Giver Person <span id="asteriskInvi11"
                                                     style="display: none" class="text-danger">*</span></label>
-                                            <select name="ContractGiver_Person" disabled id="ContractGiver_Person">
+                                            <select name="ContractGiver_person" disabled id="ContractGiver_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->ContractGiver_Person) selected @endif>
+                                                        @if ($user->id == $data1->ContractGiver_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>

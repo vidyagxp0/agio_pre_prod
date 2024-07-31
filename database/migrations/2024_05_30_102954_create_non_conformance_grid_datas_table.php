@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('non_conformance_grid_datas', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('non_conformances_id');
-            $table->string('identifier');
-            $table->longText('data');
+            $table->bigInteger('non_conformances_id')->nullable();
+            $table->string('identifier')->nullable();
+            $table->longText('data')->nullable();
             $table->timestamps();
         });
     }

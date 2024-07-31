@@ -942,7 +942,6 @@
                 });
             });
 
-
             // =========================
             wow = new WOW({
                 boxClass: 'wow', // default
@@ -1023,8 +1022,7 @@
                                     <?php
                                     // Calculate the due date (30 days from the initiation date)
                                     $initiationDate = date('Y-m-d'); // Current date as initiation date
-                                    $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
-                                    ?>
+                                    $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date  ?>
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -1516,9 +1514,7 @@
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="search"> Department Head<span class="text-danger"></span>
-                                            </label>
-
+                                            <label for="search"> Department Head<span class="text-danger"></span></label>
                                             <select id="select-state" placeholder="Select..." name="department_head">
                                                 {{-- <option value="">Select a value</option> --}}
                                                 @foreach ($users as $key => $value)
@@ -1531,7 +1527,6 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="search"> QA Reviewer <span class="text-danger"></span> </label>
-
                                             <select id="select-state" placeholder="Select..." name="qa_reviewer">
                                                 {{-- <option value="">Select a value</option> --}}
                                                 @foreach ($users as $key => $value)
@@ -2035,7 +2030,7 @@
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a class="remove-file"
+                                                                <a type="button" class="remove-file"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
@@ -2761,7 +2756,6 @@
                                                 //     inputsToToggle.push(facilityNameInputs[i]);
                                                 // }
 
-
                                                 selectField.addEventListener('change', function() {
                                                     var isRequired = this.value === 'yes';
 
@@ -2906,6 +2900,9 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                        @if ($data1->Production_Review !== 'yes')
+
+
                                         $('.p_erson').hide();
 
                                         $('[name="Production_Review"]').change(function() {
@@ -2918,6 +2915,7 @@
                                                 $('.p_erson span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -2964,9 +2962,7 @@
                                                     style="display: {{ $data->Production_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 4) disabled @endif
-                                                name="Production_person" class="Production_person"
-                                                id="Production_person">
+                                            <select @if ($data->stage == 4) disabled @endif name="Production_person" class="Production_person"     id="Production_person">
                                                 <option value=""> Select</option>
                                                 @foreach ($userData as $user)
                                                     <option value="{{ $user->id }}"
@@ -3214,10 +3210,8 @@
                                     </div>
                                     <div class="col-md-6 mb-3 p_erson">
                                         <div class="group-input">
-                                            <label for="Production Review Completed By">Production Review Completed
-                                                By</label>
-                                            <input readonly type="text" value="{{ $data1->Production_by }}"
-                                                name="production_by" id="production_by">
+                                            <label for="Production Review Completed By">Production Review Completed By</label>
+                                            <input readonly type="text" value="{{ $data1->Production_by }}" name="production_by" id="production_by">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 p_erson">
@@ -3225,8 +3219,7 @@
                                             <label for="Production Review Completed On">Production Review Completed
                                                 On</label>
                                             <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input readonly type="date"id="production_on" name="production_on"
-                                                value="{{ $data1->production_on }}">
+                                            <input readonly type="date"id="production_on" name="production_on"    value="{{ $data1->production_on }}">
                                         </div>
                                     </div>
                                 @endif
@@ -3287,15 +3280,12 @@
                                             <label for="Warehouse Person">Warehouse Person <span id="asteriskware"
                                                     style="display: {{ $data1->Warehouse_review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
-                                            <select name="Warehouse_notification" class="Warehouse_notification"
-                                                id="Warehouse_notification"
-                                                value="{{ $data1->Warehouse_notification }}"
-                                                @if ($data->stage == 4) disabled @endif>
-                                                <option value=""> -- Select --</option>
-                                                @foreach ($users as $user)
-                                                    <option
-                                                        {{ $data1->Warehouse_notification == $user->id ? 'selected' : '' }}
-                                                        value="{{ $user->id }}">{{ $user->name }}</option>
+                                                <select @if ($data->stage == 4) disabled @endif  name="Warehouse_notification" class="Warehouse_notification"  id="Warehouse_notification">
+                                                <option value=""> Select</option>
+                                                @foreach ($userData as $user)
+                                                    <option value="{{ $user->id }}"
+                                                        @if ($user->id == $data1->Warehouse_notification) selected @endif>
+                                                        {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
 
@@ -3303,25 +3293,16 @@
                                     </div>
                                     <div class="col-md-12 mb-3 warehouse">
                                         <div class="group-input">
-                                            <label for="Impact Assessment1">Impact Assessment (By Warehouse) <span
-                                                    id="asteriskware2"
-                                                    style="display: {{ $data1->Warehouse_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea @if ($data1->Warehouse_review == 'yes' && $data->stage == 4) required @endif class="summernote Warehouse_assessment"
-                                                name="Warehouse_assessment" id="summernote-19" @if ($data->stage == 3 || Auth::user()->id != $data1->Warehouse_notification) readonly @endif>{{ $data1->Warehouse_assessment }}</textarea>
+                                            <label for="Impact Assessment1">Impact Assessment (By Warehouse) <span id="asteriskware2"  style="display: {{ $data1->Warehouse_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"  class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea @if ($data1->Warehouse_review == 'yes' && $data->stage == 4) required @endif class="summernote Warehouse_assessment"  name="Warehouse_assessment" id="summernote-19" @if ($data->stage == 3 || Auth::user()->id != $data1->Warehouse_notification) readonly @endif>{{ $data1->Warehouse_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 warehouse">
                                         <div class="group-input">
-                                            <label for="Warehouse Feedback">Warehouse Feedback <span id="asteriskware3"
-                                                    style="display: {{ $data1->Warehouse_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea @if ($data1->Warehouse_review == 'yes' && $data->stage == 4) required @endif class="summernote Warehouse_feedback"
-                                                name="Warehouse_feedback" id="summernote-20" @if ($data->stage == 3 || Auth::user()->id != $data1->Warehouse_notification) readonly @endif>{{ $data1->Warehouse_feedback }}</textarea>
+                                            <label for="Warehouse Feedback">Warehouse Feedback <span id="asteriskware3" style="display: {{ $data1->Warehouse_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"  class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea @if ($data1->Warehouse_review == 'yes' && $data->stage == 4) required @endif class="summernote Warehouse_feedback" name="Warehouse_feedback" id="summernote-20" @if ($data->stage == 3 || Auth::user()->id != $data1->Warehouse_notification) readonly @endif>{{ $data1->Warehouse_feedback }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12 warehouse">
@@ -3391,18 +3372,14 @@
 
                                     <div class="col-md-6 mb-3 warehouse">
                                         <div class="group-input">
-                                            <label for="Warehouse Review Completed By">Warehouse Review Completed
-                                                By</label>
-                                            <input disabled type="text" value="{{ $data1->Warehouse_by }}"
-                                                name="Warehouse_by" id="Warehouse_by">
+                                            <label for="Warehouse Review Completed By">Warehouse Review Completed By</label>
+                                            <input disabled type="text" value="{{ $data1->Warehouse_by }}" name="Warehouse_by" id="Warehouse_by">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3 warehouse">
                                         <div class="group-input">
-                                            <label for="Warehouse Review Completed On">Warehouse Review Completed
-                                                On</label>
-                                            <input type="date"id="Warehouse_on" name="Warehouse_on"
-                                                value="{{ $data1->Warehouse_on }}">
+                                            <label for="Warehouse Review Completed On">Warehouse Review Completed  On</label>
+                                            <input type="date"id="Warehouse_on" name="Warehouse_on"  value="{{ $data1->Warehouse_on }}">
                                         </div>
                                     </div>
                                 @else
@@ -3536,6 +3513,7 @@
                                 Quality Control
                             </div>
                             <script>
+                                @if ($data1->Quality_review !== 'yes')
                                 $(document).ready(function() {
                                     $('.quality_control').hide();
 
@@ -3548,6 +3526,7 @@
                                             $('.quality_control span').hide();
                                         }
                                     });
+                                    @endif
                                 });
                             </script>
                             @if ($data->stage == 3 || $data->stage == 4)
@@ -3578,19 +3557,12 @@
                                 @endphp
                                 <div class="col-lg-6 quality_control">
                                     <div class="group-input">
-                                        <label for="Quality Control Person">Quality Control Person <span id="asteriskQC"
-                                                style="display: {{ $data1->Quality_review == 'yes' ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span></label>
-                                        <select name="Quality_Control_Person" class="Quality_Control_Person"
-                                            id="Quality_Control_Person"
-                                            @if ($data->stage == 4) disabled @endif>
+                                        <label for="Quality Control Person">Quality Control Person <span id="asteriskQC"  style="display: {{ $data1->Quality_review == 'yes' ? 'inline' : 'none' }}"  class="text-danger">*</span></label>
+                                        <select @if ($data->stage == 4) disabled @endif  name="Quality_Control_Person" class="Quality_Control_Person"  id="Quality_Control_Person">
                                             <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option
-                                                    {{ $data1->Quality_Control_Person == $user->id ? 'selected' : '' }}
-                                                    value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @foreach ($userData as $user)
+                                                <option  {{ $data1->Quality_Control_Person == $user->id ? 'selected' : '' }} value="{{ $user->id }}"> {{ $user->name }}</option>
                                             @endforeach
-
                                         </select>
 
                                     </div>
@@ -3692,16 +3664,14 @@
                                             value="{{ $data1->Quality_Control_on }}">
                                     </div>
                                 </div>
-                                <div class="sub-head">
-                                    Quality Assurance
-                                </div>
+
                                 <script>
                                     $(document).ready(function() {
                                         @if ($data1->Quality_Assurance_Review !== 'yes')
 
                                             $('.quality_assurance').hide();
 
-                                            $('[name="Quality_Assurance"]').change(function() {
+                                            $('[name="Quality_Assurance_Review"]').change(function() {
                                                 if ($(this).val() === 'yes') {
                                                     $('.quality_assurance').show();
                                                     $('.quality_assurance span').show();
@@ -3714,6 +3684,10 @@
 
                                     });
                                 </script>
+                                <div class="sub-head">
+                                    Quality Assurance
+                                </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
@@ -3740,18 +3714,11 @@
                                 @endphp
                                 <div class="col-lg-6 quality_assurance">
                                     <div class="group-input">
-                                        <label for="Quality Assurance Person">Quality Assurance Person <span
-                                                id="asteriskQQA"
-                                                style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span></label>
-                                        <select name="QualityAssurance_person" class="QualityAssurance_person"
-                                            id="QualityAssurance_person"
-                                            @if ($data->stage == 4) disabled @endif>
+                                        <label for="Quality Assurance Person">Quality Assurance Person <span  id="asteriskQQA" style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"  class="text-danger">*</span></label>
+                                        <select @if ($data->stage == 4) disabled @endif  name="QualityAssurance_person" class="Quality_Control_Person"  id="QualityAssurance_person">
                                             <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option
-                                                    {{ $data1->QualityAssurance_person == $user->id ? 'selected' : '' }}
-                                                    value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @foreach ($userData as $user)
+                                                <option  {{ $data1->QualityAssurance_person == $user->id ? 'selected' : '' }} value="{{ $user->id }}"> {{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -5277,6 +5244,7 @@
                                             value="{{ $data1->Quality_Control_on }}">
                                     </div>
                                 </div>
+
                                 <div class="sub-head">
                                     Quality Assurance
                                 </div>
@@ -9854,9 +9822,7 @@
                                             <th>Residual Detectability- H(1)/M(2)/L(3)</th>
                                             <th>Residual RPN</th>
                                             <th>Risk Acceptance (Y/N)</th>
-                                            <th>Mitigation proposal (Mention either CAPA reference number, IQ,
-                                                OQ or
-                                                PQ)</th>
+                                            <th>Mitigation proposal (Mention either CAPA reference number, IQ, OQ or PQ)</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>

@@ -1607,11 +1607,11 @@ class DeviationController extends Controller
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
                 $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
 
-                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
-                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
+                $Cft->Production_person = $request->Production_person == null ? $Cft->Production_person : $request->Production_person;
+                $Cft->Production_Review = $request->Production_Review == null ? $Cft->Production_Review : $request->Production_Review;
 
-                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person;
-                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->Production_Table_Review : $request->Production_Table_Review;
+                $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
+                $Cft->Warehouse_notification = $request->Warehouse_notification == null ? $Cft->Warehouse_notification : $request->Warehouse_notification;
                 
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
@@ -1674,11 +1674,11 @@ class DeviationController extends Controller
 
             }
             else{
-                $Cft->RA_Review = $request->RA_Review;
-                $Cft->RA_person = $request->RA_person;
+                $Cft->Warehouse_notification = $request->Warehouse_notification;
+                $Cft->Warehouse_review = $request->Warehouse_review;
 
-                $Cft->Production_Table_Review = $request->Production_Table_Review;
-                $Cft->Production_Table_Person = $request->Production_Table_Person;
+                $Cft->Production_Review = $request->Production_Review;
+                $Cft->Production_person = $request->Production_person;
 
                 $Cft->Production_Injection_Review = $request->Production_Injection_Review;
                 $Cft->Production_Injection_Person = $request->Production_Injection_Person;
@@ -1745,8 +1745,10 @@ class DeviationController extends Controller
                 $Cft->Other5_person = $request->Other5_person;
                 $Cft->Other5_Department_person = $request->Other5_Department_person;
             }
-            $Cft->RA_assessment = $request->RA_assessment;
-            $Cft->RA_feedback = $request->RA_feedback;
+            $Cft->Warehouse_feedback = $request->Warehouse_feedback;
+            $Cft->Warehouse_assessment = $request->Warehouse_assessment;
+            $Cft->Production_feedback = $request->Production_feedback;
+            $Cft->Production_assessment = $request->Production_assessment;
 
             $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
             $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
@@ -6146,7 +6148,7 @@ class DeviationController extends Controller
                     // }
 
                     if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
-                        $list = Helpers::getHeadoperationsUserList();
+                        // $list = Helpers::getHeadoperationsUserList();
                                 // foreach ($list as $u) {
                                 //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
                                 //         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -6168,7 +6170,7 @@ class DeviationController extends Controller
                                 // }
                             }
                             if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
-                                $list = Helpers::getCEOUserList();
+                                // $list = Helpers::getCEOUserList();
                                         // foreach ($list as $u) {
                                         //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
                                         //         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -6192,7 +6194,7 @@ class DeviationController extends Controller
                                         // }
                                     }
                                     if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
-                                        $list = Helpers::getCorporateEHSHeadUserList();
+                                        // $list = Helpers::getCorporateEHSHeadUserList();
                                                 // foreach ($list as $u) {
                                                 //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
                                                 //         $email = Helpers::getInitiatorEmail($u->user_id);
