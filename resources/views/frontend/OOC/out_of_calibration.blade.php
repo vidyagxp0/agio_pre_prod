@@ -575,7 +575,7 @@ $(document).ready(function() {
 
 
 
-                            <div class="sub-head"> Delay Justfication for Reporting</div>
+                            <div class="sub-head"> Delay Justification for Reporting</div>
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">

@@ -2980,7 +2980,7 @@ public function OOCAuditTrial($id){
         $cc = OutOfCalibration::find($id);
                $cft = [];
                $parent_id = $id;
-               $parent_type = "Capa";
+               $parent_type = "Out of Calibration";
                $old_record = Capa::select('id', 'division_id', 'record')->get();
                $record_number = ((RecordNumber::first()->value('counter')) + 1);
                $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -2999,7 +2999,9 @@ public function OOCAuditTrial($id){
 
                if ($request->revision == "capa-child") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
+                $record = $record_number;
+                $old_records = $old_record;
+                return view('frontend.forms.capa', compact('record', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
                 }
 
                if ($request->revision == "Action-Item") {
@@ -3015,7 +3017,7 @@ public function OOCAuditTrial($id){
         $cc = OutOfCalibration::find($id);
                $cft = [];
                $parent_id = $id;
-               $parent_type = "Capa";
+               $parent_type = "Out of Calibration";
                $currentDate = Carbon::now();
                $formattedDate = $currentDate->addDays(30);
                $due_date= $formattedDate->format('d-M-Y');
@@ -3044,7 +3046,7 @@ public function OOCAuditTrial($id){
 
 
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
+                return view('frontend.extension.extension_new', compact('parent_id', 'parent_type', 'parent_name', 'record_number', 'parent_due_date'));
 
             }
 
