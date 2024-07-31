@@ -231,24 +231,24 @@
                                 </div>
 
                                 <!-- <div class="col-md-6">
-                                                                                <div class="group-input">
-                                                                                    <label for="Initiated Through">
-                                                                                        Initiated Through <span class="text-danger"></span>
-                                                                                    </label>
-                                                                                    <select id="select-state" placeholder="Select..." name="initiated_by"
-                                                                                        {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                                        <option value="">--Select--</option>
-                                                                                        <option value="Recall "{{ $showdata->initiated_by == 'Recall' ? 'selected' : '' }}>Recall </option>
-                                                                                        <option value="Return "{{ $showdata->initiated_by == 'Return' ? 'selected' : '' }}>Return </option>
-                                                                                        <option value="Deviation"{{ $showdata->initiated_by == 'Deviation' ? 'selected' : '' }}>Deviation</option>
-                                                                                        <option value="Complaint"{{ $showdata->initiated_by == 'Complaint' ? 'selected' : '' }}>Complaint</option>
-                                                                                        <option value="Regulatory"{{ $showdata->initiated_by == 'Regulatory' ? 'selected' : '' }}>Regulatory</option>
-                                                                                        <option value="Lab Incident"{{ $showdata->initiated_by == 'Lab Incident' ? 'selected' : '' }}>Lab Incident</option>
-                                                                                        <option value="Improvement"{{ $showdata->initiated_by == 'Improvement' ? 'selected' : '' }}>Improvement</option>
-                                                                                        <option value="Others"{{ $showdata->initiated_by == 'Others' ? 'selected' : '' }}>Others</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div> -->
+                                                                                                            <div class="group-input">
+                                                                                                                <label for="Initiated Through">
+                                                                                                                    Initiated Through <span class="text-danger"></span>
+                                                                                                                </label>
+                                                                                                                <select id="select-state" placeholder="Select..." name="initiated_by"
+                                                                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                                                                                                    <option value="">--Select--</option>
+                                                                                                                    <option value="Recall "{{ $showdata->initiated_by == 'Recall' ? 'selected' : '' }}>Recall </option>
+                                                                                                                    <option value="Return "{{ $showdata->initiated_by == 'Return' ? 'selected' : '' }}>Return </option>
+                                                                                                                    <option value="Deviation"{{ $showdata->initiated_by == 'Deviation' ? 'selected' : '' }}>Deviation</option>
+                                                                                                                    <option value="Complaint"{{ $showdata->initiated_by == 'Complaint' ? 'selected' : '' }}>Complaint</option>
+                                                                                                                    <option value="Regulatory"{{ $showdata->initiated_by == 'Regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                                                                                                    <option value="Lab Incident"{{ $showdata->initiated_by == 'Lab Incident' ? 'selected' : '' }}>Lab Incident</option>
+                                                                                                                    <option value="Improvement"{{ $showdata->initiated_by == 'Improvement' ? 'selected' : '' }}>Improvement</option>
+                                                                                                                    <option value="Others"{{ $showdata->initiated_by == 'Others' ? 'selected' : '' }}>Others</option>
+                                                                                                                </select>
+                                                                                                            </div>
+                                                                                                        </div> -->
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -380,27 +380,27 @@
                                 @endphp
 
                                 <!-- <div class="">
-                                                                                <div class="group-input">
-                                                                                    <label for="reference_record">Reference Documents</label>
-                                                                                    <select multiple id="reference_record" name="reference_document[]"
-                                                                                        {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                                        @foreach ($old_record as $new)
+                                                                                                            <div class="group-input">
+                                                                                                                <label for="reference_record">Reference Documents</label>
+                                                                                                                <select multiple id="reference_record" name="reference_document[]"
+                                                                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                                                                                                    @foreach ($old_record as $new)
     <option value="{{ $new->id }}"
-                                                                                                {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
-                                                                                                {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
-                                                                                                {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
-                                                                                            </option>
+                                                                                                                            {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
+                                                                                                                            {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
+                                                                                                                            {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
+                                                                                                                        </option>
     @endforeach
 
-                                                                                        {{-- <option value="{{ $referenceValue }}"
+                                                                                                                    {{-- <option value="{{ $referenceValue }}"
                                                 @if (in_array($referenceValue, $showdata->reference_document)) selected @endif>
                                                 {{ $referenceValue }}
                                             </option> --}}
-                                                                                        {{-- Uncomment and add more options as needed --}}
-                                                                                        {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div> -->
+                                                                                                                    {{-- Uncomment and add more options as needed --}}
+                                                                                                                    {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
+                                                                                                                </select>
+                                                                                                            </div>
+                                                                                                        </div> -->
 
                                 <div class="">
                                     <div class="group-input">
@@ -508,21 +508,21 @@
                                 </div>
 
                                 <!-- <div class="col-md-6">
-                                                                            <div class="group-input">
-                                                                                <label for="search">
-                                                                                 <span class="text-danger"></span>
-                                                                                </label>
-                                                                                <select id="select-state" placeholder="Select..." name="">
-                                                                                    <option value="">Select a value</option>
-                                                                                    @foreach ($users as $key => $value)
+                                                                                                        <div class="group-input">
+                                                                                                            <label for="search">
+                                                                                                             <span class="text-danger"></span>
+                                                                                                            </label>
+                                                                                                            <select id="select-state" placeholder="Select..." name="">
+                                                                                                                <option value="">Select a value</option>
+                                                                                                                @foreach ($users as $key => $value)
     <option  @if ($showdata->department_head_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
     @endforeach
-                                                                                </select>
-                                                                                @error('department_head_to')
+                                                                                                            </select>
+                                                                                                            @error('department_head_to')
         <p class="text-danger">{{ $message }}</p>
     @enderror
-                                                                            </div>
-                                                                        </div> -->
+                                                                                                        </div>
+                                                                                                    </div> -->
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -2419,8 +2419,8 @@
                             <input type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
                         </div>
                     </div>
 
@@ -2460,8 +2460,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input class="input_width" type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
 
@@ -2501,8 +2501,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input class="input_width" type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
 
@@ -2542,8 +2542,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input class="input_width" type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
 
@@ -2583,8 +2583,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input class="input_width" type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
 
