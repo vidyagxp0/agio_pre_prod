@@ -14,6 +14,8 @@ use App\Models\LabIncident;
 use App\Models\Incident;
 use App\Models\InternalAudit;
 use Illuminate\Http\Request;
+use App\Models\OOS_micro;
+use App\Models\Ootc;
 use Carbon\Carbon;
 use App\Models\Capa;
 use App\Http\Controllers\Controller;
@@ -727,7 +729,7 @@ class LogFilterController extends Controller
         return response()->json($res);
     }
 
-    public function OOT_Filter(Request $request)
+public function OOT_Filter(Request $request)
 {
     $res = [
         'status' => 'ok',
@@ -746,8 +748,8 @@ class LogFilterController extends Controller
             $query->where('division_id', $request->division_id_oot);
         }
 
-        if ($request->source_document_type) {
-            $query->where('source_document_type_gi', $request->source_document_type);
+        if ($request->source_document_type_OOT) {
+            $query->where('source_document_type_gi', $request->source_document_type_OOT);
         }
 
         if ($request->period_oot) {
@@ -767,32 +769,36 @@ class LogFilterController extends Controller
                     break;
             }
             if ($startDate) {
-                $query->whereDate('intiation_date', '>=', $startDate);
-                }
+                $query->whereDate('initiation_date', '>=', $startDate);
+            }
         }
 
         if ($request->date_oot_from) {
             $dateFrom = Carbon::parse($request->date_oot_from)->startOfDay();
-            $query->whereDate('intiation_date', '>=', $dateFrom);
-           }
+            $query->whereDate('initiation_date', '>=', $dateFrom);
+        }
 
         if ($request->date_OOT_to) {
             $dateTo = Carbon::parse($request->date_OOT_to)->endOfDay();
-            $query->whereDate('intiation_date', '<=', $dateTo);
-          }
+            $query->whereDate('initiation_date', '<=', $dateTo);
+        }
 
         $oots = $query->get();
+        $oosmicro = OOS_micro::get();
 
-        $htmlData = view('frontend.forms.Logs.filterData.OOS_OOT_log_data', compact('oots'))->render();
+        $htmlData = view('frontend.forms.Logs.filterData.OOS_OOT_log_data', compact('oots', 'oosmicro'))->render();
 
         $res['body'] = $htmlData;
     } catch (\Exception $e) {
         $res['status'] = 'error';
         $res['message'] = $e->getMessage();
-       }
+    }
 
     return response()->json($res);
 }
+
+
+    
 
 
 

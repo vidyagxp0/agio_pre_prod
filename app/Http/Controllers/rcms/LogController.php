@@ -98,7 +98,10 @@ class LogController extends Controller
             
                 $oots =  Ootc::with('ProductGridOot')->get();
 
-                $ootss=[];
+
+                $oots = Ootc::with('ProductGridOot')->get();
+                $oosmicro = OOS_micro::get();
+            
                  // foreach($oots as $oo)
             // {
                 // return $oo;

@@ -13,4 +13,9 @@ class Ootc extends Model
         return $this->hasOne(ProductGridOot::class,'ootcs_id');
     }
 
+    public function division()
+    {
+        return $this->belongsTo(QMSDivision::class,'division_id');
+    }
+
 }
