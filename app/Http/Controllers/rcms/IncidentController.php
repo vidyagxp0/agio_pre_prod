@@ -100,8 +100,9 @@ class IncidentController extends Controller
         $incident->due_date = $request->due_date;
         $incident->intiation_date = $request->intiation_date;
         $incident->Initiator_Group = $request->Initiator_Group;
-        $incident->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
+
         $incident->initiator_group_code = $request->initiator_group_code;
+        $incident->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
         $incident->short_description = $request->short_description;
         $incident->incident_date = $request->incident_date;
         $incident->incident_time = $request->incident_time;
@@ -1127,7 +1128,6 @@ if ($incident->Initial_attachment) {
     {
         $old_record = Incident::select('id', 'division_id', 'record')->get();
         $data = Incident::find($id);
-
 
         $userData = User::all();
 
@@ -4838,6 +4838,91 @@ if ($incident->Initial_attachment) {
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Failure Investigation' . $id . '.pdf');
+        }
+    }
+
+    public function incident_child_1(Request $request, $id)
+    {
+
+        $cft = [];
+        $parent_id = $id;
+        $parent_type = "Audit_Program";
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        $parent_record = Incident::where('id', $id)->value('record');
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_division_id = Incident::where('id', $id)->value('division_id');
+        $parent_initiator_id = Incident::where('id', $id)->value('initiator_id');
+        $parent_intiation_date = Incident::where('id', $id)->value('intiation_date');
+        $parent_created_at = Incident::where('id', $id)->value('created_at');
+        $parent_short_description = Incident::where('id', $id)->value('short_description');
+        $hod = User::where('role', 4)->get();
+        if ($request->child_type == "extension") {
+            $parent_due_date = "";
+            $parent_id = $id;
+            $parent_type = "extension";
+            $parent_name = $request->parent_name;
+
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $Extensionchild = Incident::find($id);
+            $Extensionchild->Extensionchild = $record_number;
+            $old_records = Incident::select('id', 'division_id', 'record')->get();
+
+            $Extensionchild->save();
+            return view('frontend.extension.extension_new', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date','old_records', 'parent_type','parent_created_at'));
+
+        }
+        $old_record = Incident::select('id', 'division_id', 'record')->get();
+        // dd($request->child_type)
+        if ($request->child_type == "capa") {
+            $parent_name = "CAPA";
+            $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $Capachild = Incident::find($id);
+            $Capachild->Capachild = $record;
+            $old_records = Incident::select('id', 'division_id', 'record')->get();
+
+            $Capachild->save();
+
+
+            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
+        } elseif ($request->child_type == "Action_Item")
+         {
+            $parent_name = "CAPA";
+            $actionchild = Incident::find($id);
+            $actionchild->actionchild = $record_number;
+            $parent_id = $id;
+            $actionchild->save();
+
+            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        elseif ($request->child_type == "effectiveness_check")
+         {
+            $parent_name = "CAPA";
+            $effectivenesschild = Incident::find($id);
+            $effectivenesschild->effectivenesschild = $record_number;
+            $effectivenesschild->save();
+        return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        elseif ($request->child_type == "Change_control") {
+            $parent_name = "CAPA";
+            $Changecontrolchild = Incident::find($id);
+            $Changecontrolchild->Changecontrolchild = $record_number;
+
+            $Changecontrolchild->save();
+
+            return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        else {
+            $parent_name = "Root";
+            $Rootchild = Incident::find($id);
+            $Rootchild->Rootchild = $record_number;
+            $Rootchild->save();
+            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
         }
     }
 }

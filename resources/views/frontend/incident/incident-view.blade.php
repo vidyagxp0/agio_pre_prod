@@ -722,9 +722,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-not-reqired">
                                 CFT Review Not Required
                             </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
-                                    </button> -->
+                                    </button>
                         @elseif(
                             $data->stage == 4 &&
                                 (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
@@ -750,9 +750,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Final Review Complete
                             </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
-                                    </button> -->
+                                    </button>
                         @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
@@ -1066,64 +1066,50 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Department</b> <span
                                                         class="text-danger">*</span></label>
-                                                <select name="Initiator_Group"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    id="initiator_group">
-                                                    <option value="">Enter Your Selection Here</option>
-                                                    <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif>
-                                                        Corporate
-                                                        Quality Assurance</option>
-                                                    <option value="QAB" @if ($data->Initiator_Group == 'QAB') selected @endif>
-                                                        Quality
-                                                        Assurance Biopharma</option>
-                                                    <option value="CQC" @if ($data->Initiator_Group == 'CQC') selected @endif>
-                                                        Central
-                                                        Quality Control</option>
-                                                    <option value="MANU" @if ($data->Initiator_Group == 'MANU') selected @endif>
-                                                        Manufacturing
-                                                    </option>
-                                                    <option value="PSG" @if ($data->Initiator_Group == 'PSG') selected @endif>
-                                                        Plasma
-                                                        Sourcing Group</option>
-                                                    <option value="CS" @if ($data->Initiator_Group == 'CS') selected @endif>
-                                                        Central
-                                                        Stores</option>
-                                                    <option value="ITG" @if ($data->Initiator_Group == 'ITG') selected @endif>
-                                                        Information
-                                                        Technology Group</option>
-                                                    <option value="MM" @if ($data->Initiator_Group == 'MM') selected @endif>
-                                                        Molecular
-                                                        Medicine</option>
-                                                    <option value="CL" @if ($data->Initiator_Group == 'CL') selected @endif>
-                                                        Central
-                                                        Laboratory</option>
-                                                    <option value="TT" @if ($data->Initiator_Group == 'TT') selected @endif>
-                                                        Tech
-                                                        team</option>
-                                                    <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif>
-                                                        Quality
-                                                        Assurance</option>
-                                                    <option value="QM" @if ($data->Initiator_Group == 'QM') selected @endif>
-                                                        Quality
-                                                        Management</option>
-                                                    <option value="IA" @if ($data->Initiator_Group == 'IA') selected @endif>
-                                                        IT
-                                                        Administration</option>
-                                                    <option value="ACC" @if ($data->Initiator_Group == 'ACC') selected @endif>
-                                                        Accounting
-                                                    </option>
-                                                    <option value="LOG" @if ($data->Initiator_Group == 'LOG') selected @endif>
-                                                        Logistics
-                                                    </option>
-                                                    <option value="SM" @if ($data->Initiator_Group == 'SM') selected @endif>
-                                                        Senior
-                                                        Management</option>
-                                                    <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif>
-                                                        Business
-                                                        Administration</option>
-                                                        <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif>
-                                                            Document Cell</option>
-
+                                                <select name="Initiator_Group"  {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="initiator_group">
+                                                    {{-- <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif> Corporate  Quality Assurance</option>
+                                                    <option value="QAB" @if ($data->Initiator_Group == 'QAB') selected @endif> Quality  Assurance Biopharma</option>
+                                                    <option value="QAB" @if ($data->Initiator_Group == 'QC') selected @endif> Quality  Control</option>
+                                                    <option value="CQC" @if ($data->Initiator_Group == 'CQC') selected @endif> Central Quality Control</option>
+                                                    <option value="MANU" @if ($data->Initiator_Group == 'MANU') selected @endif> Manufacturing  </option>
+                                                    <option value="PSG" @if ($data->Initiator_Group == 'PSG') selected @endif>Plasma Sourcing Group</option>
+                                                    <option value="CS" @if ($data->Initiator_Group == 'CS') selected @endif> Central Stores</option>
+                                                    <option value="ITG" @if ($data->Initiator_Group == 'ITG') selected @endif> Information    Technology Group</option>
+                                                    <option value="MM" @if ($data->Initiator_Group == 'MM') selected @endif> Molecular  Medicine</option>
+                                                    <option value="CL" @if ($data->Initiator_Group == 'CL') selected @endif>Central Laboratory</option>
+                                                    <option value="TT" @if ($data->Initiator_Group == 'TT') selected @endif>Tech  team</option>
+                                                    <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif> Quality Assurance</option>
+                                                    <option value="QM" @if ($data->Initiator_Group == 'QM') selected @endif> Quality Management</option>
+                                                    <option value="IA" @if ($data->Initiator_Group == 'IA') selected @endif>  IT  Administration</option>
+                                                    <option value="ACC" @if ($data->Initiator_Group == 'ACC') selected @endif>  Accounting   </option>
+                                                    <option value="LOG" @if ($data->Initiator_Group == 'LOG') selected @endif> Logistics     </option>
+                                                    <option value="SM" @if ($data->Initiator_Group == 'SM') selected @endif>Senior Management</option>
+                                                    <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif> Business  Administration</option>
+                                                     <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif>  Document Cell</option>
+                                                    <option value="PG"  @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option> --}}
+                                                            <option value="CQA"  @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                                        <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif >Quality Assurance</option>
+                                                        <option value="QC"  @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control</option>
+                                                        <option value="QM"  @if ($data->Initiator_Group == 'QM') selected @endif>Quality Control (Microbiology department)</option>
+                                                        <option value="PG"  @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option>
+                                                        <option value="PL"  @if ($data->Initiator_Group == 'PL') selected @endif>Production Liquid Orals</option>
+                                                        <option value="PT"  @if ($data->Initiator_Group == 'PT') selected @endif>Production Tablet and Powder</option>
+                                                        <option value="PE"  @if ($data->Initiator_Group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and
+                                                            Liquid)</option>
+                                                        <option value="PC"  @if ($data->Initiator_Group == 'PC') selected @endif>Production Capsules</option>
+                                                        <option value="PI"  @if ($data->Initiator_Group == 'PI') selected @endif>Production Injectable</option>
+                                                        <option value="EN"  @if ($data->Initiator_Group == 'EN') selected @endif>Engineering</option>
+                                                        <option value="HR"  @if ($data->Initiator_Group == 'HR') selected @endif>Human Resource</option>
+                                                        <option value="ST"  @if ($data->Initiator_Group == 'ST') selected @endif>Store</option>
+                                                        <option value="IT"  @if ($data->Initiator_Group == 'IT') selected @endif>Electronic Data Processing</option>
+                                                        <option value="FD"  @if ($data->Initiator_Group == 'FD') selected @endif>Formulation Development</option>
+                                                        <option value="AL"  @if ($data->Initiator_Group == 'AL') selected @endif>Analytical research and Development Laboratory
+                                                        </option>
+                                                        <option value="PD"  @if ($data->Initiator_Group == 'PD') selected @endif>Packaging Development</option>
+                                                        <option value="PU"  @if ($data->Initiator_Group == 'PU') selected @endif>Purchase Department</option>
+                                                        <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif >Document Cell</option>
+                                                        <option value="RA"  @if ($data->Initiator_Group == 'RA') selected @endif>Regulatory Affairs</option>
+                                                        <option value="PV"  @if ($data->Initiator_Group == 'PV') selected @endif>Pharmacovigilance</option>
 
                                                 </select>
                                             </div>
@@ -2209,11 +2195,11 @@
                                             $data->stage == 5 ||
                                             $data->stage == 6 ||
                                             $data->stage == 7)
-                                        <a style="  justify-content: center; width: 10rem; margin-left: 1px;;"
+                                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;"
                                             type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#launch_extension">
                                             Launch Extension
-                                        </a>
+                                        </a> --}}
                                     @endif
                                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -2848,11 +2834,11 @@
                                         $data->stage == 5 ||
                                         $data->stage == 6 ||
                                         $data->stage == 7)
-                                    <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                                    {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                         class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#launch_extension">
                                         Launch Extension
-                                    </a>
+                                    </a> --}}
                                 @endif
                                 <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -2906,6 +2892,7 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                        @if ($data1->Production_Review !== 'yes')
                                         $('.p_erson').hide();
 
                                         $('[name="Production_Review"]').change(function() {
@@ -2918,6 +2905,7 @@
                                                 $('.p_erson span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -3237,7 +3225,6 @@
                                 <script>
                                     $(document).ready(function() {
                                         @if ($data1->Warehouse_review !== 'yes')
-
                                             $('.warehouse').hide();
 
                                             $('[name="Warehouse_review"]').change(function() {
@@ -8048,11 +8035,11 @@
                                     $data->stage == 5 ||
                                     $data->stage == 6 ||
                                     $data->stage == 7)
-                                <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                     class="button  launch_extension" data-bs-toggle="modal"
                                     data-bs-target="#launch_extension">
                                     Launch Extension
-                                </a>
+                                </a> --}}
                             @endif
                             <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -9786,11 +9773,11 @@
                             $data->stage == 5 ||
                             $data->stage == 6 ||
                             $data->stage == 7)
-                        <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                             class="button  launch_extension" data-bs-toggle="modal"
                             data-bs-target="#launch_extension">
                             Launch Extension
-                        </a>
+                        </a> --}}
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -10416,11 +10403,11 @@
                             $data->stage == 5 ||
                             $data->stage == 6 ||
                             $data->stage == 7)
-                        <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                             class="button  launch_extension" data-bs-toggle="modal"
                             data-bs-target="#launch_extension">
                             Launch Extension
-                        </a>
+                        </a> --}}
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -10784,11 +10771,11 @@
                                 $data->stage == 5 ||
                                 $data->stage == 6 ||
                                 $data->stage == 7)
-                            <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                            {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                 class="button  launch_extension" data-bs-toggle="modal"
                                 data-bs-target="#launch_extension">
                                 Launch Extension
-                            </a>
+                            </a> --}}
                         @endif
                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -11233,11 +11220,11 @@
                             $data->stage == 5 ||
                             $data->stage == 6 ||
                             $data->stage == 7)
-                        <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                             class="button  launch_extension" data-bs-toggle="modal"
                             data-bs-target="#launch_extension">
                             Launch Extension
-                        </a>
+                        </a> --}}
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -11372,11 +11359,11 @@
                             $data->stage == 5 ||
                             $data->stage == 6 ||
                             $data->stage == 7)
-                        <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                             class="button  launch_extension" data-bs-toggle="modal"
                             data-bs-target="#launch_extension">
                             Launch Extension
-                        </a>
+                        </a> --}}
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -12222,11 +12209,11 @@
                             $data->stage == 5 ||
                             $data->stage == 6 ||
                             $data->stage == 7)
-                        <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                             class="button  launch_extension" data-bs-toggle="modal"
                             data-bs-target="#launch_extension">
                             Launch Extension
-                        </a>
+                        </a> --}}
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">

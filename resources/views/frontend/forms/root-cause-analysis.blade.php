@@ -35,8 +35,8 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Investigation</button>  
-         
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Investigation</button>
+
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
@@ -59,7 +59,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/{{ $record }}">
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/{{ $record_number }}">
 
                                     </div>
                                 </div>
@@ -272,7 +272,7 @@
                                         <option value="Document">Document</option>
                                         <option value="Equipment">Equipment</option>
                                         <option value="Instrument">Instrument</option>
-                                      
+
                                         <option value="Facilities">Facilities</option>
                                         <option value="Other">Other</option>
                                         <option value="Stability">Stability</option>
@@ -763,10 +763,10 @@
                                         </select>
                                     </div>
                                 </div> --}}
-                            
-                            
-                            
-                            
+
+
+
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -776,7 +776,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
 
                     <div id="CCForm5" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -850,9 +850,9 @@
                                                     <textarea name="investigation_tool"></textarea>
                                                 </div>
                                             </div>
-                                           
-                                          
-                                           
+
+
+
 
 
                                             <div class="col-12">
@@ -907,7 +907,7 @@
                         </div>
 
                         </div>
-                        
+
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             {{-- <div class="sub-head">

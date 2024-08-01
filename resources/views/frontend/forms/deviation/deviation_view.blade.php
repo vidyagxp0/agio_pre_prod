@@ -699,7 +699,6 @@
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
 
-
                     </div>
 
                 </div>
@@ -734,7 +733,6 @@
                             @else
                                 <div class="">CFT Review</div>
                             @endif
-
 
                             @if ($data->stage >= 5)
                                 <div class="active">QA Final Review</div>
@@ -1027,7 +1025,7 @@
                                                         </option>
                                                     </select>
                                                 </div>
-                                            
+
                                         @error('Initiator_Group')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -1088,7 +1086,6 @@
                                                 inputsToToggle.push(facilityNameInputs[i]);
                                             }
 
-
                                             selectField.addEventListener('change', function() {
                                                 var isRequired = this.value === 'Recurring';
                                                 // var natureOfRepeatBlock = document.getElementsById('nature_of_repeat_block');
@@ -1138,7 +1135,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="col-lg-6 new-time-data-field">
                                         <div class="group-input input-time">
                                             <label for="deviation_time">Deviation Observed On (Time) <span
@@ -1164,8 +1160,6 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-
 
                                     <script>
                                         flatpickr("#deviation_time", {
@@ -1831,7 +1825,7 @@
                                         @enderror
                                     </div>
                                         </div>
-                                
+
                                 <div class="col-md-4">
                                     <div class="group-input">
                                         <label for="search">
@@ -1863,9 +1857,9 @@
                                     </div>
                                 </div>
 
-                                            
 
-                                            
+
+
 
 
 
@@ -8167,7 +8161,7 @@
                 </div>
                 </div>
                 @else
-                
+
                 <div class="col-lg-6">
                 <div class="group-input">
                                 <label for="Proposed Due Date">Proposed Due Date</label>
@@ -8295,7 +8289,7 @@
 
 
 
-                            
+
 
 
                     <div class="col-12 sub-head"></div>
@@ -8757,7 +8751,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="sub-head">
                                     Root Cause
                                 </div>
@@ -9077,7 +9071,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         <script>
                                 $(document).on('change', '.Root_Cause_Category_Select', function () {
 
@@ -9285,7 +9279,7 @@
                                                            <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Detail Of Root Cause">Detail Of Root Cause</label>
-                                        
+
                                         <textarea class="" name="Detail_Of_Root_Cause" id="summernote-18">{{$data->Detail_Of_Root_Cause}}</textarea>
                                     </div>
                                 </div>
@@ -9338,7 +9332,7 @@
                                    id="risk-assessment-risk-management">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#failure_mode_and_effect_analysis" style="font-size: 0.8rem; font-weight: 400;">
-                                    (Launch Instruction)
+                                    (Laun   ch Instruction)
                                 </span>
                             </label>
                             <div class="table-responsive">
@@ -9371,259 +9365,259 @@
                                     </thead>
                                     <tbody>
 
-    @if ($grid_data_qrms && is_array($grid_data_qrms->data))
-        @foreach ($grid_data_qrms->data as $grid_data_qrms)
-            <tr>
+                                         @if ($grid_data_qrms && is_array($grid_data_qrms->data))
+                                            @foreach ($grid_data_qrms->data as $grid_data_qrms)
+                                   <tr>
 
-                <td><input disabled type="text"name="serial[]"
-                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
-                <td>
-                    <input type="text" class="numberDetail" name="failure_mode_qrms[{{ $loop->index }}][risk_factor]"
-                        value="{{ isset($grid_data_qrms['risk_factor']) ? $grid_data_qrms['risk_factor'] : '' }}">
-                </td>
-                <td>
-                    <input type="text" class="numberDetail" name="failure_mode_qrms[{{ $loop->index }}][risk_element]"
-                        value="{{ isset($grid_data_qrms['risk_element']) ? $grid_data_qrms['risk_element'] : '' }}">
-                </td>
-                <td>
-                    <input type="text" class="numberDetail"
-                        name="failure_mode_qrms[{{ $loop->index }}][probale_of_risk_element]"
-                        value="{{ isset($grid_data_qrms['probale_of_risk_element']) ? $grid_data_qrms['probale_of_risk_element'] : '' }}">
-                </td>
-                <td>
-                    <input type="text" class="numberDetail"
-                        name="failure_mode_qrms[{{ $loop->index }}][existing_risk_control]"
-                        value="{{ isset($grid_data_qrms['existing_risk_control']) ? $grid_data_qrms['existing_risk_control'] : '' }}">
-                </td>
-                <td>
-                    <select name="failure_mode_qrms[{{ $loop->index }}][initial_severity]" id="analysisR" onchange="calculateRiskAnalysis(this)">
+                            <td><input disabled type="text"name="serial[]"
+                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
+                            <td>
+                                <input type="text" class="numberDetail" name="failure_mode_qrms[{{ $loop->index }}][risk_factor]"
+                                    value="{{ isset($grid_data_qrms['risk_factor']) ? $grid_data_qrms['risk_factor'] : '' }}">
+                            </td>
+                            <td>
+                                <input type="text" class="numberDetail" name="failure_mode_qrms[{{ $loop->index }}][risk_element]"
+                                    value="{{ isset($grid_data_qrms['risk_element']) ? $grid_data_qrms['risk_element'] : '' }}">
+                            </td>
+                            <td>
+                                <input type="text" class="numberDetail"
+                                    name="failure_mode_qrms[{{ $loop->index }}][probale_of_risk_element]"
+                                    value="{{ isset($grid_data_qrms['probale_of_risk_element']) ? $grid_data_qrms['probale_of_risk_element'] : '' }}">
+                            </td>
+                            <td>
+                                <input type="text" class="numberDetail"
+                                    name="failure_mode_qrms[{{ $loop->index }}][existing_risk_control]"
+                                    value="{{ isset($grid_data_qrms['existing_risk_control']) ? $grid_data_qrms['existing_risk_control'] : '' }}">
+                            </td>
+                            <td>
+                                <select name="failure_mode_qrms[{{ $loop->index }}][initial_severity]" id="analysisR" onchange="calculateRiskAnalysis(this)">
+                                    <option value="">-- Select --</option>
+                                    <option value="1"
+                                        {{ isset($grid_data_qrms['initial_severity']) && $grid_data_qrms['initial_severity'] == '1' ? 'selected' : '' }}>
+                                        1</option>
+                                    <option value="2"
+                                        {{ isset($grid_data_qrms['initial_severity']) && $grid_data_qrms['initial_severity'] == '2' ? 'selected' : '' }}>
+                                        2</option>
+                                    <option value="3"
+                                        {{ isset($grid_data_qrms['initial_severity']) && $grid_data_qrms['initial_severity'] == '3' ? 'selected' : '' }}>
+                                        3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="failure_mode_qrms[{{ $loop->index }}][initial_probability]" id="analysisP" onchange="calculateRiskAnalysis(this)">
+                                    <option value="">-- Select --</option>
+                                    <option value="1"
+                                        {{ isset($grid_data_qrms['initial_probability']) && $grid_data_qrms['initial_probability'] == '1' ? 'selected' : '' }}>
+                                        1</option>
+                                    <option value="2"
+                                        {{ isset($grid_data_qrms['initial_probability']) && $grid_data_qrms['initial_probability'] == '2' ? 'selected' : '' }}>
+                                        2</option>
+                                    <option value="3"
+                                        {{ isset($grid_data_qrms['initial_probability']) && $grid_data_qrms['initial_probability'] == '3' ? 'selected' : '' }}>
+                                        3</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="failure_mode_qrms[{{ $loop->index }}][initial_detectability]" id="analysisN" onchange="calculateRiskAnalysis(this)">
+                                    <option value="">-- Select --</option>
+                                    <option value="1"
+                                        {{ isset($grid_data_qrms['initial_detectability']) && $grid_data_qrms['initial_detectability'] == '1' ? 'selected' : '' }}>
+                                        1</option>
+                                    <option value="2"
+                                        {{ isset($grid_data_qrms['initial_detectability']) && $grid_data_qrms['initial_detectability'] == '2' ? 'selected' : '' }}>
+                                        2</option>
+                                    <option value="3"
+                                        {{ isset($grid_data_qrms['initial_detectability']) && $grid_data_qrms['initial_detectability'] == '3' ? 'selected' : '' }}>
+                                        3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="numberDetail" id="analysisRPN"
+                                    name="failure_mode_qrms[{{ $loop->index }}][initial_rpn]"
+                                    value="{{ isset($grid_data_qrms['initial_rpn']) ? $grid_data_qrms['initial_rpn'] : '' }}">
+                            </td>
+
+                            <td>
+                                <select name="failure_mode_qrms[{{ $loop->index }}][risk_acceptance]" id="">
+                                    <option value="">-- Select --</option>
+                                    <option value="n"
+                                        {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'n' ? 'selected' : '' }}>
+                                        N</option>
+                                    <option value="y"
+                                        {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'y' ? 'selected' : '' }}>
+                                        Y</option>
+                            </td>
+
+                            <td>
+                                <input type="text" class="numberDetail"
+                                    name="failure_mode_qrms[{{ $loop->index }}][proposed_additional_risk_control]"
+                                    value="{{ isset($grid_data_qrms['proposed_additional_risk_control']) ? $grid_data_qrms['proposed_additional_risk_control'] : '' }}">
+                            </td>
+
+                            <td>
+                                <select name="failure_mode_qrms[{{ $loop->index }}][residual_severity]" id="analysisRNew" onchange="calculateRiskAnalysisNew(this)">
+                                    <option value="">-- Select --</option>
+                                    <option value="1"
+                                        {{ isset($grid_data_qrms['residual_severity']) && $grid_data_qrms['residual_severity'] == '1' ? 'selected' : '' }}>
+                                        1</option>
+                                    <option value="2"
+                                        {{ isset($grid_data_qrms['residual_severity']) && $grid_data_qrms['residual_severity'] == '2' ? 'selected' : '' }}>
+                                        2</option>
+                                    <option value="3"
+                                        {{ isset($grid_data_qrms['residual_severity']) && $grid_data_qrms['residual_severity'] == '3' ? 'selected' : '' }}>
+                                        3</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="failure_mode_qrms[{{ $loop->index }}][residual_probability]" id="analysisPNew" onchange="calculateRiskAnalysisNew(this)">
+                                    <option value="">-- Select --</option>
+                                    <option value="1"
+                                        {{ isset($grid_data_qrms['residual_probability']) && $grid_data_qrms['residual_probability'] == '1' ? 'selected' : '' }}>
+                                        1</option>
+                                    <option value="2"
+                                        {{ isset($grid_data_qrms['residual_probability']) && $grid_data_qrms['residual_probability'] == '2' ? 'selected' : '' }}>
+                                        2</option>
+                                    <option value="3"
+                                        {{ isset($grid_data_qrms['residual_probability']) && $grid_data_qrms['residual_probability'] == '3' ? 'selected' : '' }}>
+                                        3</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="failure_mode_qrms[{{ $loop->index }}][residual_detectability]" id="analysisNNew" onchange="calculateRiskAnalysisNew(this)">
+                                    <option value="">-- Select --</option>
+                                    <option value="1"
+                                        {{ isset($grid_data_qrms['residual_detectability']) && $grid_data_qrms['residual_detectability'] == '1' ? 'selected' : '' }}>
+                                        1</option>
+                                    <option value="2"
+                                        {{ isset($grid_data_qrms['residual_detectability']) && $grid_data_qrms['residual_detectability'] == '2' ? 'selected' : '' }}>
+                                        2</option>
+                                    <option value="3"
+                                        {{ isset($grid_data_qrms['residual_detectability']) && $grid_data_qrms['residual_detectability'] == '3' ? 'selected' : '' }}>
+                                        3</option>
+                                </select>
+                            </td>
+
+                                <td>
+                                    <input type="text" class="numberDetail" id="analysisRPNNew" readonly
+                                        name="failure_mode_qrms[{{ $loop->index }}][residual_rpn]"
+                                        value="{{ isset($grid_data_qrms['residual_rpn']) ? $grid_data_qrms['residual_rpn'] : '' }}">
+                                </td>
+
+                            <td>
+                                <select name="failure_mode_qrms[{{ $loop->index }}][risk_acceptance]" id="">
+                                    <option value="">-- Select --</option>
+                                    <option value="n"
+                                        {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'n' ? 'selected' : '' }}>
+                                        N</option>
+                                    <option value="y"
+                                        {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'y' ? 'selected' : '' }}>
+                                        Y</option>
+                            </td>
+
+                            <td>
+                                <input type="text" class="numberDetail"
+                                    name="failure_mode_qrms[{{ $loop->index }}][mitigation_proposal]"
+                                    value="{{ isset($grid_data_qrms['mitigation_proposal']) ? $grid_data_qrms['mitigation_proposal'] : '' }}">
+                            </td>
+
+                          <td><button type="text" class="removeRowBtn">Remove</button></td>
+
+                          </tr>
+                  @endforeach
+                   @else
+                    <!-- <td><input disabled type="text" name="failure_mode_qrms[0][serial]" value=""></td> -->
+                    <td><input disabled type="text"name="serial[]"
+                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
+                    <td><input type="text" class="numberDetail" name="failure_mode_qrms[0][risk_factor]"></td>
+                    <td><input type="text" class="Document_Remarks" name="failure_mode_qrms[0][risk_element]"></td>
+                    <td><input type="text" class="Document_Remarks" name="failure_mode_qrms[0][probale_of_risk_element]"></td>
+                    <td><input type="text" class="Document_Remarks" name="failure_mode_qrms[0][existing_risk_control]"></td>
+                    <td>
+                        <select name="failure_mode_qrms[0][initial_severity]" id="">
+                            <option value="">-- Select --</option>
+                            <option value="1" ($grid_data_qrms && isset($grid_data_qrms['initial_severity']=='1' ? 'selected'
+                                : '' ))>1</option>
+                            <option value="2" ($grid_data_qrms && isset($grid_data_qrms['initial_severity']=='2' ? 'selected'
+                                : '' ))>2</option>
+                            <option value="3" ($grid_data_qrms && isset($grid_data_qrms['initial_severity']=='3' ? 'selected'
+                                : '' ))>3</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="failure_mode_qrms[0][initial_probability]" id="">
+                            <option value="">-- Select --</option>
+                            <option value="1" ($grid_data_qrms && isset($grid_data_qrms['initial_probability']=='1'
+                                ? 'selected' : '' ))>1</option>
+                            <option value="2" ($grid_data_qrms && isset($grid_data_qrms['initial_probability']=='2'
+                                ? 'selected' : '' ))>2</option>
+                            <option value="3" ($grid_data_qrms && isset($grid_data_qrms['initial_probability']=='3'
+                                ? 'selected' : '' ))>3</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="failure_mode_qrms[0][initial_detectability]" id="">
+                            <option value="">-- Select --</option>
+                            <option value="1" ($grid_data_qrms && isset($grid_data_qrms['initial_detectability']=='1'
+                                ? 'selected' : '' ))>1</option>
+                            <option value="2" ($grid_data_qrms && isset($grid_data_qrms['initial_detectability']=='2'
+                                ? 'selected' : '' ))>2</option>
+                            <option value="3" ($grid_data_qrms && isset($grid_data_qrms['initial_detectability']=='3'
+                                ? 'selected' : '' ))>3</option>
+                        </select>
+                    </td>
+              <td><input type="text" class="Document_Remarks" name="failure_mode_qrms[0][initial_rpn]"></td>
+
+                  <td>
+                    <select name="failure_mode_qrms[0][risk_acceptance]" id="">
                         <option value="">-- Select --</option>
-                        <option value="1"
-                            {{ isset($grid_data_qrms['initial_severity']) && $grid_data_qrms['initial_severity'] == '1' ? 'selected' : '' }}>
-                            1</option>
-                        <option value="2"
-                            {{ isset($grid_data_qrms['initial_severity']) && $grid_data_qrms['initial_severity'] == '2' ? 'selected' : '' }}>
-                            2</option>
-                        <option value="3"
-                            {{ isset($grid_data_qrms['initial_severity']) && $grid_data_qrms['initial_severity'] == '3' ? 'selected' : '' }}>
-                            3</option>
+                        <option value="n" ($grid_data_qrms && isset($grid_data_qrms['risk_acceptance']=='n' ? 'selected'
+                            : '' ))>N</option>
+                        <option value="y" ($grid_data_qrms && isset($grid_data_qrms['risk_acceptance']=='y' ? 'selected'
+                            : '' ))>Y</option>
                     </select>
-                </td>
-                <td>
-                    <select name="failure_mode_qrms[{{ $loop->index }}][initial_probability]" id="analysisP" onchange="calculateRiskAnalysis(this)">
-                        <option value="">-- Select --</option>
-                        <option value="1"
-                            {{ isset($grid_data_qrms['initial_probability']) && $grid_data_qrms['initial_probability'] == '1' ? 'selected' : '' }}>
-                            1</option>
-                        <option value="2"
-                            {{ isset($grid_data_qrms['initial_probability']) && $grid_data_qrms['initial_probability'] == '2' ? 'selected' : '' }}>
-                            2</option>
-                        <option value="3"
-                            {{ isset($grid_data_qrms['initial_probability']) && $grid_data_qrms['initial_probability'] == '3' ? 'selected' : '' }}>
-                            3</option>
-                    </select>
-                </td>
+                  </td>
 
-                <td>
-                    <select name="failure_mode_qrms[{{ $loop->index }}][initial_detectability]" id="analysisN" onchange="calculateRiskAnalysis(this)">
-                        <option value="">-- Select --</option>
-                        <option value="1"
-                            {{ isset($grid_data_qrms['initial_detectability']) && $grid_data_qrms['initial_detectability'] == '1' ? 'selected' : '' }}>
-                            1</option>
-                        <option value="2"
-                            {{ isset($grid_data_qrms['initial_detectability']) && $grid_data_qrms['initial_detectability'] == '2' ? 'selected' : '' }}>
-                            2</option>
-                        <option value="3"
-                            {{ isset($grid_data_qrms['initial_detectability']) && $grid_data_qrms['initial_detectability'] == '3' ? 'selected' : '' }}>
-                            3</option>
-                    </select>
-                </td>
-                <td>
-                    <input type="text" class="numberDetail" id="analysisRPN"
-                        name="failure_mode_qrms[{{ $loop->index }}][initial_rpn]"
-                        value="{{ isset($grid_data_qrms['initial_rpn']) ? $grid_data_qrms['initial_rpn'] : '' }}">
-                </td>
+                                     <td><input type="text" class="Document_Remarks"
+                                     name="failure_mode_qrms[0][proposed_additional_risk_control]"></td>
 
-                <td>
-                    <select name="failure_mode_qrms[{{ $loop->index }}][risk_acceptance]" id="">
-                        <option value="">-- Select --</option>
-                        <option value="n"
-                            {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'n' ? 'selected' : '' }}>
-                            N</option>
-                        <option value="y"
-                            {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'y' ? 'selected' : '' }}>
-                            Y</option>
-                </td>
+                    <td>
+                        <select name="failure_mode_qrms[0][residual_severity]" id="">
+                            <option value="">-- Select --</option>
+                            <option value="1" ($grid_data_qrms && isset($grid_data_qrms['residual_severity']=='1' ? 'selected'
+                                : '' ))>1</option>
+                            <option value="2" ($grid_data_qrms && isset($grid_data_qrms['residual_severity']=='2' ? 'selected'
+                                : '' ))>2</option>
+                            <option value="3" ($grid_data_qrms && isset($grid_data_qrms['residual_severity']=='3' ? 'selected'
+                                : '' ))>3</option>
+                        </select>
+                    </td>
 
-                <td>
-                    <input type="text" class="numberDetail"
-                        name="failure_mode_qrms[{{ $loop->index }}][proposed_additional_risk_control]"
-                        value="{{ isset($grid_data_qrms['proposed_additional_risk_control']) ? $grid_data_qrms['proposed_additional_risk_control'] : '' }}">
-                </td>
+                        <td>
+                            <select name="failure_mode_qrms[0][residual_probability]" id="">
+                                <option value="">-- Select --</option>
+                                <option value="1" ($grid_data_qrms && isset($grid_data_qrms['residual_probability']=='1'
+                                    ? 'selected' : '' ))>1</option>
+                                <option value="2" ($grid_data_qrms && isset($grid_data_qrms['residual_probability']=='2'
+                                    ? 'selected' : '' ))>2</option>
+                                <option value="3" ($grid_data_qrms && isset($grid_data_qrms['residual_probability']=='3'
+                                    ? 'selected' : '' ))>3</option>
+                            </select>
+                        </td>
 
-                <td>
-                    <select name="failure_mode_qrms[{{ $loop->index }}][residual_severity]" id="analysisRNew" onchange="calculateRiskAnalysisNew(this)">
-                        <option value="">-- Select --</option>
-                        <option value="1"
-                            {{ isset($grid_data_qrms['residual_severity']) && $grid_data_qrms['residual_severity'] == '1' ? 'selected' : '' }}>
-                            1</option>
-                        <option value="2"
-                            {{ isset($grid_data_qrms['residual_severity']) && $grid_data_qrms['residual_severity'] == '2' ? 'selected' : '' }}>
-                            2</option>
-                        <option value="3"
-                            {{ isset($grid_data_qrms['residual_severity']) && $grid_data_qrms['residual_severity'] == '3' ? 'selected' : '' }}>
-                            3</option>
-                    </select>
-                </td>
-
-                <td>
-                    <select name="failure_mode_qrms[{{ $loop->index }}][residual_probability]" id="analysisPNew" onchange="calculateRiskAnalysisNew(this)">
-                        <option value="">-- Select --</option>
-                        <option value="1"
-                            {{ isset($grid_data_qrms['residual_probability']) && $grid_data_qrms['residual_probability'] == '1' ? 'selected' : '' }}>
-                            1</option>
-                        <option value="2"
-                            {{ isset($grid_data_qrms['residual_probability']) && $grid_data_qrms['residual_probability'] == '2' ? 'selected' : '' }}>
-                            2</option>
-                        <option value="3"
-                            {{ isset($grid_data_qrms['residual_probability']) && $grid_data_qrms['residual_probability'] == '3' ? 'selected' : '' }}>
-                            3</option>
-                    </select>
-                </td>
-
-                <td>
-                    <select name="failure_mode_qrms[{{ $loop->index }}][residual_detectability]" id="analysisNNew" onchange="calculateRiskAnalysisNew(this)">
-                        <option value="">-- Select --</option>
-                        <option value="1"
-                            {{ isset($grid_data_qrms['residual_detectability']) && $grid_data_qrms['residual_detectability'] == '1' ? 'selected' : '' }}>
-                            1</option>
-                        <option value="2"
-                            {{ isset($grid_data_qrms['residual_detectability']) && $grid_data_qrms['residual_detectability'] == '2' ? 'selected' : '' }}>
-                            2</option>
-                        <option value="3"
-                            {{ isset($grid_data_qrms['residual_detectability']) && $grid_data_qrms['residual_detectability'] == '3' ? 'selected' : '' }}>
-                            3</option>
-                    </select>
-                </td>
-
-                <td>
-                    <input type="text" class="numberDetail" id="analysisRPNNew" readonly
-                        name="failure_mode_qrms[{{ $loop->index }}][residual_rpn]"
-                        value="{{ isset($grid_data_qrms['residual_rpn']) ? $grid_data_qrms['residual_rpn'] : '' }}">
-                </td>
-
-                <td>
-                    <select name="failure_mode_qrms[{{ $loop->index }}][risk_acceptance]" id="">
-                        <option value="">-- Select --</option>
-                        <option value="n"
-                            {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'n' ? 'selected' : '' }}>
-                            N</option>
-                        <option value="y"
-                            {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'y' ? 'selected' : '' }}>
-                            Y</option>
-                </td>
-
-                <td>
-                    <input type="text" class="numberDetail"
-                        name="failure_mode_qrms[{{ $loop->index }}][mitigation_proposal]"
-                        value="{{ isset($grid_data_qrms['mitigation_proposal']) ? $grid_data_qrms['mitigation_proposal'] : '' }}">
-                </td>
-
-                <td><button type="text" class="removeRowBtn">Remove</button></td>
-
-            </tr>
-        @endforeach
-    @else
-        <!-- <td><input disabled type="text" name="failure_mode_qrms[0][serial]" value=""></td> -->
-        <td><input disabled type="text"name="serial[]"
-                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
-        <td><input type="text" class="numberDetail" name="failure_mode_qrms[0][risk_factor]"></td>
-        <td><input type="text" class="Document_Remarks" name="failure_mode_qrms[0][risk_element]"></td>
-        <td><input type="text" class="Document_Remarks" name="failure_mode_qrms[0][probale_of_risk_element]"></td>
-        <td><input type="text" class="Document_Remarks" name="failure_mode_qrms[0][existing_risk_control]"></td>
-        <td>
-            <select name="failure_mode_qrms[0][initial_severity]" id="">
-                <option value="">-- Select --</option>
-                <option value="1" ($grid_data_qrms && isset($grid_data_qrms['initial_severity']=='1' ? 'selected'
-                    : '' ))>1</option>
-                <option value="2" ($grid_data_qrms && isset($grid_data_qrms['initial_severity']=='2' ? 'selected'
-                    : '' ))>2</option>
-                <option value="3" ($grid_data_qrms && isset($grid_data_qrms['initial_severity']=='3' ? 'selected'
-                    : '' ))>3</option>
-            </select>
-        </td>
-        <td>
-            <select name="failure_mode_qrms[0][initial_probability]" id="">
-                <option value="">-- Select --</option>
-                <option value="1" ($grid_data_qrms && isset($grid_data_qrms['initial_probability']=='1'
-                    ? 'selected' : '' ))>1</option>
-                <option value="2" ($grid_data_qrms && isset($grid_data_qrms['initial_probability']=='2'
-                    ? 'selected' : '' ))>2</option>
-                <option value="3" ($grid_data_qrms && isset($grid_data_qrms['initial_probability']=='3'
-                    ? 'selected' : '' ))>3</option>
-            </select>
-        </td>
-        <td>
-            <select name="failure_mode_qrms[0][initial_detectability]" id="">
-                <option value="">-- Select --</option>
-                <option value="1" ($grid_data_qrms && isset($grid_data_qrms['initial_detectability']=='1'
-                    ? 'selected' : '' ))>1</option>
-                <option value="2" ($grid_data_qrms && isset($grid_data_qrms['initial_detectability']=='2'
-                    ? 'selected' : '' ))>2</option>
-                <option value="3" ($grid_data_qrms && isset($grid_data_qrms['initial_detectability']=='3'
-                    ? 'selected' : '' ))>3</option>
-            </select>
-        </td>
-        <td><input type="text" class="Document_Remarks" name="failure_mode_qrms[0][initial_rpn]"></td>
-
-        <td>
-            <select name="failure_mode_qrms[0][risk_acceptance]" id="">
-                <option value="">-- Select --</option>
-                <option value="n" ($grid_data_qrms && isset($grid_data_qrms['risk_acceptance']=='n' ? 'selected'
-                    : '' ))>N</option>
-                <option value="y" ($grid_data_qrms && isset($grid_data_qrms['risk_acceptance']=='y' ? 'selected'
-                    : '' ))>Y</option>
-            </select>
-        </td>
-
-        <td><input type="text" class="Document_Remarks"
-                name="failure_mode_qrms[0][proposed_additional_risk_control]"></td>
-
-        <td>
-            <select name="failure_mode_qrms[0][residual_severity]" id="">
-                <option value="">-- Select --</option>
-                <option value="1" ($grid_data_qrms && isset($grid_data_qrms['residual_severity']=='1' ? 'selected'
-                    : '' ))>1</option>
-                <option value="2" ($grid_data_qrms && isset($grid_data_qrms['residual_severity']=='2' ? 'selected'
-                    : '' ))>2</option>
-                <option value="3" ($grid_data_qrms && isset($grid_data_qrms['residual_severity']=='3' ? 'selected'
-                    : '' ))>3</option>
-            </select>
-        </td>
-
-        <td>
-            <select name="failure_mode_qrms[0][residual_probability]" id="">
-                <option value="">-- Select --</option>
-                <option value="1" ($grid_data_qrms && isset($grid_data_qrms['residual_probability']=='1'
-                    ? 'selected' : '' ))>1</option>
-                <option value="2" ($grid_data_qrms && isset($grid_data_qrms['residual_probability']=='2'
-                    ? 'selected' : '' ))>2</option>
-                <option value="3" ($grid_data_qrms && isset($grid_data_qrms['residual_probability']=='3'
-                    ? 'selected' : '' ))>3</option>
-            </select>
-        </td>
-
-        <td>
-            <select name="failure_mode_qrms[0][residual_detectability]" id="">
-                <option value="">-- Select --</option>
-                <option value="1" ($grid_data_qrms && isset($grid_data_qrms['residual_detectability']=='1'
-                    ? 'selected' : '' ))>1</option>
-                <option value="2" ($grid_data_qrms && isset($grid_data_qrms['residual_detectability']=='2'
-                    ? 'selected' : '' ))>2</option>
-                <option value="3" ($grid_data_qrms && isset($grid_data_qrms['residual_detectability']=='3'
-                    ? 'selected' : '' ))>3</option>
-            </select>
-        </td>
+                    <td>
+                        <select name="failure_mode_qrms[0][residual_detectability]" id="">
+                            <option value="">-- Select --</option>
+                            <option value="1" ($grid_data_qrms && isset($grid_data_qrms['residual_detectability']=='1'
+                                ? 'selected' : '' ))>1</option>
+                            <option value="2" ($grid_data_qrms && isset($grid_data_qrms['residual_detectability']=='2'
+                                ? 'selected' : '' ))>2</option>
+                            <option value="3" ($grid_data_qrms && isset($grid_data_qrms['residual_detectability']=='3'
+                                ? 'selected' : '' ))>3</option>
+                        </select>
+                    </td>
 
         <td><input type="text" class="Document_Remarks" name="failure_mode_qrms[0][residual_rpn]"></td>
 

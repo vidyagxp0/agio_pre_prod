@@ -2776,6 +2776,8 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                        @if ($data1->Production_Review !== 'yes')
+
                                         $('.p_erson').hide();
 
                                         $('[name="Production_Review"]').change(function() {
@@ -2788,8 +2790,10 @@
                                                 $('.p_erson span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
+
                                 @php
                                     $data1 = DB::table('non_conformance_c_f_ts')
                                         ->where('non_conformances_id', $data->id)
@@ -3094,9 +3098,6 @@
                                     </div>
                                 @endif
 
-                                <div class="sub-head">
-                                    Warehouse
-                                </div>
                                 <script>
                                     $(document).ready(function() {
                                         @if($data1->Warehouse_review !== 'yes')
@@ -3115,6 +3116,10 @@
                                         @endif
                                     });
                                 </script>
+                                <div class="sub-head">
+                                    Warehouse
+                                </div>
+
                                 @if ($data->stage == 3 || $data->stage == 4)
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -3130,9 +3135,7 @@
                                                     value="no">No</option>
                                                 <option @if ($data1->Warehouse_review == 'na') selected @endif
                                                     value="na">NA</option>
-
                                             </select>
-
                                         </div>
                                     </div>
                                     @php

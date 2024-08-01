@@ -401,7 +401,7 @@
                         '<td><input type="text" name="batch_no[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
                         // '<td> <input type="text" name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' +
-                        
+
 
 
 
@@ -636,7 +636,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"  value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}">
-                                        
+
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -736,14 +736,12 @@
     </script>
 
 
-
-
                                                 <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiation Department<span class = "text-danger">*</span></label>
                                                     <select name="Initiator_Group" id="initiator_group">
                                                         <option value="NA">Select Department</option>
-                                                        <option value="CQA">Corporate Quality Assurance</option>
+                                                         <option value="CQA">Corporate Quality Assurance</option>
                                                         <option value="QA">Quality Assurance</option>
                                                         <option value="QC">Quality Control</option>
                                                         <option value="QM">Quality Control (Microbiology department)</option>
@@ -1403,11 +1401,11 @@
                                         <textarea class="" id="Description_Deviation" name="Description_Deviation[]"></textarea>
                                     </div>
                                 </div> --}}
-                                
+
 
 
                                 <!-- additional added -->
-                               <div class="col-md-12"> 
+                               <div class="col-md-12">
                                <div class="group-input">
                                             <label for="Description Deviation">Description of Deviation <span
                                                     class="text-danger">*</span></label>
@@ -4141,8 +4139,8 @@
 
 
 
-                                
-                                
+
+
                                 <div class="col-12 sub-head"></div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -4313,11 +4311,11 @@
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
                                                 );
-                                                
+
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
                                                 );
-                                                
+
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
                                                     );
@@ -4327,7 +4325,7 @@
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
                                                 );
-                                                
+
                                             } else if (selectedCategory === 'M-Maintenance') {
                                                 subCategorySelect.append(
                                                     '<option value="Infrequent_Audits">Infrequent Audits</option>');
@@ -4366,7 +4364,7 @@
                                                 <tr>
                                                     <th style="width:7%;">Row #</th>
                                                     <th style="width:15%;">Gap Category</th>
-                                                    
+
                                                     <th>Issues</th>
                                                     <th>Actions</th>
                                                     <th>Remarks</th>
@@ -4673,7 +4671,7 @@
                             <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Detail Of Root Cause">Detail Of Root Cause</label>
-                                        
+
                                         <textarea class="" name="Detail_Of_Root_Cause" id="summernote-18"></textarea>
                                     </div>
                                 </div>
