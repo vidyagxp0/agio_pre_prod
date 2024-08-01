@@ -162,10 +162,10 @@
                     <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
-                    <th class="w-20">Reviewer</th>
-                    <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
-                    <th class="w-20">Approver</th>
-                    <td class="w-30">@if($data->approver1){{ Helpers::getInitiatorName($data->approver1) }} @else Not Applicable @endif</td>
+                    <th class="w-20">HOD review</th>
+                    <td class="w-30">@if($data->reviewers){{ Helpers::getInitiatorName($data->reviewers) }} @else Not Applicable @endif</td>
+                    <th class="w-20">QA approval</th>
+                    <td class="w-30">@if($data->approvers){{ Helpers::getInitiatorName($data->approvers) }} @else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20">Current Due Date (Parent)</th>

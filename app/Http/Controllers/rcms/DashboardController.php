@@ -990,13 +990,20 @@ class DashboardController extends Controller
             $audit = "actionitemauditTrailPdf/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-        } elseif ($type == "Extension") {
+
+
+
+        } 
+        elseif ($type == "Extension") {
             $data = extension_new::find($id);
             $single = "singleReportNew/" .$data->id;
             $audit = "extensionAuditReport/" .$data->id;
             $division = QMSDivision::find($data->site_location_code);
             $division_name = $division->name;
-        } elseif ($type == "Observation") {
+        }
+        
+        
+        elseif ($type == "Observation") {
             $data = Observation::find($id);
             $single = "ObservationSingleReport/" .$data->id;
             $audit = "ObservationAuditTrialShow/" .$data->id;
@@ -1080,8 +1087,8 @@ class DashboardController extends Controller
 
         $html = '';
         $html = '<div class="block">
-        <div class="record_no">
-            Record No. ' . str_pad($data->record, 4, '0', STR_PAD_LEFT) .
+        <div class="record">
+            Record No. ' . str_pad($data->record_number, 4, '0', STR_PAD_LEFT) .
             '</div>
         <div class="division">
         ' . $division_name . '/ ' . $type . '
