@@ -722,9 +722,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-not-reqired">
                                 CFT Review Not Required
                             </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
-                                    </button> -->
+                                    </button>
                         @elseif(
                             $data->stage == 4 &&
                                 (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
@@ -750,9 +750,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Final Review Complete
                             </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
-                                    </button> -->
+                                    </button>
                         @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
@@ -942,6 +942,7 @@
                 });
             });
 
+
             // =========================
             wow = new WOW({
                 boxClass: 'wow', // default
@@ -1022,7 +1023,8 @@
                                     <?php
                                     // Calculate the due date (30 days from the initiation date)
                                     $initiationDate = date('Y-m-d'); // Current date as initiation date
-                                    $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date  ?>
+                                    $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                                    ?>
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -1064,64 +1066,50 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Department</b> <span
                                                         class="text-danger">*</span></label>
-                                                <select name="Initiator_Group"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    id="initiator_group">
-                                                    <option value="">Enter Your Selection Here</option>
-                                                    <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif>
-                                                        Corporate
-                                                        Quality Assurance</option>
-                                                    <option value="QAB" @if ($data->Initiator_Group == 'QAB') selected @endif>
-                                                        Quality
-                                                        Assurance Biopharma</option>
-                                                    <option value="CQC" @if ($data->Initiator_Group == 'CQC') selected @endif>
-                                                        Central
-                                                        Quality Control</option>
-                                                    <option value="MANU" @if ($data->Initiator_Group == 'MANU') selected @endif>
-                                                        Manufacturing
-                                                    </option>
-                                                    <option value="PSG" @if ($data->Initiator_Group == 'PSG') selected @endif>
-                                                        Plasma
-                                                        Sourcing Group</option>
-                                                    <option value="CS" @if ($data->Initiator_Group == 'CS') selected @endif>
-                                                        Central
-                                                        Stores</option>
-                                                    <option value="ITG" @if ($data->Initiator_Group == 'ITG') selected @endif>
-                                                        Information
-                                                        Technology Group</option>
-                                                    <option value="MM" @if ($data->Initiator_Group == 'MM') selected @endif>
-                                                        Molecular
-                                                        Medicine</option>
-                                                    <option value="CL" @if ($data->Initiator_Group == 'CL') selected @endif>
-                                                        Central
-                                                        Laboratory</option>
-                                                    <option value="TT" @if ($data->Initiator_Group == 'TT') selected @endif>
-                                                        Tech
-                                                        team</option>
-                                                    <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif>
-                                                        Quality
-                                                        Assurance</option>
-                                                    <option value="QM" @if ($data->Initiator_Group == 'QM') selected @endif>
-                                                        Quality
-                                                        Management</option>
-                                                    <option value="IA" @if ($data->Initiator_Group == 'IA') selected @endif>
-                                                        IT
-                                                        Administration</option>
-                                                    <option value="ACC" @if ($data->Initiator_Group == 'ACC') selected @endif>
-                                                        Accounting
-                                                    </option>
-                                                    <option value="LOG" @if ($data->Initiator_Group == 'LOG') selected @endif>
-                                                        Logistics
-                                                    </option>
-                                                    <option value="SM" @if ($data->Initiator_Group == 'SM') selected @endif>
-                                                        Senior
-                                                        Management</option>
-                                                    <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif>
-                                                        Business
-                                                        Administration</option>
-                                                        <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif>
-                                                            Document Cell</option>
-
+                                                <select name="Initiator_Group"  {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="initiator_group">
+                                                    {{-- <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif> Corporate  Quality Assurance</option>
+                                                    <option value="QAB" @if ($data->Initiator_Group == 'QAB') selected @endif> Quality  Assurance Biopharma</option>
+                                                    <option value="QAB" @if ($data->Initiator_Group == 'QC') selected @endif> Quality  Control</option>
+                                                    <option value="CQC" @if ($data->Initiator_Group == 'CQC') selected @endif> Central Quality Control</option>
+                                                    <option value="MANU" @if ($data->Initiator_Group == 'MANU') selected @endif> Manufacturing  </option>
+                                                    <option value="PSG" @if ($data->Initiator_Group == 'PSG') selected @endif>Plasma Sourcing Group</option>
+                                                    <option value="CS" @if ($data->Initiator_Group == 'CS') selected @endif> Central Stores</option>
+                                                    <option value="ITG" @if ($data->Initiator_Group == 'ITG') selected @endif> Information    Technology Group</option>
+                                                    <option value="MM" @if ($data->Initiator_Group == 'MM') selected @endif> Molecular  Medicine</option>
+                                                    <option value="CL" @if ($data->Initiator_Group == 'CL') selected @endif>Central Laboratory</option>
+                                                    <option value="TT" @if ($data->Initiator_Group == 'TT') selected @endif>Tech  team</option>
+                                                    <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif> Quality Assurance</option>
+                                                    <option value="QM" @if ($data->Initiator_Group == 'QM') selected @endif> Quality Management</option>
+                                                    <option value="IA" @if ($data->Initiator_Group == 'IA') selected @endif>  IT  Administration</option>
+                                                    <option value="ACC" @if ($data->Initiator_Group == 'ACC') selected @endif>  Accounting   </option>
+                                                    <option value="LOG" @if ($data->Initiator_Group == 'LOG') selected @endif> Logistics     </option>
+                                                    <option value="SM" @if ($data->Initiator_Group == 'SM') selected @endif>Senior Management</option>
+                                                    <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif> Business  Administration</option>
+                                                     <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif>  Document Cell</option>
+                                                    <option value="PG"  @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option> --}}
+                                                            <option value="CQA"  @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                                        <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif >Quality Assurance</option>
+                                                        <option value="QC"  @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control</option>
+                                                        <option value="QM"  @if ($data->Initiator_Group == 'QM') selected @endif>Quality Control (Microbiology department)</option>
+                                                        <option value="PG"  @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option>
+                                                        <option value="PL"  @if ($data->Initiator_Group == 'PL') selected @endif>Production Liquid Orals</option>
+                                                        <option value="PT"  @if ($data->Initiator_Group == 'PT') selected @endif>Production Tablet and Powder</option>
+                                                        <option value="PE"  @if ($data->Initiator_Group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and
+                                                            Liquid)</option>
+                                                        <option value="PC"  @if ($data->Initiator_Group == 'PC') selected @endif>Production Capsules</option>
+                                                        <option value="PI"  @if ($data->Initiator_Group == 'PI') selected @endif>Production Injectable</option>
+                                                        <option value="EN"  @if ($data->Initiator_Group == 'EN') selected @endif>Engineering</option>
+                                                        <option value="HR"  @if ($data->Initiator_Group == 'HR') selected @endif>Human Resource</option>
+                                                        <option value="ST"  @if ($data->Initiator_Group == 'ST') selected @endif>Store</option>
+                                                        <option value="IT"  @if ($data->Initiator_Group == 'IT') selected @endif>Electronic Data Processing</option>
+                                                        <option value="FD"  @if ($data->Initiator_Group == 'FD') selected @endif>Formulation Development</option>
+                                                        <option value="AL"  @if ($data->Initiator_Group == 'AL') selected @endif>Analytical research and Development Laboratory
+                                                        </option>
+                                                        <option value="PD"  @if ($data->Initiator_Group == 'PD') selected @endif>Packaging Development</option>
+                                                        <option value="PU"  @if ($data->Initiator_Group == 'PU') selected @endif>Purchase Department</option>
+                                                        <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif >Document Cell</option>
+                                                        <option value="RA"  @if ($data->Initiator_Group == 'RA') selected @endif>Regulatory Affairs</option>
+                                                        <option value="PV"  @if ($data->Initiator_Group == 'PV') selected @endif>Pharmacovigilance</option>
 
                                                 </select>
                                             </div>
@@ -1514,7 +1502,9 @@
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="search"> Department Head<span class="text-danger"></span></label>
+                                            <label for="search"> Department Head<span class="text-danger"></span>
+                                            </label>
+
                                             <select id="select-state" placeholder="Select..." name="department_head">
                                                 {{-- <option value="">Select a value</option> --}}
                                                 @foreach ($users as $key => $value)
@@ -1527,6 +1517,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="search"> QA Reviewer <span class="text-danger"></span> </label>
+
                                             <select id="select-state" placeholder="Select..." name="qa_reviewer">
                                                 {{-- <option value="">Select a value</option> --}}
                                                 @foreach ($users as $key => $value)
@@ -2030,7 +2021,7 @@
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
+                                                                <a class="remove-file"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
@@ -2204,11 +2195,11 @@
                                             $data->stage == 5 ||
                                             $data->stage == 6 ||
                                             $data->stage == 7)
-                                        <a style="  justify-content: center; width: 10rem; margin-left: 1px;;"
+                                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;"
                                             type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#launch_extension">
                                             Launch Extension
-                                        </a>
+                                        </a> --}}
                                     @endif
                                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -2756,6 +2747,7 @@
                                                 //     inputsToToggle.push(facilityNameInputs[i]);
                                                 // }
 
+
                                                 selectField.addEventListener('change', function() {
                                                     var isRequired = this.value === 'yes';
 
@@ -2842,11 +2834,11 @@
                                         $data->stage == 5 ||
                                         $data->stage == 6 ||
                                         $data->stage == 7)
-                                    <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                                    {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                         class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#launch_extension">
                                         Launch Extension
-                                    </a>
+                                    </a> --}}
                                 @endif
                                 <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -2901,8 +2893,6 @@
                                 <script>
                                     $(document).ready(function() {
                                         @if ($data1->Production_Review !== 'yes')
-
-
                                         $('.p_erson').hide();
 
                                         $('[name="Production_Review"]').change(function() {
@@ -2962,7 +2952,9 @@
                                                     style="display: {{ $data->Production_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 4) disabled @endif name="Production_person" class="Production_person"     id="Production_person">
+                                            <select @if ($data->stage == 4) disabled @endif
+                                                name="Production_person" class="Production_person"
+                                                id="Production_person">
                                                 <option value=""> Select</option>
                                                 @foreach ($userData as $user)
                                                     <option value="{{ $user->id }}"
@@ -3210,8 +3202,10 @@
                                     </div>
                                     <div class="col-md-6 mb-3 p_erson">
                                         <div class="group-input">
-                                            <label for="Production Review Completed By">Production Review Completed By</label>
-                                            <input readonly type="text" value="{{ $data1->Production_by }}" name="production_by" id="production_by">
+                                            <label for="Production Review Completed By">Production Review Completed
+                                                By</label>
+                                            <input readonly type="text" value="{{ $data1->Production_by }}"
+                                                name="production_by" id="production_by">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 p_erson">
@@ -3219,7 +3213,8 @@
                                             <label for="Production Review Completed On">Production Review Completed
                                                 On</label>
                                             <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input readonly type="date"id="production_on" name="production_on"    value="{{ $data1->production_on }}">
+                                            <input readonly type="date"id="production_on" name="production_on"
+                                                value="{{ $data1->production_on }}">
                                         </div>
                                     </div>
                                 @endif
@@ -3230,7 +3225,6 @@
                                 <script>
                                     $(document).ready(function() {
                                         @if ($data1->Warehouse_review !== 'yes')
-
                                             $('.warehouse').hide();
 
                                             $('[name="Warehouse_review"]').change(function() {
@@ -3280,12 +3274,15 @@
                                             <label for="Warehouse Person">Warehouse Person <span id="asteriskware"
                                                     style="display: {{ $data1->Warehouse_review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
-                                                <select @if ($data->stage == 4) disabled @endif  name="Warehouse_notification" class="Warehouse_notification"  id="Warehouse_notification">
-                                                <option value=""> Select</option>
-                                                @foreach ($userData as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Warehouse_notification) selected @endif>
-                                                        {{ $user->name }}</option>
+                                            <select name="Warehouse_notification" class="Warehouse_notification"
+                                                id="Warehouse_notification"
+                                                value="{{ $data1->Warehouse_notification }}"
+                                                @if ($data->stage == 4) disabled @endif>
+                                                <option value=""> -- Select --</option>
+                                                @foreach ($users as $user)
+                                                    <option
+                                                        {{ $data1->Warehouse_notification == $user->id ? 'selected' : '' }}
+                                                        value="{{ $user->id }}">{{ $user->name }}</option>
                                                 @endforeach
                                             </select>
 
@@ -3293,16 +3290,25 @@
                                     </div>
                                     <div class="col-md-12 mb-3 warehouse">
                                         <div class="group-input">
-                                            <label for="Impact Assessment1">Impact Assessment (By Warehouse) <span id="asteriskware2"  style="display: {{ $data1->Warehouse_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"  class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                            <textarea @if ($data1->Warehouse_review == 'yes' && $data->stage == 4) required @endif class="summernote Warehouse_assessment"  name="Warehouse_assessment" id="summernote-19" @if ($data->stage == 3 || Auth::user()->id != $data1->Warehouse_notification) readonly @endif>{{ $data1->Warehouse_assessment }}</textarea>
+                                            <label for="Impact Assessment1">Impact Assessment (By Warehouse) <span
+                                                    id="asteriskware2"
+                                                    style="display: {{ $data1->Warehouse_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea @if ($data1->Warehouse_review == 'yes' && $data->stage == 4) required @endif class="summernote Warehouse_assessment"
+                                                name="Warehouse_assessment" id="summernote-19" @if ($data->stage == 3 || Auth::user()->id != $data1->Warehouse_notification) readonly @endif>{{ $data1->Warehouse_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 warehouse">
                                         <div class="group-input">
-                                            <label for="Warehouse Feedback">Warehouse Feedback <span id="asteriskware3" style="display: {{ $data1->Warehouse_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"  class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                            <textarea @if ($data1->Warehouse_review == 'yes' && $data->stage == 4) required @endif class="summernote Warehouse_feedback" name="Warehouse_feedback" id="summernote-20" @if ($data->stage == 3 || Auth::user()->id != $data1->Warehouse_notification) readonly @endif>{{ $data1->Warehouse_feedback }}</textarea>
+                                            <label for="Warehouse Feedback">Warehouse Feedback <span id="asteriskware3"
+                                                    style="display: {{ $data1->Warehouse_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea @if ($data1->Warehouse_review == 'yes' && $data->stage == 4) required @endif class="summernote Warehouse_feedback"
+                                                name="Warehouse_feedback" id="summernote-20" @if ($data->stage == 3 || Auth::user()->id != $data1->Warehouse_notification) readonly @endif>{{ $data1->Warehouse_feedback }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12 warehouse">
@@ -3372,14 +3378,18 @@
 
                                     <div class="col-md-6 mb-3 warehouse">
                                         <div class="group-input">
-                                            <label for="Warehouse Review Completed By">Warehouse Review Completed By</label>
-                                            <input disabled type="text" value="{{ $data1->Warehouse_by }}" name="Warehouse_by" id="Warehouse_by">
+                                            <label for="Warehouse Review Completed By">Warehouse Review Completed
+                                                By</label>
+                                            <input disabled type="text" value="{{ $data1->Warehouse_by }}"
+                                                name="Warehouse_by" id="Warehouse_by">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3 warehouse">
                                         <div class="group-input">
-                                            <label for="Warehouse Review Completed On">Warehouse Review Completed  On</label>
-                                            <input type="date"id="Warehouse_on" name="Warehouse_on"  value="{{ $data1->Warehouse_on }}">
+                                            <label for="Warehouse Review Completed On">Warehouse Review Completed
+                                                On</label>
+                                            <input type="date"id="Warehouse_on" name="Warehouse_on"
+                                                value="{{ $data1->Warehouse_on }}">
                                         </div>
                                     </div>
                                 @else
@@ -3513,7 +3523,6 @@
                                 Quality Control
                             </div>
                             <script>
-                                @if ($data1->Quality_review !== 'yes')
                                 $(document).ready(function() {
                                     $('.quality_control').hide();
 
@@ -3526,7 +3535,6 @@
                                             $('.quality_control span').hide();
                                         }
                                     });
-                                    @endif
                                 });
                             </script>
                             @if ($data->stage == 3 || $data->stage == 4)
@@ -3557,12 +3565,19 @@
                                 @endphp
                                 <div class="col-lg-6 quality_control">
                                     <div class="group-input">
-                                        <label for="Quality Control Person">Quality Control Person <span id="asteriskQC"  style="display: {{ $data1->Quality_review == 'yes' ? 'inline' : 'none' }}"  class="text-danger">*</span></label>
-                                        <select @if ($data->stage == 4) disabled @endif  name="Quality_Control_Person" class="Quality_Control_Person"  id="Quality_Control_Person">
+                                        <label for="Quality Control Person">Quality Control Person <span id="asteriskQC"
+                                                style="display: {{ $data1->Quality_review == 'yes' ? 'inline' : 'none' }}"
+                                                class="text-danger">*</span></label>
+                                        <select name="Quality_Control_Person" class="Quality_Control_Person"
+                                            id="Quality_Control_Person"
+                                            @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
-                                            @foreach ($userData as $user)
-                                                <option  {{ $data1->Quality_Control_Person == $user->id ? 'selected' : '' }} value="{{ $user->id }}"> {{ $user->name }}</option>
+                                            @foreach ($users as $user)
+                                                <option
+                                                    {{ $data1->Quality_Control_Person == $user->id ? 'selected' : '' }}
+                                                    value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
+
                                         </select>
 
                                     </div>
@@ -3664,14 +3679,16 @@
                                             value="{{ $data1->Quality_Control_on }}">
                                     </div>
                                 </div>
-
+                                <div class="sub-head">
+                                    Quality Assurance
+                                </div>
                                 <script>
                                     $(document).ready(function() {
                                         @if ($data1->Quality_Assurance_Review !== 'yes')
 
                                             $('.quality_assurance').hide();
 
-                                            $('[name="Quality_Assurance_Review"]').change(function() {
+                                            $('[name="Quality_Assurance"]').change(function() {
                                                 if ($(this).val() === 'yes') {
                                                     $('.quality_assurance').show();
                                                     $('.quality_assurance span').show();
@@ -3684,10 +3701,6 @@
 
                                     });
                                 </script>
-                                <div class="sub-head">
-                                    Quality Assurance
-                                </div>
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
@@ -3714,11 +3727,18 @@
                                 @endphp
                                 <div class="col-lg-6 quality_assurance">
                                     <div class="group-input">
-                                        <label for="Quality Assurance Person">Quality Assurance Person <span  id="asteriskQQA" style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"  class="text-danger">*</span></label>
-                                        <select @if ($data->stage == 4) disabled @endif  name="QualityAssurance_person" class="Quality_Control_Person"  id="QualityAssurance_person">
+                                        <label for="Quality Assurance Person">Quality Assurance Person <span
+                                                id="asteriskQQA"
+                                                style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"
+                                                class="text-danger">*</span></label>
+                                        <select name="QualityAssurance_person" class="QualityAssurance_person"
+                                            id="QualityAssurance_person"
+                                            @if ($data->stage == 4) disabled @endif>
                                             <option value="">-- Select --</option>
-                                            @foreach ($userData as $user)
-                                                <option  {{ $data1->QualityAssurance_person == $user->id ? 'selected' : '' }} value="{{ $user->id }}"> {{ $user->name }}</option>
+                                            @foreach ($users as $user)
+                                                <option
+                                                    {{ $data1->QualityAssurance_person == $user->id ? 'selected' : '' }}
+                                                    value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -5244,7 +5264,6 @@
                                             value="{{ $data1->Quality_Control_on }}">
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Quality Assurance
                                 </div>
@@ -8016,11 +8035,11 @@
                                     $data->stage == 5 ||
                                     $data->stage == 6 ||
                                     $data->stage == 7)
-                                <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                     class="button  launch_extension" data-bs-toggle="modal"
                                     data-bs-target="#launch_extension">
                                     Launch Extension
-                                </a>
+                                </a> --}}
                             @endif
                             <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -9754,11 +9773,11 @@
                             $data->stage == 5 ||
                             $data->stage == 6 ||
                             $data->stage == 7)
-                        <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                             class="button  launch_extension" data-bs-toggle="modal"
                             data-bs-target="#launch_extension">
                             Launch Extension
-                        </a>
+                        </a> --}}
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -9822,7 +9841,9 @@
                                             <th>Residual Detectability- H(1)/M(2)/L(3)</th>
                                             <th>Residual RPN</th>
                                             <th>Risk Acceptance (Y/N)</th>
-                                            <th>Mitigation proposal (Mention either CAPA reference number, IQ, OQ or PQ)</th>
+                                            <th>Mitigation proposal (Mention either CAPA reference number, IQ,
+                                                OQ or
+                                                PQ)</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -10382,11 +10403,11 @@
                             $data->stage == 5 ||
                             $data->stage == 6 ||
                             $data->stage == 7)
-                        <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                             class="button  launch_extension" data-bs-toggle="modal"
                             data-bs-target="#launch_extension">
                             Launch Extension
-                        </a>
+                        </a> --}}
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -10750,11 +10771,11 @@
                                 $data->stage == 5 ||
                                 $data->stage == 6 ||
                                 $data->stage == 7)
-                            <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                            {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                                 class="button  launch_extension" data-bs-toggle="modal"
                                 data-bs-target="#launch_extension">
                                 Launch Extension
-                            </a>
+                            </a> --}}
                         @endif
                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -11199,11 +11220,11 @@
                             $data->stage == 5 ||
                             $data->stage == 6 ||
                             $data->stage == 7)
-                        <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                             class="button  launch_extension" data-bs-toggle="modal"
                             data-bs-target="#launch_extension">
                             Launch Extension
-                        </a>
+                        </a> --}}
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -11338,11 +11359,11 @@
                             $data->stage == 5 ||
                             $data->stage == 6 ||
                             $data->stage == 7)
-                        <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                             class="button  launch_extension" data-bs-toggle="modal"
                             data-bs-target="#launch_extension">
                             Launch Extension
-                        </a>
+                        </a> --}}
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">
@@ -12188,11 +12209,11 @@
                             $data->stage == 5 ||
                             $data->stage == 6 ||
                             $data->stage == 7)
-                        <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
                             class="button  launch_extension" data-bs-toggle="modal"
                             data-bs-target="#launch_extension">
                             Launch Extension
-                        </a>
+                        </a> --}}
                     @endif
                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#effectivenss_extension">

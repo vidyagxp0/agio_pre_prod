@@ -1026,16 +1026,14 @@ Not Applicable
                     <tbody>
                         @foreach (unserialize($action_item_details->date_due) as $key => $due_date)
                             <tr>
+                                <td>{{ $key + 1 }}</td>
                                 <td>
-                                    {{ $key + 1 }}</td>
-                                <td>
-                                    @foreach ($users as $undata)
-                                        <option
-                                            {{ (unserialize($action_item_details->responsible_person)[$key] ?? null) == $undata->id ? 'selected' : '' }}
-                                            value="{{ $undata->id }}">
-                                            {{ $undata->name }}
-                                        </option>
-                                    @endforeach
+                                    @php
+                                        $responsiblePersonId =
+                                            unserialize($action_item_details->responsible_person)[$key] ?? null;
+                                        $responsiblePerson = $users->firstWhere('id', $responsiblePersonId);
+                                    @endphp
+                                    {{ $responsiblePerson->name ?? '' }}
                                 </td>
                                 <td>{{ unserialize($action_item_details->current_status)[$key] ?? '' }}</td>
                                 <td>{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key] ?? null) }}
@@ -1044,6 +1042,7 @@ Not Applicable
                             </tr>
                         @endforeach
                     </tbody>
+
                 </table>
             </div>
         </div>
@@ -1075,13 +1074,20 @@ Not Applicable
                                     </td>
                                     <td>{{ unserialize($capa_detail_details->site2)[$key] ?? '' }}</td>
                                     <td>
-                                        @foreach ($users as $undata)
+                                        {{-- @foreach ($users as $undata)
                                             <option
                                                 {{ unserialize($capa_detail_details->responsible_person2)[$key] == $undata->id ? 'selected' : '' }}
                                                 value="{{ $undata->id }}">
                                                 {{ $undata->name }}
                                             </option>
-                                        @endforeach
+                                        @endforeach --}}
+                                        @php
+                                            $responsiblePersonId =
+                                                unserialize($capa_detail_details->responsible_person2)[$key] ?? null;
+                                            $responsiblePerson = $users->firstWhere('id', $responsiblePersonId);
+                                        @endphp
+                                        {{ $responsiblePerson->name ?? '' }}
+
                                     </td>
                                 </tr>
                             @endforeach

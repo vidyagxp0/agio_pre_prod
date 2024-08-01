@@ -160,7 +160,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Related Records">Action Item Related Records</label>
-                                        {{-- <select multiple id="related_records" name="related_records[]"
+                                        <select multiple id="related_records" name="related_records[]"
                                             placeholder="Select Reference Records">
                                       @if (!empty($old_record)) 
                                             @foreach ($old_record as $new)
@@ -169,8 +169,8 @@
                                                 </option>
                                             @endforeach
                                          @endif
-                                        </select> --}}
-                                        <input type="longText" name="related_records" >
+                                        </select>
+                                        {{-- <input type="longText" name="related_records" > --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

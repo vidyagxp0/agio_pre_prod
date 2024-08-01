@@ -2532,6 +2532,8 @@ class ManagementReviewController extends Controller
         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
         $canvas->page_text($width / 4, $height / 2, $managementReview->status, null, 25, [0, 0, 0], 2, 6, -20);
         return $pdf->stream('Management-Review' . $id . '.pdf');
+
+
     }
      
 

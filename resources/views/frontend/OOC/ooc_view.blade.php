@@ -18,6 +18,7 @@
         border: 1px solid grey;
         padding: 5px;
         text-align: center;
+        font-size: 10px;
         position: relative;
         /* border-right: none; */
         background: white;
@@ -1331,7 +1332,7 @@ $(document).ready(function() {
 
 
 
-                            <div class="sub-head"> Delay Justfication for Reporting</div>
+                            <div class="sub-head"> Delay Justification for Reporting</div>
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
