@@ -1508,47 +1508,47 @@ function addMultipleFiles(input, block_id) {
                             <div class="row">
                                
                             <div class="col-12">
-    <div class="group-input">
-        <label for="audit-agenda-grid">
-            Internal Audit (Observations/Discrepancy)
-            <button type="button" name="audit-agenda-grid" id="internalaudit-observation">+</button>
-        </label>
-        <table class="table table-bordered" id="internalaudit-odtable">
-            <thead>
-                <tr>
-                    <th style="width: 120px;">Sr. No</th>
-                    <th>Observations/Discrepancy</th>
-                    <th>Category</th>
-                    <th>Remarks</th>
-                    <th style="width: 15%">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if ($grid_Data3 && is_array($grid_Data3->data))
-                    @foreach ($grid_Data3->data as $item)
-                        <tr>
-                            <td>
-                                <input disabled type="text" name="observations[{{ $loop->index }}][serial_number]" value="{{ $loop->index + 1 }}">
-                            </td>
-                            <td>
-                                <input type="text" name="observations[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}">
-                            </td>
-                            <td>
-                                <input type="text" name="observations[{{ $loop->index }}][category]" value="{{ isset($item['category']) ? $item['category'] : '' }}">
-                            </td>
-                            <td>
-                                <input type="text" name="observations[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}">
-                            </td>
-                            <td>
-                                <button type="button" class="removeRowBtn">Remove</button>
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
-            </tbody>
-        </table>
-    </div>
-</div>
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Internal Audit (Observations/Discrepancy)
+                                            <button type="button" name="audit-agenda-grid" id="internalaudit-observation">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="internalaudit-odtable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 120px;">Sr. No</th>
+                                                    <th>Observations/Discrepancy</th>
+                                                    <th>Category</th>
+                                                    <th>Remarks</th>
+                                                    <th style="width: 15%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if ($grid_Data3 && is_array($grid_Data3->data))
+                                                    @foreach ($grid_Data3->data as $item)
+                                                        <tr>
+                                                            <td>
+                                                                <input disabled type="text" name="observations[{{ $loop->index }}][serial_number]" value="{{ $loop->index + 1 }}">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="observations[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="observations[{{ $loop->index }}][category]" value="{{ isset($item['category']) ? $item['category'] : '' }}">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="observations[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}">
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="removeRowBtn">Remove</button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
 
 
                                 <div class="col-12">
@@ -1569,37 +1569,59 @@ function addMultipleFiles(input, block_id) {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            @if ($grid_Data4 && is_array($grid_Data4->data))
-                                            @foreach ($grid_Data4->data as $item)
-                                              <tr>
-                                              <td><input disabled type="text" name="auditorroles[{{ $loop->index }}][serial_number]" value="{{ $loop->index + 1 }}" value="1">
-                                                </td>
-                                                <td><input type="text" name="auditorroles[{{ $loop->index }}][role]" value="{{ isset($item['role']) ? $item['role'] : '' }}" ></td>
-                                                <td><input type="text" name="auditorroles[{{ $loop->index }}][name]" value="{{ isset($item['name']) ? $item['name'] : '' }}"></td>
-                                                <td>
-                                                <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div class="calenderauditee">
-                                                                <input type="text" class="test"
-                                                                    id="internal_start_date" readonly
-                                                                    placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="internal_start_date"
-                                                                    name="auditorroles[{{ $loop->index }}][internal_start_date]"
-                                                                    value="{{ isset($item['internal_start_date']) ? $item['internal_start_date'] : '' }}"
-                                                                    class="hide-input"
-                                                                    oninput="handleDateInput(this, `internal_start_date`);checkDate('internal_start_date','internal_start_date_checkdate')" />
+                                                @if ($grid_Data4 && is_array($grid_Data4->data))
+                                                @foreach ($grid_Data4->data as $item)
+                                                <tr>
+                                                    <td>
+                                                        <input disabled type="text" name="auditorroles[{{ $loop->index }}][serial_number]" value="{{ $loop->index + 1 }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="auditorroles[{{ $loop->index }}][role]" value="{{ $item['role'] ?? '' }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="auditorroles[{{ $loop->index }}][name]" value="{{ $item['name'] ?? '' }}">
+                                                    </td>
+                                                    <td>
+                                                        <!-- <div class="group-input new-date-data-field mb-0">
+                                                            <div class="input-date">
+                                                                <div class="calenderauditee">
+                                                                    <input type="text" class="test" name="auditorroles[{{ $loop->index }}][internal_start_date]" value="{{ $item['internal_start_date'] ?? '' }}" id="internal_start_date_{{ $loop->index }}" readonly placeholder="DD-MMM-YYYY" data-original-value="{{ $item['internal_start_date'] ?? '' }}" />
+                                                                    <input type="date" id="internal_start_date_input_{{ $loop->index }}" name="auditorroles[{{ $loop->index }}][internal_start_date]" class="hide-input" oninput="handleDateInput(this, 'internal_start_date_{{ $loop->index }}');checkDate('internal_start_date_checkdate', 'internal_end_date_checkdate')" />
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><input type="text" name="auditorroles[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}"></td>
-                                                <td>
-                                                    <button type="text"class="removeRowBtn">Remove</button>
-                                                </td>
-                                              </tr>
-                                              @endforeach
-                                              @endif
+                                                        </div> -->
+                                                        <div class="new-date-data-field">
+                                                                        <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                        <input class="click_date"
+                                                                        id="internal_start_date{{ $loop->index }}"
+                                                                        type="text"
+                                                                        name="auditorroles[{{ $loop->index }}][internal_start_date]"
+                                                                        value="{{ isset($item['internal_start_date']) ? \Carbon\Carbon::parse($item['internal_start_date'])->format('d-M-Y') : '' }}"
+                                                                        placeholder="DD-MMM-YYYY"
+                                                                        readonly />
+                                                                        <input type="date"
+                                                                        name="auditorroles[{{ $loop->index }}][internal_start_date]"
+                                                                        id="internal_start_date{{ $loop->index }}_input"
+                                                                        value="{{ isset($item['internal_start_date']) ? $item['internal_start_date'] : '' }}"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                        class="hide-input"
+                                                                        onchange="handleDateInput(this, 'internal_start_date{{ $loop->index }}'); updateEndDateMin('internal_start_date{{ $loop->index }}_input', 'End_date_{{ $loop->index }}_input')" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="auditorroles[{{ $loop->index }}][remarks]" value="{{ $item['remarks'] ?? '' }}">
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="removeRowBtn">Remove</button>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                                @endif
                                             </tbody>
+
                                         </table>
                                     </div>
                                 </div>
@@ -1611,6 +1633,8 @@ function addMultipleFiles(input, block_id) {
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
+                                <button type="button"> <a href="{{ url('rcms/internalObservationSingleReport', $data->id) }}" class="text-white">
+                                        Single Report (AO) </a> </button>
                             </div>
                         </div>
                     </div>
@@ -1671,7 +1695,28 @@ function addMultipleFiles(input, block_id) {
                                                 <td><input type="text" name="Initial[{{ $loop->index }}][impact_assesment]" value="{{ isset($item['impact_assesment']) ? $item['impact_assesment'] : '' }}"></td>
                                                 <td><input type="text" name="Initial[{{ $loop->index }}][responsiblity]" value="{{ isset($item['responsiblity']) ? $item['responsiblity'] : '' }}"></td>
                                                 <td><input type="text" name="Initial[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}"></td>
-                                                <td><input type="text" name="Initial[{{ $loop->index }}][closure_date]" value="{{ isset($item['closure_date']) ? $item['closure_date'] : '' }}"></td>
+                                                <td>
+                                                <div class="new-date-data-field">  
+                                                    <div class="group-input input-date">
+                                                        <div class="calenderauditee">
+                                                            <input class="click_date"
+                                                                    id="closure_date{{ $loop->index }}"
+                                                                    type="text"
+                                                                    name="Initial[{{ $loop->index }}][closure_date]"
+                                                                    value="{{ isset($item['closure_date']) ? \Carbon\Carbon::parse($item['closure_date'])->format('d-M-Y') : '' }}"
+                                                                    placeholder="DD-MMM-YYYY"
+                                                                    readonly />
+                                                            <input type="date"
+                                                                    name="Initial[{{ $loop->index }}][closure_date]"
+                                                                    id="closure_date{{ $loop->index }}_input"
+                                                                    value="{{ isset($item['closure_date']) ? $item['closure_date'] : '' }}"
+                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                    class="hide-input"
+                                                                    onchange="handleDateInput(this, 'closure_date{{ $loop->index }}'); updateEndDateMin('closure_date{{ $loop->index }}_input', 'End_date_{{ $loop->index }}_input')" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </td>
                                                 <td>
                                                     <button type="text"class="removeRowBtn">Remove</button>
                                                 </td>
@@ -13094,6 +13139,35 @@ $checklistqualitycontrol = [
         })
     </script>
 
+<script>
+// Function to handle date input changes
+function handleDateInput(input, targetId) {
+    var dateInput = document.getElementById(targetId);
+    var originalValue = dateInput.getAttribute('data-original-value');
+    
+    if (input.value !== originalValue) {
+        dateInput.value = input.value; // Update only if different from the original value
+    } else {
+        input.value = dateInput.value; // Preserve the existing value if no change
+    }
+}
+
+// Function to update original date value on input change
+function updateOriginalValue(input) {
+    var targetId = input.getAttribute('data-target-id');
+    var dateInput = document.getElementById(targetId);
+    dateInput.setAttribute('data-original-value', input.value);
+}
+
+// Handle input events for non-date fields
+document.querySelectorAll('input[type="text"]').forEach(function(input) {
+    input.addEventListener('input', function() {
+        // You may want to handle updates here if needed
+        updateOriginalValue(this);
+    });
+});
+
+</script>
 
 
 <script>
@@ -13110,7 +13184,17 @@ $checklistqualitycontrol = [
                         '<td><input type="text" name="Initial[' + serialNumber + '][impact_assesment]"></td>' +
                         '<td><input type="text" name="Initial[' + serialNumber + '][responsiblity]"></td>' +
                         '<td><input type="text" name="Initial[' + serialNumber + '][remarks]"></td>' +
-                        '<td><input type="text" name="Initial[' + serialNumber + '][closure_date]"></td>' +
+                        '<td>' +
+                    '<div class="group-input new-date-data-field mb-0">' +
+                    '<div class="input-date ">' +
+                    '<div class="calenderauditee">' +
+                    '<input type="text" class="test" name="Initial[' + serialNumber + '][closure_date]" id="closure_date' + serialNumber + '" readonly placeholder="DD-MMM-YYYY" />' +
+                    '<input type="date" id="closure_dateinput_' + serialNumber + '" name="Initial[' + serialNumber + '][closure_date]" class="hide-input" oninput="handleDateInput(this, \'closure_date' + serialNumber + '\'); checkDate(\'closure_date' + serialNumber + '\',\'closure_datecheckdate_' + serialNumber + '\')" />' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</td>' +
+                     '<td><input type="text" name="Initial[' + serialNumber + '][remarks]"></td>' +
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
                         '</tr>';
 

@@ -86,13 +86,27 @@ class InternalauditController extends Controller
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
-        $internalAudit->Audit_team =  implode(',', $request->Audit_team);
-        $internalAudit->Auditee =  implode(',', $request->Auditee);
+        // $internalAudit->Audit_team =  implode(',', $request->Audit_team);
+        if (!is_array($request->Audit_team)) {
+            $refrenceRecordArray = explode(',', $request->Audit_team);
+        } else {
+            $refrenceRecordArray = $request->Audit_team;
+        }
+        // $internalAudit->Auditee =  implode(',', $request->Auditee);
+        if (!is_array($request->Auditee)) {
+            $refrenceRecordArray = explode(',', $request->Auditee);
+        } else {
+            $refrenceRecordArray = $request->Auditee;
+        }
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->Comments = $request->Comments;
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
-        $internalAudit->refrence_record=  implode(',', $request->refrence_record);
+        if (!is_array($request->refrence_record)) {
+            $refrenceRecordArray = explode(',', $request->refrence_record);
+        } else {
+            $refrenceRecordArray = $request->refrence_record;
+        }
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date= $request->audit_start_date;
@@ -2896,4 +2910,33 @@ $Checklist_Capsule->save();
             return $pdf->stream('Internal-Audit' . $id . '.pdf');
         }
     }
+
+    public static function observationSingleReport($id)
+    {
+        $data = InternalAudit::find($id);
+        $internal_id = $id;
+        $grid_Data3 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrCreate();
+        $grid_Data4 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
+        if (!empty($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.internalAudit.observation-tab-singleReport', compact('data','grid_Data3','grid_Data4'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('Internal-Audit' . $id . '.pdf');
+        }
+    }
+
 }

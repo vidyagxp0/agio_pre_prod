@@ -915,48 +915,56 @@ class DashboardController extends Controller
             $data = Ootc::find($id);
             $single = "ootcSingleReport/" . $data->id;
             $audit = "audit_pdf/".$data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Failure Investigation") {
             $data = FailureInvestigation::find($id);
             $single = "failure-investigation-single-report/" . $data->id;
             $audit = "failure-investigation-audit-pdf/".$data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "ERRATA") {
             $data = errata::find($id);
             $single = "errata_single_pdf/" . $data->id;
             $audit = "errata_audit/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Capa") {
             $data = Capa::find($id);
             $single = "capaSingleReport/" . $data->id;
             $audit = "capaAuditReport/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Lab-Incident") {
             $data = LabIncident::find($id);
             $single = "LabIncidentSingleReport/" . $data->id;
             $audit = "LabIncidentAuditReport/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Deviation") {
             $data = Deviation::find($id);
             $single = "deviationSingleReport/" . $data->id;
             $audit = "DeviationAuditTrialPdf/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Internal-Audit") {
             $data = InternalAudit::find($id);
             $single = "internalSingleReport/" . $data->id;
             $audit = "internalauditReport/" . $data->id;
+            $parent = "internalObservationSingleReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Risk-Assesment") {
             $data = RiskManagement::find($id);
             $single = "riskSingleReport/" . $data->id;
             $audit = "riskAuditReport/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Out Of Calibration") {
@@ -964,66 +972,77 @@ class DashboardController extends Controller
             $recordno = ((RecordNumber::first()->value('counter')) + 1);
             $single = "OOCSingleReport/" . $data->id;
             $audit = "ooc_Audit_Report/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }elseif ($type == "Lab-Incident") {
             $data = LabIncident::find($id);
             $single = "LabIncidentSingleReport/" . $data->id;
             $audit = "LabIncidentAuditReport/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "External-Audit") {
             $data = Auditee::find($id);
             $single = "ExternalAuditSingleReport/" . $data->id;
             $audit = "ExternalAuditTrialReport/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Audit-Program") {
             $data = AuditProgram::find($id);
             $single = "auditProgramSingleReport/" . $data->id;
             $audit = "auditProgramAuditReport/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Action-Item") {
             $data = ActionItem::find($id);
             $single = "actionitemSingleReport/"  . $data->id;
             $audit = "actionitemauditTrailPdf/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Extension") {
             $data = extension_new::find($id);
             $single = "singleReportNew/" .$data->id;
             $audit = "extensionAuditReport/" .$data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->site_location_code);
             $division_name = $division->name;
         } elseif ($type == "Observation") {
             $data = Observation::find($id);
             $single = "ObservationSingleReport/" .$data->id;
             $audit = "ObservationAuditTrialShow/" .$data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division ? $division->name : '';
         } elseif ($type == "Effectiveness-Check") {
             $data = EffectivenessCheck::find($id);
             $single = "effectiveSingleReport/" .$data->id;
             $audit = "effectiveAuditReport/" .$data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Management-Review") {
             $data = ManagementReview::find($id);
             $single = "managementReview/" . $data->id;
             $audit = "managementReviewReport/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }elseif ($type == "OOS Chemical") {
             $data = OOS::find($id);
             $single = "oos/single_report/" . $data->id;
             $audit = "oos/audit_report/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }elseif ($type == "OOS Microbiology") {
             $data = OOS_micro::find($id);
             $single = "oos_micro/single_report/" . $data->id;
             $audit = "oos_micro/audit_report/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }
@@ -1031,6 +1050,7 @@ class DashboardController extends Controller
             $data = RootCauseAnalysis::find($id);
             $single = "rootSingleReport/" . $data->id;
             $audit = "rootAuditReport/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }
@@ -1038,6 +1058,7 @@ class DashboardController extends Controller
             $data = MarketComplaint::find($id);
             $single = "marketComplaintSingleReport/" . $data->id;
             $audit = "MarketComplaintAuditReport/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
 
@@ -1047,6 +1068,7 @@ class DashboardController extends Controller
             $data = MarketComplaint::find($id);
             $audit = "marketcomplaint/marketauditTrailPdf/" . $data->id;
             $single = "pdf-report/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
 
@@ -1056,6 +1078,7 @@ class DashboardController extends Controller
             $data = CC::find($id);
             $audit = "audit/" . $data->id;
             $single = "change_control_single_pdf/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }
@@ -1064,6 +1087,7 @@ class DashboardController extends Controller
             $data = Incident::find($id);
             $single = "incident-single-report/" . $data->id;
             $audit = "incident-audit-pdf/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }
@@ -1071,10 +1095,15 @@ class DashboardController extends Controller
             $data = NonConformance::find($id);
             $single = "non-conformance-single-report/" . $data->id;
             $audit = "non-conformance-audit-pdf/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }
-
+            
+        
+        // if(isset($audit_Observation)){
+        //             $var = $audit_Observation;
+        // }
 
         $type = $type == 'Capa' ? 'CAPA' : $type;
 
@@ -1104,6 +1133,7 @@ class DashboardController extends Controller
                         <div class="drop-list">
                             <a target="__blank" href="' . $audit . '" class="inner-item">Audit Trail</a>
                             <a target="__blank" href="' . $single . '" class="inner-item">' . $type . ' Single Report</a>
+                            <a target="__blank" href="' . $parent . '" class="inner-item">' . $type . ' Parent with Internal Report</a>
                         </div>
                     </div>
                 </div>

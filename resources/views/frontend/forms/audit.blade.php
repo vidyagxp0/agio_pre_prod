@@ -16,8 +16,11 @@
     </style>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/virtual-select@1.0.0/dist/virtual-select.min.css"> -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/virtual-select@1.0.0"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/virtual-select@1.0.0"></script> -->
     <script>
         $(function() {
             $("#datepicker").datepicker();
@@ -367,52 +370,52 @@
                       <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Audit Response & Closure</button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
+                      <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
                       Granulation</button>
-                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Checklist - Tablet Compression</button>
-                     <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
-                     <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
+                     <button class="cctablinks" style="display:none;" id="button2" onclick="openCity(event, 'CCForm8')">Checklist - Tablet Compression</button>
+                     <button class="cctablinks" style="display:none;" id="button3" onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
+                     <button class="cctablinks" style="display:none;" id="button4" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
                     </button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Checklist - Capsule
-                    </button>
-
-                     <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Checklist - Liquid/Ointment Dispensing & Manufacturing
-                    </button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Checklist - Liquid/Ointment Packing
+                      <button class="cctablinks" style="display:none;" id="button5" onclick="openCity(event, 'CCForm11')">Checklist - Capsule
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Checklist - Quality Assurance
+                     <button class="cctablinks" style="display:none;" id="button6" onclick="openCity(event, 'CCForm12')">Checklist - Liquid/Ointment Dispensing & Manufacturing
+                    </button>
+                    <button class="cctablinks" style="display:none;" id="button7" onclick="openCity(event, 'CCForm13')">Checklist - Liquid/Ointment Packing
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Checklist - Engineering
+                    <button class="cctablinks"  style="display:none;" id="button8" onclick="openCity(event, 'CCForm14')">Checklist - Quality Assurance
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Checklist - Quality Control
+                    <button class="cctablinks" style="display:none;" id="button9" onclick="openCity(event, 'CCForm15')">Checklist - Engineering
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Checklist - Stores
+                    <button class="cctablinks" style="display:none;" id="button10" onclick="openCity(event, 'CCForm16')">Checklist - Quality Control
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm18')">Checklist - Human Resource
+                    <button class="cctablinks" style="display:none;" id="button11" onclick="openCity(event, 'CCForm17')">Checklist - Stores
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing)
+                    <button class="cctablinks" style="display:none;" id="button12" onclick="openCity(event, 'CCForm18')">Checklist - Human Resource
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Checklist -
+                    <button class="cctablinks" style="display:none;" id="button13" onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing)
+                    </button>
+
+                    <button class="cctablinks" style="display:none;" id="button14" onclick="openCity(event, 'CCForm20')">Checklist -
                         Production (Injection Packing)
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Production (Powder Manufacturing and Packing)
+                    <button class="cctablinks" style="display:none;" id="button15" onclick="openCity(event, 'CCForm21')">Checklist - Production (Powder Manufacturing and Packing)
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Analytical Research and Development
+                    <button class="cctablinks" style="display:none;" id="button16" onclick="openCity(event, 'CCForm22')">Checklist - Analytical Research and Development
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
+                    <button class="cctablinks" style="display:none;" id="button17" onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist -LL / P2P
+                    <button class="cctablinks" style="display:none;" id="button18" onclick="openCity(event, 'CCForm24')">Checklist -LL / P2P
                     </button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
@@ -737,16 +740,180 @@
                         <div class="inner-block-content">
                             <div class="row">
 
-                            <!-- <div class="col-lg-12">
+                            <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="checklists">Checklists</label>
-                                    <select multiple id="checklists" name="checklists[]" onchange="showData()">
-                                        <option value="CCForm11">Checklist - Tablet Dispensing & Granulation</option>
-                                        <option value="CCForm12">Checklist - Tablet Compression</option>
-                                        <option value="CCForm13">Checklist - Tablet Coating</option>
+                                    <select multiple id="checklists" class="abc" name="checklists[]">
+                                        <option value="1">Checklist - Tablet Dispensing & Granulation</option>
+                                        <option value="2">Checklist - Tablet Compression</option>
+                                        <option value="3">Checklist - Tablet Coating</option>
+                                        <option value="4">Checklist - Tablet/Capsule Packing</option>
+                                        <option value="5">Checklist - Capsule</option>
+                                        <option value="6">Checklist - Liquid/Ointment Dispensing & Manufacturing</option>
+                                        <option value="7">Checklist - Liquid/Ointment Packing</option>
+                                        <option value="8">Checklist - Quality Assurance</option>
+                                        <option value="9">Checklist - Engineering</option>
+                                        <option value="10">Checklist - Quality Control</option>
+                                        <option value="11">Checklist - Stores</option>
+                                        <option value="12">Checklist - Human Resource</option>
+                                        <option value="13">Checklist - Production (Injection Dispensing & Manufacturing)</option>
+                                        <option value="14">Checklist - Production (Injection Packing)</option>
+                                        <option value="15">Checklist - Production (Powder Manufacturing and Packing)</option>
+                                        <option value="16">Checklist - Analytical Research and Development</option>
+                                        <option value="17">Checklist - Formulation Research and Development</option>
+                                        <option value="18">Checklist - LL / P2P</option>
                                     </select>
+
                                 </div>
-                            </div> -->
+                            </div>
+
+
+                                    <script>
+
+                                    // const virtualSelectInstance = VirtualSelect.init({
+                                    //         ele: '#checklists'
+                                    //     });
+
+                                        document.querySelector('.abc').addEventListener('change', function() {
+                                            const selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
+
+                                            if (selectedOptions.includes('1')) {
+                                                console.log('print1',selectedOptions);
+                                                var abc = document.getElementById('button1');
+                                                document.getElementById('button1').style.display = 'block';
+                                                // console.log('data',abc);
+                                            } else {
+                                                document.getElementById('button1').style.display = 'none';
+                                                console.log('print1e');
+                                            }
+
+                                            if (selectedOptions.includes('2')) {
+                                                console.log('print2',selectedOptions);
+                                                document.getElementById('button2').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button2').style.display = 'none';
+                                                console.log('print2e');
+                                            }
+                                            if (selectedOptions.includes('3')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button3').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button3').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            if (selectedOptions.includes('4')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button4').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button4').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            if (selectedOptions.includes('5')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button5').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button5').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            if (selectedOptions.includes('6')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button6').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button6').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            if (selectedOptions.includes('7')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button7').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button7').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            if (selectedOptions.includes('8')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button8').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button8').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            if (selectedOptions.includes('9')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button9').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button9').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+
+                                            if (selectedOptions.includes('10')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button10').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button10').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            if (selectedOptions.includes('11')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button11').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button11').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            if (selectedOptions.includes('12')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button12').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button12').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            if (selectedOptions.includes('13')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button13').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button13').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            if (selectedOptions.includes('14')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button14').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button14').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            if (selectedOptions.includes('15')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button15').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button15').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            if (selectedOptions.includes('16')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button16').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button16').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            
+                                            if (selectedOptions.includes('17')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button17').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button17').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                            if (selectedOptions.includes('18')) {
+                                                // console.log('print2',selectedOptions);
+                                                document.getElementById('button18').style.display = 'block';
+                                            } else {
+                                                document.getElementById('button18').style.display = 'none';
+                                                // console.log('print3e');
+                                            }
+                                        });
+
+                                        function openCity(evt, cityName) {
+                                            console.log('Open city:', cityName);
+                                        }
+                                    </script>
 
                                 <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
@@ -30278,7 +30445,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #checklists'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record,'
         });
 
         function openCity(evt, cityName) {
