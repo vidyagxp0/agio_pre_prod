@@ -31,8 +31,8 @@
         header {
             display: none;
         }
-       
-        
+
+
     </style>
     </style>
 
@@ -68,7 +68,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / 
+            {{ Helpers::getDivisionName(session()->get('division')) }} /
             {{-- {{ Helpers::getDivisionName($data->division_id) }} / --}}
             Extension
         </div>
@@ -83,7 +83,7 @@
     ======================================= --}}
     <div id="change-control-fields">
         <div class="container-fluid">
-        
+
             <!-- Tab links -->
             <div class="cctab">
 
@@ -123,7 +123,7 @@
                                 {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"><b>Initiator</b></label>
@@ -148,7 +148,7 @@
                                 <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date">
                             </div>
                         </div>
-                            
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Short Description">Short Description<span
@@ -174,7 +174,7 @@
                                         name="reviewers" placeholder="Select Reviewers"  >
                                         <option value="">-- Select --</option>
                                         @if (!empty($reviewers))
-                                        
+
                                             @foreach ($reviewers as $lan)
                                                 @if(Helpers::checkUserRolesreviewer($lan))
                                                     <option value="{{ $lan->id }}">
@@ -186,7 +186,7 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">QA approval </label>
@@ -206,7 +206,7 @@
                                     </select>
                                 </div>
                             </div>
-                           
+
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Actual Start Date">Current Due Date (Parent)</label>
@@ -218,7 +218,7 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Actual Start Date">Proposed Due Date</label>
@@ -233,7 +233,6 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Short Description"> Description</label>
-                                
                                  <textarea name="description" id="description" cols="30"  ></textarea>
                                 </div>
                                 {{-- @error('short_description')
@@ -243,7 +242,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Short Description">Justification / Reason </label>
-                                
+
                                  <textarea name="justification_reason" id="justification_reason" cols="30"  ></textarea>
                                 </div>
                                 {{-- @error('short_description')
@@ -288,7 +287,7 @@
                               <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30" ></textarea>
                             </div>
                         </div>
-                       
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Guideline Attachment">HOD Attachment  </label>
@@ -323,7 +322,7 @@
                                <textarea name="approver_remarks" id="approver_remarks" cols="30" ></textarea>
                             </div>
                         </div>
-                       
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Guideline Attachment">QA Attachment  </label>

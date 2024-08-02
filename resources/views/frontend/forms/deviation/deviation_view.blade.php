@@ -429,16 +429,12 @@
                         '<td><input type="text" class="Document_Remarks" name="failure_mode_qrms[' + serialNumber + '][initial_rpn]" id="analysisRPNScript"></td>' +
                         '<td> <select name="failure_mode_qrms[' + serialNumber + '][risk_acceptance]" id=""> <option value="n">-- Select --</option><option value="n">N</option> <option> Y </option> </select> </td>' +
                         '<td><input type="text" class="Document_Remarks" name="failure_mode_qrms[' + serialNumber + '][proposed_additional_risk_control]"></td>' +
-
                         '<td> <select name="failure_mode_qrms[' + serialNumber + '][residual_severity]" id="analysisRScriptNew" onchange="calculateRiskAnalysisScriptNew(this)"> <option value="1">-- Select --</option><option value="1">1</option> <option value="2">2</option> <option value="3">3</option> </select> </td>' +
                         '<td> <select name="failure_mode_qrms[' + serialNumber + '][residual_probability]" id="analysisPScriptNew" onchange="calculateRiskAnalysisScriptNew(this)"> <option value="1">-- Select --</option><option value="1">1</option> <option value="2">2</option> <option value="3">3</option> </select> </td>' +
                         '<td> <select name="failure_mode_qrms[' + serialNumber + '][residual_detectability]" id="analysisNScriptNew" onchange="calculateRiskAnalysisScriptNew(this)"> <option value="1">-- Select --</option><option value="1">1</option> <option value="2">2</option> <option value="3">3</option> </select> </td>' +
                         '<td><input type="text" class="Document_Remarks" name="failure_mode_qrms[' + serialNumber + '][residual_rpn]" id="analysisRPNScriptNew"></td>' +
                         '<td> <select name="failure_mode_qrms[' + serialNumber + '][risk_acceptance]" id=""> <option value="">-- Select --</option><option value="n">N</option>   <option value="y">Y</option></select> </td>' +
-
                         '<td><input type="text" class="Document_Remarks" name="failure_mode_qrms[' + serialNumber + '][mitigation_proposal]"></td>' +
-
-
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
 
                         '</tr>';

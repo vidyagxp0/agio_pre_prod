@@ -794,8 +794,6 @@
         console.log('Script working')
 
         $(document).ready(function() {
-
-
             function submitForm() {
 
                 let auditForm = document.getElementById('auditForm');
