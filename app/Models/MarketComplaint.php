@@ -58,11 +58,26 @@ class MarketComplaint extends Model
         'initial_attachment_ca' => 'array',
         'closure_comment_c' => 'array',
         'initial_attachment_c' => 'array',
+        'due_date_gi' => 'date',
+        'complaint_reported_on_gi'=>'date'
     ];
 
 
     public function marketcomplaintrecord(){
       return $this->hasMany(MarketComplaintGrids::class,'');
     }
+    public function product_details()
+    {
+        return $this->hasOne(MarketComplaintGrids::class, 'mc_id');
+    }
+    public function division()
+    {
+      return $this->belongsTo(QMSDivision::class,'division_id');
+    }
 
+public function initiator()
+    {
+        return $this->belongsTo(User::class,'initiator_id');
+    }
+ 
 }

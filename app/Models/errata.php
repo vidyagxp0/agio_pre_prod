@@ -10,6 +10,7 @@ class Errata extends Model
     use HasFactory;
 
 
+
     public function initiator()
     {
         return $this->belongsTo(User::class,'initiator_id');
@@ -25,6 +26,10 @@ class Errata extends Model
         'qa_reviewer',
         'reference',
         'otherFieldsUser'
+    ];
+    protected $casts = [
+        'intiation_date' => 'date',
+        'due_date' => 'date'
     ];
 
    }

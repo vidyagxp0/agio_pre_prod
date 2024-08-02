@@ -13,7 +13,7 @@ select,
 textarea {
     outline: none;
     border: 1px solid grey;
-    padding: 5px 15px;
+    padding: 5px 1px;
     caret-color: #4274da;
 }
 

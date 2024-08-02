@@ -34,6 +34,7 @@ class ErrataController extends Controller
     public function store(Request $request)
     {
 
+
         $data = new errata();
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->division_id = $request->division_id;

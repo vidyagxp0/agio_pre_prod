@@ -9,9 +9,9 @@
 <td>{{$deviations->Deviation_category?$deviations->Deviation_category:'NA'}}</td>
 <td>{{$deviations->audit_type}}</td>
 <td></td>
-<td>{{$deviations->QA_final_approved_on}}</td>
+<td>{{$deviations->QA_final_approved_on ? QA_final_approved_on : 'NA'}}</td>
 <td>{{$deviations->due_date}}</td>
-<td>{{$deviations->QA_final_approved_by}}</td>
+<td>{{$deviations->QA_final_approved_by ? QA_final_approved_by : 'NA' }}</td>
 <td>{{$deviations->status}}</td>
 </tr>
 @empty 

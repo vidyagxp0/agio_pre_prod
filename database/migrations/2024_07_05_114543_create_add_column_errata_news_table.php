@@ -18,7 +18,6 @@ return new class extends Migration
             $table->integer('erratanew_id')->nullable();
             $table->text('department_head_to')->nullable();
             $table->text('document_title')->nullable();
-            // $table->text('custom_value')->nullable();
             $table->text('qa_reviewer')->nullable();
             $table->text('reference')->nullable();
             $table->timestamps();
