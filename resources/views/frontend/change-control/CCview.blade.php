@@ -131,11 +131,6 @@
 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/audit-trial', $data->id) }}"> Audit Trail </a> </button>
 
-                        <!-- @if ($data->stage >= 9)
-                            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/eCheck', $data->id) }}">
-                                    Close Done </a> </button>
-                        @endif -->
-
                         @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
@@ -157,30 +152,23 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-cft-from-QA-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Initial Review Complete
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-modal">
-                                CFT Review Not Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                RA Review Required
-                            </button>
-                        @elseif($data->stage == 4 && (in_array(18, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                RA Review Complete
-                            </button>
-                        @elseif($data->stage == 5 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
-                        @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                RA Review Required
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#opened-state-modal">
                                 Send to Initiator
                             </button>
@@ -193,33 +181,41 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#initalQA-review-modal">
                                 Send to QA Initial Review
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval">
                                 QA Final Review Complete
+                            </button>
+                        @elseif($data->stage == 6 && (in_array(18, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                RA Review Complete
                             </button>
                         @elseif($data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Pre-Approved
-                            </button>
-                        @elseif($data->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Information Required
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Approved
                             </button>
-                        @elseif ($data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#effectiveness-check-modal">
-                                Effectiveness Check
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval">
+                                Rejected
+                            </button>
+                        @elseif ($data->stage == 9 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                                Send For Final Approval
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Info Required
+                            </button>
+                        @elseif ($data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                                Closure Approved
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Info Required
                             </button>
                         @else
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
-
-
                     </div>
 
                 </div>
@@ -247,34 +243,48 @@
                                 <div class="">QA Initial Review</div>
                             @endif
                             @if ($data->stage >= 4)
-                                <div class="active">Pending RA Review</div>
-                            @else
-                                <div class="">Pending RA Review</div>
-                            @endif
-                            @if ($data->stage >= 5)
                                 <div class="active">CFT Review</div>
                             @else
                                 <div class="">CFT Review</div>
                             @endif
-                            @if ($data->stage >= 6)
+                            @if ($data->stage >= 5)
                                 <div class="active">QA Final Review</div>
                             @else
                                 <div class="">QA Final Review</div>
                             @endif
-                            @if ($data->stage >= 7)
-                                <div class="active">QA Head/Manager Designee Pre-Approval</div>
+                            @if ($data->stage >= 6)
+                                <div class="active">Pending RA Review</div>
                             @else
-                                <div class="">QA Head/Manager Designee Pre-Approval</div>
+                                <div class="">Pending RA Review</div>
                             @endif
-                            @if ($data->stage >= 8)
+                            @if ($data->stage >= 7)
                                 <div class="active">QA Head/Manager Designee Approval</div>
                             @else
                                 <div class="">QA Head/Manager Designee Approval</div>
                             @endif
-                            @if ($data->stage >= 9)
-                                <div class="bg-danger">Closed - Done</div>
+
+                            @if ($data->stage >= 8)
+                                <div class="bg-danger" @if($data->stage > 8) style="display: none" @endif>Closed - Rejected</div>
                             @else
-                                <div class="">Closed - Done</div>
+                                <div class="" @if($data->stage > 8) style="display: none" @endif>Closed - Rejected</div>
+                            @endif
+
+                            @if ($data->stage >= 9)
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>Post Implementation</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>Post Implementation</div>
+                            @endif
+
+                            @if ($data->stage >= 10)
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>QA Closure Approval</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>QA Closure Approval</div>
+                            @endif
+
+                            @if ($data->stage >= 11)
+                                <div class="active bg-danger" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
                             @endif
                         </div>
                     @endif
@@ -8520,24 +8530,28 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="group-input">
-                            <label for="minor">
-                                <input type="radio" name="revision" id="minor" value="Extension">
-                                Extension
-                            </label>
-                            <label for="minor">
-                                <input type="radio" name="revision" id="minor" value="Action-Item">
-                                Action Item
-                            </label>
                             @if($data->stage == 3)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="RCA">
                                     RCA
                                 </label>
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="Extension">
+                                    Extension
+                                </label>
                             @endif
-                            @if($data->stage == 6)
+                            @if($data->stage == 5)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Capa">
                                     Capa
+                                </label>
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="Extension">
+                                    Extension
+                                </label>                            
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="Action-Item">
+                                    Action Item
                                 </label>
                             @endif
                         </div>
@@ -8638,8 +8652,8 @@
     </div>
     <!-- /************ Initial QA Modal ***********/ -->
 
-    <!-- /************ CFT from QA Modal ***********/ -->
-    <div class="modal fade" id="send-cft-from-QA-modal">
+    <!-- /************ Sent to QA Head Approval Modal ***********/ -->
+    <div class="modal fade" id="qa-head-approval">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -8647,7 +8661,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('rcms/send-cft-from-QA', $cc_lid) }}" method="POST">
+                <form action="{{ url('rcms/send-qa-approval', $cc_lid) }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -8665,7 +8679,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" class="form-control" name="comments">
+                            <input type="comment" class="form-control" name="comments" required>
                         </div>
                     </div>
 
@@ -8677,7 +8691,48 @@
             </div>
         </div>
     </div>
-    <!-- /************ CFT from QA Modal ***********/ -->
+    <!-- /************ Sent to QA Head Approval Modal ***********/ -->
+
+    <!-- /************ Sent to Post Implementation Modal ***********/ -->
+    <div class="modal fade" id="send-post-implementation">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <form action="{{ url('rcms/send-post-implementation', $cc_lid) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" class="form-control" name="comments" required>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /************ Sent to Post Implementation Modal ***********/ -->
 
 
     <!-- /************ HOD Modal ***********/ -->

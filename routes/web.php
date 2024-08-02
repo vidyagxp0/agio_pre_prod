@@ -558,7 +558,6 @@ Route::get('errata_new', [ErrataController::class, 'index'])->name('errata_new')
 
 // ----------------------Stages----------------------------------------
 
-
 // extensionchild========================
 // Route::view('extension_new', 'frontend.extension.extension_new');
 // Route::view('extension_view', 'frontend.extension.extension_view');
@@ -579,3 +578,5 @@ Route::get('trainer_qualification', [TrainerController::class, 'index'])->name('
 
 //=====================================================================
 // >>>>>>> B-backup
+
+Route::post('RCAChildRoot/{id}', [RootCauseController::class, 'RCAChildRoot'])->name('R_C_A_root_child');

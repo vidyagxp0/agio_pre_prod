@@ -1113,98 +1113,15 @@ class ActionItemController extends Controller
             $lastopenState = ActionItem::find($id);
             $openState = ActionItem::find($id);
             $task = Taskdetails::where('cc_id', $id)->first();
-            if ($changeControl->stage == 1) {
-                // $rules = [
-                //     'action_taken' => 'required|max:255',
-
-                // ];
-                // $customMessages = [
-                //     'action_taken.required' => 'The action taken field is required.',
-
-                // ];
-                // if ($task != null) {
-                //     $validator = Validator::make($task->toArray(), $rules, $customMessages);
-                    // if ($validator->fails()) {
-                    //     $errorMessages = implode('<br>', $validator->errors()->all());
-                    //     session()->put('errorMessages', $errorMessages);
-                    //     return back();
-                    // } else {
-                //         $changeControl->stage = '2';
-                //         $changeControl->status = 'Work In Progress';
-                //         $changeControl->update();
-                //         $history = new CCStageHistory();
-                //         $history->type = "Action-Item";
-                //         $history->doc_id = $id;
-                //         $history->user_id = Auth::user()->id;
-                //         $history->user_name = Auth::user()->name;
-                //         $history->stage_id = $changeControl->stage;
-                //         $history->status = $changeControl->status;
-                //         $history->save();
-                //         toastr()->success('Document Sent');
-
-                //         return back();
-                    
-                // } else {
-                    $changeControl->stage = '2';
-                    $changeControl->status = 'HOD Review';
-                    $changeControl->submitted_by = Auth::user()->name;
-                    $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
-                    $changeControl->submitted_comment = $request->comment;
-                   
-                        $history = new ActionItemHistory;
-                        $history->action = "submit";
-                        $history->cc_id = $id;
-                        $history->activity_type = 'Activity Log';
-                        $history->current = $changeControl->submitted_by;
-                        $history->comment = $request->comment;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastopenState->status;
-                        $history->stage = "HOD Review";
-                       
-                    $changeControl->update();
-                    $history->change_to = "HOD Review";
-                    $history->change_from = $lastopenState->status;
-                    $history->save();
-                    // $history = new CCStageHistory();
-                    // $history->type = "Action-Item";
-                    // $history->doc_id = $id;
-                    // $history->user_id = Auth::user()->id;
-                    // $history->user_name = Auth::user()->name;
-                    // $history->stage_id = $changeControl->stage;
-                    // $history->status = $lastopenState->status;
-                  
-                //     $list = Helpers::getActionOwnerUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $openState->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                          
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $openState],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Submitted By ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      } 
-                //   }
-                    toastr()->success('Document Sent');
-
-                    return back();
-                }
+         
             
-            if ($changeControl->stage == 2) {
-                $changeControl->stage = '3';
+            if ($changeControl->stage == 1) {
+                $changeControl->stage = '2';
                 $changeControl->status = 'Acknowledge';
-                $changeControl->work_completion_by = Auth::user()->name;
-                $changeControl->work_completion_on = Carbon::now()->format('d-M-Y');
-                $changeControl->work_completion_comment = $request->comment;
+                $changeControl->acknowledgement_by = Auth::user()->name;
+                $changeControl->acknowledgement_on = Carbon::now()->format('d-M-Y');
+                $changeControl->acknowledgement_comment = $request->comment;
                 
-
                       $history = new ActionItemHistory;
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -1255,16 +1172,52 @@ class ActionItemController extends Controller
                 return back();
             }
 
-            if ($changeControl->stage == 3) {
-                $changeControl->stage = '4';
+            if ($changeControl->stage == 2) {
+                $changeControl->stage = '3';
                 $changeControl->status = 'Work Completion';
-                $changeControl->acknowledgement_by = Auth::user()->name;
-                $changeControl->acknowledgement_on = Carbon::now()->format('d-M-Y');
+                $changeControl->work_completion_by = Auth::user()->name;
+                $changeControl->work_completion_on = Carbon::now()->format('d-M-Y');
                 $changeControl->acknowledgement_comment = $request->comment;
                 $history = new ActionItemHistory;
                 $history->action = "Acknowledgement Complete";
 
                      
+                        $history->cc_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = $lastopenState->completed_by;
+                        $history->current = $changeControl->completed_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastopenState->status;
+                        $history->stage = "Work Completion";
+                        $history->save();
+                $changeControl->update();
+                // $history = new CCStageHistory();
+                //  $history->type = "Action-Item";
+                // $history->doc_id = $id;
+                // $history->user_id = Auth::user()->id;
+                // $history->user_name = Auth::user()->name;
+                // $history->stage_id = $changeControl->stage;
+                // $history->status = $lastopenState->status;
+                $history->change_to = "Work Completion";
+                $history->change_from = $lastopenState->status;
+                $history->save();
+            //   
+                toastr()->success('Document Sent');
+
+                return back();
+            }
+            if ($changeControl->stage == 3) {
+                $changeControl->stage = '4';
+                $changeControl->status = 'QA Verification';
+                $changeControl->qa_varification_by = Auth::user()->name;
+                $changeControl->qa_varification_on = Carbon::now()->format('d-M-Y');
+                $changeControl->qa_varification_comment = $request->comment;
+                $history = new ActionItemHistory;
+                $history->action = "Acknowledgement Complete";
+
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
                         $history->previous = $lastopenState->completed_by;
@@ -1420,6 +1373,21 @@ public function actionStageCancel(Request $request, $id)
             return redirect('rcms/actionItem/'.$id);
         }
 
+  
+    } else {
+        toastr()->error('E-signature Not match');
+        return back();
+    }
+}
+
+public function actionmoreinfo(Request $request, $id)
+{
+    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        $changeControl = ActionItem::find($id);
+        $lastopenState = ActionItem::find($id);
+        $openState = ActionItem::find($id);
+
+
         if ($changeControl->stage == 2) {
             $changeControl->stage = "1";
             $changeControl->status = "Opened";
@@ -1472,10 +1440,10 @@ public function actionStageCancel(Request $request, $id)
         }
         if ($changeControl->stage == 3) {
             $changeControl->stage = "2";
-            $changeControl->status = "HOD Review";
-            $changeControl->more_information_required_by = (string)Auth::user()->name;
-            $changeControl->more_information_required_on = Carbon::now()->format('d-M-Y');
-            $changeControl->more_info_requ_comment =$request->comment;
+            $changeControl->status = "Acknowledgement";
+            $changeControl->more_Acknowledgement_by = (string)Auth::user()->name;
+            $changeControl->more_Acknowledgement_on = Carbon::now()->format('d-M-Y');
+            $changeControl->more_Acknowledgement_comment =$request->comment;
             $history = new ActionItemHistory;
             $history->action = "More Information Required";
             $history->cc_id = $id;
@@ -1486,7 +1454,7 @@ public function actionStageCancel(Request $request, $id)
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->stage = "HOD Review";
+            $history->stage = "Acknowledgement";
             $history->save();
             $changeControl->update();
             // $history = new CCStageHistory();
@@ -1505,10 +1473,10 @@ public function actionStageCancel(Request $request, $id)
         }
         if ($changeControl->stage == 4) {
             $changeControl->stage = "3";
-            $changeControl->status = "Acknowledge";
-            $changeControl->more_information_required_by = (string)Auth::user()->name;
-            $changeControl->more_information_required_on = Carbon::now()->format('d-M-Y');
-            $changeControl->more_info_requ_comment =$request->comment;
+            $changeControl->status = "work Completion";
+            $changeControl->more_work_completion_by = (string)Auth::user()->name;
+            $changeControl->more_work_completion_on = Carbon::now()->format('d-M-Y');
+            $changeControl->more_work_completion_comment =$request->comment;
             $history = new ActionItemHistory;
             $history->action = "More Information Required";
             $history->cc_id = $id;
@@ -1519,7 +1487,7 @@ public function actionStageCancel(Request $request, $id)
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->stage = "Acknowledge";
+            $history->stage = "work Completion";
             $history->save();
             $changeControl->update();
             // $history = new CCStageHistory();
@@ -1537,58 +1505,6 @@ public function actionStageCancel(Request $request, $id)
             return redirect('rcms/actionItem/'.$id);
         }
 
-// ==============================cancel steg =================
-        if ($changeControl->stage == 2) {
-            $changeControl->stage = "0";
-            $changeControl->status = "Closed-Cancelled";
-            $changeControl->cancelled_by = Auth::user()->name;
-            $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-            $changeControl->cancelled_comment =$request->comment; 
-            $history = new ActionItemHistory;
-            $history->action = "Cancel";
-            $history->cc_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->current = $changeControl->cancelled_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastopenState->status;
-            $history->stage = "Cancelled";
-            $history->save();
-            $changeControl->update();
-            // $history = new CCStageHistory();
-            // $history->type = "Action Item";
-            // $history->doc_id = $id;
-            // $history->user_id = Auth::user()->id;
-            // $history->user_name = Auth::user()->name;
-            // $history->stage_id = $changeControl->stage;
-            // $history->status = "Cancelled";
-            $history->change_to = "Cancelled";
-            $history->change_from = $lastopenState->status;
-            $history->save();
-            // $list = Helpers::getActionOwnerUserList();
-            //         foreach ($list as $u) {
-            //             if($u->q_m_s_divisions_id == $openState->division_id){
-            //                 $email = Helpers::getInitiatorEmail($u->user_id);
-            //                  if ($email !== null) {
-                          
-            //                   Mail::send(
-            //                       'mail.view-mail',
-            //                        ['data' => $openState],
-            //                     function ($message) use ($email) {
-            //                         $message->to($email)
-            //                             ->subject("Document is Cancel By ".Auth::user()->name);
-            //                     }
-            //                   );
-            //                 }
-            //          } 
-            //       }
-            toastr()->success('Document Sent');
-            return redirect('rcms/actionItem/'.$id);
-        }
-
-       
     } else {
         toastr()->error('E-signature Not match');
         return back();
