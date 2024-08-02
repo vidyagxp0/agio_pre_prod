@@ -7165,7 +7165,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 32,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7327,7 +7327,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 32,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7487,7 +7487,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 60,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7641,7 +7641,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 60,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
