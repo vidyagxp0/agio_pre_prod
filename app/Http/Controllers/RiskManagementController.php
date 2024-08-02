@@ -98,7 +98,28 @@ class RiskManagementController extends Controller
         $data->estimated_cost = $request->estimated_cost;
         $data->currency = $request->currency;
         $data->root_cause_methodology = is_array($request->root_cause_methodology) ? implode(',', $request->root_cause_methodology) : '';
-       // $data->root_cause_methodology = implode(',', $request->root_cause_methodology);
+       
+        $data->risk_level = $request->input('risk_level');
+        $data->risk_level_2 = $request->input('risk_level_2');
+        $data->purpose = $request->input('purpose');
+        $data->scope = $request->input('scope');
+        $data->reason_for_revision = $request->input('reason_for_revision');
+        $data->Brief_description = $request->input('Brief_description');
+        $data->document_used_risk = $request->input('document_used_risk');
+        $data->risk_level3 = $request->input('risk_level3');
+
+       
+        // $data->risk_level = serialize($request->input('risk_level'));
+        // $data->risk_level_2 = serialize($request->input('risk_level_2'));
+        // $data->purpose = serialize($request->input('purpose'));
+        // $data->scope = serialize($request->input('scope'));
+        // $data->reason_for_revision = serialize($request->input('reason_for_revision'));
+        // $data->Brief_description = serialize($request->input('Brief_description'));
+        // $data->document_used_risk = serialize($request->input('document_used_risk'));
+        // $data->risk_level3 = serialize($request->input('risk_level3'));
+
+       
+        // $data->root_cause_methodology = implode(',', $request->root_cause_methodology);
         // $data->measurement = json_encode($request->measurement);
         // $data->materials = json_encode($request->materials);
         // $data->methods = json_encode($request->methods);
@@ -165,7 +186,23 @@ class RiskManagementController extends Controller
         //$data->occurance = $request->occurance;
        // $data->refrence_record =  implode(',', $request->refrence_record);
        $data->refrence_record = is_array($request->refrence_record) ? implode(',', $request->refrence_record) : '';
+      
+      
+      
+      
+       if (!empty($request->risk_attachment)) {
+        $files = [];
+        if ($request->hasfile('risk_attachment')) {
+            foreach ($request->file('risk_attachment') as $file) {
+                $name = $request->name . 'risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
 
+
+        $data->risk_attachment = json_encode($files);
+    }
 
 
         if (!empty($request->reference)) {
@@ -533,11 +570,101 @@ class RiskManagementController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
             $history->change_to =   "Opened";
-         $history->change_from = "Initiation";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
          
             $history->save();
         }
+
+
+        if (!empty($data->purpose)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Purpose';
+            $history->previous = "Null";
+            $history->current = $data->purpose;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
+
+
+        if (!empty($data->scope)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Scope';
+            $history->previous = "Null";
+            $history->current = $data->scope;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
+        if (!empty($data->reason_for_revision)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Reason for Revision';
+            $history->previous = "Null";
+            $history->current = $data->reason_for_revision;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
+        if (!empty($data->Brief_description)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Brief Description / Procedure';
+            $history->previous = "Null";
+            $history->current = $data->Brief_description;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
+        if (!empty($data->document_used_risk)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Documents Used for Risk Management';
+            $history->previous = "Null";
+            $history->current = $data->document_used_risk;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
+
 
         if (!empty($data->open_date)) {
             $history = new RiskAuditTrail();
@@ -1772,6 +1899,19 @@ class RiskManagementController extends Controller
        $data->departments2 = is_array($request->departments2) ? implode(',', $request->departments2) : '';
  
        
+       $data->risk_level = $request->input('risk_level');
+       $data->risk_level_2 = $request->input('risk_level_2');
+       $data->purpose = $request->input('purpose');
+       $data->scope = $request->input('scope');
+       $data->reason_for_revision = $request->input('reason_for_revision');
+       $data->Brief_description = $request->input('Brief_description');
+       $data->document_used_risk = $request->input('document_used_risk');
+       $data->risk_level3 = $request->input('risk_level3');
+
+      
+
+
+
        $data->site_name = $request->site_name;
         $data->building = $request->building;
         $data->floor = $request->floor;
@@ -1841,6 +1981,21 @@ class RiskManagementController extends Controller
 
             $data->reference = json_encode($files);
         }
+
+
+        if (!empty($request->risk_attachment)) {
+            $files = [];
+            if ($request->hasfile('risk_attachment')) {
+                foreach ($request->file('risk_attachment') as $file) {
+                    $name = $request->name . 'risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $data->risk_attachment = json_encode($files);
+        }
         // return $data;
         $data->update();
              // -----------grid=------
@@ -1848,59 +2003,29 @@ class RiskManagementController extends Controller
             //  $data1->risk_id = $data->id;
             //  $data1->type = "effect_analysis";
         
-             $data1 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','effect_analysis')->first();
             
-             if (!empty($request->risk_factor)) {
-                 $data1->risk_factor = serialize($request->risk_factor);
-             }
-             if (!empty($request->risk_element)) {
-                 $data1->risk_element = serialize($request->risk_element);
-             }
-             if (!empty($request->problem_cause)) {
-                 $data1->problem_cause = serialize($request->problem_cause);
-             }
-             if (!empty($request->existing_risk_control)) {
-                 $data1->existing_risk_control = serialize($request->existing_risk_control);
-             }
-             if (!empty($request->initial_severity)) {
-                 $data1->initial_severity = serialize($request->initial_severity);
-             }
-             if (!empty($request->initial_detectability)) {
-                 $data1->initial_detectability = serialize($request->initial_detectability);
-             }
-             if (!empty($request->initial_probability)) {
-                 $data1->initial_probability = serialize($request->initial_probability);
-             }
-             if (!empty($request->initial_rpn)) {
-                 $data1->initial_rpn = serialize($request->initial_rpn);
-             }
-             if (!empty($request->risk_acceptance)) {
-                 $data1->risk_acceptance = serialize($request->risk_acceptance);
-             }
-             if (!empty($request->risk_control_measure)) {
-                 $data1->risk_control_measure = serialize($request->risk_control_measure);
-             }
-             if (!empty($request->residual_severity)) {
-                 $data1->residual_severity = serialize($request->residual_severity);
-             }
-             if (!empty($request->residual_probability)) {
-                 $data1->residual_probability = serialize($request->residual_probability);
-             }
-             if (!empty($request->residual_detectability)) {
-                 $data1->residual_detectability = serialize($request->residual_detectability);
-             }
-             if (!empty($request->residual_rpn)) {
-                 $data1->residual_rpn = serialize($request->residual_rpn);
-             }
-             if (!empty($request->risk_acceptance2)) {
-                 $data1->risk_acceptance2 = serialize($request->risk_acceptance2);
-             }
-             if (!empty($request->mitigation_proposal)) {
-                 $data1->mitigation_proposal = serialize($request->mitigation_proposal);
-             }
-     
+             $data1 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'effect_analysis')->first();
+
+             // Serialize and update the data, ensuring that we always update the fields
+             $data1->risk_factor = serialize($request->risk_factor ?? []);
+             $data1->risk_element = serialize($request->risk_element ?? []);
+             $data1->problem_cause = serialize($request->problem_cause ?? []);
+             $data1->existing_risk_control = serialize($request->existing_risk_control ?? []);
+             $data1->initial_severity = serialize($request->initial_severity ?? []);
+             $data1->initial_detectability = serialize($request->initial_detectability ?? []);
+             $data1->initial_probability = serialize($request->initial_probability ?? []);
+             $data1->initial_rpn = serialize($request->initial_rpn ?? []);
+             $data1->risk_control_measure = serialize($request->risk_control_measure ?? []);
+             $data1->residual_severity = serialize($request->residual_severity ?? []);
+             $data1->residual_probability = serialize($request->residual_probability ?? []);
+             $data1->residual_detectability = serialize($request->residual_detectability ?? []);
+             $data1->residual_rpn = serialize($request->residual_rpn ?? []);
+             $data1->risk_acceptance = serialize($request->risk_acceptance ?? []);
+             $data1->risk_acceptance2 = serialize($request->risk_acceptance2 ?? []);
+             $data1->mitigation_proposal = serialize($request->mitigation_proposal ?? []);
+             
              $data1->save();
-     
+             
              // ---------------------------------------
             //  $data2 = new RiskAssesmentGrid();
             //  $data2->risk_id = $data->id;
@@ -2089,6 +2214,137 @@ class RiskManagementController extends Controller
             
  
 
+
+            if ($lastDocument->purpose != $data->purpose) {
+                $history = new RiskAuditTrail();
+
+        
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Purpose';
+            $history->previous = $lastDocument->purpose;
+            $history->current = $data->purpose;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->purpose) || $lastDocument->purpose === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          //  dd($history);
+            $history->save();
+            }
+
+
+            if ($lastDocument->scope != $data->scope) {
+                $history = new RiskAuditTrail();
+
+        
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Scope';
+            $history->previous = $lastDocument->scope;
+            $history->current = $data->scope;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->scope) || $lastDocument->scope === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          //  dd($history);
+            $history->save();
+            }
+
+
+
+            if ($lastDocument->reason_for_revision != $data->reason_for_revision) {
+                $history = new RiskAuditTrail();
+
+        
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Reason for Revision';
+            $history->previous = $lastDocument->reason_for_revision;
+            $history->current = $data->reason_for_revision;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->reason_for_revision) || $lastDocument->reason_for_revision === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          //  dd($history);
+            $history->save();
+            }
+
+
+
+            if ($lastDocument->Brief_description != $data->Brief_description) {
+                $history = new RiskAuditTrail();
+
+        
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Brief Description / Procedure';
+            $history->previous = $lastDocument->Brief_description;
+            $history->current = $data->Brief_description;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->Brief_description) || $lastDocument->Brief_description === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          //  dd($history);
+            $history->save();
+            }
+
+            if ($lastDocument->document_used_risk != $data->document_used_risk) {
+                $history = new RiskAuditTrail();
+
+        
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Documents Used for Risk Management';
+            $history->previous = $lastDocument->document_used_risk;
+            $history->current = $data->document_used_risk;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->document_used_risk) || $lastDocument->document_used_risk === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          //  dd($history);
+            $history->save();
+            }
+
         if ($lastDocument->open_date != $data->open_date || !empty($request->open_date_comment)) {
 
             $history = new RiskAuditTrail();
@@ -2111,7 +2367,8 @@ class RiskManagementController extends Controller
            
             $history->save();
         }
-        if ((!empty($data['severity2_level']) && $lastDocument->severity2_level != $data['severity2_level']) || !empty($request->comment)) {
+      
+          if ($lastDocument->severity2_level != $data->severity2_level || !empty($request->comment)) {
 
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
@@ -3107,14 +3364,14 @@ class RiskManagementController extends Controller
 
 
 
-        if ($lastDocument->detection2 != $data->detection2 || !empty($request->detection2)) {
+        if ($lastDocument->detection2 != $data->detection2 || !empty($request->comment)) {
 
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Residual Detection';
             $history->previous = $lastDocument->detection2;
             $history->current = $data->detection2;
-            $history->comment = $request->detection2;
+            $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3131,14 +3388,14 @@ class RiskManagementController extends Controller
         }
 
 
-        if ($lastDocument->rpn2 != $data->rpn2 || !empty($request->rpn2)) {
+        if ($lastDocument->rpn2 != $data->rpn2 || !empty($request->comment)) {
 
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Residual RPN';
             $history->previous = $lastDocument->rpn2;
             $history->current = $data->rpn2;
-            $history->comment = $request->rpn2;
+            $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4310,17 +4567,19 @@ class RiskManagementController extends Controller
         $data = RiskManagement::find($id);
        // dd($data);
         if (!empty($data)) {
-
+            $users = User::all();
             $riskgrdfishbone = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','fishbone')->first();
             $failure_mode = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','effect_analysis')->first();
             $riskgrdwhy_chart = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','why_chart')->first();
             $riskgrdwhat_who_where = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','what_who_where')->first();
-
+            $action_plan = RiskAssesmentGrid::where('risk_id',$id)->where('type',"Action_Plan")->first();
+            $mitigation = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','Mitigation_Plan_Details')->first();
+         
             // dd($riskgrdwhat_who_where);
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','riskgrdfishbone','riskgrdwhy_chart','riskgrdwhat_who_where','failure_mode'))
+            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','riskgrdfishbone','riskgrdwhy_chart','riskgrdwhat_who_where','failure_mode','action_plan','users','mitigation'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

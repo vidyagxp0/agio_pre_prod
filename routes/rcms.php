@@ -422,6 +422,10 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('launch-extension-investigation/{id}', [IncidentController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
 
             /********************* Incident Routes Ends *******************/
+            Route::post('send-qa-approval/{id}', [CCController::class, 'sentToQAHeadApproval'])->name('send-qa-approval');
+            Route::post('send-post-implementation/{id}', [CCController::class, 'sentoPostImplementation'])->name('send-post-implementation');
+            Route::post('moreinfoState_actionitem/{id}', [ActionItemController::class, 'actionmoreinfo']);
+
         }
     );
 });
