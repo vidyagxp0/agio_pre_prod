@@ -1604,35 +1604,12 @@ class DeviationController extends Controller
 
             $Cft = DeviationCft::withoutTrashed()->where('deviation_id', $id)->first();
             if($Cft && $deviation->stage == 4 ){
-                $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
-                $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
 
                 $Cft->Production_person = $request->Production_person == null ? $Cft->Production_person : $request->Production_person;
                 $Cft->Production_Review = $request->Production_Review == null ? $Cft->Production_Review : $request->Production_Review;
 
                 $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
                 $Cft->Warehouse_notification = $request->Warehouse_notification == null ? $Cft->Warehouse_notification : $request->Warehouse_notification;
-                
-                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
-                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
-
-                $Cft->Store_person = $request->Store_person == null ? $Cft->Store_person : $request->Store_person;
-                $Cft->Store_Review = $request->Store_Review == null ? $Cft->Store_Review : $request->Store_Review;
-
-                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person == null ? $Cft->ResearchDevelopment_person : $request->ResearchDevelopment_person;
-                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review == null ? $Cft->ResearchDevelopment_Review : $request->ResearchDevelopment_Review;
-
-                $Cft->Microbiology_person = $request->Microbiology_person == null ? $Cft->Microbiology_person : $request->Microbiology_person;
-                $Cft->Microbiology_Review = $request->Microbiology_Review == null ? $Cft->Microbiology_Review : $request->Microbiology_Review;
-
-                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person == null ? $Cft->RegulatoryAffair_person : $request->RegulatoryAffair_person;
-                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review == null ? $Cft->RegulatoryAffair_Review : $request->RegulatoryAffair_Review;
-
-                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person == null ? $Cft->CorporateQualityAssurance_person : $request->CorporateQualityAssurance_person;
-                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review == null ? $Cft->CorporateQualityAssurance_Review : $request->CorporateQualityAssurance_Review;
-
-                $Cft->ContractGiver_person = $request->ContractGiver_person == null ? $Cft->ContractGiver_person : $request->ContractGiver_person;
-                $Cft->ContractGiver_Review = $request->ContractGiver_Review == null ? $Cft->ContractGiver_Review : $request->ContractGiver_Review;
 
                 $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
                 $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
@@ -1642,6 +1619,15 @@ class DeviationController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
+
+                $Cft->Analytical_Development_review = $request->Analytical_Development_review == null ? $Cft->Analytical_Development_review : $request->Analytical_Development_review;
+                $Cft->Analytical_Development_person = $request->Analytical_Development_person == null ? $Cft->Analytical_Development_person : $request->Analytical_Development_person;
+
+                $Cft->Kilo_Lab_review = $request->Kilo_Lab_review == null ? $Cft->Kilo_Lab_review : $request->Kilo_Lab_review;
+                $Cft->Kilo_Lab_person = $request->Kilo_Lab_person == null ? $Cft->Kilo_Lab_person : $request->Kilo_Lab_person;
+
+                $Cft->Technology_transfer_review = $request->Technology_transfer_review == null ? $Cft->Technology_transfer_review : $request->Technology_transfer_review;
+                $Cft->Technology_transfer_person = $request->Technology_transfer_person == null ? $Cft->Technology_transfer_person : $request->Technology_transfer_person;
                 
                 $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
@@ -1651,6 +1637,9 @@ class DeviationController extends Controller
                 
                 $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
+                
+                $Cft->Project_management_review = $request->Project_management_review == null ? $Cft->Project_management_review : $request->Project_management_review;
+                $Cft->Project_management_person = $request->Project_management_person == null ? $Cft->Project_management_person : $request->Project_management_person;
                 
                 $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
@@ -1674,35 +1663,12 @@ class DeviationController extends Controller
 
             }
             else{
-                $Cft->Warehouse_notification = $request->Warehouse_notification;
-                $Cft->Warehouse_review = $request->Warehouse_review;
 
                 $Cft->Production_Review = $request->Production_Review;
                 $Cft->Production_person = $request->Production_person;
 
-                $Cft->Production_Injection_Review = $request->Production_Injection_Review;
-                $Cft->Production_Injection_Person = $request->Production_Injection_Person;
-
-                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
-                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
-
-                $Cft->Store_person = $request->Store_person;
-                $Cft->Store_Review = $request->Store_Review;
-
-                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person;
-                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review;
-
-                $Cft->Microbiology_person = $request->Microbiology_person;
-                $Cft->Microbiology_Review = $request->Microbiology_Review;
-
-                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person;
-                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
-
-                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person;
-                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
-
-                $Cft->ContractGiver_person = $request->ContractGiver_person;
-                $Cft->ContractGiver_Review = $request->ContractGiver_Review;
+                $Cft->Warehouse_notification = $request->Warehouse_notification;
+                $Cft->Warehouse_review = $request->Warehouse_review;
 
                 $Cft->Quality_review = $request->Quality_review;
                 $Cft->Quality_Control_Person = $request->Quality_Control_Person;
@@ -1712,18 +1678,27 @@ class DeviationController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person;
-                
+
+                $Cft->Analytical_Development_review = $request->Analytical_Development_review;
+                $Cft->Analytical_Development_person = $request->Analytical_Development_person;
+
+                $Cft->Kilo_Lab_review = $request->Kilo_Lab_review;
+                $Cft->Kilo_Lab_person = $request->Kilo_Lab_person;
+
+                $Cft->Technology_transfer_review = $request->Technology_transfer_review;
+                $Cft->Technology_transfer_person = $request->Technology_transfer_person;
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
 
                 $Cft->Human_Resource_review = $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person;
 
-                $Cft->Project_management_review = $request->Project_management_review;
-                $Cft->Project_management_person = $request->Project_management_person;
-                
                 $Cft->Information_Technology_review = $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person;
+
+                $Cft->Project_management_review = $request->Project_management_review;
+                $Cft->Project_management_person = $request->Project_management_person;
                 
                 $Cft->Other1_review = $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person;
@@ -1745,37 +1720,12 @@ class DeviationController extends Controller
                 $Cft->Other5_person = $request->Other5_person;
                 $Cft->Other5_Department_person = $request->Other5_Department_person;
             }
-            $Cft->Warehouse_feedback = $request->Warehouse_feedback;
-            $Cft->Warehouse_assessment = $request->Warehouse_assessment;
+
             $Cft->Production_feedback = $request->Production_feedback;
             $Cft->Production_assessment = $request->Production_assessment;
 
-            $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
-            $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
-
-            $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
-            $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
-
-            $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
-            $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
-
-            $Cft->Store_feedback = $request->Store_feedback;
-            $Cft->Store_assessment = $request->Store_assessment;
-
-            $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
-            $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
-
-            $Cft->Microbiology_feedback = $request->Microbiology_feedback;
-            $Cft->Microbiology_assessment = $request->Microbiology_assessment;
-
-            $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
-            $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
-
-            $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
-            $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
-
-            $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
-            $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
+            $Cft->Warehouse_feedback = $request->Warehouse_feedback;
+            $Cft->Warehouse_assessment = $request->Warehouse_assessment;
 
             $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
             $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
@@ -1786,6 +1736,15 @@ class DeviationController extends Controller
             $Cft->Engineering_assessment = $request->Engineering_assessment;
             $Cft->Engineering_feedback = $request->Engineering_feedback;
             
+            $Cft->Analytical_Development_assessment = $request->Analytical_Development_assessment;
+            $Cft->Analytical_Development_feedback = $request->Analytical_Development_feedback;
+
+            $Cft->Kilo_Lab_feedback = $request->Kilo_Lab_feedback;
+            $Cft->Kilo_Lab_assessment = $request->Kilo_Lab_assessment;
+
+            $Cft->Technology_transfer_feedback = $request->Technology_transfer_feedback;
+            $Cft->Technology_transfer_assessment = $request->Technology_transfer_assessment;
+
             $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
             $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
 
@@ -1794,7 +1753,10 @@ class DeviationController extends Controller
 
             $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
             $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-            
+
+            $Cft->Project_management_feedback = $request->Project_management_feedback;
+            $Cft->Project_management_assessment = $request->Project_management_assessment;
+
             $Cft->Other1_assessment = $request->Other1_assessment;
             $Cft->Other1_feedback = $request->Other1_feedback;
 
@@ -1811,17 +1773,7 @@ class DeviationController extends Controller
             $Cft->Other5_feedback = $request->Other5_feedback;
 
 
-            if (!empty ($request->RA_attachment)) {
-                $files = [];
-                if ($request->hasfile('RA_attachment')) {
-                    foreach ($request->file('RA_attachment') as $file) {
-                        $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->RA_attachment = json_encode($files);
-            }
+
             if (!empty ($request->Quality_Assurance_attachment)) {
                 $files = [];
                 if ($request->hasfile('Quality_Assurance_attachment')) {
@@ -6256,88 +6208,72 @@ class DeviationController extends Controller
                     foreach ($columns as $index => $column) {
                         $value = $cftUsers->$column;
                         if($index == 0 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->production_by = Auth::user()->name;
+                            $updateCFT->production_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 1 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Warehouse_by = Auth::user()->name;
+                            $updateCFT->Warehouse_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 2 && $cftUsers->$column == Auth::user()->id){
                             $updateCFT->Quality_Control_by = Auth::user()->name;
                             $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
                         }
-                        if($index == 1 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 3 && $cftUsers->$column == Auth::user()->id){
                             $updateCFT->QualityAssurance_by = Auth::user()->name;
                             $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d');
                         }
-                        if($index == 2 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 4 && $cftUsers->$column == Auth::user()->id){
                             $updateCFT->Engineering_by = Auth::user()->name;
                             $updateCFT->Engineering_on = Carbon::now()->format('Y-m-d');
                         }
-                        if($index == 3 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 5 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Analytical_Development_by = Auth::user()->name;
+                            $updateCFT->Analytical_Development_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 6 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Kilo_Lab_attachment_by = Auth::user()->name;
+                            $updateCFT->Kilo_Lab_attachment_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 7 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Technology_transfer_by = Auth::user()->name;
+                            $updateCFT->Technology_transfer_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 8 && $cftUsers->$column == Auth::user()->id){
                             $updateCFT->Environment_Health_Safety_by = Auth::user()->name;
                             $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
                         }
-                        if($index == 4 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 9 && $cftUsers->$column == Auth::user()->id){
                             $updateCFT->Human_Resource_by = Auth::user()->name;
                             $updateCFT->Human_Resource_on = Carbon::now()->format('Y-m-d');
                         }
-                        if($index == 5 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 10 && $cftUsers->$column == Auth::user()->id){
                             $updateCFT->Information_Technology_by = Auth::user()->name;
                             $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
                         }
-                        if($index == 6 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 11 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Project_management_by = Auth::user()->name;
+                            $updateCFT->Project_management_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 12 && $cftUsers->$column == Auth::user()->id){
                             $updateCFT->Other1_by = Auth::user()->name;
                             $updateCFT->Other1_on = Carbon::now()->format('Y-m-d');
                         }
-                        if($index == 7 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 13 && $cftUsers->$column == Auth::user()->id){
                             $updateCFT->Other2_by = Auth::user()->name;
                             $updateCFT->Other2_on = Carbon::now()->format('Y-m-d');
                         }
-                        if($index == 8 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 14 && $cftUsers->$column == Auth::user()->id){
                             $updateCFT->Other3_by = Auth::user()->name;
                             $updateCFT->Other3_on = Carbon::now()->format('Y-m-d');
                         }
-                        if($index == 9 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 15 && $cftUsers->$column == Auth::user()->id){
                             $updateCFT->Other4_by = Auth::user()->name;
                             $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
                         }
-                        if($index == 10 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 16 && $cftUsers->$column == Auth::user()->id){
                             $updateCFT->Other5_by = Auth::user()->name;
                             $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
-                        }
-                        if($index == 11 && $cftUsers->$column == Auth::user()->id){
-                            $updateCFT->RA_by = Auth::user()->name;
-                            $updateCFT->RA_on = Carbon::now()->format('Y-m-d');
-                        }
-                        if($index == 12 && $cftUsers->$column == Auth::user()->id){
-                            $updateCFT->Production_Table_By = Auth::user()->name;
-                            $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
-                        }
-                        if($index == 13 && $cftUsers->$column == Auth::user()->id){
-                            $updateCFT->ProductionLiquid_by = Auth::user()->name;
-                            $updateCFT->ProductionLiquid_on = Carbon::now()->format('Y-m-d');
-                        }
-                        if($index == 14 && $cftUsers->$column == Auth::user()->id){
-                            $updateCFT->Production_Injection_By = Auth::user()->name;
-                            $updateCFT->Production_Injection_On = Carbon::now()->format('Y-m-d');
-                        }
-                        if($index == 15 && $cftUsers->$column == Auth::user()->id){
-                            $updateCFT->Store_by = Auth::user()->name;
-                            $updateCFT->Store_on = Carbon::now()->format('Y-m-d');
-                        }
-                        if($index == 16 && $cftUsers->$column == Auth::user()->id){
-                            $updateCFT->ResearchDevelopment_by = Auth::user()->name;
-                            $updateCFT->ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
-                        }
-                        if($index == 17 && $cftUsers->$column == Auth::user()->id){
-                            $updateCFT->Microbiology_by = Auth::user()->name;
-                            $updateCFT->Microbiology_on = Carbon::now()->format('Y-m-d');
-                        }
-                        if($index == 18 && $cftUsers->$column == Auth::user()->id){
-                            $updateCFT->RegulatoryAffair_by = Auth::user()->name;
-                            $updateCFT->RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
-                        }
-                        if($index == 19 && $cftUsers->$column == Auth::user()->id){
-                            $updateCFT->CorporateQualityAssurance_by = Auth::user()->name;
-                            $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
-                        }
-                        if($index == 20 && $cftUsers->$column == Auth::user()->id){
-                            $updateCFT->ContractGiver_by = Auth::user()->name;
-                            $updateCFT->ContractGiver_by = Carbon::now()->format('Y-m-d');
                         }
                         $updateCFT->update();
 
