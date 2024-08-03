@@ -31,7 +31,7 @@
         header {
             display: none;
         }
-       
+
         .progress-bars div {
             flex: 1 1 auto;
             border: 1px solid grey;
@@ -106,7 +106,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
-                           
+
                         @elseif($extensionNew->stage == 3 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) ))
 
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -136,7 +136,7 @@
                             </button> --}}
                         @endif
                          <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"><button class="button_theme1"> Exit
-                        </button>  </a> 
+                        </button>  </a>
                     </div>
                 </div>
                 <div class="status">
@@ -149,7 +149,7 @@
                         <div class="progress-bars d-flex">
                             @if ($extensionNew->stage >= 1)
                                 <div class="active">Opened</div>
-                                
+
                             @else
                                 <div class="">Opened</div>
                             @endif
@@ -162,7 +162,7 @@
 
                             @if ($extensionNew->stage >= 3)
                                 <div class="active">In Approved</div>
-                                
+
                             @else
                                 <div class="">In Approved</div>
                             @endif
@@ -225,7 +225,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Division Code"><b>Site/Location Code</b></label>
-                                <input disabled type="text" name="site_location"   id="site_location" 
+                                <input disabled type="text" name="site_location"   id="site_location"
                                     value="{{ Helpers::getDivisionName($extensionNew->site_location_code) }}">
                                 <input type="hidden" name="site_location_code"  id="site_location_code" value="{{ session()->get('division') }}">
                                 {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
@@ -325,7 +325,7 @@
                                         <input type="text"  id="proposed_due_date"  value="{{  Helpers::getdateFormat($extensionNew->proposed_due_date) }}" readonly placeholder="DD-MMM-YYYY" />
                                     <input type="date" name="proposed_due_date"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $extensionNew->proposed_due_date }}"
                                     class="hide-input"
-                                    oninput="handleDateInput(this, 'proposed_due_date')"/> 
+                                    oninput="handleDateInput(this, 'proposed_due_date')"/>
                                     </div>
                                 </div>
                             </div>
@@ -341,7 +341,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Short Description"> Justification / Reason </label>
-                                 
+
                                     <textarea id="docname" type="text" name="justification_reason" value="" >{{$extensionNew->justification_reason}}</textarea>
                                 </div>
                                 {{-- @error('short_description')
@@ -794,8 +794,6 @@
         console.log('Script working')
 
         $(document).ready(function() {
-
-
             function submitForm() {
 
                 let auditForm = document.getElementById('auditForm');
@@ -814,7 +812,7 @@
                 extensionForm.submit();
             }
 
-           
+
         });
 
         document.addEventListener('DOMContentLoaded', function() {

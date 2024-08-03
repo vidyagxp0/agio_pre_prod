@@ -226,7 +226,7 @@ class InternalauditController extends Controller
         $internalAudit->remark_61 = $request->remark_61;
         $internalAudit->remark_62 = $request->remark_62;
         $internalAudit->remark_63 = $request->remark_63;
-        
+
         $internalAudit->save();
 //------------------------------------response and remarks input---------------------------------
 //$internalaudit   = new table_cc_impactassement();
@@ -276,7 +276,7 @@ class InternalauditController extends Controller
         $auditQualityGrid->identifier = 'auditQualityControlChecklist';
         $auditQualityGrid->data = $request->auditQualityControlChecklist;
         $auditQualityGrid->save();
-        
+
         $auditQualityAssuranceGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditQualityAssuranceChecklist'])->firstOrNew();
         $auditQualityAssuranceGrid->ia_id = $internalAudit->id;
         $auditQualityAssuranceGrid->identifier = 'auditQualityAssuranceChecklist';
@@ -294,8 +294,8 @@ class InternalauditController extends Controller
         $auditsheGrid->identifier = 'auditSheChecklist';
         $auditsheGrid->data = $request->auditSheChecklist;
         $auditsheGrid->save();
-        
-        $internalAuditComments = InternalAuditChecklistGrid::where(['ia_id' => $ia_id])->firstOrNew();        
+
+        $internalAuditComments = InternalAuditChecklistGrid::where(['ia_id' => $ia_id])->firstOrNew();
         $internalAuditComments->auditSheChecklist_comment = $request->auditSheChecklist_comment;
         if (!empty($request->auditSheChecklist_attachment)) {
             $files = [];
@@ -309,7 +309,7 @@ class InternalauditController extends Controller
 
 
             $internalAuditComments->auditSheChecklist_attachment = json_encode($files);
-            
+
         }
 
         $internalAuditComments->save();
@@ -1309,14 +1309,14 @@ $Checklist_Capsule->save();
    // =======================new engneering checklist ====
    $engineering_checklist = IA_checklist_engineering::where(['ia_id' => $id])->firstOrCreate();
    $engineering_checklist->ia_id = $id;
- 
- 
+
+
    for ($i = 1; $i <= 34; $i++)
    {
        $string = 'engineering_response_'. $i;
        $engineering_checklist->$string = $request->$string;
    }
- 
+
    for ($i = 1; $i <= 34; $i++)
    {
        $string = 'engineering_remark_'. $i;
@@ -1329,14 +1329,14 @@ $Checklist_Capsule->save();
     // =======================new quality control checklist ====
     $quality_control_checklist = IA_quality_control::where(['ia_id' => $id])->firstOrCreate();
     $quality_control_checklist->ia_id = $id;
-  
-  
+
+
     for ($i = 1; $i <= 84; $i++)
     {
         $string = 'quality_control_response_'. $i;
         $quality_control_checklist->$string = $request->$string;
     }
-  
+
     for ($i = 1; $i <= 84; $i++)
     {
         $string = 'quality_control_remark__'. $i;
@@ -1370,14 +1370,14 @@ $Checklist_Capsule->save();
   // =======================new human resources ====
   $checklist_human_resources = IA_checklist_hr::where(['ia_id' => $id])->firstOrCreate();
   $checklist_human_resources->ia_id = $id;
- 
- 
+
+
   for ($i = 1; $i <= 35; $i++)
   {
       $string = 'checklist_hr_response_'. $i;
       $checklist_human_resources->$string = $request->$string;
   }
- 
+
   for ($i = 1; $i <= 35; $i++)
   {
       $string = 'checklist_hr_remark_'. $i;
@@ -1390,14 +1390,14 @@ $Checklist_Capsule->save();
   // =======================new human resources ====
   $checklist_production_dispensing = IA_checklist_dispensing::where(['ia_id' => $id])->firstOrCreate();
   $checklist_production_dispensing->ia_id = $id;
- 
- 
+
+
   for ($i = 1; $i <= 14; $i++)
   {
       $string = 'response_dispensing_'. $i;
       $checklist_production_dispensing->$string = $request->$string;
   }
- 
+
   for ($i = 1; $i <= 14; $i++)
   {
       $string = 'remark_dispensing_'. $i;
@@ -1408,7 +1408,7 @@ $Checklist_Capsule->save();
       $string = 'response_injection_'. $i;
       $checklist_production_dispensing->$string = $request->$string;
   }
- 
+
   for ($i = 1; $i <= 50; $i++)
   {
       $string = 'remark_injection_'. $i;
@@ -1419,7 +1419,7 @@ $Checklist_Capsule->save();
       $string = 'response_documentation_'. $i;
       $checklist_production_dispensing->$string = $request->$string;
   }
- 
+
   for ($i = 1; $i <= 7; $i++)
   {
       $string = 'remark_documentation_'. $i;
@@ -1432,15 +1432,15 @@ $Checklist_Capsule->save();
 // ======================================checklist injecection production=================
   $checklist_production_injection = IA_checklist_production_injection::where(['ia_id' => $id])->firstOrCreate();
   $checklist_production_injection->ia_id = $id;
- 
- 
-  
+
+
+
   for ($i = 1; $i <= 41; $i++)
   {
       $string = 'response_injection_packing_'. $i;
       $checklist_production_injection->$string = $request->$string;
   }
- 
+
   for ($i = 1; $i <= 41; $i++)
   {
       $string = 'remark_injection_packing_'. $i;
@@ -1451,7 +1451,7 @@ $Checklist_Capsule->save();
       $string = 'response_documentation_production_'. $i;
       $checklist_production_injection->$string = $request->$string;
   }
- 
+
   for ($i = 1; $i <= 6; $i++)
   {
       $string = 'remark_documentation_production_'. $i;
@@ -1464,15 +1464,15 @@ $Checklist_Capsule->save();
   // ====================================== IA_checklist_manufacturing_filling =================
   $checklist_manufacturing_production = IA_checklist_manufacturing_filling::where(['ia_id' => $id])->firstOrCreate();
   $checklist_manufacturing_production->ia_id = $id;
- 
- 
-  
+
+
+
   for ($i = 1; $i <= 44; $i++)
   {
       $string = 'response_powder_manufacturing_filling_'. $i;
       $checklist_manufacturing_production->$string = $request->$string;
   }
- 
+
   for ($i = 1; $i <= 44; $i++)
   {
       $string = 'remark_powder_manufacturing_filling_'. $i;
@@ -1483,7 +1483,7 @@ $Checklist_Capsule->save();
       $string = 'response_packing_'. $i;
       $checklist_manufacturing_production->$string = $request->$string;
   }
- 
+
   for ($i = 1; $i <= 3; $i++)
   {
       $string = 'remark_packing_'. $i;
@@ -1497,31 +1497,31 @@ $Checklist_Capsule->save();
    // ====================================== IA_checklist_analytical_research =================
    $checklist_analytical_research = IA_checklist_analytical_research::where(['ia_id' => $id])->firstOrCreate();
    $checklist_analytical_research->ia_id = $id;
-  
-  
-   
+
+
+
    for ($i = 1; $i <= 26; $i++)
    {
        $string = 'response_analytical_research_development_'. $i;
        $checklist_analytical_research->$string = $request->$string;
    }
-  
+
    for ($i = 1; $i <= 26; $i++)
    {
        $string = 'remark_analytical_research_development_'. $i;
        $checklist_analytical_research->$string = $request->$string;
    }
-  
+
    // dd($checklistTabletCompression->tablet_compress_remark_1)
    $checklist_analytical_research->remark_analytical_research_comment = $request->remark_analytical_research_comment;
    $checklist_analytical_research->save();
- 
+
  // ====================================== IA_checklist_analytical_research =================
  $checklist__formulation_research = IA_checklist__formulation_research::where(['ia_id' => $id])->firstOrCreate();
  $checklist__formulation_research->ia_id = $id;
 
 
- 
+
  for ($i = 1; $i <= 24; $i++)
  {
      $string = 'response_formulation_research_development_'. $i;
@@ -1640,15 +1640,15 @@ $Checklist_Capsule->save();
             'auditfacilityChecklist' => 'required|array',
             'auditfacilityChecklist.*.response' => 'nullable|string',
             'auditfacilityChecklist.*.remarks' => 'nullable|string',
-            
+
             'auditMachinesChecklist' => 'required|array',
             'auditMachinesChecklist.*.response' => 'nullable|string',
             'auditMachinesChecklist.*.remarks' => 'nullable|string',
-            
+
             'auditProductionChecklist' => 'required|array',
             'auditProductionChecklist.*.response' => 'nullable|string',
             'auditProductionChecklist.*.remarks' => 'nullable|string',
-            
+
             'auditMaterialsChecklist' => 'required|array',
             'auditMaterialsChecklist.*.response' => 'nullable|string',
             'auditMaterialsChecklist.*.remarks' => 'nullable|string',
@@ -1656,23 +1656,23 @@ $Checklist_Capsule->save();
             'auditQualityControlChecklist' => 'required|array',
             'auditQualityControlChecklist.*.response' => 'nullable|string',
             'auditQualityControlChecklist.*.remarks' => 'nullable|string',
-        
+
             'auditQualityAssuranceChecklist' => 'required|array',
             'auditQualityAssuranceChecklist.*.response' => 'nullable|string',
             'auditQualityAssuranceChecklist.*.remarks' => 'nullable|string',
-            
+
             'auditPackagingChecklist' => 'required|array',
             'auditPackagingChecklist.*.response' => 'nullable|string',
             'auditPackagingChecklist.*.remarks' => 'nullable|string',
-            
+
             'auditSheChecklist' => 'required|array',
             'auditSheChecklist.*.response' => 'nullable|string',
             'auditSheChecklist.*.remarks' => 'nullable|string',
-            
+
         ]);
 
         // dd($validatedData);
-        
+
         $auditAssessmentGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditAssessmentChecklist'])->firstOrNew();
         // dd($auditAssessmentGrid);
         $auditAssessmentGrid->ia_id = $ia_id;
@@ -1734,9 +1734,9 @@ $Checklist_Capsule->save();
         $auditsheGrid->ia_id = $ia_id;
         $auditsheGrid->identifier = 'auditSheChecklist';
         $auditsheGrid->data = $validatedData['auditSheChecklist'];
-        $auditsheGrid->save();  
+        $auditsheGrid->save();
 
-        $internalAuditComments = InternalAuditChecklistGrid::where(['ia_id' => $ia_id])->firstOrNew();        
+        $internalAuditComments = InternalAuditChecklistGrid::where(['ia_id' => $ia_id])->firstOrNew();
         $internalAuditComments->auditSheChecklist_comment = $request->auditSheChecklist_comment;
         if (!empty($request->auditSheChecklist_attachment)) {
             $files = [];

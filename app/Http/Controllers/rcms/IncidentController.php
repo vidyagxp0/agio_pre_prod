@@ -1872,8 +1872,8 @@ if ($incident->Initial_attachment) {
                 $Cft->Other5_attachment = json_encode($files);
             }
 
+         $Cft->save();
 
-        $Cft->save();
                 $IsCFTRequired = IncidentCftResponse::withoutTrashed()->where(['is_required' => 1, 'incident_id' => $id])->latest()->first();
                 $cftUsers = DB::table('incident_cfts')->where(['incident_id' => $id])->first();
                 // Define the column names
