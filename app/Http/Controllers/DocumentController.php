@@ -1505,6 +1505,7 @@ class DocumentController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->save();
+                
             }
             if ($lastContent->distribution != $documentcontet->distribution || !empty($request->distribution_comment)) {
                 $history = new DocumentHistory;
@@ -2316,13 +2317,26 @@ class DocumentController extends Controller
     {
         try {
             $document = Document::findOrFail($documentId);
-            // dd($document);
             if ( $document->doc_content && !empty($document->doc_content->annexuredata) )
             {
                 $annexure_data = unserialize($document->doc_content->annexuredata);
+                
+                // $annexure_data = $annexure_data[$annexure_number-1];
+                // dd($annexure_data);
 
-                $annexure_data = $annexure_data[$annexure_number-1];
+                 // Check if the annexure number exists in the data
+            if (isset($annexure_data[$annexure_number - 1])) {
+                $annexure_data = $annexure_data[$annexure_number - 1];
+            } else {
+                throw new \Exception('Invalid Annexure Number');
+            }
 
+                // Check the size of annexure_data
+                $annexure_data_size = strlen($annexure_data);
+                if ($annexure_data_size > 100000) { // Adjust the size limit as needed
+                    throw new \Exception('Annexure Data is too large');
+                }
+                
                 $document = Document::find($documentId);
                 $data = Document::find($documentId);
                 $data->department = Department::find($data->department_id);

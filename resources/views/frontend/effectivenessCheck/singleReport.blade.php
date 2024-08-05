@@ -411,14 +411,20 @@
                         <th class="w-20">
                         Submit On</th>
                         <td class="w-30">{{ $data->submit_on }}</td>
+                        <th class="w-20">
+                        Submit Comment</th>
+                        <td class="w-30">{{ $data->submit_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Not Effective By
                         </th>
-                        <td class="w-30">{{ $data->not_effective_by }}</td>
+                        <td class="w-30">{{ $data->qa_review_complete_by }}</td>
                         <th class="w-20">
                         Not Effective On</th>
-                        <td class="w-30">{{ $data->not_effective_on }}</td>
+                        <td class="w-30">{{ $data->qa_review_complete_on }}</td>
+                        <th class="w-20">
+                        Not Effective Comment</th>
+                        <td class="w-30">{{ $data->qa_review_complete_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Effective by
@@ -427,6 +433,9 @@
                         <th class="w-20">
                         Effective On</th>
                         <td class="w-30">{{ $data->effective_on }}</td>
+                        <th class="w-20">
+                        Effective Comment</th>
+                        <td class="w-30">{{ $data->effective_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Not Effective Approval Complete By
@@ -435,6 +444,9 @@
                         <th class="w-20">
                         Not Effective Approval Complete On</th>
                         <td class="w-30">{{ $data->not_effective_approval_complete_on }}</td>
+                        <th class="w-20">
+                        Not Effective Approval Complete Comment</th>
+                        <td class="w-30">{{ $data->not_effective_approval_complete_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Effective Approval Complete By
@@ -443,6 +455,43 @@
                         <th class="w-20">
                         Effective Approval Complete On</th>
                         <td class="w-30">{{ $data->effective_approval_complete_on }}</td>
+                        <th class="w-20">
+                        Effective Approval Complete Comment</th>
+                        <td class="w-30">{{ $data->effective_approval_complete_comment }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Acknowledge Complete By
+                        </th>
+                        <td class="w-30">{{ $data->effectiveness_check_complete_by }}</td>
+                        <th class="w-20">
+                        Acknowledge Complete On</th>
+                        <td class="w-30">{{ $data->effectiveness_check_complete_on }}</td>
+                        <th class="w-20">
+                        Acknowledge Complete Comment</th>
+                        <td class="w-30">{{ $data->effectiveness_check_complete_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">HOD Review Complete By
+                        </th>
+                        <td class="w-30">{{ $data->hod_review_complete_by }}</td>
+                        <th class="w-20">
+                        HOD Review Complete On</th>
+                        <td class="w-30">{{ $data->hod_review_complete_on }}</td>
+                        <th class="w-20">
+                        HOD Review Complete Comment</th>
+                        <td class="w-30">{{ $data->hod_review_complete_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancel By
+                        </th>
+                        <td class="w-30">{{ $data->closed_cancelled_by }}</td>
+                        <th class="w-20">
+                        Cancel On</th>
+                        <td class="w-30">{{ $data->closed_cancelled_on }}</td>
+                        <th class="w-20">
+                        Cancel Comment</th>
+                        <td class="w-30">{{ $data->closed_cancelled_comment }}</td>
                     </tr>
                    
                 </table>
