@@ -449,55 +449,7 @@
                 </table>
             </div>
 
-            <div class="block">
-                <div class="block-head">
-                    Activity Log
-                </div>
-                <table>
-                    <tr>
-                        <th class="w-20">Submitted By</th>
-                        <td class="w-30">{{ $data->submitted_by }}</td>
-                        <th class="w-20">Submitted On</th>
-                        <td class="w-30">{{ $data->submitted_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Incident Review Completed By</th>
-                        <td class="w-30">{{ $data->incident_review_completed_by }}</td>
-                        <th class="w-20">Incident Review Completed On</th>
-                        <td class="w-30">{{ $data->incident_review_completed_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Investigation Completed By</th>
-                        <td class="w-30">{{ $data->investigation_completed_by }}</td>
-                        <th class="w-20">Investigation Completed On</th>
-                        <td class="w-30">{{ $data->investigation_completed_on}}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">QA Review Completed By</th>
-                        <td class="w-30">{{ $data->qA_review_completed_by }}</td>
-                        <th class="w-20">QA Review Completed On</th>
-                        <td class="w-30">{{ $data->qA_review_completed_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">QA Head Approval Completed By</th>
-                        <td class="w-30">{{ $data->qA_head_approval_completed_by }}</td>
-                        <th class="w-20">QA Head Approval Completed On</th>
-                        <td class="w-30">{{ $data->qA_head_approval_completed_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">All Activities Completed By</th>
-                        <td class="w-30">{{ $data->all_activities_completed_by }}</td>
-                        <th class="w-20">All Activities Completed On</th>
-                        <td class="w-30">{{ $data->all_activities_completed_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Cancelled By</th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">Cancelled On</th>
-                        <td class="w-30">{{ $data->cancelled_on }}</td>
-                    </tr>
-                </table>
-            </div>
+            
 
             <div class="block">
                 <div class="block-head">
@@ -669,6 +621,103 @@
                         
                     </table>
                 </div>
+
+
+                <div class="block">
+                <div class="block-head">
+                    Activity Log
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">Submitted By</th>
+                        <td class="w-30">{{ $data->submitted_by }}</td>
+                        <th class="w-20">Submitted On</th>
+                        <td class="w-30">{{ $data->submitted_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Verification Complete By</th>
+                        <td class="w-30">{{ $data->verification_complete_completed_by }}</td>
+                        <th class="w-20">Verification Complete On</th>
+                        <td class="w-30">{{ $data->verification_completed_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->verification_complete_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Preliminary Investigation Completed By</th>
+                        <td class="w-30">{{ $data->preliminary_completed_by }}</td>
+                        <th class="w-20">Preliminary Investigation Completed On</th>
+                        <td class="w-30">{{ $data->preliminary_completed_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->preliminary_completed_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Assignable Cause Identification Completed By</th>
+                        <td class="w-30">{{ $data->all_activities_completed_by }}</td>
+                        <th class="w-20">Assignable Cause Identification Completed On</th>
+                        <td class="w-30">{{ $data->all_activities_completed_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->all_activities_completed_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">No Assignable Cause Identification  Completed By</th>
+                        <td class="w-30">{{ $data->no_assignable_cause_by }}</td>
+                        <th class="w-20">No Assignable Cause Identification  Completed On</th>
+                        <td class="w-30">{{ $data->no_assignable_cause_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->no_assignable_cause_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Extended Inv Completed By</th>
+                        <td class="w-30">{{ $data->extended_inv_complete_by }}</td>
+                        <th class="w-20">Extended Inv Completed On</th>
+                        <td class="w-30">{{ $data->extended_inv_complete_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->extended_inv_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Solution Validation Completed By</th>
+                        <td class="w-30">{{ $data->review_completed_by }}</td>
+                        <th class="w-20">Solution Validation Completed On</th>
+                        <td class="w-30">{{ $data->review_completed_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->solution_validation_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">All Action Approved Completed By</th>
+                        <td class="w-30">{{ $data->all_actiion_approved_by }}</td>
+                        <th class="w-20">All Action Approved Completed On</th>
+                        <td class="w-30">{{ $data->all_actiion_approved_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->all_action_approved_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Assessment Completed By</th>
+                        <td class="w-30">{{ $data->assesment_completed_by }}</td>
+                        <th class="w-20">Assessment Completed On</th>
+                        <td class="w-30">{{ $data->assesment_completed_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->assessment_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Closure Completed By</th>
+                        <td class="w-30">{{ $data->closure_completed_by }}</td>
+                        <th class="w-20">Closure Completed On</th>
+                        <td class="w-30">{{ $data->closure_completed_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->closure_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_by }}</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">{{ $data->cancelled_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->cancell_comment }}</td>
+                    </tr>
+                </table>
+            </div>
 
 
             </div>

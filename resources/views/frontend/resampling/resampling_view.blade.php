@@ -46,7 +46,7 @@
                 {{-- <div class="head">PR-0001</div> --}}
                 <div class="slogan">
                     <strong>Site Division/Project :</strong>
-                    {{ Helpers::getDivisionName($data->division_id) }} / Action item
+                    {{ Helpers::getDivisionName($data->division_id) }} / Resampling
                 </div>
             </div>
         </div>
@@ -190,7 +190,7 @@
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
                                             <input disabled type="text" name="record_number"
-                                                value="{{ Helpers::getDivisionName($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                value="{{ Helpers::getDivisionName($data->division_id) }}/Resampling/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                             {{-- <div class="static"></div> --}}
                                         </div>
                                     </div>
@@ -308,7 +308,7 @@
                                     
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Related Records">Action Item Related Records</label>
+                                            <label for="Related Records">Resampling Related Records</label>
                                             {{-- <select {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
                                                 placeholder="Select Reference Records">
                                                 <option value="">--select record--</option>
@@ -341,7 +341,7 @@
                                     </div>
                                     {{-- <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="related_records">Action Item Related Records</label>
+                                            <label for="related_records">Resampling Related Records</label>
                                             <select multiple name="related_records" placeholder="Select Reference Records"
                                                 data-search="false" data-silent-initial-value-set="true"
                                                 id="related_records">
@@ -1297,7 +1297,7 @@
                             <label for="revision">Choose Change Implementation</label>
                             <label for="major">
                                 <input type="radio" name="revision" id="major" value="Action-Item">
-                                Action Item
+                                Resampling
 
                             </label>
                             <label for="minor">
