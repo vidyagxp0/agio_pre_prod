@@ -99,7 +99,7 @@
 
 
                 <div class="slogan">
-                    @php 
+                    @php
                         $name = DB::table('q_m_s_divisions')->where('id', $data->id)->value('name');
                     @endphp
                     <strong>Site Division / Project </strong>:
@@ -400,7 +400,7 @@
                                                 </div>
                                             </div> -->
 
-                                            
+
                                             <div class="col-md-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -592,7 +592,7 @@
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
 
                                             </div>
-                                            
+
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator Group">Initiated Through</label>
@@ -766,7 +766,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="risk_assessment_related_record">Related Records</label>
-                                                <select  multiple id="risk_assessment_related_record" name="risk_assessment_related_record[]" placeholder="Select Reference Records" 
+                                                <select  multiple id="risk_assessment_related_record" name="risk_assessment_related_record[]" placeholder="Select Reference Records"
                                                         data-search="false" data-silent-initial-value-set="true">
                                                     @foreach ($preRiskAssessment as $prix)
                                                         <option value="{{ $prix->id }}"
@@ -908,8 +908,8 @@
                                             Change Details
                                         </div>
                                         <div class="row">
-                                            
-                                           
+
+
 
                                             <div class="col-12">
                                                 <div class="group-input">
@@ -1078,7 +1078,7 @@
                                                     <span class="sr-only">Loading...</span>
                                                 </div>
                                                 Save
-                                            </button>                                            
+                                            </button>
                                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 class="nextButton" onclick="nextStep()">Next</button>
@@ -1621,7 +1621,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote QualityAssurance_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->QualityAssurance_person) && Auth::user()->id != $data1->QualityAssurance_person)) readonly @endif 
+                                                    @if ($data->stage == 3 || (isset($data1->QualityAssurance_person) && Auth::user()->id != $data1->QualityAssurance_person)) readonly @endif
                                                         name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
                                                 </div>
                                             </div>
@@ -1844,7 +1844,7 @@
                                                     <input readonly type="date" id="QualityAssurance_on" name="QualityAssurance_on"
                                                         value="{{ $data1->QualityAssurance_on }}">
                                                 </div>
-                                            </div>  
+                                            </div>
                                         @endif
 
 
@@ -2691,8 +2691,8 @@
                                                     <div class="group-input">
                                                         <label for="Production Injection assessment">Impact Assessment (By Production Injection)
                                                             <!-- <span
-                                                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                                                            class="text-danger">*</span> -->
+                                                                       id="asteriskInvi12" style="display: none"
+                                                                         class="text-danger">*</span> -->
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
@@ -2703,8 +2703,8 @@
                                                     <div class="group-input">
                                                         <label for="Production Injection feedback">Production Injection Feedback
                                                             <!-- <span
-                                                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                                                            class="text-danger">*</span> -->
+                                                            id="asteriskInvi22" style="display: none"
+                                                            class="text-danger">*</span> -->
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
@@ -5216,7 +5216,7 @@
                                                         value="{{ $data1->CorporateQualityAssurance_on }}">
                                                 </div>
                                             </div>
-                                        @endif 
+                                        @endif
 
 
 
@@ -7794,7 +7794,7 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        
+
                                     </div>
                                     <div class="button-block">
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
@@ -7808,13 +7808,13 @@
                                         </button>
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                             id="ChangeNextButton" class="nextButton">Next</button>
-                                            
+
                                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                                 Exit </a> </button>
                                     </div>
                                 </div>
-                                </div>                                
+                                </div>
 
                                 <div id="CCForm4" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -7863,7 +7863,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
 
                                 <div id="CCForm8" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -7977,7 +7977,7 @@
                                                                 <td><input type="text" class="Removebtn" name="Action[]" readonly></td>
                                                             </tr>
                                                         @endforeach
-                                                        @else                                                        
+                                                        @else
                                                             <td><input type="text" name="affectedDocuments[0][serial]" value="1" readonly></td>
                                                             <td><input type="text" name="affectedDocuments[0][afftectedDoc]"></td>
                                                             <td><input type="text" name="affectedDocuments[0][documentName]"></td>
@@ -8335,7 +8335,7 @@
                 </div>
             </div>
 
-                    
+
 
         </div>
         </form>
@@ -8548,7 +8548,7 @@
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Extension">
                                     Extension
-                                </label>                            
+                                </label>
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Action-Item">
                                     Action Item
@@ -8920,7 +8920,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const currentStage = document.getElementById('stage').value;
-            
+
             if (currentStage > 2)
             {
                 const RA_Review = document.getElementById('RA_Review').value;
@@ -9201,7 +9201,7 @@
                                             });
                                         });
                                     </script>
-                                    
+
     <script>
 
         document.addEventListener('DOMContentLoaded', function() {

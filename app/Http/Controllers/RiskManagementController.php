@@ -2438,8 +2438,8 @@ class RiskManagementController extends Controller
             if($Cft && $data->stage == 4 ){
                 $Cft->Production_Review = $request->Production_Review == null ? $Cft->Production_Review : $request->Production_Review;
                 $Cft->Production_person = $request->Production_person == null ? $Cft->Production_person : $request->Production_Review;
-                $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
-                $Cft->Warehouse_notification = $request->Warehouse_notification == null ? $Cft->Warehouse_notification : $request->Warehouse_notification;
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
                 $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
                 $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
                 $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
@@ -2520,8 +2520,8 @@ class RiskManagementController extends Controller
             }
             $Cft->Production_assessment = $request->Production_assessment;
             $Cft->Production_feedback = $request->Production_feedback;
-            $Cft->Warehouse_assessment = $request->Warehouse_assessment;
-            $Cft->Warehouse_feedback = $request->Warehouse_feedback;
+            $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
+            $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
             $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
             $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
             $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
