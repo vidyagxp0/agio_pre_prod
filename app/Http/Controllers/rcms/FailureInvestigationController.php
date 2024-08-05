@@ -72,7 +72,7 @@ class FailureInvestigationController extends Controller
                     ->withErrors($validator)
                     ->withInput();
             } else {
-                $form_progress = 'general';
+                $form_progress = '  ';
             }
         }
 
@@ -887,7 +887,7 @@ class FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
 
@@ -902,7 +902,7 @@ class FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
 
@@ -917,7 +917,7 @@ class FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
 
@@ -933,7 +933,7 @@ class FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
         }
@@ -950,7 +950,7 @@ class FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
         }
@@ -966,7 +966,7 @@ class FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
         }
@@ -982,7 +982,7 @@ class FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
         }
@@ -998,7 +998,7 @@ class FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
         }
@@ -1014,7 +1014,7 @@ class FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
         }
@@ -1031,7 +1031,7 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $failureInvestigation->status;
             $history->action_name = 'Create';
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->save();
         }
         if (!empty ($request->Facility_Equipment)){
@@ -1046,7 +1046,7 @@ class FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
         }
@@ -1059,7 +1059,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
@@ -1076,7 +1076,7 @@ class FailureInvestigationController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->action_name = 'Create';
@@ -1092,7 +1092,7 @@ class FailureInvestigationController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->action_name = 'Create';
@@ -1108,7 +1108,7 @@ class FailureInvestigationController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->action_name = 'Create';
@@ -1124,7 +1124,7 @@ class FailureInvestigationController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $failureInvestigation->status;
             $history->action_name = 'Create';
@@ -2307,7 +2307,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = "Update";
+            if (is_null($lastFailureInvestigation->short_description) || $lastFailureInvestigation->short_description === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastFailureInvestigation->Initiator_Group != $failureInvestigation->Initiator_Group || !empty ($request->comment)) {
@@ -2323,7 +2327,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Initiator_Group) || $lastFailureInvestigation->Initiator_Group === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2340,7 +2348,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->failure_investigation_date) || $lastFailureInvestigation->failure_investigation_date === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2357,7 +2369,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Observed_by) || $lastFailureInvestigation->Observed_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2374,7 +2390,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->failure_investigation_reported_date) || $lastFailureInvestigation->failure_investigation_reported_date === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2391,7 +2411,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->audit_type) || $lastFailureInvestigation->audit_type === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2408,7 +2432,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Others) || $lastFailureInvestigation->Others === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2425,7 +2453,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Facility_Equipment) || $lastFailureInvestigation->Facility_Equipment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2442,7 +2474,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Document_Details_Required) || $lastFailureInvestigation->Document_Details_Required === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2459,7 +2495,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Product_Batch) || $lastFailureInvestigation->Product_Batch === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2476,7 +2516,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Description_failure_investigation) || $lastFailureInvestigation->Description_failure_investigation === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2493,7 +2537,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Immediate_Action) || $lastFailureInvestigation->Immediate_Action === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2510,7 +2558,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Preliminary_Impact) || $lastFailureInvestigation->Preliminary_Impact === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2527,7 +2579,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->HOD_Remarks) || $lastFailureInvestigation->HOD_Remarks === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2544,7 +2600,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->failure_investigation_category) || $lastFailureInvestigation->failure_investigation_category === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2561,7 +2621,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Justification_for_categorization) || $lastFailureInvestigation->Justification_for_categorization === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2578,7 +2642,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Investigation_required) || $lastFailureInvestigation->Investigation_required === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2595,7 +2663,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Investigation_Details) || $lastFailureInvestigation->Investigation_Details === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2612,7 +2684,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Customer_notification) || $lastFailureInvestigation->Customer_notification === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2629,7 +2705,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->customers) || $lastFailureInvestigation->customers === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2646,7 +2726,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->QAInitialRemark) || $lastFailureInvestigation->QAInitialRemark === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2661,9 +2745,13 @@ class FailureInvestigationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
+            if (is_null($lastFailureInvestigation->Investigation_Summary) || $lastFailureInvestigation->Investigation_Summary === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2680,7 +2768,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Impact_assessment) || $lastFailureInvestigation->Impact_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2697,12 +2789,16 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Root_cause) || $lastFailureInvestigation->Root_cause === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
         if ($lastFailureInvestigation->CAPA_Rquired != $failureInvestigation->CAPA_Rquired || !empty ($request->comment)) {
-                        $history = new FailureInvestigationAuditTrail;
+            $history = new FailureInvestigationAuditTrail;
             $history->failure_investigation_id = $id;
             $history->activity_type = 'CAPA Required ?';
             $history->previous = $lastFailureInvestigation->CAPA_Rquired;
@@ -2714,7 +2810,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->CAPA_Rquired) || $lastFailureInvestigation->CAPA_Rquired === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2731,7 +2831,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->capa_type) || $lastFailureInvestigation->capa_type === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2748,7 +2852,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->CAPA_Description) || $lastFailureInvestigation->CAPA_Description === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2765,7 +2873,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Post_Categorization) || $lastFailureInvestigation->Post_Categorization === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2782,7 +2894,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Investigation_Of_Review) || $lastFailureInvestigation->Investigation_Of_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2799,7 +2915,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->QA_Feedbacks) || $lastFailureInvestigation->QA_Feedbacks === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2816,7 +2936,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Closure_Comments) || $lastFailureInvestigation->Closure_Comments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2833,7 +2957,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Disposition_Batch) || $lastFailureInvestigation->Disposition_Batch === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -2851,7 +2979,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->RA_Review) || $lastFailureInvestigation->RA_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->RA_person != $request->RA_person && $request->RA_person != null) {
@@ -2867,7 +2999,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->RA_person) || $lastFailureInvestigation->RA_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->RA_assessment != $request->RA_assessment && $request->RA_assessment != null) {
@@ -2883,7 +3019,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->RA_assessment) || $lastFailureInvestigation->RA_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->RA_feedback != $request->RA_feedback && $request->RA_feedback != null) {
@@ -2899,7 +3039,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->RA_feedback) || $lastFailureInvestigation->RA_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->RA_by != $request->RA_by && $request->RA_by != null) {
@@ -2915,7 +3059,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->RA_by) || $lastFailureInvestigation->RA_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->RA_on != $request->RA_on && $request->RA_on != null) {
@@ -2931,10 +3079,41 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->RA_on) || $lastFailureInvestigation->RA_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
+
+
+        if ($lastCft->RA_attachment != $request->RA_attachment && $request->RA_attachment != null) {
+            $history = new FailureInvestigationAuditTrail();
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'RA Review Attachments';
+            $history->previous = is_array($lastCft->RA_attachment) ? json_encode($lastCft->RA_attachment) : $lastCft->RA_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+          if (is_null($lastFailureInvestigation->RA_attachment) || $lastFailureInvestigation->RA_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           // dd($history);
+            $history->save();
+        }
+        
+        
         /*************** Quality Assurance ***************/
         if ($lastCft->Quality_Assurance_Review != $request->Quality_Assurance_Review && $request->Quality_Assurance_Review != null) {
             $history = new FailureInvestigationAuditTrail;
@@ -2949,7 +3128,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Quality_Assurance_Review) || $lastFailureInvestigation->Quality_Assurance_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->QualityAssurance_person != $request->QualityAssurance_person && $request->QualityAssurance_person != null) {
@@ -2965,7 +3148,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->QualityAssurance_person) || $lastFailureInvestigation->QualityAssurance_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->QualityAssurance_assessment != $request->QualityAssurance_assessment && $request->QualityAssurance_assessment != null) {
@@ -2981,7 +3168,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->QualityAssurance_assessment) || $lastFailureInvestigation->QualityAssurance_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->QualityAssurance_feedback != $request->QualityAssurance_feedback && $request->QualityAssurance_feedback != null) {
@@ -2997,7 +3188,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->QualityAssurance_feedback) || $lastFailureInvestigation->QualityAssurance_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->QualityAssurance_by != $request->QualityAssurance_by && $request->QualityAssurance_by != null) {
@@ -3013,7 +3208,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->QualityAssurance_by) || $lastFailureInvestigation->QualityAssurance_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->QualityAssurance_on != $request->QualityAssurance_on && $request->QualityAssurance_on != null) {
@@ -3029,10 +3228,38 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->QualityAssurance_on) || $lastFailureInvestigation->QualityAssurance_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
+
+        if ($lastCft->Quality_Assurance_attachment != $request->Quality_Assurance_attachment && $request->Quality_Assurance_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Quality Assurance Attachments';
+
+            $history->previous = is_array($lastCft->Quality_Assurance_attachment) ? json_encode($lastCft->Quality_Assurance_attachment) : $lastCft->Quality_Assurance_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+           $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+          if (is_null($lastFailureInvestigation->Quality_Assurance_attachment) || $lastFailureInvestigation->Quality_Assurance_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
         
         /*************** Production Tablet ***************/
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
@@ -3048,7 +3275,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Production_Table_Review) || $lastFailureInvestigation->Production_Table_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Production_Table_Person != $request->Production_Table_Person && $request->Production_Table_Person != null) {
@@ -3064,7 +3295,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Production_Table_Person) || $lastFailureInvestigation->Production_Table_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Production_Table_Assessment != $request->Production_Table_Assessment && $request->Production_Table_Assessment != null) {
@@ -3080,7 +3315,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Production_Table_Assessment) || $lastFailureInvestigation->Production_Table_Assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback && $request->Production_Table_Feedback != null) {
@@ -3096,7 +3335,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Production_Table_Feedback) || $lastFailureInvestigation->Production_Table_Feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
@@ -3112,7 +3355,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Production_Table_By) || $lastFailureInvestigation->Production_Table_By === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Production_Table_On != $request->Production_Table_On && $request->Production_Table_On != null) {
@@ -3128,7 +3375,36 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Production_Table_On) || $lastFailureInvestigation->Production_Table_On === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        if ($lastCft->Production_Table_Attachment != $request->Production_Table_Attachment && $request->Production_Table_Attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Production Tablet Attachments';
+          
+            $history->previous = is_array($lastCft->Production_Table_Attachment) ? json_encode($lastCft->Production_Table_Attachment) : $lastCft->Production_Table_Attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+          if (is_null($lastFailureInvestigation->Production_Table_Attachment) || $lastFailureInvestigation->Production_Table_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -3146,7 +3422,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->ProductionLiquid_Review) || $lastFailureInvestigation->ProductionLiquid_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ProductionLiquid_person != $request->ProductionLiquid_person && $request->ProductionLiquid_person != null) {
@@ -3162,7 +3442,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->ProductionLiquid_person) || $lastFailureInvestigation->ProductionLiquid_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ProductionLiquid_assessment != $request->ProductionLiquid_assessment && $request->ProductionLiquid_assessment != null) {
@@ -3178,7 +3462,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->ProductionLiquid_assessment) || $lastFailureInvestigation->ProductionLiquid_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ProductionLiquid_feedback != $request->ProductionLiquid_feedback && $request->ProductionLiquid_feedback != null) {
@@ -3194,7 +3482,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->ProductionLiquid_feedback) || $lastFailureInvestigation->ProductionLiquid_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ProductionLiquid_by != $request->ProductionLiquid_by && $request->ProductionLiquid_by != null) {
@@ -3210,7 +3502,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->ProductionLiquid_by) || $lastFailureInvestigation->ProductionLiquid_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ProductionLiquid_on != $request->ProductionLiquid_on && $request->ProductionLiquid_on != null) {
@@ -3226,10 +3522,39 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->ProductionLiquid_on) || $lastFailureInvestigation->ProductionLiquid_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
+
+        if ($lastCft->ProductionLiquid_attachment != $request->ProductionLiquid_attachment && $request->ProductionLiquid_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Production Liquid Attachments';
+           
+           
+            $history->previous = is_array($lastCft->ProductionLiquid_attachment) ? json_encode($lastCft->ProductionLiquid_attachment) : $lastCft->ProductionLiquid_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+           $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+          if (is_null($lastFailureInvestigation->ProductionLiquid_attachment) || $lastFailureInvestigation->ProductionLiquid_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
         /*************** Production Injection ***************/
         if ($lastCft->Production_Injection_Review != $request->Production_Injection_Review && $request->Production_Injection_Review != null) {
             $history = new FailureInvestigationAuditTrail;
@@ -3244,7 +3569,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Production_Injection_Review) || $lastFailureInvestigation->Production_Injection_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Production_Injection_Person != $request->Production_Injection_Person && $request->Production_Injection_Person != null) {
@@ -3260,7 +3589,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Production_Injection_Person) || $lastFailureInvestigation->Production_Injection_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Production_Injection_Assessment != $request->Production_Injection_Assessment && $request->Production_Injection_Assessment != null) {
@@ -3276,7 +3609,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Production_Injection_Assessment) || $lastFailureInvestigation->Production_Injection_Assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Production_Injection_Feedback != $request->Production_Injection_Feedback && $request->Production_Injection_Feedback != null) {
@@ -3292,7 +3629,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Production_Injection_Feedback) || $lastFailureInvestigation->Production_Injection_Feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Production_Injection_By != $request->Production_Injection_By && $request->Production_Injection_By != null) {
@@ -3308,7 +3649,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Production_Injection_By) || $lastFailureInvestigation->Production_Injection_By === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Production_Injection_On != $request->Production_Injection_On && $request->Production_Injection_On != null) {
@@ -3324,7 +3669,38 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Production_Injection_On) || $lastFailureInvestigation->Production_Injection_On === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+
+        if ($lastCft->Production_Injection_Attachment != $request->Production_Injection_Attachment && $request->Production_Injection_Attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Production Injection Attachments';
+            
+            $history->previous = is_array($lastCft->Production_Injection_Attachment) ? json_encode($lastCft->Production_Injection_Attachment) : $lastCft->Production_Injection_Attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+             
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+          if (is_null($lastFailureInvestigation->Production_Injection_Attachment) || $lastFailureInvestigation->Production_Injection_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -3342,7 +3718,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Store_Review) || $lastFailureInvestigation->Store_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Store_person != $request->Store_person && $request->Store_person != null) {
@@ -3358,7 +3738,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Store_person) || $lastFailureInvestigation->Store_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Store_assessment != $request->Store_assessment && $request->Store_assessment != null) {
@@ -3374,7 +3758,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Store_assessment) || $lastFailureInvestigation->Store_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Store_feedback != $request->Store_feedback && $request->Store_feedback != null) {
@@ -3390,7 +3778,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Store_feedback) || $lastFailureInvestigation->Store_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Store_by != $request->Store_by && $request->Store_by != null) {
@@ -3406,7 +3798,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Store_by) || $lastFailureInvestigation->Store_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Store_on != $request->Store_on && $request->Store_on != null) {
@@ -3422,7 +3818,36 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Store_on) || $lastFailureInvestigation->Store_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->Store_attachment != $request->Store_attachment && $request->Store_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Store Attachments';
+        
+            $history->previous = is_array($lastCft->Store_attachment) ? json_encode($lastCft->Store_attachment) : $lastCft->Store_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+               
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+          if (is_null($lastFailureInvestigation->Store_attachment) || $lastFailureInvestigation->Store_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -3440,7 +3865,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Quality_review) || $lastFailureInvestigation->Quality_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Quality_Control_Person != $request->Quality_Control_Person && $request->Quality_Control_Person != null) {
@@ -3456,7 +3885,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Quality_Control_Person) || $lastFailureInvestigation->Quality_Control_Person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Quality_Control_assessment != $request->Quality_Control_assessment && $request->Quality_Control_assessment != null) {
@@ -3472,7 +3905,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Quality_Control_assessment) || $lastFailureInvestigation->Quality_Control_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Quality_Control_feedback != $request->Quality_Control_feedback && $request->Quality_Control_feedback != null) {
@@ -3488,7 +3925,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Quality_Control_feedback) || $lastFailureInvestigation->Quality_Control_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Quality_Control_by != $request->Quality_Control_by && $request->Quality_Control_by != null) {
@@ -3504,7 +3945,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Quality_Control_by) || $lastFailureInvestigation->Quality_Control_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Quality_Control_on != $request->Quality_Control_on && $request->Quality_Control_on != null) {
@@ -3520,7 +3965,38 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+          if (is_null($lastFailureInvestigation->Quality_Control_on) || $lastFailureInvestigation->Quality_Control_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            
+            $history->save();
+        }
+
+
+        if ($lastCft->Quality_Control_attachment != $request->Quality_Control_attachment && $request->Quality_Control_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Quality Control Attachment';
+            
+            $history->previous = is_array($lastCft->Quality_Control_attachment) ? json_encode($lastCft->Quality_Control_attachment) : $lastCft->Quality_Control_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+                $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->Quality_Control_attachment) || $lastFailureInvestigation->Quality_Control_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -3538,7 +4014,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->ResearchDevelopment_Review) || $lastFailureInvestigation->ResearchDevelopment_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ResearchDevelopment_person != $request->ResearchDevelopment_person && $request->ResearchDevelopment_person != null) {
@@ -3554,7 +4034,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->ResearchDevelopment_person) || $lastFailureInvestigation->ResearchDevelopment_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ResearchDevelopment_assessment != $request->ResearchDevelopment_assessment && $request->ResearchDevelopment_assessment != null) {
@@ -3570,7 +4054,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->ResearchDevelopment_assessment) || $lastFailureInvestigation->ResearchDevelopment_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ResearchDevelopment_feedback != $request->ResearchDevelopment_feedback && $request->ResearchDevelopment_feedback != null) {
@@ -3586,7 +4074,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->ResearchDevelopment_feedback) || $lastFailureInvestigation->ResearchDevelopment_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ResearchDevelopment_by != $request->ResearchDevelopment_by && $request->ResearchDevelopment_by != null) {
@@ -3602,7 +4094,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->ResearchDevelopment_by) || $lastFailureInvestigation->ResearchDevelopment_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ResearchDevelopment_on != $request->ResearchDevelopment_on && $request->ResearchDevelopment_on != null) {
@@ -3618,7 +4114,36 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->ResearchDevelopment_on) || $lastFailureInvestigation->ResearchDevelopment_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->ResearchDevelopment_attachment != $request->ResearchDevelopment_attachment && $request->ResearchDevelopment_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Research Development Attachments';
+         
+            $history->previous = is_array($lastCft->ResearchDevelopment_attachment) ? json_encode($lastCft->ResearchDevelopment_attachment) : $lastCft->ResearchDevelopment_attachment;
+           $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+              
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->ResearchDevelopment_attachment) || $lastFailureInvestigation->ResearchDevelopment_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -3636,7 +4161,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Engineering_review) || $lastFailureInvestigation->Engineering_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Engineering_person != $request->Engineering_person && $request->Engineering_person != null) {
@@ -3652,7 +4181,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Engineering_person) || $lastFailureInvestigation->Engineering_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Engineering_assessment != $request->Engineering_assessment && $request->Engineering_assessment != null) {
@@ -3668,7 +4201,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Engineering_assessment) || $lastFailureInvestigation->Engineering_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Engineering_feedback != $request->Engineering_feedback && $request->Engineering_feedback != null) {
@@ -3684,7 +4221,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Engineering_feedback) || $lastFailureInvestigation->Engineering_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Engineering_by != $request->Engineering_by && $request->Engineering_by != null) {
@@ -3700,7 +4241,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Engineering_by) || $lastFailureInvestigation->Engineering_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Engineering_on != $request->Engineering_on && $request->Engineering_on != null) {
@@ -3716,7 +4261,36 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Engineering_on) || $lastFailureInvestigation->Engineering_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->Engineering_attachment != $request->Engineering_attachment && $request->Engineering_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Engineering Attachments';
+          
+            $history->previous = is_array($lastCft->Engineering_attachment) ? json_encode($lastCft->Engineering_attachment) : $lastCft->Engineering_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+              
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->Engineering_attachment) || $lastFailureInvestigation->Engineering_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -3734,7 +4308,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Human_Resource_review) || $lastFailureInvestigation->Human_Resource_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Human_Resource_person != $request->Human_Resource_person && $request->Human_Resource_person != null) {
@@ -3750,7 +4328,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Human_Resource_person) || $lastFailureInvestigation->Human_Resource_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Human_Resource_assessment != $request->Human_Resource_assessment && $request->Human_Resource_assessment != null) {
@@ -3766,7 +4348,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Human_Resource_assessment) || $lastFailureInvestigation->Human_Resource_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Human_Resource_feedback != $request->Human_Resource_feedback && $request->Human_Resource_feedback != null) {
@@ -3782,7 +4368,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Human_Resource_feedback) || $lastFailureInvestigation->Human_Resource_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Human_Resource_by != $request->Human_Resource_by && $request->Human_Resource_by != null) {
@@ -3798,7 +4388,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Human_Resource_by) || $lastFailureInvestigation->Human_Resource_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Human_Resource_on != $request->Human_Resource_on && $request->Human_Resource_on != null) {
@@ -3814,7 +4408,36 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Human_Resource_on) || $lastFailureInvestigation->Human_Resource_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        if ($lastCft->Human_Resource_attachment != $request->Human_Resource_attachment && $request->Human_Resource_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Human Resource Attachments';
+           
+            $history->previous = is_array($lastCft->Human_Resource_attachment) ? json_encode($lastCft->Human_Resource_attachment) : $lastCft->Human_Resource_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+             $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->Human_Resource_attachment) || $lastFailureInvestigation->Human_Resource_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -3832,7 +4455,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Microbiology_Review) || $lastFailureInvestigation->Microbiology_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Microbiology_person != $request->Microbiology_person && $request->Microbiology_person != null) {
@@ -3848,7 +4475,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Microbiology_person) || $lastFailureInvestigation->Microbiology_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Microbiology_assessment != $request->Microbiology_assessment && $request->Microbiology_assessment != null) {
@@ -3864,7 +4495,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Microbiology_assessment) || $lastFailureInvestigation->Microbiology_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Microbiology_feedback != $request->Microbiology_feedback && $request->Microbiology_feedback != null) {
@@ -3880,7 +4515,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Microbiology_feedback) || $lastFailureInvestigation->Microbiology_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Microbiology_by != $request->Microbiology_by && $request->Microbiology_by != null) {
@@ -3896,7 +4535,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Microbiology_by) || $lastFailureInvestigation->Microbiology_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Microbiology_on != $request->Microbiology_on && $request->Microbiology_on != null) {
@@ -3912,10 +4555,38 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Microbiology_on) || $lastFailureInvestigation->Microbiology_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
+
+        if ($lastCft->Microbiology_attachment != $request->Microbiology_attachment && $request->Microbiology_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Microbiology Review On';
+            $history->previous = is_array($lastCft->Microbiology_attachment) ? json_encode($lastCft->Microbiology_attachment) : $lastCft->Microbiology_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+           $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->Microbiology_attachment) || $lastFailureInvestigation->Microbiology_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+      
         /*************** Regulatory Affair ***************/
         if ($lastCft->RegulatoryAffair_Review != $request->RegulatoryAffair_Review && $request->RegulatoryAffair_Review != null) {
             $history = new FailureInvestigationAuditTrail;
@@ -3930,7 +4601,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->RegulatoryAffair_Review) || $lastFailureInvestigation->RegulatoryAffair_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->RegulatoryAffair_person != $request->RegulatoryAffair_person && $request->RegulatoryAffair_person != null) {
@@ -3946,7 +4621,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->RegulatoryAffair_person) || $lastFailureInvestigation->RegulatoryAffair_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->RegulatoryAffair_assessment != $request->RegulatoryAffair_assessment && $request->RegulatoryAffair_assessment != null) {
@@ -3962,7 +4641,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->RegulatoryAffair_assessment) || $lastFailureInvestigation->RegulatoryAffair_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->RegulatoryAffair_feedback != $request->RegulatoryAffair_feedback && $request->RegulatoryAffair_feedback != null) {
@@ -3978,7 +4661,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->RegulatoryAffair_feedback) || $lastFailureInvestigation->RegulatoryAffair_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->RegulatoryAffair_by != $request->RegulatoryAffair_by && $request->RegulatoryAffair_by != null) {
@@ -3994,7 +4681,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->RegulatoryAffair_by) || $lastFailureInvestigation->RegulatoryAffair_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on  && $request->RegulatoryAffair_on != null) {
@@ -4010,7 +4701,35 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->RegulatoryAffair_on) || $lastFailureInvestigation->RegulatoryAffair_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        if ($lastCft->RegulatoryAffair_attachment != $request->RegulatoryAffair_attachment  && $request->RegulatoryAffair_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Regulatory Affair Attachment';
+            $history->previous = is_array($lastCft->RegulatoryAffair_attachment) ? json_encode($lastCft->RegulatoryAffair_attachment) : $lastCft->RegulatoryAffair_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+               $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->RegulatoryAffair_attachment) || $lastFailureInvestigation->RegulatoryAffair_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -4028,7 +4747,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->CorporateQualityAssurance_Review) || $lastFailureInvestigation->CorporateQualityAssurance_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->CorporateQualityAssurance_person != $request->CorporateQualityAssurance_person && $request->CorporateQualityAssurance_person != null) {
@@ -4044,7 +4767,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->CorporateQualityAssurance_person) || $lastFailureInvestigation->CorporateQualityAssurance_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->CorporateQualityAssurance_assessment != $request->CorporateQualityAssurance_assessment && $request->CorporateQualityAssurance_assessment != null) {
@@ -4060,7 +4787,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->CorporateQualityAssurance_assessment) || $lastFailureInvestigation->CorporateQualityAssurance_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->CorporateQualityAssurance_feedback != $request->CorporateQualityAssurance_feedback && $request->CorporateQualityAssurance_feedback != null) {
@@ -4076,7 +4807,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->CorporateQualityAssurance_feedback) || $lastFailureInvestigation->CorporateQualityAssurance_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->CorporateQualityAssurance_by != $request->CorporateQualityAssurance_by && $request->CorporateQualityAssurance_by != null) {
@@ -4092,7 +4827,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->CorporateQualityAssurance_by) || $lastFailureInvestigation->CorporateQualityAssurance_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->CorporateQualityAssurance_on != $request->CorporateQualityAssurance_on && $request->CorporateQualityAssurance_on != null) {
@@ -4108,7 +4847,35 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->CorporateQualityAssurance_on) || $lastFailureInvestigation->CorporateQualityAssurance_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        if ($lastCft->CorporateQualityAssurance_attachment != $request->CorporateQualityAssurance_attachment && $request->CorporateQualityAssurance_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Corporate Quality  Attachments';
+            $history->previous = is_array($lastCft->CorporateQualityAssurance_attachment) ? json_encode($lastCft->CorporateQualityAssurance_attachment) : $lastCft->CorporateQualityAssurance_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+             $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->CorporateQualityAssurance_attachment) || $lastFailureInvestigation->CorporateQualityAssurance_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -4126,7 +4893,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Environment_Health_review) || $lastFailureInvestigation->Environment_Health_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Environment_Health_Safety_person != $request->Environment_Health_Safety_person && $request->Environment_Health_Safety_person != null) {
@@ -4142,7 +4913,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Environment_Health_Safety_person) || $lastFailureInvestigation->Environment_Health_Safety_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Health_Safety_assessment != $request->Health_Safety_assessment && $request->Health_Safety_assessment != null) {
@@ -4158,7 +4933,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Health_Safety_assessment) || $lastFailureInvestigation->Health_Safety_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Health_Safety_feedback != $request->Health_Safety_feedback && $request->Health_Safety_feedback != null) {
@@ -4174,7 +4953,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Health_Safety_feedback) || $lastFailureInvestigation->Health_Safety_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Environment_Health_Safety_by != $request->Environment_Health_Safety_by && $request->Environment_Health_Safety_by != null) {
@@ -4190,7 +4973,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Environment_Health_Safety_by) || $lastFailureInvestigation->Environment_Health_Safety_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Environment_Health_Safety_on != $request->Environment_Health_Safety_on && $request->Environment_Health_Safety_on != null) {
@@ -4206,7 +4993,35 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Environment_Health_Safety_on) || $lastFailureInvestigation->Environment_Health_Safety_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->Environment_Health_Safety_attachment != $request->Environment_Health_Safety_attachment && $request->Environment_Health_Safety_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Safety Attachments';
+            $history->previous = is_array($lastCft->Environment_Health_Safety_attachment) ? json_encode($lastCft->Environment_Health_Safety_attachment) : $lastCft->Environment_Health_Safety_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+            
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->Environment_Health_Safety_attachment) || $lastFailureInvestigation->Environment_Health_Safety_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -4224,7 +5039,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Information_Technology_review) || $lastFailureInvestigation->Information_Technology_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Information_Technology_person != $request->Information_Technology_person && $request->Information_Technology_person != null) {
@@ -4240,7 +5059,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Information_Technology_person) || $lastFailureInvestigation->Information_Technology_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Information_Technology_assessment != $request->Information_Technology_assessment && $request->Information_Technology_assessment != null) {
@@ -4256,7 +5079,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Information_Technology_assessment) || $lastFailureInvestigation->Information_Technology_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Information_Technology_feedback != $request->Information_Technology_feedback && $request->Information_Technology_feedback != null) {
@@ -4272,7 +5099,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Information_Technology_feedback) || $lastFailureInvestigation->Information_Technology_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Information_Technology_by != $request->Information_Technology_by && $request->Information_Technology_by != null) {
@@ -4288,7 +5119,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Information_Technology_by) || $lastFailureInvestigation->Information_Technology_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Information_Technology_on != $request->Information_Technology_on && $request->Information_Technology_on != null) {
@@ -4304,10 +5139,37 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Information_Technology_on) || $lastFailureInvestigation->Information_Technology_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
+        if ($lastCft->Information_Technology_attachment != $request->Information_Technology_attachment && $request->Information_Technology_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Information Technology Attachments';
+           
+            $history->previous = is_array($lastCft->Information_Technology_attachment) ? json_encode($lastCft->Information_Technology_attachment) : $lastCft->Information_Technology_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->Information_Technology_attachment) || $lastFailureInvestigation->Information_Technology_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
         /*************** Contract Giver ***************/
         if ($lastCft->ContractGiver_Review != $request->ContractGiver_Review && $request->ContractGiver_Review != null) {
             $history = new FailureInvestigationAuditTrail;
@@ -4322,7 +5184,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->ContractGiver_Review) || $lastFailureInvestigation->ContractGiver_Review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ContractGiver_person != $request->ContractGiver_person && $request->ContractGiver_person != null) {
@@ -4338,7 +5204,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->ContractGiver_person) || $lastFailureInvestigation->ContractGiver_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ContractGiver_assessment != $request->ContractGiver_assessment && $request->ContractGiver_assessment != null) {
@@ -4354,7 +5224,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->ContractGiver_assessment) || $lastFailureInvestigation->ContractGiver_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ContractGiver_feedback != $request->ContractGiver_feedback && $request->ContractGiver_feedback != null) {
@@ -4370,7 +5244,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->ContractGiver_feedback) || $lastFailureInvestigation->ContractGiver_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ContractGiver_by != $request->ContractGiver_by && $request->ContractGiver_by != null) {
@@ -4386,7 +5264,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->ContractGiver_by) || $lastFailureInvestigation->ContractGiver_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->ContractGiver_on != $request->ContractGiver_on && $request->ContractGiver_on != null) {
@@ -4402,7 +5284,35 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->ContractGiver_on) || $lastFailureInvestigation->ContractGiver_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->ContractGiver_attachment != $request->ContractGiver_attachment && $request->ContractGiver_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Contract Giver Attachments';
+           
+            $history->previous = is_array($lastCft->ContractGiver_attachment) ? json_encode($lastCft->ContractGiver_attachment) : $lastCft->ContractGiver_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->ContractGiver_attachment) || $lastFailureInvestigation->ContractGiver_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -4420,7 +5330,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other1_review) || $lastFailureInvestigation->Other1_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other1_person != $request->Other1_person && $request->Other1_person != null) {
@@ -4436,7 +5350,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other1_person) || $lastFailureInvestigation->Other1_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other1_Department_person != $request->Other1_Department_person && $request->Other1_Department_person != null) {
@@ -4452,7 +5370,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other1_Department_person) || $lastFailureInvestigation->Other1_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other1_assessment != $request->Other1_assessment && $request->Other1_assessment != null) {
@@ -4468,7 +5390,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other1_assessment) || $lastFailureInvestigation->Other1_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other1_feedback != $request->Other1_feedback && $request->Other1_feedback != null) {
@@ -4484,7 +5410,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other1_feedback) || $lastFailureInvestigation->Other1_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other1_by != $request->Other1_by && $request->Other1_by != null) {
@@ -4500,7 +5430,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other1_by) || $lastFailureInvestigation->Other1_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other1_on != $request->Other1_on && $request->Other1_on != null) {
@@ -4516,10 +5450,36 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other1_on) || $lastFailureInvestigation->Other1_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
+        if ($lastCft->Other1_attachment != $request->Other1_attachment && $request->Other1_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = "Other's 1 Attachments ";
+            $history->previous = is_array($lastCft->Other1_attachment) ? json_encode($lastCft->Other1_attachment) : $lastCft->Other1_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+             $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->Other1_attachment) || $lastFailureInvestigation->Other1_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
 
         /*************** Other 2 ***************/
         if ($lastCft->Other2_review != $request->Other2_review && $request->Other2_review != null) {
@@ -4535,7 +5495,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other2_review) || $lastFailureInvestigation->Other2_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other2_person != $request->Other2_person && $request->Other2_person != null) {
@@ -4551,7 +5515,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other2_person) || $lastFailureInvestigation->Other2_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other2_Department_person != $request->Other2_Department_person && $request->Other2_Department_person != null) {
@@ -4567,7 +5535,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other2_Department_person) || $lastFailureInvestigation->Other2_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other2_assessment != $request->Other2_assessment && $request->Other2_assessment != null) {
@@ -4583,7 +5555,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other2_assessment) || $lastFailureInvestigation->Other2_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other2_feedback != $request->Other2_feedback && $request->Other2_feedback != null) {
@@ -4599,7 +5575,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other2_feedback) || $lastFailureInvestigation->Other2_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other2_by != $request->Other2_by && $request->Other2_by != null) {
@@ -4615,7 +5595,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other2_by) || $lastFailureInvestigation->Other2_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other2_on != $request->Other2_on && $request->Other2_on != null) {
@@ -4631,7 +5615,35 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other2_on) || $lastFailureInvestigation->Other2_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->Other2_attachment != $request->Other2_attachment && $request->Other2_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = "Other's 2 Attachments";
+            
+            $history->previous = is_array($lastCft->Other2_attachment) ? json_encode($lastCft->Other2_attachment) : $lastCft->Other2_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+              $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->Other2_attachment) || $lastFailureInvestigation->Other2_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -4649,7 +5661,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other3_review) || $lastFailureInvestigation->Other3_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other3_person != $request->Other3_person && $request->Other3_person != null) {
@@ -4665,7 +5681,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other3_person) || $lastFailureInvestigation->Other3_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other3_Department_person != $request->Other3_Department_person && $request->Other3_Department_person != null) {
@@ -4681,7 +5701,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other3_Department_person) || $lastFailureInvestigation->Other3_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other3_assessment != $request->Other3_assessment && $request->Other3_assessment != null) {
@@ -4697,7 +5721,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other3_assessment) || $lastFailureInvestigation->Other3_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other3_feedback != $request->Other3_feedback && $request->Other3_feedback != null) {
@@ -4713,7 +5741,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other3_feedback) || $lastFailureInvestigation->Other3_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other3_by != $request->Other3_by && $request->Other3_by != null) {
@@ -4729,7 +5761,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other3_by) || $lastFailureInvestigation->Other3_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
@@ -4745,10 +5781,37 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other3_on) || $lastFailureInvestigation->Other3_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
+        if ($lastCft->Other3_attachment != $request->Other3_attachment && $request->Other3_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Others 3 Attachments';
+          
+            $history->previous = is_array($lastCft->Other3_attachment) ? json_encode($lastCft->Other3_attachment) : $lastCft->Other3_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->Other3_attachment) || $lastFailureInvestigation->Other3_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
         /*************** Other 4 ***************/
         if ($lastCft->Other4_review != $request->Other4_review && $request->Other4_review != null) {
             $history = new FailureInvestigationAuditTrail;
@@ -4763,7 +5826,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other4_review) || $lastFailureInvestigation->Other4_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other4_person != $request->Other4_person && $request->Other4_person != null) {
@@ -4779,7 +5846,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other4_person) || $lastFailureInvestigation->Other4_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other4_Department_person != $request->Other4_Department_person && $request->Other4_Department_person != null) {
@@ -4795,7 +5866,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other4_Department_person) || $lastFailureInvestigation->Other4_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other4_assessment != $request->Other4_assessment && $request->Other4_assessment != null) {
@@ -4811,7 +5886,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other4_assessment) || $lastFailureInvestigation->Other4_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other4_feedback != $request->Other4_feedback && $request->Other4_feedback != null) {
@@ -4827,7 +5906,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other4_feedback) || $lastFailureInvestigation->Other4_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other4_by != $request->Other4_by && $request->Other4_by != null) {
@@ -4843,7 +5926,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other4_by) || $lastFailureInvestigation->Other4_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other4_on != $request->Other4_on && $request->Other4_on != null) {
@@ -4859,7 +5946,35 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+        if (is_null($lastFailureInvestigation->Other4_on) || $lastFailureInvestigation->Other4_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        if ($lastCft->Other4_attachment != $request->Other4_attachment && $request->Other4_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Others 4 Attachments';
+            $history->previous = is_array($lastCft->Other4_attachment) ? json_encode($lastCft->Other4_attachment) : $lastCft->Other4_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+              $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+        if (is_null($lastFailureInvestigation->Other4_attachment) || $lastFailureInvestigation->Other4_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -4877,7 +5992,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Other5_review) || $lastFailureInvestigation->Other5_review === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other5_person != $request->Other5_person && $request->Other5_person != null) {
@@ -4893,7 +6012,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Other5_person) || $lastFailureInvestigation->Other5_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other5_Department_person != $request->Other5_Department_person && $request->Other5_Department_person != null) {
@@ -4909,7 +6032,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Other5_Department_person) || $lastFailureInvestigation->Other5_Department_person === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other5_assessment != $request->Other5_assessment && $request->Other5_assessment != null) {
@@ -4925,7 +6052,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Other5_assessment) || $lastFailureInvestigation->Other5_assessment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other5_feedback != $request->Other5_feedback && $request->Other5_feedback != null) {
@@ -4941,7 +6072,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Other5_feedback) || $lastFailureInvestigation->Other5_feedback === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other5_by != $request->Other5_by && $request->Other5_by != null) {
@@ -4957,7 +6092,11 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
-            $history->action_name = 'Update';
+            if (is_null($lastFailureInvestigation->Other5_by) || $lastFailureInvestigation->Other5_by === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastCft->Other5_on != $request->Other5_on && $request->Other5_on != null) {
@@ -4972,8 +6111,36 @@ class FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->change_from = $lastFailureInvestigation->status;
+            if (is_null($lastFailureInvestigation->Other5_on) || $lastFailureInvestigation->Other5_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+        if ($lastCft->Other5_attachment != $request->Other5_attachment && $request->Other5_attachment != null) {
+            $history = new FailureInvestigationAuditTrail;
+            $history->failure_investigation_id = $id;
+            $history->activity_type = 'Others 5 Attachments';
+            
+            $history->previous = is_array($lastCft->Other5_attachment) ? json_encode($lastCft->Other5_attachment) : $lastCft->Other5_attachment;
+            $history->current = is_array($files) && !empty($files) 
+            ? json_encode($files) 
+            : 'Not Applicable';
+             $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastFailureInvestigation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastFailureInvestigation->status;
+            if (is_null($lastFailureInvestigation->Other4_attachment) || $lastFailureInvestigation->Other4_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -5665,7 +6832,7 @@ class FailureInvestigationController extends Controller
                 if ($failureInvestigation->stage == 1) {
                     if ($failureInvestigation->form_progress !== 'general-open')
                     {
-                        dd('emnter');
+                        //dd('emnter');
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
@@ -6577,7 +7744,7 @@ class FailureInvestigationController extends Controller
             $lastDocument = FailureInvestigation::find($id);
 
             if ($failureInvestigation->stage == 2) {
-                $failureInvestigation->stage = "2";
+                $failureInvestigation->stage = "1";
                 $failureInvestigation->status = "Opened";
                 $failureInvestigation->qa_more_info_required_by = Auth::user()->name;
                 $failureInvestigation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
