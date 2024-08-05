@@ -2697,7 +2697,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-
+                                                'q_m_s_roles_id' => 50,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -2848,7 +2848,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 50,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3021,7 +3021,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 26,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3179,7 +3179,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 26,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3336,7 +3336,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 51,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3494,7 +3494,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 51,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3667,7 +3667,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 52,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3825,7 +3825,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 52,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3984,7 +3984,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 53,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4144,7 +4144,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 53,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4317,7 +4317,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 54,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4470,7 +4470,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 54,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4629,7 +4629,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 24,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4783,7 +4783,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 24,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4940,7 +4940,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 55,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5101,7 +5101,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 55,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5260,7 +5260,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 25,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5414,7 +5414,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 25,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5574,7 +5574,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 31,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5728,7 +5728,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 31,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5885,7 +5885,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 56,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6039,7 +6039,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 56,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6197,7 +6197,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 57,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6355,7 +6355,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 57,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6513,7 +6513,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 58,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6680,7 +6680,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 58,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6844,7 +6844,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 59,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7004,7 +7004,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 59,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7165,7 +7165,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 32,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7327,7 +7327,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 32,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7487,7 +7487,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 60,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7641,7 +7641,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 60,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();

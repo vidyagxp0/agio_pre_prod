@@ -971,7 +971,8 @@ public static function sendApproved(Request $request,$id)
         // dd($audit);
         $today = Carbon::now()->format('d-m-y');
         $document = extension_new::where('id', $id)->first();
-        $document->initiator = User::where('id', $document->initiator_id)->value('name');
+        $document->initiator = User::where('id', $document->initiator)->value('name');
+       // dd($document);
         return view('frontend.extension.audit_trailNew', compact('audit', 'document', 'today'));
     }
 }
