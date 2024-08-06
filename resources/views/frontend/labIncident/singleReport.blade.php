@@ -236,7 +236,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Date Of Analysis</th>
-                        <td class="w-30">@if($data->incident_date_analysis_gi){{ $data->incident_date_analysis_gi }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->incident_date_analysis_gi){{ Helpers::getdateFormat($data->incident_date_analysis_gi) }}@else Not Applicable @endif</td>
                         <th class="w-20">Specification Number</th>
                         <td class="w-30">@if($data->incident_specification_no_gi){{ $data->incident_specification_no_gi }}@else Not Applicable @endif</td>
                     </tr>
@@ -248,13 +248,13 @@
                     </tr>
                     <tr>
                         <th class="w-20">Date Of Incidence</th>
-                        <td class="w-30">@if($data->incident_date_incidence_gi){{ $data->incident_date_incidence_gi }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->incident_date_incidence_gi){{ Helpers::getdateFormat($data->incident_date_incidence_gi) }}@else Not Applicable @endif</td>
                         <th class="w-20">Description Of Incidence</th>
                         <td class="w-30">@if($data->description_incidence_gi){{ $data->description_incidence_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Due Date</th>
-                        <td class="w-30">@if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
                         <th class="w-20">Section Date</th>
                          <td class="w-30">@isset($data->section_sign_date_gi) {{ Helpers::getInitiatorName($data->section_sign_date_gi) }} @else Not Applicable @endisset</td>
 
@@ -356,7 +356,7 @@
                         <th class="w-20">Test</th>
                         <td class="w-30">@if($singlereport->test_ssfi){{ $singlereport->test_ssfi }}@else Not Applicable @endif</td>
                         <th class="w-20">Date Of Analysis</th>
-                        <td class="w-30">@if($singlereport->Incident_date_analysis_ssfi){{ $singlereport->Incident_date_analysis_ssfi }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($singlereport->Incident_date_analysis_ssfi){{ Helpers::getdateFormat($singlereport->Incident_date_analysis_ssfi) }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Specification Number</th>
@@ -366,7 +366,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Date Of Incidence</th>
-                        <td class="w-30">@if($singlereport->Incident_date_incidence_ssfi){{ $singlereport->Incident_date_incidence_ssfi }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($singlereport->Incident_date_incidence_ssfi){{ Helpers::getdateFormat($singlereport->Incident_date_incidence_ssfi) }}@else Not Applicable @endif</td>
                         <th class="w-20">Description Of Incidence</th>
                         <td class="w-30">@if($singlereport->Description_incidence_ssfi){{ $singlereport->Description_incidence_ssfi }}@else Not Applicable @endif</td>
                     </tr>

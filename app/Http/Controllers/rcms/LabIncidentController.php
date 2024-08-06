@@ -459,6 +459,125 @@ class LabIncidentController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
+
+        if(!empty($data->qc_head_closure)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QC Head Closure';
+            $history->previous = "Null";
+            $history->current = Helpers::getInitiatorName($data->qc_head_closure);
+            $history->comment = "No Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        if(!empty($labnew->qc_hear_remark_c)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $labnew->id;
+            $history->activity_type = 'QC Head Remark';
+            $history->previous = "Null";
+            $history->current = $labnew->qc_hear_remark_c;
+            $history->comment = "No Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        if(!empty($labnew->closure_incident_c)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $labnew->id;
+            $history->activity_type = 'Closure Of Incident';
+            $history->previous = "Null";
+            $history->current = $labnew->closure_incident_c;
+            $history->comment = "No Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        // if(!empty($data->record)) {
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $data->id;
+        //     $history->activity_type = 'Record Number';
+        //     $history->previous = "Null";
+        //     $history->current = $data->record;
+        //     $history->comment = "No Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $data->status;
+        //     $history->change_to = "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = "Create";
+        //     $history->save();
+        // }
+
+        if(!empty($data->initiator_id)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Initiator Name';
+            $history->previous = "Null";
+            $history->current = Helpers::getInitiatorName($data->initiator_id);
+            $history->comment = "No Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        if(!empty($data->intiation_date)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Date Of Initiation';
+            $history->previous = "Null";
+            $history->current = Carbon::parse($data->intiation_date)->format('d-M-Y');
+            $history->comment = "No Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        if(!empty($data->division_id)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Site/Location Code';
+            $history->previous = "Null";
+            $history->current = Helpers::getDivisionName($data->division_id);
+            $history->comment = "No Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
         // $initiatorGroup = $data->Initiator_Group;
         // $departmentName = $departments[$initiatorGroup] ?? 'Unknown Department';
         // if (!empty($departmentName)) {
@@ -496,7 +615,7 @@ class LabIncidentController extends Controller
         if (!empty($data->other_incidence)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Other Ref.Doc.No';
+            $history->activity_type = 'Other Incidence';
             $history->previous = "Null";
             $history->current = $data->other_incidence;
             $history->comment = "Not Applicable";
@@ -515,7 +634,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = $data->due_date;
+            $history->current = Carbon::parse($data->due_date)->format('d-M-Y');
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -596,7 +715,7 @@ class LabIncidentController extends Controller
         if (!empty($data->stage_stage_gi)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Instrument Involved';
+            $history->activity_type = 'Stage';
             $history->previous = "Null";
             $history->current = $data->stage_stage_gi;
             $history->comment = "Not Applicable";
@@ -612,7 +731,7 @@ class LabIncidentController extends Controller
         if (!empty($data->incident_stability_cond_gi)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Stability';
+            $history->activity_type = 'Stability Condition (If Applicable)';
             $history->previous = "Null";
             $history->current = $data->incident_stability_cond_gi;
             $history->comment = "Not Applicable";
@@ -629,7 +748,7 @@ class LabIncidentController extends Controller
          if (!empty($data->incident_interval_others_gi)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Interval';
+            $history->activity_type = 'Interval (If Applicable)';
             $history->previous = "Null";
             $history->current = $data->incident_interval_others_gi;
             $history->comment = "Not Applicable";
@@ -663,7 +782,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Date Of Analysis';
             $history->previous = "Null";
-            $history->current =$data->incident_date_analysis_gi;
+            $history->current = Carbon::parse($data->incident_date_analysis_gi)->format('d-M-Y');
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -727,7 +846,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Date Of Incidence';
             $history->previous = "Null";
-            $history->current = $data->incident_date_incidence_gi;
+            $history->current = Carbon::parse($data->incident_date_incidence_gi)->format('d-M-Y');
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -759,7 +878,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Reported By';
             $history->previous = "Null";
-            $history->current = $data->analyst_sign_date_gi;
+            $history->current = Helpers::getInitiatorName($data->analyst_sign_date_gi);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -775,7 +894,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Section Head Name';
             $history->previous = "Null";
-            $history->current = $data->section_sign_date_gi;
+            $history->current = Helpers::getInitiatorName($data->section_sign_date_gi);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1312,9 +1431,9 @@ class LabIncidentController extends Controller
         if (!empty($data->qc_review_to)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'QC Review To';
+            $history->activity_type = 'QC Review';
             $history->previous = "Null";
-            $history->current = $data->qc_review_to;
+            $history->current = Helpers::getInitiatorName($data->qc_review_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1331,7 +1450,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Investigator QC';
             $history->previous = "Null";
-            $history->current = $data->investigator_qc;
+            $history->current = Helpers::getInitiatorName($data->investigator_qc);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1600,7 +1719,7 @@ class LabIncidentController extends Controller
     if (!empty($data->Investigation_Details)) {
         $history = new LabIncidentAuditTrial();
         $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Investigation_Details';
+        $history->activity_type = 'Investigation Details';
         $history->previous = "Null";
         $history->current = $data->Investigation_Details;
         $history->comment = "Not Applicable";
@@ -1617,7 +1736,7 @@ class LabIncidentController extends Controller
     if (!empty($data->Action_Taken)) {
         $history = new LabIncidentAuditTrial();
         $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Action_Taken';
+        $history->activity_type = 'Action Taken';
         $history->previous = "Null";
         $history->current = $data->Action_Taken;
         $history->comment = "Not Applicable";
@@ -1634,7 +1753,7 @@ class LabIncidentController extends Controller
     if (!empty($data->Root_Cause)) {
         $history = new LabIncidentAuditTrial();
         $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Root_Cause';
+        $history->activity_type = 'Root Cause';
         $history->previous = "Null";
         $history->current = $data->Root_Cause;
         $history->comment = "Not Applicable";
@@ -1668,7 +1787,7 @@ class LabIncidentController extends Controller
     if (!empty($data->Currective_Action)) {
         $history = new LabIncidentAuditTrial();
         $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Currective_Action';
+        $history->activity_type = 'Currective Action';
         $history->previous = "Null";
         $history->current = $data->Currective_Action;
         $history->comment = "Not Applicable";
@@ -1920,12 +2039,12 @@ class LabIncidentController extends Controller
         $history->save();
     }
 
-    if (!empty($data->Incident_date_analysis_ssfi)) {
+    if (!empty($labnew->Incident_date_analysis_ssfi)) {
         $history = new LabIncidentAuditTrial();
-        $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Date Of Analysis';
+        $history->LabIncident_id = $labnew->id;
+        $history->activity_type = 'Date Of Analysis SSFI';
         $history->previous = "Null";
-        $history->current = $data->Incident_date_analysis_ssfi;
+        $history->current = Carbon::parse($labnew->Incident_date_analysis_ssfi)->format('d-M-Y');
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1971,12 +2090,12 @@ class LabIncidentController extends Controller
         $history->save();
     }
 
-    if (!empty($data->Incident_date_incidence_ssfi)) {
+    if (!empty($labnew->Incident_date_incidence_ssfi)) {
         $history = new LabIncidentAuditTrial();
-        $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Date Of Incidence';
+        $history->LabIncident_id = $labnew->id;
+        $history->activity_type = 'Date Of Incidence SSFI';
         $history->previous = "Null";
-        $history->current = $data->Incident_date_incidence_ssfi;
+        $history->current = Carbon::parse($labnew->Incident_date_incidence_ssfi)->format('d-M-Y');
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1993,7 +2112,7 @@ class LabIncidentController extends Controller
         $history->LabIncident_id = $data->id;
         $history->activity_type = 'QC Reviewer';
         $history->previous = "Null";
-        $history->current = $data->suit_qc_review_to;
+        $history->current = Helpers::getInitiatorName($data->suit_qc_review_to);
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -2407,6 +2526,29 @@ class LabIncidentController extends Controller
             $history->save();
            
         }
+
+        if ($lastDocument->qc_head_closure != $data->qc_head_closure ) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QC Head Closure';
+            $history->previous = Helpers::getInitiatorName($lastDocument->qc_head_closure);
+            $history->current = Helpers::getInitiatorName($data->qc_head_closure);
+            $history->comment = $request->qc_head_closure_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->qc_head_closure) || $lastDocument->qc_head_closure === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+           
+        }
+
         if ($lastDocument->other_incidence != $data->other_incidence ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -2819,6 +2961,52 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
            
         }
 
+        if ($labtab->qc_hear_remark_c != $labtab->qc_hear_remark_c ) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'QC Head Remark';
+            $history->previous = $labtab->qc_hear_remark_c;
+            $history->current = $labtab->qc_hear_remark_c;
+            $history->comment = $request->qc_hear_remark_comments;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($labtab->qc_hear_remark_c) || $labtab->qc_hear_remark_c === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+           
+        }
+
+        if ($labtab->closure_incident_c != $data->closure_incident_c ) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Closure Of Incident';
+            $history->previous = $labtab->closure_incident_c;
+            $history->current = $labtab->closure_incident_c;
+            $history->comment = $request->closure_incident_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($labtab->closure_incident_c) || $labtab->closure_incident_c === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+           
+        }
+
         $department = [
             'CQA' => 'Corporate Quality Assurance',
             'QAB' => 'Quality Assurance Biopharma',
@@ -3081,6 +3269,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
            
             $history->save();
         }
+        
         if ($lastDocument->Instrument_Details != $data->Instrument_Details ) {
 
             $history = new LabIncidentAuditTrial();
@@ -5197,7 +5386,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
             if ($changeControl->stage == 10) {
                 $changeControl->stage = "11";
-                $changeControl->status = "Closed-Done";
+                $changeControl->status = "Closed - Done";
                 $changeControl->closure_completed_by = Auth::user()->name;
                 $changeControl->closure_completed_on = Carbon::now()->format('d-M-Y');
                 $changeControl->closure_comment =$request->comment;
