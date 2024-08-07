@@ -1436,11 +1436,12 @@ $(document).ready(function() {
                             Activity Log
                         </div></center>
 
+                        
                         <div class="sub-head col-lg-12">
                             Submit
                         </div>
                         <div class="col-lg-4">
-                           
+
                             <div class="group-input">
                                 <label for="Initiator Group">Submit By : </label>
                                 <div class="static"></div>
@@ -1451,7 +1452,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Submit On : </label>
+                                <label for="OOC Logged On">Submit On: </label>
                                 <div class="static"></div>
 
 
@@ -1467,85 +1468,55 @@ $(document).ready(function() {
                         </div>
                         </div>
 
-                        <div class="sub-head col-lg-12">
-                            HOD Primary Review
-                        </div>
+                        <div class="sub-head col-lg-12">HOD Primary Review</div>
 
                         <div class="col-lg-4">
-                            
+
                             <div class="group-input">
-                                <label for="Initiator Group">HOD Review Completed By : </label>
+                                <label for="Initiator Group">HOD Primary Review Completed By: </label>
                                 <div class="static"></div>
 
                             </div>
                         </div>
 
                         <div class="col-lg-4 new-date-data-field">
-                            
+
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">HOD Review Completed On :</label>
-                                </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="hod_review_occ_comment">Comment : </label>
-                                <div class="static"></div>
-
-
-
-
-
-                            </div>
-                        </div>
-
-                        <div class="sub-head col-lg-12">
-                            QA Intial Review
-                        </div>
-                        <div class="col-lg-4">
-                          
-                            <div class="group-input">
-
-                                <label for="Initiator Group">QA Initial Review Completed By :</label>
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">QA Initial Review Completed On : </label>
-
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="qa_intial_review_ooc_comment">Comment : </label>
-                                <div class="static"></div>
-
-                            </div>
-                        </div>
-
-
-                        <div class="sub-head col-lg-12">
-                            QA Final Review
-                        </div>
-                        <div class="col-lg-4">
-                            
-                            <div class="group-input">
-                                <label for="Initiator Group">QA Final Review Completed By : </label>
-                                <div class="static"></div>
-
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">QA Final Review Completed On : </label>
+                                <label for="OOC Logged On">HOD Primary Review Completed On</label>
                                 <div class="static"></div>
                                 
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="hod_review_occ_comment"> Comment : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        CQA/QA Head Primary Review
+                        </div>
+                        <div class="col-lg-4">
+
+                            <div class="group-input">
+
+                                <label for="Initiator Group">CQA/QA Head Primary Review Complete By :</label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">CQA/QA Head Primary Review Complete On : </label>
+                                <div class="static"></div>
+
 
 
 
@@ -1553,14 +1524,668 @@ $(document).ready(function() {
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="qa_final_review_comment">Comment : </label>
+                                <label for="qa_intial_review_ooc_comment">Comment</label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+                        <div class="sub-head col-lg-12">
+                            Phase IA Investigation
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IA Investigation Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IA Investigation Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
                                 <div class="static"></div>
 
                             </div>
                         </div>
 
 
-                        
+
+                        <div class="sub-head col-lg-12">
+                        Phase IA HOD Primary Review 
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IA HOD Primary Review Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IA HOD Primary Review Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        Phase IA QA Review
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IA QA Review Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IA QA Review Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Assignable Cause Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Assignable Cause Found Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Assignable Cause Found Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        Assignable Cause Not Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Assignable Cause Not Found Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Assignable Cause Not Found Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+                        <div class="sub-head col-lg-12">
+                            Phase IB Investigation</div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB Investigation By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IB Investigation  On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase IB HOD Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB HOD Review Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IB HOD Review Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="sub-head col-lg-12">
+                            Phase IB QA Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB QA Review Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IB QA Review Complete  On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        P-IB Assignable Cause Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-IB Assignable Cause Found By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-IB Assignable Cause Found On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="sub-head col-lg-12">
+                        P-IB Assignable Cause Not Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-IB Assignable Cause Not Found By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-IB Assignable Cause Found On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II A Investigation
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II A Investigation By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II A Investigation On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II A HOD Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II A HOD Review Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II A HOD Review Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II A QA Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II A QA Review Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II A QA Review Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        P-II A Assignable Cause Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II A Assignable Cause Found By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-II A Assignable Cause Found On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        P-II A Assignable Cause Not Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II A Assignable Cause Not Found By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-II A Assignable Cause Not Found On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II B Investigation
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II B Investigation By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II B Investigation On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II B HOD Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II B HOD Review Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II B HOD Review Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        Phase II B QA Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II B QA Review Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II B QA Review Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        P-II B Assignable Cause Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II B Assignable Cause Found By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-II B Assignable Cause Found On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        P-II B Assignable Cause Not Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II B Assignable Cause Not Found By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-II B Assignable Cause Not Found On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
                         <div class="sub-head col-lg-12">
                             Cancel
                         </div>
@@ -1590,37 +2215,6 @@ $(document).ready(function() {
                                 <label for="comment">Comment : </label>
                                 <div class="static"></div>
                         </div>
-                        </div>
-                        <div class="sub-head col-lg-12">
-                            Closure
-                        </div>
-                      <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Initiator Group">Closure Done By : </label>
-                                <div class="static"></div>
-
-
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">Closure Done On : </label>
-                                <div class="static"></div>
-
-
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static"></div>
-
-                            </div>
                         </div>
 
                         

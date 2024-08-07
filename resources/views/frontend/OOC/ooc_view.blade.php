@@ -359,7 +359,7 @@ $users = DB::table('users')->get();
                     Request More Info
                 </button>
 
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button> 
                 
@@ -423,7 +423,7 @@ $users = DB::table('users')->get();
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
                 </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                     Child
                 </button>
 
@@ -473,7 +473,7 @@ $users = DB::table('users')->get();
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                      More Information Required
                 </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                     Child
                 </button>
 
@@ -503,7 +503,7 @@ $users = DB::table('users')->get();
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 P-II B Assignable Cause Found
                 </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal2">
                 P-II B Assignable Cause Not Found
                 </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
@@ -970,6 +970,49 @@ $users = DB::table('users')->get();
                             <button type="button" data-bs-dismiss="modal">Close</button>
                           
                  </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="rejection-modal2">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('RejectStateChangeTwo', $ooc->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and an outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comment <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="comment" required>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </form>
         </div>
     </div>
@@ -2518,36 +2561,6 @@ $(document).ready(function() {
                             </div>
                         </div>
 
-                        <!-- <div class="sub-head col-lg-12">
-                            Phase IA Investigation
-                        </div>
-                        <div class="col-lg-4">
-
-                            <div class="group-input">
-                                <label for="Initiator Group">Phase IA Investigation Complete By : </label>
-                                <div class="static">{{$ooc->correction_completed_by}}</div>
-
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">Phase IA Investigation Completed On : </label>
-                                <div class="static">{{$ooc->correction_completed_on}}</div>
-
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="qa_final_review_comment">Comment : </label>
-                                <div class="static">{{$ooc->correction_completed_comment}}</div>
-
-                            </div>
-                        </div> -->
 
 
                         <div class="sub-head col-lg-12">
@@ -2565,7 +2578,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Phase IA HOD Primary Review Complete  On : </label>
+                                <label for="OOC Logged On">Phase IA HOD Primary Review Complete On : </label>
                                 <div class="static">{{$ooc->obvious_r_completed_on}}</div>
 
 
@@ -2582,45 +2595,12 @@ $(document).ready(function() {
                             </div>
                         </div>
 
-
-<!--                         
                         <div class="sub-head col-lg-12">
-                            Correction Complete
+                        Phase IA QA Review
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Correction Complete By : </label>
-                                <div class="static">{{$ooc->correction_ooc_completed_by}}</div>
-
-
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">Correction Complete On : </label>
-                                <div class="static">{{$ooc->correction_ooc_completed_on}}</div>
-
-
-
-
-
-                            </div>
-                        </div> -->
-                        <!-- <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->correction_ooc_comment}}</div>
-
-                            </div>
-                        </div> -->
-
-                        <div class="sub-head col-lg-12">
-                            Phase IB Investigation</div>
-                      <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Initiator Group">Phase IB Investigation By : </label>
+                                <label for="Initiator Group">Phase IA QA Review Complete By : </label>
                                 <div class="static">{{$ooc->cause_i_completed_by}}</div>
 
 
@@ -2630,7 +2610,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Phase IB Investigation  On : </label>
+                                <label for="OOC Logged On">Phase IA QA Review Complete On : </label>
                                 <div class="static">{{$ooc->cause_i_completed_on}}</div>
 
 
@@ -2647,13 +2627,14 @@ $(document).ready(function() {
                             </div>
                         </div>
 
+
                         <div class="sub-head col-lg-12">
-                            Phase IA QA Review Complete
+                        Assignable Cause Found
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase IA QA Review Complete By : </label>
-                                <div class="static">{{$ooc->correction_ooc_completed_by}}</div>
+                                <label for="Initiator Group">Assignable Cause Found Complete By : </label>
+                                <div class="static">{{$ooc->approved_ooc_completed_by}}</div>
 
 
                             </div>
@@ -2662,8 +2643,8 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Phase IA QA Review Complete  On : </label>
-                                <div class="static">{{$ooc->correction_ooc_completed_on}}</div>
+                                <label for="OOC Logged On">Assignable Cause Found Complete On : </label>
+                                <div class="static">{{$ooc->approved_ooc_completed_on}}</div>
 
 
 
@@ -2674,47 +2655,13 @@ $(document).ready(function() {
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->correction_ooc_comment}}</div>
+                                <div class="static">{{$ooc->approved_ooc_comment}}</div>
 
                             </div>
                         </div>
-
 
                         <div class="sub-head col-lg-12">
-                            Correction Complete
-                        </div>
-                      <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Initiator Group">Correction Completed By : </label>
-                                <div class="static">{{$ooc->correction_ooc_completed_by}}</div>
-
-
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">Correction Completed  On : </label>
-                                <div class="static">{{$ooc->correction_ooc_completed_on}}</div>
-
-
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->correction_ooc_comment}}</div>
-
-                            </div>
-                        </div>
-
-
-                        <div class="sub-head col-lg-12">
-                            Assignable Cause Not Found
+                        Assignable Cause Not Found
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
@@ -2744,18 +2691,12 @@ $(document).ready(function() {
 
                             </div>
                         </div>
-
-
-                       
-
-                     
                         <div class="sub-head col-lg-12">
-                            Cause Not Identified
-                        </div>
+                            Phase IB Investigation</div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Cause Not Identified By : </label>
-                                <div class="static">{{$ooc->cause_n_i_completed_by}}</div>
+                                <label for="Initiator Group">Phase IB Investigation By : </label>
+                                <div class="static">{{$ooc->correction_ooc_completed_by}}</div>
 
 
                             </div>
@@ -2764,8 +2705,8 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Cause Not Identified  On : </label>
-                                <div class="static">{{$ooc->cause_n_i_completed_on}}</div>
+                                <label for="OOC Logged On">Phase IB Investigation  On : </label>
+                                <div class="static">{{$ooc->correction_ooc_completed_on}}</div>
 
 
 
@@ -2776,19 +2717,19 @@ $(document).ready(function() {
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->cause_n_i_completed_comment}}</div>
+                                <div class="static">{{$ooc->correction_ooc_comment}}</div>
 
                             </div>
                         </div>
 
 
                         <div class="sub-head col-lg-12">
-                            QA Review Complete
+                        Phase IB HOD Review Complete
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">QA Review Complete By : </label>
-                                <div class="static">{{$ooc->qareview_ooc_completed_by}}</div>
+                                <label for="Initiator Group">Phase IB HOD Review Complete By : </label>
+                                <div class="static">{{$ooc->Phase_IB_HOD_Review_Completed_BY}}</div>
 
 
                             </div>
@@ -2797,8 +2738,8 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">QA Review Complete  On : </label>
-                                <div class="static">{{$ooc->qareview_ooc_completed_on}}</div>
+                                <label for="OOC Logged On">Phase IB HOD Review Complete On : </label>
+                                <div class="static">{{$ooc->Phase_IB_HOD_Review_Completed_ON}}</div>
 
 
 
@@ -2809,7 +2750,7 @@ $(document).ready(function() {
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->qareview_ooc_comment}}</div>
+                                <div class="static">{{$ooc->Phase_IB_HOD_Review_Completed_Comment}}</div>
 
                             </div>
                         </div>
@@ -2817,20 +2758,13 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-
-
-
                         <div class="sub-head col-lg-12">
-                            Approved
+                            Phase IB QA Review Complete
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Approved By : </label>
-                                <div class="static">{{$ooc->approved_ooc_completed_by}}</div>
+                                <label for="Initiator Group">Phase IB QA Review Complete By : </label>
+                                <div class="static">{{$ooc->Phase_IB_QA_Review_Complete_12_by}}</div>
 
 
                             </div>
@@ -2839,8 +2773,8 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Approved  On : </label>
-                                <div class="static">{{$ooc->approved_ooc_completed_on}}</div>
+                                <label for="OOC Logged On">Phase IB QA Review Complete  On : </label>
+                                <div class="static">{{$ooc->Phase_IB_QA_Review_Complete_12_on}}</div>
 
 
 
@@ -2851,13 +2785,408 @@ $(document).ready(function() {
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->approved_ooc_comment}}</div>
+                                <div class="static">{{$ooc->Phase_IB_QA_Review_Complete_12_comment}}</div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        P-IB Assignable Cause Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-IB Assignable Cause Found By : </label>
+                                <div class="static">{{$ooc->P_IB_Assignable_Cause_Found_by}}</div>
+
 
                             </div>
                         </div>
 
 
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-IB Assignable Cause Found On : </label>
+                                <div class="static">{{$ooc->P_IB_Assignable_Cause_Found_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->P_IB_Assignable_Cause_Found_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="sub-head col-lg-12">
+                        P-IB Assignable Cause Not Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-IB Assignable Cause Not Found By : </label>
+                                <div class="static">{{$ooc->Under_Phase_II_A_Investigation_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-IB Assignable Cause Found On : </label>
+                                <div class="static">{{$ooc->Under_Phase_II_A_Investigation_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->Under_Phase_II_A_Investigation_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II A Investigation
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II A Investigation By : </label>
+                                <div class="static">{{$ooc->Phase_II_A_Investigation_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II A Investigation On : </label>
+                                <div class="static">{{$ooc->Phase_II_A_Investigation_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->Phase_II_A_Investigation_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II A HOD Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II A HOD Review Complete By : </label>
+                                <div class="static">{{$ooc->Phase_II_A_HOD_Review_Complete_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II A HOD Review Complete On : </label>
+                                <div class="static">{{$ooc->Phase_II_A_HOD_Review_Complete_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->Phase_II_A_HOD_Review_Complete_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II A QA Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II A QA Review Complete By : </label>
+                                <div class="static">{{$ooc->Phase_II_A_QA_Review_Complete_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II A QA Review Complete On : </label>
+                                <div class="static">{{$ooc->Phase_II_A_QA_Review_Complete_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->Phase_II_A_QA_Review_Complete_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        P-II A Assignable Cause Found
+                        </div>
+                      <div class="col-lg-4">
                         
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II A Assignable Cause Found By : </label>
+                                <div class="static">{{$ooc->P_II_A_Assignable_Cause_Found_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-II A Assignable Cause Found On : </label>
+                                <div class="static">{{$ooc->P_II_A_Assignable_Cause_Found_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->P_II_A_Assignable_Cause_Found_comment}}</div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        P-II A Assignable Cause Not Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II A Assignable Cause Not Found By : </label>
+                                <div class="static">{{$ooc->P_II_A_Assignable_Cause_Not_Found_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-II A Assignable Cause Not Found On : </label>
+                                <div class="static">{{$ooc->P_II_A_Assignable_Cause_Not_Found_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->P_II_A_Assignable_Cause_Not_Found_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II B Investigation
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II B Investigation By : </label>
+                                <div class="static">{{$ooc->Phase_II_B_Investigation_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II B Investigation On : </label>
+                                <div class="static">{{$ooc->Phase_II_B_Investigation_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->Phase_II_B_Investigation_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II B HOD Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II B HOD Review Complete By : </label>
+                                <div class="static">{{$ooc->Phase_II_B_HOD_Review_Complete_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II B HOD Review Complete On : </label>
+                                <div class="static">{{$ooc->Phase_II_B_HOD_Review_Complete_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->Phase_II_B_HOD_Review_Complete_comment}}</div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        Phase II B QA Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II B QA Review Complete By : </label>
+                                <div class="static">{{$ooc->Phase_II_B_QA_ReviewComplete_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II B QA Review Complete On : </label>
+                                <div class="static">{{$ooc->Phase_II_B_QA_ReviewComplete_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->Phase_II_B_QA_ReviewComplete_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        P-II B Assignable Cause Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II B Assignable Cause Found By : </label>
+                                <div class="static">{{$ooc->P_II_B_Assignable_Cause_Found_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-II B Assignable Cause Found On : </label>
+                                <div class="static">{{$ooc->P_II_B_Assignable_Cause_Found_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->P_II_B_Assignable_Cause_Found_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        P-II B Assignable Cause Not Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II B Assignable Cause Not Found By : </label>
+                                <div class="static">{{$ooc->new_stage_reject_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-II B Assignable Cause Not Found On : </label>
+                                <div class="static">{{$ooc->new_stage_reject_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->new_stage_reject_comment}}</div>
+
+                            </div>
+                        </div>
+
                         <div class="sub-head col-lg-12">
                             Cancel
                         </div>
@@ -2888,12 +3217,6 @@ $(document).ready(function() {
                                 <div class="static">{{$ooc->cancell_comment}}</div>
                         </div>
                         </div>
-
-
-
-
-
-
 
                     </div>
                     <div class="button-block">
