@@ -1063,7 +1063,7 @@
                                             {{-- <td style="width: 6%"><input type="text" name="investigation[0][s_no]" value="">
                                                </td>
                                             --}}
-                                            <td>{{ $suitabilityNumber++ }}</td>
+                                            <td style="width: 6%">{{ $suitabilityNumber++ }}</td>
                                               <td><input type="text" name="investigation[0][name_of_product_ssfi]" value="">
                                                </td>
                                             <td><input type="text" name="investigation[0][batch_no_ssfi]" value=""></td>

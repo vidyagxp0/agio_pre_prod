@@ -346,7 +346,7 @@ class LabIncidentController extends Controller
          $labnew->proposed_corrective_ssfi = $request->proposed_corrective_ssfi;
          $labnew->root_cause_ssfi = $request->root_cause_ssfi;
          $labnew->incident_summary_ssfi = $request->incident_summary_ssfi;
-         // $data->system_suitable_attachments = $request->system_suitable_attachments;
+        //  $data->system_suitable_attachments = $request->system_suitable_attachments;
          $labnew->closure_incident_c = $request->closure_incident_c;
          $labnew->affected_document_closure = $request->affected_document_closure;
          $labnew->qc_hear_remark_c = $request->qc_hear_remark_c;
@@ -4668,8 +4668,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                $cc = LabIncident::find($id);
                $cft = [];
                $parent_id = $id;
-               $parent_type = "Capa";
-               $old_record = Capa::select('id', 'division_id', 'record')->get();
+               $parent_type = "Lab Incident";
+               $old_records = Capa::select('id', 'division_id', 'record')->get();
                $record_number = ((RecordNumber::first()->value('counter')) + 1);
                $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
                $currentDate = Carbon::now();
@@ -4680,6 +4680,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_initiator_id = $id;
                $changeControl = OpenStage::find(1);
+
+
                if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
 
                // Debugging to check the revision value
@@ -4687,17 +4689,26 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                if ($request->revision == "Action-Item") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                   return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                   $record = $record_number;
+                   return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
                }
 
-               if ($request->revision == "capa-child") {
-                   $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                  return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
-               }
-               if ($request->revision == "Extension") {
+               if ($request->revision == "resampling") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                $record = $record_number;
+                return view('frontend.resampling.resapling_create', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+            }
+
+               if ($request->revision == "capa") {
+                   $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                   $record = $record_number;
+                  return view('frontend.forms.capa', compact('record', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+               }
+               if ($request->revision == "rca") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
            
@@ -4742,7 +4753,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
         $cc = LabIncident::find($id);
         $cft = [];
         $parent_id = $id;
-        $parent_type = "Capa";
+        $parent_type = "lab_incident";
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
