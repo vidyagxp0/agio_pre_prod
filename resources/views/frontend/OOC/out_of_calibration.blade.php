@@ -478,6 +478,7 @@ $users = DB::table('users')->get();
                         <th>Calibration Parameter</th>
                         <th>Acceptance Criteria</th>
                         <th>Results</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -492,6 +493,7 @@ $users = DB::table('users')->get();
                     <td><input type="text" name="instrumentdetails[0][calibration]"></td>
                     <td><input type="text" name="instrumentdetails[0][acceptancecriteria]"></td>
                     <td><input type="text" name="instrumentdetails[0][results]"></td>
+                    <td><button class="removeRowBtn">Remove</button>
                     </tr>
                 </tbody>
             </table>
@@ -556,6 +558,7 @@ $(document).ready(function() {
                 '<td><input type="text" name="instrumentdetails[' + investdetails + '][calibration]" value=""></td>' +
                 '<td><input type="text" name="instrumentdetails[' + investdetails + '][acceptancecriteria]" value=""></td>' +
                 '<td><input type="text" name="instrumentdetails[' + investdetails + '][results]" value=""></td>' +
+               '<td><button class="removeRowBtn">Remove</button>'+
                 '</tr>';
             investdetails++; // Increment the row number here
             return html;
@@ -565,6 +568,9 @@ $(document).ready(function() {
         var rowCount = tableBody.children('tr').length;
         var newRow = generateTableRow(rowCount + 1);
         tableBody.append(newRow);
+    });
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
     });
 });
 
@@ -1462,7 +1468,7 @@ $(document).ready(function() {
                         </div>
 
                         <div class="sub-head col-lg-12">
-                            HOD Review
+                            HOD Primary Review
                         </div>
 
                         <div class="col-lg-4">
@@ -1551,6 +1557,39 @@ $(document).ready(function() {
                                 <div class="static"></div>
 
                             </div>
+                        </div>
+
+
+                        
+                        <div class="sub-head col-lg-12">
+                            Cancel
+                        </div>
+                        <div class="col-lg-4">
+
+                            <div class="group-input">
+                                <label for="Initiator Group">Cancelled By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Cancelled On: </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="comment">Comment : </label>
+                                <div class="static"></div>
+                        </div>
                         </div>
                         <div class="sub-head col-lg-12">
                             Closure
