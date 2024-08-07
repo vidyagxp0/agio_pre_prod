@@ -244,6 +244,7 @@ Route::post('auditee_store', [AuditeeController::class, 'store'])->name('auditee
 Route::post('update/{id}', [AuditeeController::class, 'update'])->name('updateExternalAudit');
 Route::post('ExternalAuditStateChange/{id}', [AuditeeController::class, 'ExternalAuditStateChange'])->name('externalAuditStateChange');
 Route::post('RejectStateAuditee/{id}', [AuditeeController::class, 'RejectStateChange'])->name('RejectStateAuditee');
+Route::post('UpdateStateAuditee/{id}', [AuditeeController::class, 'UpdateStateChange'])->name('UpdateStateAuditee');
 Route::post('CancelStateExternalAudit/{id}', [AuditeeController::class, 'externalAuditCancel'])->name('CancelStateExternalAudit');
 Route::get('ExternalAuditTrialShow/{id}', [AuditeeController::class, 'AuditTrialExternalShow'])->name('ShowexternalAuditTrial');
 Route::get('ExternalAuditTrialDetails/{id}', [AuditeeController::class, 'AuditTrialExternalDetails'])->name('ExternalAuditTrialDetailsShow');
