@@ -252,7 +252,7 @@
                                                 <label for="search">
                                                     Assigned To 
                                                 </label>
-                                                <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 6 ||  $data->stage == 4 ? 'disabled' : ''}} >
+                                                <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 6 ||  $data->stage == 8 ? 'disabled' : ''}} >
                                                     <option value="">Select a value</option>
                                                     @foreach ($users as $value)
                                                         <option {{ $data->assign_to == $value->name ? 'selected' : '' }}
@@ -313,7 +313,7 @@
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining              
                                         {{-- <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? "disabled" : "" }}>{{ $data->short_description }}</textarea> --}}
-                                        <input type="text" name="short_description" id="docname" required  {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? "disabled" : "" }} value="{{ $data->short_description }}" >
+                                        <input type="text" name="short_description" id="docname" required  {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? "disabled" : "" }} value="{{ $data->short_description }}" >
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
 
@@ -329,7 +329,7 @@
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
-                                        <select {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} id="select-state" placeholder="Select..." name="Quality_Reviewer">
+                                        <select {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }} id="select-state" placeholder="Select..." name="Quality_Reviewer">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option {{ $data->Quality_Reviewer == $value->id ? 'selected' : '' }}
@@ -353,7 +353,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
-                                        <input type="text" name="Effectiveness_check_Plan" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}
+                                        <input type="text" name="Effectiveness_check_Plan" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $data->Effectiveness_check_Plan }}">
                                     </div>
                                 </div>
@@ -376,7 +376,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} type="file" id="myfile" name="Attachments[]"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }} type="file" id="myfile" name="Attachments[]"
                                                             oninput="addMultipleFiles(this, 'Attachments')"
                                                             multiple>
                                                     </div>
@@ -388,7 +388,7 @@
                             <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}>Save</button>
+                                                {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }}>Save</button>
                                         @endif
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
@@ -414,7 +414,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
-                                        <textarea type="text" name="Effectiveness_Results"{{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}
+                                        <textarea type="text" name="Effectiveness_Results"{{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }}
                                             >{{ $data->Effectiveness_Results }}</textarea>
                                     </div>
                                 </div>
@@ -444,7 +444,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->Effectiveness_check_Attachment }}" type="file" id="myfile" name="Effectiveness_check_Attachment[]"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }} value="{{ $data->Effectiveness_check_Attachment }}" type="file" id="myfile" name="Effectiveness_check_Attachment[]"
                                                             oninput="addMultipleFiles(this, 'Effectiveness_check_Attachment')"
                                                             multiple>
                                                     </div>
@@ -457,7 +457,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <textarea type="text" name="effect_summary" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} > {{ $data->effect_summary }}</textarea>
+                                        <textarea type="text" name="effect_summary" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }} > {{ $data->effect_summary }}</textarea>
                                     </div>
                                 </div>
                                 {{-- <div class="col-12 sub-head">
@@ -467,7 +467,7 @@
                                     <div class="group-input">
                                         <label for="Addendum Comments"><b>Addendum Comments</b>
                                                         </label>
-                                        <textarea type="text" name="Addendum_Comments" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}
+                                        <textarea type="text" name="Addendum_Comments" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }}
                                             >{{ $data->Addendum_Comments }}</textarea>
                                     </div>
                                 </div> --}}
@@ -496,7 +496,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} type="file" id="myfile" name="Addendum_Attachment[]"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }} type="file" id="myfile" name="Addendum_Attachment[]"
                                                             oninput="addMultipleFiles(this, 'Addendum_Attachment')"
                                                             multiple>
                                                     </div>
@@ -507,7 +507,7 @@
                             <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}>Save</button>
+                                                {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }}>Save</button>
                                         @endif
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -527,7 +527,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments"><b>Closure Comments</b></label>
-                                        <textarea name="Comments" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} >{{ $data->Comments }}</textarea>
+                                        <textarea name="Comments" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }} >{{ $data->Comments }}</textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
@@ -554,7 +554,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->Attachment }}" type="file" id="myfile" name="Attachment[]"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }} value="{{ $data->Attachment }}" type="file" id="myfile" name="Attachment[]"
                                                             oninput="addMultipleFiles(this, 'Attachment')"
                                                             multiple>
                                                     </div>
@@ -587,7 +587,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->refer_record }}" type="file" id="myfile" name="refer_record[]"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }} value="{{ $data->refer_record }}" type="file" id="myfile" name="refer_record[]"
                                                             oninput="addMultipleFiles(this, 'refer_record')"
                                                             multiple>
                                                     </div>
@@ -598,7 +598,7 @@
                             <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}>Save</button>
+                                                {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 8 ? 'disabled' : '' }}>Save</button>
                                         @endif
 
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>

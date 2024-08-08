@@ -309,6 +309,24 @@ class Helpers
         }
     }
 
+    // $parent ? $parent->record : '' blade file after getting parent from this function
+    public static function getParentRecord($type, $id)
+    {
+        $parent_record = null;
+
+        switch ($type) {
+            case 'lab_incident':
+                $parent_record = LabIncident::find($id);
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+
+        return $parent_record;
+    }
+
     public static function divisionNameForQMS($id)
     {
         return QMSDivision::where('id', $id)->value('name');
