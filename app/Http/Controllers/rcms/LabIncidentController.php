@@ -4701,6 +4701,12 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
             }
 
+            if ($request->revision == "Extension") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+            }
+
                if ($request->revision == "capa") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $record = $record_number;

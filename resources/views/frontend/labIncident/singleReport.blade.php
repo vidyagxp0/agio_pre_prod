@@ -316,7 +316,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File</th>
                         </tr>
                         @if ($data->attachments_gi)
                             @foreach (json_decode($data->attachments_gi) as $key => $file)
@@ -397,7 +397,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File</th>
                         </tr>
                         @if ($data->attachments_ia)
                             @foreach (json_decode($data->attachments_ia) as $key => $file)
@@ -493,7 +493,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File</th>
                         </tr>
                         @if ($singlereport->system_suitable_attachments)
                             @foreach (json_decode($singlereport->system_suitable_attachments) as $key => $file)
@@ -553,7 +553,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File</th>
                         </tr>
                         @if ($singlereport->closure_attachment_c)
                             @foreach (json_decode($singlereport->closure_attachment_c) as $key => $file)
@@ -701,7 +701,7 @@
 
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File</th>
                             </tr>
                             @if ($data->Inv_Attachment)
                                 @foreach (json_decode($data->Inv_Attachment) as $key => $file)
@@ -772,7 +772,7 @@
 
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-60">File</th>
                             </tr>
                             @if ($data->QA_Head_Attachment)
                                 @foreach (json_decode($data->QA_Head_Attachment) as $key => $file)

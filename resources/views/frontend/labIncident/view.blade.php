@@ -8,6 +8,11 @@
         header {
             display: none;
         }
+        .input_width {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 11px;
+        }
     </style>
 
     @php
@@ -53,9 +58,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             QA Head/HOD Initial Review Complete
                             </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
-                            </button> -->
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -65,6 +70,9 @@
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
+                                Child
                             </button>
 
                         @elseif($data->stage == 4 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -89,9 +97,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
-                            </button> -->
+                            </button>
                             
                         @elseif($data->stage == 6 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -100,9 +108,10 @@
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Information Required
                         </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
-                                Child
-                            </button> -->
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
+                            Child
+                        </button>
+                        
                         @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#root-modal">
                                 Root Cause Found
@@ -113,9 +122,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
-                            </button> -->
+                            </button>
                          @elseif($data->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Pending Approval
@@ -126,9 +135,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Head/HOD Final Review Complete
                             </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
-                            </button> -->
+                            </button>
 
                             @elseif($data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -137,9 +146,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
-                            </button> -->
+                            </button>
 
                             @elseif($data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -147,6 +156,9 @@
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#back-modal">
                                 Final Root Cause Not Found
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
+                                Child
                             </button>
 
 
@@ -2500,16 +2512,16 @@
                         <div class="group-input">
                             <label for="username">Username  <span
                                 class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input class="input_width" type="text" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password  <span
                                 class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
                     <!-- Modal footer -->
@@ -2768,6 +2780,12 @@
                             <label for="root-item">
                                 <input type="radio" name="revision" id="root-item" value="capa">
                                 CAPA
+                            </label>
+                        </div>
+                        <div class="group-input">
+                            <label for="root-item">
+                                <input type="radio" name="revision" id="root-item" value="Extension">
+                                Extension
                             </label>
                         </div>
                         

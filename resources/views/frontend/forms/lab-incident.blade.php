@@ -1516,20 +1516,18 @@
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Verification 
+                                    QA Head/HOD Initial Review 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Verification Complete">Verification Complete
-                                            By</label>
+                                        <label for="Verification Complete">QA Head/HOD Initial Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Incident Review Completed On">Verification Complete
-                                            On</label>
+                                        <label for="Incident Review Completed On">QA Head/HOD Initial Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1542,18 +1540,18 @@
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Preliminary Investigation
+                                    QA Initial Review
                                 </div>
                                 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Investigation Completed By"> Preliminary Investigation Completed By</label>
+                                        <label for="Investigation Completed By">QA Initial Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Investigation Completed On"> Preliminary Investigation Completed On</label>
+                                        <label for="Investigation Completed On">QA Initial Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1566,18 +1564,18 @@
                                 
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Assignable Cause Identification
+                                    Pending Initiator Update
                                 </div>
                                 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Assignable Cause Identification Completed">Assignable Cause Identification Completed By</label>
+                                        <label for="Assignable Cause Identification Completed">Pending Initiator Update Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Assignable Cause Identification Completed">Assignable Cause Identification Completed On</label>
+                                        <label for="Assignable Cause Identification Completed">Pending Initiator Update Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1591,17 +1589,17 @@
 
 
                                <div class="col-12 sub-head" style="font-size: 16px">
-                                    No Assignable Cause Identification
+                                    QA Head/HOD Secondary Review
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="No Assignable Completed By">No Assignable Cause Identification  Completed By</label>
+                                        <label for="No Assignable Completed By">QA Head/HOD Secondary Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="No Assignable Completed On">No Assignable Cause Identification Completed On</label>
+                                        <label for="No Assignable Completed On">QA Head/HOD Secondary Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1614,17 +1612,17 @@
                                 </div>
                                
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Extended Inv
+                                    QA Secondary Review
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Extended Inv Completed By">Extended Inv Completed By</label>
+                                        <label for="Extended Inv Completed By">QA Secondry Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Extended Inv Completed On">Extended Inv Completed On</label>
+                                        <label for="Extended Inv Completed On">QA Secondry Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1638,17 +1636,36 @@
                                 
                                 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Solution Validation 
+                                    QAH Approval
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Solution Validation Completed By">Solution Validation Completed By</label>
+                                        <label for="Solution Validation Completed By">Root Cause Found By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input" >
-                                        <label for="Solution Validation Completed On">Solution Validation Completed On</label>
+                                        <label for="Solution Validation Completed On">Root Cause Found On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>                                
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Solution Validation Completed By">Root Cause Not Found By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input" >
+                                        <label for="Solution Validation Completed On">Root Cause Not Found On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>                                
@@ -1660,17 +1677,17 @@
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    All Action Approved
+                                    QA Head/HOD Final Review
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="All Action Approved Completed By">All Action Approved Completed By</label>
+                                        <label for="All Action Approved Completed By">QA Head/HOD Final Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="All Action Approved Completed On">All Action Approved Completed On</label>
+                                        <label for="All Action Approved Completed On">QA Head/HOD Final Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1683,17 +1700,17 @@
                                
                                
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Assessment 
+                                    QA Final Review 
                                 </div>
                                  <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Assessment Completed By">Assessment Completed By</label>
+                                        <label for="Assessment Completed By">QA Final Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Assemssment Completed On">Assessment Completed On</label>
+                                        <label for="Assemssment Completed On">QA Final Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1705,17 +1722,36 @@
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Closure
+                                    QAH Final Approval
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Closure Completed By">Closure Completed By</label>
+                                        <label for="Closure Completed By">Final Root Cause Found By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Closure Completed On">Closure Completed On</label>
+                                        <label for="Closure Completed On">Final Root Cause Found On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment" >Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div> 
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Closure Completed By">Final Root Cause Not Found By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Closure Completed On">Final Root Cause Not Found On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1733,13 +1769,13 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled By">Cancelled By</label>
+                                        <label for="Cancelled By">Cancel By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled On">Cancelled On</label>
+                                        <label for="Cancelled On">Cancel On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
