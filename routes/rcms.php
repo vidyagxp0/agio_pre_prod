@@ -34,6 +34,7 @@ use App\Http\Controllers\tms\JobTrainingController;
 use App\Http\Controllers\tms\TrainerController;
 use App\Models\EffectivenessCheck;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ResamplingController;
 
 
 // ============================================
@@ -293,6 +294,9 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('launch-extension-investigation/{id}', [FailureInvestigationController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
 
             /********************* Fallure Investigation Routes Ends *******************/
+                    //  ========== Resampling======================
+            Route::get('resamplingSingleReport/{id}', [ResamplingController::class, 'singleReport'])->name('resamplingSingleReport');
+            Route::get('resamplingAuditReport/{id}', [ResamplingController::class, 'auditReport'])->name('resamplingAuditReport');
 
             // =====================extesnion new report and audit trail ===============
             Route::get('singleReportNew/{id}', [ExtensionNewController::class, 'singleReport'])->name('singleReportNew');

@@ -161,11 +161,11 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Action-Item Single Report
+                   Resampling Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100" >
+                        <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100" >
                     </div>
                 </td>
             </tr>
@@ -173,10 +173,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> Action-Item No.</strong>
+                    <strong> Resampling No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/Resampling/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}

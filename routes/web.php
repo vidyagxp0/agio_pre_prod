@@ -589,8 +589,6 @@ Route::post('resampling' , [ResamplingController::class,'store'])->name('resampl
 Route::post('resampling-actionView/{id}' , [ResamplingController::class,'update'])->name('resampling-update');
 Route::post('resapling-stage-cancel/{id}', [ResamplingController::class, 'resamplingStageCancel'])->name('resapling-stage-cancel');
 Route::get('resampling-audittrialshow/{id}', [ResamplingController::class, 'resamplingAuditTrialShow'])->name('resampling-audittrialshow');
-Route::get('resamplingSingleReport/{id}', [ResamplingController::class, 'singleReport'])->name('resamplingSingleReport');
-Route::get('resamplingAuditReport/{id}', [ResamplingController::class, 'auditReport'])->name('resamplingAuditReport');
 Route::post('send-resampling/{id}', [ResamplingController::class, 'stageChange'])->name('send-resampling');
 Route::post('moreinfoState_resampling/{id}', [ResamplingController::class, 'resamplingmoreinfo'])->name('moreinfoState_resampling');
 
