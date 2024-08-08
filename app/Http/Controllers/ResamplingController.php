@@ -1109,9 +1109,10 @@ class ResamplingController extends Controller
         // return "hii";
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Resampling::find($id);
+            // return $changeControl;
             $lastopenState = Resampling::find($id);
-            $openState = Resampling::find($id);
-            $task = Taskdetails::where('resampling_id', $id)->first();
+            // $openState = Resampling::find($id);
+            // $task = Taskdetails::where('resampling_id', $id)->first();
          
             
             if ($changeControl->stage == 1) {
@@ -1314,7 +1315,7 @@ class ResamplingController extends Controller
 //     }
 // }
 
-public function actionStageCancel(Request $request, $id)
+public function resamplingStageCancel(Request $request, $id)
 {
     if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
         $changeControl = Resampling::find($id);
@@ -1369,7 +1370,7 @@ public function actionStageCancel(Request $request, $id)
             //          } 
             //       }
             toastr()->success('Document Sent');
-            return redirect('rcms/actionItem/'.$id);
+            return redirect('resampling_view/'.$id);
         }
 
   
@@ -1379,12 +1380,12 @@ public function actionStageCancel(Request $request, $id)
     }
 }
 
-public function actionmoreinfo(Request $request, $id)
+public function resamplingmoreinfo(Request $request, $id)
 {
     if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
         $changeControl = Resampling::find($id);
         $lastopenState = Resampling::find($id);
-        $openState = Resampling::find($id);
+        // $openState = Resampling::find($id);
 
 
         if ($changeControl->stage == 2) {
@@ -1435,7 +1436,7 @@ public function actionmoreinfo(Request $request, $id)
         //      } 
         //   }
             toastr()->success('Document Sent');
-            return redirect('rcms/actionItem/'.$id);
+            return redirect('resampling_view/'.$id);
         }
         if ($changeControl->stage == 3) {
             $changeControl->stage = "2";
@@ -1468,7 +1469,7 @@ public function actionmoreinfo(Request $request, $id)
             $history->save();
       
             toastr()->success('Document Sent');
-            return redirect('rcms/actionItem/'.$id);
+            return redirect('resampling_view/'.$id);
         }
         if ($changeControl->stage == 4) {
             $changeControl->stage = "3";
@@ -1501,7 +1502,7 @@ public function actionmoreinfo(Request $request, $id)
             $history->save();
       
             toastr()->success('Document Sent');
-            return redirect('rcms/actionItem/'.$id);
+            return redirect('resampling_view/'.$id);
         }
 
     } else {
@@ -1511,7 +1512,7 @@ public function actionmoreinfo(Request $request, $id)
 }
 public function resamplingAuditTrialShow($id)
 {
-    $audit = ResamplingAudittrail::where('resampling_id', $id)->orderByDESC('id')->paginate();
+    $audit = ResamplingAudittrail::where('resampling_id', $id)->orderByDESC('id')->paginate(5);
     $today = Carbon::now()->format('d-m-y');
     $document = Resampling::where('id', $id)->first();
     $document->initiator = User::where('id', $document->initiator_id)->value('name');
