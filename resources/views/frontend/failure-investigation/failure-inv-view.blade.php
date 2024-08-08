@@ -2451,7 +2451,7 @@
                                                 <select disabled id="failure_investigation_category"
                                                     name="failure_investigation_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                     value="{{ $data->failure_investigation_category }}">
-                                                    <option value="0">-- Select --</option>
+                                                    <option value="">-- Select --</option>
                                                     <option @if ($data->failure_investigation_category == 'minor') selected @endif
                                                         value="minor">Minor</option>
                                                     <option @if ($data->failure_investigation_category == 'major') selected @endif
@@ -2682,7 +2682,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="RA Review"> RA Review Required ? <span class="text-danger">*</span></label>
-                                            <select name="RA_Review" id="RA_Review">
+                                            <select name="RA_Review" id="RA_Review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->RA_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -2697,7 +2697,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-
+                                                'q_m_s_roles_id' => 50,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -2782,7 +2782,6 @@
                                                 name="RA_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                                 id="RA_by">
 
-
                                         </div>
                                     </div>
                                     <div class="col-lg-6 ra_review">
@@ -2848,7 +2847,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 50,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3006,7 +3005,7 @@
                                         <div class="group-input">
                                             <label for="Quality Assurance"> Quality Assurance Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Quality_Assurance_Review" id="Quality_Assurance_Review">
+                                            <select name="Quality_Assurance_Review" id="Quality_Assurance_Review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -3021,7 +3020,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 26,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3179,7 +3178,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 26,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3321,7 +3320,7 @@
                                         <div class="group-input">
                                             <label for="Production Tablet"> Production Tablet Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Production_Table_Review" id="Production_Table_Review">
+                                            <select name="Production_Table_Review" id="Production_Table_Review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Production_Table_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -3336,7 +3335,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 51,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3494,7 +3493,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 51,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3652,7 +3651,7 @@
                                         <div class="group-input">
                                             <label for="Production Liquid"> Production Liquid Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="ProductionLiquid_Review" id="ProductionLiquid_Review">
+                                            <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->ProductionLiquid_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -3667,7 +3666,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 52,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3825,7 +3824,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 52,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3969,7 +3968,7 @@
                                         <div class="group-input">
                                             <label for="Production Injection"> Production Injection Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Production_Injection_Review" id="Production_Injection_Review">
+                                            <select name="Production_Injection_Review" id="Production_Injection_Review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Production_Injection_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -3984,7 +3983,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 53,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4144,7 +4143,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 53,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4302,7 +4301,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Store"> Store Required ? <span class="text-danger">*</span></label>
-                                            <select name="Store_Review" id="Store_Review">
+                                            <select name="Store_Review" id="Store_Review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Store_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -4317,7 +4316,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 54,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4470,7 +4469,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 54,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4614,7 +4613,7 @@
                                         <div class="group-input">
                                             <label for="Quality Control"> Quality Control Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Quality_review" id="Quality_review_Review">
+                                            <select name="Quality_review" id="Quality_review_Review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Quality_review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -4629,7 +4628,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 24,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4783,7 +4782,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 24,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4925,7 +4924,7 @@
                                         <div class="group-input">
                                             <label for="Research Development"> Research Development Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review">
+                                            <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review" @if ($data->stage == 4) disabled @endif >
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->ResearchDevelopment_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -4940,7 +4939,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 55,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5101,7 +5100,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 55,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5245,7 +5244,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Engineering"> Engineering Required ? <span class="text-danger">*</span></label>
-                                            <select name="Engineering_review" id="Engineering_review">
+                                            <select name="Engineering_review" id="Engineering_review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Engineering_review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -5260,7 +5259,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 25,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5414,7 +5413,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 25,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5559,7 +5558,7 @@
                                         <div class="group-input">
                                             <label for="Human Resource"> Human Resource Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Human_Resource_review" id="Human_Resource_review">
+                                            <select name="Human_Resource_review" id="Human_Resource_review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Human_Resource_review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -5574,7 +5573,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 31,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5728,7 +5727,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 31,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5870,7 +5869,7 @@
                                         <div class="group-input">
                                             <label for="Microbiology"> Microbiology Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Microbiology_Review" id="Microbiology_Review">
+                                            <select name="Microbiology_Review" id="Microbiology_Review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Microbiology_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -5885,7 +5884,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 56,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6039,7 +6038,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 56,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6182,7 +6181,7 @@
                                         <div class="group-input">
                                             <label for="RegulatoryAffair"> Regulatory Affair Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="RegulatoryAffair_Review" id="RegulatoryAffair_Review">
+                                            <select name="RegulatoryAffair_Review" id="RegulatoryAffair_Review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->RegulatoryAffair_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -6197,7 +6196,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 57,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6355,7 +6354,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 57,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6498,7 +6497,7 @@
                                         <div class="group-input">
                                             <label for="Corporate Quality Assurance"> Corporate Quality Assurance Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="CorporateQualityAssurance_Review" id="CorporateQualityAssurance_Review">
+                                            <select name="CorporateQualityAssurance_Review" id="CorporateQualityAssurance_Review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->CorporateQualityAssurance_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -6513,7 +6512,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 58,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6680,7 +6679,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 58,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6829,7 +6828,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Safety"> Safety Required ? <span class="text-danger">*</span></label>
-                                            <select name="Environment_Health_review" id="Environment_Health_review">
+                                            <select name="Environment_Health_review" id="Environment_Health_review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Environment_Health_review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -6844,7 +6843,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 59,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7004,7 +7003,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 59,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7150,7 +7149,7 @@
                                         <div class="group-input">
                                             <label for="Information_Technology"> Information Technology Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Information_Technology_review" id="Information_Technology_review">
+                                            <select name="Information_Technology_review" id="Information_Technology_review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Information_Technology_review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -7165,7 +7164,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 32,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7327,7 +7326,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 32,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7472,7 +7471,7 @@
                                         <div class="group-input">
                                             <label for="Contract Giver"> Contract Giver Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="ContractGiver_Review" id="ContractGiver_Review">
+                                            <select name="ContractGiver_Review" id="ContractGiver_Review" @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->ContractGiver_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -7487,7 +7486,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 60,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7641,7 +7640,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 60,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -11771,7 +11770,7 @@
                                     <div class="group-input">
                                         <label for="Post Categorization Of Deviation">Post Categorization Of Failure Investigation <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please Refer Intial Failure Investigation category before updating.</small></div>
-                                        <select name="Post_Categorization"  id="Post_Categorization" value="Post_Categorization">
+                                        <select name="Post_Categorization"  id="Post_Categorization" value="Post_Categorization" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                         <option value=""> -- Select --</option>
                                         <option @if ($data->Post_Categorization == 'major') selected @endif
                                             value="major">Major</option>
@@ -11933,7 +11932,7 @@
                                     <div class="group-input">
                                         <label for="Investigation Of Revised Categorization">Justification for Revised Category </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea readonly class="tiny" name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}  id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
+                                        <textarea readonly class="tiny" name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}  id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
                                     </div>
                                     @error('Post_Categorization')
                                         <div class="text-danger">{{ $message }}</div>
@@ -12109,7 +12108,7 @@
                             <div><small class="text-primary">Please Refer Intial Failure Investigation category before
                                     updating.</small></div>
                             <select
-                                name="Post_Categorization"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                name="Post_Categorization"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                 id="Post_Categorization" value="Post_Categorization">
                                 <option value=""> -- Select --</option>
                                 <option @if ($data->Post_Categorization == 'major') selected @endif value="major">Major
@@ -12129,21 +12128,21 @@
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
                             <textarea class="tiny"
-                                name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                 id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="group-input">
                             <label for="Closure Comments">Closure Comments <span class="text-danger">
-                                    @if ($data->stage == 8)
+                                    @if ($data->stage == 6)
                                         *
                                     @else
                                     @endif
                                 </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea @if ($data->stage != 8) disabled @endif required class="tiny"
+                            <textarea @if ($data->stage != 6) disabled @endif required class="tiny"
                                 name="Closure_Comments"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-15">{{ $data->Closure_Comments }}</textarea>
                         </div>
                         @error('Closure_Comments')
@@ -12153,14 +12152,14 @@
                     <div class="col-md-12">
                         <div class="group-input">
                             <label for="Disposition of Batch">Disposition of Batch <span class="text-danger">
-                                    @if ($data->stage == 8)
+                                    @if ($data->stage == 6)
                                         *
                                     @else
                                     @endif
                                 </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea @if ($data->stage != 8) readonly @endif required class="tiny"
+                            <textarea @if ($data->stage != 6) readonly @endif required class="tiny"
                                 name="Disposition_Batch"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-16">{{ $data->Disposition_Batch }}</textarea>
                         </div>
                         @error('Disposition_Batch')
@@ -14575,7 +14574,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('failureInvestigationStageChange', $data->id) }}" method="POST"
+                <form action="{{ route('failure_investigation_send_stage', $data->id) }}" method="POST"
                     id="signatureModalForm">
                     @csrf
                     <div class="modal-body">
@@ -15049,5 +15048,8 @@
             }
         });
     </script>
+
+
+    
 
 @endsection
