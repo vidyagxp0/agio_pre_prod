@@ -2451,7 +2451,7 @@
                                                 <select disabled id="failure_investigation_category"
                                                     name="failure_investigation_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                     value="{{ $data->failure_investigation_category }}">
-                                                    <option value="">-- Select --</option>
+                                                    <option value="0">-- Select --</option>
                                                     <option @if ($data->failure_investigation_category == 'minor') selected @endif
                                                         value="minor">Minor</option>
                                                     <option @if ($data->failure_investigation_category == 'major') selected @endif
@@ -2682,7 +2682,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="RA Review"> RA Review Required ? <span class="text-danger">*</span></label>
-                                            <select name="RA_Review" id="RA_Review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="RA_Review" id="RA_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->RA_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -2781,6 +2781,7 @@
                                             <input readonly type="text" value="{{ $data1->RA_by }}"
                                                 name="RA_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                                 id="RA_by">
+
 
                                         </div>
                                     </div>
@@ -3005,7 +3006,7 @@
                                         <div class="group-input">
                                             <label for="Quality Assurance"> Quality Assurance Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Quality_Assurance_Review" id="Quality_Assurance_Review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="Quality_Assurance_Review" id="Quality_Assurance_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -3320,7 +3321,7 @@
                                         <div class="group-input">
                                             <label for="Production Tablet"> Production Tablet Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Production_Table_Review" id="Production_Table_Review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="Production_Table_Review" id="Production_Table_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Production_Table_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -3651,7 +3652,7 @@
                                         <div class="group-input">
                                             <label for="Production Liquid"> Production Liquid Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="ProductionLiquid_Review" id="ProductionLiquid_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->ProductionLiquid_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -3968,7 +3969,7 @@
                                         <div class="group-input">
                                             <label for="Production Injection"> Production Injection Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Production_Injection_Review" id="Production_Injection_Review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="Production_Injection_Review" id="Production_Injection_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Production_Injection_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -4301,7 +4302,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Store"> Store Required ? <span class="text-danger">*</span></label>
-                                            <select name="Store_Review" id="Store_Review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="Store_Review" id="Store_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Store_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -4613,7 +4614,7 @@
                                         <div class="group-input">
                                             <label for="Quality Control"> Quality Control Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Quality_review" id="Quality_review_Review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="Quality_review" id="Quality_review_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Quality_review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -4924,7 +4925,7 @@
                                         <div class="group-input">
                                             <label for="Research Development"> Research Development Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review" @if ($data->stage == 4) disabled @endif >
+                                            <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->ResearchDevelopment_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -5244,7 +5245,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Engineering"> Engineering Required ? <span class="text-danger">*</span></label>
-                                            <select name="Engineering_review" id="Engineering_review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="Engineering_review" id="Engineering_review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Engineering_review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -5558,7 +5559,7 @@
                                         <div class="group-input">
                                             <label for="Human Resource"> Human Resource Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Human_Resource_review" id="Human_Resource_review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="Human_Resource_review" id="Human_Resource_review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Human_Resource_review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -5869,7 +5870,7 @@
                                         <div class="group-input">
                                             <label for="Microbiology"> Microbiology Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Microbiology_Review" id="Microbiology_Review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="Microbiology_Review" id="Microbiology_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Microbiology_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -6181,7 +6182,7 @@
                                         <div class="group-input">
                                             <label for="RegulatoryAffair"> Regulatory Affair Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="RegulatoryAffair_Review" id="RegulatoryAffair_Review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="RegulatoryAffair_Review" id="RegulatoryAffair_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->RegulatoryAffair_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -6497,7 +6498,7 @@
                                         <div class="group-input">
                                             <label for="Corporate Quality Assurance"> Corporate Quality Assurance Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="CorporateQualityAssurance_Review" id="CorporateQualityAssurance_Review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="CorporateQualityAssurance_Review" id="CorporateQualityAssurance_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->CorporateQualityAssurance_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -6828,7 +6829,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Safety"> Safety Required ? <span class="text-danger">*</span></label>
-                                            <select name="Environment_Health_review" id="Environment_Health_review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="Environment_Health_review" id="Environment_Health_review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Environment_Health_review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -7149,7 +7150,7 @@
                                         <div class="group-input">
                                             <label for="Information_Technology"> Information Technology Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Information_Technology_review" id="Information_Technology_review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="Information_Technology_review" id="Information_Technology_review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Information_Technology_review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -7471,7 +7472,7 @@
                                         <div class="group-input">
                                             <label for="Contract Giver"> Contract Giver Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="ContractGiver_Review" id="ContractGiver_Review" @if ($data->stage == 4) disabled @endif>
+                                            <select name="ContractGiver_Review" id="ContractGiver_Review">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->ContractGiver_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
@@ -11770,7 +11771,7 @@
                                     <div class="group-input">
                                         <label for="Post Categorization Of Deviation">Post Categorization Of Failure Investigation <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please Refer Intial Failure Investigation category before updating.</small></div>
-                                        <select name="Post_Categorization"  id="Post_Categorization" value="Post_Categorization" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                        <select name="Post_Categorization"  id="Post_Categorization" value="Post_Categorization">
                                         <option value=""> -- Select --</option>
                                         <option @if ($data->Post_Categorization == 'major') selected @endif
                                             value="major">Major</option>
@@ -11932,7 +11933,7 @@
                                     <div class="group-input">
                                         <label for="Investigation Of Revised Categorization">Justification for Revised Category </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea readonly class="tiny" name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}  id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
+                                        <textarea readonly class="tiny" name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}  id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
                                     </div>
                                     @error('Post_Categorization')
                                         <div class="text-danger">{{ $message }}</div>
@@ -12108,7 +12109,7 @@
                             <div><small class="text-primary">Please Refer Intial Failure Investigation category before
                                     updating.</small></div>
                             <select
-                                name="Post_Categorization"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                name="Post_Categorization"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                 id="Post_Categorization" value="Post_Categorization">
                                 <option value=""> -- Select --</option>
                                 <option @if ($data->Post_Categorization == 'major') selected @endif value="major">Major
@@ -12128,7 +12129,7 @@
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
                             <textarea class="tiny"
-                                name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                 id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
                         </div>
                     </div>
@@ -14574,7 +14575,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('failure_investigation_send_stage', $data->id) }}" method="POST"
+                <form action="{{ route('failureInvestigationStageChange', $data->id) }}" method="POST"
                     id="signatureModalForm">
                     @csrf
                     <div class="modal-body">
