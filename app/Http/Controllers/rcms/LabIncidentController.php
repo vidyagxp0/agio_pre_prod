@@ -4479,8 +4479,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                $cc = LabIncident::find($id);
                $cft = [];
                $parent_id = $id;
-               $parent_type = "Capa";
-               $old_record = Capa::select('id', 'division_id', 'record')->get();
+               $parent_type = "Lab Incident";
+               $old_records = Capa::select('id', 'division_id', 'record')->get();
                $record_number = ((RecordNumber::first()->value('counter')) + 1);
                $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
                $currentDate = Carbon::now();
@@ -4498,13 +4498,14 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                if ($request->revision == "Action-Item") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                   return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                   $record = $record_number;
+                   return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
                }
 
                if ($request->revision == "capa-child") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                  return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
+                  return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
                }
                if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -4521,7 +4522,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                $cft = [];
                $parent_id = $id;
                $parent_type = "LabIncident";
-               $old_record = Capa::select('id', 'division_id', 'record')->get();
+               $old_records = Capa::select('id', 'division_id', 'record')->get();
                $record_number = ((RecordNumber::first()->value('counter')) + 1);
                $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
                $currentDate = Carbon::now();
@@ -4552,8 +4553,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
         $cc = LabIncident::find($id);
         $cft = [];
         $parent_id = $id;
-        $parent_type = "Capa";
-        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $parent_type = "Lab Incident";
+        $old_records = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -4566,14 +4567,13 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
         if ($request->revision == "Action-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
-
-            // return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+            $record = $record_number;
+            return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
         }
 
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
+            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
         }
         if ($request->revision == "effectiveness-check") {
          $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -4594,7 +4594,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
         $cft = [];
         $parent_id = $id;
         $parent_type = "Capa";
-        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $old_records = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -4607,7 +4607,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
         if ($request->revision == "risk-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.risk-management', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.forms.risk-management', compact('record_number', 'due_date', 'parent_id','old_records', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
         }
         if ($request->revision == "Extension") {
