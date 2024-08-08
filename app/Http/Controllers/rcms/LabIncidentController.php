@@ -346,7 +346,7 @@ class LabIncidentController extends Controller
          $labnew->proposed_corrective_ssfi = $request->proposed_corrective_ssfi;
          $labnew->root_cause_ssfi = $request->root_cause_ssfi;
          $labnew->incident_summary_ssfi = $request->incident_summary_ssfi;
-         // $data->system_suitable_attachments = $request->system_suitable_attachments;
+        //  $data->system_suitable_attachments = $request->system_suitable_attachments;
          $labnew->closure_incident_c = $request->closure_incident_c;
          $labnew->affected_document_closure = $request->affected_document_closure;
          $labnew->qc_hear_remark_c = $request->qc_hear_remark_c;
@@ -459,6 +459,125 @@ class LabIncidentController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
+
+        if(!empty($data->qc_head_closure)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QC Head Closure';
+            $history->previous = "Null";
+            $history->current = Helpers::getInitiatorName($data->qc_head_closure);
+            $history->comment = "No Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        if(!empty($labnew->qc_hear_remark_c)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $labnew->id;
+            $history->activity_type = 'QC Head Remark';
+            $history->previous = "Null";
+            $history->current = $labnew->qc_hear_remark_c;
+            $history->comment = "No Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        if(!empty($labnew->closure_incident_c)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $labnew->id;
+            $history->activity_type = 'Closure Of Incident';
+            $history->previous = "Null";
+            $history->current = $labnew->closure_incident_c;
+            $history->comment = "No Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        // if(!empty($data->record)) {
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $data->id;
+        //     $history->activity_type = 'Record Number';
+        //     $history->previous = "Null";
+        //     $history->current = $data->record;
+        //     $history->comment = "No Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $data->status;
+        //     $history->change_to = "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = "Create";
+        //     $history->save();
+        // }
+
+        if(!empty($data->initiator_id)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Initiator Name';
+            $history->previous = "Null";
+            $history->current = Helpers::getInitiatorName($data->initiator_id);
+            $history->comment = "No Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        if(!empty($data->intiation_date)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Date Of Initiation';
+            $history->previous = "Null";
+            $history->current = Carbon::parse($data->intiation_date)->format('d-M-Y');
+            $history->comment = "No Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        if(!empty($data->division_id)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Site/Location Code';
+            $history->previous = "Null";
+            $history->current = Helpers::getDivisionName($data->division_id);
+            $history->comment = "No Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
         // $initiatorGroup = $data->Initiator_Group;
         // $departmentName = $departments[$initiatorGroup] ?? 'Unknown Department';
         // if (!empty($departmentName)) {
@@ -496,7 +615,7 @@ class LabIncidentController extends Controller
         if (!empty($data->other_incidence)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Other Ref.Doc.No';
+            $history->activity_type = 'Other Incidence';
             $history->previous = "Null";
             $history->current = $data->other_incidence;
             $history->comment = "Not Applicable";
@@ -515,7 +634,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = $data->due_date;
+            $history->current = Carbon::parse($data->due_date)->format('d-M-Y');
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -596,7 +715,7 @@ class LabIncidentController extends Controller
         if (!empty($data->stage_stage_gi)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Instrument Involved';
+            $history->activity_type = 'Stage';
             $history->previous = "Null";
             $history->current = $data->stage_stage_gi;
             $history->comment = "Not Applicable";
@@ -612,7 +731,7 @@ class LabIncidentController extends Controller
         if (!empty($data->incident_stability_cond_gi)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Stability';
+            $history->activity_type = 'Stability Condition (If Applicable)';
             $history->previous = "Null";
             $history->current = $data->incident_stability_cond_gi;
             $history->comment = "Not Applicable";
@@ -629,7 +748,7 @@ class LabIncidentController extends Controller
          if (!empty($data->incident_interval_others_gi)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Interval';
+            $history->activity_type = 'Interval (If Applicable)';
             $history->previous = "Null";
             $history->current = $data->incident_interval_others_gi;
             $history->comment = "Not Applicable";
@@ -663,7 +782,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Date Of Analysis';
             $history->previous = "Null";
-            $history->current =$data->incident_date_analysis_gi;
+            $history->current = Carbon::parse($data->incident_date_analysis_gi)->format('d-M-Y');
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -727,7 +846,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Date Of Incidence';
             $history->previous = "Null";
-            $history->current = $data->incident_date_incidence_gi;
+            $history->current = Carbon::parse($data->incident_date_incidence_gi)->format('d-M-Y');
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -759,7 +878,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Reported By';
             $history->previous = "Null";
-            $history->current = $data->analyst_sign_date_gi;
+            $history->current = Helpers::getInitiatorName($data->analyst_sign_date_gi);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -775,7 +894,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Section Head Name';
             $history->previous = "Null";
-            $history->current = $data->section_sign_date_gi;
+            $history->current = Helpers::getInitiatorName($data->section_sign_date_gi);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1312,9 +1431,9 @@ class LabIncidentController extends Controller
         if (!empty($data->qc_review_to)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'QC Review To';
+            $history->activity_type = 'QC Review';
             $history->previous = "Null";
-            $history->current = $data->qc_review_to;
+            $history->current = Helpers::getInitiatorName($data->qc_review_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1331,7 +1450,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Investigator QC';
             $history->previous = "Null";
-            $history->current = $data->investigator_qc;
+            $history->current = Helpers::getInitiatorName($data->investigator_qc);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1600,7 +1719,7 @@ class LabIncidentController extends Controller
     if (!empty($data->Investigation_Details)) {
         $history = new LabIncidentAuditTrial();
         $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Investigation_Details';
+        $history->activity_type = 'Investigation Details';
         $history->previous = "Null";
         $history->current = $data->Investigation_Details;
         $history->comment = "Not Applicable";
@@ -1617,7 +1736,7 @@ class LabIncidentController extends Controller
     if (!empty($data->Action_Taken)) {
         $history = new LabIncidentAuditTrial();
         $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Action_Taken';
+        $history->activity_type = 'Action Taken';
         $history->previous = "Null";
         $history->current = $data->Action_Taken;
         $history->comment = "Not Applicable";
@@ -1634,7 +1753,7 @@ class LabIncidentController extends Controller
     if (!empty($data->Root_Cause)) {
         $history = new LabIncidentAuditTrial();
         $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Root_Cause';
+        $history->activity_type = 'Root Cause';
         $history->previous = "Null";
         $history->current = $data->Root_Cause;
         $history->comment = "Not Applicable";
@@ -1668,7 +1787,7 @@ class LabIncidentController extends Controller
     if (!empty($data->Currective_Action)) {
         $history = new LabIncidentAuditTrial();
         $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Currective_Action';
+        $history->activity_type = 'Currective Action';
         $history->previous = "Null";
         $history->current = $data->Currective_Action;
         $history->comment = "Not Applicable";
@@ -1920,12 +2039,12 @@ class LabIncidentController extends Controller
         $history->save();
     }
 
-    if (!empty($data->Incident_date_analysis_ssfi)) {
+    if (!empty($labnew->Incident_date_analysis_ssfi)) {
         $history = new LabIncidentAuditTrial();
-        $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Date Of Analysis';
+        $history->LabIncident_id = $labnew->id;
+        $history->activity_type = 'Date Of Analysis SSFI';
         $history->previous = "Null";
-        $history->current = $data->Incident_date_analysis_ssfi;
+        $history->current = Carbon::parse($labnew->Incident_date_analysis_ssfi)->format('d-M-Y');
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1971,12 +2090,12 @@ class LabIncidentController extends Controller
         $history->save();
     }
 
-    if (!empty($data->Incident_date_incidence_ssfi)) {
+    if (!empty($labnew->Incident_date_incidence_ssfi)) {
         $history = new LabIncidentAuditTrial();
-        $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Date Of Incidence';
+        $history->LabIncident_id = $labnew->id;
+        $history->activity_type = 'Date Of Incidence SSFI';
         $history->previous = "Null";
-        $history->current = $data->Incident_date_incidence_ssfi;
+        $history->current = Carbon::parse($labnew->Incident_date_incidence_ssfi)->format('d-M-Y');
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1993,7 +2112,7 @@ class LabIncidentController extends Controller
         $history->LabIncident_id = $data->id;
         $history->activity_type = 'QC Reviewer';
         $history->previous = "Null";
-        $history->current = $data->suit_qc_review_to;
+        $history->current = Helpers::getInitiatorName($data->suit_qc_review_to);
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -2407,6 +2526,29 @@ class LabIncidentController extends Controller
             $history->save();
            
         }
+
+        if ($lastDocument->qc_head_closure != $data->qc_head_closure ) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QC Head Closure';
+            $history->previous = Helpers::getInitiatorName($lastDocument->qc_head_closure);
+            $history->current = Helpers::getInitiatorName($data->qc_head_closure);
+            $history->comment = $request->qc_head_closure_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->qc_head_closure) || $lastDocument->qc_head_closure === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+           
+        }
+
         if ($lastDocument->other_incidence != $data->other_incidence ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -2819,6 +2961,52 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
            
         }
 
+        if ($labtab->qc_hear_remark_c != $labtab->qc_hear_remark_c ) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'QC Head Remark';
+            $history->previous = $labtab->qc_hear_remark_c;
+            $history->current = $labtab->qc_hear_remark_c;
+            $history->comment = $request->qc_hear_remark_comments;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($labtab->qc_hear_remark_c) || $labtab->qc_hear_remark_c === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+           
+        }
+
+        if ($labtab->closure_incident_c != $data->closure_incident_c ) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Closure Of Incident';
+            $history->previous = $labtab->closure_incident_c;
+            $history->current = $labtab->closure_incident_c;
+            $history->comment = $request->closure_incident_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($labtab->closure_incident_c) || $labtab->closure_incident_c === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+           
+        }
+
         $department = [
             'CQA' => 'Corporate Quality Assurance',
             'QAB' => 'Quality Assurance Biopharma',
@@ -3081,6 +3269,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
            
             $history->save();
         }
+        
         if ($lastDocument->Instrument_Details != $data->Instrument_Details ) {
 
             $history = new LabIncidentAuditTrial();
@@ -4491,6 +4680,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_initiator_id = $id;
                $changeControl = OpenStage::find(1);
+
+
                if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
 
                // Debugging to check the revision value
@@ -4503,15 +4694,30 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                }
 
-               if ($request->revision == "capa-child") {
-                   $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                  return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
-               }
-               if ($request->revision == "Extension") {
+               if ($request->revision == "resampling") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                $record = $record_number;
+                return view('frontend.resampling.resapling_create', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+            }
+
+            if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
+
+               if ($request->revision == "capa") {
+                   $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                   $record = $record_number;
+                  return view('frontend.forms.capa', compact('record', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+               }
+               if ($request->revision == "rca") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+            }
+           
 
            }
 
@@ -4624,12 +4830,12 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             $lastDocument =  LabIncident::find($id);
 
 
-           if( $labstate->stage == 4){
-            $labstate->stage = "6";
+           if( $labstate->stage == 10){
+            $labstate->stage = "4";
             $labstate->no_assignable_cause_by = Auth::user()->name;
             $labstate->no_assignable_cause_on = Carbon::now()->format('d-M-Y');
             $labstate->no_assignable_cause_comment = $request->comment;
-            $labstate->status = "Pending Extended Investigation";
+            $labstate->status = "Pending Initiator Update";
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Activity Log';
@@ -4640,11 +4846,11 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to = "Pending Extended Investigation";
+            $history->change_to = "Pending Initiator Update";
             $history->change_from = $lastDocument->status;
             $history->origin_state = $lastDocument->status;
-            $history->stage='No Assignable Cause Identification';
-            $history->action='No Assignable Cause Identification';
+            $history->stage='Final Root Cause Not Found';
+            $history->action='Final Root Cause Not Found';
             $history->save();
 
 
@@ -4658,6 +4864,49 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             return back();
         }
     }
+
+    public function LabIncidentStateCancel(Request $request,$id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $labstate = LabIncident::find($id);
+            $lastDocument =  LabIncident::find($id);
+
+
+           if( $labstate->stage == 7){
+            $labstate->stage = "11";
+            $labstate->no_assignable_cause_by = Auth::user()->name;
+            $labstate->no_assignable_cause_on = Carbon::now()->format('d-M-Y');
+            $labstate->no_assignable_cause_comment = $request->comment;
+            $labstate->status = "Closed - Done";
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Activity Log';
+            // $history->previous = $lastDocument->submitted_by;
+            $history->current = $labstate->no_assignable_cause_by;
+            $history->current = $labstate->verification_complete_completed_by;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Closed - Done";
+            $history->change_from = $lastDocument->status;
+            $history->origin_state = $lastDocument->status;
+            $history->stage='Root Cause Found';
+            $history->action='Root Cause Found';
+            $history->save();
+
+
+            $labstate->update();
+
+            return redirect()->back();
+           }
+
+        }else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+    
     public function LabIncidentStateChange(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -4670,21 +4919,33 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 $changeControl->submitted_by = Auth::user()->name;
                 $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
                 $changeControl->comment =$request->comment;
-                $changeControl->status = "Pending Incident Verification";
+                $changeControl->status = "QA Head/HOD Initial Review";
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->submitted_by;
-                $history->current = $changeControl->submitted_by;
+                // $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Submitted By, Submitted On';
+                if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->submitted_by . ' , ' . $lastDocument->submitted_on;
+                }
+                // $history->previous = $lastDocument->submitted_by;
+                // $history->current = $changeControl->submitted_by;
+                $history->current = $changeControl->submitted_by . ' , ' . $changeControl->submitted_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Pending Incident Verification";
+                $history->change_to = "QA Head/HOD Initial Review";
                 $history->action = 'Submit';
                 $history->change_from = $lastDocument->status;
                 $history->stage='Submit';
+                if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
 
                 try {
@@ -4722,24 +4983,36 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "3";
-                $changeControl->status = "Pending Preliminary Investigation";
+                $changeControl->status = "QA Initial Review";
                 $changeControl->verification_complete_completed_by = Auth::user()->name;
                 $changeControl->verification_completed_on = Carbon::now()->format('d-M-Y');
                 $changeControl->verification_complete_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->verification_complete_completed_by;
-                $history->current = $changeControl->verification_complete_completed_by;
+                // $history->activity_type = 'Activity Log';
+                $history->activity_type = 'QA Head/HOD Initial Review Complete By, QA Head/HOD Initial Review Complete On';
+                if (is_null($lastDocument->verification_complete_completed_by) || $lastDocument->verification_complete_completed_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->verification_complete_completed_by . ' , ' . $lastDocument->verification_completed_on;
+                }
+                // $history->previous = $lastDocument->verification_complete_completed_by;
+                // $history->current = $changeControl->verification_complete_completed_by;
+                $history->current = $changeControl->verification_complete_completed_by . ' , ' . $changeControl->verification_completed_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->change_to = "Pending Preliminary Investigation";
+                $history->change_to = "QA Initial Review";
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
-                $history->action = 'Verification Complete';
-                $history->stage='Verification Complete';
+                $history->action = 'QA Head/HOD Initial Review Complete';
+                $history->stage='QA Head/HOD Initial Review Complete';
+                if (is_null($lastDocument->verification_complete_completed_by) || $lastDocument->verification_complete_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
 
                 $history->save();
                 $list = Helpers::getQCHeadUserList();
@@ -4766,24 +5039,38 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
-                $changeControl->status = "Evaluation of Finding";
+                $changeControl->status = "Pending Initiator Update";
                 $changeControl->preliminary_completed_by = Auth::user()->name;
                 $changeControl->preliminary_completed_on = Carbon::now()->format('d-M-Y');
                 $changeControl->preliminary_completed_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->preliminary_completed_by;
-                $history->current = $changeControl->preliminary_completed_by;
+                // $history->activity_type = 'Activity Log';
+                // $history->previous = $lastDocument->preliminary_completed_by;
+                // $history->current = $changeControl->preliminary_completed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->change_to = "Evaluation of Finding";
+                $history->change_to = "Pending Initiator Update";
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
-                $history->action = 'Preliminary Investigation';
-                $history->stage='Preliminary Investigation';
+                $history->action = 'QA Initial Review Complete';
+                $history->stage='QA Initial Review Complete';
+
+                $history->activity_type = 'QA Initial Review Complete By, QA Initial Review Complete On';
+                if (is_null($lastDocument->preliminary_completed_by) || $lastDocument->preliminary_completed_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->preliminary_completed_by . ' , ' . $lastDocument->preliminary_completed_on;
+                }
+                $history->current = $changeControl->preliminary_completed_by . ' , ' . $changeControl->preliminary_completed_on;
+                if (is_null($lastDocument->preliminary_completed_by) || $lastDocument->preliminary_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+
                 $history->save();
                 $list = Helpers::getHodUserList();
                     foreach ($list as $u) {
@@ -4808,24 +5095,38 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
                 if ($changeControl->stage == 4) {
                     $changeControl->stage = "5";
-                    $changeControl->status = "Pending Solution & Sample Test";
+                    $changeControl->status = "QA Head/HOD Secondary Review";
                     $changeControl->all_activities_completed_comment =$request->comment;
                     $changeControl->all_activities_completed_by = Auth::user()->name;
                     $changeControl->all_activities_completed_on = Carbon::now()->format('d-M-Y');
                     $history = new LabIncidentAuditTrial();
                     $history->LabIncident_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = $lastDocument->all_activities_completed_by;
-                    $history->current = $changeControl->all_activities_completed_by;
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = $lastDocument->all_activities_completed_by;
+                    // $history->current = $changeControl->all_activities_completed_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Pending Solution & Sample Test";
+                    $history->change_to = "QA Head/HOD Secondary Review";
                     $history->change_from = $lastDocument->status;
                     $history->origin_state = $lastDocument->status;
-                    $history->stage='Assignable Cause Identification';
-                    $history->action='Assignable Cause Identification';
+                    $history->stage='Pending Initiator Update Complete';
+                    $history->action='Pending Initiator Update Complete';
+
+                    $history->activity_type = 'Pending Initiator Update Complete By, Pending Initiator Update Complete On';
+                    if (is_null($lastDocument->all_activities_completed_by) || $lastDocument->all_activities_completed_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->all_activities_completed_by . ' , ' . $lastDocument->all_activities_completed_on;
+                    }
+                    $history->current = $changeControl->all_activities_completed_by . ' , ' . $changeControl->all_activities_completed_on;
+                    if (is_null($lastDocument->all_activities_completed_by) || $lastDocument->all_activities_completed_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+
                     $history->save();
                     $changeControl->update();
                     toastr()->success('Document Sent');
@@ -4835,25 +5136,39 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 }
 
             if ($changeControl->stage == 5) {
-                $changeControl->stage = "7";
-                $changeControl->status = "CAPA Initiation & Approval";
+                $changeControl->stage = "6";
+                $changeControl->status = "QA Secondary Review";
                 $changeControl->review_completed_by = Auth::user()->name;
                 $changeControl->review_completed_on = Carbon::now()->format('d-M-Y');
                 $changeControl->solution_validation_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->review_completed_by;
-                $history->current = $changeControl->review_completed_by;
+                // $history->activity_type = 'Activity Log';
+                // $history->previous = $lastDocument->review_completed_by;
+                // $history->current = $changeControl->review_completed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->change_to = "CAPA Initiation & Approval";
+                $history->change_to = "QA Secondary Review";
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
-                $history->action='Solution Validation';
-                $history->stage='Solution Validation';
+                $history->action='QA Head/HOD Secondary Review Complete';
+                $history->stage='QA Head/HOD Secondary Review Complete';
+
+                $history->activity_type = 'QA Head/HOD Secondary Review Complete By, QA Head/HOD Secondary Review Complete On';
+                    if (is_null($lastDocument->review_completed_by) || $lastDocument->review_completed_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->review_completed_by . ' , ' . $lastDocument->review_completed_on;
+                    }
+                    $history->current = $changeControl->review_completed_by . ' , ' . $changeControl->review_completed_on;
+                    if (is_null($lastDocument->review_completed_by) || $lastDocument->review_completed_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+
                 $history->save();
                 $list = Helpers::getQAUserList();
                 foreach ($list as $u) {
@@ -4877,25 +5192,39 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 return back();
             }
             if ($changeControl->stage == 6) {
-                $changeControl->stage = "8";
-                $changeControl->status = "Final QA/Head Assessment";
+                $changeControl->stage = "7";
+                $changeControl->status = "QAH Approval";
                 $changeControl->extended_inv_complete_by = Auth::user()->name;
                 $changeControl->extended_inv_complete_on = Carbon::now()->format('d-M-Y');
                 $changeControl->extended_inv_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->extended_inv_complete_by;
-                $history->current = $changeControl->extended_inv_complete_by;
+                // $history->activity_type = 'Activity Log';
+                // $history->previous = $lastDocument->extended_inv_complete_by;
+                // $history->current = $changeControl->extended_inv_complete_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->change_to = "Final QA/Head Assessment";
+                $history->change_to = "QAH Approval";
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Extended Inv. Complete';
-                $history->action='Extended Inv Complete';
+                $history->stage='QA Secondry Review Complete';
+                $history->action='QA Secondry Review Complete';
+
+                $history->activity_type = 'QA Secondry Review Complete By, QA Secondry Review Complete On';
+                    if (is_null($lastDocument->extended_inv_complete_by) || $lastDocument->extended_inv_complete_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->extended_inv_complete_by . ' , ' . $lastDocument->extended_inv_complete_on;
+                    }
+                    $history->current = $changeControl->extended_inv_complete_by . ' , ' . $changeControl->extended_inv_complete_on;
+                    if (is_null($lastDocument->extended_inv_complete_by) || $lastDocument->extended_inv_complete_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -4904,7 +5233,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
             if ($changeControl->stage == 7) {
                 $changeControl->stage = "8";
-                $changeControl->status = "Final QA/Head Assessment";
+                $changeControl->status = "QA Head/HOD Final Review";
                 $changeControl->all_actiion_approved_by = Auth::user()->name;
                 $changeControl->all_actiion_approved_on = Carbon::now()->format('d-M-Y');
                 $changeControl->all_action_approved_comment =$request->comment;
@@ -4917,11 +5246,25 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->change_to = "Final QA/Head Assessment";
+                $history->change_to = "QA Head/HOD Final Review";
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
-                $history->stage='All Action Approved';
-                $history->action='All Action Approved';
+                $history->stage='Root Cause Not Found';
+                $history->action='Root Cause Not Found';
+
+                $history->activity_type = 'Root Cause Not Found By, Root Cause Not Found On';
+                    if (is_null($lastDocument->all_actiion_approved_by) || $lastDocument->all_actiion_approved_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->all_actiion_approved_by . ' , ' . $lastDocument->all_actiion_approved_on;
+                    }
+                    $history->current = $changeControl->all_actiion_approved_by . ' , ' . $changeControl->all_actiion_approved_on;
+                    if (is_null($lastDocument->all_actiion_approved_by) || $lastDocument->all_actiion_approved_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+
                 $history->save();
                 $list = Helpers::getHodUserList();
                     foreach ($list as $u) {
@@ -4945,7 +5288,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
             if ($changeControl->stage == 8) {
                 $changeControl->stage = "9";
-                $changeControl->status = "Pending Approval";
+                $changeControl->status = "QA Final Review";
                 $changeControl->assesment_completed_by = Auth::user()->name;
                 $changeControl->assesment_completed_on = Carbon::now()->format('d-M-Y');
                 $changeControl->assessment_comment=$request->comment;
@@ -4958,11 +5301,25 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->change_to = "Pending Approval";
+                $history->change_to = "QA Final Review";
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Assessment Completed';
-                $history->action='Assessment Completed';
+                $history->stage='QA Head/HOD Final Review Complete';
+                $history->action='QA Head/HOD Final Review Complete';
+
+                $history->activity_type = 'QA Head/HOD Final Review Complete By, QA Head/HOD Final Review Complete On';
+                    if (is_null($lastDocument->assesment_completed_by) || $lastDocument->assesment_completed_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->assesment_completed_by . ' , ' . $lastDocument->assesment_completed_on;
+                    }
+                    $history->current = $changeControl->assesment_completed_by . ' , ' . $changeControl->assesment_completed_on;
+                    if (is_null($lastDocument->assesment_completed_by) || $lastDocument->assesment_completed_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+
                 $history->save();
                 $list = Helpers::getHodUserList();
                     foreach ($list as $u) {
@@ -4988,10 +5345,115 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
             if ($changeControl->stage == 9) {
                 $changeControl->stage = "10";
-                $changeControl->status = "Closed-Done";
+                $changeControl->status = "QAH Approval";
+                $changeControl->assesment_completed_by = Auth::user()->name;
+                $changeControl->assesment_completed_on = Carbon::now()->format('d-M-Y');
+                $changeControl->assessment_comment=$request->comment;
+                $history = new LabIncidentAuditTrial();
+                $history->LabIncident_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->closure_completed_by;
+                $history->current = $changeControl->closure_completed_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to = "QAH Approval";
+                $history->change_from = $lastDocument->status;
+                $history->origin_state = $lastDocument->status;
+                $history->stage='QA Final Review Complete';
+                $history->action='QA Final Review Complete';
+
+                $history->activity_type = 'QA Final Review Complete By, QA Final Review Complete On';
+                    if (is_null($lastDocument->assesment_completed_by) || $lastDocument->assesment_completed_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->assesment_completed_by . ' , ' . $lastDocument->assesment_completed_on;
+                    }
+                    $history->current = $changeControl->assesment_completed_by . ' , ' . $changeControl->assesment_completed_on;
+                    if (is_null($lastDocument->assesment_completed_by) || $lastDocument->assesment_completed_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+
+                $history->save();
+                $list = Helpers::getHodUserList();
+                    foreach ($list as $u) {
+                        if($u->q_m_s_divisions_id ==$changeControl->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            //  if ($email !== null) {
+
+                            //   Mail::send(
+                            //       'mail.view-mail',
+                            //        ['data' => $changeControl],
+                            //     function ($message) use ($email) {
+                            //         $message->to($email)
+                            //             ->subject("Document is send By ".Auth::user()->name);
+                            //     }
+                            //   );
+                            // }
+                     }
+                  }
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($changeControl->stage == 10) {
+                $changeControl->stage = "11";
+                $changeControl->status = "Closed - Done";
                 $changeControl->closure_completed_by = Auth::user()->name;
                 $changeControl->closure_completed_on = Carbon::now()->format('d-M-Y');
                 $changeControl->closure_comment =$request->comment;
+
+                $history = new LabIncidentAuditTrial();
+                $history->LabIncident_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->closure_completed_by;
+                $history->current = $changeControl->closure_completed_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to = "Closed - Done";
+                $history->change_from = $lastDocument->status;
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Final Root Cause Found ';
+                $history->action='Final Root Cause Found ';
+
+                $history->activity_type = 'Final Root Cause Found By, Final Root Cause Found On';
+                    if (is_null($lastDocument->closure_completed_by) || $lastDocument->closure_completed_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->closure_completed_by . ' , ' . $lastDocument->closure_completed_on;
+                    }
+                    $history->current = $changeControl->closure_completed_by . ' , ' . $changeControl->closure_completed_on;
+                    if (is_null($lastDocument->closure_completed_by) || $lastDocument->closure_completed_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+
+                $history->save();
+                $list = Helpers::getHodUserList();
+                    foreach ($list as $u) {
+                        if($u->q_m_s_divisions_id ==$changeControl->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            //  if ($email !== null) {
+
+                            //   Mail::send(
+                            //       'mail.view-mail',
+                            //        ['data' => $changeControl],
+                            //     function ($message) use ($email) {
+                            //         $message->to($email)
+                            //             ->subject("Document is send By ".Auth::user()->name);
+                            //     }
+                            //   );
+                            // }
+                     }
+                  }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5023,49 +5485,56 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "2";
-                $changeControl->status = "Pending Incident Verification";
+                $changeControl->status = "QA Head/HOD Initial Review";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "3";
-                $changeControl->status = "Pending  Preliminary Investigation";
+                $changeControl->status = "QA Initial Review";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "4";
-                $changeControl->status = "Evaluation of Finding";
+                $changeControl->status = "Pending Initiator Update";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 6) {
-                $changeControl->stage = "4";
-                $changeControl->status = "Evaluation of Finding";
+                $changeControl->stage = "5";
+                $changeControl->status = "QA Head/HOD Secondary Review";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 7) {
-                $changeControl->stage = "5";
-                $changeControl->status = "Pending Solution & Sample Test";
+                $changeControl->stage = "6";
+                $changeControl->status = "QA Secondary Review";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 8) {
-                $changeControl->stage = "6";
-                $changeControl->status = "Pending Extended Investigation";
+                $changeControl->stage = "7";
+                $changeControl->status = "QAH Approval";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 9) {
                 $changeControl->stage = "8";
-                $changeControl->status = "Final QA/Head Assessment";
+                $changeControl->status = "QA Head/HOD Final Review";
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 10) {
+                $changeControl->stage = "9";
+                $changeControl->status = "QA Final Review";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
