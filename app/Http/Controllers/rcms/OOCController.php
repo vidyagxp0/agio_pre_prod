@@ -2814,10 +2814,16 @@ $oocevaluation->save();
             $oocchange->comment = $request->comment;
             $oocchange->status = "HOD Primary Review";
             $history = new OOCAuditTrail();
-                $history->ooc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocumentOOC->submitted_by;
-                $history->current = $oocchange->submitted_by;
+            $history->ooc_id = $id;
+            $history->activity_type = 'Submitted By    ,   Submitted On';
+                    if (is_null($lastDocumentOOC->submitted_by) || $lastDocumentOOC->submitted_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocumentOOC->submitted_by . ' , ' . $lastDocumentOOC->submitted_on;
+                    }
+
+                // $history->previous = $lastDocumentOOC->submitted_by;
+                $history->current = $oocchange->submitted_by . ' , ' . $oocchange->submitted_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2825,7 +2831,14 @@ $oocevaluation->save();
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "HOD Primary Review";
                 $history->change_from = $lastDocumentOOC->status;
-                $history->action_name = 'Submit';
+                // $history->action_name = 'Submit';
+                if (is_null($lastDocumentOOC->submitted_by) || $lastDocumentOOC->submitted_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Submit';
+
                 $history->stage='Submit';
                 $history->save();
             // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Opened', 'HOD Primary Review', $isInitial);
@@ -3299,7 +3312,7 @@ $oocevaluation->save();
             $oocchange->status = "Closed - Done";
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
-            $history->activity_type = 'Activity Log';
+            $history->activity_type = 'P-II B Assignable Cause Found By ,   P-II B Assignable Cause Found On';
             $history->previous = $lastDocumentOOC->P_II_B_Assignable_Cause_Found_by;
             $history->current = $oocchange->P_II_B_Assignable_Cause_Found_by;
             $history->comment = $request->comment;
@@ -3310,9 +3323,9 @@ $oocevaluation->save();
             $history->change_to = "Closed - Done";
             $history->change_from = $lastDocumentOOC->status;
             $history->action_name = 'P-II B Assignable Cause Found';
+            $history->action = 
             $history->stage='P-II B Assignable Cause Found';
             $history->save();
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'P-II B Assignable Cause Found', 'Closed - Done');
             $oocchange->update();
             toastr()->success('Closed - Done');
             return back();
@@ -3340,9 +3353,16 @@ public function OOCStateChangetwo(Request $request, $id)
             $oocchange->status = "Under Phase-IB Investigation";
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = $lastDocumentOOC->correction_r_completed_by;
-            $history->current = $oocchange->correction_r_completed_by;
+            $history->activity_type = 'Assignable Cause Not Found Complete By  ,   Assignable Cause Not Found Complete On';
+            if (is_null($lastDocumentOOC->correction_r_completed_by) || $lastDocumentOOC->correction_r_completed_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocumentOOC->correction_r_completed_by . ' , ' . $lastDocumentOOC->correction_r_completed_on;
+            }
+            
+            // $history->previous = $lastDocumentOOC->correction_r_completed_by;
+            // $history->current = $oocchange->correction_r_completed_by;
+            $history->current = $oocchange->correction_r_completed_by . ' , ' . $oocchange->correction_r_completed_on;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3350,10 +3370,16 @@ public function OOCStateChangetwo(Request $request, $id)
             $history->origin_state = $lastDocumentOOC->status;
             $history->change_to = "Under Phase-IB Investigation";
             $history->change_from = $lastDocumentOOC->status;
-            $history->action_name = 'Assignable Cause Not Found';
+            // $history->action_name = 'Assignable Cause Not Found';
+            $history->action = 'Assignable Cause Not Found';
             $history->stage='Assignable Cause Not Found';
+            if (is_null($lastDocumentOOC->correction_r_completed_by) || $lastDocumentOOC->correction_r_completed_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+
             $history->save();
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Assignable Cause Not Found', 'Under Phase-IB Investigation');
             $oocchange->update();
             toastr()->success('Under Phase-IB Investigation');
             return back();

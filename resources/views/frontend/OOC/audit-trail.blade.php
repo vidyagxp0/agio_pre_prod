@@ -261,7 +261,7 @@
                             <td>
                                 <div>
                                     <strong> Action Name
-                                        :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
+                                        :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
 
                                 </div>
                             </td>
@@ -270,7 +270,7 @@
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at : 'Not Applicable' }}
+                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at->format('d-M-Y , H:i A') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
