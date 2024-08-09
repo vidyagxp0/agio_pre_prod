@@ -3232,8 +3232,14 @@ $oocevaluation->save();
             $oocchange->status = "Phase II A HOD Primary Review";
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = $lastDocumentOOC->Phase_II_A_Investigation_by;
+            $history->activity_type = 'Phase II A Investigation By , Phase II A Investigation On';
+            if (is_null($lastDocumentOOC->Phase_II_A_Investigation_by) || $lastDocumentOOC->Phase_II_A_Investigation_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocumentOOC->Phase_II_A_Investigation_by . ' , ' . $lastDocumentOOC->Phase_II_A_Investigation_on;
+            }
+            // $history->previous = $lastDocumentOOC->Phase_II_A_Investigation_by;
+            $history->current = $oocchange->Phase_II_A_Investigation_by . ' , ' . $oocchange->Phase_II_A_Investigation_on;
             $history->current = $oocchange->Phase_II_A_Investigation_by;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
@@ -3242,10 +3248,15 @@ $oocevaluation->save();
             $history->origin_state = $lastDocumentOOC->status;
             $history->change_to = "Phase II A HOD Primary Review";
             $history->change_from = $lastDocumentOOC->status;
-            $history->action_name = 'Phase II A Investigation';
+            $history->action = 'Phase II A Investigation';
             $history->stage='Phase II A Investigation';
+            if (is_null($lastDocumentOOC->Phase_II_A_Investigation_by) || $lastDocumentOOC->Phase_II_A_Investigation_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            
             $history->save();
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II A Investigation', 'Phase II A HOD Primary Review');
             $oocchange->update();
             toastr()->success('Phase II A HOD Primary Review');
             return back();
@@ -3258,9 +3269,13 @@ $oocevaluation->save();
             $oocchange->status = "Phase II A QA Review";
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = $lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by;
-            $history->current = $oocchange->Phase_II_A_HOD_Review_Complete_by;
+            $history->activity_type = 'Phase II A HOD Review Complete By    ,   Phase II A HOD Review Complete On';
+            if (is_null($lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by . ' , ' . $lastDocumentOOC->Phase_II_A_HOD_Review_Complete_on;
+            }
+            $history->current = $oocchange->Phase_II_A_HOD_Review_Complete_by . ' , ' . $oocchange->Phase_II_A_HOD_Review_Complete_on;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3268,7 +3283,12 @@ $oocevaluation->save();
             $history->origin_state = $lastDocumentOOC->status;
             $history->change_to = "Phase II A QA Review";
             $history->change_from = $lastDocumentOOC->status;
-            $history->action_name = 'Phase II A HOD Review Complete';
+            $history->action = 'Phase II A HOD Review Complete';
+            if (is_null($lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->stage='Phase II A HOD Review Complete';
             $history->save();
             // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II A HOD Review Complete', 'Phase II A QA Review');
@@ -3285,9 +3305,13 @@ $oocevaluation->save();
             $oocchange->status = "P-II A QAH/CQAH Review";
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by;
-            $history->current = $oocchange->Phase_II_A_QA_Review_Complete_by;
+            $history->activity_type = 'Phase II A QA Review Complete By   ,    Phase II A QA Review Complete  On';
+            if (is_null($lastDocumentOOC->Phase_II_A_QA_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by . ' , ' . $lastDocumentOOC->Phase_II_A_QA_Review_Complete_on;
+            }
+            $history->current = $oocchange->Phase_II_A_QA_Review_Complete_by . ' , ' . $oocchange->Phase_II_A_QA_Review_Complete_on;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3295,7 +3319,12 @@ $oocevaluation->save();
             $history->origin_state = $lastDocumentOOC->status;
             $history->change_to = "P-II A QAH/CQAH Review";
             $history->change_from = $lastDocumentOOC->status;
-            $history->action_name = 'Phase II A QA Review Complete';
+            $history->action = 'Phase II A QA Review Complete';
+            if (is_null($lastDocumentOOC->Phase_II_A_QA_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->stage='Phase II A QA Review Complete';
             $history->save();
             // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II A QA Review Complete', 'P-II A QAH/CQAH Review');
@@ -3311,9 +3340,13 @@ $oocevaluation->save();
             $oocchange->status = "Closed Done";
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = $lastDocumentOOC->P_II_A_Assignable_Cause_Found_by;
-            $history->current = $oocchange->P_II_A_Assignable_Cause_Found_by;
+            $history->activity_type = 'P-II A Assignable Cause Found By  ,   P-II A Assignable Cause Found  On';
+            if (is_null($lastDocumentOOC->P_II_A_Assignable_Cause_Found_by) || $lastDocumentOOC->P_II_A_Assignable_Cause_Found_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocumentOOC->P_II_A_Assignable_Cause_Found_by . ' , ' . $lastDocumentOOC->Phase_II_A_QA_Review_Complete_on;
+            }
+            $history->current = $oocchange->P_II_A_Assignable_Cause_Found_by . ' , ' . $oocchange->Phase_II_A_QA_Review_Complete_on;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3321,8 +3354,13 @@ $oocevaluation->save();
             $history->origin_state = $lastDocumentOOC->status;
             $history->change_to = "Closed Done";
             $history->change_from = $lastDocumentOOC->status;
-            $history->action_name = 'P-II A Assignable Cause Found';
+            $history->action = 'P-II A Assignable Cause Found';
             $history->stage='P-II A Assignable Cause Found';
+            if (is_null($lastDocumentOOC->Phase_II_A_QA_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
             // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'P-II A Assignable Cause Found', 'Closed Done');
             $oocchange->update();
@@ -3338,9 +3376,13 @@ $oocevaluation->save();
             $oocchange->status = "Phase II B HOD Primary Review ";
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = $lastDocumentOOC->Phase_II_B_Investigation_by;
-            $history->current = $oocchange->Phase_II_B_Investigation_by;
+            $history->activity_type = 'Phase II B Investigation By   ,    Phase II B Investigation On';
+            if (is_null($lastDocumentOOC->Phase_II_B_Investigation_by) || $lastDocumentOOC->Phase_II_B_Investigation_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocumentOOC->Phase_II_B_Investigation_by . ' , ' . $lastDocumentOOC->Phase_II_B_Investigation_on;
+            }
+            $history->current = $oocchange->Phase_II_B_Investigation_by . ' , ' . $oocchange->Phase_II_B_Investigation_on;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3348,8 +3390,14 @@ $oocevaluation->save();
             $history->origin_state = $lastDocumentOOC->status;
             $history->change_to = "Phase II B HOD Primary Review";
             $history->change_from = $lastDocumentOOC->status;
-            $history->action_name = 'Phase II B Investigation';
+            $history->action = 'Phase II B Investigation';
             $history->stage='Phase II B Investigation';
+            if (is_null($lastDocumentOOC->Phase_II_A_QA_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+
             $history->save();
             // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II B Investigation', 'Phase II B HOD Primary Review ');
             $oocchange->update();
@@ -3364,9 +3412,13 @@ $oocevaluation->save();
             $oocchange->status = "Phase II B QA Review  ";
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = $lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by;
-            $history->current = $oocchange->Phase_II_B_HOD_Review_Complete_by;
+            $history->activity_type = 'Phase II B HOD Review Complete By  ,   Phase II B HOD Review Complete On';
+            if (is_null($lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by) || $lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by . ' , ' . $lastDocumentOOC->Phase_II_B_HOD_Review_Complete_on;
+            }
+            $history->current = $oocchange->Phase_II_B_HOD_Review_Complete_by . ' , ' . $oocchange->Phase_II_B_HOD_Review_Complete_on;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3374,8 +3426,14 @@ $oocevaluation->save();
             $history->origin_state = $lastDocumentOOC->status;
             $history->change_to = "Phase II B QA Review";
             $history->change_from = $lastDocumentOOC->status;
-            $history->action_name = 'Phase II B HOD Review Complete';
+            $history->action = 'Phase II B HOD Review Complete';
             $history->stage='Phase II B HOD Review Complete';
+            if (is_null($lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by) || $lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+
             $history->save();
             // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II B HOD Review Complete ', 'Phase II B QA Review  ');
             $oocchange->update();
@@ -3427,7 +3485,7 @@ $oocevaluation->save();
             $history->change_to = "Closed - Done";
             $history->change_from = $lastDocumentOOC->status;
             $history->action_name = 'P-II B Assignable Cause Found';
-            $history->action = 
+            $history->action = 'P-II B Assignable Cause Found';
             $history->stage='P-II B Assignable Cause Found';
             $history->save();
             $oocchange->update();
@@ -3535,9 +3593,13 @@ public function OOCStateChangetwo(Request $request, $id)
             $oocchange->status = "Under Phase-II B Investigation ";
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = $lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by;
-            $history->current = $oocchange->P_II_A_Assignable_Cause_Not_Found_by;
+            $history->activity_type = 'P-II A Assignable Cause Found By  ,   P-II A Assignable Cause Found On';
+            if (is_null($lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by) || $lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by . ' , ' . $lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_on;
+            }
+            $history->current = $oocchange->P_II_A_Assignable_Cause_Not_Found_by . ' , ' . $oocchange->P_II_A_Assignable_Cause_Not_Found_on;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3545,8 +3607,13 @@ public function OOCStateChangetwo(Request $request, $id)
             $history->origin_state = $lastDocumentOOC->status;
             $history->change_to = "Under Phase-II B Investigation";
             $history->change_from = $lastDocumentOOC->status;
-            $history->action_name = 'P-II A Assignable Cause Found';
+            $history->action = 'P-II A Assignable Cause Found';
             $history->stage='P-II A Assignable Cause Found';
+            if (is_null($lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by) || $lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
             // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'P-II A Assignable Cause Found', 'Under Phase-II B Investigation ');
             $oocchange->update();
@@ -3563,6 +3630,7 @@ public function RejectStateChangeTwo(Request $request, $id)
 {
     if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
         $ooc = OutOfCalibration::find($id);
+        $lastDocumentOOC = OutOfCalibration::find($id);
 
         if ($ooc->stage == 23) {
             $ooc->stage = "4";
@@ -3570,6 +3638,30 @@ public function RejectStateChangeTwo(Request $request, $id)
             $ooc->new_stage_reject_by = Auth::user()->name;
             $ooc->new_stage_reject_on = Carbon::now()->format('d-M-Y');
             $ooc->new_stage_reject_comment = $request->comment;
+            $history = new OOCAuditTrail();
+            $history->ooc_id = $id;
+            $history->activity_type = 'P-II A Assignable Cause Not Found By  ,   P-II A Assignable Cause Not Found On';
+            if (is_null($lastDocumentOOC->new_stage_reject_by) || $lastDocumentOOC->new_stage_reject_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocumentOOC->new_stage_reject_by . ' , ' . $lastDocumentOOC->new_stage_reject_on;
+            }
+            $history->current = $ooc->new_stage_reject_by . ' , ' . $ooc->new_stage_reject_on;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocumentOOC->status;
+            $history->change_to = "Under Phase-II B Investigation";
+            $history->change_from = $lastDocumentOOC->status;
+            $history->action = 'P-II A Assignable Cause Not Found';
+            $history->stage='P-II A Assignable Cause Not Found';
+            if (is_null($lastDocumentOOC->new_stage_reject_by) || $lastDocumentOOC->new_stage_reject_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
             $ooc->update();
             toastr()->success('Document Sent');
             return back();
@@ -3589,7 +3681,7 @@ public function RejectoocStateChange(Request $request, $id)
             $ooc->stage = "1";
             $ooc->status = "Opened";
             $ooc->new_stage_reject_HOD_by = Auth::user()->name;
-            $ooc->new_stage_reject_HOD_on = Carbon::now()->format('d-M-Y');
+            $ooc->new_stage_reject_HOD_on  = Carbon::now()->format('d-M-Y');
             $ooc->new_stage_reject_HOD_comment = $request->comment;
             $ooc->update();
             toastr()->success('Document Sent');
@@ -3856,6 +3948,12 @@ public function OOCAuditTrial($id){
                 return view('frontend.resampling.resapling_create', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
            }
 
+           if ($request->revision == "Extension") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+        }
+
         }
 
     public function oo_c_capa_child(Request $request ,$id)
@@ -3903,6 +4001,12 @@ public function OOCAuditTrial($id){
                    return view('frontend.forms.risk-management', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
                }
+
+               if ($request->revision == "Extension") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+    
+            }
     }
 
     public function auditDetailsooc($id){

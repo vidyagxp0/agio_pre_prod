@@ -268,9 +268,9 @@ $users = DB::table('users')->get();
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                     Cancel
                 </button> 
-                <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
-                </button> -->
+                </button>
             @elseif($ooc->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <!-- <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 Assignable Cause Found
@@ -871,6 +871,12 @@ $users = DB::table('users')->get();
                             Resampling
                         </label>
                     </div>
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Extension">
+                            Extension
+                        </label>
+                    </div>
                     {{-- <div class="group-input">
                         <label for="root-item">
                          <input type="radio" name="revision" id="root-item" value="effectiveness-check">
@@ -907,6 +913,12 @@ $users = DB::table('users')->get();
                         <label for="capa-child">
                             <input type="radio" name="revision" id="capa-child" value="Action-child">
                             Action Item
+                        </label>
+                    </div>
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Extension">
+                            Extension
                         </label>
                     </div>
                     <!-- <div class="group-input">
