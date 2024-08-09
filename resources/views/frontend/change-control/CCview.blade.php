@@ -1065,8 +1065,6 @@
                                                     });
                                                 });
                                             </script>
-
-
                                         </div>
                                         <div class="button-block">
 
@@ -1250,8 +1248,8 @@
                                             });
                                         </script>
                                         @php
-                                            $data1 = DB::table('cc_cfts')
-                                                ->where('cc_id', $data->id)
+                                            $data1 = DB::table('risk_managment_cfts')
+                                                ->where('risk_id', $data->id)
                                                 ->first();
                                         @endphp
 
@@ -1355,8 +1353,6 @@
                                                         By</label>
                                                     <input readonly type="text" value="{{ $data1->RA_by }}"
                                                         name="RA_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }} id="RA_by">
-
-
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 ra_review">
@@ -1564,8 +1560,8 @@
                                             });
                                         </script>
                                         @php
-                                            $data1 = DB::table('cc_cfts')
-                                                ->where('cc_id', $data->id)
+                                            $data1 = DB::table('risk_managment_cfts')
+                                                ->where('risk_id', $data->id)
                                                 ->first();
                                         @endphp
 
@@ -1868,8 +1864,8 @@
                                             });
                                         </script>
                                         @php
-                                            $data1 = DB::table('cc_cfts')
-                                                ->where('cc_id', $data->id)
+                                            $data1 = DB::table('risk_managment_cfts')
+                                                ->where('risk_id_id', $data->id)
                                                 ->first();
                                         @endphp
 
@@ -1920,10 +1916,8 @@
                                                     <label for="Production Tablet assessment">Impact Assessment (By Production Tablet) <span id="asteriskPT1"
                                                             style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                            does not require completion</small></div>
-                                                    <textarea @if ($data1->Production_Table_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_Table_Assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Production_Table_Person) && Auth::user()->id != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it  does not require completion</small></div>
+                                                    <textarea @if ($data1->Production_Table_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_Table_Assessment" @if ($data->stage == 3 || (isset($data1->Production_Table_Person) && Auth::user()->id != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 productionTable">
@@ -2185,8 +2179,8 @@
                                             });
                                         </script>
                                         @php
-                                            $data1 = DB::table('cc_cfts')
-                                                ->where('cc_id', $data->id)
+                                            $data1 = DB::table('risk_managment_cfts')
+                                                ->where('risk_id', $data->id)
                                                 ->first();
                                         @endphp
 
@@ -2468,8 +2462,6 @@
                                         @endif
 
 
-
-
                                         <div class="sub-head">
                                             Production Injection
                                         </div>
@@ -2716,8 +2708,8 @@
                                                     <div class="group-input">
                                                         <label for="Production Injection assessment">Impact Assessment (By Production Injection)
                                                             <!-- <span
-                                                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                                                            class="text-danger">*</span> -->
+                                                           id="asteriskInvi12" style="display: none"
+                                                          class="text-danger">*</span> -->
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
@@ -3114,8 +3106,8 @@
                                             });
                                         </script>
                                         @php
-                                            $data1 = DB::table('cc_cfts')
-                                                ->where('cc_id', $data->id)
+                                            $data1 = DB::table('risk_managment_cfts')
+                                                ->where('risk_id', $data->id)
                                                 ->first();
                                         @endphp
 
@@ -3416,8 +3408,8 @@
                                             });
                                         </script>
                                         @php
-                                            $data1 = DB::table('cc_cfts')
-                                                ->where('cc_id', $data->id)
+                                            $data1 = DB::table('risk_managment_cfts')
+                                                ->where('risk_id', $data->id)
                                                 ->first();
                                         @endphp
 
@@ -3720,8 +3712,8 @@
                                             });
                                         </script>
                                         @php
-                                            $data1 = DB::table('cc_cfts')
-                                                ->where('cc_id', $data->id)
+                                            $data1 = DB::table('risk_managment_cfts')
+                                                ->where('risk_id', $data->id)
                                                 ->first();
                                         @endphp
 
