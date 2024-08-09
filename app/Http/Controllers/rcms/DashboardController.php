@@ -12,6 +12,7 @@ use App\Models\Extension;
 use App\Models\InternalAudit;
 use App\Models\ManagementReview;
 use App\Models\OutOfCalibration;
+use App\Models\Resampling;
 use App\Models\RiskManagement;
 use App\Models\LabIncident;
 use App\Models\Auditee;
@@ -88,6 +89,7 @@ class DashboardController extends Controller
 
         $datas25 = NonConformance::orderByDesc('id')->get();
         $incident = Incident::orderByDesc('id')->get();
+        $resampling = Resampling::orderByDesc('id')->get();
         foreach ($datas as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -560,6 +562,27 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "due_date" => $data->due_date,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+        foreach ($resampling as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->cc_id ? $data->cc_id : "-",
+                "record" => $data->record,
+                "type" => "Resampling",
+                "due_date" => $data->due_date,
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "division_id" => $data->division_id,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -1071,6 +1094,14 @@ class DashboardController extends Controller
             $data = NonConformance::find($id);
             $single = "non-conformance-single-report/" . $data->id;
             $audit = "non-conformance-audit-pdf/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        }
+        elseif ($type == "Resampling") {
+            $data = Resampling::find($id);
+            $single = "resamplingSingleReport/" . $data->id;
+            $audit = "resamplingAuditReport/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }

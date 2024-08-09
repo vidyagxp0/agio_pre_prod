@@ -63,6 +63,7 @@ class ProcessSeeder extends Seeder
         $processNames = [
             "Extension",
             "Action Item",
+            "Resampling",
             "Observation",
             "Root Cause Analysis",
             "Risk Assessment",

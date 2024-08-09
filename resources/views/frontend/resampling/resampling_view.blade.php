@@ -46,7 +46,7 @@
                 {{-- <div class="head">PR-0001</div> --}}
                 <div class="slogan">
                     <strong>Site Division/Project :</strong>
-                    {{ Helpers::getDivisionName($data->division_id) }} / Action item
+                    {{ Helpers::getDivisionName($data->division_id) }} / Resampling
                 </div>
             </div>
         </div>
@@ -69,7 +69,7 @@
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
                         {{-- {{ dd($data->stage);}} --}}
                        <a class="button_theme1 text-white"
-                                href="{{ url('rcms/action-item-audittrialshow', $data->id) }}"> Audit Trail </a> 
+                                href="{{ route('resampling-audittrialshow', $data->id) }}"> Audit Trail </a> 
                         @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
@@ -78,7 +78,7 @@
                                 Cancel
                             </button></a>
                             @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                           <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                           <a > <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button></a>
                             {{-- <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
@@ -91,14 +91,14 @@
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                  Complete
                             </button></a>
-                            <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            <a href="#more-info-required-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button></a>
                             @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                            Varification  Complete
                             </button></a>
-                            <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            <a href="#more-info-required-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button></a>
                         {{-- @elseif($data->stage == 2 && (in_array(8, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -164,9 +164,8 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Action Approval</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
                 </div>
-                <form action="{{ route('actionItem.update', $data->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('resampling-update', $data->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
 
                     <div id="step-form">
 
@@ -191,7 +190,7 @@
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
                                             <input disabled type="text" name="record_number"
-                                                value="{{ Helpers::getDivisionName($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                value="{{ Helpers::getDivisionName($data->division_id) }}/Resampling/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                             {{-- <div class="static"></div> --}}
                                         </div>
                                     </div>
@@ -301,15 +300,15 @@
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
-                                        <input name="short_description"   id="docname" type="text" value="{{ $data->short_description }}"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 5 ? "disabled" : "" }} type="text">
-                                      
+                                        
+                                        <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 5 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
                                 </div>
                                     
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Related Records">Action Item Related Records</label>
+                                            <label for="Related Records">Resampling Related Records</label>
                                             {{-- <select {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
                                                 placeholder="Select Reference Records">
                                                 <option value="">--select record--</option>
@@ -342,7 +341,7 @@
                                     </div>
                                     {{-- <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="related_records">Action Item Related Records</label>
+                                            <label for="related_records">Resampling Related Records</label>
                                             <select multiple name="related_records" placeholder="Select Reference Records"
                                                 data-search="false" data-silent-initial-value-set="true"
                                                 id="related_records">
@@ -1063,7 +1062,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ url('rcms/send-At', $data->id) }}" method="POST">
+                <form action="{{ route('send-resampling', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -1106,7 +1105,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('rcms/moreinfoState_actionitem', $data->id) }}" method="POST">
+                <form action="{{ route('moreinfoState_resampling', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -1154,7 +1153,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
-                        <form action="{{ url('rcms/action-stage-cancel', $data->id) }}" method="POST">
+                        <form action="{{ route('resapling-stage-cancel', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -1298,7 +1297,7 @@
                             <label for="revision">Choose Change Implementation</label>
                             <label for="major">
                                 <input type="radio" name="revision" id="major" value="Action-Item">
-                                Action Item
+                                Resampling
 
                             </label>
                             <label for="minor">

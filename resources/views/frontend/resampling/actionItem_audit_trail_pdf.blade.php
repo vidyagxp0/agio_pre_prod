@@ -153,7 +153,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Lab Incident Audit Trail Report
+                     Action Item Audit Trial Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -165,10 +165,11 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>    Lab Incident No.</strong>
+                    <strong> Action Item No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($doc->division_id) }}/LI
+                    {{ Helpers::getDivisionName($doc->division_id) }}/
+                    AI
                     /{{ Helpers::year($doc->created_at) }}/
                     {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
@@ -178,6 +179,20 @@
             </tr>
         </table>
     </header>
+
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
 
@@ -294,20 +309,6 @@
         </div>
 
     </div>
-
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-
-            </tr>
-        </table>
-    </footer>
 
 
 </body>

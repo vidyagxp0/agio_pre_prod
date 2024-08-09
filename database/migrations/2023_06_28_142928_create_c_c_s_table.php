@@ -20,10 +20,12 @@ return new class extends Migration
 
             $table->string('form_type')->nullable();
             $table->integer('record')->nullable();
+            $table->integer('record_number')->nullable();
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();
             $table->longText('short_description')->nullable();
             $table->longText('severity_level1')->nullable();    
+            $table->longText('cft_reviewer')->nullable();    
             $table->longText('initiated_through')->nullable();
             $table->longText('initiated_through_req')->nullable();
             $table->string('intiation_date')->nullable();
