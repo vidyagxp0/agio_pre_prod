@@ -237,7 +237,7 @@
                                                 {{-- <input disabled type="text" name="record"
                                                     value="{{ $data->record }}"> --}}
                                                     <input disabled type="text" name="record" id="record"
-                                                    value="{{Helpers::getDivisionName(session()->get('division'))}}/CAPA/{{ date('y') }}/{{ $data->record_number }}">
+                                                    value="{{Helpers::getDivisionName(session()->get('division'))}}/CAPA/{{ date('y') }}/{{ $data->record}}">
                                                     
             
                                             </div>
@@ -1485,7 +1485,7 @@
                                             <div class="group-input">
                                                 <label for="Plan Approved By">Comment</label>
                                                 <input type="hidden" name="comment"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <div class="static">{{ $data->plan_proposed_on_comment }}</div>
+                                                <div class="static">{{ $data->comment }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
