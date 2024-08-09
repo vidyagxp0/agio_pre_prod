@@ -1108,6 +1108,7 @@ class DashboardController extends Controller
             $data = Resampling::find($id);
             $single = "resamplingSingleReport/" . $data->id;
             $audit = "resamplingAuditReport/" . $data->id;
+            $parent = "#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }

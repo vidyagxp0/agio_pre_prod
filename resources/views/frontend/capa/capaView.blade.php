@@ -237,7 +237,7 @@
                                                 {{-- <input disabled type="text" name="record"
                                                     value="{{ $data->record }}"> --}}
                                                     <input disabled type="text" name="record" id="record"
-                                                    value="{{Helpers::getDivisionName(session()->get('division'))}}/CAPA/{{ date('y') }}/{{ $data->record_number }}">
+                                                    value="{{Helpers::getDivisionName(session()->get('division'))}}/CAPA/{{ date('y') }}/{{ $data->record }}">
                                                     
             
                                             </div>
