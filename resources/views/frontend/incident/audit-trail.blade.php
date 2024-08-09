@@ -372,8 +372,8 @@
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                    <strong> Data Field Name :</strong>
+                                        {{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;" class="imageContainer">
                                     <!-- Assuming $dataDemo->image_url contains the URL of your image -->

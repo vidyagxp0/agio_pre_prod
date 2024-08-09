@@ -1088,10 +1088,10 @@ class CapaController extends Controller
         }
         $lastDocument = Capa::find($id);
         $capa = Capa::find($id);
-        $capa->parent_id = $request->parent_id;
-        $capa->parent_type = $request->parent_type;
-        $capa->division_code = $request->division_code;
-        $capa->intiation_date= $request->intiation_date;
+        // $capa->parent_id = $request->parent_id;
+        // $capa->parent_type = $request->parent_type;
+        // $capa->division_code = $request->division_code;
+        // $capa->intiation_date= $request->intiation_date;
         $capa->general_initiator_group = $request->initiator_group;
         $capa->short_description = $request->short_description;
         $capa->problem_description = $request->problem_description;
