@@ -2300,7 +2300,6 @@ class CapaController extends Controller
                      $history->change_to = "HOD Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'HOD Review';
-                    
                     $history->save();
 
                 //     $list = Helpers::getHodUserList();

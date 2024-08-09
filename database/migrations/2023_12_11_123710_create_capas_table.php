@@ -63,11 +63,11 @@ return new class extends Migration
             $table->longText('capa_qa_comments2')->nullable();
             $table->text('Microbiology_new')->nullable();
             // $table->text('Microbiology_Person')->nullable();
-            $table->text('goup_review')->nullable();
-            $table->text('Production_new')->nullable();
-            $table->text('Production_Person')->nullable();
-            $table->text('Quality_Approver')->nullable();
-            $table->text('Quality_Approver_Person')->nullable();
+            $table->longText('goup_review')->nullable();
+            $table->longText('Production_new')->nullable();
+            $table->longText('Production_Person')->nullable();
+            $table->longText('Quality_Approver')->nullable();
+            $table->longText('Quality_Approver_Person')->nullable();
             $table->text('bd_domestic')->nullable();
             $table->text('Bd_Person')->nullable();
             $table->string('additional_attachments')->nullable();
