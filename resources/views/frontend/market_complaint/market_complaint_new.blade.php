@@ -1331,9 +1331,6 @@
                                                         </div>
                                                     </td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
-
-
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1451,7 +1448,7 @@
 
 
 
-                                                           <div class="col-12">
+                                     <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">HOD Attachment</label>
                                         <div>
@@ -1698,8 +1695,6 @@
                                     <input type="date" id="QualityAssurance_on" name="QualityAssurance_on">
                                 </div>
                             </div>
-
-
 
 
                             <div class="sub-head">
@@ -2495,7 +2490,6 @@
                             </div>
 
 
-
                             <div class="sub-head">
                                 Microbiology
                             </div>
@@ -2591,8 +2585,6 @@
                                     <input type="date" id="Microbiology_on" name="Microbiology_on">
                                 </div>
                             </div>
-
-
 
                             <div class="sub-head">
                                 Regulatory Affair
@@ -3004,8 +2996,6 @@
                                 </div>
                             </div>
 
-
-
                             <div class="sub-head">
                                 Contract Giver
                             </div>
@@ -3131,7 +3121,6 @@
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                         <option value="na">NA</option>
-
                                     </select>
 
                                 </div>
@@ -3278,7 +3267,6 @@
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endforeach
-
                                     </select>
 
                                 </div>
@@ -3507,7 +3495,6 @@
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                         <option value="na">NA</option>
-
                                     </select>
 
                                 </div>
@@ -3755,9 +3742,7 @@
                     <div class="inner-block-content">
                         <div class="row">
 
-
                             <div class="sub-head">Acknowledgement</div>
-
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
@@ -3792,8 +3777,6 @@
                                                     <th>Released Quantity</th>
                                                     <th>Remarks</th>
                                                     <th></th>
-
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -3838,7 +3821,6 @@
                                                     <td><input type="text" name="Product_MaterialDetails[0][pack_profile_pmd_ca]"></td>
                                                     <td><input type="text" name="Product_MaterialDetails[0][released_quantity_pmd_ca]"></td>
                                                     <td><input type="text" name="Product_MaterialDetails[0][remarks_ca]"></td>
-
 
                                                     <td><button type="text" class="removeRowBtn">Remove</button></td>
 
@@ -4281,10 +4263,6 @@
                                                 <textarea name="acs2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
-
-
-
-
                                     </tr>
                                     <tr>
                                         <td class="flex text-center">4</td>
@@ -4377,9 +4355,6 @@
         </div>
 
 
-
-
-
         <div id="CCForm4" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -4430,13 +4405,9 @@
             <div class="inner-block-content">
 
                 <div class="row">
-
-
-
                     <div class="sub-head">
                         Activity Log
                     </div>
-
 
                     <div class="col-lg-6">
                         <div class="group-input">
@@ -4448,10 +4419,6 @@
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Submit On : </label>
-
-
-
-
                         </div>
                     </div>
 
@@ -4467,10 +4434,6 @@
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">HOD Review Completed On :</label>
-
-
-
-
                         </div>
                     </div>
 
@@ -4485,10 +4448,6 @@
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">QA Initial Review Completed On : </label>
-
-
-
-
                         </div>
                     </div>
 
@@ -4503,10 +4462,6 @@
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">QA Final Review Completed On : </label>
-
-
-
-
                         </div>
                     </div>
 
@@ -4521,17 +4476,8 @@
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Closure Done On : </label>
-
-
-
-
                         </div>
                     </div>
-
-
-
-
-
                 </div>
                 <div class="button-block">
                     <button type="submit" class="saveButton">Save</button>
@@ -4733,3 +4679,6 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
 </script> --}}
 @endsection
+
+
+

@@ -190,9 +190,6 @@
                     <div class="d-flex" style="gap:20px;">
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
-
-
-
                         @php
                             $userRoles = DB::table('user_roles')
                                 ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
@@ -208,19 +205,20 @@
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button></a>
-
+                            <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
+                            </button></a>
 
                         @elseif($data->stage == 2 && (in_array(14, $userRoleIds) || in_array(18, $userRoleIds)))
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button></a>
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Complete Review
+                                Evaluation Complete
                             </button></a>
-                           <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                           {{-- <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                             Cancel
-                        </button></a>
-
+                        </button></a> --}}
 
                         @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
@@ -229,439 +227,31 @@
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                CFT Review Complete
                             </button></a>
-                            <a href="#signature-modal"></a>
-
+                            {{-- <a href="#signature-modal"></a> --}}
 
                         @elseif($data->stage == 4 && (in_array(15, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                        <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            More Information Required
+                        </button></a>
+
+                        <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Review Complete
                             </button></a>
-                       <a href="#child-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                        Action Item
-                    </button></a>
-                    <a href="#child-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                        Capa
-                    </button></a>
+
                         @elseif($data->stage == 5 && (in_array(14, $userRoleIds) || in_array(18, $userRoleIds)))
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Approve Plan
+                            Approved
                         </button></a>
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Reject
+                                More Information Required
                             </button></a>
-
-
                         @elseif($data->stage == 6 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                           <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            All CAPA Closed
-                        </button></a>
-                            {{-- ====regulatroy single child --}}
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal4">
-                                Child
-                            </button> --}}
 
-
-
-
-                        {{-- @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                           <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Send Letter
-                        </button></a>
-                           <a href="#child-modal3"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
-                            Child
-                        </button></a> --}}
-
-                        {{-- @elseif($data->stage == 8 )
-                        <a href="{{ route('reopen.stage', $data->id) }}">
-                            <button class="button_theme1"> Re Open </button>
-                        </a>
-                      --}}
-                        @endif
-                         <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"><button class="button_theme1"> Exit
-                            </button> </a>
-
+                          @endif
 
                     </div>
 
                 </div>
-
-
-                <!--------------------------Modal-------------------->
-
-
-
-                <div class="modal fade" id="rejection-modal">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                                <h4 class="modal-title">E-Signature</h4>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <form action="{{ route('marketcomplaint.mar_comp_reject_stateChange', $data->id) }}"
-                                method="POST">
-                                @csrf
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <div class="mb-3 text-justify">
-                                        Please select a meaning and a outcome for this task and enter your username
-                                        and password for this task. You are performing an electronic signature,
-                                        which is legally binding equivalent of a hand written signature.
-                                    </div>
-                                    <div class="group-input">
-                                        <label for="username">Username <span class="text-danger">*</span></label>
-                                        <input type="text" name="username" required>
-                                    </div>
-                                    <div class="group-input">
-                                        <label for="password">Password <span class="text-danger">*</span></label>
-                                        <input type="password" name="password" required>
-                                    </div>
-                                    <div class="group-input">
-                                        <label for="comment">Comment <span class="text-danger">*</span></label>
-                                        <input type="comment" name="comment" required>
-                                    </div>
-                                </div>
-
-                                <!-- Modal footer -->
-                                <!-- <div class="modal-footer">
-                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                        <button>Close</button>
-                                    </div> -->
-                                <div class="modal-footer">
-                                    <button type="submit">Submit</button>
-                                    <button type="button" data-bs-dismiss="modal">Close</button>
-
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-                <div class="modal fade" id="signature-modal">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                                <h4 class="modal-title">E-Signature</h4>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <form action="{{ route('marketcomplaint.mar_comp_stagechange', $data->id) }}" method="POST">
-                                @csrf
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <div class="mb-3 text-justify">
-                                        Please select a meaning and a outcome for this task and enter your username
-                                        and password for this task. You are performing an electronic signature,
-                                        which is legally binding equivalent of a hand written signature.
-                                    </div>
-                                    <div class="group-input">
-                                        <label for="username">Username <span class="text-danger">*</span></label>
-                                        <input type="text" name="username" required>
-                                    </div>
-                                    <div class="group-input">
-                                        <label for="password">Password <span class="text-danger">*</span></label>
-                                        <input type="password" name="password" required>
-                                    </div>
-                                    <div class="group-input">
-                                        <label for="comment">Comment</label>
-                                        <input type="comment" name="comment">
-                                    </div>
-                                </div>
-
-                                <!-- Modal footer -->
-                                <!-- <div class="modal-footer">
-                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                        <button>Close</button>
-                                    </div> -->
-                                <div class="modal-footer">
-                                    <button type="submit">Submit</button>
-                                    <button type="button" data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-                <div class="modal fade" id="cancel-modal">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                                <h4 class="modal-title">E-Signature</h4>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-
-                            <form action="{{ route('marketcomplaint.MarketComplaintCancel', $data->id) }}" method="POST">
-                                @csrf
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <div class="mb-3 text-justify">
-                                        Please select a meaning and a outcome for this task and enter your username
-                                        and password for this task. You are performing an electronic signature,
-                                        which is legally binding equivalent of a hand written signature.
-                                    </div>
-                                    <div class="group-input">
-                                        <label for="username">Username <span class="text-danger">*</span></label>
-                                        <input type="text" name="username" required>
-                                    </div>
-                                    <div class="group-input">
-                                        <label for="password">Password <span class="text-danger">*</span></label>
-                                        <input type="password" name="password" required>
-                                    </div>
-                                    <div class="group-input">
-                                        <label for="comment">Comment <span class="text-danger">*</span></label>
-                                        <input type="comment" name="comment" required>
-                                    </div>
-                                </div>
-
-                                <!-- Modal footer -->
-                                <!-- <div class="modal-footer">
-                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                        <button>Close</button>
-                                    </div> -->
-                                <div class="modal-footer">
-                                    <button type="submit">Submit</button>
-                                    <button type="button" data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-{{-- ==================================capa and  Action child=============================================== --}}
-
-
-                <div class="modal fade" id="child-modal">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                                <h4 class="modal-title">Child</h4>
-                            </div>
-                            <div class="model-body">
-
-                                <form action="{{ route('marketcomplaint.capa_action_child', $data->id) }}" method="POST">
-                                    @csrf
-                                    <!-- Modal body -->
-                                    <div class="modal-body">
-                                        <div class="group-input">
-                                            <label style="  display: flex;     gap: 18px; width: 60px;" for="capa-child">
-                                                <input type="radio" name="revision" id="capa-child" value="capa-child">
-                                                CAPA
-                                            </label>
-                                        </div>
-                                        <div class="group-input">
-                                            <label  style=" display: flex;     gap: 16px; width: 60px;" for="root-item">
-                                                <input type="radio" name="revision" id="root-item" value="Action-Item">
-                                                Action Item
-                                            </label>
-                                        </div>
-                                        {{-- <div class="group-input">
-                                            <label for="root-item">
-                                             <input type="radio" name="revision" id="root-item" value="effectiveness-check">
-                                                Effectiveness check
-                                            </label>
-                                        </div> --}}
-                                    </div>
-
-                                    <!-- Modal footer -->
-                                    <!-- <div class="modal-footer">
-                                        <button type="button" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit">Continue</button>
-                                    </div> -->
-                                    <div class="modal-footer">
-                                              <button type="submit">Submit</button>
-                                             <button type="button" data-bs-dismiss="modal">Close</button>
-                                   </div>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-{{-- ==================================RCA and Action child=============================================== --}}
-                <div class="modal fade" id="child-modal1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                                <h4 class="modal-title">Child</h4>
-                            </div>
-                            <div class="model-body">
-                            <form action="{{ route('marketcomplaint.rca_action_child', $data->id) }}" method="POST">
-                                @csrf
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <div class="group-input">
-                                        <label style="  display: flex;     gap: 18px; width: 60px;" for="capa-child">
-                                            <input type="radio" name="revision" id="capa-child" value="rca-child">
-                                           RCA
-                                        </label>
-                                    </div>
-                                    <div class="group-input">
-                                        <label style=" display: flex;     gap: 16px; width: 60px;" for="root-item">
-                                            <input type="radio" name="revision" id="root-item" value="Action-Item">
-                                          <span style="width: 100px;">  Action Item</span>
-                                        </label>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="modal-footer">
-                                          <button type="submit">Submit</button>
-                                         <button type="button" data-bs-dismiss="modal">Close</button>
-                               </div>
-                            </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-{{-- ==================================Regulatory  Reporting  and Effectiveness  Check child=============================================== --}}
-
-<div class="modal fade" id="child-modal3">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Child</h4>
-            </div>
-            <div class="model-body">
-
-                <form action="{{ route('marketcomplaint.Regu_Effec_child', $data->id) }}" method="POST">
-                    @csrf
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        {{-- <div class="group-input">
-                            <label style=" display: flex;     gap: 16px; width: 60px;" for="capa-child">
-                                <input type="radio" name="revision" id="rca-child" value="regulatory-child">
-                                Regulatory Reporting
-                            </label>
-                        </div> --}}
-                        <div class="group-input">
-                            <label style="  display: flex;     gap: 18px; width: 60px;"for="root-item">
-                                <input type="radio" name="revision" id="root-item" value="Effectiveness-child">
-                                Effectiveness Check
-                            </label>
-                        </div>
-
-                    </div>
-
-
-                    <div class="modal-footer">
-                              <button type="submit">Submit</button>
-                             <button type="button" data-bs-dismiss="modal">Close</button>
-                   </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-{{-- ==========================single regulatory ======================= --}}
-<div class="modal fade" id="child-modal4">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Child</h4>
-            </div>
-            <div class="model-body">
-
-                <form action="{{ route('marketcomplaint.Regu_Effec_child', $data->id) }}" method="POST">
-                    @csrf
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <div class="group-input">
-                            <label style=" display: flex;     gap: 16px; width: 60px;" for="capa-child">
-                                <input type="radio" name="revision" id="rca-child" value="regulatory-child">
-                                Regulatory Reporting
-                            </label>
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="modal-footer">
-                              <button type="submit">Submit</button>
-                             <button type="button" data-bs-dismiss="modal">Close</button>
-                   </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-                <style>
-                    #step-form>div {
-                        display: none
-                    }
-
-                    #step-form>div:nth-child(1) {
-                        display: block;
-                    }
-                    .input_full_width{
-                        width: 100%;
-                border-radius: 5px;
-                margin-bottom: 10px;
-                    }
-                </style>
-
-
-
-
-
-
-
-
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const removeButtons = document.querySelectorAll('.remove-file');
-
-                        removeButtons.forEach(button => {
-                            button.addEventListener('click', function() {
-                                const fileName = this.getAttribute('data-file-name');
-                                const fileContainer = this.closest('.file-container');
-
-                                // Hide the file container
-                                if (fileContainer) {
-                                    fileContainer.style.display = 'none';
-                                }
-                            });
-                        });
-                    });
-                </script>
-
-                <script>
-                    var maxLength = 240;
-                    $('#duedoc').keyup(function() {
-                        var textlen = maxLength - $(this).val().length;
-                        $('#rchar').text(textlen);
-                    });
-                </script>
-
-
-
-
-
-
-
-
 
                 <!-------------------------- end Modal-------------------->
 
@@ -681,35 +271,36 @@
                             @endif
 
                             @if ($data->stage >= 2)
-                                <div class="active">Supervisor Review </div>
+                                <div class="active">Risk Analysis & Work Group Assignment </div>
                             @else
-                                <div class="">Supervisor Review</div>
+                                <div class="">Risk Analysis & Work Group Assignment</div>
                             @endif
 
                             @if ($data->stage >= 3)
-                                <div class="active">Investigation and Root Cause Analysis</div>
+                                <div class="active">CFT Review
+                                </div>
                             @else
-                                <div class="">Investigation and Root Cause
-                                    Analysis</div>
+                                <div class="">CFT Review
+                                </div>
                             @endif
 
                             @if ($data->stage >= 4)
-                                <div class="active">CFT Review</div>
-                            @else
-                                <div class="">CFT Review</div>
-                            @endif
-
-                            @if ($data->stage >= 5)
                                 <div class="active">In QA Review</div>
                             @else
                                 <div class="">In QA Review</div>
                             @endif
-                            @if ($data->stage >= 6)
-                                <div class="active">Pending Actions Completion</div>
+
+                            @if ($data->stage >= 5)
+                                <div class="active">In Approval</div>
                             @else
-                                <div class="">Pending Actions Completion</div>
+                                <div class="">In Approval</div>
                             @endif
-                            @if ($data->stage >= 7)
+                            @if ($data->stage >= 6)
+                            <div class="bg-danger">Closed - Done</div>
+                            @else
+                            <div class="">Closed - Done</div>
+                            @endif
+                            {{-- @if ($data->stage >= 7)
                                 <div class="active">Pending Response Letter</div>
                             @else
                                 <div class="">Pending Response Letter</div>
@@ -722,8 +313,8 @@
                              @if ($data->stage >= 9)
                         <div class="bg-danger">Closed - Done</div>
                         @else
-                        <div class="">Closed - Done</div>
-                        @endif
+                        <div class="">Closed - Done</div> --}}
+                        {{-- @endif --}}
                     @endif
 
 
@@ -741,6 +332,7 @@
             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CFT Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Complaint Acknowledgement</button>
 
+            {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">In QA Review</button> --}}
             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure</button>
 
             <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
@@ -925,8 +517,6 @@
                                         updateDueDateDisplay();
                                     });
                                 </script> --}}
-
-
 
 
                             {{-- <div class="col-lg-6">
@@ -1164,8 +754,6 @@
                         return date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                     }
                 </script>
-
-
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
@@ -1592,16 +1180,8 @@
                                     </textarea>
                                 </div>
                             </div>
-
-
-
-
-
                             <div class="button-block">
                                 <button type="submit" class="saveButton" id="saveButton"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} >Save</button>
-
-
-
 
                         {{-- <script>
                             function showAlert(event) {
@@ -1982,8 +1562,6 @@
                                                     <th>Sign</th>
                                                     <th>Date</th>
                                                     <th>Action</th>
-
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -2065,11 +1643,6 @@
                                     });
                                 });
                             </script>
-
-
-
-
-
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -2187,10 +1760,6 @@
                                     }
                                 }
                             </script>
-
-
-
-
 
                 <div class="col-12">
                     <div class="group-input">
@@ -2313,14 +1882,14 @@
                                 ->where('mc_id', $data->id)
                                 ->first();
                         @endphp
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Production Review Table"> Production TAble Required ? <span
                                             class="text-danger">*</span></label>
                                     <select name="Production_Table_Review" id="Production_Table_Review"
-                                        @if ($data->stage == 4) disabled @endif
-                                        @if ($data->stage == 3) required @endif>
+                                        @if ($data->stage == 3) disabled @endif
+                                        @if ($data->stage == 2) required @endif>
                                         <option value="">-- Select --</option>
                                         <option @if ($data1->Production_Table_Review == 'yes') selected @endif
                                             value='yes'>
@@ -2352,7 +1921,7 @@
                                             style="display: {{ $data1->Production_Table_Review == 'yes' ? 'inline' : 'none' }}"
                                             class="text-danger">*</span>
                                     </label>
-                                    <select @if ($data->stage == 4) disabled @endif
+                                    <select @if ($data->stage == 3) disabled @endif
                                         name="Production_Table_Person" class="Production_Table_Person"
                                         id="Production_Table_Person">
                                         <option value="">-- Select --</option>
@@ -2368,24 +1937,24 @@
                                 <div class="group-input">
                                     <label for="Production assessment">Impact Table Assessment (By Production)
                                         <span id="asteriskProduction1"
-                                            style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->Production_Table_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_Table_Assessment"
-                                        @if ($data->stage == 3 || Auth::user()->id != $data1->Production_Table_Person) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
+                                    <textarea @if ($data1->Production_Table_Review == 'yes' && $data->stage == 2) required @endif class="summernote Production_Table_Assessment"
+                                        @if ($data->stage == 2 || Auth::user()->id != $data1->Production_Table_Person) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3 p_erson">
                                 <div class="group-input">
                                     <label for="Production Table feedback">Production Table Feedback <span
                                             id="asteriskProduction2"
-                                            style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 2 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea class="summernote Production_Table_Feedback" @if ($data->stage == 3 || Auth::user()->id != $data1->Production_Table_Person) readonly @endif
-                                        name="Production_Table_Feedback" id="summernote-18" @if ($data1->Production_Table_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Production_Table_Feedback }}</textarea>
+                                    <textarea class="summernote Production_Table_Feedback" @if ($data->stage == 2 || Auth::user()->id != $data1->Production_Table_Person) readonly @endif
+                                        name="Production_Table_Feedback" id="summernote-18" @if ($data1->Production_Table_Review == 'yes' && $data->stage == 2) required @endif>{{ $data1->Production_Table_Feedback }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12 p_erson">
@@ -8849,8 +8418,6 @@ require completion</small></div>
                                 </div>
                             </div>
 
-
-
                             <div class="sub-head">
                                 Other's 5 ( Additional Person Review From Departments If Required)
                             </div>
@@ -9211,12 +8778,6 @@ require completion</small></div>
                                 });
                             });
                         </script>
-
-
-
-
-
-
 
 
                         <div class="col-lg-12">
@@ -9664,10 +9225,6 @@ require completion</small></div>
             </div>
     </div>
 
-
-
-
-
     <div id="CCForm4" class="inner-block cctabcontent">
         <div class="inner-block-content">
             <div class="sub-head">
@@ -9736,8 +9293,6 @@ require completion</small></div>
         <div class="inner-block-content">
 
             <div class="row">
-
-
 
                 <div class="sub-head">
                     Activity Log
@@ -9870,9 +9425,6 @@ require completion</small></div>
                         <label for="OOC Logged On">Propose Plan On : </label>
 
                         <div class="date">{{ $data->propose_plan_on }}</div>
-
-
-
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -9894,9 +9446,6 @@ require completion</small></div>
                         <label for="OOC Logged On">Reject On : </label>
 
                         <div class="date">{{ $data->reject_on}}</div>
-
-
-
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -9919,10 +9468,6 @@ require completion</small></div>
                     <div class="group-input input-date">
                         <label for="OOC Logged On">Approve Plan On : </label>
                         <div class="date">{{ $data->approve_plan_on }}</div>
-
-
-
-
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -9952,9 +9497,6 @@ require completion</small></div>
                         <div class="static">{{ $data->all_capa_closed_comment }}</div>
                     </div>
                 </div>
-
-
-
                 <div class="col-lg-4">
                     <div class="group-input">
                         <label for="Initiator Group">Closure Done By : </label>
@@ -9967,10 +9509,6 @@ require completion</small></div>
                     <div class="group-input input-date">
                         <label for="OOC Logged On">Closure Done On : </label>
                         <div class="date">{{ $data->closed_done_on }}</div>
-
-
-
-
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -9980,13 +9518,7 @@ require completion</small></div>
                     </div>
                 </div>
 
-
-
-
             </div>
-
-
-
 
             <div class="button-block">
                 <button type="submit" class="saveButton">Save</button>
@@ -10169,5 +9701,359 @@ document.getElementById('initiator_group').addEventListener('change', function()
 });
 
 </script> --}}
+
+<!--------------------------Modal-------------------->
+
+
+<div class="modal fade" id="rejection-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('marketcomplaint.mar_comp_reject_stateChange', $data->id) }}"
+                method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and a outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="comment">Comment <span class="text-danger">*</span></label>
+                        <input type="comment" name="comment" required>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <!-- <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
+                <div class="modal-footer">
+                    <button type="submit">Submit</button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="signature-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('marketcomplaint.mar_comp_stagechange', $data->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and a outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="comment">Comment</label>
+                        <input type="comment" name="comment">
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <!-- <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
+                <div class="modal-footer">
+                    <button type="submit">Submit</button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cancel-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form action="{{ route('marketcomplaint.MarketComplaintCancel', $data->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and a outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="comment">Comment <span class="text-danger">*</span></label>
+                        <input type="comment" name="comment" required>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <!-- <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
+                <div class="modal-footer">
+                    <button type="submit">Submit</button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{-- ==================================capa and  Action child=============================================== --}}
+
+
+<div class="modal fade" id="child-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <div class="model-body">
+
+                <form action="{{ route('marketcomplaint.capa_action_child', $data->id) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="group-input">
+                            <label style="  display: flex;     gap: 18px; width: 60px;" for="capa-child">
+                                <input type="radio" name="revision" id="capa-child" value="capa-child">
+                                CAPA
+                            </label>
+                        </div>
+                        <div class="group-input">
+                            <label  style=" display: flex;     gap: 16px; width: 60px;" for="root-item">
+                                <input type="radio" name="revision" id="root-item" value="Action-Item">
+                                Action Item
+                            </label>
+                        </div>
+                        {{-- <div class="group-input">
+                            <label for="root-item">
+                             <input type="radio" name="revision" id="root-item" value="effectiveness-check">
+                                Effectiveness check
+                            </label>
+                        </div> --}}
+                    </div>
+
+                    <!-- Modal footer -->
+                    <!-- <div class="modal-footer">
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        <button type="submit">Continue</button>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                             <button type="button" data-bs-dismiss="modal">Close</button>
+                   </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{{-- ==================================RCA and Action child=============================================== --}}
+<div class="modal fade" id="child-modal1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <div class="model-body">
+            <form action="{{ route('marketcomplaint.rca_action_child', $data->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="group-input">
+                        <label style="  display: flex;     gap: 18px; width: 60px;" for="capa-child">
+                            <input type="radio" name="revision" id="capa-child" value="rca-child">
+                           RCA
+                        </label>
+                    </div>
+                    <div class="group-input">
+                        <label style=" display: flex;     gap: 16px; width: 60px;" for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Action-Item">
+                          <span style="width: 100px;">  Action Item</span>
+                        </label>
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+                          <button type="submit">Submit</button>
+                         <button type="button" data-bs-dismiss="modal">Close</button>
+               </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- ==================================Regulatory  Reporting  and Effectiveness  Check child=============================================== --}}
+
+<div class="modal fade" id="child-modal3">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title">Child</h4>
+</div>
+<div class="model-body">
+
+<form action="{{ route('marketcomplaint.Regu_Effec_child', $data->id) }}" method="POST">
+    @csrf
+    <!-- Modal body -->
+    <div class="modal-body">
+        {{-- <div class="group-input">
+            <label style=" display: flex;     gap: 16px; width: 60px;" for="capa-child">
+                <input type="radio" name="revision" id="rca-child" value="regulatory-child">
+                Regulatory Reporting
+            </label>
+        </div> --}}
+        <div class="group-input">
+            <label style="  display: flex;     gap: 18px; width: 60px;"for="root-item">
+                <input type="radio" name="revision" id="root-item" value="Effectiveness-child">
+                Effectiveness Check
+            </label>
+        </div>
+
+    </div>
+
+
+    <div class="modal-footer">
+              <button type="submit">Submit</button>
+             <button type="button" data-bs-dismiss="modal">Close</button>
+   </div>
+</form>
+</div>
+
+</div>
+</div>
+</div>
+{{-- ==========================single regulatory ======================= --}}
+<div class="modal fade" id="child-modal4">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title">Child</h4>
+</div>
+<div class="model-body">
+
+<form action="{{ route('marketcomplaint.Regu_Effec_child', $data->id) }}" method="POST">
+    @csrf
+    <!-- Modal body -->
+    <div class="modal-body">
+        <div class="group-input">
+            <label style=" display: flex;     gap: 16px; width: 60px;" for="capa-child">
+                <input type="radio" name="revision" id="rca-child" value="regulatory-child">
+                Regulatory Reporting
+            </label>
+        </div>
+
+
+    </div>
+
+
+    <div class="modal-footer">
+              <button type="submit">Submit</button>
+             <button type="button" data-bs-dismiss="modal">Close</button>
+   </div>
+</form>
+</div>
+
+</div>
+</div>
+</div>
+<style>
+    #step-form>div {
+        display: none
+    }
+
+    #step-form>div:nth-child(1) {
+        display: block;
+    }
+    .input_full_width{
+        width: 100%;
+border-radius: 5px;
+margin-bottom: 10px;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const removeButtons = document.querySelectorAll('.remove-file');
+
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const fileName = this.getAttribute('data-file-name');
+                const fileContainer = this.closest('.file-container');
+
+                // Hide the file container
+                if (fileContainer) {
+                    fileContainer.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    var maxLength = 240;
+    $('#duedoc').keyup(function() {
+        var textlen = maxLength - $(this).val().length;
+        $('#rchar').text(textlen);
+    });
+</script>
 
 @endsection

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('comment')->nullable();
             $table->date('completed_on')->nullable();
             $table->integer('is_required')->default(0);
+            $table->text('deleted_at')->nullabl();
             $table->timestamps();
         });
     }
