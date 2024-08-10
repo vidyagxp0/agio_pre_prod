@@ -314,6 +314,13 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('ootcSingleReport/{id}', [OOTController::class, 'singleReport']);
             Route::post('sendstage/{id}',[OOTController::class,'oot_send_stage']);
             Route::post('cancel/{id}', [OOTController::class, 'ootCancel']);
+            Route::post('RejectStateChangeTTwo/{id}', [OOTController::class, 'RejectStateChangeTTwo'])->name('RejectStateChangeTTwo');
+            Route::post('OOTChildRoot/{id}', [OOTController::class, 'OOTChildRoot'])->name('o_o_t_root_child');
+            Route::post('oo_t_capa_child/{id}', [OOTController::class, 'oo_t_capa_child'])->name('oo_t_capa_child');
+
+
+
+
             Route::post('thirdStage/{id}', [OOTController::class, 'stageChange']);
             Route::post('reject/{id}', [OOTController::class, 'oot_reject']);
             Route::get('audit_pdf/{id}',[OOTController::class,'auditTiailPdf']);

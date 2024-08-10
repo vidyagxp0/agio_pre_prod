@@ -246,8 +246,6 @@ $users = DB::table('users')->get();
             $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $ooc->division_id])->get();
             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
         @endphp
-            {{-- <button class="button_theme1" onclick="window.print();return false;"
-                class="new-doc-btn">Print</button> --}}
             <button class="button_theme1"> <a class="text-white"
                     href="{{ route('audittrialooc', $ooc->id) }}"> Audit Trail </a> </button>
 
@@ -272,9 +270,7 @@ $users = DB::table('users')->get();
                     Child
                 </button>
             @elseif($ooc->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-            <!-- <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                Assignable Cause Found
-            </button> -->
+            
             <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 CQA/QA Head Primary Review Complete
             </button>
@@ -284,9 +280,6 @@ $users = DB::table('users')->get();
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button>
-            <!-- <button class="button_theme1" name="no_assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal1">
-                Assignable Cause Not Found
-            </button> -->
                
                 
             @elseif($ooc->stage == 4 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -295,28 +288,17 @@ $users = DB::table('users')->get();
             <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 Phase IA Investigation
             </button>
-            <!-- <button class="button_theme1" name="no_assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal1">
-                Phase IA Investigation
-            </button> -->
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
                 </button> 
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                 Child
             </button>   
-            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                    All Activities Completed
-                </button> --}}
             @elseif($ooc->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                    Obvious Results Not Found
-                </button> -->
+                
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                  Phase IA HOD Review Complete
                 </button> 
-                <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
-                    Obvious Results Found
-                </button> -->
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
                 </button> 
@@ -578,7 +560,6 @@ $users = DB::table('users')->get();
                     <div class="">Closed Done</div>
                 @endif
             @endif
-
             @if ($ooc->stage >= 10)
                 <div class="active">Under Phase-IB Investigation</div>
             @else

@@ -2978,7 +2978,7 @@ $oocevaluation->save();
             if (is_null($lastDocumentOOC->obvious_r_completed_by) || $lastDocumentOOC->obvious_r_completed_by === '') {
                 $history->previous = "Null";
             } else {
-                $history->previous = $lastDocumentOOC->obvious_r_completed_by . ' , ' . $lastDocumentOOC->submitted_on;
+                $history->previous = $lastDocumentOOC->obvious_r_completed_by . ' , ' . $lastDocumentOOC->obvious_r_completed_on;
             }
             $history->current = $oocchange->obvious_r_completed_by . ' , ' . $oocchange->obvious_r_completed_on;
             // $history->current = $oocchange->obvious_r_completed_by;
