@@ -512,6 +512,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -526,6 +529,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -540,6 +546,26 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($internalAudit->initiator_group_code)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Initiator Group Code';
+            $history->previous = "Null";
+            $history->current = $internalAudit->initiator_group_code;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -554,8 +580,29 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
+
+        if (!empty($internalAudit->initiated_through)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Initiated Through';
+            $history->previous = "Null";
+            $history->current = $internalAudit->initiated_through;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
 
         if (!empty($internalAudit->audit_type)) {
             $history = new InternalAuditTrial();
@@ -568,6 +615,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -582,13 +632,16 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
         if (!empty($internalAudit->initial_comments)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Initial Comments';
+            $history->activity_type = 'Description';
             $history->previous = "Null";
             $history->current = $internalAudit->initial_comments;
             $history->comment = "NA";
@@ -596,50 +649,96 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
-        if (!empty($internalAudit->start_date)) {
+        if (!empty($internalAudit->external_agencies)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Audit Schedule Start Date';
+            $history->activity_type = 'External Agencies';
             $history->previous = "Null";
-            $history->current = $internalAudit->start_date;
+            $history->current = $internalAudit->external_agencies;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($internalAudit->Others)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Others';
+            $history->previous = "Null";
+            $history->current = $internalAudit->Others;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($internalAudit->audit_schedule_start_date)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Audit Start';
+            $history->previous = "Null";
+            $history->current = $internalAudit->audit_schedule_start_date;
             $history->comment = "Na";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
-        if (!empty($internalAudit->end_date)) {
+        if (!empty($internalAudit->audit_schedule_end_date)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Audit Schedule End Date';
+            $history->activity_type = 'End Date';
             $history->previous = "Null";
-            $history->current = $internalAudit->end_date;
+            $history->current = $internalAudit->audit_schedule_end_date;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
-        if (!empty($internalAudit->audit_agenda)) {
-            $history = new InternalAuditTrial();
-            $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Audit Agenda';
-            $history->previous = "Null";
-            $history->current = $internalAudit->audit_agenda;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $internalAudit->status;
-            $history->save();
-        }
+        // if (!empty($internalAudit->audit_agenda)) {
+        //     $history = new InternalAuditTrial();
+        //     $history->InternalAudit_id = $internalAudit->id;
+        //     $history->activity_type = 'Audit Agenda';
+        //     $history->previous = "Null";
+        //     $history->current = $internalAudit->audit_agenda;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $internalAudit->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
 
         // if (!empty($internalAudit->Facility)) {
         //     $history = new InternalAuditTrial();
@@ -680,6 +779,26 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($internalAudit->if_comments)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Comments(If Any)';
+            $history->previous = "Null";
+            $history->current = $internalAudit->if_comments;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -694,6 +813,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -708,6 +830,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -722,6 +847,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -736,8 +864,97 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
+
+        if (!empty($internalAudit->Relevant_Guideline)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Relevant Guidelines / Industry Standards';
+            $history->previous = "Null";
+            $history->current = $internalAudit->Relevant_Guideline;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($internalAudit->QA_Comments)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'QA Comments';
+            $history->previous = "Null";
+            $history->current = $internalAudit->QA_Comments;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($internalAudit->Audit_Category)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Audit Category';
+            $history->previous = "Null";
+            $history->current = $internalAudit->Audit_Category;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($internalAudit->Supplier_Details)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Supplier/Vendor/Manufacturer Details';
+            $history->previous = "Null";
+            $history->current = $internalAudit->Supplier_Details;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($internalAudit->Supplier_Site)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Supplier/Vendor/Manufacturer Site';
+            $history->previous = "Null";
+            $history->current = $internalAudit->Supplier_Site;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
 
         if (!empty($internalAudit->Comments)) {
             $history = new InternalAuditTrial();
@@ -750,6 +967,26 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($internalAudit->severity_level_form)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Observation Category';
+            $history->previous = "Null";
+            $history->current = $internalAudit->severity_level_form;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -764,6 +1001,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -778,13 +1018,16 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
         if (!empty($internalAudit->Reference_Recores1)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Reference Recores';
+            $history->activity_type = 'Reference Records';
             $history->previous = "Null";
             $history->current = $internalAudit->Reference_Recores1;
             $history->comment = "NA";
@@ -792,13 +1035,16 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
         if (!empty($internalAudit->Reference_Recores2)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Reference Recores';
+            $history->activity_type = 'Reference Records';
             $history->previous = "Null";
             $history->current = $internalAudit->Reference_Recores2;
             $history->comment = "NA";
@@ -806,6 +1052,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -820,6 +1069,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -834,6 +1086,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -848,6 +1103,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
         // if (!empty($internalAudit->file_attachment_guideline)) {
@@ -875,6 +1133,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -889,6 +1150,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -903,6 +1167,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -917,6 +1184,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -931,6 +1201,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -945,6 +1218,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -959,6 +1235,9 @@ class InternalauditController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
 
@@ -3445,6 +3724,18 @@ $Checklist_Capsule->save();
     }
 
         public function internal_audit_child(Request $request, $id)
+        {
+            $parent_id = $id;
+            $parent_type = "Observations";
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $currentDate = Carbon::now();
+            $formattedDate = $currentDate->addDays(30);
+            $due_date = $formattedDate->format('d-M-Y');
+            return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+
+        public function internal_audit_child_II(Request $request, $id)
         {
             $parent_id = $id;
             $parent_type = "Observations";

@@ -12946,6 +12946,10 @@ $checklistqualitycontrol = [
                                     <label for="major">
                                         <input type="radio" name="child_type" value="Observations">
                                         Observations
+                                        <input type="radio" name="child_type" value="Observations">
+                                        
+                                        <input type="radio" name="child_type" value="Observations">
+
                                     </label>
                                 </div>
 
