@@ -437,6 +437,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
                                                 <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                      id="initiator_group">
+                                                     <option value="0">-- Select --</option>
                                                     <option value="CQA"
                                                         @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
@@ -515,8 +516,7 @@ function addMultipleFiles(input, block_id) {
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
                                                 
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
-                                            </div>
+                                                <input name="short_description"   id="docname" type="text" value="{{ $data->short_description }}"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 5 ? "disabled" : "" }} type="text"></div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
         
                                         </div>

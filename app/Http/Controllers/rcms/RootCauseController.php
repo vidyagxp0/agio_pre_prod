@@ -1087,7 +1087,7 @@ use Illuminate\Support\Facades\Hash;
 
     public function root_update(Request $request, $id)
 
-
+    //  dd(root_update);
 
     {
        //       dd($request->all());

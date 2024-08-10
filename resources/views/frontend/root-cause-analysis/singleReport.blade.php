@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt=""
+                        <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt=""
                             class="w-100">
                     </div>
                 </td>
@@ -190,11 +190,12 @@
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    Investigation
+                    General Information
                 </div>
                 <div style="max-width: 700px!important; overflow: hidden;">
                     <table>
                         <tr> {{ $data->created_at }} added by {{ $data->originator }}
+                            
                             <th class="w-20">Initiator</th>
                             <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                             <th class="w-20">Date Initiation</th>
@@ -205,25 +206,6 @@
                             <td class="w-30">
                                 @if ($data->division_code)
                                     {{ $data->division_code }}
-                                @else
-                                    Not Applicable
-                                @endif
-                            </td>
-                            <th class="w-20">Initiator Group</th>
-                            <td class="w-30">
-                                @if ($data->initiator_Group)
-                                    {{ $data->initiator_Group }}
-                                @else
-                                    Not Applicable
-                                @endif
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th class="w-20">Record Number</th>
-                            <td class="w-30">
-                                @if ($data->record)
-                                    {{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}
                                 @else
                                     Not Applicable
                                 @endif
@@ -239,20 +221,30 @@
 
                         </tr>
                         <tr>
-                            <th class="w-20">Short Description</th>
-                            <td class="w-80" colspan="3">
-                                @if ($data->short_description)
-                                    {{ $data->short_description }}
+
+
+
+                        </tr>
+                       
+                        <tr>
+                            
+                            <th class="w-20">Initiator Department</th>
+                            <td class="w-30">@if($data->initiator_Group){{ Helpers::getInitiatorGroupFullName($data->initiator_Group) }} @else Not Applicable @endif</td>
+                            <th class="w-20">Initiator Department Code</th>
+                            <td class="w-30">
+                                @if ($data->initiator_Group)
+                                    {{ $data->initiator_Group }}
                                 @else
                                     Not Applicable
                                 @endif
                             </td>
+                           
                         </tr>
-                        <tr>
-                            <th class="w-20">Initiator Group Code</th>
-                            <td class="w-30">
-                                @if ($data->initiator_Group)
-                                    {{ $data->initiator_Group }}
+                         <tr>
+                            <th class="w-20">Short Description</th>
+                            <td class="w-30" >
+                                @if ($data->short_description)
+                                    {{ $data->short_description }}
                                 @else
                                     Not Applicable
                                 @endif
@@ -265,19 +257,17 @@
                                     Not Applicable
                                 @endif
                             </td>
-                        </tr>
+                         </tr>
+
                         <tr>
                             <th class="w-20">Due Date</th>
-                            <td class="w-30" colspan="3">
+                            <td class="w-30" >
                                 @if ($data->due_date)
                                     {{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }}
                                 @else
                                     Not Applicable
                                 @endif
                             </td>
-
-                        </tr>
-                        <tr>
                             <th class="w-20">Others</th>
                             <td class="w-30">
                                 @if ($data->initiated_if_other)
@@ -286,7 +276,9 @@
                                     Not Applicable
                                 @endif
                             </td>
+
                         </tr>
+                        
                         <tr>
                             <th class="w-20">Priority Level</th>
                             <td class="w-30">
@@ -296,10 +288,6 @@
                                     Not Applicable
                                 @endif
                             </td>
-                        </tr>
-                        <tr>
-                            {{-- <th class="w-20">Additional Investigators</th>
-                        <td class="w-30">@if ($data->investigators){{ $data->investigators }}@else Not Applicable @endif</td> --}}
                             <th class="w-20">Department(s)</th>
                             <td class="w-30">
                                 @if ($data->department)
@@ -309,22 +297,18 @@
                                 @endif
                             </td>
                         </tr>
-                        <tr>
+                                           
+                              <tr>
                             <th class="w-20">Description</th>
-                            <td class="w-80">
+                            <td class="w-30">
                                 @if ($data->description)
                                     {{ $data->description }}
                                 @else
                                     Not Applicable
                                 @endif
                             </td>
-                        </tr>
-
-
-                        <tr>
-
                             <th class="w-20">Comments</th>
-                            <td class="w-80">
+                            <td class="w-30">
                                 @if ($data->comments)
                                     {{ $data->comments }}
                                 @else
@@ -332,6 +316,8 @@
                                 @endif
                             </td>
                         </tr>
+
+                        
                         <tr>
                             <th class="w-20">Initiated Through
                             </th>
@@ -350,6 +336,7 @@
                                     Not Applicable
                                 @endif
                             </td>
+                            
                         </tr>
 
                     </table>
@@ -403,8 +390,8 @@
                     <tr>
                         <th class="w-20">Root Cause Description</th>
                         <td class="w-80">
-                            @if ($data->root_cause_description)
-                                {{ $data->root_cause_description }}
+                            @if ($data->root_cause_description_rca)
+                                {{ $data->root_cause_description_rca }}
                             @else
                                 Not Applicable
                             @endif
@@ -835,6 +822,157 @@
                         </tr>
                     </table>
 
+                </div>
+                <div class="block">
+                    <div class="block-head">
+                        Investigation
+                    </div>
+
+                    <table>
+
+
+                        <tr>
+                            <th class="w-20">Objective</th>
+                            <td class="w-80">
+                                @if ($data->objective)
+                                    {{ $data->objective }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Scope</th>
+                            <td class="w-80">
+                                @if ($data->scope)
+                                    {{ $data->scope }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Problem Statement</th>
+                            <td class="w-80">
+                                @if ($data->problem_statement_rca)
+                                    {{ $data->problem_statement_rca }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Requirement</th>
+                            <td class="w-80">
+                                @if ($data->requirement)
+                                    {{ $data->requirement }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Immediate Action</th>
+                            <td class="w-80">
+                                @if ($data->immediate_action)
+                                    {{ $data->immediate_action }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Investigation Team</th>
+                            <td class="w-80">
+                                @if ($data->investigation_team)
+                                    {{ $data->investigation_team }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Investigation Tool</th>
+                            <td class="w-80">
+                                @if ($data->investigation_tool)
+                                    {{ $data->investigation_tool }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Root Cause</th>
+                            <td class="w-80">
+                                @if ($data->root_cause)
+                                    {{ $data->root_cause }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Impact / Risk Assessment</th>
+                            <td class="w-80">
+                                @if ($data->impact_risk_assessment)
+                                    {{ $data->impact_risk_assessment }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">CAPA</th>
+                            <td class="w-80">
+                                @if ($data->capa)
+                                    {{ $data->capa }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">CAPA</th>
+                            <td class="w-80">
+                                @if ($data->investigation_summary_rca)
+                                    {{ $data->investigation_summary_rca }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        
+    
+
+                    </table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            Investigation Attachment
+
+                        </div>
+                        <table>
+
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if ($data->root_cause_initial_attachment_rca)
+                                @foreach (json_decode($data->root_cause_initial_attachment_rca) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+
+                        </table>
+                    </div>
                 </div>
                 <div class="block">
                     <div class="block-head">
