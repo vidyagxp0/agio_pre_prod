@@ -337,60 +337,57 @@
 
         <div class="inner-block">
             <!-- Input fields -->
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <label for="type">Type</label>
-                    <select class="form-control" id="type" name="type">
-                        <option value="">Select Type</option>
-                        <option value="cft_review">CFT Review</option>
-                        <option value="notification">Notification</option>
-                        <option value="business">Business Rules</option>
-                        <option value="stage">Stage Change</option>
-                        <option value="user_action">User Action</option>
-                    </select>
+          <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label for="typedata">Type</label>
+                        <select class="form-control" id="typedata" name="typedata">  <!-- 'typedata' used consistently -->
+                            <option value="">Select Type</option>
+                            <option value="cft_review">CFT Review</option>
+                            <option value="notification">Notification</option>
+                            <option value="business">Business Rules</option>
+                            <option value="stage">Stage Change</option>
+                            <option value="user_action">User Action</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="user">Perform BY</label>
+                        <select class="form-control" id="user" name="user">
+                            <option value="">Select User</option>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="from_date">From Date</label>
+                        <input type="date" class="form-control" id="from_date" name="from_date">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="to_date">To Date</label>
+                        <input type="date" class="form-control" id="to_date" name="to_date">
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <label for="user">Perform BY</label>
-                    <select class="form-control" id="user" name="user">
-                        <option value="">Select User</option>
-                        @foreach($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="from_date">From Date</label>
-                    <input type="date" class="form-control" id="from_date" name="from_date">
-                </div>
-                <div class="col-md-3">
-                    <label for="to_date">To Date</label>
-                    <input type="date" class="form-control" id="to_date" name="to_date">
-                </div>
-            </div>
 
-            <div class="division">
-            </div>
+                <div class="division"></div>
 
-            <div class="second-table">
-                <table>
-                    <thead>
-                        <tr class="table_bg">
-                            <th>S.No</th>
-                            <th>Flow Changed From</th>
-                            <th>Flow Changed To</th>
-                            <th>Data Field</th>
-                            <th>Action Type</th>
-                            <th>Performer</th>
-                        </tr>
-                    </thead>
-                    <tbody id="audit-data">
-                    
-                        
-                     @include('frontend.failure-investigation.audit-comp')
-                        
-                    </tbody>
-                </table>
-            </div>
+                <div class="second-table">
+                    <table>
+                        <thead>
+                            <tr class="table_bg">
+                                <th>S.No</th>
+                                <th>Flow Changed From</th>
+                                <th>Flow Changed To</th>
+                                <th>Data Field</th>
+                                <th>Action Type</th>
+                                <th>Performer</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-data">
+                            @include('frontend.failure-investigation.audit-comp')
+                        </tbody>
+                    </table>
+                </div>
+
         </div>
 
         <!-- Pagination links -->
@@ -462,65 +459,57 @@
             </div>
         </div>
     </div>
+<script type='text/javascript'>
+    $(document).ready(function() {
 
-    <script type='text/javascript'>
-        $(document).ready(function() {
+        function fetchAuditData() {
+            var typedata = $('#typedata').val();  
+            var user = $('#user').val();
+            var fromDate = $('#from_date').val();
+            var toDate = $('#to_date').val();
 
- 
-            function fetchAuditData() {
-                var type = $('#type').val();
-                var user = $('#user').val();
-                var fromDate = $('#from_date').val();
-                var toDate = $('#to_date').val();
+            $.ajax({
+                url: "{{ route('api.failure.filter', $document->id) }}",
+                method: 'GET',
+                data: {
+                    typedata: typedata, 
+                    user: user,
+                    from_date: fromDate,
+                    to_date: toDate
+                },
+                success: function(response) {
+                    $('#audit-data').html(response.html);
+                }
+            });
+        }
+
+        // Event listeners for the input fields
+        $('#typedata, #user, #from_date, #to_date').on('change', function() {
+            fetchAuditData();
+        });
+
+        $('#auditTable').on('click', '.viewdetails', function() {
+            var auditid = $(this).attr('data-id');
+
+            if (auditid > 0) {
+                var url = "{{ route('audit-details', [':auditid']) }}";
+                url = url.replace(':auditid', auditid);
+
+                // Empty modal data
+                $('#auditTableinfo').empty();
 
                 $.ajax({
-                    url: "{{ route('api.failure.filter', $document->id) }}",
-                    method: 'GET',
-                    data: {
-                        type: type,
-                        user: user,
-                        from_date: fromDate,
-                        to_date: toDate
-                    },
+                    url: url,
+                    dataType: 'json',
                     success: function(response) {
-                        
-                        $('#audit-data').html(response.html);
+                        $('#auditTableinfo').append(response.html);
+                        $('#activity-modal').modal('show');
                     }
                 });
             }
-
-            // Event listeners for the input fields
-            $('#type, #user, #from_date, #to_date').on('change', function() {
-                fetchAuditData();
-            });
-
-            $('#auditTable').on('click', '.viewdetails', function() {
-                var auditid = $(this).attr('data-id');
-
-                if (auditid > 0) {
-
-                    // AJAX request
-                    var url = "{{ route('audit-details', [':auditid']) }}";
-                    url = url.replace(':auditid', auditid);
-
-                    // Empty modal data
-                    $('#auditTableinfo').empty();
-
-                    $.ajax({
-                        url: url,
-                        dataType: 'json',
-                        success: function(response) {
-
-                            // Add employee details
-                            $('#auditTableinfo').append(response.html);
-
-                            // Display Modal
-                            $('#activity-modal').modal('show');
-                        }
-                    });
-                }
-            });
-
         });
-    </script>
+
+    });
+</script>
+
 @endsection

@@ -292,6 +292,9 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('launch-extension-qrm/{id}', [FailureInvestigationController::class, 'launchExtensionQrm'])->name('launch-extension-qrm');
             Route::post('launch-extension-investigation/{id}', [FailureInvestigationController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
 
+
+           // Route::post('failure-investigation/{id}/audit-trail', 'FailureInvestigationController@failureInvestigationAuditTrail')->name('failureInvestigation.auditTrail');
+
             /********************* Fallure Investigation Routes Ends *******************/
 
             // =====================extesnion new report and audit trail ===============

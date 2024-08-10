@@ -8261,7 +8261,7 @@ class  FailureInvestigationController extends Controller
 {
     
     $audit = FailureInvestigationAuditTrail::where('failure_investigation_id', $id)->orderByDesc('id')->paginate(5);
-
+    //return $audit;
     $today = Carbon::now()->format('d-m-y');
     $document = FailureInvestigation::where('id', $id)->first();
     $document->initiator = User::where('id', $document->initiator_id)->value('name');
@@ -8271,49 +8271,128 @@ class  FailureInvestigationController extends Controller
 }
 
 
-public function audit_trail_filter(Request  $request,$id)
-{
+// public function audit_trail_filter(Request  $request,$id)
+// {
 
+//     $query = FailureInvestigationAuditTrail::query();
+
+//     $query->where('failure_investigation_id', $id);
+
+//     if ($request->type) {
+
+//         if ($request->type == 'cft_review')
+//          {
+//             $cft_fields = [
+//                 'RA Review Required', 'RA Person', 'RA Assessment', 'RA Feedback', 'RA Review By', 'RA Review On', 'RA Review Attachments',
+//                 'Quality Assurance Review Required', 'Quality Assurance Person', 'Quality Assurance Assessment', 'Quality Assurance Feedback', 'Quality Assurance Review By', 'Quality Assurance Review On', 'Quality Assurance Attachments',
+//                 'Production Tablet Review Required', 'Production Tablet Person', 'Production Tablet Assessment', 'Production Tablet Feedback', 'Production Tablet Review By', 'Production Tablet On', 'Production Tablet Attachments',
+//                 'Production Liquid Review Required', 'Production Liquid Person', 'Production Liquid Assessment', 'Production Liquid Feedback', 'Production Liquid Review By', 'Production Liquid Review On', 'Production Injection Review Required', 
+//                 'Production Injection Person', 'Production Injection Assessment', 'Production Injection Feedback', 'Production Injection Review By', 'Production Injection On', 'Production Injection Attachments','Store Review Required','Store Person','Store Assessment','Store Feedback','Store Review By','Store Review On', 'Store Attachments','Quality Control Required','Quality Control Person','Quality Control Assessment','Quality Control Feeback','Quality Control By', 'Quality Control On','Quality Control Attachment','Research & Development Required','Research & Development Person', 'Research & Development Assessment','Research & Development Feedback','Research & Development By','Research & Development On','Research Development Attachments','Engineering Review Required','Engineering Person','Engineering Assessment','Engineering Feedback','Engineering Review By', 'Engineering Review On','Engineering Attachments','Human Resource Review Required','Human Resource Person','Human Resource Assessment','Human Resource Feedback','Human Resource Review By','Human Resource Review On','Human Resource Attachments','Microbiology Review Required','Microbiology Person', 'Microbiology Assessment','Microbiology Feedback','Microbiology Review By','Microbiology Review On','Microbiology Review On','Regulatory Affair Review Required', 'Regulatory Affair Person', 'Regulatory Affair Assessment','Regulatory Affair Feedback','Regulatory Affair Review By','Regulatory Affair Review On','Regulatory Affair Attachment','Corporate Quality Assurance Review Required','Corporate Quality Assurance Person','Corporate Quality Assurance Assessment','Corporate Quality Assurance Review By','Corporate Quality Assurance Review On','Corporate Quality  Attachments','Safety Review Required','Safety Person','Safety Assessment','Safety Feedback', 'Safety Review By','Safety Review On','Safety Attachments','Information Technology Review Required','Information Technology Person','Information Technology Assessment','Information Technology Feedback', 'Information Technology Review By','Information Technology Review On','Information Technology Attachments','Contract Giver Review Required', 'Contract Giver Person','Contract Giver Assessment','Contract Giver Feedback','Contract Giver Review By','Contract Giver Review On','Contract Giver Attachments','Other 1 Review Required','Other 1 Person','Other 1 Review Required','Other 1 Assessment','Other 1 Feedback','Other 1 Review By','Other 1 Review On',"Other's 1 Attachments ",'Other 2 Review Required','Other 2 Person','Other 2 Review Required','Other 2 Assessment','Other 2 Feedback','Other 2 Review By','Other 2 Review On',"Other's 2 Attachments",'Other 3 Review Required', 'Other 3 Person','Other 3 Review Required','Other 3 Assessment','Other 3 Feedback','Other 3 Review By','Other 3 Review On','Others 3 Attachments','Other 4 Review Required','Other 4 Person','Other 4 Review Required','Other 4 Assessment','Other 4 Feedback','Other 4 Review By','Other 4 Review On','Others 4 Attachments', 'Other 5 Review Required','Other 5 Person','Other 5 Review Required','Other 5 Assessment','Other 5 Feedback','Other 5 Review By','Other 5 Review On','Others 5 Attachments'
+//             ];
+//             $query->whereIn('activity_type', $cft_fields);
+//         }elseif ($request->type == 'stage') {
+            
+//             $query->where('activity_type', 'Activity Log');
+//         }
+//         elseif ($request->type == 'user_action') {
+//             $user_action = [
+//                 'submit', 'HOD Review Complete', 'QA Initial Review Complete',
+//                 'CFT Review Complete', 'QA Final Review Complete', 'Approved',
+//                 'Initiator Updated Complete', 'More Information Required'
+//             ];
+
+//             $query->whereIn('action_name', $user_action);
+//         }
+//     }
+
+//     if ($request->user) {
+//         $query->where('user_id', $request->user);
+//     }
+
+//     if ($request->from_date) {
+//         $query->whereDate('created_at', '>=', $request->from_date);
+//     }
+
+//     if ($request->to_date) {
+//         $query->whereDate('created_at', '<=', $request->to_date);
+//     }
+
+//     // $audit = $query->orderByDesc('id')->paginate(10);
+//     $audit = $query->orderByDesc('id')->get();
+
+//     $filter_request = true;
+
+//     $responseHtml = view('frontend.failure-investigation.audit-comp', compact('audit', 'filter_request'))->render();
+
+//    return response()->json(['html' => $responseHtml]);
+// }
+    
+public function audit_trail_filter(Request $request, $id)
+{
+    
     $query = FailureInvestigationAuditTrail::query();
 
+   
     $query->where('failure_investigation_id', $id);
 
-    if ($request->type) {
-        if ($request->type == 'cft_review') {
-            $cft_fields = [
-                'RA Review Required', 'RA Person', 'RA Assessment', 'RA Feedback', 'RA Review By', 'RA Review On', 'RA Review Attachments',
-                'Quality Assurance Review Required', 'Quality Assurance Person', 'Quality Assurance Assessment', 'Quality Assurance Feedback', 'Quality Assurance Review By', 'Quality Assurance Review On', 'Quality Assurance Attachments',
-                'Production Tablet Review Required', 'Production Tablet Person', 'Production Tablet Assessment', 'Production Tablet Feedback', 'Production Tablet Review By', 'Production Tablet On', 'Production Tablet Attachments',
-                'Production Liquid Review Required', 'Production Liquid Person', 'Production Liquid Assessment', 'Production Liquid Feedback', 'Production Liquid Review By', 'Production Liquid Review On', 'Production Injection Review Required', 
-                'Production Injection Person', 'Production Injection Assessment', 'Production Injection Feedback', 'Production Injection Review By', 'Production Injection On', 'Production Injection Attachments','Store Review Required','Store Person','Store Assessment','Store Feedback','Store Review By','Store Review On', 'Store Attachments','Quality Control Required','Quality Control Person','Quality Control Assessment','Quality Control Feeback','Quality Control By', 'Quality Control On','Quality Control Attachment','Research & Development Required','Research & Development Person', 'Research & Development Assessment','Research & Development Feedback','Research & Development By','Research & Development On','Research Development Attachments','Engineering Review Required','Engineering Person','Engineering Assessment','Engineering Feedback','Engineering Review By', 'Engineering Review On','Engineering Attachments','Human Resource Review Required','Human Resource Person','Human Resource Assessment','Human Resource Feedback','Human Resource Review By','Human Resource Review On','Human Resource Attachments','Microbiology Review Required','Microbiology Person', 'Microbiology Assessment','Microbiology Feedback','Microbiology Review By','Microbiology Review On','Microbiology Review On','Regulatory Affair Review Required', 'Regulatory Affair Person', 'Regulatory Affair Assessment','Regulatory Affair Feedback','Regulatory Affair Review By','Regulatory Affair Review On','Regulatory Affair Attachment','Corporate Quality Assurance Review Required','Corporate Quality Assurance Person','Corporate Quality Assurance Assessment',
-                'Production Injection Person', 'Production Injection Assessment', 'Production Injection Feedback', 'Production Injection Review By', 'Production Injection On', 'Production Injection Attachments','Store Review Required','Store Person','Store Assessment','Store Feedback','Store Review By','Store Review On', 'Store Attachments','Quality Control Required','Quality Control Person','Quality Control Assessment','Quality Control Feeback','Quality Control By', 'Quality Control On','Quality Control Attachment','Research & Development Required','Research & Development Person', 'Research & Development Assessment','Research & Development Feedback','Research & Development By','Research & Development On','Research Development Attachments','Engineering Review Required','Engineering Person','Engineering Assessment','Engineering Feedback','Engineering Review By', 'Engineering Review On','Engineering Attachments','Human Resource Review Required','Human Resource Person','Human Resource Assessment','Human Resource Feedback','Human Resource Review By','Human Resource Review On','Human Resource Attachments','Microbiology Review Required','Microbiology Person', 'Microbiology Assessment','Microbiology Feedback','Microbiology Review By','Microbiology Review On','Microbiology Review On','Regulatory Affair Review Required', 'Regulatory Affair Person', 'Regulatory Affair Assessment','Regulatory Affair Feedback','Regulatory Affair Review By','Regulatory Affair Review On','Regulatory Affair Attachment','Corporate Quality Assurance Review Required','Corporate Quality Assurance Person','Corporate Quality Assurance Assessment','Corporate Quality Assurance Review By','Corporate Quality Assurance Review On','Corporate Quality  Attachments','Safety Review Required','Safety Person','Safety Assessment','Safety Feedback', 'Safety Review By','Safety Review On','Safety Attachments','Information Technology Review Required','Information Technology Person','Information Technology Assessment','Information Technology Feedback', 'Information Technology Review By','Information Technology Review On','Information Technology Attachments','Contract Giver Review Required', 'Contract Giver Person','Contract Giver Assessment','Contract Giver Feedback','Contract Giver Review By','Contract Giver Review On','Contract Giver Attachments','Other 1 Review Required','Other 1 Person','Other 1 Review Required','Other 1 Assessment','Other 1 Feedback','Other 1 Review By','Other 1 Review On',"Other's 1 Attachments ",'Other 2 Review Required','Other 2 Person','Other 2 Review Required','Other 2 Assessment','Other 2 Feedback','Other 2 Review By','Other 2 Review On',"Other's 2 Attachments",'Other 3 Review Required', 'Other 3 Person','Other 3 Review Required','Other 3 Assessment','Other 3 Feedback','Other 3 Review By','Other 3 Review On','Others 3 Attachments','Other 4 Review Required','Other 4 Person','Other 4 Review Required','Other 4 Assessment','Other 4 Feedback','Other 4 Review By','Other 4 Review On','Others 4 Attachments', 'Other 5 Review Required','Other 5 Person','Other 5 Review Required','Other 5 Assessment','Other 5 Feedback','Other 5 Review By','Other 5 Review On','Others 5 Attachments'
-            ];
-            $query->whereIn('activity_type', $cft_fields);
+    
+    if ($request->filled('typedata')) {
+    
+        switch ($request->typedata) {
+            case 'cft_review':
+                $cft_fields = [
+                    'RA Review Required', 'RA Person', 'RA Assessment', 'RA Feedback', 'RA Review By', 'RA Review On', 'RA Review Attachments',
+                    'Quality Assurance Review Required', 'Quality Assurance Person', 'Quality Assurance Assessment', 'Quality Assurance Feedback', 'Quality Assurance Review By', 'Quality Assurance Review On', 'Quality Assurance Attachments',
+                    'Production Tablet Review Required', 'Production Tablet Person', 'Production Tablet Assessment', 'Production Tablet Feedback', 'Production Tablet Review By', 'Production Tablet On', 'Production Tablet Attachments',
+                    'Production Liquid Review Required', 'Production Liquid Person', 'Production Liquid Assessment', 'Production Liquid Feedback', 'Production Liquid Review By', 'Production Liquid Review On', 'Production Injection Review Required', 
+                    'Production Injection Person', 'Production Injection Assessment', 'Production Injection Feedback', 'Production Injection Review By', 'Production Injection On', 'Production Injection Attachments','Store Review Required','Store Person','Store Assessment','Store Feedback','Store Review By','Store Review On', 'Store Attachments','Quality Control Required','Quality Control Person','Quality Control Assessment','Quality Control Feeback','Quality Control By', 'Quality Control On','Quality Control Attachment','Research & Development Required','Research & Development Person', 'Research & Development Assessment','Research & Development Feedback','Research & Development By','Research & Development On','Research Development Attachments','Engineering Review Required','Engineering Person','Engineering Assessment','Engineering Feedback','Engineering Review By', 'Engineering Review On','Engineering Attachments','Human Resource Review Required','Human Resource Person','Human Resource Assessment','Human Resource Feedback','Human Resource Review By','Human Resource Review On','Human Resource Attachments','Microbiology Review Required','Microbiology Person', 'Microbiology Assessment','Microbiology Feedback','Microbiology Review By','Microbiology Review On','Microbiology Review On','Regulatory Affair Review Required', 'Regulatory Affair Person', 'Regulatory Affair Assessment','Regulatory Affair Feedback','Regulatory Affair Review By','Regulatory Affair Review On','Regulatory Affair Attachment','Corporate Quality Assurance Review Required','Corporate Quality Assurance Person','Corporate Quality Assurance Assessment','Corporate Quality Assurance Review By','Corporate Quality Assurance Review On','Corporate Quality  Attachments','Safety Review Required','Safety Person','Safety Assessment','Safety Feedback', 'Safety Review By','Safety Review On','Safety Attachments','Information Technology Review Required','Information Technology Person','Information Technology Assessment','Information Technology Feedback', 'Information Technology Review By','Information Technology Review On','Information Technology Attachments','Contract Giver Review Required', 'Contract Giver Person','Contract Giver Assessment','Contract Giver Feedback','Contract Giver Review By','Contract Giver Review On','Contract Giver Attachments','Other 1 Review Required','Other 1 Person','Other 1 Review Required','Other 1 Assessment','Other 1 Feedback','Other 1 Review By','Other 1 Review On',"Other's 1 Attachments ",'Other 2 Review Required','Other 2 Person','Other 2 Review Required','Other 2 Assessment','Other 2 Feedback','Other 2 Review By','Other 2 Review On',"Other's 2 Attachments",'Other 3 Review Required', 'Other 3 Person','Other 3 Review Required','Other 3 Assessment','Other 3 Feedback','Other 3 Review By','Other 3 Review On','Others 3 Attachments','Other 4 Review Required','Other 4 Person','Other 4 Review Required','Other 4 Assessment','Other 4 Feedback','Other 4 Review By','Other 4 Review On','Others 4 Attachments', 'Other 5 Review Required','Other 5 Person','Other 5 Review Required','Other 5 Assessment','Other 5 Feedback','Other 5 Review By','Other 5 Review On','Others 5 Attachments'
+                ];
+                $query->whereIn('activity_type', $cft_fields);
+                break;
+
+            case 'stage':
+                 $query->where('activity_type', 'Activity Log');
+                 break;
+
+            case 'user_action':
+                $user_action = [
+                    'submit', 'HOD Review Complete', 'QA Initial Review Complete',
+                    'CFT Review Complete', 'QA Final Review Complete', 'Approved',
+                    'Initiator Updated Complete', 'More Information Required','',
+                ];
+                $query->whereIn('action', $user_action);
+                break;
+
+            default:
+                
+                break;
         }
     }
 
-    if ($request->user) {
+    // Apply other filters if present
+    if ($request->filled('user')) {
         $query->where('user_id', $request->user);
     }
 
-    if ($request->from_date) {
+    if ($request->filled('from_date')) {
         $query->whereDate('created_at', '>=', $request->from_date);
     }
 
-    if ($request->to_date) {
+    if ($request->filled('to_date')) {
         $query->whereDate('created_at', '<=', $request->to_date);
     }
 
-    // $audit = $query->orderByDesc('id')->paginate(10);
+    // Get the filtered results
     $audit = $query->orderByDesc('id')->get();
 
     $filter_request = true;
 
+    // Render the view with the filtered data
     $responseHtml = view('frontend.failure-investigation.audit-comp', compact('audit', 'filter_request'))->render();
 
-   return response()->json(['html' => $responseHtml]);
+    // Return the JSON response
+    return response()->json(['html' => $responseHtml]);
 }
-    
 
 
 
