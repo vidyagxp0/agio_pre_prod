@@ -212,7 +212,7 @@ function addMultipleFiles(input, block_id) {
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowInternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(13, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Schedule Audit
                             </button>
@@ -222,13 +222,13 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Complete Audit Preparation
+                                Acknowledgement
                             </button>
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Reject
+                                More info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
@@ -236,7 +236,7 @@ function addMultipleFiles(input, block_id) {
                         @elseif($data->stage == 3 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
                             </button> <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">
-                                Reject
+                                More info Required
                             </button>
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
@@ -258,9 +258,13 @@ function addMultipleFiles(input, block_id) {
                                 No CAPAs Required
                             </button>
 
-                        @elseif($data->stage == 5 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
+
+                        @elseif($data->stage == 5 && (in_array(13, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                All CAPA Closed
+                                Response Reviewed
                             </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
@@ -286,9 +290,9 @@ function addMultipleFiles(input, block_id) {
                             @endif
 
                             @if ($data->stage >= 2)
-                                <div class="active">Audit Preparation </div>
+                                <div class="active">Acknowledgement Pending </div>
                             @else
-                                <div class="">Audit Preparation</div>
+                                <div class="">Acknowledgement Pending</div>
                             @endif
 
                             @if ($data->stage >= 3)
@@ -303,9 +307,9 @@ function addMultipleFiles(input, block_id) {
                                 <div class="">Pending Response</div>
                             @endif
                             @if ($data->stage >= 5)
-                                <div class="active">CAPA Execution in Progress</div>
+                                <div class="active">Response Verification</div>
                             @else
-                                <div class="">CAPA Execution in Progress</div>
+                                <div class="">Response Verification</div>
                             @endif
                             @if ($data->stage >= 6)
                                 <div class="bg-danger">Closed - Done</div>
@@ -12497,126 +12501,237 @@ $checklistqualitycontrol = [
                             <div id="CCForm6" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Audit Schedule By</label>
+                                                <label for="Audit Schedule On">Schedule Audit By</label>
                                                 <div class="static">{{ $data->audit_schedule_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Audit Schedule On</label>
+                                                <label for="Audit Schedule On">Schedule Audit On</label>
                                                 <div class="static">{{ $data->audit_schedule_on }}</div>
                                             </div>
+                                        </div> 
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static">{{ $data->sheduled_audit_comment }}</div>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-6">
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Cancelled By">Cancelled By</label>
+                                                <div class="static">{{ $data->cancelled_1_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Cancelled On">Cancelled On</label>
+                                                <div class="static">{{ $data->cancelled_1_on }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static">{{ $data->cancel_1_comment }}</div>
+                                            </div>
+                                        </div>                                        
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Preparation Completed On">Acknowledement
+                                                    By</label>
+                                                <div class="static">{{ $data->audit_preparation_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Acknowledement On">Acknowledement
+                                                    On</label>
+                                                <div class="static">{{ $data->audit_preparation_completed_on }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static">{{ $data->acknowledge_commnet }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Mgr.more Info Reqd By">More Info Required
+                                                    By</label>
+                                                <div class="static">{{ $data->more_info_2_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="More Info Required On">More Info Required
+                                                    On</label>
+                                                <div class="static">{{ $data->more_info_2_on }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static">{{ $data->more_info_2_comment }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Cancelled By">Cancelled By</label>
+                                                <div class="static">{{ $data->cancelled_2_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Cancelled On">Cancelled On</label>
+                                                <div class="static">{{ $data->cancelled_2_on }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static">{{ $data->cancel_2_comment }}</div>
+                                            </div>
+                                        </div>            
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Observation Submitted By">Issue Report
+                                                    By</label>
+                                                <div class="static">{{ $data->audit_mgr_more_info_reqd_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Issue Report On">Issue Report
+                                                    On</label>
+                                                <div class="static">{{ $data->audit_mgr_more_info_reqd_on }}</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static">{{ $data->issue_report_comment }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Mgr.more Info Reqd By">More Info Required
+                                                    By</label>
+                                                <div class="static">{{ $data->more_info_3_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="More Info Required On">More Info Required
+                                                    On</label>
+                                                <div class="static">{{ $data->more_info_3_on }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static">{{ $data->more_info_3_comment }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancelled By</label>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancelled On">Cancelled On</label>
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+
+                                        <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation Completed
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_preparation_completed_by }}</div>
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static">{{ $data->cancel_3_comment }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+
+                                        <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation Completed
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_preparation_completed_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd By">Audit Mgr.more Info Reqd
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_mgr_more_info_reqd_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd On">Audit Mgr.more Info Reqd
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_mgr_more_info_reqd_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Audit Observation Submitted By">Audit Observation Submitted
+                                                <label for="Audit Lead More Info Reqd By">CAPA Plan Proposed
                                                     By</label>
                                                 <div class="static">{{ $data->audit_observation_submitted_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Observation Submitted On">Audit Observation Submitted
+                                                <label for="CAPA Plan Proposed On">CAPA Plan Proposed
                                                     On</label>
                                                 <div class="static">{{ $data->audit_observation_submitted_on }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+
+                                        <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Lead More Info Reqd By">Audit Lead More Info Reqd
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static">{{$data->capa_plan_comment}}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Response Completed By">No CAPAs Required
+                                                    By</label>
+                                                <div class="static">{{ $data->no_capa_plan_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="No CAPAs Required On">No CAPAs Required
+                                                    On</label>
+                                                <div class="static">{{ $data->no_capa_plan_on }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static">{{ $data->no_capa_plan_required_comment }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Response Feedback Verified By">Response Reviewed
                                                     By</label>
                                                 <div class="static">{{ $data->audit_lead_more_info_reqd_by }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Lead More Info Reqd On">Audit Lead More Info Reqd
+                                                <label for="Response Reviewed On">Response Reviewed
                                                     On</label>
                                                 <div class="static">{{ $data->audit_lead_more_info_reqd_on }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+
+                                        <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Response Completed By">Audit Response Completed
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_response_completed_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Audit Response Completed On">Audit Response Completed
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_response_completed_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified By">Response Feedback Verified
-                                                    By</label>
-                                                <div class="static">{{ $data->response_feedback_verified_by }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified On">Response Feedback Verified
-                                                    On</label>
-                                                <div class="static">{{ $data->response_feedback_verified_on }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified By"> Rejected By
-                                                    </label>
-                                                <div class="static">{{ $data->rejected_by}}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Response Feedback Verified On"> Rejected On
-                                                    </label>
-                                                <div class="static">{{ $data->rejected_on }}</div>
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static">{{ $data->response_reviewd_comment }}</div>
                                             </div>
                                         </div>
 
