@@ -2666,7 +2666,7 @@ class OOTController extends Controller
             return back();
         }
     }
-    public function RejectStateChangeTTwo(Request $request, $id)
+    public function RejectStateChangeNew(Request $request, $id)
 {
     if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
         $data = Ootc::find($id);
