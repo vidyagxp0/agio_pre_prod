@@ -1616,7 +1616,7 @@
                                         
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Completed By"> QA ReviewCompleted By</label>
+                                                <label for="Completed By"> QA Review Completed By</label>
                                                 <input type="hidden" name="qa_review_completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->qa_review_completed_by }}</div>
                                             </div>

@@ -186,9 +186,7 @@
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         $auditCollect = DB::table('audit_reviewers_details')
-                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
-                            ->latest()
-                            ->first();
+                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])->latest()->first();
                     @endphp
 
                     <div class="d-flex justify-content-between align-items-center">

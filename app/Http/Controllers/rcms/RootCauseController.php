@@ -2850,6 +2850,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->change_to =   "Final QA Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage='Final QA Review';
+                $history->action_name = 'Update';
                 $history->save();
 
                 $root->update();

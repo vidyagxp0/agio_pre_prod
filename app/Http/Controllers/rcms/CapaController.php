@@ -423,7 +423,7 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        if (!empty($capa->rcadetails)) {
+        if (!empty($capa->rcadetails)) {    
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
             $history->activity_type = 'Root Cause Analysis';
@@ -2300,6 +2300,7 @@ class CapaController extends Controller
                      $history->change_to = "HOD Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'HOD Review';
+                    $history->action_name = 'Update';
                     $history->save();
 
                 //     $list = Helpers::getHodUserList();
@@ -2344,6 +2345,7 @@ class CapaController extends Controller
                  $history->change_to = "QA Review";
                     $history->change_from = $lastDocument->status;
                 $history->stage = 'QA Review';
+                $history->action_name = 'Update';
                 $history->save();
 
                 // $list = Helpers::getQAUserList();
@@ -2387,6 +2389,7 @@ class CapaController extends Controller
                      $history->change_to = "QA Approval";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'QA Approval';
+                    $history->action_name = 'Update';
                     $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2413,6 +2416,7 @@ class CapaController extends Controller
                          $history->change_to = "CAPA In progress";
                     $history->change_from = $lastDocument->status;
                         $history->stage = 'CAPA In progress';
+                        $history->action_name = 'Update';
                         $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2439,6 +2443,7 @@ class CapaController extends Controller
                          $history->change_to = "HOD Final Review";
                     $history->change_from = $lastDocument->status;
                         $history->stage = 'HOD Final Review';
+                        $history->action_name = 'Update';
                         $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2465,6 +2470,7 @@ class CapaController extends Controller
                          $history->change_to = "QA Closure Review";
                     $history->change_from = $lastDocument->status;
                         $history->stage = 'QA Closure Review';
+                        $history->action_name = 'Update';
                         $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2491,6 +2497,7 @@ class CapaController extends Controller
                          $history->change_to = "QAH Approval";
                     $history->change_from = $lastDocument->status;
                         $history->stage = 'QAH Approval';
+                        $history->action_name = 'Update';
                         $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2517,6 +2524,7 @@ class CapaController extends Controller
                          $history->change_to = "Closed - Done";
                     $history->change_from = $lastDocument->status;
                         $history->stage = 'Closed - Done';
+                        $history->action_name = 'Update';
                         $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2619,6 +2627,7 @@ class CapaController extends Controller
                         $history->change_to = "Opened";
                         $history->change_from = $lastDocument->status;
                         $history->stage = 'Opened';
+                        $history->action_name = 'Update';
                         $history->save();
                 $capa->update();
                 $history = new CapaHistory();
@@ -2655,6 +2664,7 @@ class CapaController extends Controller
                     $history->change_to = "Pending CAPA Plan";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Pending CAPA Plan';
+                    $history->action_name = 'Update';
                     $history->save();
             $capa->update();
             $history = new CapaHistory();
@@ -2706,6 +2716,7 @@ class CapaController extends Controller
                     $history->change_to = "CAPA In Progress";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Rejected';
+                    $history->action_name = 'Update';
                     $history->save();
         $capa->update();
         $history = new CapaHistory();
@@ -2740,6 +2751,7 @@ class CapaController extends Controller
                     $history->change_to = "QA Approval";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'QA Approval';
+                    $history->action_name = 'Update';
                     $history->save();
             $capa->update();
             $history = new CapaHistory();
@@ -2776,6 +2788,7 @@ class CapaController extends Controller
                     $history->change_to = "CAPA In progress";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'CAPA In progress';
+                    $history->action_name = 'Update';
                     $history->save();
             $capa->update();
             $history = new CapaHistory();
@@ -2811,6 +2824,7 @@ class CapaController extends Controller
                     $history->change_to = "HOD Final Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'HOD Final Review';
+                    $history->action_name = 'Update';
                     $history->save();
                      $capa->update();
                     $history = new CapaHistory();
@@ -2846,6 +2860,7 @@ class CapaController extends Controller
                     $history->change_to = "QA Closure Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'QA Closure Review';
+                    $history->action_name = 'Update';
                     $history->save();
                      $capa->update();
                     $history = new CapaHistory();
@@ -2957,6 +2972,7 @@ class CapaController extends Controller
                     $history->change_to = "Pending CAPA Plan";
                     $history->change_from = "CAPA In Progress";
                     $history->stage = 'CAPA In Progress';
+                    $history->action_name = 'Update';
                 $history->save();
                 $capa->update();
                 $history = new CapaHistory();
