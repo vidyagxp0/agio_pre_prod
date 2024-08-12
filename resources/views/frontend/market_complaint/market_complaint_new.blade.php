@@ -4286,9 +4286,6 @@
                                                 <textarea name="qrm2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
-
-
-
                                     </tr>
                                     <tr>
                                         <td class="flex text-center">5</td>
@@ -4312,8 +4309,6 @@
                                                 <textarea name="oth2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
-
-
 
                                     </tr>
 
@@ -4422,8 +4417,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Initiator Group">HOD Review Completed By : </label>
@@ -4436,7 +4429,6 @@
                             <label for="OOC Logged On">HOD Review Completed On :</label>
                         </div>
                     </div>
-
 
                     <div class="col-lg-6">
                         <div class="group-input">
@@ -4451,7 +4443,6 @@
                         </div>
                     </div>
 
-
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Initiator Group">QA Final Review Completed By : </label>
@@ -4464,7 +4455,6 @@
                             <label for="OOC Logged On">QA Final Review Completed On : </label>
                         </div>
                     </div>
-
 
                     <div class="col-lg-6">
                         <div class="group-input">
@@ -4482,7 +4472,6 @@
                 <div class="button-block">
                     <button type="submit" class="saveButton">Save</button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
-
                     <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                         </a> </button>
                 </div>
@@ -4508,7 +4497,6 @@
         VirtualSelect.init({
             ele: '#related_records, #hod'
         });
-
 
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
@@ -4649,8 +4637,6 @@
         }
     }
 </script> --}}
-
-
 
 
 {{-- ---------------------======================record number script  --}}

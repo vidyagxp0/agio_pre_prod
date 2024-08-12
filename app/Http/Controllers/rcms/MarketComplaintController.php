@@ -3343,13 +3343,7 @@ if ( $lastmarketComplaint->initial_attachment_c != $marketComplaint->initial_att
      $marketComplaint->update();
         // dd($marketComplaint);
         // {{-- --produts grid gi  --}}
-
-
-
-
             // {{ grid update }}
-
-
         // For "Product Details"
         $griddata = $marketComplaint->id;
 
@@ -3477,11 +3471,28 @@ public function marketComplaintStateChange(Request $request,$id)
 
 
                 $marketstat->update();
+                toastr()->success('DocumetSet');
                 return back();
             }
 
             if ($marketstat->stage == 2) {
 
+                if ($marketstat->form_progress !== 'cft')
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'QA initial review / CFT Mandatory Tab is yet to be filled!'
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for CFT review state'
+                        ]);
+                    }
 
                 $marketstat->stage = "3";
                 $marketstat->status = "CFT Review";
@@ -3535,530 +3546,524 @@ public function marketComplaintStateChange(Request $request,$id)
                 //     }
                 // }
 
-
-
                 $marketstat->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            // if ($marketstat->stage == 3) {
-
-            //     // CFT review state update form_progress
-            //     if ($marketstat->form_progress !== 'cft')
-            //     {
-            //         Session::flash('swal', [
-            //             'type' => 'warning',
-            //             'title' => 'Mandatory Fields!',
-            //             'message' => 'CFT Tab is yet to be filled'
-            //         ]);
-
-            //         return redirect()->back();
-            //     } else {
-            //         Session::flash('swal', [
-            //             'type' => 'success',
-            //             'title' => 'Success',
-            //             'message' => 'Sent for Investigation and CAPA review state'
-            //         ]);
-            //     }
-
-
-            //     $IsCFTRequired = MarketComplaintcftResponce::withoutTrashed()->where(['is_required' => 1, 'mc_id' => $id])->latest()->first();
-            //     $cftUsers = DB::table('MarketComplaintCfts')->where(['mc_id' => $id])->first();
-            //     // Define the column names
-            //     $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
-            //     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
-
-            //     // Initialize an array to store the values
-            //     $valuesArray = [];
-
-            //     // Iterate over the columns and retrieve the values
-            //     foreach ($columns as $index => $column) {
-            //         $value = $cftUsers->$column;
-            //         if($index == 0 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Quality_Control_by = Auth::user()->name;
-            //             $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
-
-
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Quality_Control_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-
-            //         }
-            //         if($index == 1 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->QualityAssurance_by = Auth::user()->name;
-            //             $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->QualityAssurance_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 2 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Engineering_by = Auth::user()->name;
-            //             $updateCFT->Engineering_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Engineering_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 3 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Environment_Health_Safety_by = Auth::user()->name;
-            //             $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Environment_Health_Safety_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 4 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Human_Resource_by = Auth::user()->name;
-            //             $updateCFT->Human_Resource_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Human_Resource_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 5 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Information_Technology_by = Auth::user()->name;
-            //             $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Information_Technology_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 6 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Other1_by = Auth::user()->name;
-            //             $updateCFT->Other1_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Other1_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 7 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Other2_by = Auth::user()->name;
-            //             $updateCFT->Other2_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Other2_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 8 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Other3_by = Auth::user()->name;
-            //             $updateCFT->Other3_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Other3_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 9 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Other4_by = Auth::user()->name;
-            //             $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Other4_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 10 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Other5_by = Auth::user()->name;
-            //             $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Other5_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 11 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->RA_by = Auth::user()->name;
-            //             $updateCFT->RA_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->RA_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 12 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Production_Table_By = Auth::user()->name;
-            //             $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Production_Table_By;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 13 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->ProductionLiquid_by = Auth::user()->name;
-            //             $updateCFT->ProductionLiquid_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->ProductionLiquid_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 14 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Production_Injection_By = Auth::user()->name;
-            //             $updateCFT->Production_Injection_On = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Production_Injection_By;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 15 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Store_by = Auth::user()->name;
-            //             $updateCFT->Store_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Store_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 16 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->ResearchDevelopment_by = Auth::user()->name;
-            //             $updateCFT->ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->ResearchDevelopment_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 17 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->Microbiology_by = Auth::user()->name;
-            //             $updateCFT->Microbiology_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->Microbiology_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 18 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->RegulatoryAffair_by = Auth::user()->name;
-            //             $updateCFT->RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->RegulatoryAffair_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 19 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->CorporateQualityAssurance_by = Auth::user()->name;
-            //             $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->CorporateQualityAssurance_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         if($index == 20 && $cftUsers->$column == Auth::user()->id){
-            //             $updateCFT->ContractGiver_by = Auth::user()->name;
-            //             $updateCFT->ContractGiver_by = Carbon::now()->format('Y-m-d');
-            //             $history = new MarketComplaintAuditTrial();
-            //             $history->market_id = $id;
-            //             $history->activity_type = 'Activity Log';
-            //             $history->previous = "";
-            //             $history->action= 'CFT Review Complete';
-            //             $history->current = $marketstat->ContractGiver_by;
-            //             $history->comment = $request->comment;
-            //             $history->user_id = Auth::user()->id;
-            //             $history->user_name = Auth::user()->name;
-            //             $history->change_to =   "Not Applicable";
-            //             $history->change_from = $lastDocument->status;
-            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //             $history->origin_state = $lastDocument->status;
-            //             $history->stage = 'CFT Review';
-            //             $history->action_name = "Update";
-            //             $history->save();
-            //         }
-            //         $updateCFT->update();
-
-            //         if ($value != null && $value != 0) {
-            //             $valuesArray[] = $value;
-            //         }
-            //     }
-
-            //     if ($IsCFTRequired) {
-            //         if (count(array_unique($valuesArray)) == ($cftDetails + 1)) {
-            //             $stage = new MarketComplaintcftResponce();
-            //             $stage->market_id = $id;
-            //             $stage->mc_id = Auth::user()->id;
-            //             $stage->status = "Completed";
-
-            //             $stage->comment = $request->comment;
-            //             $stage->save();
-            //         } else {
-            //             $stage = new MarketComplaintcftResponce();
-            //             $stage->market_id = $id;
-            //             $stage->mc_id = Auth::user()->id;
-            //             $stage->status = "In-progress";
-
-            //             $stage->comment = $request->comment;
-            //             $stage->save();
-            //         }
-            //     }
-
-            //     $checkCFTCount = MarketComplaintcftResponce::withoutTrashed()->where(['status' => 'Completed', 'mc_id' => $id])->count();
-
-
-
-            //     if (!$IsCFTRequired || $checkCFTCount) {
-
-            //         $marketstat->stage = "4";
-            //         $marketstat->status = "QA Final Review";
-            //         $marketstat->CFT_Review_Complete_By = Auth::user()->name;
-            //         $marketstat->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
-            //         $marketstat->CFT_Review_Comments = $request->comment;
-
-            //         $history = new MarketComplaintAuditTrial();
-            //         $history->market_id = $id;
-            //         $history->activity_type = 'Activity Log';
-            //         $history->previous = "";
-            //         $history->action='CFT Review Complete';
-            //         $history->current = $marketstat->CFT_Review_Complete_By;
-            //         $history->comment = $request->comment;
-            //         $history->user_id = Auth::user()->id;
-            //         $history->user_name = Auth::user()->name;
-            //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //         $history->origin_state = $lastDocument->status;
-            //         $history->change_to =   "QA Final Review";
-            //         $history->change_from = $lastDocument->status;
-            //         $history->stage = 'Complete';
-            //         $history->save();
-
-            //         $marketstat->update();
-            //     }
-            //     toastr()->success('Document Sent');
-            //     return back();
-            // }
             if ($marketstat->stage == 3) {
 
+                // CFT review state update form_progress
+                if ($marketstat->form_progress !== 'cft')
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'CFT Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Investigation and CAPA review state'
+                    ]);
+                }
+
+
+                $IsCFTRequired = MarketComplaintcftResponce::withoutTrashed()->where(['is_required' => 1, 'mc_id' => $id])->latest()->first();
+                $cftUsers = DB::table('MarketComplaintCfts')->where(['mc_id' => $id])->first();
+                // Define the column names
+                $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
+                // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
+
+                // Initialize an array to store the values
+                $valuesArray = [];
+
+                // Iterate over the columns and retrieve the values
+                foreach ($columns as $index => $column) {
+                    $value = $cftUsers->$column;
+                    if($index == 0 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Quality_Control_by = Auth::user()->name;
+                        $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
+
+
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Quality_Control_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+
+                    }
+                    if($index == 1 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->QualityAssurance_by = Auth::user()->name;
+                        $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->QualityAssurance_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 2 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Engineering_by = Auth::user()->name;
+                        $updateCFT->Engineering_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Engineering_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 3 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Environment_Health_Safety_by = Auth::user()->name;
+                        $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Environment_Health_Safety_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 4 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Human_Resource_by = Auth::user()->name;
+                        $updateCFT->Human_Resource_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Human_Resource_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 5 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Information_Technology_by = Auth::user()->name;
+                        $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Information_Technology_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 6 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Other1_by = Auth::user()->name;
+                        $updateCFT->Other1_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Other1_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 7 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Other2_by = Auth::user()->name;
+                        $updateCFT->Other2_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Other2_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 8 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Other3_by = Auth::user()->name;
+                        $updateCFT->Other3_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Other3_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 9 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Other4_by = Auth::user()->name;
+                        $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Other4_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 10 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Other5_by = Auth::user()->name;
+                        $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Other5_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 11 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->RA_by = Auth::user()->name;
+                        $updateCFT->RA_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->RA_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 12 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Production_Table_By = Auth::user()->name;
+                        $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Production_Table_By;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 13 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->ProductionLiquid_by = Auth::user()->name;
+                        $updateCFT->ProductionLiquid_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->ProductionLiquid_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 14 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Production_Injection_By = Auth::user()->name;
+                        $updateCFT->Production_Injection_On = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Production_Injection_By;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 15 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Store_by = Auth::user()->name;
+                        $updateCFT->Store_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Store_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 16 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->ResearchDevelopment_by = Auth::user()->name;
+                        $updateCFT->ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->ResearchDevelopment_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 17 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Microbiology_by = Auth::user()->name;
+                        $updateCFT->Microbiology_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->Microbiology_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 18 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->RegulatoryAffair_by = Auth::user()->name;
+                        $updateCFT->RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->RegulatoryAffair_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 19 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->CorporateQualityAssurance_by = Auth::user()->name;
+                        $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->CorporateQualityAssurance_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 20 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->ContractGiver_by = Auth::user()->name;
+                        $updateCFT->ContractGiver_by = Carbon::now()->format('Y-m-d');
+                        $history = new MarketComplaintAuditTrial();
+                        $history->market_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review Complete';
+                        $history->current = $marketstat->ContractGiver_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    $updateCFT->update();
+
+                    if ($value != null && $value != 0) {
+                        $valuesArray[] = $value;
+                    }
+                }
+
+                if ($IsCFTRequired) {
+                    if (count(array_unique($valuesArray)) == ($cftDetails + 1)) {
+                        $stage = new MarketComplaintcftResponce();
+                        $stage->market_id = $id;
+                        $stage->mc_id = Auth::user()->id;
+                        $stage->status = "Completed";
+
+                        $stage->comment = $request->comment;
+                        $stage->save();
+                    } else {
+                        $stage = new MarketComplaintcftResponce();
+                        $stage->market_id = $id;
+                        $stage->mc_id = Auth::user()->id;
+                        $stage->status = "In-progress";
+
+                        $stage->comment = $request->comment;
+                        $stage->save();
+                    }
+                }
+
+                $checkCFTCount = MarketComplaintcftResponce::withoutTrashed()->where(['status' => 'Completed', 'mc_id' => $id])->count();
+
+                if (!$IsCFTRequired || $checkCFTCount) {
+
+                    $marketstat->stage = "4";
+                    $marketstat->status = "QA Final Review";
+                    $marketstat->CFT_Review_Complete_By = Auth::user()->name;
+                    $marketstat->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $marketstat->CFT_Review_Comments = $request->comment;
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action='CFT Review Complete';
+                    $history->current = $marketstat->CFT_Review_Complete_By;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "QA Final Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Complete';
+                    $history->save();
+
+                    $marketstat->update();
+                }
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($marketstat->stage == 3) {
 
                 $marketstat->stage = "4";
                 $marketstat->status = "In QA Review";
@@ -4111,8 +4116,6 @@ public function marketComplaintStateChange(Request $request,$id)
                 //         }
                 //     }
                 // }
-
-
 
                 $marketstat->update();
                 toastr()->success('Document Sent');
@@ -4173,8 +4176,6 @@ public function marketComplaintStateChange(Request $request,$id)
                 //     }
                 // }
 
-
-
                 $marketstat->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -4229,7 +4230,6 @@ public function marketComplaintStateChange(Request $request,$id)
             // }
 
 
-
             if ($marketstat->stage == 5) {
 
                 $marketstat->stage = "11";
@@ -4237,7 +4237,6 @@ public function marketComplaintStateChange(Request $request,$id)
                 $marketstat->Close_by = Auth::user()->name;
                 $marketstat->Close_on = Carbon::now()->format('d-M-Y');
                 $marketstat->Close_comment = $request->comment;
-
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -4271,13 +4270,11 @@ public function marketComplaintStateChange(Request $request,$id)
 
 }
 
-
     public function marketComplaintRejectState(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $marketstat = MarketComplaint::find($id);
             $lastDocument =  MarketComplaint::find($id);
-
 
             if ($marketstat->stage == 2) {
                 $marketstat->stage = "1";
@@ -4356,6 +4353,32 @@ public function marketComplaintStateChange(Request $request,$id)
 
                 return back();
             }
+
+            if ($marketstat->stage == 5) {
+                $marketstat->stage = "4";
+                $marketstat->status = "In QA Review";
+                $marketstat->reject_by = Auth::user()->name;
+                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
+                $marketstat->reject_comment = $request->comment;
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'Reject';
+                $history->previous = "";
+                $history->current = $marketstat->closed_done_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "In QA Review";
+                $history->change_from = "In Approval";
+                $history->stage='In QA Review';
+                $history->save();
+                $marketstat->update();
+
+                return back();
+            }
         }
 
         // Optionally, handle invalid credentials or other logic
@@ -4395,7 +4418,6 @@ public function marketComplaintStateChange(Request $request,$id)
                 return back();
             }
 
-
             // $changeControl->stage = "2";
             // // $changeControl->status = "Closed - Cancelled";
             // $changeControl->cancelled_by = Auth::user()->name;
@@ -4408,8 +4430,6 @@ public function marketComplaintStateChange(Request $request,$id)
             return back();
         }
     }
-
-
 
 
 // =======================================================RCA and Action ======================================================
@@ -4448,8 +4468,6 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
 
 
 }
-
-
 
 
 // ================================================================Capa and Action==================================================
@@ -4539,9 +4557,6 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         $prductgigrid =MarketComplaintGrids::where(['mc_id' => $id,'identifer' => 'ProductDetails'])->first();
         // $martab_grid =MarketComplaintGrids::where(['mc_id' => $id,'identifer'=> 'Sutability'])->first();
 
-
-
-
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
@@ -4570,19 +4585,14 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
 
     public function MarketAuditTrial($id)
     {
-
-
         $audit = MarketComplaintAuditTrial::where('market_id', $id)->orderByDESC('id')->paginate();
         $today = Carbon::now()->format('d-m-y');
         $document = MarketComplaint::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
 
-
         return view('frontend.market_complaint.audit-trial',compact('audit', 'document', 'today'));
 
     }
-
-
 
 
     public function auditDetailsMarket($id)
@@ -4624,10 +4634,6 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
             return $pdf->stream('Market-AuditTrial' . $id . '.pdf');
         }
     }
-
-
-
-
 
 
 
@@ -4691,16 +4697,11 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         $this->show($request, $id);
     // $history->change_to = "Opened";
 
-
         $marketComplaint->save();
     return redirect()->route('marketcomplaint.marketcomplaint_view', $id);
     }
-
-
-
-
-
-
 }
+
+
 
 

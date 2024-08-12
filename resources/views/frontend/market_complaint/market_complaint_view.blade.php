@@ -11,6 +11,18 @@
         #change-control-fields > div.container-fluid > div.inner-block.state-block > div.status > div.progress-bars.d-flex > div.bg-danger{
             border-radius: 0px 20px 20px 0px;
         }
+
+        .swal-modal {
+            scale: 0.7 !important;
+        }
+
+        .whyblock-bottom {
+            margin-bottom: 10px;
+        }
+
+        .swal-icon {
+            scale: 0.8 !important;
+        }
     </style>
     @php
         $users = DB::table('users')->get();
@@ -24,6 +36,13 @@
             {{ Helpers::getDivisionName(session()->get('division')) }}/ Market Complaint
         </div>
     </div>
+
+    @if (Session::has('swal'))
+        <script>
+            swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+                "{{ Session::get('swal')['type'] }}")
+        </script>
+    @endif
 
     <script>
         $(document).ready(function() {
@@ -1866,7 +1885,6 @@
 
                                     $('[name="Production_Table_Review"]').change(function() {
                                         if ($(this).val() === 'yes') {
-
                                             $('.p_erson').show();
                                             $('.p_erson span').show();
                                         } else {
@@ -1941,7 +1959,7 @@
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->Production_Table_Review == 'yes' && $data->stage == 2) required @endif class="summernote Production_Table_Assessment"
+                                    <textarea @if ($data1->Production_Table_Review == 'yes' && $data->stage == 3) required @endif class="summernote Production_Table_Assessment"
                                         @if ($data->stage == 2 || Auth::user()->id != $data1->Production_Table_Person) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                 </div>
                             </div>
@@ -2000,15 +2018,12 @@
                                     <input readonly type="text" value="{{ $data1->Production_Table_By }}"
                                         name="Production_Table_By"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                         id="Production_Table_By">
-
-
                                 </div>
                             </div>
                             <div class="col-6 new-date-data-field p_erson">
                                 <div class="group-input input-date">
                                     <label for="Production Review Table Completed On">Production Review Table
-                                        Completed
-                                        On</label>
+                                        Completed     On</label>
                                     <!-- <div><small class="text-primary">Please select related information</small></div> -->
 
                                     <div class="calenderauditee">
@@ -2197,8 +2212,6 @@
                                         By</label>
                                     <input readonly type="text" value="{{ $data1->Production_Table_By }}"
                                         name="Production_Table_By" id="Production_Table_By">
-
-
                                 </div>
                             </div>
                             <div class="col-6 new-date-data-field p_erson">
@@ -2251,13 +2264,13 @@
                                 ->first();
                         @endphp
 
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Production Injection"> Production Injection Required ? <span
                                             class="text-danger">*</span></label>
                                     <select name="Production_Injection_Review" id="Production_Injection_Review"
-                                        @if ($data->stage == 4) disabled @endif>
+                                        @if ($data->stage == 3) disabled @endif>
                                         <option value="">-- Select --</option>
                                         <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
                                             value='yes'>
@@ -2289,7 +2302,7 @@
                                             style="display: {{ $data1->Production_Injection_Review == 'yes' ? 'inline' : 'none' }}"
                                             class="text-danger">*</span>
                                     </label>
-                                    <select @if ($data->stage == 4) disabled @endif
+                                    <select @if ($data->stage == 3) disabled @endif
                                         name="Production_Injection_Person" class="Production_Injection_Person"
                                         id="Production_Injection_Person">
                                         <option value="">-- Select --</option>
@@ -2305,13 +2318,13 @@
                                 <div class="group-input">
                                     <label for="Production Injection assessment">Impact Assessment (By Production
                                         Injection) <span id="asteriskPT1"
-                                            style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_Injection_Assessment"
+                                    <textarea @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 3) required @endif class="summernote Production_Injection_Assessment"
                                         @if (
-                                            $data->stage == 3 ||
+                                            $data->stage == 2 ||
                                                 (isset($data1->Production_Injection_Person) && Auth::user()->id != $data1->Production_Injection_Person)) readonly @endif name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                 </div>
                             </div>
@@ -2324,9 +2337,9 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
                                     <textarea class="summernote Production_Injection_Feedback" @if (
-                                        $data->stage == 3 ||
+                                        $data->stage == 2 ||
                                             (isset($data1->Production_Injection_Person) && Auth::user()->id != $data1->Production_Injection_Person)) readonly @endif
-                                        name="Production_Injection_Feedback" id="summernote-18" @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Production_Injection_Feedback }}</textarea>
+                                        name="Production_Injection_Feedback" id="summernote-18" @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Production_Injection_Feedback }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12 productionInjection">
@@ -2373,8 +2386,6 @@
                                         value="{{ $data1->Production_Injection_By }}"
                                         name="Production_Injection_By"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                         id="Production_Injection_By">
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6 productionInjection">
@@ -2467,7 +2478,7 @@
                                     </select>
                                 </div>
                             </div>
-                            @if ($data->stage == 4)
+                            @if ($data->stage == 3)
                                 <div class="col-md-12 mb-3 productionInjection">
                                     <div class="group-input">
                                         <label for="Production Injection assessment">Impact Assessment (By
@@ -2502,7 +2513,7 @@
                                             Production Injection)
                                             <!-- <span
                                                                                                                                                                     id="asteriskInvi12" style="display: none"
-                                                                                                                                                                    class="text-danger">*</span> -->
+                                                                                                                          class="text-danger">*</span> -->
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if
                                                 it
@@ -2568,8 +2579,6 @@
                                     <input readonly type="text"
                                         value="{{ $data1->Production_Injection_By }}"
                                         name="Production_Injection_By" id="Production_Injection_By">
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6 productionInjection">
@@ -2613,7 +2622,7 @@
                                 ->first();
                         @endphp
 
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Research Development"> Research Development Required ? <span
@@ -2667,13 +2676,13 @@
                                 <div class="group-input">
                                     <label for="Research Development assessment">Impact Assessment (By Research
                                         Development) <span id="asteriskPT1"
-                                            style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 2 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif class="summernote ResearchDevelopment_assessment"
+                                    <textarea @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 3) required @endif class="summernote ResearchDevelopment_assessment"
                                         @if (
-                                            $data->stage == 3 ||
+                                            $data->stage == 2 ||
                                                 (isset($data1->ResearchDevelopmentStore_person) && Auth::user()->id != $data1->ResearchDevelopmentStore_person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                 </div>
                             </div>
@@ -2681,14 +2690,14 @@
                                 <div class="group-input">
                                     <label for="Research Development feedback">Research Development Feedback <span
                                             id="asteriskPT2"
-                                            style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 2 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
                                     <textarea class="summernote ResearchDevelopment_feedback" @if (
-                                        $data->stage == 3 ||
+                                        $data->stage == 2 ||
                                             (isset($data1->ResearchDevelopmentStore_person) && Auth::user()->id != $data1->ResearchDevelopmentStore_person)) readonly @endif
-                                        name="ResearchDevelopment_feedback" id="summernote-18" @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ResearchDevelopment_feedback }}</textarea>
+                                        name="ResearchDevelopment_feedback" id="summernote-18" @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                 </div>
                             </div>
                             {{-- <div class="col-12 researchDevelopment">
@@ -2961,7 +2970,7 @@
                                 ->first();
                         @endphp
 
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Human Resource"> Human Resource Required ? <span
@@ -3015,24 +3024,24 @@
                                 <div class="group-input">
                                     <label for="Human Resource assessment">Impact Assessment (By Human Resource)
                                         <span id="asteriskPT1"
-                                            style="display: {{ $data1->Human_Resource_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Human_Resource_review == 'yes' && $data->stage == 2 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif class="summernote Human_Resource_assessment"
-                                        @if ($data->stage == 3 || (isset($data1->Human_Resource_person) && Auth::user()->id != $data1->Human_Resource_person)) readonly @endif name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
+                                    <textarea @if ($data1->Human_Resource_review == 'yes' && $data->stage == 3) required @endif class="summernote Human_Resource_assessment"
+                                        @if ($data->stage == 2 || (isset($data1->Human_Resource_person) && Auth::user()->id != $data1->Human_Resource_person)) readonly @endif name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3 Human_Resource">
                                 <div class="group-input">
                                     <label for="Human Resource feedback">Human Resource Feedback <span
                                             id="asteriskPT2"
-                                            style="display: {{ $data1->Human_Resource_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Human_Resource_review == 'yes' && $data->stage == 2 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
                                     <textarea class="summernote Human_Resource_feedback" @if ($data->stage == 3 || (isset($data1->Human_Resource_person) && Auth::user()->id != $data1->Human_Resource_person)) readonly @endif
-                                        name="Human_Resource_feedback" id="summernote-18" @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Human_Resource_feedback }}</textarea>
+                                        name="Human_Resource_feedback" id="summernote-18" @if ($data1->Human_Resource_review == 'yes' && $data->stage == 2) required @endif>{{ $data1->Human_Resource_feedback }}</textarea>
                                 </div>
                             </div>
                             {{-- <div class="col-12 Human_Resource">
@@ -3077,8 +3086,6 @@
                                     <input readonly type="text" value="{{ $data1->Human_Resource_by }}"
                                         name="Human_Resource_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                         id="Human_Resource_by">
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6 Human_Resource">
@@ -3252,8 +3259,6 @@
                                         By</label>
                                     <input readonly type="text" value="{{ $data1->Human_Resource_by }}"
                                         name="Human_Resource_by" id="Human_Resource_by">
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6 Human_Resource">
@@ -3276,8 +3281,6 @@
                             $(document).ready(function() {
                                 @if ($data1->CorporateQualityAssurance_Review !== 'yes')
                                     $('.CQA').hide();
-
-
                                     $('[name="CorporateQualityAssurance_Review"]').change(function() {
                                         if ($(this).val() === 'yes') {
 
@@ -3297,7 +3300,7 @@
                                 ->first();
                         @endphp
 
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Corporate Quality Assurance"> Corporate Quality Assurance Required
@@ -3354,13 +3357,13 @@
                                 <div class="group-input">
                                     <label for="RA assessment">Impact Assessment (By Corporate Quality Assurance)
                                         <span id="asteriskRA1"
-                                            style="display: {{ $data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif
+                                    <textarea @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 3) required @endif
                                         class="summernote CorporateQualityAssurance_assessment" @if (
-                                            $data->stage == 3 ||
+                                            $data->stage == 2 ||
                                                 (isset($data1->CorporateQualityAssurance_person) &&
                                                     Auth::user()->id != $data1->CorporateQualityAssurance_person)) readonly @endif
                                         name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
@@ -3370,16 +3373,16 @@
                                 <div class="group-input">
                                     <label for="RA feedback">Corporate Quality Assurance Feedback <span
                                             id="asteriskRA2"
-                                            style="display: {{ $data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
                                     <textarea class="summernote CorporateQualityAssurance_feedback" @if (
-                                        $data->stage == 3 ||
+                                        $data->stage == 2 ||
                                             (isset($data1->CorporateQualityAssurance_person) &&
                                                 Auth::user()->id != $data1->CorporateQualityAssurance_person)) readonly @endif
                                         name="CorporateQualityAssurance_feedback" id="summernote-18"
-                                        @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
+                                        @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                 </div>
                             </div>
                             {{-- <div class="col-12 CQA">
@@ -3673,7 +3676,7 @@
                                 ->first();
                         @endphp
 
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Store"> Store Required ? <span
@@ -3725,23 +3728,23 @@
                                 <div class="group-input">
                                     <label for="Store assessment">Impact Assessment (By Store) <span
                                             id="asteriskPT1"
-                                            style="display: {{ $data1->Store_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Store_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif class="summernote Store_assessment"
-                                        @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->id != $data1->Store_person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
+                                    <textarea @if ($data1->Store_Review == 'yes' && $data->stage == 3) required @endif class="summernote Store_assessment"
+                                        @if ($data->stage == 2 || (isset($data1->Store_person) && Auth::user()->id != $data1->Store_person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3 store">
                                 <div class="group-input">
                                     <label for="store feedback">store Feedback <span id="asteriskPT2"
-                                            style="display: {{ $data1->Store_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Store_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea class="summernote Store_feedback" @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->id != $data1->Store_person)) readonly @endif
-                                        name="Store_feedback" id="summernote-18" @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Store_feedback }}</textarea>
+                                    <textarea class="summernote Store_feedback" @if ($data->stage == 2 || (isset($data1->Store_person) && Auth::user()->id != $data1->Store_person)) readonly @endif
+                                        name="Store_feedback" id="summernote-18" @if ($data1->Store_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Store_feedback }}</textarea>
                                 </div>
                             </div>
                             {{-- <div class="col-12 store">
@@ -3784,8 +3787,6 @@
                                     <input readonly type="text" value="{{ $data1->Store_by }}"
                                         name="Store_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                         id="Store_by">
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6 store">
@@ -3953,8 +3954,6 @@
                                         By</label>
                                     <input readonly type="text" value="{{ $data1->Store_by }}"
                                         name="Store_by" id="Store_by">
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6 store">
@@ -3996,7 +3995,7 @@
                                 ->first();
                         @endphp
 
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Engineering"> Engineering Required ? <span
@@ -4050,24 +4049,24 @@
                                 <div class="group-input">
                                     <label for="Engineering assessment">Impact Assessment (By Engineering) <span
                                             id="asteriskPT1"
-                                            style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif class="summernote Engineering_assessment"
-                                        @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->id != $data1->Engineering_person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                    <textarea @if ($data1->Engineering_review == 'yes' && $data->stage == 3) required @endif class="summernote Engineering_assessment"
+                                        @if ($data->stage == 2 || (isset($data1->Engineering_person) && Auth::user()->id != $data1->Engineering_person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3 Engineering">
                                 <div class="group-input">
                                     <label for="Engineering feedback">Engineering Feedback <span
                                             id="asteriskPT2"
-                                            style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea class="summernote Engineering_feedback" @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->id != $data1->Engineering_person)) readonly @endif
-                                        name="Engineering_feedback" id="summernote-18" @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Engineering_feedback }}</textarea>
+                                    <textarea class="summernote Engineering_feedback" @if ($data->stage == 2 || (isset($data1->Engineering_person) && Auth::user()->id != $data1->Engineering_person)) readonly @endif
+                                        name="Engineering_feedback" id="summernote-18" @if ($data1->Engineering_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Engineering_feedback }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12 Engineering">
@@ -4284,8 +4283,6 @@
                                         By</label>
                                     <input readonly type="text" value="{{ $data1->Engineering_by }}"
                                         name="Engineering_by" id="Engineering_by">
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6 Engineering">
@@ -4326,7 +4323,7 @@
                                 ->first();
                         @endphp
 
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RegulatoryAffair"> Regulatory Affair Required ? <span
@@ -4381,13 +4378,13 @@
                                     <label for="Regulatory Affair assessment">Impact Assessment (By Regulatory
                                         Affair)
                                         <span id="asteriskPT1"
-                                            style="display: {{ $data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->RegulatoryAffair_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4) required @endif class="summernote RegulatoryAffair_assessment"
+                                    <textarea @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 3) required @endif class="summernote RegulatoryAffair_assessment"
                                         @if (
-                                            $data->stage == 3 ||
+                                            $data->stage == 2 ||
                                                 (isset($data1->RegulatoryAffair_person) && Auth::user()->id != $data1->RegulatoryAffair_person)) readonly @endif name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                 </div>
                             </div>
@@ -4395,14 +4392,14 @@
                                 <div class="group-input">
                                     <label for="Regulatory Affair feedback">Regulatory Affair Feedback <span
                                             id="asteriskPT2"
-                                            style="display: {{ $data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->RegulatoryAffair_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
                                     <textarea class="summernote RegulatoryAffair_feedback" @if (
-                                        $data->stage == 3 ||
+                                        $data->stage == 2 ||
                                             (isset($data1->RegulatoryAffair_person) && Auth::user()->id != $data1->RegulatoryAffair_person)) readonly @endif
-                                        name="RegulatoryAffair_feedback" id="summernote-18" @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->RegulatoryAffair_feedback }}</textarea>
+                                        name="RegulatoryAffair_feedback" id="summernote-18" @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                 </div>
                             </div>
                             {{-- <div class="col-12 RegulatoryAffair">
@@ -4624,8 +4621,6 @@
                                         By</label>
                                     <input readonly type="text" value="{{ $data1->RegulatoryAffair_by }}"
                                         name="RegulatoryAffair_by" id="RegulatoryAffair_by">
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6 RegulatoryAffair">
@@ -4638,11 +4633,6 @@
                                 </div>
                             </div>
                         @endif
-
-
-
-
-
 
                         <div class="sub-head">
                             Quality Assurance
@@ -4714,12 +4704,12 @@
                             <div class="group-input">
                                 <label for="Impact Assessment3">Impact Assessment (By Quality Assurance) <span
                                         id="asteriskQQA1"
-                                        style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                        style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                         class="text-danger">*</span></label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                         not require completion</small></div>
-                                <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote QualityAssurance_assessment"
-                                    name="QualityAssurance_assessment" @if ($data->stage == 3 || Auth::user()->id != $data1->QualityAssurance_person) readonly @endif id="summernote-23">{{ $data1->QualityAssurance_assessment }}</textarea>
+                                <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 3) required @endif class="summernote QualityAssurance_assessment"
+                                    name="QualityAssurance_assessment" @if ($data->stage == 2 || Auth::user()->id != $data1->QualityAssurance_person) readonly @endif id="summernote-23">{{ $data1->QualityAssurance_assessment }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12 mb-3 quality_assurance">
@@ -4829,7 +4819,6 @@
                             $(document).ready(function() {
                                 @if ($data1->ProductionLiquid_Review !== 'yes')
                                     $('.productionLiquid').hide();
-
                                     $('[name="ProductionLiquid_Review"]').change(function() {
                                         if ($(this).val() === 'yes') {
 
@@ -4849,7 +4838,7 @@
                                 ->first();
                         @endphp
 
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Production Liquid"> Production Liquid Required ? <span
@@ -4904,13 +4893,13 @@
                                     <label for="Production Liquid assessment">Impact Assessment (By Production
                                         Liquid)
                                         <span id="asteriskPT1"
-                                            style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 4) required @endif class="summernote ProductionLiquid_assessment"
+                                    <textarea @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 3) required @endif class="summernote ProductionLiquid_assessment"
                                         @if (
-                                            $data->stage == 3 ||
+                                            $data->stage == 2 ||
                                                 (isset($data1->ProductionLiquid_person) && Auth::user()->id != $data1->ProductionLiquid_person)) readonly @endif name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                 </div>
                             </div>
@@ -5092,8 +5081,7 @@
                                             Liquid)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if
                                                 it
-                                                does not
-require completion</small></div>
+                                                does not require completion</small></div>
                                         <textarea disabled class="tiny" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                     </div>
                                 </div>
@@ -5150,8 +5138,6 @@ require completion</small></div>
                                         By</label>
                                     <input readonly type="text" value="{{ $data1->ProductionLiquid_by }}"
                                         name="ProductionLiquid_by" id="ProductionLiquid_by">
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6 productionLiquid">
@@ -5192,7 +5178,7 @@ require completion</small></div>
                                 ->first();
                         @endphp
 
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Quality Control"> Quality Control Required ? <span
@@ -5246,24 +5232,24 @@ require completion</small></div>
                                 <div class="group-input">
                                     <label for="Quality Control assessment">Impact Assessment (By Quality Control)
                                         <span id="asteriskPT1"
-                                            style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->Quality_review == 'yes' && $data->stage == 4) required @endif class="summernote Quality_Control_assessment"
-                                        @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->id != $data1->Quality_Control_Person)) readonly @endif name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
+                                    <textarea @if ($data1->Quality_review == 'yes' && $data->stage == 3) required @endif class="summernote Quality_Control_assessment"
+                                        @if ($data->stage == 2 || (isset($data1->Quality_Control_Person) && Auth::user()->id != $data1->Quality_Control_Person)) readonly @endif name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3 qualityControl">
                                 <div class="group-input">
                                     <label for="Quality Control feedback">Quality Control Feedback <span
                                             id="asteriskPT2"
-                                            style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea class="summernote Quality_Control_feedback" @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->id != $data1->Quality_Control_Person)) readonly @endif
-                                        name="Quality_Control_feedback" id="summernote-18" @if ($data1->Quality_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Quality_Control_feedback }}</textarea>
+                                    <textarea class="summernote Quality_Control_feedback" @if ($data->stage == 2 || (isset($data1->Quality_Control_Person) && Auth::user()->id != $data1->Quality_Control_Person)) readonly @endif
+                                        name="Quality_Control_feedback" id="summernote-18" @if ($data1->Quality_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Quality_Control_feedback }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12 qualityControl">
@@ -5308,8 +5294,6 @@ require completion</small></div>
                                     <input readonly type="text" value="{{ $data1->Quality_Control_by }}"
                                         name="Quality_Control_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                         id="Quality_Control_by">
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6 qualityControl">
@@ -5482,8 +5466,6 @@ require completion</small></div>
                                         By</label>
                                     <input readonly type="text" value="{{ $data1->Quality_Control_by }}"
                                         name="Quality_Control_by" id="Quality_Control_by">
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6 qualityControl">
@@ -5524,7 +5506,7 @@ require completion</small></div>
                                 ->first();
                         @endphp
 
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Microbiology"> Microbiology Required ? <span
@@ -5578,26 +5560,26 @@ require completion</small></div>
                                 <div class="group-input">
                                     <label for="Microbiology assessment">Impact Assessment (By Microbiology)
                                         <span id="asteriskPT1"
-                                            style="display: {{ $data1->Microbiology_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Microbiology_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if
                                             it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->Microbiology_Review == 'yes' && $data->stage == 4) required @endif class="summernote Microbiology_assessment"
-                                        @if ($data->stage == 3 || (isset($data1->Microbiology_person) && Auth::user()->id != $data1->Microbiology_person)) readonly @endif name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
+                                    <textarea @if ($data1->Microbiology_Review == 'yes' && $data->stage == 3) required @endif class="summernote Microbiology_assessment"
+                                        @if ($data->stage == 2 || (isset($data1->Microbiology_person) && Auth::user()->id != $data1->Microbiology_person)) readonly @endif name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3 Microbiology">
                                 <div class="group-input">
                                     <label for="Microbiology feedback">Microbiology Feedback <span
                                             id="asteriskPT2"
-                                            style="display: {{ $data1->Microbiology_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Microbiology_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if
                                             it
                                             does not require completion</small></div>
-                                    <textarea class="summernote Microbiology_feedback" @if ($data->stage == 3 || (isset($data1->Microbiology_person) && Auth::user()->id != $data1->Microbiology_person)) readonly @endif
-                                        name="Microbiology_feedback" id="summernote-18" @if ($data1->Microbiology_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Microbiology_feedback }}</textarea>
+                                    <textarea class="summernote Microbiology_feedback" @if ($data->stage == 2 || (isset($data1->Microbiology_person) && Auth::user()->id != $data1->Microbiology_person)) readonly @endif
+                                        name="Microbiology_feedback" id="summernote-18" @if ($data1->Microbiology_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Microbiology_feedback }}</textarea>
                                 </div>
                             </div>
                             {{-- <div class="col-12 Microbiology">
@@ -5641,8 +5623,6 @@ require completion</small></div>
                                     <input readonly type="text" value="{{ $data1->Microbiology_by }}"
                                         name="Microbiology_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                         id="Microbiology_by">
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6 Microbiology">
@@ -5861,7 +5841,7 @@ require completion</small></div>
                                 ->first();
                         @endphp
 
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Safety"> Safety Required ? <span
@@ -5915,14 +5895,14 @@ require completion</small></div>
                                 <div class="group-input">
                                     <label for="Safety assessment">Impact Assessment (By Safety) <span
                                             id="asteriskPT1"
-                                            style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if
                                             it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif class="summernote Health_Safety_assessment"
+                                    <textarea @if ($data1->Environment_Health_review == 'yes' && $data->stage == 3) required @endif class="summernote Health_Safety_assessment"
                                         @if (
-                                            $data->stage == 3 ||
+                                            $data->stage == 2 ||
                                                 (isset($data1->Environment_Health_Safety_person) &&
                                                     Auth::user()->id != $data1->Environment_Health_Safety_person)) readonly @endif name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
                                 </div>
@@ -5930,16 +5910,16 @@ require completion</small></div>
                             <div class="col-md-12 mb-3 safety">
                                 <div class="group-input">
                                     <label for="Safety feedback">Safety Feedback <span id="asteriskPT2"
-                                            style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if
                                             it
                                             does not require completion</small></div>
                                     <textarea class="summernote Health_Safety_feedback" @if (
-                                        $data->stage == 3 ||
+                                        $data->stage == 2 ||
                                             (isset($data1->Environment_Health_Safety_person) &&
                                                 Auth::user()->id != $data1->Environment_Health_Safety_person)) readonly @endif
-                                        name="Health_Safety_feedback" id="summernote-18" @if ($data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Health_Safety_feedback }}</textarea>
+                                        name="Health_Safety_feedback" id="summernote-18" @if ($data1->Environment_Health_review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Health_Safety_feedback }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12 safety">
@@ -6208,7 +6188,7 @@ require completion</small></div>
                                 ->first();
                         @endphp
 
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Contract Giver"> Contract Giver Required ? <span
@@ -6263,26 +6243,26 @@ require completion</small></div>
                                     <label for="Contract Giver assessment">Impact Assessment (By Contract
                                         Giver)
                                         <span id="asteriskPT1"
-                                            style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if
                                             it
                                             does not require completion</small></div>
-                                    <textarea @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif class="summernote ContractGiver_assessment"
-                                        @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->id != $data1->ContractGiver_person)) readonly @endif name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
+                                    <textarea @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 3) required @endif class="summernote ContractGiver_assessment"
+                                        @if ($data->stage == 2 || (isset($data1->ContractGiver_person) && Auth::user()->id != $data1->ContractGiver_person)) readonly @endif name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3 store">
                                 <div class="group-input">
                                     <label for="Contract Giver feedback">Contract Giver Feedback <span
                                             id="asteriskPT2"
-                                            style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                            style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if
                                             it
                                             does not require completion</small></div>
-                                    <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->id != $data1->ContractGiver_person)) readonly @endif
-                                        name="ContractGiver_feedback" id="summernote-18" @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ContractGiver_feedback }}</textarea>
+                                    <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 2 || (isset($data1->ContractGiver_person) && Auth::user()->id != $data1->ContractGiver_person)) readonly @endif
+                                        name="ContractGiver_feedback" id="summernote-18" @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->ContractGiver_feedback }}</textarea>
                                 </div>
                             </div>
                             {{-- <div class="col-12 store">
@@ -6327,8 +6307,6 @@ require completion</small></div>
                                     <input readonly type="text" value="{{ $data1->ContractGiver_by }}"
                                         name="ContractGiver_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                         id="ContractGiver_by">
-
-
                                 </div>
                             </div>
                             <div class="col-lg-6 store">
@@ -6521,7 +6499,7 @@ require completion</small></div>
 
 
 
-                        @if ($data->stage == 3 || $data->stage == 4)
+                        @if ($data->stage == 2 || $data->stage == 3)
                             <div class="sub-head">
                                 Other's 1 ( Additional Person Review From Departments If Required)
                             </div>
@@ -6680,16 +6658,16 @@ require completion</small></div>
                                 <div class="group-input">
                                     <label for="Impact Assessment12">Impact Assessment (By Other's 1)
                                     </label>
-                                    <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Other1_assessment"
-                                        @if ($data->stage == 3 || Auth::user()->id != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
+                                    <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 3) required @endif class="tiny" name="Other1_assessment"
+                                        @if ($data->stage == 2 || Auth::user()->id != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3 other1_reviews ">
                                 <div class="group-input">
                                     <label for="Feedback1"> Other's 1 Feedback
                                     </label>
-                                    <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Other1_feedback"
-                                        @if ($data->stage == 3 || Auth::user()->id != $data1->Other1_person) readonly @endif id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
+                                    <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 3) required @endif class="tiny" name="Other1_feedback"
+                                        @if ($data->stage == 2 || Auth::user()->id != $data1->Other1_person) readonly @endif id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
                                 </div>
                             </div>
                             <script>
@@ -6954,16 +6932,16 @@ require completion</small></div>
                                 <div class="group-input">
                                     <label for="Impact Assessment13">Impact Assessment (By Other's 2)
                                     </label>
-                                    <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other2_person) readonly @endif class="tiny" name="Other2_Assessment"
-                                        @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
+                                    <textarea @if ($data->stage == 2 || Auth::user()->id != $data1->Other2_person) readonly @endif class="tiny" name="Other2_Assessment"
+                                        @if ($data1->Other2_review == 'yes' && $data->stage == 3) required @endif id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3 Other2_reviews">
                                 <div class="group-input">
                                     <label for="Feedback2"> Other's 2 Feedback
                                     </label>
-                                    <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other2_person) readonly @endif class="tiny" name="Other2_feedback"
-                                        @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-44">{{ $data1->Other2_feedback }}</textarea>
+                                    <textarea @if ($data->stage == 2 || Auth::user()->id != $data1->Other2_person) readonly @endif class="tiny" name="Other2_feedback"
+                                        @if ($data1->Other2_review == 'yes' && $data->stage == 3) required @endif id="summernote-44">{{ $data1->Other2_feedback }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12 Other2_reviews">
@@ -7202,15 +7180,15 @@ require completion</small></div>
                                 <div class="group-input">
                                     <label for="Impact Assessment14">Impact Assessment (By Other's 3)
                                     </label>
-                                    <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other3_person) readonly @endif class="tiny" name="Other3_Assessment"
-                                        @if ($data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
+                                    <textarea @if ($data->stage == 2 || Auth::user()->id != $data1->Other3_person) readonly @endif class="tiny" name="Other3_Assessment"
+                                        @if ($data1->Other3_review == 'yes' && $data->stage == 3) required @endif id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3 Other3_reviews">
                                 <div class="group-input">
                                     <label for="feedback3"> Other's 3 Feedback
                                     </label>
-                                    <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other3_person) readonly @endif class="tiny" name="Other3_feedback"
+                                    <textarea @if ($data->stage == 2 || Auth::user()->id != $data1->Other3_person) readonly @endif class="tiny" name="Other3_feedback"
                                         @if ($data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-46">{{ $data1->Other3_Assessment }}</textarea>
                                 </div>
                             </div>
@@ -7447,16 +7425,16 @@ require completion</small></div>
                                 <div class="group-input">
                                     <label for="Impact Assessment15">Impact Assessment (By Other's 4)
                                     </label>
-                                    <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other4_person) readonly @endif class="tiny" name="Other4_Assessment"
-                                        @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
+                                    <textarea @if ($data->stage == 2 || Auth::user()->id != $data1->Other4_person) readonly @endif class="tiny" name="Other4_Assessment"
+                                        @if ($data1->Other4_review == 'yes' && $data->stage == 3) required @endif id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3 Other4_reviews">
                                 <div class="group-input">
                                     <label for="feedback4"> Other's 4 Feedback
                                     </label>
-                                    <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other4_person) readonly @endif class="tiny" name="Other4_feedback"
-                                        @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-48">{{ $data1->Other4_feedback }}</textarea>
+                                    <textarea @if ($data->stage == 2 || Auth::user()->id != $data1->Other4_person) readonly @endif class="tiny" name="Other4_feedback"
+                                        @if ($data1->Other4_review == 'yes' && $data->stage == 3) required @endif id="summernote-48">{{ $data1->Other4_feedback }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12 Other4_reviews">
@@ -7698,7 +7676,7 @@ require completion</small></div>
                                     <label for="Impact Assessment16">Impact Assessment (By Other's 5)
                                     </label>
                                     <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other5_person) readonly @endif class="tiny"
-                                        name="Other5_Assessment"@if ($data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
+                                        name="Other5_Assessment"@if ($data1->Other5_review == 'yes' && $data->stage == 3) required @endif id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3 Other5_reviews">
@@ -7706,7 +7684,7 @@ require completion</small></div>
                                     <label for="productionfeedback"> Other's 5 Feedback
                                     </label>
                                     <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other5_person) readonly @endif class="tiny"
-                                        name="Other5_feedback"@if ($data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-50">{{ $data1->Other5_feedback }}</textarea>
+                                        name="Other5_feedback"@if ($data1->Other5_review == 'yes' && $data->stage == 3) required @endif id="summernote-50">{{ $data1->Other5_feedback }}</textarea>
                                 </div>
                             </div>
 
@@ -10047,6 +10025,8 @@ margin-bottom: 10px;
         });
     });
 </script>
+
+
 
 <script>
     var maxLength = 240;
