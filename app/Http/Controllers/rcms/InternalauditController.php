@@ -11,6 +11,7 @@ use App\Models\{IA_checklist_capsule_paking};
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
 use App\Models\InternalAuditStageHistory;
+use App\Models\InternalAuditObservationGrid;
 use App\Models\User;
 use App\Models\IA_checklist_compression;
 use PDF;
@@ -85,13 +86,33 @@ class InternalauditController extends Controller
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
-        $internalAudit->Audit_team =  implode(',', $request->Audit_team);
-        $internalAudit->Auditee =  implode(',', $request->Auditee);
+        // $internalAudit->Audit_team =  implode(',', $request->Audit_team);
+        if (is_array($request->Audit_team)) {
+            $internalAudit->Audit_team = implode(',', $request->Audit_team);
+        } else {
+            $internalAudit->Audit_team = $request->Audit_team; 
+        }
+        if (is_array($request->checklists)) {
+            $internalAudit->checklists = implode(',', $request->checklists);
+        } else {
+            $internalAudit->checklists = $request->checklists; 
+        }
+        // $internalAudit->Auditee =  implode(',', $request->Auditee);
+        if (is_array($request->Auditee)) {
+            $internalAudit->Auditee = implode(',', $request->Auditee);
+        } else {
+            $internalAudit->Auditee = $request->Auditee; 
+        }
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->Comments = $request->Comments;
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
-        $internalAudit->refrence_record=  implode(',', $request->refrence_record);
+        // $internalAudit->refrence_record=  implode(',', $request->refrence_record);
+        if (is_array($request->refrence_record)) {
+            $internalAudit->refrence_record = implode(',', $request->refrence_record);
+        } else {
+            $internalAudit->refrence_record = $request->refrence_record; 
+        }
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date= $request->audit_start_date;
@@ -1290,6 +1311,11 @@ class InternalauditController extends Controller
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
         $internalAudit->Audit_team =  implode(',', $request->Audit_team);
+        if (is_array($request->checklists)) {
+            $internalAudit->checklists = implode(',', $request->checklists);
+        } else {
+            $internalAudit->checklists = $request->checklists; 
+        }
         $internalAudit->Auditee =  implode(',', $request->Auditee);
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->Comments = $request->Comments;
@@ -1304,6 +1330,7 @@ class InternalauditController extends Controller
         $internalAudit->due_date= $request->due_date;
         $internalAudit->audit_start_date= $request->audit_start_date;
         $internalAudit->audit_end_date = $request->audit_end_date;
+        $internalAudit->auditSheChecklist_comment_main = $request->auditSheChecklist_comment_main;
 
 
         // ===================update==============checklist=========
@@ -1842,7 +1869,19 @@ $Checklist_Capsule->save();
                     $files[] = $name;
                 }
             }
+ if (!empty($request->inv_attachment)) {
+            $files = [];
+            if ($request->hasfile('inv_attachment')) {
+                foreach ($request->file('inv_attachment') as $file) {
+                    $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
 
+
+            $internalAudit->inv_attachment = json_encode($files);
+        }
 
             $internalAudit->file_attachment = json_encode($files);
         }
@@ -1858,6 +1897,20 @@ $Checklist_Capsule->save();
 
 
             $internalAudit->file_attachment_guideline= json_encode($files);
+        }
+
+        if (!empty($request->auditSheChecklist_attachment_main)) {
+            $files = [];
+            if ($request->hasfile('auditSheChecklist_attachment_main')) {
+                foreach ($request->file('auditSheChecklist_attachment_main') as $file) {
+                    $name = $request->name . 'auditSheChecklist_attachment_main' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->auditSheChecklist_attachment_main= json_encode($files);
         }
 
 
@@ -1903,6 +1956,31 @@ $Checklist_Capsule->save();
         }
 
         $internalAudit->update();
+
+        
+  $internal_id = $internalAudit->id;
+  $newDataGridInternalAudit = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrCreate();
+  // dd($newDataGridInternalAudit);
+  $newDataGridInternalAudit->io_id = $internal_id;
+  $newDataGridInternalAudit->identifier = 'observations';
+  $newDataGridInternalAudit->data = $request->observations;
+  $newDataGridInternalAudit->save();
+
+  $internal_id = $internalAudit->id;
+  $newDataGridInternalAuditRoles = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
+  $newDataGridInternalAuditRoles->io_id = $internal_id;
+  $newDataGridInternalAuditRoles->identifier = 'auditorroles';
+  $newDataGridInternalAuditRoles->data = $request->auditorroles;
+  $newDataGridInternalAuditRoles->save();
+
+  $internal_id = $internalAudit->id;
+  $newDataGridInitialClosure = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
+  $newDataGridInitialClosure->io_id = $internal_id;
+  $newDataGridInitialClosure->identifier = 'Initial';
+  $newDataGridInitialClosure->data = $request->Initial;
+  $newDataGridInitialClosure->save();
+
+
 
         $ia_id = $internalAudit->id;
         // dd($request->all());
@@ -3016,6 +3094,7 @@ $Checklist_Capsule->save();
 
     public function internalAuditShow($id)
     {
+        $internal_id = $id;
         $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
         $data = InternalAudit::find($id);
         $checklist1 = IA_checklist_tablet_compression::where('ia_id', $id)->first();
@@ -3056,11 +3135,14 @@ $Checklist_Capsule->save();
         $auditPackagingChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPackagingChecklist'])->firstOrNew();
         $auditSheChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditSheChecklist'])->firstOrNew();
         $gridcomment = InternalAuditChecklistGrid::where(['ia_id' => $id])->first();
+        $grid_Data3 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrCreate();
+        $grid_Data4 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
+        $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
+
             // dd($gridcomment);
-
-        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist','gridcomment'));
+        // return $grid_Data2;
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist','gridcomment','grid_Data3','grid_Data4','grid_Data5'));
     }
-
     public function InternalAuditStateChange(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -3735,16 +3817,29 @@ $Checklist_Capsule->save();
             return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
         }
 
-        public function internal_audit_child_II(Request $request, $id)
+        public function multiple_child(Request $request, $id)
         {
             $parent_id = $id;
-            $parent_type = "Observations";
+            $old_records = InternalAudit::select('id', 'division_id', 'record')->get();
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             $currentDate = Carbon::now();
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
-            return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+            if($request->child_type == 'action_item'){
+            $parent_type = "action_item";
+                return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','record'));
+            }
+            if($request->child_type == 'r_c_a'){
+                $parent_type = "r_c_a";
+                return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+            }
+            if($request->child_type == 'capa'){
+                $parent_type = "capa";
+                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type','old_records'));
+            }
         }
 
 
@@ -3798,4 +3893,33 @@ $Checklist_Capsule->save();
             return $pdf->stream('Internal-Audit' . $id . '.pdf');
         }
     }
+
+    public static function observationSingleReport($id)
+    {
+        $data = InternalAudit::find($id);
+        $internal_id = $id;
+        $grid_Data3 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrCreate();
+        $grid_Data4 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
+        if (!empty($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.internalAudit.observation-tab-singleReport', compact('data','grid_Data3','grid_Data4'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('Internal-Audit' . $id . '.pdf');
+        }
+    }
+
 }

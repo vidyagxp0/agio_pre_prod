@@ -236,6 +236,7 @@ Route::get('auditDetailsRoot/{id}', [RootCauseController::class, 'auditDetailsro
 Route::post('internalauditreject/{id}', [InternalauditController::class, 'RejectStateChange']);
 Route::post('InternalAuditCancel/{id}', [InternalauditController::class, 'InternalAuditCancel']);
 Route::post('InternalAuditChild/{id}', [InternalauditController::class, 'internal_audit_child'])->name('internal_audit_child');
+Route::post('multiple_child/{id}', [InternalauditController::class, 'multiple_child'])->name('multiple_child');
 
 // external audit----------------------------
 

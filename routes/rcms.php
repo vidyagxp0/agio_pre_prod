@@ -138,6 +138,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('InternalAuditStateChange/{id}', [InternalauditController::class, 'InternalAuditStateChange'])->name('AuditStateChange');
             Route::get('InternalAuditTrialShow/{id}', [InternalauditController::class, 'InternalAuditTrialShow'])->name('ShowInternalAuditTrial');
             Route::get('InternalAuditTrialDetails/{id}', [InternalauditController::class, 'InternalAuditTrialDetails'])->name('showaudittrialinternalaudit');
+            Route::get('internalObservationSingleReport/{id}', [InternalauditController::class, 'observationSingleReport']);
 
             //-------------------------
 
