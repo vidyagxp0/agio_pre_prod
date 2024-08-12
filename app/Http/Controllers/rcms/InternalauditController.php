@@ -2457,6 +2457,30 @@ $Checklist_Capsule->save();
             $history->save();
         }
 
+        if($lastDocument->initiated_if_other != $request->initiated_if_other){
+            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+            ->where('activity_type', 'Other')
+            ->exists();
+            $history = new InternalAuditTrial;
+            $history->InternalAudit_id = $lastDocument->id;
+            $history->activity_type = 'Other';
+            if($lastDocument->initiated_if_other == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->initiated_if_other;
+            }
+            $history->current = $request->initiated_if_other;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+
         // if ($lastDocument->initial_comments != $internalAudit->initial_comments || !empty($request->initial_comments_comment)) {
 
         //     $history = new InternalAuditTrial();
@@ -3003,6 +3027,290 @@ $Checklist_Capsule->save();
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+
+$previousAttachments = $lastDocument->inv_attachment;
+$areIniAttachmentsSame = $previousAttachments == $internalAudit->inv_attachment;
+
+if ($areIniAttachmentsSame != true) {
+    $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+        ->where('activity_type', 'Initial Attachment')
+        ->exists();
+            $history = new InternalAuditTrial;
+            $history->InternalAudit_id = $id;
+            $history->activity_type = 'Initial Attachment';
+            $history->previous = $previousAttachments;
+            $history->current = $internalAudit->inv_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+
+        
+$previousAttachments1 = $lastDocument->file_attachment;
+$areIniAttachmentsSame1 = $previousAttachments1 == $internalAudit->file_attachment;
+
+if ($areIniAttachmentsSame1 != true) {
+    $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+        ->where('activity_type', 'File Attachment')
+        ->exists();
+            $history = new InternalAuditTrial;
+            $history->InternalAudit_id = $id;
+            $history->activity_type = 'File Attachment';
+            $history->previous = $previousAttachments1;
+            $history->current = $internalAudit->file_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+        
+        
+$previousAttachments2 = $lastDocument->file_attachment_guideline;
+$areIniAttachmentsSame2 = $previousAttachments2 == $internalAudit->file_attachment_guideline;
+
+if ($areIniAttachmentsSame2 != true) {
+    $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+        ->where('activity_type', 'Guideline Attachment')
+        ->exists();
+            $history = new InternalAuditTrial;
+            $history->InternalAudit_id = $id;
+            $history->activity_type = 'Guideline Attachment';
+            $history->previous = $previousAttachments2;
+            $history->current = $internalAudit->file_attachment_guideline;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if ($lastDocumentAuditTrail) {
+                $history->action_name = "Update";
+            } else {
+                $history->action_name = "New";
+            }
+            $history->save();
+        }
+
+
+        $previousAttachments3 = $lastDocument->Audit_file;
+        $areIniAttachmentsSame3 = $previousAttachments3 == $internalAudit->Audit_file;
+
+        if ($areIniAttachmentsSame3 != true) {
+            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+                ->where('activity_type', 'Audit Attachment')
+                ->exists();
+                    $history = new InternalAuditTrial;
+                    $history->InternalAudit_id = $id;
+                    $history->activity_type = 'Audit Attachment';
+                    $history->previous = $previousAttachments3;
+                    $history->current = $internalAudit->Audit_file;
+                    $history->comment = "Not Applicable";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Not Applicable";
+                    $history->change_from = $lastDocument->status;
+                    if ($lastDocumentAuditTrail) {
+                        $history->action_name = "Update";
+                    } else {
+                        $history->action_name = "New";
+                    }
+                    $history->save();
+                }
+
+
+                $previousAttachments4 = $lastDocument->report_file;
+                $areIniAttachmentsSame4 = $previousAttachments4 == $internalAudit->report_file;
+        
+                if ($areIniAttachmentsSame4 != true) {
+                    $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+                        ->where('activity_type', 'Report Attachment')
+                        ->exists();
+                            $history = new InternalAuditTrial;
+                            $history->InternalAudit_id = $id;
+                            $history->activity_type = 'Report Attachment';
+                            $history->previous = $previousAttachments4;
+                            $history->current = $internalAudit->report_file;
+                            $history->comment = "Not Applicable";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            if ($lastDocumentAuditTrail) {
+                                $history->action_name = "Update";
+                            } else {
+                                $history->action_name = "New";
+                            }
+                            $history->save();
+                        }
+
+
+                $previousAttachments5 = $lastDocument->myfile;
+                $areIniAttachmentsSame5 = $previousAttachments5 == $internalAudit->myfile;
+        
+                if ($areIniAttachmentsSame5 != true) {
+                    $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+                        ->where('activity_type', 'Audit Attachment')
+                        ->exists();
+                            $history = new InternalAuditTrial;
+                            $history->InternalAudit_id = $id;
+                            $history->activity_type = 'Audit Attachment';
+                            $history->previous = $previousAttachments5;
+                            $history->current = $internalAudit->myfile;
+                            $history->comment = "Not Applicable";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->change_to =   "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            if ($lastDocumentAuditTrail) {
+                                $history->action_name = "Update";
+                            } else {
+                                $history->action_name = "New";
+                            }
+                            $history->save();
+                        }
+
+
+                        $checklist1 = $lastDocument->checklists;
+                        $checklistdata1 = $checklist1 == $internalAudit->checklists;
+
+                        if ($checklistdata1 != true) {
+                            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+                                ->where('activity_type', 'Checklists')
+                                ->exists();
+                                    $history = new InternalAuditTrial;
+                                    $history->InternalAudit_id = $id;
+                                    $history->activity_type = 'Checklists';
+                                    $history->previous = $checklist1;
+                                    // $history->current = Helpers::getChecklistData($internalAudit->checklists);
+                                    $history->current = $internalAudit->checklists;
+                                    $history->comment = "Not Applicable";
+                                    $history->user_id = Auth::user()->id;
+                                    $history->user_name = Auth::user()->name;
+                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->origin_state = $lastDocument->status;
+                                    $history->change_to =   "Not Applicable";
+                                    $history->change_from = $lastDocument->status;
+                                    if ($lastDocumentAuditTrail) {
+                                        $history->action_name = "Update";
+                                    } else {
+                                        $history->action_name = "New";
+                                    }
+                                    $history->save();
+                                }
+        
+
+                                $reference_record = $lastDocument->refrence_record;
+                                $reference_record_data = $reference_record == $internalAudit->refrence_record;
+        
+                                if ($reference_record_data != true) {
+                                    $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+                                        ->where('activity_type', 'Reference Record')
+                                        ->exists();
+                                            $history = new InternalAuditTrial;
+                                            $history->InternalAudit_id = $id;
+                                            $history->activity_type = 'Reference Record';
+                                            $history->previous = $reference_record;
+                                            $history->current = $internalAudit->refrence_record;
+                                            $history->comment = "Not Applicable";
+                                            $history->user_id = Auth::user()->id;
+                                            $history->user_name = Auth::user()->name;
+                                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                            $history->origin_state = $lastDocument->status;
+                                            $history->change_to =   "Not Applicable";
+                                            $history->change_from = $lastDocument->status;
+                                            if ($lastDocumentAuditTrail) {
+                                                $history->action_name = "Update";
+                                            } else {
+                                                $history->action_name = "New";
+                                            }
+                                            $history->save();
+                                        }
+
+                                $Audit_team = $lastDocument->Audit_team;
+                                $Audit_team_data = $Audit_team == $internalAudit->Audit_team;
+        
+                                if ($Audit_team_data != true) {
+                                    $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+                                        ->where('activity_type', 'Audit Team')
+                                        ->exists();
+                                            $history = new InternalAuditTrial;
+                                            $history->InternalAudit_id = $id;
+                                            $history->activity_type = 'Audit Team';
+                                            $history->previous = $Audit_team;
+                                            $history->current = $internalAudit->Audit_team;
+                                            $history->comment = "Not Applicable";
+                                            $history->user_id = Auth::user()->id;
+                                            $history->user_name = Auth::user()->name;
+                                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                            $history->origin_state = $lastDocument->status;
+                                            $history->change_to =   "Not Applicable";
+                                            $history->change_from = $lastDocument->status;
+                                            if ($lastDocumentAuditTrail) {
+                                                $history->action_name = "Update";
+                                            } else {
+                                                $history->action_name = "New";
+                                            }
+                                            $history->save();
+                                        }
+
+
+                                        $Auditee = $lastDocument->Auditee;
+                                        $Auditee_data = $Auditee == $internalAudit->Auditee;
+                
+                                        if ($Auditee_data != true) {
+                                            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+                                                ->where('activity_type', 'Auditee')
+                                                ->exists();
+                                                    $history = new InternalAuditTrial;
+                                                    $history->InternalAudit_id = $id;
+                                                    $history->activity_type = 'Auditee';
+                                                    $history->previous = $Auditee;
+                                                    $history->current = $internalAudit->Auditee;
+                                                    $history->comment = "Not Applicable";
+                                                    $history->user_id = Auth::user()->id;
+                                                    $history->user_name = Auth::user()->name;
+                                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                                    $history->origin_state = $lastDocument->status;
+                                                    $history->change_to =   "Not Applicable";
+                                                    $history->change_from = $lastDocument->status;
+                                                    if ($lastDocumentAuditTrail) {
+                                                        $history->action_name = "Update";
+                                                    } else {
+                                                        $history->action_name = "New";
+                                                    }
+                                                    $history->save();
+                                                }
+        
+
+
         // if ($lastDocument->report_file != $internalAudit->report_file || !empty($request->report_file_comment)) {
 
         //     $history = new InternalAuditTrial();

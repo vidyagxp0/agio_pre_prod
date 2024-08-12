@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::table('internal_audits', function (Blueprint $table) {
             $table->text('checklists')->nullable();
+            $table->text('auditSheChecklist_comment_main')->nullable(); 
+            // $table->text('checklists')->nullable();
         });
     }
 

@@ -519,7 +519,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
                                                 <select name="initiator_Group"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                      id="initiator_group">
-
+                                                    <option value="">--Select--</option>
                                                     <option value="CQA"
                                                         @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>

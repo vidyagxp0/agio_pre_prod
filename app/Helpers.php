@@ -606,6 +606,8 @@ class Helpers
 
     }
 
+
+
     public static function getInitiatorGroupFullName($shortName)
     {
     {
@@ -847,4 +849,31 @@ class Helpers
         }
 
     }
+
+    public function getChecklistData(){
+        $checklists = [
+            '1' => 'Checklist - Tablet Dispensing & Granulation',
+            '2' => 'Checklist - Tablet Compression',
+            '3' => 'Checklist - Tablet Coating',
+            '4' => 'Checklist - Tablet/Capsule Packing',
+            '5' => 'Checklist - Capsule',
+            '6' => 'Checklist - Liquid/Ointment Dispensing & Manufacturing',
+            '7' => 'Checklist - Liquid/Ointment Packing',
+            '8' => 'Checklist - Quality Assurance',
+            '9' => 'Checklist - Engineering',
+            '10' => 'Checklist - Quality Control',
+            '11' => 'Checklist - Stores',
+            '12' => 'Checklist - Human Resource',
+            '13' => 'Checklist - Production (Injection Dispensing & Manufacturing)',
+            '14' => 'Checklist - Production (Injection Packing)',
+            '15' => 'Checklist - Production (Powder Manufacturing and Packing)',
+            '16' => 'Checklist - Analytical Research and Development',
+            '17' => 'Checklist - Formulation Research and Development',
+            '18' => 'Checklist - LL / P2P',
+        ];
+        
+        return $checklists;
+        
+    }
+
 }

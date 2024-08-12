@@ -178,7 +178,7 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Audit Program</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
             </div>
             <form action="{{ route('createAuditProgram') }}" method="post" enctype="multipart/form-data">
                 @csrf
