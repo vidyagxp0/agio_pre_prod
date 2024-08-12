@@ -6174,6 +6174,26 @@ class  FailureInvestigationController extends Controller
                 $failureInvestigation->cancelled_comment = $request->comments;
                 $failureInvestigation->update();
 
+
+                $history = new FailureInvestigationAuditTrail();
+                $history->failure_investigation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->action='Cancel';
+                $history->current = $failureInvestigation->cancelled_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Opened";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Cancelled';
+                $history->action_name = "Update";
+                $history->save();
+
+
+
                 $history = new FailureInvestigationHistory();
                 $history->type = "Failure Investigation";
                 $history->doc_id = $id;
@@ -6181,6 +6201,11 @@ class  FailureInvestigationController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $failureInvestigation->stage;
                 $history->status = "Opened";
+
+
+
+
+              
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -6214,6 +6239,25 @@ class  FailureInvestigationController extends Controller
                 $failureInvestigation->rejected_by = Auth::user()->name;
                 $failureInvestigation->rejected_on = Carbon::now()->format('d-M-Y');
                 $failureInvestigation->update();
+
+                $history = new FailureInvestigationAuditTrail();
+                $history->failure_investigation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->action='More Info Required';
+                $history->current = $failureInvestigation->rejected_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Opened";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Cancelled';
+                $history->action_name = "Update";
+                $history->save();
+
+
 
                 $history = new FailureInvestigationHistory();
                 $history->type = "Failure Investigation";
@@ -6253,22 +6297,26 @@ class  FailureInvestigationController extends Controller
                 $failureInvestigation->form_progress = 'hod';
                 $failureInvestigation->qa_more_info_required_by = Auth::user()->name;
                 $failureInvestigation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $failureInvestigation->update();
+                
 
                 $history = new FailureInvestigationAuditTrail();
                 $history->failure_investigation_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->action='More Information Required';
+                $history->action='More Info Required';
                 $history->current = $failureInvestigation->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = 'More Info Required';
+                $history->change_to =   "HOD Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'HOD Review';
+                $history->action_name = "Update";
                 $history->save();
-                $failureInvestigation->update();
-                
+
                 $history = new FailureInvestigationHistory();
                 $history->type = "Failure Investigation";
                 $history->doc_id = $id;
@@ -6379,6 +6427,8 @@ class  FailureInvestigationController extends Controller
 
                 $failureInvestigation->qa_more_info_required_by = Auth::user()->name;
                 $failureInvestigation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+
+                
                 $history = new FailureInvestigationAuditTrail();
                 $history->failure_investigation_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -6390,7 +6440,11 @@ class  FailureInvestigationController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = 'More Info Required';
+                $history->change_to =   "QA Final Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'QA Final Review';
+                $history->action_name = "Update";
+          
                 // dd();
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
@@ -7168,12 +7222,12 @@ class  FailureInvestigationController extends Controller
                     // Iterate over the columns and retrieve the values
                     foreach ($columns as $index => $column) {
                         $value = $cftUsers->$column;
-                        if($index == 0 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 0 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Quality_Control_by = Auth::user()->name;
                             $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
                            //by Ashish
 
-
+//----------------- Ashish  changes ----------------------------
 
                            $history = new FailureInvestigationAuditTrail();
                             $history->failure_investigation_id = $id;
@@ -7203,7 +7257,7 @@ class  FailureInvestigationController extends Controller
 
                             
                         }
-                        if($index == 1 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 1 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->QualityAssurance_by = Auth::user()->name;
                             $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d');
                          
@@ -7216,8 +7270,8 @@ class  FailureInvestigationController extends Controller
                             $history->current = $failureInvestigation->QualityAssurance_by;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
-                             $history->user_name = Auth::user()->name . ' - ('. auth()->id() . '';
-                           // $history->user_name = Auth::user()->name;
+                          //   $history->user_name = Auth::user()->name . ' - ('. auth()->id() . '';
+                            $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -7226,7 +7280,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 2 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 2 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Engineering_by = Auth::user()->name;
                             $updateCFT->Engineering_on = Carbon::now()->format('Y-m-d');
 
@@ -7248,7 +7302,7 @@ class  FailureInvestigationController extends Controller
                             $history->save();
 
                         }
-                        if($index == 3 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 3 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Environment_Health_Safety_by = Auth::user()->name;
                             $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
 
@@ -7270,7 +7324,7 @@ class  FailureInvestigationController extends Controller
                             $history->save();
                         
                         }
-                        if($index == 4 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 4 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Human_Resource_by = Auth::user()->name;
                             $updateCFT->Human_Resource_on = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -7290,7 +7344,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 5 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 5 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Information_Technology_by = Auth::user()->name;
                             $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -7310,7 +7364,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 6 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 6 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Other1_by = Auth::user()->name;
                             $updateCFT->Other1_on = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -7330,7 +7384,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 7 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 7 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Other2_by = Auth::user()->name;
                             $updateCFT->Other2_on = Carbon::now()->format('Y-m-d');
 
@@ -7351,7 +7405,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 8 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 8 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Other3_by = Auth::user()->name;
                             $updateCFT->Other3_on = Carbon::now()->format('Y-m-d');
 
@@ -7372,7 +7426,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 9 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 9 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Other4_by = Auth::user()->name;
                             $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
 
@@ -7393,7 +7447,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 10 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 10 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Other5_by = Auth::user()->name;
                             $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -7413,7 +7467,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 11 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 11 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->RA_by = Auth::user()->name;
                             $updateCFT->RA_on = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -7433,7 +7487,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 12 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 12 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Production_Table_By = Auth::user()->name;
                             $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -7453,7 +7507,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 13 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 13 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->ProductionLiquid_by = Auth::user()->name;
                             $updateCFT->ProductionLiquid_on = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -7473,7 +7527,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 14 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 14 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Production_Injection_By = Auth::user()->name;
                             $updateCFT->Production_Injection_On = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -7493,7 +7547,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 15 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 15 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Store_by = Auth::user()->name;
                             $updateCFT->Store_on = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -7513,7 +7567,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 16 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 16 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->ResearchDevelopment_by = Auth::user()->name;
                             $updateCFT->ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -7533,7 +7587,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 17 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 17 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Microbiology_by = Auth::user()->name;
                             $updateCFT->Microbiology_on = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -7553,7 +7607,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 18 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 18 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->RegulatoryAffair_by = Auth::user()->name;
                             $updateCFT->RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -7573,7 +7627,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 19 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 19 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->CorporateQualityAssurance_by = Auth::user()->name;
                             $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -7593,7 +7647,7 @@ class  FailureInvestigationController extends Controller
                             $history->action_name = "Update";
                             $history->save();
                         }
-                        if($index == 20 && $cftUsers->$column == Auth::user()->id){
+                        if($index == 20 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->ContractGiver_by = Auth::user()->name;
                             $updateCFT->ContractGiver_by = Carbon::now()->format('Y-m-d');
                             $history = new FailureInvestigationAuditTrail();
@@ -8260,7 +8314,7 @@ class  FailureInvestigationController extends Controller
     public function failureInvestigationAuditTrail($id, Request $request)
 {
     
-    $audit = FailureInvestigationAuditTrail::where('failure_investigation_id', $id)->orderByDesc('id')->paginate(5);
+    $audit = FailureInvestigationAuditTrail::where('failure_investigation_id', $id)->orderByDesc('id')->paginate(10);
     //return $audit;
     $today = Carbon::now()->format('d-m-y');
     $document = FailureInvestigation::where('id', $id)->first();
@@ -8340,14 +8394,21 @@ public function audit_trail_filter(Request $request, $id)
     
         switch ($request->typedata) {
             case 'cft_review':
-                $cft_fields = [
-                    'RA Review Required', 'RA Person', 'RA Assessment', 'RA Feedback', 'RA Review By', 'RA Review On', 'RA Review Attachments',
-                    'Quality Assurance Review Required', 'Quality Assurance Person', 'Quality Assurance Assessment', 'Quality Assurance Feedback', 'Quality Assurance Review By', 'Quality Assurance Review On', 'Quality Assurance Attachments',
-                    'Production Tablet Review Required', 'Production Tablet Person', 'Production Tablet Assessment', 'Production Tablet Feedback', 'Production Tablet Review By', 'Production Tablet On', 'Production Tablet Attachments',
-                    'Production Liquid Review Required', 'Production Liquid Person', 'Production Liquid Assessment', 'Production Liquid Feedback', 'Production Liquid Review By', 'Production Liquid Review On', 'Production Injection Review Required', 
-                    'Production Injection Person', 'Production Injection Assessment', 'Production Injection Feedback', 'Production Injection Review By', 'Production Injection On', 'Production Injection Attachments','Store Review Required','Store Person','Store Assessment','Store Feedback','Store Review By','Store Review On', 'Store Attachments','Quality Control Required','Quality Control Person','Quality Control Assessment','Quality Control Feeback','Quality Control By', 'Quality Control On','Quality Control Attachment','Research & Development Required','Research & Development Person', 'Research & Development Assessment','Research & Development Feedback','Research & Development By','Research & Development On','Research Development Attachments','Engineering Review Required','Engineering Person','Engineering Assessment','Engineering Feedback','Engineering Review By', 'Engineering Review On','Engineering Attachments','Human Resource Review Required','Human Resource Person','Human Resource Assessment','Human Resource Feedback','Human Resource Review By','Human Resource Review On','Human Resource Attachments','Microbiology Review Required','Microbiology Person', 'Microbiology Assessment','Microbiology Feedback','Microbiology Review By','Microbiology Review On','Microbiology Review On','Regulatory Affair Review Required', 'Regulatory Affair Person', 'Regulatory Affair Assessment','Regulatory Affair Feedback','Regulatory Affair Review By','Regulatory Affair Review On','Regulatory Affair Attachment','Corporate Quality Assurance Review Required','Corporate Quality Assurance Person','Corporate Quality Assurance Assessment','Corporate Quality Assurance Review By','Corporate Quality Assurance Review On','Corporate Quality  Attachments','Safety Review Required','Safety Person','Safety Assessment','Safety Feedback', 'Safety Review By','Safety Review On','Safety Attachments','Information Technology Review Required','Information Technology Person','Information Technology Assessment','Information Technology Feedback', 'Information Technology Review By','Information Technology Review On','Information Technology Attachments','Contract Giver Review Required', 'Contract Giver Person','Contract Giver Assessment','Contract Giver Feedback','Contract Giver Review By','Contract Giver Review On','Contract Giver Attachments','Other 1 Review Required','Other 1 Person','Other 1 Review Required','Other 1 Assessment','Other 1 Feedback','Other 1 Review By','Other 1 Review On',"Other's 1 Attachments ",'Other 2 Review Required','Other 2 Person','Other 2 Review Required','Other 2 Assessment','Other 2 Feedback','Other 2 Review By','Other 2 Review On',"Other's 2 Attachments",'Other 3 Review Required', 'Other 3 Person','Other 3 Review Required','Other 3 Assessment','Other 3 Feedback','Other 3 Review By','Other 3 Review On','Others 3 Attachments','Other 4 Review Required','Other 4 Person','Other 4 Review Required','Other 4 Assessment','Other 4 Feedback','Other 4 Review By','Other 4 Review On','Others 4 Attachments', 'Other 5 Review Required','Other 5 Person','Other 5 Review Required','Other 5 Assessment','Other 5 Feedback','Other 5 Review By','Other 5 Review On','Others 5 Attachments'
-                ];
-                $query->whereIn('activity_type', $cft_fields);
+                
+            //   $cft_fields = [
+            //         'RA Review Required', 'RA Person', 'RA Assessment', 'RA Feedback', 'RA Review By', 'RA Review On', 'RA Review Attachments',
+            //         'Quality Assurance Review Required', 'Quality Assurance Person', 'Quality Assurance Assessment', 'Quality Assurance Feedback', 'Quality Assurance Review By', 'Quality Assurance Review On', 'Quality Assurance Attachments',
+            //         'Production Tablet Review Required', 'Production Tablet Person', 'Production Tablet Assessment', 'Production Tablet Feedback', 'Production Tablet Review By', 'Production Tablet On', 'Production Tablet Attachments',
+            //         'Production Liquid Review Required', 'Production Liquid Person', 'Production Liquid Assessment', 'Production Liquid Feedback', 'Production Liquid Review By', 'Production Liquid Review On', 'Production Injection Review Required', 
+            //         'Production Injection Person', 'Production Injection Assessment', 'Production Injection Feedback', 'Production Injection Review By', 'Production Injection On', 'Production Injection Attachments','Store Review Required','Store Person','Store Assessment','Store Feedback','Store Review By','Store Review On', 'Store Attachments','Quality Control Required','Quality Control Person','Quality Control Assessment','Quality Control Feeback','Quality Control By', 'Quality Control On','Quality Control Attachment','Research & Development Required','Research & Development Person', 'Research & Development Assessment','Research & Development Feedback','Research & Development By','Research & Development On','Research Development Attachments','Engineering Review Required','Engineering Person','Engineering Assessment','Engineering Feedback','Engineering Review By', 'Engineering Review On','Engineering Attachments','Human Resource Review Required','Human Resource Person','Human Resource Assessment','Human Resource Feedback','Human Resource Review By','Human Resource Review On','Human Resource Attachments','Microbiology Review Required','Microbiology Person', 'Microbiology Assessment','Microbiology Feedback','Microbiology Review By','Microbiology Review On','Microbiology Review On','Regulatory Affair Review Required', 'Regulatory Affair Person', 'Regulatory Affair Assessment','Regulatory Affair Feedback','Regulatory Affair Review By','Regulatory Affair Review On','Regulatory Affair Attachment','Corporate Quality Assurance Review Required','Corporate Quality Assurance Person','Corporate Quality Assurance Assessment','Corporate Quality Assurance Review By','Corporate Quality Assurance Review On','Corporate Quality  Attachments','Safety Review Required','Safety Person','Safety Assessment','Safety Feedback', 'Safety Review By','Safety Review On','Safety Attachments','Information Technology Review Required','Information Technology Person','Information Technology Assessment','Information Technology Feedback', 'Information Technology Review By','Information Technology Review On','Information Technology Attachments','Contract Giver Review Required', 'Contract Giver Person','Contract Giver Assessment','Contract Giver Feedback','Contract Giver Review By','Contract Giver Review On','Contract Giver Attachments','Other 1 Review Required','Other 1 Person','Other 1 Review Required','Other 1 Assessment','Other 1 Feedback','Other 1 Review By','Other 1 Review On',"Other's 1 Attachments ",'Other 2 Review Required','Other 2 Person','Other 2 Review Required','Other 2 Assessment','Other 2 Feedback','Other 2 Review By','Other 2 Review On',"Other's 2 Attachments",'Other 3 Review Required', 'Other 3 Person','Other 3 Review Required','Other 3 Assessment','Other 3 Feedback','Other 3 Review By','Other 3 Review On','Others 3 Attachments','Other 4 Review Required','Other 4 Person','Other 4 Review Required','Other 4 Assessment','Other 4 Feedback','Other 4 Review By','Other 4 Review On','Others 4 Attachments', 'Other 5 Review Required','Other 5 Person','Other 5 Review Required','Other 5 Assessment','Other 5 Feedback','Other 5 Review By','Other 5 Review On','Others 5 Attachments'
+            //      ];
+
+
+                //  $cft_fields = ['RA Person','Quality Assurance Person','Quality Assurance Person','Production Tablet Person','Production Liquid Person', 'Production Injection Person','Store Person','Quality Control Person','Research & Development Person','Engineering Person','Human Resource Person','Microbiology Person','Regulatory Affair Person','Corporate Quality Assurance Person','Safety Person','Information Technology Person','Contract Giver Person','Other 1 Person','Other 2 Person','Other 3 Person','Other 4 Person',];
+
+                $cft_fields =['CFT Review Complete'];
+
+                $query->where('action', $cft_fields);
                 break;
 
             case 'stage':
@@ -8358,7 +8419,7 @@ public function audit_trail_filter(Request $request, $id)
                 $user_action = [
                     'submit', 'HOD Review Complete', 'QA Initial Review Complete',
                     'CFT Review Complete', 'QA Final Review Complete', 'Approved',
-                    'Initiator Updated Complete', 'More Information Required','',
+                    'Initiator Updated Complete', 'More Information Required','More Info Required','Cancel',
                 ];
                 $query->whereIn('action', $user_action);
                 break;

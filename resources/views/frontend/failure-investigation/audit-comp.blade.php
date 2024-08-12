@@ -1,7 +1,9 @@
 @forelse($audit as $audits => $dataDemo)
                             <tr>
-                                <td>{{ $dataDemo && !isset($filter_request) ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}</td>
+                              <td>{{ $dataDemo && !isset($filter_request) ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}</td>
                                 <td>
+
+                                    {{--  <td>{{ $dataDemo && !isset($filter_request) ? $loop->iteration : 'Not Applicable' }}</td>  --}}
                                     <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
                                 </td>
                                 <td>
