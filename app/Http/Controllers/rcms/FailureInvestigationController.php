@@ -2983,7 +2983,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->RA_Review) || $lastCft->RA_Review === '') {
                 $history->action_name = "New";
             } else {
@@ -3003,7 +3003,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->RA_person) || $lastCft->RA_person === '') {
                 $history->action_name = "New";
             } else {
@@ -3023,7 +3023,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->RA_assessment) || $lastCft->RA_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -3043,7 +3043,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->RA_feedback) || $lastCft->RA_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -3063,7 +3063,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->RA_by) || $lastCft->RA_by === '') {
                 $history->action_name = "New";
             } else {
@@ -3083,7 +3083,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->RA_on) || $lastCft->RA_on === '') {
                 $history->action_name = "New";
             } else {
@@ -3108,7 +3108,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to = "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->RA_attachment) || $lastCft->RA_attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -3132,7 +3132,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Quality_Assurance_Review) || $lastCft->Quality_Assurance_Review === '') {
                 $history->action_name = "New";
             } else {
@@ -3152,7 +3152,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->QualityAssurance_person) || $lastCft->QualityAssurance_person === '') {
                 $history->action_name = "New";
             } else {
@@ -3172,7 +3172,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->QualityAssurance_assessment) || $lastCft->QualityAssurance_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -3192,7 +3192,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->QualityAssurance_feedback) || $lastCft->QualityAssurance_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -3212,7 +3212,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->QualityAssurance_by) || $lastCft->QualityAssurance_by === '') {
                 $history->action_name = "New";
             } else {
@@ -3232,7 +3232,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->QualityAssurance_on) || $lastCft->QualityAssurance_on === '') {
                 $history->action_name = "New";
             } else {
@@ -3257,7 +3257,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Quality_Assurance_attachment) || $lastCft->Quality_Assurance_attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -3279,7 +3279,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Production_Table_Review) || $lastCft->Production_Table_Review === '') {
                 $history->action_name = "New";
             } else {
@@ -3299,7 +3299,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Production_Table_Person) || $lastCft->Production_Table_Person === '') {
                 $history->action_name = "New";
             } else {
@@ -3319,7 +3319,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Production_Table_Assessment) || $lastCft->Production_Table_Assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -3339,7 +3339,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Production_Table_Feedback) || $lastCft->Production_Table_Feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -3359,7 +3359,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Production_Table_By) || $lastCft->Production_Table_By === '') {
                 $history->action_name = "New";
             } else {
@@ -3379,7 +3379,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Production_Table_On) || $lastCft->Production_Table_On === '') {
                 $history->action_name = "New";
             } else {
@@ -3426,7 +3426,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->ProductionLiquid_Review) || $lastCft->ProductionLiquid_Review === '') {
                 $history->action_name = "New";
             } else {
@@ -3446,7 +3446,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->ProductionLiquid_person) || $lastCft->ProductionLiquid_person === '') {
                 $history->action_name = "New";
             } else {
@@ -3466,7 +3466,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->ProductionLiquid_assessment) || $lastCft->ProductionLiquid_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -3486,7 +3486,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->ProductionLiquid_feedback) || $lastCft->ProductionLiquid_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -3506,7 +3506,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->ProductionLiquid_by) || $lastCft->ProductionLiquid_by === '') {
                 $history->action_name = "New";
             } else {
@@ -3526,7 +3526,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->ProductionLiquid_on) || $lastCft->ProductionLiquid_on === '') {
                 $history->action_name = "New";
             } else {
@@ -3552,7 +3552,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->ProductionLiquid_attachment) || $lastCft->ProductionLiquid_attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -3573,7 +3573,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Production_Injection_Review) || $lastCft->Production_Injection_Review === '') {
                 $history->action_name = "New";
             } else {
@@ -3593,7 +3593,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Production_Injection_Person) || $lastCft->Production_Injection_Person === '') {
                 $history->action_name = "New";
             } else {
@@ -3613,7 +3613,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Production_Injection_Assessment) || $lastCft->Production_Injection_Assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -3633,7 +3633,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Production_Injection_Feedback) || $lastCft->Production_Injection_Feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -3653,7 +3653,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Production_Injection_By) || $lastCft->Production_Injection_By === '') {
                 $history->action_name = "New";
             } else {
@@ -3673,7 +3673,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Production_Injection_On) || $lastCft->Production_Injection_On === '') {
                 $history->action_name = "New";
             } else {
@@ -3700,7 +3700,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Production_Injection_Attachment) || $lastCft->Production_Injection_Attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -3722,7 +3722,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Store_Review) || $lastCft->Store_Review === '') {
                 $history->action_name = "New";
             } else {
@@ -3742,7 +3742,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Store_person) || $lastCft->Store_person === '') {
                 $history->action_name = "New";
             } else {
@@ -3762,7 +3762,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Store_assessment) || $lastCft->Store_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -3782,7 +3782,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Store_feedback) || $lastCft->Store_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -3802,7 +3802,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Store_by) || $lastCft->Store_by === '') {
                 $history->action_name = "New";
             } else {
@@ -3822,7 +3822,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Store_on) || $lastCft->Store_on === '') {
                 $history->action_name = "New";
             } else {
@@ -3847,7 +3847,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Store_attachment) || $lastCft->Store_attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -3869,7 +3869,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Quality_review) || $lastCft->Quality_review === '') {
                 $history->action_name = "New";
             } else {
@@ -3889,7 +3889,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Quality_Control_Person) || $lastCft->Quality_Control_Person === '') {
                 $history->action_name = "New";
             } else {
@@ -3909,7 +3909,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Quality_Control_assessment) || $lastCft->Quality_Control_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -3929,7 +3929,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Quality_Control_feedback) || $lastCft->Quality_Control_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -3949,7 +3949,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Quality_Control_by) || $lastCft->Quality_Control_by === '') {
                 $history->action_name = "New";
             } else {
@@ -3969,7 +3969,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
           if (is_null($lastCft->Quality_Control_on) || $lastCft->Quality_Control_on === '') {
                 $history->action_name = "New";
             } else {
@@ -3996,7 +3996,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Quality_Control_attachment) || $lastCft->Quality_Control_attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -4018,7 +4018,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->ResearchDevelopment_Review) || $lastCft->ResearchDevelopment_Review === '') {
                 $history->action_name = "New";
             } else {
@@ -4038,7 +4038,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from =  $lastFailureInvestigation->status;;
         if (is_null($lastCft->ResearchDevelopment_person) || $lastCft->ResearchDevelopment_person === '') {
                 $history->action_name = "New";
             } else {
@@ -4058,7 +4058,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->ResearchDevelopment_assessment) || $lastCft->ResearchDevelopment_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -4078,7 +4078,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->ResearchDevelopment_feedback) || $lastCft->ResearchDevelopment_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -4098,7 +4098,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->ResearchDevelopment_by) || $lastCft->ResearchDevelopment_by === '') {
                 $history->action_name = "New";
             } else {
@@ -4118,7 +4118,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->ResearchDevelopment_on) || $lastCft->ResearchDevelopment_on === '') {
                 $history->action_name = "New";
             } else {
@@ -4143,7 +4143,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->ResearchDevelopment_attachment) || $lastCft->ResearchDevelopment_attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -4165,7 +4165,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Engineering_review) || $lastCft->Engineering_review === '') {
                 $history->action_name = "New";
             } else {
@@ -4185,7 +4185,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Engineering_person) || $lastCft->Engineering_person === '') {
                 $history->action_name = "New";
             } else {
@@ -4205,7 +4205,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Engineering_assessment) || $lastCft->Engineering_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -4225,7 +4225,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Engineering_feedback) || $lastCft->Engineering_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -4245,7 +4245,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Engineering_by) || $lastCft->Engineering_by === '') {
                 $history->action_name = "New";
             } else {
@@ -4265,7 +4265,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Engineering_on) || $lastCft->Engineering_on === '') {
                 $history->action_name = "New";
             } else {
@@ -4290,7 +4290,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Engineering_attachment) || $lastCft->Engineering_attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -4312,7 +4312,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Human_Resource_review) || $lastCft->Human_Resource_review === '') {
                 $history->action_name = "New";
             } else {
@@ -4332,7 +4332,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Human_Resource_person) || $lastCft->Human_Resource_person === '') {
                 $history->action_name = "New";
             } else {
@@ -4352,7 +4352,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Human_Resource_assessment) || $lastCft->Human_Resource_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -4372,7 +4372,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Human_Resource_feedback) || $lastCft->Human_Resource_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -4392,7 +4392,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Human_Resource_by) || $lastCft->Human_Resource_by === '') {
                 $history->action_name = "New";
             } else {
@@ -4412,7 +4412,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Human_Resource_on) || $lastCft->Human_Resource_on === '') {
                 $history->action_name = "New";
             } else {
@@ -4437,7 +4437,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Human_Resource_attachment) || $lastCft->Human_Resource_attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -4459,7 +4459,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Microbiology_Review) || $lastCft->Microbiology_Review === '') {
                 $history->action_name = "New";
             } else {
@@ -4479,7 +4479,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Microbiology_person) || $lastCft->Microbiology_person === '') {
                 $history->action_name = "New";
             } else {
@@ -4499,7 +4499,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Microbiology_assessment) || $lastCft->Microbiology_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -4519,7 +4519,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Microbiology_feedback) || $lastCft->Microbiology_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -4539,7 +4539,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Microbiology_by) || $lastCft->Microbiology_by === '') {
                 $history->action_name = "New";
             } else {
@@ -4559,7 +4559,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Microbiology_on) || $lastCft->Microbiology_on === '') {
                 $history->action_name = "New";
             } else {
@@ -4583,7 +4583,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Microbiology_attachment) || $lastCft->Microbiology_attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -4605,7 +4605,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->RegulatoryAffair_Review) || $lastCft->RegulatoryAffair_Review === '') {
                 $history->action_name = "New";
             } else {
@@ -4625,7 +4625,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->RegulatoryAffair_person) || $lastCft->RegulatoryAffair_person === '') {
                 $history->action_name = "New";
             } else {
@@ -4645,7 +4645,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->RegulatoryAffair_assessment) || $lastCft->RegulatoryAffair_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -4665,7 +4665,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->RegulatoryAffair_feedback) || $lastCft->RegulatoryAffair_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -4685,7 +4685,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->RegulatoryAffair_by) || $lastCft->RegulatoryAffair_by === '') {
                 $history->action_name = "New";
             } else {
@@ -4705,7 +4705,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->RegulatoryAffair_on) || $lastCft->RegulatoryAffair_on === '') {
                 $history->action_name = "New";
             } else {
@@ -4729,7 +4729,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->RegulatoryAffair_attachment) || $lastCft->RegulatoryAffair_attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -4751,7 +4751,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->CorporateQualityAssurance_Review) || $lastCft->CorporateQualityAssurance_Review === '') {
                 $history->action_name = "New";
             } else {
@@ -4771,7 +4771,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->CorporateQualityAssurance_person) || $lastCft->CorporateQualityAssurance_person === '') {
                 $history->action_name = "New";
             } else {
@@ -4791,7 +4791,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->CorporateQualityAssurance_assessment) || $lastCft->CorporateQualityAssurance_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -4811,7 +4811,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->CorporateQualityAssurance_feedback) || $lastCft->CorporateQualityAssurance_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -4831,7 +4831,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->CorporateQualityAssurance_by) || $lastCft->CorporateQualityAssurance_by === '') {
                 $history->action_name = "New";
             } else {
@@ -4851,7 +4851,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->CorporateQualityAssurance_on) || $lastCft->CorporateQualityAssurance_on === '') {
                 $history->action_name = "New";
             } else {
@@ -4875,7 +4875,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->CorporateQualityAssurance_attachment) || $lastCft->CorporateQualityAssurance_attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -4897,7 +4897,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Environment_Health_review) || $lastCft->Environment_Health_review === '') {
                 $history->action_name = "New";
             } else {
@@ -4917,7 +4917,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Environment_Health_Safety_person) || $lastCft->Environment_Health_Safety_person === '') {
                 $history->action_name = "New";
             } else {
@@ -4937,7 +4937,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Health_Safety_assessment) || $lastCft->Health_Safety_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -4957,7 +4957,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Health_Safety_feedback) || $lastCft->Health_Safety_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -4977,7 +4977,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Environment_Health_Safety_by) || $lastCft->Environment_Health_Safety_by === '') {
                 $history->action_name = "New";
             } else {
@@ -4997,7 +4997,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Environment_Health_Safety_on) || $lastCft->Environment_Health_Safety_on === '') {
                 $history->action_name = "New";
             } else {
@@ -5021,7 +5021,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Environment_Health_Safety_attachment) || $lastCft->Environment_Health_Safety_attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -5043,7 +5043,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Information_Technology_review) || $lastCft->Information_Technology_review === '') {
                 $history->action_name = "New";
             } else {
@@ -5063,7 +5063,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Information_Technology_person) || $lastCft->Information_Technology_person === '') {
                 $history->action_name = "New";
             } else {
@@ -5083,7 +5083,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Information_Technology_assessment) || $lastCft->Information_Technology_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -5103,7 +5103,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Information_Technology_feedback) || $lastCft->Information_Technology_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -5123,7 +5123,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Information_Technology_by) || $lastCft->Information_Technology_by === '') {
                 $history->action_name = "New";
             } else {
@@ -5143,7 +5143,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Information_Technology_on) || $lastCft->Information_Technology_on === '') {
                 $history->action_name = "New";
             } else {
@@ -5167,7 +5167,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->Information_Technology_attachment) || $lastCft->Information_Technology_attachment === '') {
                 $history->action_name = "New";
             } else {
@@ -5188,7 +5188,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->ContractGiver_Review) || $lastCft->ContractGiver_Review === '') {
                 $history->action_name = "New";
             } else {
@@ -5208,7 +5208,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->ContractGiver_person) || $lastCft->ContractGiver_person === '') {
                 $history->action_name = "New";
             } else {
@@ -5228,7 +5228,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->ContractGiver_assessment) || $lastCft->ContractGiver_assessment === '') {
                 $history->action_name = "New";
             } else {
@@ -5248,7 +5248,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->ContractGiver_feedback) || $lastCft->ContractGiver_feedback === '') {
                 $history->action_name = "New";
             } else {
@@ -5268,7 +5268,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->ContractGiver_by) || $lastCft->ContractGiver_by === '') {
                 $history->action_name = "New";
             } else {
@@ -5288,7 +5288,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->ContractGiver_on) || $lastCft->ContractGiver_on === '') {
                 $history->action_name = "New";
             } else {
@@ -5312,7 +5312,7 @@ class  FailureInvestigationController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastCft->status;
+            $history->change_from = $lastFailureInvestigation->status;
         if (is_null($lastCft->ContractGiver_attachment) || $lastCft->ContractGiver_attachment === '') {
                 $history->action_name = "New";
             } else {

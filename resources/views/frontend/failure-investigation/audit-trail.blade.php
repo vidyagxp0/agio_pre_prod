@@ -415,7 +415,7 @@
                     color: #fff !important;
                 }
             </style>
-            {{--  {{ $audit->links() }}  --}}
+            {{ $audit->links() }}
         </div>
 
         </body>
