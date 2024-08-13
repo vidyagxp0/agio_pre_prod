@@ -2847,7 +2847,7 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
     $cc = MarketComplaint::find($id);
     $cft = [];
     $parent_id = $id;
-    $parent_type = "Capa";
+    $parent_type = "Market Complaint";
     $old_records = Capa::select('id', 'division_id', 'record')->get();
     $record = ((RecordNumber::first()->value('counter')) + 1);
     $record = str_pad($record, 4, '0', STR_PAD_LEFT);
@@ -2887,7 +2887,7 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         $cc = MarketComplaint::find($id);
         $cft = [];
         
-        $parent_type = "Capa";
+        $parent_type = "Market Complaint";
         $old_records = Capa::select('id', 'division_id', 'record')->get();
         // $record = ((RecordNumber::first()->value('counter')) + 1);
         $record =$cc->record;
@@ -2903,7 +2903,8 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
        
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('record', 'due_date', 'parent_id','old_records', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
+            $record_number = $record;
+            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id','old_records', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
 
         }
         if ($request->revision == "Action-Item") {

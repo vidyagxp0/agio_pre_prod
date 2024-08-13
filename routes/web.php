@@ -24,6 +24,7 @@ use App\Http\Controllers\DocumentContentController;
 use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\ResamplingController;
 // use App\Http\Controllers\tms\JobTrainingController;
 use App\Http\Controllers\InductionTrainingcontroller;
 use App\Http\Controllers\OOSMicroController;
@@ -558,7 +559,6 @@ Route::get('errata_new', [ErrataController::class, 'index'])->name('errata_new')
 
 // ----------------------Stages----------------------------------------
 
-
 // extensionchild========================
 // Route::view('extension_new', 'frontend.extension.extension_new');
 // Route::view('extension_view', 'frontend.extension.extension_view');
@@ -579,3 +579,17 @@ Route::get('trainer_qualification', [TrainerController::class, 'index'])->name('
 
 //=====================================================================
 // >>>>>>> B-backup
+
+Route::post('RCAChildRoot/{id}', [RootCauseController::class, 'RCAChildRoot'])->name('R_C_A_root_child');
+
+// =====================resampling========
+Route::get('resampling-action-task-create', [ResamplingController::class, 'showAction']);
+Route::get('resampling_view/{id}', [ResamplingController::class, 'show']);
+Route::post('resampling' , [ResamplingController::class,'store'])->name('resampling_create');
+Route::post('resampling-actionView/{id}' , [ResamplingController::class,'update'])->name('resampling-update');
+Route::post('resapling-stage-cancel/{id}', [ResamplingController::class, 'resamplingStageCancel'])->name('resapling-stage-cancel');
+Route::get('resampling-audittrialshow/{id}', [ResamplingController::class, 'resamplingAuditTrialShow'])->name('resampling-audittrialshow');
+Route::post('send-resampling/{id}', [ResamplingController::class, 'stageChange'])->name('send-resampling');
+Route::post('moreinfoState_resampling/{id}', [ResamplingController::class, 'resamplingmoreinfo'])->name('moreinfoState_resampling');
+
+// ============================================

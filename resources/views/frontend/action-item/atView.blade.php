@@ -27,7 +27,11 @@
     .calenderauditee input::-webkit-calendar-picker-indicator {
         width: 100%;
     }
-
+.new-moreinfo{
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
     </style>
     
     @php
@@ -63,7 +67,7 @@
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
-{{-- {{ dd($data->stage);}} --}}
+                        {{-- {{ dd($data->stage);}} --}}
                        <a class="button_theme1 text-white"
                                 href="{{ url('rcms/action-item-audittrialshow', $data->id) }}"> Audit Trail </a> 
                         @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -74,30 +78,27 @@
                                 Cancel
                             </button></a>
                             @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                           <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                               HOD Review Complete
-                            </button></a>
-                           <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                           <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button></a>
-                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            {{-- <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
-                            </button></a>
-                            <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
-                            </button></a>
-                            @elseif($data->stage == 3 && (in_array(8, $userRoleIds) || in_array(18, $userRoleIds)))
-                           <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            </button></a> --}}
+                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledgement Complete
                             </button></a>
-                            <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            @elseif($data->stage == 3 && (in_array(8, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                 Complete
+                            </button></a>
+                            <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button></a>
                             @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Complete
+                           Varification  Complete
                             </button></a>
-                            <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
                             </button></a>
                         {{-- @elseif($data->stage == 2 && (in_array(8, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -123,22 +124,26 @@
                             @else
                                 <div class="">Opened</div>
                             @endif
-                            @if ($data->stage >= 2)
+                            {{-- @if ($data->stage >= 2)
                                 <div class="active">HOD Review</div>
                             @else
                                 <div class="">HOD Review</div>
-                            @endif
-
-                            @if ($data->stage >= 3)
+                            @endif --}}
+                            @if ($data->stage >= 2)
                                 <div class="active">Acknowledgement</div>
                             @else
                                 <div class="">Acknowledgement</div>
-                            @endif
-                            @if ($data->stage >= 4)
+                            @endif 
+                            @if ($data->stage >= 3)
                             <div class="active">work Completion</div>
                         @else
                             <div class="">Work Completion </div>
                         @endif
+                        @if ($data->stage >= 4)
+                        <div class="active">QA Verification</div>
+                    @else
+                        <div class="">QA Verification </div>
+                    @endif
                         @if ($data->stage >= 5)
                         <div class="bg-danger">Closed - Done</div>
                     @else
@@ -151,7 +156,6 @@
         </div>
         <div id="change-control-fields">
             <div class="container-fluid">
-
                 <!-- Tab links -->
                 <div class="cctab">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
@@ -160,7 +164,6 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Action Approval</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
                 </div>
-
                 <form action="{{ route('actionItem.update', $data->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -215,7 +218,6 @@
                                                 value="{{ Helpers::getdateFormat($data->intiation_date) }}">
                                         </div>
                                     </div> --}}
-
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Date Due"><b>Date of Initiation</b></label>
@@ -238,7 +240,6 @@
                                                         value="{{ $value->id }}">{{ $value->name }}</option>
                                                 @endforeach
                                             </select>
-
                                         </div>
                                     </div>
                                     {{-- <div class="col-md-6 new-date-data-field">
@@ -249,7 +250,6 @@
                                                 <div class="calenderauditee">
                                                     <!-- Display the formatted date in a readonly input -->
                                                     <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                                   
                                                     <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                                 </div>
                                         </div>
@@ -271,7 +271,6 @@
                                             <div class="calenderauditee">
                                                 <!-- Display the formatted date in a readonly input -->
                                                 <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                               
                                                 <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                             </div>
                                         </div>
@@ -302,8 +301,8 @@
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
-                                        
-                                        <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 5 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                        <input name="short_description"   id="docname" type="text" value="{{ $data->short_description }}"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 5 ? "disabled" : "" }} type="text">
+                                      
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
                                 </div>
@@ -367,7 +366,7 @@
                                         </div>
                                     </div> --}}
 
-                                    <div class="col-12">
+                                    <div class="col-12" >
                                         <div class="group-input">
                                             <label for="description">Description</label>
                                             <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="description">{{ $data->description }}</textarea>
@@ -1090,6 +1089,55 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="more-info-required-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <form action="{{ url('rcms/moreinfoState_actionitem', $data->id) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="new-moreinfo" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="new-moreinfo" type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment <span class="text-danger">*</span></label>
+                            <input class="new-moreinfo" type="comment" name="comment" required>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <!-- <div class="modal-footer">
+                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                            <button>Close</button>
+                        </div> -->
+                    <div class="modal-footer">
+                        <button type="submit">
+                            Submit
+                        </button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>

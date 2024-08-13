@@ -34,6 +34,7 @@ use App\Http\Controllers\tms\JobTrainingController;
 use App\Http\Controllers\tms\TrainerController;
 use App\Models\EffectivenessCheck;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ResamplingController;
 
 
 // ============================================
@@ -296,6 +297,9 @@ Route::group(['prefix' => 'rcms'], function () {
            // Route::post('failure-investigation/{id}/audit-trail', 'FailureInvestigationController@failureInvestigationAuditTrail')->name('failureInvestigation.auditTrail');
 
             /********************* Fallure Investigation Routes Ends *******************/
+                    //  ========== Resampling======================
+            Route::get('resamplingSingleReport/{id}', [ResamplingController::class, 'singleReport'])->name('resamplingSingleReport');
+            Route::get('resamplingAuditReport/{id}', [ResamplingController::class, 'auditReport'])->name('resamplingAuditReport');
 
             // =====================extesnion new report and audit trail ===============
             Route::get('singleReportNew/{id}', [ExtensionNewController::class, 'singleReport'])->name('singleReportNew');
@@ -425,6 +429,11 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('launch-extension-investigation/{id}', [IncidentController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
 
             /********************* Incident Routes Ends *******************/
+            Route::post('send-qa-approval/{id}', [CCController::class, 'sentToQAHeadApproval'])->name('send-qa-approval');
+            Route::post('send-post-implementation/{id}', [CCController::class, 'sentoPostImplementation'])->name('send-post-implementation');
+            Route::post('moreinfoState_actionitem/{id}', [ActionItemController::class, 'actionmoreinfo']);
+            Route::post('LabIncidentStateCancel/{id}', [LabIncidentController::class, 'LabIncidentStateCancel'])->name('StageChangeLabcancel');
+
         }
     );
 });

@@ -31,7 +31,8 @@ class RoleGroupSeeder extends Seeder
             'External Audit' => ['Initiator', 'Audit Manager', 'Lead Auditor', 'Lead Auditee', 'View Only', 'FP'],
             'Management Review' => ['Initiator', 'Responsible Person', 'View Only', 'FP'],
             'Risk Assessment' => ['Initiator', 'HOD/Designee', 'Work Group (Risk Management Head)', 'HOD/Designee', 'QA', 'View Only', 'FP'],
-            'Action Item' => ['Initiator', 'Action Owner', 'View Only', 'FP'],
+            'Action Item' => ['Initiator', 'Action Owner', 'QA', 'View Only', 'FP'],
+            'Resampling' => ['Initiator', 'Action Owner', 'QA', 'View Only', 'FP'],
             'Extension' => ['Initiator', 'Head QA/Designee', 'View Only', 'FP'],
             'Observation' => ['Initiator', 'Lead Auditor', 'Lead Auditee', 'QA', 'View Only', 'FP'],
             'OOS Chemical' => ['Initiator', 'Lab Supervisor', 'QC Head/Designee', 'Lab Supervisor', 'QA', 'Lab Supervisor', 'QA', 'Head QA/Designee', 'View Only', 'FP'],
@@ -113,18 +114,11 @@ class RoleGroupSeeder extends Seeder
             "Corporate Quality Assurance",
             "Safety",
             "Contract Giver",
-            // "Production",
-            // "Warehouse",
             "Quality Control",
             "Quality Assurance",
             "Engineering",
-            // "Analytical Development Laboratory",
-            // "Process Development Laboratory / Kilo Lab",
-            // "Technology Transfer / Design",
-            // "Environment, Health & Safety",
             "Human Resource & Administration",
             "Information Technology",
-            // "Project Management"
         ];
 
         $processes2 = [
