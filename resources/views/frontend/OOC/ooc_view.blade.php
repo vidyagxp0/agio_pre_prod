@@ -266,18 +266,18 @@ $users = DB::table('users')->get();
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                     Cancel
                 </button> 
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                     Child
                 </button>
             @elseif($ooc->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             
             <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                CQA/QA Head Primary Review Complete
+                QA Head Primary Review Complete
             </button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                  More Info Required
             </button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                     Child
                 </button>
                
@@ -322,7 +322,7 @@ $users = DB::table('users')->get();
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
                 </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                     Child
                 </button>
                 <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
@@ -341,7 +341,7 @@ $users = DB::table('users')->get();
                     Request More Info
                 </button>
 
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                     Child
                 </button> 
                 
@@ -378,21 +378,21 @@ $users = DB::table('users')->get();
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
                 </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                     Child
                 </button>
                
                 @elseif($ooc->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                    P-IB Assignable Cause Found
+                    Approved
                 </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
                     P-IB Assignable Cause Not Found
-                </button>
+                </button> -->
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
                 </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                     Child
                 </button>
 
@@ -524,9 +524,9 @@ $users = DB::table('users')->get();
             @endif
 
             @if ($ooc->stage >= 3)
-                <div class="active">CQA/QA Head Primary Review</div>
+                <div class="active">QA Head Primary Review</div>
             @else
-                <div class="">CQA/QA Head Primary Review</div>
+                <div class="">QA Head Primary Review</div>
             @endif
 
             @if ($ooc->stage >= 4)
@@ -579,20 +579,20 @@ $users = DB::table('users')->get();
             @endif
             
             @if ($ooc->stage >= 13)
-                <div class="active">P-IB CQAH/QAH Review</div>
+                <div class="active">P-IB QAH Review</div>
             @else
-                <div class="">P-IB CQAH/QAH Review</div>
+                <div class="">P-IB QAH Review</div>
             @endif
             
-            @if ($ooc->stage < 15)
+
                 @if ($ooc->stage >= 14)
                     <div class="bg-danger">Closed Done</div>
                 @else
                     <div class="">Closed Done</div>
                 @endif
-            @endif
+            
 
-            @if ($ooc->stage >= 15)
+            <!-- @if ($ooc->stage >= 15)
                 <div class="active">Under Phase-II A Investigation</div>
             @else
                 <div class="">Under Phase-II A Investigation</div>
@@ -652,7 +652,7 @@ $users = DB::table('users')->get();
                 <div class="bg-danger">Closed - Done</div>
             @else
                 <div class="">Closed - Done</div>
-            @endif
+            @endif -->
         </div>
     @endif
 </div>
@@ -846,31 +846,15 @@ $users = DB::table('users')->get();
                             RCA
                         </label>
                     </div>
-                    <div class="group-input">
-                        <label for="capa-child">
-                            <input type="radio" name="revision" id="capa-child" value="Resampling">
-                            Resampling
-                        </label>
-                    </div>
+
                     <div class="group-input">
                         <label for="root-item">
                             <input type="radio" name="revision" id="root-item" value="Extension">
                             Extension
                         </label>
                     </div>
-                    {{-- <div class="group-input">
-                        <label for="root-item">
-                         <input type="radio" name="revision" id="root-item" value="effectiveness-check">
-                            Effectiveness check
-                        </label>
-                    </div> --}}
-                </div>
 
-                <!-- Modal footer -->
-                <!-- <div class="modal-footer">
-                    <button type="button" data-bs-dismiss="modal">Close</button>
-                    <button type="submit">Continue</button>
-                </div> -->
+                </div>
                 <div class="modal-footer">
                           <button type="submit">Submit</button>
                          <button type="button" data-bs-dismiss="modal">Close</button>                         
@@ -902,12 +886,71 @@ $users = DB::table('users')->get();
                             Extension
                         </label>
                     </div>
-                    <!-- <div class="group-input">
+                    <div class="group-input">
                         <label for="root-item">
-                            <input type="radio" name="revision" id="root-item" value="risk-Item">
-                            Risk Assessment
+                            <input type="radio" name="revision" id="root-item" value="CAPA">
+                            CAPA
                         </label>
-                    </div> -->
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="child-modal2">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('OOCChildExtension', $ooc->id) }}" method="POST">
+                    @csrf
+                    
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Extension">
+                            Extension
+                        </label>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="child-modal3">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('OOCChildAction', $ooc->id) }}" method="POST">
+                    @csrf
+                    
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Action-child">
+                            Action Item
+                        </label>
+                    </div>
+
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Extension">
+                            Extension
+                        </label>
+                    </div>
                     
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
@@ -1136,7 +1179,7 @@ $users = DB::table('users')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator Group"><b>Initiator Group</b></label>
-                                    <select name="Initiator_Group" {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }}
+                                    <select name="Initiator_Group" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}
                                          id="initiator_group">
                                         <option value="Corporate Quality Assurance"
                                             @if ($ooc->Initiator_Group== 'Corporate Quality Assurance') selected @endif>Corporate
@@ -1198,7 +1241,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="Description">Short Description</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <input type="text" name="description_ooc" value="{{$ooc->description_ooc}}">
+                                    <input type="text" name="description_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} value="{{$ooc->description_ooc}}">
                                     
                                 </div>
                             </div>
@@ -1207,7 +1250,7 @@ $users = DB::table('users')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Initiator Group Code</label>
-                                    <input type="text" name="initiator_group_code" id="initiator_group_code" value="{{$ooc->Initiator_Group}}" readonly>
+                                    <input type="text" name="initiator_group_code" id="initiator_group_code" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} value="{{$ooc->Initiator_Group}}" readonly>
                                 </div>
                             </div>
 
@@ -1286,7 +1329,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="Initiator Group">Initiated Through</label>
                                     <div><small class="text-primary">Please select related information</small></div>
-                                    <select name="initiated_through" onchange="">
+                                    <select name="initiated_through" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onchange="">
                                         <option value="0">-- select --</option>
                                         <option value="recall" {{ isset($ooc) && $ooc->initiated_through == 'recall' ? 'selected' : '' }}>Recall</option>
                                         <option value="return" {{ isset($ooc) && $ooc->initiated_through == 'return' ? 'selected' : '' }}>Return</option>
@@ -1305,7 +1348,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="If Other">If Other</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="initiated_if_other" id="summernote-1">{{$ooc->initiated_if_other}}</textarea>
+                                    <textarea  name="initiated_if_other" id="summernote-1">{{$ooc->initiated_if_other}}</textarea>
                                 </div>
                             </div>
 
@@ -1366,7 +1409,7 @@ $users = DB::table('users')->get();
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }} type="file" id="initial_attachment_ooc" name="initial_attachment_ooc[]"
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} type="file" id="initial_attachment_ooc" name="initial_attachment_ooc[]"
                                                 oninput="addMultipleFiles(this, 'initial_attachment_ooc')" multiple>
                                         </div>
                                     </div>
@@ -1380,7 +1423,7 @@ $users = DB::table('users')->get();
                                     <label for="search">
                                         OOC Logged by <span class="text-danger"></span>
                                     </label>
-                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }}>
+                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>
                                         {{-- <option value="">Select a value</option> --}}
                                         @foreach ($users as $key=> $value)
                                             <option  @if ($ooc->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1642,7 +1685,7 @@ $(document).ready(function() {
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }} type="file" id="attachments_hod_ooc" name="attachments_hod_ooc[]"
+                                                <input {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} type="file" id="attachments_hod_ooc" name="attachments_hod_ooc[]"
                                                     oninput="addMultipleFiles(this, 'attachments_hod_ooc')" multiple>
                                             </div>
                                         </div>
@@ -1906,7 +1949,7 @@ $(document).ready(function() {
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }} type="file" id="attachments_stage_ooc" name="attachments_stage_ooc[]"
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} type="file" id="attachments_stage_ooc" name="attachments_stage_ooc[]"
                                                 oninput="addMultipleFiles(this, 'attachments_stage_ooc')" multiple>
                                         </div>
                                     </div>
@@ -2028,7 +2071,7 @@ $(document).ready(function() {
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }} type="file" id="initial_attachment_stageii_ooc" name="initial_attachment_stageii_ooc[]"
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} type="file" id="initial_attachment_stageii_ooc" name="initial_attachment_stageii_ooc[]"
                                                 oninput="addMultipleFiles(this, 'initial_attachment_stageii_ooc')" multiple>
                                         </div>
                                     </div>
@@ -2183,7 +2226,7 @@ $(document).ready(function() {
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }} type="file" id="initial_attachment_capa_ooc" name="initial_attachment_capa_ooc[]"
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} type="file" id="initial_attachment_capa_ooc" name="initial_attachment_capa_ooc[]"
                                                 oninput="addMultipleFiles(this, 'initial_attachment_capa_ooc')" multiple>
                                         </div>
                                     </div>
@@ -2234,7 +2277,7 @@ $(document).ready(function() {
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }} type="file" id="initial_attachment_capa_post_ooc" name="initial_attachment_capa_post_ooc[]"
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} type="file" id="initial_attachment_capa_post_ooc" name="initial_attachment_capa_post_ooc[]"
                                                 oninput="addMultipleFiles(this, 'initial_attachment_capa_post_ooc')" multiple>
                                         </div>
                                     </div>

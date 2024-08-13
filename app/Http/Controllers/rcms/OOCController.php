@@ -3224,274 +3224,272 @@ $oocevaluation->save();
             toastr()->success('Closed Done');
             return back();
         }
-        if ($oocchange->stage == 15) {
-            $oocchange->stage = "16";
-            $oocchange->Phase_II_A_Investigation_by = Auth::user()->name;
-            $oocchange->Phase_II_A_Investigation_on = Carbon::now()->format('d-M-Y');
-            $oocchange->Phase_II_A_Investigation_comment = $request->comment;
-            $oocchange->status = "Phase II A HOD Primary Review";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Phase II A Investigation By , Phase II A Investigation On';
-            if (is_null($lastDocumentOOC->Phase_II_A_Investigation_by) || $lastDocumentOOC->Phase_II_A_Investigation_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->Phase_II_A_Investigation_by . ' , ' . $lastDocumentOOC->Phase_II_A_Investigation_on;
-            }
-            // $history->previous = $lastDocumentOOC->Phase_II_A_Investigation_by;
-            $history->current = $oocchange->Phase_II_A_Investigation_by . ' , ' . $oocchange->Phase_II_A_Investigation_on;
-            $history->current = $oocchange->Phase_II_A_Investigation_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Phase II A HOD Primary Review";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'Phase II A Investigation';
-            $history->stage='Phase II A Investigation';
-            if (is_null($lastDocumentOOC->Phase_II_A_Investigation_by) || $lastDocumentOOC->Phase_II_A_Investigation_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
+        // if ($oocchange->stage == 15) {
+        //     $oocchange->stage = "16";
+        //     $oocchange->Phase_II_A_Investigation_by = Auth::user()->name;
+        //     $oocchange->Phase_II_A_Investigation_on = Carbon::now()->format('d-M-Y');
+        //     $oocchange->Phase_II_A_Investigation_comment = $request->comment;
+        //     $oocchange->status = "Phase II A HOD Primary Review";
+        //     $history = new OOCAuditTrail();
+        //     $history->ooc_id = $id;
+        //     $history->activity_type = 'Phase II A Investigation By , Phase II A Investigation On';
+        //     if (is_null($lastDocumentOOC->Phase_II_A_Investigation_by) || $lastDocumentOOC->Phase_II_A_Investigation_by === '') {
+        //         $history->previous = "Null";
+        //     } else {
+        //         $history->previous = $lastDocumentOOC->Phase_II_A_Investigation_by . ' , ' . $lastDocumentOOC->Phase_II_A_Investigation_on;
+        //     }
+        //     // $history->previous = $lastDocumentOOC->Phase_II_A_Investigation_by;
+        //     $history->current = $oocchange->Phase_II_A_Investigation_by . ' , ' . $oocchange->Phase_II_A_Investigation_on;
+        //     $history->current = $oocchange->Phase_II_A_Investigation_by;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocumentOOC->status;
+        //     $history->change_to = "Phase II A HOD Primary Review";
+        //     $history->change_from = $lastDocumentOOC->status;
+        //     $history->action = 'Phase II A Investigation';
+        //     $history->stage='Phase II A Investigation';
+        //     if (is_null($lastDocumentOOC->Phase_II_A_Investigation_by) || $lastDocumentOOC->Phase_II_A_Investigation_by === '') {
+        //         $history->action_name = 'New';
+        //     } else {
+        //         $history->action_name = 'Update';
+        //     }
             
-            $history->save();
-            $oocchange->update();
-            toastr()->success('Phase II A HOD Primary Review');
-            return back();
-        }
-        if ($oocchange->stage == 16) {
-            $oocchange->stage = "17";
-            $oocchange->Phase_II_A_HOD_Review_Complete_by = Auth::user()->name;
-            $oocchange->Phase_II_A_HOD_Review_Complete_on = Carbon::now()->format('d-M-Y');
-            $oocchange->Phase_II_A_HOD_Review_Complete_comment = $request->comment;
-            $oocchange->status = "Phase II A QA Review";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Phase II A HOD Review Complete By    ,   Phase II A HOD Review Complete On';
-            if (is_null($lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by . ' , ' . $lastDocumentOOC->Phase_II_A_HOD_Review_Complete_on;
-            }
-            $history->current = $oocchange->Phase_II_A_HOD_Review_Complete_by . ' , ' . $oocchange->Phase_II_A_HOD_Review_Complete_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Phase II A QA Review";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'Phase II A HOD Review Complete';
-            if (is_null($lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->stage='Phase II A HOD Review Complete';
-            $history->save();
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II A HOD Review Complete', 'Phase II A QA Review');
-            $oocchange->update();
-            toastr()->success('Phase II A QA Review');
-            return back();
-        }
+        //     $history->save();
+        //     $oocchange->update();
+        //     toastr()->success('Phase II A HOD Primary Review');
+        //     return back();
+        // }
+        // if ($oocchange->stage == 16) {
+        //     $oocchange->stage = "17";
+        //     $oocchange->Phase_II_A_HOD_Review_Complete_by = Auth::user()->name;
+        //     $oocchange->Phase_II_A_HOD_Review_Complete_on = Carbon::now()->format('d-M-Y');
+        //     $oocchange->Phase_II_A_HOD_Review_Complete_comment = $request->comment;
+        //     $oocchange->status = "Phase II A QA Review";
+        //     $history = new OOCAuditTrail();
+        //     $history->ooc_id = $id;
+        //     $history->activity_type = 'Phase II A HOD Review Complete By    ,   Phase II A HOD Review Complete On';
+        //     if (is_null($lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by === '') {
+        //         $history->previous = "Null";
+        //     } else {
+        //         $history->previous = $lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by . ' , ' . $lastDocumentOOC->Phase_II_A_HOD_Review_Complete_on;
+        //     }
+        //     $history->current = $oocchange->Phase_II_A_HOD_Review_Complete_by . ' , ' . $oocchange->Phase_II_A_HOD_Review_Complete_on;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocumentOOC->status;
+        //     $history->change_to = "Phase II A QA Review";
+        //     $history->change_from = $lastDocumentOOC->status;
+        //     $history->action = 'Phase II A HOD Review Complete';
+        //     if (is_null($lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_HOD_Review_Complete_by === '') {
+        //         $history->action_name = 'New';
+        //     } else {
+        //         $history->action_name = 'Update';
+        //     }
+        //     $history->stage='Phase II A HOD Review Complete';
+        //     $history->save();
+        //     // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II A HOD Review Complete', 'Phase II A QA Review');
+        //     $oocchange->update();
+        //     toastr()->success('Phase II A QA Review');
+        //     return back();
+        // }
+        // if ($oocchange->stage == 17) {
+        //     $oocchange->stage = "18";
+        //     $oocchange->Phase_II_A_QA_Review_Complete_by = Auth::user()->name;
+        //     $oocchange->Phase_II_A_QA_Review_Complete_on = Carbon::now()->format('d-M-Y');
+        //     $oocchange->Phase_II_A_QA_Review_Complete_comment = $request->comment;
+        //     $oocchange->status = "P-II A QAH/CQAH Review";
+        //     $history = new OOCAuditTrail();
+        //     $history->ooc_id = $id;
+        //     $history->activity_type = 'Phase II A QA Review Complete By   ,    Phase II A QA Review Complete  On';
+        //     if (is_null($lastDocumentOOC->Phase_II_A_QA_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by === '') {
+        //         $history->previous = "Null";
+        //     } else {
+        //         $history->previous = $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by . ' , ' . $lastDocumentOOC->Phase_II_A_QA_Review_Complete_on;
+        //     }
+        //     $history->current = $oocchange->Phase_II_A_QA_Review_Complete_by . ' , ' . $oocchange->Phase_II_A_QA_Review_Complete_on;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocumentOOC->status;
+        //     $history->change_to = "P-II A QAH/CQAH Review";
+        //     $history->change_from = $lastDocumentOOC->status;
+        //     $history->action = 'Phase II A QA Review Complete';
+        //     if (is_null($lastDocumentOOC->Phase_II_A_QA_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by === '') {
+        //         $history->action_name = 'New';
+        //     } else {
+        //         $history->action_name = 'Update';
+        //     }
+        //     $history->stage='Phase II A QA Review Complete';
+        //     $history->save();
+        //     // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II A QA Review Complete', 'P-II A QAH/CQAH Review');
+        //     $oocchange->update();
+        //     toastr()->success('P-II A QAH/CQAH Review');
+        //     return back();
+        // }
+        // if ($oocchange->stage == 18) {
+        //     $oocchange->stage = "19";
+        //     $oocchange->P_II_A_Assignable_Cause_Found_by = Auth::user()->name;
+        //     $oocchange->P_II_A_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
+        //     $oocchange->P_II_A_Assignable_Cause_Found_comment = $request->comment;
+        //     $oocchange->status = "Closed Done";
+        //     $history = new OOCAuditTrail();
+        //     $history->ooc_id = $id;
+        //     $history->activity_type = 'P-II A Assignable Cause Found By  ,   P-II A Assignable Cause Found  On';
+        //     if (is_null($lastDocumentOOC->P_II_A_Assignable_Cause_Found_by) || $lastDocumentOOC->P_II_A_Assignable_Cause_Found_by === '') {
+        //         $history->previous = "Null";
+        //     } else {
+        //         $history->previous = $lastDocumentOOC->P_II_A_Assignable_Cause_Found_by . ' , ' . $lastDocumentOOC->Phase_II_A_QA_Review_Complete_on;
+        //     }
+        //     $history->current = $oocchange->P_II_A_Assignable_Cause_Found_by . ' , ' . $oocchange->Phase_II_A_QA_Review_Complete_on;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocumentOOC->status;
+        //     $history->change_to = "Closed Done";
+        //     $history->change_from = $lastDocumentOOC->status;
+        //     $history->action = 'P-II A Assignable Cause Found';
+        //     $history->stage='P-II A Assignable Cause Found';
+        //     if (is_null($lastDocumentOOC->Phase_II_A_QA_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by === '') {
+        //         $history->action_name = 'New';
+        //     } else {
+        //         $history->action_name = 'Update';
+        //     }
+        //     $history->save();
+        //     // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'P-II A Assignable Cause Found', 'Closed Done');
+        //     $oocchange->update();
+        //     toastr()->success('Closed Done');
+        //     return back();
+        // }
+        // if ($oocchange->stage == 20) {
+        //     $oocchange->stage = "21";
+        //     $oocchange->Phase_II_B_Investigation_by = Auth::user()->name;
+        //     $oocchange->Phase_II_B_Investigation_on = Carbon::now()->format('d-M-Y');
+        //     $oocchange->Phase_II_B_Investigation_comment = $request->comment;
+        //     $oocchange->status = "Phase II B HOD Primary Review ";
+        //     $history = new OOCAuditTrail();
+        //     $history->ooc_id = $id;
+        //     $history->activity_type = 'Phase II B Investigation By   ,    Phase II B Investigation On';
+        //     if (is_null($lastDocumentOOC->Phase_II_B_Investigation_by) || $lastDocumentOOC->Phase_II_B_Investigation_by === '') {
+        //         $history->previous = "Null";
+        //     } else {
+        //         $history->previous = $lastDocumentOOC->Phase_II_B_Investigation_by . ' , ' . $lastDocumentOOC->Phase_II_B_Investigation_on;
+        //     }
+        //     $history->current = $oocchange->Phase_II_B_Investigation_by . ' , ' . $oocchange->Phase_II_B_Investigation_on;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocumentOOC->status;
+        //     $history->change_to = "Phase II B HOD Primary Review";
+        //     $history->change_from = $lastDocumentOOC->status;
+        //     $history->action = 'Phase II B Investigation';
+        //     $history->stage='Phase II B Investigation';
+        //     if (is_null($lastDocumentOOC->Phase_II_A_QA_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by === '') {
+        //         $history->action_name = 'New';
+        //     } else {
+        //         $history->action_name = 'Update';
+        //     }
 
-        if ($oocchange->stage == 17) {
-            $oocchange->stage = "18";
-            $oocchange->Phase_II_A_QA_Review_Complete_by = Auth::user()->name;
-            $oocchange->Phase_II_A_QA_Review_Complete_on = Carbon::now()->format('d-M-Y');
-            $oocchange->Phase_II_A_QA_Review_Complete_comment = $request->comment;
-            $oocchange->status = "P-II A QAH/CQAH Review";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Phase II A QA Review Complete By   ,    Phase II A QA Review Complete  On';
-            if (is_null($lastDocumentOOC->Phase_II_A_QA_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by . ' , ' . $lastDocumentOOC->Phase_II_A_QA_Review_Complete_on;
-            }
-            $history->current = $oocchange->Phase_II_A_QA_Review_Complete_by . ' , ' . $oocchange->Phase_II_A_QA_Review_Complete_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "P-II A QAH/CQAH Review";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'Phase II A QA Review Complete';
-            if (is_null($lastDocumentOOC->Phase_II_A_QA_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->stage='Phase II A QA Review Complete';
-            $history->save();
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II A QA Review Complete', 'P-II A QAH/CQAH Review');
-            $oocchange->update();
-            toastr()->success('P-II A QAH/CQAH Review');
-            return back();
-        }
-        if ($oocchange->stage == 18) {
-            $oocchange->stage = "19";
-            $oocchange->P_II_A_Assignable_Cause_Found_by = Auth::user()->name;
-            $oocchange->P_II_A_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
-            $oocchange->P_II_A_Assignable_Cause_Found_comment = $request->comment;
-            $oocchange->status = "Closed Done";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'P-II A Assignable Cause Found By  ,   P-II A Assignable Cause Found  On';
-            if (is_null($lastDocumentOOC->P_II_A_Assignable_Cause_Found_by) || $lastDocumentOOC->P_II_A_Assignable_Cause_Found_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->P_II_A_Assignable_Cause_Found_by . ' , ' . $lastDocumentOOC->Phase_II_A_QA_Review_Complete_on;
-            }
-            $history->current = $oocchange->P_II_A_Assignable_Cause_Found_by . ' , ' . $oocchange->Phase_II_A_QA_Review_Complete_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Closed Done";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'P-II A Assignable Cause Found';
-            $history->stage='P-II A Assignable Cause Found';
-            if (is_null($lastDocumentOOC->Phase_II_A_QA_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->save();
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'P-II A Assignable Cause Found', 'Closed Done');
-            $oocchange->update();
-            toastr()->success('Closed Done');
-            return back();
-        }
+        //     $history->save();
+        //     // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II B Investigation', 'Phase II B HOD Primary Review ');
+        //     $oocchange->update();
+        //     toastr()->success('Phase II B HOD Primary Review ');
+        //     return back();
+        // }
+        // if ($oocchange->stage == 21) {
+        //     $oocchange->stage = "22";
+        //     $oocchange->Phase_II_B_HOD_Review_Complete_by = Auth::user()->name;
+        //     $oocchange->Phase_II_B_HOD_Review_Complete_on = Carbon::now()->format('d-M-Y');
+        //     $oocchange->Phase_II_B_HOD_Review_Complete_comment = $request->comment;
+        //     $oocchange->status = "Phase II B QA Review  ";
+        //     $history = new OOCAuditTrail();
+        //     $history->ooc_id = $id;
+        //     $history->activity_type = 'Phase II B HOD Review Complete By  ,   Phase II B HOD Review Complete On';
+        //     if (is_null($lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by) || $lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by === '') {
+        //         $history->previous = "Null";
+        //     } else {
+        //         $history->previous = $lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by . ' , ' . $lastDocumentOOC->Phase_II_B_HOD_Review_Complete_on;
+        //     }
+        //     $history->current = $oocchange->Phase_II_B_HOD_Review_Complete_by . ' , ' . $oocchange->Phase_II_B_HOD_Review_Complete_on;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocumentOOC->status;
+        //     $history->change_to = "Phase II B QA Review";
+        //     $history->change_from = $lastDocumentOOC->status;
+        //     $history->action = 'Phase II B HOD Review Complete';
+        //     $history->stage='Phase II B HOD Review Complete';
+        //     if (is_null($lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by) || $lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by === '') {
+        //         $history->action_name = 'New';
+        //     } else {
+        //         $history->action_name = 'Update';
+        //     }
 
-        if ($oocchange->stage == 20) {
-            $oocchange->stage = "21";
-            $oocchange->Phase_II_B_Investigation_by = Auth::user()->name;
-            $oocchange->Phase_II_B_Investigation_on = Carbon::now()->format('d-M-Y');
-            $oocchange->Phase_II_B_Investigation_comment = $request->comment;
-            $oocchange->status = "Phase II B HOD Primary Review ";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Phase II B Investigation By   ,    Phase II B Investigation On';
-            if (is_null($lastDocumentOOC->Phase_II_B_Investigation_by) || $lastDocumentOOC->Phase_II_B_Investigation_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->Phase_II_B_Investigation_by . ' , ' . $lastDocumentOOC->Phase_II_B_Investigation_on;
-            }
-            $history->current = $oocchange->Phase_II_B_Investigation_by . ' , ' . $oocchange->Phase_II_B_Investigation_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Phase II B HOD Primary Review";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'Phase II B Investigation';
-            $history->stage='Phase II B Investigation';
-            if (is_null($lastDocumentOOC->Phase_II_A_QA_Review_Complete_by) || $lastDocumentOOC->Phase_II_A_QA_Review_Complete_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-
-            $history->save();
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II B Investigation', 'Phase II B HOD Primary Review ');
-            $oocchange->update();
-            toastr()->success('Phase II B HOD Primary Review ');
-            return back();
-        }
-        if ($oocchange->stage == 21) {
-            $oocchange->stage = "22";
-            $oocchange->Phase_II_B_HOD_Review_Complete_by = Auth::user()->name;
-            $oocchange->Phase_II_B_HOD_Review_Complete_on = Carbon::now()->format('d-M-Y');
-            $oocchange->Phase_II_B_HOD_Review_Complete_comment = $request->comment;
-            $oocchange->status = "Phase II B QA Review  ";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Phase II B HOD Review Complete By  ,   Phase II B HOD Review Complete On';
-            if (is_null($lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by) || $lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by . ' , ' . $lastDocumentOOC->Phase_II_B_HOD_Review_Complete_on;
-            }
-            $history->current = $oocchange->Phase_II_B_HOD_Review_Complete_by . ' , ' . $oocchange->Phase_II_B_HOD_Review_Complete_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Phase II B QA Review";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'Phase II B HOD Review Complete';
-            $history->stage='Phase II B HOD Review Complete';
-            if (is_null($lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by) || $lastDocumentOOC->Phase_II_B_HOD_Review_Complete_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-
-            $history->save();
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II B HOD Review Complete ', 'Phase II B QA Review  ');
-            $oocchange->update();
-            toastr()->success('Phase II B QA Review  ');
-            return back();
-        }
-        if ($oocchange->stage == 22) {
-            $oocchange->stage = "23";
-            $oocchange->Phase_II_B_QA_ReviewComplete_by = Auth::user()->name;
-            $oocchange->Phase_II_B_QA_ReviewComplete_on = Carbon::now()->format('d-M-Y');
-            $oocchange->Phase_II_B_QA_ReviewComplete_comment = $request->comment;
-            $oocchange->status = "P-II B QAH/CQAH Review";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->previous = $lastDocumentOOC->Phase_II_B_QA_ReviewComplete_by;
-            $history->current = $oocchange->Phase_II_B_QA_ReviewComplete_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "P-II B QAH/CQAH Review";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action_name = 'Phase II B QA Review Complete';
-            $history->stage='Phase II B QA Review Complete';
-            $history->save();
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II B QA Review Complete', 'P-II B QAH/CQAH Review');
-            $oocchange->update();
-            toastr()->success('P-II B QAH/CQAH Review');
-            return back();
-        }
-        if ($oocchange->stage == 23) {
-            $oocchange->stage = "24";
-            $oocchange->P_II_B_Assignable_Cause_Found_by = Auth::user()->name;
-            $oocchange->P_II_B_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
-            $oocchange->P_II_B_Assignable_Cause_Found_comment = $request->comment;
-            $oocchange->status = "Closed - Done";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'P-II B Assignable Cause Found By ,   P-II B Assignable Cause Found On';
-            $history->previous = $lastDocumentOOC->P_II_B_Assignable_Cause_Found_by;
-            $history->current = $oocchange->P_II_B_Assignable_Cause_Found_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Closed - Done";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action_name = 'P-II B Assignable Cause Found';
-            $history->action = 'P-II B Assignable Cause Found';
-            $history->stage='P-II B Assignable Cause Found';
-            $history->save();
-            $oocchange->update();
-            toastr()->success('Closed - Done');
-            return back();
-        }
+        //     $history->save();
+        //     // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II B HOD Review Complete ', 'Phase II B QA Review  ');
+        //     $oocchange->update();
+        //     toastr()->success('Phase II B QA Review  ');
+        //     return back();
+        // }
+        // if ($oocchange->stage == 22) {
+        //     $oocchange->stage = "23";
+        //     $oocchange->Phase_II_B_QA_ReviewComplete_by = Auth::user()->name;
+        //     $oocchange->Phase_II_B_QA_ReviewComplete_on = Carbon::now()->format('d-M-Y');
+        //     $oocchange->Phase_II_B_QA_ReviewComplete_comment = $request->comment;
+        //     $oocchange->status = "P-II B QAH/CQAH Review";
+        //     $history = new OOCAuditTrail();
+        //     $history->ooc_id = $id;
+        //     $history->activity_type = 'Activity Log';
+        //     $history->previous = $lastDocumentOOC->Phase_II_B_QA_ReviewComplete_by;
+        //     $history->current = $oocchange->Phase_II_B_QA_ReviewComplete_by;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocumentOOC->status;
+        //     $history->change_to = "P-II B QAH/CQAH Review";
+        //     $history->change_from = $lastDocumentOOC->status;
+        //     $history->action_name = 'Phase II B QA Review Complete';
+        //     $history->stage='Phase II B QA Review Complete';
+        //     $history->save();
+        //     // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase II B QA Review Complete', 'P-II B QAH/CQAH Review');
+        //     $oocchange->update();
+        //     toastr()->success('P-II B QAH/CQAH Review');
+        //     return back();
+        // }
+        // if ($oocchange->stage == 23) {
+        //     $oocchange->stage = "24";
+        //     $oocchange->P_II_B_Assignable_Cause_Found_by = Auth::user()->name;
+        //     $oocchange->P_II_B_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
+        //     $oocchange->P_II_B_Assignable_Cause_Found_comment = $request->comment;
+        //     $oocchange->status = "Closed - Done";
+        //     $history = new OOCAuditTrail();
+        //     $history->ooc_id = $id;
+        //     $history->activity_type = 'P-II B Assignable Cause Found By ,   P-II B Assignable Cause Found On';
+        //     $history->previous = $lastDocumentOOC->P_II_B_Assignable_Cause_Found_by;
+        //     $history->current = $oocchange->P_II_B_Assignable_Cause_Found_by;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocumentOOC->status;
+        //     $history->change_to = "Closed - Done";
+        //     $history->change_from = $lastDocumentOOC->status;
+        //     $history->action_name = 'P-II B Assignable Cause Found';
+        //     $history->action = 'P-II B Assignable Cause Found';
+        //     $history->stage='P-II B Assignable Cause Found';
+        //     $history->save();
+        //     $oocchange->update();
+        //     toastr()->success('Closed - Done');
+        //     return back();
+        // }
 
 
     } else {
@@ -3522,8 +3520,6 @@ public function OOCStateChangetwo(Request $request, $id)
                 $history->previous = $lastDocumentOOC->correction_r_completed_by . ' , ' . $lastDocumentOOC->correction_r_completed_on;
             }
             
-            // $history->previous = $lastDocumentOOC->correction_r_completed_by;
-            // $history->current = $oocchange->correction_r_completed_by;
             $history->current = $oocchange->correction_r_completed_by . ' , ' . $oocchange->correction_r_completed_on;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
@@ -3547,79 +3543,79 @@ public function OOCStateChangetwo(Request $request, $id)
             return back();
         }
 
-        if ($oocchange->stage == 13) {
-            $oocchange->stage = "15";
-            $oocchange->Under_Phase_II_A_Investigation_by = Auth::user()->name;
-            $oocchange->Under_Phase_II_A_Investigation_on = Carbon::now()->format('d-M-Y');
-            $oocchange->Under_Phase_II_A_Investigation_comment = $request->comment;
-            $oocchange->status = "Under Phase-II A Investigation";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'P-IB Assignable Cause Found By   ,   P-IB Assignable Cause Found On';
-            if (is_null($lastDocumentOOC->Under_Phase_II_A_Investigation_by) || $lastDocumentOOC->Under_Phase_II_A_Investigation_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->Under_Phase_II_A_Investigation_by . ' , ' . $lastDocumentOOC->Under_Phase_II_A_Investigation_on;
-            }
-            // $history->previous = $lastDocumentOOC->Under_Phase_II_A_Investigation_by;
-            $history->current = $oocchange->Under_Phase_II_A_Investigation_by . ' , ' . $oocchange->Under_Phase_II_A_Investigation_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Under Phase-II A Investigation";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'P-IB Assignable Cause Found';
-            if (is_null($lastDocumentOOC->Under_Phase_II_A_Investigation_by) || $lastDocumentOOC->Under_Phase_II_A_Investigation_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->stage='P-IB Assignable Cause Found';
-            $history->save();
+        // if ($oocchange->stage == 13) {
+        //     $oocchange->stage = "15";
+        //     $oocchange->Under_Phase_II_A_Investigation_by = Auth::user()->name;
+        //     $oocchange->Under_Phase_II_A_Investigation_on = Carbon::now()->format('d-M-Y');
+        //     $oocchange->Under_Phase_II_A_Investigation_comment = $request->comment;
+        //     $oocchange->status = "Under Phase-II A Investigation";
+        //     $history = new OOCAuditTrail();
+        //     $history->ooc_id = $id;
+        //     $history->activity_type = 'P-IB Assignable Cause Found By   ,   P-IB Assignable Cause Found On';
+        //     if (is_null($lastDocumentOOC->Under_Phase_II_A_Investigation_by) || $lastDocumentOOC->Under_Phase_II_A_Investigation_by === '') {
+        //         $history->previous = "Null";
+        //     } else {
+        //         $history->previous = $lastDocumentOOC->Under_Phase_II_A_Investigation_by . ' , ' . $lastDocumentOOC->Under_Phase_II_A_Investigation_on;
+        //     }
+        //     // $history->previous = $lastDocumentOOC->Under_Phase_II_A_Investigation_by;
+        //     $history->current = $oocchange->Under_Phase_II_A_Investigation_by . ' , ' . $oocchange->Under_Phase_II_A_Investigation_on;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocumentOOC->status;
+        //     $history->change_to = "Under Phase-II A Investigation";
+        //     $history->change_from = $lastDocumentOOC->status;
+        //     $history->action = 'P-IB Assignable Cause Found';
+        //     if (is_null($lastDocumentOOC->Under_Phase_II_A_Investigation_by) || $lastDocumentOOC->Under_Phase_II_A_Investigation_by === '') {
+        //         $history->action_name = 'New';
+        //     } else {
+        //         $history->action_name = 'Update';
+        //     }
+        //     $history->stage='P-IB Assignable Cause Found';
+        //     $history->save();
             
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'P-IB Assignable Cause Found', 'Under Phase-II A Investigation');
-            $oocchange->update();
-            toastr()->success('Under Phase-II A Investigation');
-            return back();
-        }
+        //     // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'P-IB Assignable Cause Found', 'Under Phase-II A Investigation');
+        //     $oocchange->update();
+        //     toastr()->success('Under Phase-II A Investigation');
+        //     return back();
+        // }
 
-        if ($oocchange->stage == 18) {
-            $oocchange->stage = "20";
-            $oocchange->P_II_A_Assignable_Cause_Not_Found_by = Auth::user()->name;
-            $oocchange->P_II_A_Assignable_Cause_Not_Found_on = Carbon::now()->format('d-M-Y');
-            $oocchange->P_II_A_Assignable_Cause_Not_Found_comment = $request->comment;
-            $oocchange->status = "Under Phase-II B Investigation ";
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'P-II A Assignable Cause Found By  ,   P-II A Assignable Cause Found On';
-            if (is_null($lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by) || $lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by . ' , ' . $lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_on;
-            }
-            $history->current = $oocchange->P_II_A_Assignable_Cause_Not_Found_by . ' , ' . $oocchange->P_II_A_Assignable_Cause_Not_Found_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOOC->status;
-            $history->change_to = "Under Phase-II B Investigation";
-            $history->change_from = $lastDocumentOOC->status;
-            $history->action = 'P-II A Assignable Cause Found';
-            $history->stage='P-II A Assignable Cause Found';
-            if (is_null($lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by) || $lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->save();
-            // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'P-II A Assignable Cause Found', 'Under Phase-II B Investigation ');
-            $oocchange->update();
-            toastr()->success('Under Phase-II B Investigation ');
-            return back();
-        }
+        // if ($oocchange->stage == 18) {
+        //     $oocchange->stage = "20";
+        //     $oocchange->P_II_A_Assignable_Cause_Not_Found_by = Auth::user()->name;
+        //     $oocchange->P_II_A_Assignable_Cause_Not_Found_on = Carbon::now()->format('d-M-Y');
+        //     $oocchange->P_II_A_Assignable_Cause_Not_Found_comment = $request->comment;
+        //     $oocchange->status = "Under Phase-II B Investigation ";
+        //     $history = new OOCAuditTrail();
+        //     $history->ooc_id = $id;
+        //     $history->activity_type = 'P-II A Assignable Cause Found By  ,   P-II A Assignable Cause Found On';
+        //     if (is_null($lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by) || $lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by === '') {
+        //         $history->previous = "Null";
+        //     } else {
+        //         $history->previous = $lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by . ' , ' . $lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_on;
+        //     }
+        //     $history->current = $oocchange->P_II_A_Assignable_Cause_Not_Found_by . ' , ' . $oocchange->P_II_A_Assignable_Cause_Not_Found_on;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocumentOOC->status;
+        //     $history->change_to = "Under Phase-II B Investigation";
+        //     $history->change_from = $lastDocumentOOC->status;
+        //     $history->action = 'P-II A Assignable Cause Found';
+        //     $history->stage='P-II A Assignable Cause Found';
+        //     if (is_null($lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by) || $lastDocumentOOC->P_II_A_Assignable_Cause_Not_Found_by === '') {
+        //         $history->action_name = 'New';
+        //     } else {
+        //         $history->action_name = 'Update';
+        //     }
+        //     $history->save();
+        //     // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'P-II A Assignable Cause Found', 'Under Phase-II B Investigation ');
+        //     $oocchange->update();
+        //     toastr()->success('Under Phase-II B Investigation ');
+        //     return back();
+        // }
     } else {
         toastr()->error('E-signature Not match');
         return back();
@@ -4001,12 +3997,92 @@ public function OOCAuditTrial($id){
                    return view('frontend.forms.risk-management', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
                }
-
+               if ($request->revision == "CAPA") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                $record_number = $record_number;
+                $old_records = $old_record;
+                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+                }
                if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
     
             }
+    }
+    public function OOCChildExtension(Request $request ,$id)
+    {
+        $cc = OutOfCalibration::find($id);
+               $cft = [];
+               $parent_id = $id;
+               $parent_type = "Out of Calibration";
+               $currentDate = Carbon::now();
+               $formattedDate = $currentDate->addDays(30);
+               $due_date= $formattedDate->format('d-M-Y');
+               $old_record = Capa::select('id', 'division_id', 'record')->get();
+               $record_number = ((RecordNumber::first()->value('counter')) + 1);
+               $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+               $record = ((RecordNumber::first()->value('counter')) + 1);
+               $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+               $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+               $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+               $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+               $parent_initiator_id = $id;
+
+
+               $formattedDate = $currentDate->addDays(30);
+               $due_date = $formattedDate->format('d-M-Y');
+               $oocOpen = OpenStage::find(1);
+               if (!empty($oocOpen->cft)) $cft = explode(',', $oocOpen->cft);
+
+                if ($request->revision == "Extension") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+    
+            }
+    }
+    public function OOCChildAction(Request $request ,$id)
+    {
+        $cc = OutOfCalibration::find($id);
+               $cft = [];
+               $parent_id = $id;
+               $parent_type = "Out of Calibration";
+               $currentDate = Carbon::now();
+               $formattedDate = $currentDate->addDays(30);
+               $due_date= $formattedDate->format('d-M-Y');
+               $old_record = Capa::select('id', 'division_id', 'record')->get();
+               $record_number = ((RecordNumber::first()->value('counter')) + 1);
+               $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+               $record = ((RecordNumber::first()->value('counter')) + 1);
+               $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+               $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+               $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+               $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+               $parent_initiator_id = $id;
+
+
+               $formattedDate = $currentDate->addDays(30);
+               $due_date = $formattedDate->format('d-M-Y');
+               $oocOpen = OpenStage::find(1);
+               if (!empty($oocOpen->cft)) $cft = explode(',', $oocOpen->cft);
+
+                if ($request->revision == "Extension") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+    
+            }
+            if ($request->revision == "Action-child") {
+                $parent_due_date = "";
+                $parent_id = $id;
+                $parent_name = $request->parent_name;
+                if ($request->due_date) {
+               $parent_due_date = $request->due_date;
+                                         }
+
+
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+        }
     }
 
     public function auditDetailsooc($id){
@@ -4029,8 +4105,7 @@ public function OOCAuditTrial($id){
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
             $data = OOCAuditTrail::where('ooc_id', $id)->get();
-
-
+           
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.OOC.auditReport', compact('data', 'doc'))

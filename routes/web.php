@@ -471,6 +471,8 @@ Route::post('RejectoocStateChange/{id}', [OOCController::class, 'RejectoocStateC
 Route::post('RejectStateChangeTwo/{id}', [OOCController::class, 'RejectStateChangeTwo'])->name('RejectStateChangeTwo');
 Route::post('OOCChildRoot/{id}', [OOCController::class, 'OOCChildRoot'])->name('o_o_c_root_child');
 Route::post('OOCChildCapa/{id}', [OOCController::class, 'oo_c_capa_child'])->name('oo_c_capa_child');
+Route::post('OOCChildExtension/{id}', [OOCController::class, 'OOCChildExtension'])->name('OOCChildExtension');
+Route::post('OOCChildAction/{id}', [OOCController::class, 'OOCChildAction'])->name('OOCChildAction');
 Route::get('OOCAuditTrial/{id}', [OOCController::class, 'OOCAuditTrial'])->name('audittrialooc');
 Route::get('auditDetailsooc/{id}', [OOCController::class, 'auditDetailsooc'])->name('OOCauditDetails');
 Route::get('/rcms/ooc_Audit_Report/{id}', [OOCController::class, 'auditReportooc'])->name('ooc_Audit_Report');
