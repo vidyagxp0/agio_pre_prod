@@ -5663,7 +5663,7 @@
                 <h4 class="modal-title">E-Signature</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('RejectStateChangeTTwo', $data->id) }}" method="POST">
+            <form action="{{ route('RejectStateChangeNew', $data->id) }}" method="POST">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
