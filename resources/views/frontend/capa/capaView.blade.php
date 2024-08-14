@@ -97,6 +97,9 @@
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Review Complete
                             </button></a>
+                            <a href="#child-modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button></a>
                             {{-- <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button></a> --}}
@@ -133,18 +136,16 @@
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                  Complete
                             </button></a>
-                            <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
+                            {{-- <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                  More Info Required
-                              </button></a>
+                              </button></a> --}}
                             <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#child-modal">
                                 Child
                             </button></a>
                             
                         @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                           {{-- <a href="#child-modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button></a> --}}
+                           
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Final Review Complete
 
@@ -152,6 +153,9 @@
                            <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                 More Info Required
                              </button></a>
+                             <a href="#child-modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button></a>
                              @elseif($data->stage == 7 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                              
                               <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -171,9 +175,19 @@
                                 QAH Approval Complete
 
                            </button></a>
+                           
                            <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                 More Info Required
-                             </button></a>
+                           </button></a>
+                           <a href="#child-modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            Child
+                        </button></a>
+                           @elseif($data->stage == 9&& (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                           
+                         <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
+                             data-bs-target="#child-modal1">
+                             Child
+                         </button></a>
 
                         @endif
                          <a class="button_theme1 text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
@@ -1724,7 +1738,7 @@
                                                 <div class="static">{{ $data->com_comment }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        {{-- <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="QA More Info Required By"> More Info Required
                                                     By</label>
@@ -1746,7 +1760,7 @@
                                                 <input type="hidden" name="com_comment1"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->com_comment1 }}</div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Rejected By">HOD Final Review Completed By</label>
@@ -1899,17 +1913,23 @@
                         <div class="modal-header">
                             <h4 class="modal-title">Child</h4>
                         </div>
-                        <form action="{{ route('capa_effectiveness_check', $data->id) }}" method="POST">
+                        <form action="{{ route('capa_child_changecontrol', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="group-input">
-                                    <label for="major">
+                                    {{-- <label for="major">
                                         <input type="hidden" name="parent_name" value="Capa">
                                         <input type="hidden" name="due_date" value="{{ $data->due_date }}">
                                         <input type="radio" name="child_type" value="effectiveness_check">
                                         Effectiveness Check
+                                    </label> --}}
+                                    {{-- @if ($data->stage == 6) --}}
+                                    <label for="major">
+                                       <input type="radio" name="child_type" value="extension">
+                                          Extension
                                     </label>
+                                {{-- @endif --}}
 
                                 </div>
 
@@ -1989,8 +2009,15 @@
                                         Action-Item
                                     </label>
                                 </div>
+                                <div class="group-input">
+                                    <label for="major">
+                                        <input type="radio" name="child_type" value="extension">
+                                        Extension
+                                      </label>
+                                </div>
 
                             </div>
+
 
 
                             <!-- Modal footer -->

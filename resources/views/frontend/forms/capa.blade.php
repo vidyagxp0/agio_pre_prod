@@ -1237,20 +1237,20 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="com_more_info_required_by">
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div>  
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA More Info Required On"> More Info Required On</label>
                                     <input type="hidden" name="com_more_info_required_on">
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div>~ --}}
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Rejected By">HOD Final Review Completed By</label>

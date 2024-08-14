@@ -276,10 +276,10 @@ function addMultipleFiles(input, block_id) {
                                 Send to Opened 
                             </button>
                            
-                        {{-- @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(11, $userRoleIds) ))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                All CAPA Closed
-                            </button> --}}
+                        @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(11, $userRoleIds) ))
+                            <button class="button_theme1" data-bs-toggle="modal">
+                                Re-open
+                            </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
