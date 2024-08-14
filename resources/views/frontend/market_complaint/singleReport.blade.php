@@ -139,7 +139,7 @@
 
     .inner-block .block-head {
         font-weight: bold;
-        font-size: 1.1rem; 
+        font-size: 1.1rem;
         padding-bottom: 5px;
         border-bottom: 2px solid #4274da;
         margin-bottom: 10px;
@@ -215,7 +215,7 @@
                         <td class="w-80">{{ $data->originator }}</td>
                         <th class="w-20">Date Initiation</th>
                         <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
-                        
+
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -241,7 +241,7 @@
                             ];
                         @endphp
                         <td class="w-80">{{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
- 
+
                         <th class="w-20">Initiator Group Code</th>
                         {{-- <td class="w-80">{{ $data->initiator_group ?? 'Not Applicable' }}</td> --}}
                         <td class="w-80">{{ $data->initiator_group_code_gi ?? 'Not Applicable' }}</td>
@@ -258,8 +258,8 @@
                     <tr>
                             <th class="w-20">Due Date</th>
                             <td class="w-80">{{  Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
-                        
-                   
+
+
                         <th class="w-20">Repeat Nature</th>
                         <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td>
                     </tr>
@@ -278,14 +278,14 @@
                     <tr>
                         <th class="w-20">Is Repeat</th>
                         <td class="w-80">{{ $data->is_repeat_gi ?? 'Not Applicable' }}</td>
-                    
+
                         <th class="w-20">Complaint</th>
                         <td class="w-80">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
-                       
+
                     </tr>
                 </table>
-                
-                
+
+
                 <table>
                     <tr>
                         <th class="w-20">Details Of Nature Market Complaint</th>
@@ -302,18 +302,18 @@
 
                     </tr>
                 </table>
-               
+
                 <table>
-                    <tr>   
+                    <tr>
                     <th class="w-20">Review Of Complaint Sample</th>
                         <td class="w-80">{!! $data->review_of_complaint_sample_gi ?? 'Not Applicable' !!}</td>
                     </tr>
-               
+
                     <tr>
                         <th class="w-20">Review Of Batch Manufacturing Record (BMR)</th>
                         <td class="w-80">{!! $data->review_of_batch_manufacturing_record_BMR_gi ?? 'Not Applicable' !!}</td>
                     </tr>
-                    <tr>  
+                    <tr>
                         <th class="w-20">Review Of Raw Materials Used In Batch Manufacturing</th>
                         <td class="w-80">{!! $data->review_of_raw_materials_used_in_batch_manufacturing_gi ?? 'Not Applicable' !!}</td>
                     </tr>
@@ -347,7 +347,7 @@
                     </tr>
                 </table>
                 <table>
-                   
+
                     <tr>
                         <th class="w-20">Initial Attachment</th>
                         <td class="w-80">
@@ -381,12 +381,12 @@
                         <tbody>
                             @if($prductgigrid && $prductgigrid->data)
                                   @foreach ($prductgigrid->data as  $item)
-                                  
-                                  
-                                 
+
+
+
                                         <tr>
                                 {{-- <td style="width: 6%">{{ $item['serial'] }}</td> --}}
-{{--                                
+{{--
                                   <td>{{ $item['info_product_name'] }}</td>
                                   <td>{{ $item['info_batch_no'] }}</td>
                                   <td>{{ $item['info_mfg_date'] }}</td>
@@ -395,7 +395,7 @@
                                   <td>{{ $item['info_pack_size'] }}</td>
                                   <td> {{ $item['info_dispatch_quantity'] }}</td>
                                   <td>{{ $item['info_remarks'] }}</td>
-                                 
+
 
                             </tr>
                             @endforeach
@@ -412,7 +412,7 @@
                     </table>
 
 
-                   </tr> --}} 
+                   </tr> --}}
 
                 </table>
             </div>
@@ -471,13 +471,305 @@
                         </td>
                     </tr>
 
-{{-- 
+{{--
                     <tr>
                         <th class="w-20">Initial Attachment</th>
                         <td class="w-80">{{ $data->Initial_Attachment ? '<a href="'.asset('upload/document/'.$data->Initial_Attachment).'">'.$data->Initial_Attachment.'</a>' : 'Not Applicable' }}</td>
                     </tr> --}}
                 </table>
             </div>
+
+            <div class="block">
+                <div class="block-head">
+                    CFT Review
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">Production Table Required ?</th>
+                        <td class="w-80">{!! $data->Production_Table_Review ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Production Table Person</th>
+                        <td class="w-80">{!! $data->Production_Table_Person ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Impact Table Assessment (By Production)</th>
+                        <td class="w-80">{!! $data->Production_Table_Assessment ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+
+                    <tr>
+                        <th class="w-20">Production Table Feedback</th>
+                        <td class="w-80">{!! $data->Production_Table_Feedback ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Production Table Attachments</th>
+                        <td class="w-80">
+                            @if($data->initial_attachment_ca)
+                                <a href="{{ asset('upload/' . $data->Production_Table_Attachment) }}" target="_blank">{{ $data->Production_Table_Attachment }}</a>
+                            @else
+                                Not Attached
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Production Review Table Completed By</th>
+                        <td class="w-80">{{ $data->Production_Table_By ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Production Review Table Completed On</th>
+                        <td class="w-80">{{ $data->Production_Table_On ?? 'Not Applicable' }}</td>
+                    </tr>
+
+
+
+                </table>
+
+
+            </div>
+
+            <div class="block">
+                <div class="block-head">
+                    Production Injection
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">Production Injection Required ?</th>
+                        <td class="w-80">{!! $data->Production_Injection_Review ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Production Injection Person</th>
+                        <td class="w-80">{!! $data->Production_Injection_Review ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Impact Assessment (By Production  Injection)</th>
+                        <td class="w-80">{!! $data->Production_Injection_Assessment ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Production Injection Feedback</th>
+                        <td class="w-80">{!! $data->Production_Injection_Feedback ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Production Injection
+                            Attachments</th>
+                        <td class="w-80">
+                            @if($data->Production_Injection_Attachment)
+                                <a href="{{ asset('upload/' . $data->Production_Injection_Attachment) }}" target="_blank">{{ $data->Production_Injection_Attachment }}</a>
+                            @else
+                                Not Attached
+                            @endif
+                        </td>
+                    </tr>
+
+                     <tr>
+                        <th class="w-20">Production Injection Completed
+                            By</th>
+                        <td class="w-80">{{ $data->Production_Injection_By ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Production Injection Completed On</th>
+                        <td class="w-80">{{ $data->Production_Table_On ?? 'Not Applicable' }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="block">
+                <div class="block-head">
+                    Production Injection
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">Production Injection Required ?</th>
+                        <td class="w-80">{!! $data->Production_Injection_Review ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Production Injection Person</th>
+                        <td class="w-80">{!! $data->Production_Injection_Review ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Impact Assessment (By Production  Injection)</th>
+                        <td class="w-80">{!! $data->Production_Injection_Assessment ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Production Injection Feedback</th>
+                        <td class="w-80">{!! $data->Production_Injection_Feedback ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Production Injection
+                            Attachments</th>
+                        <td class="w-80">
+                            @if($data->Production_Injection_Attachment)
+                                <a href="{{ asset('upload/' . $data->Production_Injection_Attachment) }}" target="_blank">{{ $data->Production_Injection_Attachment }}</a>
+                            @else
+                                Not Attached
+                            @endif
+                        </td>
+                    </tr>
+
+                     <tr>
+                        <th class="w-20">Production Injection Completed
+                            By</th>
+                        <td class="w-80">{{ $data->Production_Injection_By ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Production Injection Completed On</th>
+                        <td class="w-80">{{ $data->Production_Table_On ?? 'Not Applicable' }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="block">
+                <div class="block-head">
+                    Research & Development
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">Research Development Required ??</th>
+                        <td class="w-80">{!! $data->ResearchDevelopment_Review ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Research Development Person</th>
+                        <td class="w-80">{!! $data->ResearchDevelopment_person ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Impact Assessment (By Research Development Person)</th>
+                        <td class="w-80">{!! $data->ResearchDevelopmentStore_person ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Research Development Feedback</th>
+                        <td class="w-80">{!! $data->ResearchDevelopment_feedback ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Research Development
+                            Attachments</th>
+                        <td class="w-80">
+                            @if($data->ResearchDevelopment_attachment)
+                                <a href="{{ asset('upload/' . $data->ResearchDevelopment_attachment) }}" target="_blank">{{ $data->ResearchDevelopment_attachment }}</a>
+                            @else
+                                Not Attached
+                            @endif
+                        </td>
+                    </tr>
+
+                     <tr>
+                        <th class="w-20">Reaserch Development Completed
+                            By</th>
+                        <td class="w-80">{{ $data->ResearchDevelopment_by ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Research Development Completed On</th>
+                        <td class="w-80">{{ $data->ResearchDevelopment_on ?? 'Not Applicable' }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="block">
+                <div class="block-head">
+                    Research & Development
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">Research Development Required ?</th>
+                        <td class="w-80">{!! $data->ResearchDevelopment_Review ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Research Development Person</th>
+                        <td class="w-80">{!! $data->ResearchDevelopment_person ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Impact Assessment (By Research Development Person)</th>
+                        <td class="w-80">{!! $data->ResearchDevelopmentStore_person ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Research Development Feedback</th>
+                        <td class="w-80">{!! $data->ResearchDevelopment_feedback ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Research Development
+                            Attachments</th>
+                        <td class="w-80">
+                            @if($data->ResearchDevelopment_attachment)
+                                <a href="{{ asset('upload/' . $data->ResearchDevelopment_attachment) }}" target="_blank">{{ $data->ResearchDevelopment_attachment }}</a>
+                            @else
+                                Not Attached
+                            @endif
+                        </td>
+                    </tr>
+
+                     <tr>
+                        <th class="w-20">Reaserch Development Completed
+                            By</th>
+                        <td class="w-80">{{ $data->ResearchDevelopment_by ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Research Development Completed On</th>
+                        <td class="w-80">{{ $data->ResearchDevelopment_on ?? 'Not Applicable' }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="block">
+                <div class="block-head">
+                    Human Resource
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">Human Resource Required ?</th>
+                        <td class="w-80">{!! $data->ResearchDevelopment_Review ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Research Development Person</th>
+                        <td class="w-80">{!! $data->ResearchDevelopment_person ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Impact Assessment (By Research Development Person)</th>
+                        <td class="w-80">{!! $data->ResearchDevelopmentStore_person ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Research Development Feedback</th>
+                        <td class="w-80">{!! $data->ResearchDevelopment_feedback ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Research Development
+                            Attachments</th>
+                        <td class="w-80">
+                            @if($data->ResearchDevelopment_attachment)
+                                <a href="{{ asset('upload/' . $data->ResearchDevelopment_attachment) }}" target="_blank">{{ $data->ResearchDevelopment_attachment }}</a>
+                            @else
+                                Not Attached
+                            @endif
+                        </td>
+                    </tr>
+
+                     <tr>
+                        <th class="w-20">Reaserch Development Completed
+                            By</th>
+                        <td class="w-80">{{ $data->ResearchDevelopment_by ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Research Development Completed On</th>
+                        <td class="w-80">{{ $data->ResearchDevelopment_on ?? 'Not Applicable' }}</td>
+                    </tr>
+                </table>
+            </div>
+
             <div class="block">
                 <div class="block-head">
                     Complaint Acknowledgement
@@ -723,9 +1015,6 @@
             </div>
         </div>
     </div>
-
-
-
 </body>
 
 </html>

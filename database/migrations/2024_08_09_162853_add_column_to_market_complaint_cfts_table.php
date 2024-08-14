@@ -20,6 +20,9 @@ return new class extends Migration
             $table->text('Store_feedback')->nullable();
             $table->text('Store_by')->nullable();
             $table->text('Store_on')->nullable();
+            $table->text('ResearchDevelopment_attachment')->nullable();
+            $table->text('CorporateQualityAssurance_attachment')->nullable();
+            $table->text('Microbiology_attachment')->nullable();
 
         });
     }
