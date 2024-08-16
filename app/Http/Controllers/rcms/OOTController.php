@@ -1815,22 +1815,21 @@ class OOTController extends Controller
                 return back();
             }
             
-    
             if ($changestage->stage == 2) {
                 $changestage->stage = "3";
-                $changestage->pls_submited_by = Auth::user()->name;
-                $changestage->pls_submited_on = Carbon::now()->format('d-M-Y');
-                $changestage->pls_comments = $request->comments;
-                $changestage->status = "CQA/QA Head Primary Review";
+                // $changestage->Request_For_Cancellation_By = Auth::user()->name;
+                // $changestage->Request_For_Cancellation_On = Carbon::now()->format('d-M-Y');
+                // $changestage->Request_For_Cancellation_Comment = $request->comments;
+                $changestage->status = "QA Head Approval";
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
-                $history->activity_type = 'HOD Primary Review Complete By     ,     HOD Primary Review Complete On';
-                if (is_null($lastDocument->pls_submited_by) || $lastDocument->pls_submited_by === '') {
+                $history->activity_type = 'Request For Cancellation By     ,     Request For Cancellation On';
+                if (is_null($lastDocument->Request_For_Cancellation_By) || $lastDocument->Request_For_Cancellation_By === '') {
                     $history->previous = "Null";
                 } else {
-                    $history->previous = $lastDocument->pls_submited_by . ' , ' . $lastDocument->pls_submited_on;
+                    $history->previous = $lastDocument->Request_For_Cancellation_By . ' , ' . $lastDocument->Request_For_Cancellation_On;
                 }
-                $history->current = $changestage->pls_submited_by . ' , ' . $changestage->pls_submited_on;
+                $history->current = $changestage->Request_For_Cancellation_By . ' , ' . $changestage->Request_For_Cancellation_On;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1853,9 +1852,11 @@ class OOTController extends Controller
                 toastr()->success('CQA/QA Head Primary Review');
                 return back();
             }
+
+            
     
-            if ($changestage->stage == 3) {
-                $changestage->stage = "4";
+            if ($changestage->stage == 4) {
+                $changestage->stage = "5";
                 $changestage->ppli_submited_by = Auth::user()->name;
                 $changestage->ppli_submited_on = Carbon::now()->format('d-M-Y');
                 $changestage->ppli_comments = $request->comments;
@@ -1893,8 +1894,8 @@ class OOTController extends Controller
                 return back();
             }
     
-            if ($changestage->stage == 4) {
-                $changestage->stage = "5";
+            if ($changestage->stage == 5) {
+                $changestage->stage = "7";
                 $changestage->p_capa_submited_by = Auth::user()->name;
                 $changestage->p_capa_submited_on = Carbon::now()->format('d-M-Y');
                 $changestage->p_capa_comments = $request->comments;
@@ -1933,8 +1934,8 @@ class OOTController extends Controller
                 return redirect()->back();
             }
     
-            if ($changestage->stage == 5) {
-                $changestage->stage = "7";
+            if ($changestage->stage == 7) {
+                $changestage->stage = "8";
                 $changestage->Final_Approval_By = Auth::user()->name;
                 $changestage->Final_Approval_on = Carbon::now()->format('d-M-Y');
                 $changestage->final_capa_comments = $request->comments;
@@ -1971,8 +1972,8 @@ class OOTController extends Controller
                 return back();
             }
     
-            if ($changestage->stage == 7) {
-                $changestage->stage = "8";
+            if ($changestage->stage == 8) {
+                $changestage->stage = "9";
                 // $changestage->cause_i_completed_by = Auth::user()->name;
                 // $changestage->cause_i_completed_on = Carbon::now()->format('d-M-Y');
                 // $changestage->correction_data_comment = $request->comments;
@@ -2011,11 +2012,11 @@ class OOTController extends Controller
                 return back();
             }
     
-            if ($changestage->stage == 8) {
-                $changestage->stage = "9";
-                $changestage->approved_data_completed_by = Auth::user()->name;
-                $changestage->approved_data_completed_on = Carbon::now()->format('d-M-Y');
-                $changestage->approved_data_comment = $request->comments;
+            if ($changestage->stage == 9) {
+                $changestage->stage = "10";
+                // $changestage->approved_data_completed_by = Auth::user()->name;
+                // $changestage->approved_data_completed_on = Carbon::now()->format('d-M-Y');
+                // $changestage->approved_data_comment = $request->comments;
                 $changestage->status = "Closed-Done";
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
@@ -2047,8 +2048,8 @@ class OOTController extends Controller
                 return back();
             }
     
-            if ($changestage->stage == 10) {
-                $changestage->stage = "11";
+            if ($changestage->stage == 11) {
+                $changestage->stage = "12";
                 // $changestage->correction_ooT_completed_by = Auth::user()->name;
                 // $changestage->correction_ooT_completed_on = Carbon::now()->format('d-M-Y');
                 // $changestage->correction_ooT_comment = $request->comments;
@@ -2083,8 +2084,8 @@ class OOTController extends Controller
                 return back();
             }
     
-            if ($changestage->stage == 11) {
-                $changestage->stage = "12";
+            if ($changestage->stage == 12) {
+                $changestage->stage = "13";
                 $changestage->Phase_IB_HOD_Review_Completed_BY = Auth::user()->name;
                 $changestage->Phase_IB_HOD_Review_Completed_ON = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_IB_HOD_Review_Completed_Comment = $request->comments;
@@ -2121,8 +2122,8 @@ class OOTController extends Controller
                 return back();
             }
     
-            if ($changestage->stage == 12) {
-                $changestage->stage = "13";
+            if ($changestage->stage == 13) {
+                $changestage->stage = "14";
                 $changestage->Phase_IB_QA_Review_Complete_12_by = Auth::user()->name;
                 $changestage->Phase_IB_QA_Review_Complete_12_on = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_IB_QA_Review_Complete_12_comment = $request->comments;
@@ -2157,8 +2158,8 @@ class OOTController extends Controller
                 toastr()->success('P-IB CQAH/QAH Review');
                 return back();
             }
-            if ($changestage->stage == 13) {
-                $changestage->stage = "14";
+            if ($changestage->stage == 14) {
+                $changestage->stage = "15";
                 $changestage->P_IB_Assignable_Cause_Found_by = Auth::user()->name;
                 $changestage->P_IB_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
                 $changestage->P_IB_Assignable_Cause_Found_comment = $request->comments;
@@ -2192,8 +2193,8 @@ class OOTController extends Controller
                 toastr()->success('Closed Done');
                 return back();
             }
-            if ($changestage->stage == 15) {
-                $changestage->stage = "16";
+            if ($changestage->stage == 16) {
+                $changestage->stage = "17";
                 $changestage->Phase_II_A_Investigation_by = Auth::user()->name;
                 $changestage->Phase_II_A_Investigation_on = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_II_A_Investigation_comment = $request->comments;
@@ -2229,8 +2230,8 @@ class OOTController extends Controller
                 toastr()->success('Phase II A HOD Primary Review');
                 return back();
             }
-            if ($changestage->stage == 16) {
-                $changestage->stage = "17";
+            if ($changestage->stage == 17) {
+                $changestage->stage = "18";
                 $changestage->Phase_II_A_HOD_Review_Complete_by = Auth::user()->name;
                 $changestage->Phase_II_A_HOD_Review_Complete_on = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_II_A_HOD_Review_Complete_comment = $request->comments;
@@ -2265,8 +2266,8 @@ class OOTController extends Controller
                 return back();
             }
     
-            if ($changestage->stage == 17) {
-                $changestage->stage = "18";
+            if ($changestage->stage == 18) {
+                $changestage->stage = "19";
                 $changestage->Phase_II_A_QA_Review_Complete_by = Auth::user()->name;
                 $changestage->Phase_II_A_QA_Review_Complete_on = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_II_A_QA_Review_Complete_comment = $request->comments;
@@ -2300,8 +2301,8 @@ class OOTController extends Controller
                 toastr()->success('P-II A QAH/CQAH Review');
                 return back();
             }
-            if ($changestage->stage == 18) {
-                $changestage->stage = "19";
+            if ($changestage->stage == 20) {
+                $changestage->stage = "21";
                 $changestage->P_II_A_Assignable_Cause_Found_by = Auth::user()->name;
                 $changestage->P_II_A_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
                 $changestage->P_II_A_Assignable_Cause_Found_comment = $request->comments;
@@ -2336,8 +2337,8 @@ class OOTController extends Controller
                 return back();
             }
     
-            if ($changestage->stage == 20) {
-                $changestage->stage = "21";
+            if ($changestage->stage == 21) {
+                $changestage->stage = "22";
                 $changestage->Phase_II_B_Investigation_by = Auth::user()->name;
                 $changestage->Phase_II_B_Investigation_on = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_II_B_Investigation_comment = $request->comments;
@@ -2372,8 +2373,8 @@ class OOTController extends Controller
                 toastr()->success('Phase II B HOD Primary Review ');
                 return back();
             }
-            if ($changestage->stage == 21) {
-                $changestage->stage = "22";
+            if ($changestage->stage == 22) {
+                $changestage->stage = "23";
                 $changestage->Phase_II_B_HOD_Review_Complete_by = Auth::user()->name;
                 $changestage->Phase_II_B_HOD_Review_Complete_on = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_II_B_HOD_Review_Complete_comment = $request->comments;
@@ -2408,8 +2409,8 @@ class OOTController extends Controller
                 toastr()->success('Phase II B QA Review  ');
                 return back();
             }
-            if ($changestage->stage == 22) {
-                $changestage->stage = "23";
+            if ($changestage->stage == 23) {
+                $changestage->stage = "24";
                 $changestage->Phase_II_B_QA_ReviewComplete_by = Auth::user()->name;
                 $changestage->Phase_II_B_QA_ReviewComplete_on = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_II_B_QA_ReviewComplete_comment = $request->comments;
@@ -2434,8 +2435,8 @@ class OOTController extends Controller
                 toastr()->success('P-II B QAH/CQAH Review');
                 return back();
             }
-            if ($changestage->stage == 23) {
-                $changestage->stage = "24";
+            if ($changestage->stage == 24) {
+                $changestage->stage = "25";
                 $changestage->P_II_B_Assignable_Cause_Found_by = Auth::user()->name;
                 $changestage->P_II_B_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
                 $changestage->P_II_B_Assignable_Cause_Found_comment = $request->comments;
@@ -2487,7 +2488,7 @@ class OOTController extends Controller
                 return back();
             }
     
-            if ($data->stage == 3) {
+            if ($data->stage == 4) {
                 $data->stage = "2";
                 $data->status = "HOD Primary Review";
                 $data->new_stage_reject_HOD_by = Auth::user()->name;
@@ -2497,8 +2498,8 @@ class OOTController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($data->stage == 4) {
-                $data->stage = "3";
+            if ($data->stage == 5) {
+                $data->stage = "4";
                 $data->status = "CQA/QA Head Primary Review";
                 $data->new_stage_reject_CQA_by = Auth::user()->name;
                 $data->new_stage_reject__CQA_on = Carbon::now()->format('d-M-Y');
@@ -2507,8 +2508,8 @@ class OOTController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($data->stage == 5) {
-                $data->stage = "4";
+            if ($data->stage == 7) {
+                $data->stage = "5";
                 $data->status = "Under Phase-IA Investigation";
                 $data->new_stage_reject_UnderPhaseIA_by = Auth::user()->name;
                 $data->new_stage_reject_UnderPhaseIA_on = Carbon::now()->format('d-M-Y');
@@ -2517,8 +2518,8 @@ class OOTController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($data->stage == 7) {
-                $data->stage = "5";
+            if ($data->stage == 8) {
+                $data->stage = "7";
                 $data->status = "Phase IA HOD Primary Review";
                 $data->new_stage_reject_Phase_IA_HOD_Primary_Review_by = Auth::user()->name;
                 $data->new_stage_reject_Phase_IA_HOD_Primary_Review_on = Carbon::now()->format('d-M-Y');
@@ -2527,8 +2528,8 @@ class OOTController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($data->stage == 8) {
-                $data->stage = "7";
+            if ($data->stage == 10) {
+                $data->stage = "8";
                 $data->status = "Under Stage II B Investigation";
                 $data->new_stage_rejectUnder_Stage_II_B_Investigation_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Stage_II_B_Investigation_on = Carbon::now()->format('d-M-Y');
@@ -2537,8 +2538,8 @@ class OOTController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($data->stage == 10) {
-                $data->stage = "8";
+            if ($data->stage == 11) {
+                $data->stage = "10";
                 $data->status = "P-IA CQAH/QAH Review";
                 $data->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by = Auth::user()->name;
                 $data->new_stage_rejectP_IA_CQAH_QAH_Reviewation_on = Carbon::now()->format('d-M-Y');
@@ -2547,8 +2548,8 @@ class OOTController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($data->stage == 11) {
-                $data->stage = "10";
+            if ($data->stage == 12) {
+                $data->stage = "11";
                 $data->status = "Under Phase-IB Investigation";
                 $data->new_stage_rejectUnder_Phase_IB_Investigation_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Phase_IB_Investigation_on = Carbon::now()->format('d-M-Y');
@@ -2557,8 +2558,8 @@ class OOTController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($data->stage == 12) {
-                $data->stage = "11";
+            if ($data->stage == 13) {
+                $data->stage = "12";
                 $data->status = "Phase IB HOD Primary Review";
                 $data->new_stage_rejectPhase_IB_HOD_Primary_Review_by = Auth::user()->name;
                 $data->new_stage_rejectPhase_IB_HOD_Primary_Review_on = Carbon::now()->format('d-M-Y');
@@ -2567,8 +2568,8 @@ class OOTController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($data->stage == 13) {
-                $data->stage = "12";
+            if ($data->stage == 15) {
+                $data->stage = "13";
                 $data->status = "Phase IB QA Review";
                 $data->new_stage_rejectPhase_IB_QA_Review_by = Auth::user()->name;
                 $data->new_stage_rejectPhase_IB_QA_Review_on = Carbon::now()->format('d-M-Y');
@@ -2577,8 +2578,8 @@ class OOTController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($data->stage == 15) {
-                $data->stage = "13";
+            if ($data->stage == 16) {
+                $data->stage = "15";
                 $data->status = "P-IA CQAH/QAH Review";
                 $data->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by = Auth::user()->name;
                 $data->new_stage_rejectP_IA_CQAH_QAH_Reviewation_on = Carbon::now()->format('d-M-Y');
@@ -2587,8 +2588,8 @@ class OOTController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($data->stage == 16) {
-                $data->stage = "15";
+            if ($data->stage == 17) {
+                $data->stage = "16";
                 $data->status = "Under Phase-II A Investigation";
                 $data->new_stage_rejectUnder_Phase_II_A_Investigation_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Phase_II_A_Investigation_on = Carbon::now()->format('d-M-Y');
@@ -2597,8 +2598,8 @@ class OOTController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($data->stage == 17) {
-                $data->stage = "16";
+            if ($data->stage == 18) {
+                $data->stage = "17";
                 $data->status = "Phase II A HOD Primary Review";
                 $data->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_on = Carbon::now()->format('d-M-Y');
@@ -2608,8 +2609,8 @@ class OOTController extends Controller
                 return back();
             }
     
-            if ($data->stage == 18) {
-                $data->stage = "17";
+            if ($data->stage == 20) {
+                $data->stage = "18";
                 $data->status = "Phase IA QA Review";
                 $data->new_stage_rejectUnder_Phase_IA_HOD18Investigation_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Phase_IA_HOD18Investigation_on = Carbon::now()->format('d-M-Y');
@@ -2618,8 +2619,8 @@ class OOTController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($data->stage == 20) {
-                $data->stage = "18";
+            if ($data->stage == 21) {
+                $data->stage = "20";
                 $data->status = "P-II A QAH/CQAH Review";
                 $data->new_stage_reject_P_II_A_QAH_CQAH_Review_by = Auth::user()->name;
                 $data->new_stage_reject_P_II_A_QAH_CQAH_Review_on = Carbon::now()->format('d-M-Y');
@@ -2629,8 +2630,8 @@ class OOTController extends Controller
                 return back();
             }
     
-            if ($data->stage == 21) {
-                $data->stage = "20";
+            if ($data->stage == 22) {
+                $data->stage = "21";
                 $data->status = "Under Phase-II B Investigation";
                 $data->new_stage_rejectUnder_Phase_II_B_Investigation_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Phase_II_B_Investigation_on = Carbon::now()->format('d-M-Y');
@@ -2640,8 +2641,8 @@ class OOTController extends Controller
                 return back();
             }
     
-            if ($data->stage == 22) {
-                $data->stage = "21";
+            if ($data->stage == 23) {
+                $data->stage = "22";
                 $data->status = "Phase II B HOD Primary Review";
                 $data->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_on = Carbon::now()->format('d-M-Y');
@@ -2672,7 +2673,7 @@ class OOTController extends Controller
         $data = Ootc::find($id);
         $lastDocument = Ootc::find($id);
 
-        if ($data->stage == 23) {
+        if ($data->stage == 24) {
             $data->stage = "4";
             $data->status = "Phase II B QA Review ";
             $data->new_stage_reject_by = Auth::user()->name;
@@ -2711,6 +2712,266 @@ class OOTController extends Controller
 
 }
 
+public function stageChange(Request $request, $id){
+
+    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        $changestage = Ootc::find($id);
+        $lastDocument = Ootc::find($id);
+            
+        
+        if ($changestage->stage == 1) {
+            $changestage->stage = "3";
+            // $changestage->Request_For_Cancellation_By = Auth::user()->name;
+            // $changestage->Request_For_Cancellation_On = Carbon::now()->format('d-M-Y');
+            // $changestage->Request_For_Cancellation_Comment = $request->comment;
+            $changestage->status = "QA Head Approval";
+            $history = new OotAuditTrial();
+            $history->ootcs_id = $id;
+            $history->activity_type = 'Request For Cancellation By  ,   Request For Cancellation On';
+            if (is_null($lastDocument->Request_For_Cancellation_By) || $lastDocument->Request_For_Cancellation_By === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->Request_For_Cancellation_By . ' , ' . $lastDocument->Request_For_Cancellation_On;
+            }
+            
+            $history->current = $changestage->Request_For_Cancellation_By . ' , ' . $changestage->Request_For_Cancellation_On;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Under Phase-IB Investigation";
+            $history->change_from = $lastDocument->status;
+            // $history->action_name = 'Assignable Cause Not Found';
+            $history->action = 'Assignable Cause Not Found';
+            $history->stage='Assignable Cause Not Found';
+            if (is_null($lastDocument->correction_r_completed_by) || $lastDocument->correction_r_completed_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+
+            $history->save();
+            $changestage->update();
+            toastr()->success('Under Phase-IB Investigation');
+            return back();
+        }
+        if ($changestage->stage == 2) {
+            $changestage->stage = "4";
+            $changestage->pls_submited_by = Auth::user()->name;
+            $changestage->pls_submited_on = Carbon::now()->format('d-M-Y');
+            $changestage->pls_comments = $request->comments;
+            $changestage->status = "CQA/QA Head Primary Review";
+            $history = new OotAuditTrial();
+            $history->ootcs_id = $id;
+            $history->activity_type = 'HOD Primary Review Complete By     ,     HOD Primary Review Complete On';
+            if (is_null($lastDocument->pls_submited_by) || $lastDocument->pls_submited_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->pls_submited_by . ' , ' . $lastDocument->pls_submited_on;
+            }
+            $history->current = $changestage->pls_submited_by . ' , ' . $changestage->pls_submited_on;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "CQA/QA Head Primary Review";
+            $history->change_from = $lastDocument->status;
+            $history->action = 'HOD Primary Review Complete';
+            if (is_null($lastDocument->pls_submited_by) || $lastDocument->pls_submited_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->stage='HOD Primary Review Complete';
+            $history->save();
+
+            
+            // $this->saveAuditTrail($id, $lastDocument, $changestage, 'HOD Primary Review', 'HOD Primary Review Complete');
+            $changestage->update();
+            toastr()->success('CQA/QA Head Primary Review');
+            return back();
+        }
+        
+        
+
+                        if ($changestage->stage == 9) {
+                            $changestage->stage = "11";
+                            // $changestage->correction_r_completed_by = Auth::user()->name;
+                            // $changestage->correction_r_completed_on = Carbon::now()->format('d-M-Y');
+                            // $changestage->correction_r_ncompleted_comment = $request->comment;
+                            $changestage->status = "Under Phase-IB Investigation";
+                            $history = new OotAuditTrial();
+                            $history->ootcs_id = $id;
+                            $history->activity_type = 'Assignable Cause Not Found Complete By  ,   Assignable Cause Not Found Complete On';
+                            if (is_null($lastDocument->correction_r_completed_by) || $lastDocument->correction_r_completed_by === '') {
+                                $history->previous = "Null";
+                            } else {
+                                $history->previous = $lastDocument->correction_r_completed_by . ' , ' . $lastDocument->correction_r_completed_on;
+                            }
+                            
+                            $history->current = $changestage->correction_r_completed_by . ' , ' . $changestage->correction_r_completed_on;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->change_to = "Under Phase-IB Investigation";
+                            $history->change_from = $lastDocument->status;
+                            // $history->action_name = 'Assignable Cause Not Found';
+                            $history->action = 'Assignable Cause Not Found';
+                            $history->stage='Assignable Cause Not Found';
+                            if (is_null($lastDocument->correction_r_completed_by) || $lastDocument->correction_r_completed_by === '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
+                
+                            $history->save();
+                            $changestage->update();
+                            toastr()->success('Under Phase-IB Investigation');
+                            return back();
+                        }
+                
+                        if ($changestage->stage == 14) {
+                            $changestage->stage = "16";
+                            $changestage->Under_Phase_II_A_Investigation_by = Auth::user()->name;
+                            $changestage->Under_Phase_II_A_Investigation_on = Carbon::now()->format('d-M-Y');
+                            $changestage->Under_Phase_II_A_Investigation_comment = $request->comment;
+                            $changestage->status = "Under Phase-II A Investigation";
+                            $history = new OotAuditTrial();
+                            $history->ootcs_id = $id;
+                            $history->activity_type = 'P-IB Assignable Cause Found By   ,   P-IB Assignable Cause Found On';
+                            if (is_null($lastDocument->Under_Phase_II_A_Investigation_by) || $lastDocument->Under_Phase_II_A_Investigation_by === '') {
+                                $history->previous = "Null";
+                            } else {
+                                $history->previous = $lastDocument->Under_Phase_II_A_Investigation_by . ' , ' . $lastDocument->Under_Phase_II_A_Investigation_on;
+                            }
+                            // $history->previous = $lastDocument->Under_Phase_II_A_Investigation_by;
+                            $history->current = $changestage->Under_Phase_II_A_Investigation_by . ' , ' . $changestage->Under_Phase_II_A_Investigation_on;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->change_to = "Under Phase-II A Investigation";
+                            $history->change_from = $lastDocument->status;
+                            $history->action = 'P-IB Assignable Cause Found';
+                            if (is_null($lastDocument->Under_Phase_II_A_Investigation_by) || $lastDocument->Under_Phase_II_A_Investigation_by === '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
+                            $history->stage='P-IB Assignable Cause Found';
+                            $history->save();
+                            
+                            // $this->saveAuditTrail($id, $lastDocument, $changestage, 'P-IB Assignable Cause Found', 'Under Phase-II A Investigation');
+                            $changestage->update();
+                            toastr()->success('Under Phase-II A Investigation');
+                            return back();
+                        }
+                
+                        if ($changestage->stage == 19) {
+                            $changestage->stage = "21";
+                            $changestage->P_II_A_Assignable_Cause_Not_Found_by = Auth::user()->name;
+                            $changestage->P_II_A_Assignable_Cause_Not_Found_on = Carbon::now()->format('d-M-Y');
+                            $changestage->P_II_A_Assignable_Cause_Not_Found_comment = $request->comment;
+                            $changestage->status = "Under Phase-II B Investigation ";
+                            $history = new OotAuditTrial();
+                            $history->ootcs_id = $id;
+                            $history->activity_type = 'P-II A Assignable Cause Found By  ,   P-II A Assignable Cause Found On';
+                            if (is_null($lastDocument->P_II_A_Assignable_Cause_Not_Found_by) || $lastDocument->P_II_A_Assignable_Cause_Not_Found_by === '') {
+                                $history->previous = "Null";
+                            } else {
+                                $history->previous = $lastDocument->P_II_A_Assignable_Cause_Not_Found_by . ' , ' . $lastDocument->P_II_A_Assignable_Cause_Not_Found_on;
+                            }
+                            $history->current = $changestage->P_II_A_Assignable_Cause_Not_Found_by . ' , ' . $changestage->P_II_A_Assignable_Cause_Not_Found_on;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->change_to = "Under Phase-II B Investigation";
+                            $history->change_from = $lastDocument->status;
+                            $history->action = 'P-II A Assignable Cause Found';
+                            $history->stage='P-II A Assignable Cause Found';
+                            if (is_null($lastDocument->P_II_A_Assignable_Cause_Not_Found_by) || $lastDocument->P_II_A_Assignable_Cause_Not_Found_by === '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
+                            $history->save();
+                            // $this->saveAuditTrail($id, $lastDocument, $changestage, 'P-II A Assignable Cause Found', 'Under Phase-II B Investigation ');
+                            $changestage->update();
+                            toastr()->success('Under Phase-II B Investigation ');
+                            return back();
+                        }
+                    }
+                        
+        
+            toastr()->success('Document Sent');
+            return back();
+}
+
+
+public function ootCancel(Request $request, $id)
+{
+    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        $data = Ootc::find($id);
+        $lastDocument = Ootc::find($id);
+        $data->stage = "0";
+        $data->status = "Closed-Cancelled";
+        $data->cancelled_by = Auth::user()->name;
+        $data->cancelled_on = Carbon::now()->format('d-M-Y');
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous ="";
+                $history->current = $data->cancelled_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                // dd($history->user_role);
+                $history->origin_state =  $data->status;
+                $history->stage = 'Cancelled';
+                $history->save();
+        $data->update();
+        // $history = new OotAuditTrial();
+        // $history->activity_type = "OOT";
+        // $history->ootcs_id = $id;
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->stage = $data->stage;
+        // $history->status = $data->status;
+        // $history->save();
+
+        // $list = Helpers::getInitiatorUserList();
+        // foreach ($list as $u) {
+        //     if($u->q_m_s_divisions_id == $capa->division_id){
+        //       $email = Helpers::getInitiatorEmail($u->user_id);
+        //       if ($email !== null) {
+
+        //         Mail::send(
+        //             'mail.view-mail',
+        //             ['data' => $capa],
+        //             function ($message) use ($email) {
+        //                 $message->to($email)
+        //                     ->subject("Cancelled By ".Auth::user()->name);
+        //             }
+        //          );
+        //       }
+        //     }
+        // }
+
+        toastr()->success('Document Sent');
+        return back();
+    } else {
+        toastr()->error('E-signature Not match');
+        return back();
+    }
+}
 public function OOTChildRoot(Request $request ,$id)
 {
     $cc = Ootc::find($id);
@@ -2817,224 +3078,6 @@ public function oo_t_capa_child(Request $request ,$id)
             }
     }
 
-    public function stageChange(Request $request, $id){
-
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $changestage = Ootc::find($id);
-            $lastDocument = Ootc::find($id);
-                // $changestage->stage = "5";
-                // $changestage->status = "Pending Extended Investigation";
-                // $changestage->pei_submited_by = Auth::user()->name;
-                // $changestage->pei_submited_on = Carbon::now()->format('d-M-Y');
-                // $changestage->pei_comments =$request->comments;
-                //                 $history = new OotAuditTrial();
-                //                 $history->ootcs_id = $id;
-                //                 $history->activity_type = 'Activity Log';
-                //                 $history->current = $changestage->Completed_By;
-                //                 $history->comment = $request->comment;
-                //                 $history->user_id = Auth::user()->id;
-                //                 $history->user_name = Auth::user()->name;
-                //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                //                 $history->origin_state = $lastDocument->status;
-                //                 $history->stage = "Lab Error Not Idenfied";
-                //                 $history->action = "Lab Error Not  Identified ";
-                //                 $history->save();
-                            //     $list = Helpers::getLeadAuditeeUserList();
-                            //     foreach ($list as $u) {
-                            //         if($u->q_m_s_divisions_id == $changestage->division_id){
-                            //             $email = Helpers::getInitiatorEmail($u->user_id);
-                            //              if ($email !== null) {
-
-                            //               Mail::send(
-                            //                   'mail.view-mail',
-                            //                    ['data' => $changestage],
-                            //                 function ($message) use ($email) {
-                            //                     $message->to($email)
-                            //                         ->subject("Document sent ".Auth::user()->name);
-                            //                 }
-                            //               );
-                            //             }
-                            //      }
-                            //   }
-                            
-                            if ($changestage->stage == 8) {
-                                $changestage->stage = "10";
-                                // $changestage->correction_r_completed_by = Auth::user()->name;
-                                // $changestage->correction_r_completed_on = Carbon::now()->format('d-M-Y');
-                                // $changestage->correction_r_ncompleted_comment = $request->comment;
-                                $changestage->status = "Under Phase-IB Investigation";
-                                $history = new OotAuditTrial();
-                                $history->ootcs_id = $id;
-                                $history->activity_type = 'Assignable Cause Not Found Complete By  ,   Assignable Cause Not Found Complete On';
-                                if (is_null($lastDocument->correction_r_completed_by) || $lastDocument->correction_r_completed_by === '') {
-                                    $history->previous = "Null";
-                                } else {
-                                    $history->previous = $lastDocument->correction_r_completed_by . ' , ' . $lastDocument->correction_r_completed_on;
-                                }
-                                
-                                // $history->previous = $lastDocument->correction_r_completed_by;
-                                // $history->current = $changestage->correction_r_completed_by;
-                                $history->current = $changestage->correction_r_completed_by . ' , ' . $changestage->correction_r_completed_on;
-                                $history->comment = $request->comment;
-                                $history->user_id = Auth::user()->id;
-                                $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                                $history->origin_state = $lastDocument->status;
-                                $history->change_to = "Under Phase-IB Investigation";
-                                $history->change_from = $lastDocument->status;
-                                // $history->action_name = 'Assignable Cause Not Found';
-                                $history->action = 'Assignable Cause Not Found';
-                                $history->stage='Assignable Cause Not Found';
-                                if (is_null($lastDocument->correction_r_completed_by) || $lastDocument->correction_r_completed_by === '') {
-                                    $history->action_name = 'New';
-                                } else {
-                                    $history->action_name = 'Update';
-                                }
-                    
-                                $history->save();
-                                $changestage->update();
-                                toastr()->success('Under Phase-IB Investigation');
-                                return back();
-                            }
-                    
-                            if ($changestage->stage == 13) {
-                                $changestage->stage = "15";
-                                $changestage->Under_Phase_II_A_Investigation_by = Auth::user()->name;
-                                $changestage->Under_Phase_II_A_Investigation_on = Carbon::now()->format('d-M-Y');
-                                $changestage->Under_Phase_II_A_Investigation_comment = $request->comment;
-                                $changestage->status = "Under Phase-II A Investigation";
-                                $history = new OotAuditTrial();
-                                $history->ootcs_id = $id;
-                                $history->activity_type = 'P-IB Assignable Cause Found By   ,   P-IB Assignable Cause Found On';
-                                if (is_null($lastDocument->Under_Phase_II_A_Investigation_by) || $lastDocument->Under_Phase_II_A_Investigation_by === '') {
-                                    $history->previous = "Null";
-                                } else {
-                                    $history->previous = $lastDocument->Under_Phase_II_A_Investigation_by . ' , ' . $lastDocument->Under_Phase_II_A_Investigation_on;
-                                }
-                                // $history->previous = $lastDocument->Under_Phase_II_A_Investigation_by;
-                                $history->current = $changestage->Under_Phase_II_A_Investigation_by . ' , ' . $changestage->Under_Phase_II_A_Investigation_on;
-                                $history->comment = $request->comment;
-                                $history->user_id = Auth::user()->id;
-                                $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                                $history->origin_state = $lastDocument->status;
-                                $history->change_to = "Under Phase-II A Investigation";
-                                $history->change_from = $lastDocument->status;
-                                $history->action = 'P-IB Assignable Cause Found';
-                                if (is_null($lastDocument->Under_Phase_II_A_Investigation_by) || $lastDocument->Under_Phase_II_A_Investigation_by === '') {
-                                    $history->action_name = 'New';
-                                } else {
-                                    $history->action_name = 'Update';
-                                }
-                                $history->stage='P-IB Assignable Cause Found';
-                                $history->save();
-                                
-                                // $this->saveAuditTrail($id, $lastDocument, $changestage, 'P-IB Assignable Cause Found', 'Under Phase-II A Investigation');
-                                $changestage->update();
-                                toastr()->success('Under Phase-II A Investigation');
-                                return back();
-                            }
-                    
-                            if ($changestage->stage == 18) {
-                                $changestage->stage = "20";
-                                $changestage->P_II_A_Assignable_Cause_Not_Found_by = Auth::user()->name;
-                                $changestage->P_II_A_Assignable_Cause_Not_Found_on = Carbon::now()->format('d-M-Y');
-                                $changestage->P_II_A_Assignable_Cause_Not_Found_comment = $request->comment;
-                                $changestage->status = "Under Phase-II B Investigation ";
-                                $history = new OotAuditTrial();
-                                $history->ootcs_id = $id;
-                                $history->activity_type = 'P-II A Assignable Cause Found By  ,   P-II A Assignable Cause Found On';
-                                if (is_null($lastDocument->P_II_A_Assignable_Cause_Not_Found_by) || $lastDocument->P_II_A_Assignable_Cause_Not_Found_by === '') {
-                                    $history->previous = "Null";
-                                } else {
-                                    $history->previous = $lastDocument->P_II_A_Assignable_Cause_Not_Found_by . ' , ' . $lastDocument->P_II_A_Assignable_Cause_Not_Found_on;
-                                }
-                                $history->current = $changestage->P_II_A_Assignable_Cause_Not_Found_by . ' , ' . $changestage->P_II_A_Assignable_Cause_Not_Found_on;
-                                $history->comment = $request->comment;
-                                $history->user_id = Auth::user()->id;
-                                $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                                $history->origin_state = $lastDocument->status;
-                                $history->change_to = "Under Phase-II B Investigation";
-                                $history->change_from = $lastDocument->status;
-                                $history->action = 'P-II A Assignable Cause Found';
-                                $history->stage='P-II A Assignable Cause Found';
-                                if (is_null($lastDocument->P_II_A_Assignable_Cause_Not_Found_by) || $lastDocument->P_II_A_Assignable_Cause_Not_Found_by === '') {
-                                    $history->action_name = 'New';
-                                } else {
-                                    $history->action_name = 'Update';
-                                }
-                                $history->save();
-                                // $this->saveAuditTrail($id, $lastDocument, $changestage, 'P-II A Assignable Cause Found', 'Under Phase-II B Investigation ');
-                                $changestage->update();
-                                toastr()->success('Under Phase-II B Investigation ');
-                                return back();
-                            }
-                        }
-                            
-            
-                toastr()->success('Document Sent');
-                return back();
-
-        }
-    
-
-    public function ootCancel(Request $request, $id)
-    {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $data = Ootc::find($id);
-            $lastDocument = Ootc::find($id);
-            $data->stage = "0";
-            $data->status = "Closed-Cancelled";
-            $data->cancelled_by = Auth::user()->name;
-            $data->cancelled_on = Carbon::now()->format('d-M-Y');
-                    $history = new OotAuditTrial();
-                    $history->ootcs_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous ="";
-                    $history->current = $data->cancelled_by;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state =  $data->status;
-                    $history->stage = 'Cancelled';
-                    $history->save();
-            $data->update();
-            $history = new OotAuditTrial();
-            $history->activity_type = "OOT";
-            $history->ootcs_id = $id;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->stage = $data->stage;
-            // $history->status = $data->status;
-            $history->save();
-
-            // $list = Helpers::getInitiatorUserList();
-            // foreach ($list as $u) {
-            //     if($u->q_m_s_divisions_id == $capa->division_id){
-            //       $email = Helpers::getInitiatorEmail($u->user_id);
-            //       if ($email !== null) {
-
-            //         Mail::send(
-            //             'mail.view-mail',
-            //             ['data' => $capa],
-            //             function ($message) use ($email) {
-            //                 $message->to($email)
-            //                     ->subject("Cancelled By ".Auth::user()->name);
-            //             }
-            //          );
-            //       }
-            //     }
-            // }
-
-            toastr()->success('Document Sent');
-            return back();
-        } else {
-            toastr()->error('E-signature Not match');
-            return back();
-        }
-    }
 
 
     public function auditTiailPdf(Request $request,$id){
