@@ -15,7 +15,7 @@
         <div class="container-fluid">
             <div class="dashboard-container">
 
-                
+
 
                 <div class="row">
                     <div class="col-lg-9">
@@ -47,12 +47,12 @@
                             </div>
 
                             {{-- <div id="rootApp"></div> --}}
-                            
+
                             <div class="inner-block">
                                 <h2>Analytics</h2>
-            
+
                                 @include('frontend.charts.charts')
-            
+
                             </div>
 
                             <div class="chart-grid">
@@ -80,7 +80,7 @@
                                         <div id="chart-20"></div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="row">
                                  <div class="col-12">
                                     <div class="inner-block search-block">
@@ -104,11 +104,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
+
                      <div class="col-lg-3">
                         <div class="dashboard-right-block">
                             <div class="inner-block recent-record">
@@ -159,14 +159,10 @@
                                 <a herf="#" class="link">Go to Helpdesk</a>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
 
-
-
                 <div>
-
-                        
 
                         <div class="inner-block calendar-block">
                             <div id='calendar'></div>
@@ -435,7 +431,7 @@
                                         <div class="group-input input-date">
                                             <label for="due-date">Due Date</label>
                                             <!-- <input type="date" name="due_date"> -->
-                                            <div class="calenderauditee">                                     
+                                            <div class="calenderauditee">
                                                 <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
                                                 <input type="date" name="due_date" value=""
                                                 class="hide-input"
@@ -1064,7 +1060,7 @@ var options = {
         chart.render();
     //   =========================================================new chard added 5
 
-    
+
     var options = {
           series: [
           {
@@ -1169,7 +1165,7 @@ var options = {
             const goals =
               opt.w.config.series[opt.seriesIndex].data[opt.dataPointIndex]
                 .goals
-        
+
             if (goals && goals.length) {
               return `${val} / ${goals[0].value}`
             }
@@ -3039,7 +3035,7 @@ var options = {
         },
         xaxis: {
           categories: ['Assigned', 'Completed', 'Unassigned', 'Not Completed', 'In Process', 'Document Obsoleted', 'Course Obsoleted',
-            
+
           ],
         }
         };
@@ -3048,7 +3044,7 @@ var options = {
         chart.render();
     //   =========================================================new chard added 5
 
-    
+
     var options = {
           series: [
           {
@@ -3153,7 +3149,7 @@ var options = {
             const goals =
               opt.w.config.series[opt.seriesIndex].data[opt.dataPointIndex]
                 .goals
-        
+
             if (goals && goals.length) {
               return `${val} / ${goals[0].value}`
             }

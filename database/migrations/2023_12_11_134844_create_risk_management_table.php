@@ -130,7 +130,7 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
             $table->string('submitted_by')->nullable();
-            $table->string('evaluated_by')->nullable();           
+            $table->string('evaluated_by')->nullable();
             $table->string('plan_approved_by')->nullable();
             $table->string('cancelled_by')->nullable();
             $table->string('cancelled_on')->nullable();
@@ -141,6 +141,9 @@ return new class extends Migration
             $table->string('evaluated_on')->nullable();
             $table->string('plan_approved_on')->nullable();
             $table->string('risk_analysis_completed_on')->nullable();
+            $table->text('cft_review_by')->nullable();
+            $table->text('cft_review_on')->nullable();
+            $table->text('cft_review_comment')->nullable();
             $table->timestamps();
         });
     }

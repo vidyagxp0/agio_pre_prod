@@ -262,14 +262,14 @@
 
                         @elseif($data->stage == 5 && (in_array(1, $userRoleIds) || in_array(18, $userRoleIds)))
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Approve Plan
+                            QA Verification complete
                         </button></a>
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button></a>
                         @elseif($data->stage == 6 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                         <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            All Capa Close
+                            Approve Complete
                         </button></a>
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -333,14 +333,14 @@
                             @endif
 
                             @if ($data->stage >= 5)
-                                <div class="active">Pending Approval</div>
+                                <div class="active">All Action Complete</div>
                             @else
-                                <div class="">Pending Approval</div>
+                                <div class="">All Action Complete</div>
                             @endif
                             @if ($data->stage >= 6)
-                            <div class="active">Pending Action Completion</div>
+                            <div class="active">QA Head Approve</div>
                             @else
-                            <div class="">Pending Action Completion</div>
+                            <div class="">QA Head Approve</div>
                             @endif
                              @if ($data->stage >= 7)
                                 <div class="active">Pending Response Letter</div>

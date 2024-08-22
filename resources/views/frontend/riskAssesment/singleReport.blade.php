@@ -1357,12 +1357,22 @@
                         <td class="w-30">@if($data->criticality){{ $data->Production_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
-                        <div class="block-head">
-                            Production Attechment
-                        </div>
+
+
+
+                    <tr>
+                        <th class="w-20">Production by</th>
+                        <td class="w-30">@if($data->impact){{ $data->Production_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">Production on</th>
+                        <td class="w-30">@if($data->criticality){{ $data->production_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="block">
+                <div class="block-head"> Production Attachment  </div>
                         <table>
-                            <tr class="table_bg">
+                            <tr class="">
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Batch No</th>
                             </tr>
@@ -1380,14 +1390,6 @@
                                 </tr>
                             @endif
                         </table>
-                    </div>
-                    <tr>
-                        <th class="w-20">Production by</th>
-                        <td class="w-30">@if($data->impact){{ $data->Production_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Production on</th>
-                        <td class="w-30">@if($data->criticality){{ $data->production_on}}@else Not Applicable @endif</td>
-                    </tr>
-                </table>
             </div>
 
             <div class="block">
@@ -1406,30 +1408,7 @@
                         <td class="w-30">@if($data->Production_Injection_Assessment){{ $data->Production_Injection_Assessment}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
-                        <div class="block-head">
-                            Production Injection Attechment
-                        </div>
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
-                            </tr>
-                            @if($data->reference)
-                                @foreach(json_decode($data->Production_Injection_Attachment) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-60">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
+
                     <tr>
                         <th class="w-20">Production Injection by</th>
                         <td class="w-30">@if($data->Production_Injection_By){{ $data->Production_Injection_By}}@else Not Applicable @endif</td>
@@ -1437,6 +1416,33 @@
                         <td class="w-30">@if($data->Production_Injection_On){{ $data->Production_Injection_On}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
+            </div>
+
+            <div class="block">
+                <div class="border-table">
+                    <div class="block-head">
+                        Production Injection Attechment
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->reference)
+                            @foreach(json_decode($data->Production_Injection_Attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
 
             <div class="block">
@@ -1455,30 +1461,7 @@
                         <td class="w-30">@if($data->Quality_Control_feedback){{ $data->Quality_Control_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
-                        <div class="block-head">
-                            Quality Control Attechment
-                        </div>
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
-                            </tr>
-                            @if($data->reference)
-                                @foreach(json_decode($data->Quality_Control_attachment) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-60">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
+
                     <tr>
                         <th class="w-20">Quality Control By</th>
                         <td class="w-30">@if($data->Quality_Control_by){{ $data->Quality_Control_by }}@else Not Applicable @endif</td>
@@ -1486,6 +1469,33 @@
                         <td class="w-30">@if($data->Quality_Control_on){{ $data->Quality_Control_on}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
+            </div>
+
+            <div class="block">
+                <div class="border-table">
+                    <div class="block-head">
+                        Quality Control Attechment
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->reference)
+                            @foreach(json_decode($data->Quality_Control_attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
 
             <div class="block">
@@ -1504,30 +1514,7 @@
                         <td class="w-30">@if($data->QualityAssurance_feedback){{ $data->QualityAssurance_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
-                        <div class="block-head">
-                            Quality Assurance Attechment
-                        </div>
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
-                            </tr>
-                            @if($data->reference)
-                                @foreach(json_decode($data->Quality_Assurance_attachment) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-60">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
+
                     <tr>
                         <th class="w-20">Quality Control By</th>
                         <td class="w-30">@if($data->QualityAssurance_by){{ $data->QualityAssurance_by }}@else Not Applicable @endif</td>
@@ -1535,6 +1522,33 @@
                         <td class="w-30">@if($data->QualityAssurance_on){{ $data->QualityAssurance_on}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
+            </div>
+
+            <div class="block">
+                <div class="border-table">
+                    <div class="block-head">
+                        Quality Assurance Attechment
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->reference)
+                            @foreach(json_decode($data->Quality_Assurance_attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
 
             <div class="block">
@@ -1553,30 +1567,7 @@
                         <td class="w-30">@if($data->Engineering_feedback){{ $data->Engineering_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
-                        <div class="block-head">
-                            Engineering Attechment
-                        </div>
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
-                            </tr>
-                            @if($data->reference)
-                                @foreach(json_decode($data->Engineering_attachment) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-60">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
+
                     <tr>
                         <th class="w-20">Engineering By</th>
                         <td class="w-30">@if($data->Engineering_by){{ $data->Engineering_by }}@else Not Applicable @endif</td>
@@ -1584,6 +1575,33 @@
                         <td class="w-30">@if($data->Engineering_on){{ $data->Engineering_on}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
+            </div>
+
+            <div class="block">
+                <div class="border-table">
+                    <div class="block-head">
+                        Engineering Attechment
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->reference)
+                            @foreach(json_decode($data->Engineering_attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
 
             <div class="block">
@@ -1602,30 +1620,7 @@
                         <td class="w-30">@if($data->Analytical_Development_feedback){{ $data->Analytical_Development_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
-                        <div class="block-head">
-                            Analytical Development Attechment
-                        </div>
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
-                            </tr>
-                            @if($data->reference)
-                                @foreach(json_decode($data->Analytical_Development_attachment) as $key => $file)
-                                    <tr>_
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-60">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
+
                     <tr>
                         <th class="w-20">Analytical Development By</th>
                         <td class="w-30">@if($data->Analytical_Development_by){{ $data->Analytical_Development_by }}@else Not Applicable @endif</td>
@@ -1633,6 +1628,33 @@
                         <td class="w-30">@if($data->Analytical_Development_on){{ $data->Analytical_Development_on}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
+            </div>
+
+            <div class="block">
+                <div class="border-table">
+                    <div class="block-head">
+                        Analytical Development Attechment
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->reference)
+                            @foreach(json_decode($data->Analytical_Development_attachment) as $key => $file)
+                                <tr>_
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
 
 
@@ -1653,30 +1675,7 @@
                         <td class="w-30">@if($data->Technology_transfer_feedback){{ $data->Technology_transfer_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
-                        <div class="block-head">
-                            Technology Transfer Attechment
-                        </div>
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
-                            </tr>
-                            @if($data->reference)
-                                @foreach(json_decode($data->Technology_transfer_attachment) as $key => $file)
-                                    <tr>_
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-60">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
+
                     <tr>
                         <th class="w-20">Technology Transfer By</th>
                         <td class="w-30">@if($data->Technology_transfer_by){{ $data->Technology_transfer_by }}@else Not Applicable @endif</td>
@@ -1684,6 +1683,33 @@
                         <td class="w-30">@if($data->Technology_transfer_on){{ $data->Technology_transfer_on}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
+            </div>
+
+            <div class="block">
+                <div class="border-table">
+                    <div class="block-head">
+                        Technology Transfer Attechment
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->reference)
+                            @foreach(json_decode($data->Technology_transfer_attachment) as $key => $file)
+                                <tr>_
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
 
 
@@ -1703,30 +1729,7 @@
                         <td class="w-30">@if($data->Health_Safety_feedback){{ $data->Health_Safety_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
-                        <div class="block-head">
-                            Saftey Attechment
-                        </div>
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
-                            </tr>
-                            @if($data->reference)
-                                @foreach(json_decode($data->Environment_Health_Safety_attachment) as $key => $file)
-                                    <tr>_
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-60">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
+
                     <tr>
                         <th class="w-20">Saftey By</th>
                         <td class="w-30">@if($data->Environment_Health_Safety_by){{ $data->Environment_Health_Safety_by }}@else Not Applicable @endif</td>
@@ -1734,6 +1737,32 @@
                         <td class="w-30">@if($data->Environment_Health_Safety_on){{ $data->Environment_Health_Safety_on}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
+            </div>
+
+            <div class="block">
+                    <div class="block-head">
+                        Saftey Attechment
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->reference)
+                            @foreach(json_decode($data->Environment_Health_Safety_attachment) as $key => $file)
+                                <tr>_
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+
             </div>
 
             <div class="block">
@@ -1752,30 +1781,7 @@
                         <td class="w-30">@if($data->Human_Resource_feedback){{ $data->Human_Resource_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
-                        <div class="block-head">
-                            Human Resource Attechment
-                        </div>
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
-                            </tr>
-                            @if($data->reference)
-                                @foreach(json_decode($data->Human_Resource_attachment) as $key => $file)
-                                    <tr>_
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-60">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
+
                     <tr>
                         <th class="w-20">Human Resource  By</th>
                         <td class="w-30">@if($data->Human_Resource_by){{ $data->Human_Resource_by }}@else Not Applicable @endif</td>
@@ -1783,6 +1789,33 @@
                         <td class="w-30">@if($data->Human_Resource_on){{ $data->Human_Resource_on}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
+            </div>
+
+            <div class="block">
+                <div class="border-table">
+                    <div class="block-head">
+                        Human Resource Attechment
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->reference)
+                            @foreach(json_decode($data->Human_Resource_attachment) as $key => $file)
+                                <tr>_
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
 
             <div class="block">
@@ -1801,30 +1834,7 @@
                         <td class="w-30">@if($data->Information_Technology_feedback){{ $data->Information_Technology_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
-                        <div class="block-head">
-                            Information Technology Attechment
-                        </div>
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
-                            </tr>
-                            @if($data->reference)
-                                @foreach(json_decode($data->Information_Technology_attachment) as $key => $file)
-                                    <tr>_
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-60">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
+
                     <tr>
                         <th class="w-20">Information Technology By</th>
                         <td class="w-30">@if($data->Information_Technology_by){{ $data->Information_Technology_by }}@else Not Applicable @endif</td>
@@ -1832,6 +1842,33 @@
                         <td class="w-30">@if($data->Information_Technology_on){{ $data->Information_Technology_on}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
+            </div>
+
+            <div class="block">
+                <div class="border-table">
+                    <div class="block-head">
+                        Information Technology Attechment
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->reference)
+                            @foreach(json_decode($data->Information_Technology_attachment) as $key => $file)
+                                <tr>_
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
 
             <div class="block">
@@ -1850,30 +1887,6 @@
                         <td class="w-30">@if($data->Project_management_feedback){{ $data->Project_management_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
-                        <div class="block-head">
-                            Project Managment Attechment
-                        </div>
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
-                            </tr>
-                            @if($data->reference)
-                                @foreach(json_decode($data->Project_management_attachment) as $key => $file)
-                                    <tr>_
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-60">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
                     <tr>
                         <th class="w-20">Project Managment By</th>
                         <td class="w-30">@if($data->Project_management_by){{ $data->Project_management_by }}@else Not Applicable @endif</td>
@@ -1881,6 +1894,33 @@
                         <td class="w-30">@if($data->Project_management_on){{ $data->Project_management_on}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
+            </div>
+
+            <div class="block">
+                <div class="border-table">
+                    <div class="block-head">
+                        Project Managment Attechment
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->reference)
+                            @foreach(json_decode($data->Project_management_attachment) as $key => $file)
+                                <tr>_
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
 
             <div class="block">
@@ -1899,30 +1939,6 @@
                         <td class="w-30">@if($data->RA_feedback){{ $data->RA_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
-                        <div class="block-head">
-                            R A  Attechment
-                        </div>
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
-                            </tr>
-                            @if($data->reference)
-                                @foreach(json_decode($data->RA_attachment) as $key => $file)
-                                    <tr>_
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-60">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
                     <tr>
                         <th class="w-20">R A  By</th>
                         <td class="w-30">@if($data->RA_by){{ $data->RA_by }}@else Not Applicable @endif</td>
@@ -1930,6 +1946,33 @@
                         <td class="w-30">@if($data->RA_on){{ $data->RA_on}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
+            </div>
+
+            <div class="block">
+                <div class="border-table">
+                    <div class="block-head">
+                        R A Attechment
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->reference)
+                            @foreach(json_decode($data->RA_attachment) as $key => $file)
+                                <tr>_
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
 
             <div class="block">

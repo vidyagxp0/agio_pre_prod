@@ -523,8 +523,6 @@
                         <td class="w-80">{{ $data->Production_Table_On ?? 'Not Applicable' }}</td>
                     </tr>
 
-
-
                 </table>
 
 
@@ -626,53 +624,7 @@
                 </table>
             </div>
 
-            <div class="block">
-                <div class="block-head">
-                    Research & Development
-                </div>
-                <table>
 
-                    <tr>
-                        <th class="w-20">Research Development Required ??</th>
-                        <td class="w-80">{!! $data->ResearchDevelopment_Review ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Research Development Person</th>
-                        <td class="w-80">{!! $data->ResearchDevelopment_person ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Impact Assessment (By Research Development Person)</th>
-                        <td class="w-80">{!! $data->ResearchDevelopmentStore_person ?? 'Not Applicable' !!}</td>
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Research Development Feedback</th>
-                        <td class="w-80">{!! $data->ResearchDevelopment_feedback ?? 'Not Applicable' !!}</td>
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Research Development
-                            Attachments</th>
-                        <td class="w-80">
-                            @if($data->ResearchDevelopment_attachment)
-                                <a href="{{ asset('upload/' . $data->ResearchDevelopment_attachment) }}" target="_blank">{{ $data->ResearchDevelopment_attachment }}</a>
-                            @else
-                                Not Attached
-                            @endif
-                        </td>
-                    </tr>
-
-                     <tr>
-                        <th class="w-20">Reaserch Development Completed
-                            By</th>
-                        <td class="w-80">{{ $data->ResearchDevelopment_by ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Research Development Completed On</th>
-                        <td class="w-80">{{ $data->ResearchDevelopment_on ?? 'Not Applicable' }}</td>
-                    </tr>
-                </table>
-            </div>
 
             <div class="block">
                 <div class="block-head">
@@ -1018,3 +970,6 @@
 </body>
 
 </html>
+
+
+

@@ -16,11 +16,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
+use App\Models\RootCauseAnalysis;
+use App\Models\Extension;
+
 
 use PDF;
 use Helpers;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
+
 
 class RiskManagementController extends Controller
 {
@@ -190,7 +195,6 @@ class RiskManagementController extends Controller
 
 
 
-
        if (!empty($request->risk_attachment)) {
         $files = [];
         if ($request->hasfile('risk_attachment')) {
@@ -234,31 +238,6 @@ class RiskManagementController extends Controller
          $Cft->Production_feedback = $request->Production_feedback;
          $Cft->production_on = $request->production_on;
          $Cft->production_by = $request->production_by;
-
-         $Cft->RA_Review = $request->RA_Review;
-         $Cft->RA_Comments = $request->RA_Comments;
-         $Cft->RA_person = $request->RA_person;
-         $Cft->RA_assessment = $request->RA_assessment;
-         $Cft->RA_feedback = $request->RA_feedback;
-         $Cft->RA_attachment = $request->RA_attachment;
-         $Cft->RA_by = $request->RA_by;
-         $Cft->RA_on = $request->RA_on;
-
-         $Cft->Production_Table_Review = $request->Production_Table_Review;
-         $Cft->Production_Table_Person = $request->Production_Table_Person;
-         $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
-         $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
-         $Cft->Production_Table_Attachment = $request->Production_Table_Attachment;
-         $Cft->Production_Table_By = $request->Production_Table_By;
-         $Cft->Production_Table_On = $request->Production_Table_On;
-
-         $Cft->Production_Injection_Review = $request->Production_Injection_Review;
-         $Cft->Production_Injection_Person = $request->Production_Injection_Person;
-         $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
-         $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
-         $Cft->Production_Injection_Attachment = $request->Production_Injection_Attachment;
-         $Cft->Production_Injection_By = $request->Production_Injection_By;
-         $Cft->Production_Injection_On = $request->Production_Injection_On;
 
          $Cft->Warehouse_review = $request->Warehouse_review;
          $Cft->Warehouse_notification = $request->Warehouse_notification;
@@ -337,168 +316,70 @@ class RiskManagementController extends Controller
          $Cft->Project_management_by = $request->Project_management_by;
          $Cft->Project_management_on = $request->Project_management_on;
 
-         $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
-         $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
-         $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
-         $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
-         $Cft->ProductionLiquid_by = $request->ProductionLiquid_by;
-         $Cft->ProductionLiquid_on = $request->ProductionLiquid_on;
+         $Cft->Other1_review = $request->Other1_review;
+         $Cft->Other1_person = $request->Other1_person;
+         $Cft->Other1_Department_person = $request->Other1_Department_person;
+         $Cft->Other1_assessment = $request->Other1_assessment;
+         $Cft->Other1_feedback = $request->Other1_feedback;
+         $Cft->Other1_by = $request->Other1_by;
+         $Cft->Other1_on = $request->Other1_on;
 
-         $Cft->Project_management_review = $request->Project_management_review;
-         $Cft->Project_management_person = $request->Project_management_person;
-         $Cft->Project_management_assessment = $request->Project_management_assessment;
-         $Cft->Project_management_feedback = $request->Project_management_feedback;
-         $Cft->Project_management_by = $request->Project_management_by;
-         $Cft->Project_management_on = $request->Project_management_on;
+         $Cft->Other2_review = $request->Other2_review;
+         $Cft->Other2_person = $request->Other2_person;
+         $Cft->Other2_Department_person = $request->Other2_Department_person;
+         $Cft->Other2_Assessment = $request->Other2_Assessment;
+         $Cft->Other2_feedback = $request->Other2_feedback;
+         $Cft->Other2_by = $request->Other2_by;
+         $Cft->Other2_on = $request->Other2_on;
 
-         $Cft->Store_Review = $request->Store_Review;
-         $Cft->Store_person = $request->Store_person;
-         $Cft->Store_assessment = $request->Store_assessment;
-         $Cft->Store_feedback = $request->Store_feedback;
-         $Cft->Store_by = $request->Store_by;
-         $Cft->Store_on = $request->Store_on;
+         $Cft->Other3_review = $request->Other3_review;
+         $Cft->Other3_person = $request->Other3_person;
+         $Cft->Other3_Department_person = $request->Other3_Department_person;
+         $Cft->Other3_Assessment = $request->Other3_Assessment;
+         $Cft->Other3_feedback = $request->Other3_feedback;
+         $Cft->Other3_by = $request->Other3_by;
+         $Cft->Other3_on = $request->Other3_on;
 
-         $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review;
-         $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person;
-         $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
-         $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
-         $Cft->ResearchDevelopment_by = $request->ResearchDevelopment_by;
-         $Cft->ResearchDevelopment_on = $request->ResearchDevelopment_on;
+         $Cft->Other4_review = $request->Other4_review;
+         $Cft->Other4_person = $request->Other4_person;
+         $Cft->Other4_Department_person = $request->Other4_Department_person;
+         $Cft->Other4_Assessment = $request->Other4_Assessment;
+         $Cft->Other4_feedback = $request->Other4_feedback;
+         $Cft->Other4_by = $request->Other4_by;
+         $Cft->Other4_on = $request->Other4_on;
 
-         $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
-         $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person;
-         $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
-         $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
-         $Cft->RegulatoryAffair_by = $request->RegulatoryAffair_by;
-         $Cft->RegulatoryAffair_on = $request->RegulatoryAffair_on;
+         $Cft->Other5_review = $request->Other5_review;
+         $Cft->Other5_person = $request->Other5_person;
+         $Cft->Other5_Department_person = $request->Other5_Department_person;
+         $Cft->Other5_Assessment = $request->Other5_Assessment;
+         $Cft->Other5_feedback = $request->Other5_feedback;
+         $Cft->Other5_by = $request->Other5_by;
+         $Cft->Other5_on = $request->Other5_on;
 
-         $Cft->Microbiology_Review = $request->Microbiology_Review;
-         $Cft->Microbiology_person = $request->Microbiology_person;
-         $Cft->Microbiology_assessment = $request->Microbiology_assessment;
-         $Cft->Microbiology_feedback = $request->Microbiology_feedback;
-         $Cft->Microbiology_by = $request->Microbiology_by;
-         $Cft->Microbiology_on = $request->Microbiology_on;
-
-         $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
-         $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person;
-         $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
-         $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
-         $Cft->CorporateQualityAssurance_by = $request->CorporateQualityAssurance_by;
-         $Cft->CorporateQualityAssurance_on = $request->CorporateQualityAssurance_on;
-
-         $Cft->ContractGiver_Review = $request->ContractGiver_Review;
-         $Cft->ContractGiver_person = $request->ContractGiver_person;
-         $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
-         $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
-         $Cft->ContractGiver_by = $request->ContractGiver_by;
-         $Cft->ContractGiver_on = $request->ContractGiver_on;
-
-         // $Cft->Other1_review = $request->Other1_review;
-         // $Cft->Other1_person = $request->Other1_person;
-         // $Cft->Other1_Department_person = $request->Other1_Department_person;
-         // $Cft->Other1_assessment = $request->Other1_assessment;
-         // $Cft->Other1_feedback = $request->Other1_feedback;
-         // $Cft->Other1_by = $request->Other1_by;
-         // $Cft->Other1_on = $request->Other1_on;
-
-         // $Cft->Other2_review = $request->Other2_review;
-         // $Cft->Other2_person = $request->Other2_person;
-         // $Cft->Other2_Department_person = $request->Other2_Department_person;
-         // $Cft->Other2_Assessment = $request->Other2_Assessment;
-         // $Cft->Other2_feedback = $request->Other2_feedback;
-         // $Cft->Other2_by = $request->Other2_by;
-         // $Cft->Other2_on = $request->Other2_on;
-
-         // $Cft->Other3_review = $request->Other3_review;
-         // $Cft->Other3_person = $request->Other3_person;
-         // $Cft->Other3_Department_person = $request->Other3_Department_person;
-         // $Cft->Other3_Assessment = $request->Other3_Assessment;
-         // $Cft->Other3_feedback = $request->Other3_feedback;
-         // $Cft->Other3_by = $request->Other3_by;
-         // $Cft->Other3_on = $request->Other3_on;
-
-         // $Cft->Other4_review = $request->Other4_review;
-         // $Cft->Other4_person = $request->Other4_person;
-         // $Cft->Other4_Department_person = $request->Other4_Department_person;
-         // $Cft->Other4_Assessment = $request->Other4_Assessment;
-         // $Cft->Other4_feedback = $request->Other4_feedback;
-         // $Cft->Other4_by = $request->Other4_by;
-         // $Cft->Other4_on = $request->Other4_on;
-
-         // $Cft->Other5_review = $request->Other5_review;
-         // $Cft->Other5_person = $request->Other5_person;
-         // $Cft->Other5_Department_person = $request->Other5_Department_person;
-         // $Cft->Other5_Assessment = $request->Other5_Assessment;
-         // $Cft->Other5_feedback = $request->Other5_feedback;
-         // $Cft->Other5_by = $request->Other5_by;
-         // $Cft->Other5_on = $request->Other5_on;
-
-
-         if (!empty ($request->RA_attachment)) {
+         if (!empty ($request->production_attachment)) {
              $files = [];
-             if ($request->hasfile('RA_attachment')) {
-                 foreach ($request->file('RA_attachment') as $file) {
-                     $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+             if ($request->hasfile('production_attachment')) {
+                 foreach ($request->file('production_attachment') as $file) {
+                     $name = $request->name . 'production_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                      $file->move('upload/', $name);
                      $files[] = $name;
                  }
              }
-             $Cft->RA_attachment = json_encode($files);
-         }
-         if (!empty ($request->Quality_Assurance_attachment)) {
+
+
+         $Cft->production_attachment = json_encode($files);
+          }
+         if (!empty ($request->Warehouse_attachment)) {
              $files = [];
-             if ($request->hasfile('Quality_Assurance_attachment')) {
-                 foreach ($request->file('Quality_Assurance_attachment') as $file) {
-                     $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+             if ($request->hasfile('Warehouse_attachment')) {
+                 foreach ($request->file('Warehouse_attachment') as $file) {
+                     $name = $request->name . 'Warehouse_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                      $file->move('upload/', $name);
                      $files[] = $name;
                  }
              }
-             $Cft->Quality_Assurance_attachment = json_encode($files);
-         }
-         if (!empty ($request->Production_Table_Attachment)) {
-             $files = [];
-             if ($request->hasfile('Production_Table_Attachment')) {
-                 foreach ($request->file('Production_Table_Attachment') as $file) {
-                     $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                     $file->move('upload/', $name);
-                     $files[] = $name;
-                 }
-             }
-             $Cft->Production_Table_Attachment = json_encode($files);
-         }
-         if (!empty ($request->ProductionLiquid_attachment)) {
-             $files = [];
-             if ($request->hasfile('ProductionLiquid_attachment')) {
-                 foreach ($request->file('ProductionLiquid_attachment') as $file) {
-                     $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                     $file->move('upload/', $name);
-                     $files[] = $name;
-                 }
-             }
-             $Cft->ProductionLiquid_attachment = json_encode($files);
-         }
-         if (!empty ($request->Production_Injection_Attachment)) {
-             $files = [];
-             if ($request->hasfile('Production_Injection_Attachment')) {
-                 foreach ($request->file('Production_Injection_Attachment') as $file) {
-                     $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                     $file->move('upload/', $name);
-                     $files[] = $name;
-                 }
-             }
-             $Cft->Production_Injection_Attachment = json_encode($files);
-         }
-         if (!empty ($request->Store_attachment)) {
-             $files = [];
-             if ($request->hasfile('Store_attachment')) {
-                 foreach ($request->file('Store_attachment') as $file) {
-                     $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                     $file->move('upload/', $name);
-                     $files[] = $name;
-                 }
-             }
-             $Cft->Store_attachment = json_encode($files);
+
+             $Cft->Warehouse_attachment = json_encode($files);
          }
          if (!empty ($request->Quality_Control_attachment)) {
              $files = [];
@@ -509,18 +390,20 @@ class RiskManagementController extends Controller
                      $files[] = $name;
                  }
              }
+
              $Cft->Quality_Control_attachment = json_encode($files);
          }
-         if (!empty ($request->ResearchDevelopment_attachment)) {
+         if (!empty ($request->Quality_Assurance_attachment)) {
              $files = [];
-             if ($request->hasfile('ResearchDevelopment_attachment')) {
-                 foreach ($request->file('ResearchDevelopment_attachment') as $file) {
-                     $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+             if ($request->hasfile('Quality_Assurance_attachment')) {
+                 foreach ($request->file('Quality_Assurance_attachment') as $file) {
+                     $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                      $file->move('upload/', $name);
                      $files[] = $name;
                  }
              }
-             $Cft->ResearchDevelopment_attachment = json_encode($files);
+
+             $Cft->Quality_Assurance_attachment = json_encode($files);
          }
          if (!empty ($request->Engineering_attachment)) {
              $files = [];
@@ -531,51 +414,48 @@ class RiskManagementController extends Controller
                      $files[] = $name;
                  }
              }
+
+
              $Cft->Engineering_attachment = json_encode($files);
          }
-         if (!empty ($request->Human_Resource_attachment)) {
+         if (!empty ($request->Analytical_Development_attachment)) {
              $files = [];
-             if ($request->hasfile('Human_Resource_attachment')) {
-                 foreach ($request->file('Human_Resource_attachment') as $file) {
-                     $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+             if ($request->hasfile('Analytical_Development_attachment')) {
+                 foreach ($request->file('Analytical_Development_attachment') as $file) {
+                     $name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                      $file->move('upload/', $name);
                      $files[] = $name;
                  }
              }
-             $Cft->Human_Resource_attachment = json_encode($files);
+
+
+             $Cft->Analytical_Development_attachment = json_encode($files);
          }
-         if (!empty ($request->Microbiology_attachment)) {
+         if (!empty ($request->Kilo_Lab_attachment)) {
              $files = [];
-             if ($request->hasfile('Microbiology_attachment')) {
-                 foreach ($request->file('Microbiology_attachment') as $file) {
-                     $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+             if ($request->hasfile('Kilo_Lab_attachment')) {
+                 foreach ($request->file('Kilo_Lab_attachment') as $file) {
+                     $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                      $file->move('upload/', $name);
                      $files[] = $name;
                  }
              }
-             $Cft->Microbiology_attachment = json_encode($files);
+
+
+             $Cft->Kilo_Lab_attachment = json_encode($files);
          }
-         if (!empty ($request->RegulatoryAffair_attachment)) {
+         if (!empty ($request->Technology_transfer_attachment)) {
              $files = [];
-             if ($request->hasfile('RegulatoryAffair_attachment')) {
-                 foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                     $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+             if ($request->hasfile('Technology_transfer_attachment')) {
+                 foreach ($request->file('Technology_transfer_attachment') as $file) {
+                     $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                      $file->move('upload/', $name);
                      $files[] = $name;
                  }
              }
-             $Cft->RegulatoryAffair_attachment = json_encode($files);
-         }
-         if (!empty ($request->CorporateQualityAssurance_attachment)) {
-             $files = [];
-             if ($request->hasfile('CorporateQualityAssurance_attachment')) {
-                 foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                     $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                     $file->move('upload/', $name);
-                     $files[] = $name;
-                 }
-             }
-             $Cft->CorporateQualityAssurance_attachment = json_encode($files);
+
+
+             $Cft->Technology_transfer_attachment = json_encode($files);
          }
          if (!empty ($request->Environment_Health_Safety_attachment)) {
              $files = [];
@@ -586,7 +466,22 @@ class RiskManagementController extends Controller
                      $files[] = $name;
                  }
              }
+
+
              $Cft->Environment_Health_Safety_attachment = json_encode($files);
+         }
+         if (!empty ($request->Human_Resource_attachment)) {
+             $files = [];
+             if ($request->hasfile('Human_Resource_attachment')) {
+                 foreach ($request->file('Human_Resource_attachment') as $file) {
+                     $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $file->move('upload/', $name);
+                     $files[] = $name;
+                 }
+             }
+
+
+             $Cft->Human_Resource_attachment = json_encode($files);
          }
          if (!empty ($request->Information_Technology_attachment)) {
              $files = [];
@@ -597,21 +492,23 @@ class RiskManagementController extends Controller
                      $files[] = $name;
                  }
              }
+
+
              $Cft->Information_Technology_attachment = json_encode($files);
          }
-         if (!empty ($request->ContractGiver_attachment)) {
+         if (!empty ($request->Project_management_attachment)) {
              $files = [];
-             if ($request->hasfile('ContractGiver_attachment')) {
-                 foreach ($request->file('ContractGiver_attachment') as $file) {
-                     $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+             if ($request->hasfile('Project_management_attachment')) {
+                 foreach ($request->file('Project_management_attachment') as $file) {
+                     $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                      $file->move('upload/', $name);
                      $files[] = $name;
                  }
              }
-             $Cft->ContractGiver_attachment = json_encode($files);
+
+
+             $Cft->Project_management_attachment = json_encode($files);
          }
-
-
          if (!empty ($request->Other1_attachment)) {
              $files = [];
              if ($request->hasfile('Other1_attachment')) {
@@ -678,7 +575,8 @@ class RiskManagementController extends Controller
              $Cft->Other5_attachment = json_encode($files);
          }
 
-         $Cft->save();
+          $Cft->save();
+
 
          /* CFT Fields Ends */
 
@@ -955,7 +853,6 @@ class RiskManagementController extends Controller
         //         }
         //     }
         // }
-
 
 
         // $Fishbone_or_ishikawa_diagram = [
@@ -2164,8 +2061,6 @@ class RiskManagementController extends Controller
                 $history->save();
             }
 
-
-
             if (!empty($data->reference)) {
                 $history = new RiskAuditTrail();
                 $history->risk_id = $data->id;
@@ -2421,962 +2316,52 @@ class RiskManagementController extends Controller
             //  $data1->type = "effect_analysis";
 
 
-            if ($data->stage == 3 || $data->stage == 4 ){
+            if($data->stage == 2 || $data->stage == 3 ){
+
+
+                if (!$form_progress) {
+                    $form_progress = 'cft';
+                }
+
                 $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
-                if($Cft && $data->stage == 4 ){
-                    $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
-                    $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
-
-                    $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
-                    $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
-
-                    $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person;
-                    $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->Production_Table_Review : $request->Production_Table_Review;
-
-                    $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
-                    $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
-
-                    $Cft->Store_person = $request->Store_person == null ? $Cft->Store_person : $request->Store_person;
-                    $Cft->Store_Review = $request->Store_Review == null ? $Cft->Store_Review : $request->Store_Review;
-
-                    $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person == null ? $Cft->ResearchDevelopment_person : $request->ResearchDevelopment_person;
-                    $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review == null ? $Cft->ResearchDevelopment_Review : $request->ResearchDevelopment_Review;
-
-                    $Cft->Microbiology_person = $request->Microbiology_person == null ? $Cft->Microbiology_person : $request->Microbiology_person;
-                    $Cft->Microbiology_Review = $request->Microbiology_Review == null ? $Cft->Microbiology_Review : $request->Microbiology_Review;
-
-                    $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person == null ? $Cft->RegulatoryAffair_person : $request->RegulatoryAffair_person;
-                    $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review == null ? $Cft->RegulatoryAffair_Review : $request->RegulatoryAffair_Review;
-
-                    $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person == null ? $Cft->CorporateQualityAssurance_person : $request->CorporateQualityAssurance_person;
-                    $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review == null ? $Cft->CorporateQualityAssurance_Review : $request->CorporateQualityAssurance_Review;
-
-                    $Cft->ContractGiver_person = $request->ContractGiver_person == null ? $Cft->ContractGiver_person : $request->ContractGiver_person;
-                    $Cft->ContractGiver_Review = $request->ContractGiver_Review == null ? $Cft->ContractGiver_Review : $request->ContractGiver_Review;
-
+                if($Cft && $data->stage == 3 ){
+                    $Cft->Production_Review = $request->Production_Review == null ? $Cft->Production_Review : $request->Production_Review;
+                    $Cft->Production_person = $request->Production_person == null ? $Cft->Production_person : $request->Production_Review;
+                    $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
+                    $Cft->Warehouse_notification = $request->Warehouse_notification == null ? $Cft->Warehouse_notification : $request->Warehouse_notification;
                     $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
                     $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
-
                     $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
                     $Cft->QualityAssurance_person = $request->QualityAssurance_person == null ? $Cft->QualityAssurance_person : $request->QualityAssurance_person;
 
                     $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
                     $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-
+                    $Cft->Analytical_Development_review = $request->Analytical_Development_review == null ? $Cft->Analytical_Development_review : $request->Analytical_Development_review;
+                    $Cft->Analytical_Development_person = $request->Analytical_Development_person == null ? $Cft->Analytical_Development_person : $request->Analytical_Development_person;
+                    $Cft->Kilo_Lab_review = $request->Kilo_Lab_review == null ? $Cft->Kilo_Lab_review : $request->Kilo_Lab_review;
+                    $Cft->Kilo_Lab_person = $request->Kilo_Lab_person == null ? $Cft->Kilo_Lab_person : $request->Kilo_Lab_person;
+                    $Cft->Technology_transfer_review = $request->Technology_transfer_review == null ? $Cft->Technology_transfer_review : $request->Technology_transfer_review;
+                    $Cft->Technology_transfer_person = $request->Technology_transfer_person == null ? $Cft->Technology_transfer_person : $request->Technology_transfer_person;
                     $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                     $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
-
                     $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
                     $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-
+                    $Cft->Project_management_review = $request->Project_management_review == null ? $Cft->Project_management_review : $request->Project_management_review;
+                    $Cft->Project_management_person = $request->Project_management_person == null ? $Cft->Project_management_person : $request->Project_management_person;
                     $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
                     $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-
                     $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
                     $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
                     $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
-
                     $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
                     $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
                     $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
-
                     $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
                     $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
                     $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-
                     $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
                     $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
                     $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
-
-                    $Cft->Other5_review = $request->Other5_review  == null ? $Cft->Other5_review : $request->Other5_review;
-                    $Cft->Other5_person = $request->Other5_person  == null ? $Cft->Other5_person : $request->Other5_person;
-                    $Cft->Other5_Department_person = $request->Other5_Department_person  == null ? $Cft->Other5_Department_person : $request->Other5_Department_person;
-                }
-                else{
-                    $Cft->RA_Review = $request->RA_Review;
-                    $Cft->RA_person = $request->RA_person;
-
-                    $Cft->Production_Table_Review = $request->Production_Table_Review;
-                    $Cft->Production_Table_Person = $request->Production_Table_Person;
-
-                    $Cft->Production_Injection_Review = $request->Production_Injection_Review;
-                    $Cft->Production_Injection_Person = $request->Production_Injection_Person;
-
-                    $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
-                    $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
-
-                    $Cft->Store_person = $request->Store_person;
-                    $Cft->Store_Review = $request->Store_Review;
-
-                    $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person;
-                    $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review;
-
-                    $Cft->Microbiology_person = $request->Microbiology_person;
-                    $Cft->Microbiology_Review = $request->Microbiology_Review;
-
-                    $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person;
-                    $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
-
-                    $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person;
-                    $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
-
-                    $Cft->ContractGiver_person = $request->ContractGiver_person;
-                    $Cft->ContractGiver_Review = $request->ContractGiver_Review;
-
-                    $Cft->Quality_review = $request->Quality_review;
-                    $Cft->Quality_Control_Person = $request->Quality_Control_Person;
-
-                    $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
-                    $Cft->QualityAssurance_person = $request->QualityAssurance_person;
-
-                    $Cft->Engineering_review = $request->Engineering_review;
-                    $Cft->Engineering_person = $request->Engineering_person;
-
-                    $Cft->Environment_Health_review = $request->Environment_Health_review;
-                    $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
-
-                    $Cft->Human_Resource_review = $request->Human_Resource_review;
-                    $Cft->Human_Resource_person = $request->Human_Resource_person;
-
-                    $Cft->Project_management_review = $request->Project_management_review;
-                    $Cft->Project_management_person = $request->Project_management_person;
-
-                    $Cft->Information_Technology_review = $request->Information_Technology_review;
-                    $Cft->Information_Technology_person = $request->Information_Technology_person;
-
-                    $Cft->Other1_review = $request->Other1_review;
-                    $Cft->Other1_person = $request->Other1_person;
-                    $Cft->Other1_Department_person = $request->Other1_Department_person;
-
-                    $Cft->Other2_review = $request->Other2_review;
-                    $Cft->Other2_person = $request->Other2_person;
-                    $Cft->Other2_Department_person = $request->Other2_Department_person;
-
-                    $Cft->Other3_review = $request->Other3_review;
-                    $Cft->Other3_person = $request->Other3_person;
-                    $Cft->Other3_Department_person = $request->Other3_Department_person;
-
-                    $Cft->Other4_review = $request->Other4_review;
-                    $Cft->Other4_person = $request->Other4_person;
-                    $Cft->Other4_Department_person = $request->Other4_Department_person;
-
-                    $Cft->Other5_review = $request->Other5_review;
-                    $Cft->Other5_person = $request->Other5_person;
-                    $Cft->Other5_Department_person = $request->Other5_Department_person;
-                }
-                $Cft->RA_assessment = $request->RA_assessment;
-                $Cft->RA_feedback = $request->RA_feedback;
-
-                $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
-                $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
-
-                $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
-                $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
-
-                $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
-                $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
-
-                $Cft->Store_feedback = $request->Store_feedback;
-                $Cft->Store_assessment = $request->Store_assessment;
-
-                $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
-                $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
-
-                $Cft->Microbiology_feedback = $request->Microbiology_feedback;
-                $Cft->Microbiology_assessment = $request->Microbiology_assessment;
-
-                $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
-                $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
-
-                $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
-                $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
-
-                $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
-                $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
-
-                $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
-                $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-
-                $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
-                $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
-
-                $Cft->Engineering_assessment = $request->Engineering_assessment;
-                $Cft->Engineering_feedback = $request->Engineering_feedback;
-
-                $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
-                $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
-
-                $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
-                $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
-
-                $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
-                $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-
-                $Cft->Other1_assessment = $request->Other1_assessment;
-                $Cft->Other1_feedback = $request->Other1_feedback;
-
-                $Cft->Other2_Assessment = $request->Other2_Assessment;
-                $Cft->Other2_feedback = $request->Other2_feedback;
-
-                $Cft->Other3_Assessment = $request->Other3_Assessment;
-                $Cft->Other3_feedback = $request->Other3_feedback;
-
-                $Cft->Other4_Assessment = $request->Other4_Assessment;
-                $Cft->Other4_feedback = $request->Other4_feedback;
-
-                $Cft->Other5_Assessment = $request->Other5_Assessment;
-                $Cft->Other5_feedback = $request->Other5_feedback;
-
-
-                if (!empty ($request->RA_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('RA_attachment')) {
-                        foreach ($request->file('RA_attachment') as $file) {
-                            $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->RA_attachment = json_encode($files);
-                }
-                if (!empty ($request->Quality_Assurance_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Quality_Assurance_attachment')) {
-                        foreach ($request->file('Quality_Assurance_attachment') as $file) {
-                            $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Quality_Assurance_attachment = json_encode($files);
-                }
-                if (!empty ($request->Production_Table_Attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Production_Table_Attachment')) {
-                        foreach ($request->file('Production_Table_Attachment') as $file) {
-                            $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Production_Table_Attachment = json_encode($files);
-                }
-                if (!empty ($request->ProductionLiquid_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('ProductionLiquid_attachment')) {
-                        foreach ($request->file('ProductionLiquid_attachment') as $file) {
-                            $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->ProductionLiquid_attachment = json_encode($files);
-                }
-                if (!empty ($request->Production_Injection_Attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Production_Injection_Attachment')) {
-                        foreach ($request->file('Production_Injection_Attachment') as $file) {
-                            $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Production_Injection_Attachment = json_encode($files);
-                }
-                if (!empty ($request->Store_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Store_attachment')) {
-                        foreach ($request->file('Store_attachment') as $file) {
-                            $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Store_attachment = json_encode($files);
-                }
-                if (!empty ($request->Quality_Control_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Quality_Control_attachment')) {
-                        foreach ($request->file('Quality_Control_attachment') as $file) {
-                            $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Quality_Control_attachment = json_encode($files);
-                }
-                if (!empty ($request->ResearchDevelopment_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('ResearchDevelopment_attachment')) {
-                        foreach ($request->file('ResearchDevelopment_attachment') as $file) {
-                            $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->ResearchDevelopment_attachment = json_encode($files);
-                }
-                if (!empty ($request->Engineering_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Engineering_attachment')) {
-                        foreach ($request->file('Engineering_attachment') as $file) {
-                            $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Engineering_attachment = json_encode($files);
-                }
-                if (!empty ($request->Human_Resource_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Human_Resource_attachment')) {
-                        foreach ($request->file('Human_Resource_attachment') as $file) {
-                            $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Human_Resource_attachment = json_encode($files);
-                }
-                if (!empty ($request->Microbiology_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Microbiology_attachment')) {
-                        foreach ($request->file('Microbiology_attachment') as $file) {
-                            $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Microbiology_attachment = json_encode($files);
-                }
-                if (!empty ($request->RegulatoryAffair_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('RegulatoryAffair_attachment')) {
-                        foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                            $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->RegulatoryAffair_attachment = json_encode($files);
-                }
-                if (!empty ($request->CorporateQualityAssurance_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('CorporateQualityAssurance_attachment')) {
-                        foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                            $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->CorporateQualityAssurance_attachment = json_encode($files);
-                }
-                if (!empty ($request->Environment_Health_Safety_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Environment_Health_Safety_attachment')) {
-                        foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                            $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Environment_Health_Safety_attachment = json_encode($files);
-                }
-                if (!empty ($request->Information_Technology_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Information_Technology_attachment')) {
-                        foreach ($request->file('Information_Technology_attachment') as $file) {
-                            $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Information_Technology_attachment = json_encode($files);
-                }
-                if (!empty ($request->ContractGiver_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('ContractGiver_attachment')) {
-                        foreach ($request->file('ContractGiver_attachment') as $file) {
-                            $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->ContractGiver_attachment = json_encode($files);
-                }
-                if (!empty ($request->Other1_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Other1_attachment')) {
-                        foreach ($request->file('Other1_attachment') as $file) {
-                            $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Other1_attachment = json_encode($files);
-                }
-                if (!empty ($request->Other2_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Other2_attachment')) {
-                        foreach ($request->file('Other2_attachment') as $file) {
-                            $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Other2_attachment = json_encode($files);
-                }
-                if (!empty ($request->Other3_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Other3_attachment')) {
-                        foreach ($request->file('Other3_attachment') as $file) {
-                            $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Other3_attachment = json_encode($files);
-                }
-                if (!empty ($request->Other4_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Other4_attachment')) {
-                        foreach ($request->file('Other4_attachment') as $file) {
-                            $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-
-                    $Cft->Other4_attachment = json_encode($files);
-                }
-                if (!empty ($request->Other5_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Other5_attachment')) {
-                        foreach ($request->file('Other5_attachment') as $file) {
-                            $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Other5_attachment = json_encode($files);
-                }
-                $Cft->save();
-            }
-
-
-            if ($data->stage == 3 || $data->stage == 4 ){
-                $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
-                if($Cft && $data->stage == 4 ){
-                    $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
-                    $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
-
-                    $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->RA_Review : $request->Production_Injection_Person;
-                    $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->RA_person : $request->Production_Injection_Review;
-
-                    $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->RA_Review : $request->Production_Table_Person;
-                    $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->RA_person : $request->Production_Table_Review;
-
-                    $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
-                    $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
-
-                    $Cft->Store_person = $request->Store_person == null ? $Cft->Store_person : $request->Store_person;
-                    $Cft->Store_Review = $request->Store_Review == null ? $Cft->Store_Review : $request->Store_Review;
-
-                    $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person == null ? $Cft->ResearchDevelopment_person : $request->ResearchDevelopment_person;
-                    $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review == null ? $Cft->ResearchDevelopment_Review : $request->ResearchDevelopment_Review;
-
-                    $Cft->Microbiology_person = $request->Microbiology_person == null ? $Cft->Microbiology_person : $request->Microbiology_person;
-                    $Cft->Microbiology_Review = $request->Microbiology_Review == null ? $Cft->Microbiology_Review : $request->Microbiology_Review;
-
-                    $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person == null ? $Cft->RegulatoryAffair_person : $request->RegulatoryAffair_person;
-                    $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review == null ? $Cft->RegulatoryAffair_Review : $request->RegulatoryAffair_Review;
-
-                    $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person == null ? $Cft->CorporateQualityAssurance_person : $request->CorporateQualityAssurance_person;
-                    $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review == null ? $Cft->CorporateQualityAssurance_Review : $request->CorporateQualityAssurance_Review;
-
-                    $Cft->ContractGiver_person = $request->ContractGiver_person == null ? $Cft->ContractGiver_person : $request->ContractGiver_person;
-                    $Cft->ContractGiver_Review = $request->ContractGiver_Review == null ? $Cft->ContractGiver_Review : $request->ContractGiver_Review;
-
-                    $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
-                    $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
-
-                    $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
-                    $Cft->QualityAssurance_person = $request->QualityAssurance_person == null ? $Cft->QualityAssurance_person : $request->QualityAssurance_person;
-
-                    $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
-                    $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-
-                    $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
-                    $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
-
-                    $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
-                    $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-
-                    $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
-                    $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-
-                    $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
-                    $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
-                    $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
-
-                    $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
-                    $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
-                    $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
-
-                    $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
-                    $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
-                    $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-
-                    $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
-                    $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
-                    $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
-
-                    $Cft->Other5_review = $request->Other5_review  == null ? $Cft->Other5_review : $request->Other5_review;
-                    $Cft->Other5_person = $request->Other5_person  == null ? $Cft->Other5_person : $request->Other5_person;
-                    $Cft->Other5_Department_person = $request->Other5_Department_person  == null ? $Cft->Other5_Department_person : $request->Other5_Department_person;
-                }
-                else{
-                    $Cft->RA_Review = $request->RA_Review;
-                    $Cft->RA_person = $request->RA_person;
-
-                    $Cft->Production_Table_Review = $request->Production_Table_Review;
-                    $Cft->Production_Table_Person = $request->Production_Table_Person;
-
-                    $Cft->Production_Injection_Review = $request->Production_Injection_Review;
-                    $Cft->Production_Injection_Person = $request->Production_Injection_Person;
-
-                    $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
-                    $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
-
-                    $Cft->Store_person = $request->Store_person;
-                    $Cft->Store_Review = $request->Store_Review;
-
-                    $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person;
-                    $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review;
-
-                    $Cft->Microbiology_person = $request->Microbiology_person;
-                    $Cft->Microbiology_Review = $request->Microbiology_Review;
-
-                    $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person;
-                    $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
-
-                    $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person;
-                    $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
-
-                    $Cft->ContractGiver_person = $request->ContractGiver_person;
-                    $Cft->ContractGiver_Review = $request->ContractGiver_Review;
-
-                    $Cft->Quality_review = $request->Quality_review;
-                    $Cft->Quality_Control_Person = $request->Quality_Control_Person;
-
-                    $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
-                    $Cft->QualityAssurance_person = $request->QualityAssurance_person;
-
-                    $Cft->Engineering_review = $request->Engineering_review;
-                    $Cft->Engineering_person = $request->Engineering_person;
-
-                    $Cft->Environment_Health_review = $request->Environment_Health_review;
-                    $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
-
-                    $Cft->Human_Resource_review = $request->Human_Resource_review;
-                    $Cft->Human_Resource_person = $request->Human_Resource_person;
-
-                    $Cft->Information_Technology_review = $request->Information_Technology_review;
-                    $Cft->Information_Technology_person = $request->Information_Technology_person;
-
-                    $Cft->Other1_review = $request->Other1_review;
-                    $Cft->Other1_person = $request->Other1_person;
-                    $Cft->Other1_Department_person = $request->Other1_Department_person;
-
-                    $Cft->Other2_review = $request->Other2_review;
-                    $Cft->Other2_person = $request->Other2_person;
-                    $Cft->Other2_Department_person = $request->Other2_Department_person;
-
-                    $Cft->Other3_review = $request->Other3_review;
-                    $Cft->Other3_person = $request->Other3_person;
-                    $Cft->Other3_Department_person = $request->Other3_Department_person;
-
-                    $Cft->Other4_review = $request->Other4_review;
-                    $Cft->Other4_person = $request->Other4_person;
-                    $Cft->Other4_Department_person = $request->Other4_Department_person;
-
-                    $Cft->Other5_review = $request->Other5_review;
-                    $Cft->Other5_person = $request->Other5_person;
-                    $Cft->Other5_Department_person = $request->Other5_Department_person;
-                }
-                $Cft->RA_assessment = $request->RA_assessment;
-                $Cft->RA_feedback = $request->RA_feedback;
-
-                $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
-                $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
-
-                $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
-                $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
-
-                $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
-                $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
-
-                $Cft->Store_feedback = $request->Store_feedback;
-                $Cft->Store_assessment = $request->Store_assessment;
-
-                $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
-                $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
-
-                $Cft->Microbiology_feedback = $request->Microbiology_feedback;
-                $Cft->Microbiology_assessment = $request->Microbiology_assessment;
-
-                $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
-                $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
-
-                $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
-                $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
-
-                $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
-                $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
-
-                $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
-                $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-
-                $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
-                $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
-
-                $Cft->Engineering_assessment = $request->Engineering_assessment;
-                $Cft->Engineering_feedback = $request->Engineering_feedback;
-
-                $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
-                $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
-
-                $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
-                $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
-
-                $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
-                $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-
-                $Cft->Other1_assessment = $request->Other1_assessment;
-                $Cft->Other1_feedback = $request->Other1_feedback;
-
-                $Cft->Other2_Assessment = $request->Other2_Assessment;
-                $Cft->Other2_feedback = $request->Other2_feedback;
-
-                $Cft->Other3_Assessment = $request->Other3_Assessment;
-                $Cft->Other3_feedback = $request->Other3_feedback;
-
-                $Cft->Other4_Assessment = $request->Other4_Assessment;
-                $Cft->Other4_feedback = $request->Other4_feedback;
-
-                $Cft->Other5_Assessment = $request->Other5_Assessment;
-                $Cft->Other5_feedback = $request->Other5_feedback;
-
-
-                if (!empty ($request->RA_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('RA_attachment')) {
-                        foreach ($request->file('RA_attachment') as $file) {
-                            $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->RA_attachment = json_encode($files);
-                }
-                if (!empty ($request->Quality_Assurance_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Quality_Assurance_attachment')) {
-                        foreach ($request->file('Quality_Assurance_attachment') as $file) {
-                            $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Quality_Assurance_attachment = json_encode($files);
-                }
-                if (!empty ($request->Production_Table_Attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Production_Table_Attachment')) {
-                        foreach ($request->file('Production_Table_Attachment') as $file) {
-                            $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Production_Table_Attachment = json_encode($files);
-                }
-                if (!empty ($request->ProductionLiquid_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('ProductionLiquid_attachment')) {
-                        foreach ($request->file('ProductionLiquid_attachment') as $file) {
-                            $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->ProductionLiquid_attachment = json_encode($files);
-                }
-                if (!empty ($request->Production_Injection_Attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Production_Injection_Attachment')) {
-                        foreach ($request->file('Production_Injection_Attachment') as $file) {
-                            $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Production_Injection_Attachment = json_encode($files);
-                }
-                if (!empty ($request->Store_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Store_attachment')) {
-                        foreach ($request->file('Store_attachment') as $file) {
-                            $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Store_attachment = json_encode($files);
-                }
-                if (!empty ($request->Quality_Control_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Quality_Control_attachment')) {
-                        foreach ($request->file('Quality_Control_attachment') as $file) {
-                            $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Quality_Control_attachment = json_encode($files);
-                }
-                if (!empty ($request->ResearchDevelopment_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('ResearchDevelopment_attachment')) {
-                        foreach ($request->file('ResearchDevelopment_attachment') as $file) {
-                            $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->ResearchDevelopment_attachment = json_encode($files);
-                }
-                if (!empty ($request->Engineering_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Engineering_attachment')) {
-                        foreach ($request->file('Engineering_attachment') as $file) {
-                            $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Engineering_attachment = json_encode($files);
-                }
-                if (!empty ($request->Human_Resource_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Human_Resource_attachment')) {
-                        foreach ($request->file('Human_Resource_attachment') as $file) {
-                            $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Human_Resource_attachment = json_encode($files);
-                }
-                if (!empty ($request->Microbiology_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Microbiology_attachment')) {
-                        foreach ($request->file('Microbiology_attachment') as $file) {
-                            $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Microbiology_attachment = json_encode($files);
-                }
-                if (!empty ($request->RegulatoryAffair_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('RegulatoryAffair_attachment')) {
-                        foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                            $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->RegulatoryAffair_attachment = json_encode($files);
-                }
-                if (!empty ($request->CorporateQualityAssurance_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('CorporateQualityAssurance_attachment')) {
-                        foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                            $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->CorporateQualityAssurance_attachment = json_encode($files);
-                }
-                if (!empty ($request->Environment_Health_Safety_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Environment_Health_Safety_attachment')) {
-                        foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                            $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Environment_Health_Safety_attachment = json_encode($files);
-                }
-
-                if (!empty ($request->Information_Technology_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Information_Technology_attachment')) {
-                        foreach ($request->file('Information_Technology_attachment') as $file) {
-                            $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Information_Technology_attachment = json_encode($files);
-                }
-                if (!empty ($request->ContractGiver_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('ContractGiver_attachment')) {
-                        foreach ($request->file('ContractGiver_attachment') as $file) {
-                            $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->ContractGiver_attachment = json_encode($files);
-                }
-                if (!empty ($request->Other1_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Other1_attachment')) {
-                        foreach ($request->file('Other1_attachment') as $file) {
-                            $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Other1_attachment = json_encode($files);
-                }
-                if (!empty ($request->Other2_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Other2_attachment')) {
-                        foreach ($request->file('Other2_attachment') as $file) {
-                            $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Other2_attachment = json_encode($files);
-                }
-                if (!empty ($request->Other3_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Other3_attachment')) {
-                        foreach ($request->file('Other3_attachment') as $file) {
-                            $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Other3_attachment = json_encode($files);
-                }
-                if (!empty ($request->Other4_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Other4_attachment')) {
-                        foreach ($request->file('Other4_attachment') as $file) {
-                            $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-
-                    $Cft->Other4_attachment = json_encode($files);
-                }
-                if (!empty ($request->Other5_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Other5_attachment')) {
-                        foreach ($request->file('Other5_attachment') as $file) {
-                            $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Other5_attachment = json_encode($files);
-                }
-
-
-            $Cft->save();
-            }
-
-
-            if ($data->stage == 3 || $data->stage == 4 ){
-                $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
-                if($Cft && $data->stage == 4 ){
-                    $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
-                    $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
-
-                    $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->RA_Review : $request->Production_Injection_Person;
-                    $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->RA_person : $request->Production_Injection_Review;
-
-                    $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->RA_Review : $request->Production_Table_Person;
-                    $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->RA_person : $request->Production_Table_Review;
-
-                    $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
-                    $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
-
-                    $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
-                    $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
-
-                    $Cft->Store_person = $request->Store_person == null ? $Cft->Store_person : $request->Store_person;
-                    $Cft->Store_Review = $request->Store_Review == null ? $Cft->Store_Review : $request->Store_Review;
-
-                    $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person == null ? $Cft->ResearchDevelopment_person : $request->ResearchDevelopment_person;
-                    $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review == null ? $Cft->ResearchDevelopment_Review : $request->ResearchDevelopment_Review;
-
-                    $Cft->Microbiology_person = $request->Microbiology_person == null ? $Cft->Microbiology_person : $request->Microbiology_person;
-                    $Cft->Microbiology_Review = $request->Microbiology_Review == null ? $Cft->Microbiology_Review : $request->Microbiology_Review;
-
-                    $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person == null ? $Cft->RegulatoryAffair_person : $request->RegulatoryAffair_person;
-                    $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review == null ? $Cft->RegulatoryAffair_Review : $request->RegulatoryAffair_Review;
-
-                    $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person == null ? $Cft->CorporateQualityAssurance_person : $request->CorporateQualityAssurance_person;
-                    $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review == null ? $Cft->CorporateQualityAssurance_Review : $request->CorporateQualityAssurance_Review;
-
-                    $Cft->ContractGiver_person = $request->ContractGiver_person == null ? $Cft->ContractGiver_person : $request->ContractGiver_person;
-                    $Cft->ContractGiver_Review = $request->ContractGiver_Review == null ? $Cft->ContractGiver_Review : $request->ContractGiver_Review;
-
-                    $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
-                    $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
-
-                    $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
-                    $Cft->QualityAssurance_person = $request->QualityAssurance_person == null ? $Cft->QualityAssurance_person : $request->QualityAssurance_person;
-
-                    $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
-                    $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-
-                    $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
-                    $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
-
-                    $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
-                    $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-
-                    $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
-                    $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-
-                    $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
-                    $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
-                    $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
-
-                    $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
-                    $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
-                    $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
-
-                    $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
-                    $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
-                    $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-
-                    $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
-                    $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
-                    $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
-
                     $Cft->Other5_review = $request->Other5_review  == null ? $Cft->Other5_review : $request->Other5_review;
                     $Cft->Other5_person = $request->Other5_person  == null ? $Cft->Other5_person : $request->Other5_person;
                     $Cft->Other5_Department_person = $request->Other5_Department_person  == null ? $Cft->Other5_Department_person : $request->Other5_Department_person;
@@ -3384,152 +2369,115 @@ class RiskManagementController extends Controller
                 else{
                     $Cft->Production_Review = $request->Production_Review;
                     $Cft->Production_person = $request->Production_person;
-
-                    $Cft->Production_Table_Review = $request->Production_Table_Review;
-                    $Cft->Production_Table_Person = $request->Production_Table_Person;
-
-                    $Cft->Production_Injection_Review = $request->Production_Injection_Review;
-                    $Cft->Production_Injection_Person = $request->Production_Injection_Person;
-
-                    $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
-                    $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
-
-                    $Cft->Store_person = $request->Store_person;
-                    $Cft->Store_Review = $request->Store_Review;
-
-                    $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person;
-                    $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review;
-
-                    $Cft->Microbiology_person = $request->Microbiology_person;
-                    $Cft->Microbiology_Review = $request->Microbiology_Review;
-
-                    $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person;
-                    $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
-
-                    $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person;
-                    $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
-
-                    $Cft->ContractGiver_person = $request->ContractGiver_person;
-                    $Cft->ContractGiver_Review = $request->ContractGiver_Review;
-
+                    $Cft->Warehouse_review = $request->Warehouse_review;
+                    $Cft->Warehouse_notification = $request->Warehouse_notification;
                     $Cft->Quality_review = $request->Quality_review;
                     $Cft->Quality_Control_Person = $request->Quality_Control_Person;
-
                     $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
                     $Cft->QualityAssurance_person = $request->QualityAssurance_person;
-
                     $Cft->Engineering_review = $request->Engineering_review;
                     $Cft->Engineering_person = $request->Engineering_person;
-
+                    $Cft->Analytical_Development_review = $request->Analytical_Development_review;
+                    $Cft->Analytical_Development_person = $request->Analytical_Development_person;
+                    $Cft->Kilo_Lab_review = $request->Kilo_Lab_review;
+                    $Cft->Kilo_Lab_person = $request->Kilo_Lab_person;
+                    $Cft->Technology_transfer_review = $request->Technology_transfer_review;
+                    $Cft->Technology_transfer_person = $request->Technology_transfer_person;
                     $Cft->Environment_Health_review = $request->Environment_Health_review;
                     $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
-
                     $Cft->Human_Resource_review = $request->Human_Resource_review;
                     $Cft->Human_Resource_person = $request->Human_Resource_person;
-
                     $Cft->Project_management_review = $request->Project_management_review;
                     $Cft->Project_management_person = $request->Project_management_person;
-
                     $Cft->Information_Technology_review = $request->Information_Technology_review;
                     $Cft->Information_Technology_person = $request->Information_Technology_person;
-
                     $Cft->Other1_review = $request->Other1_review;
                     $Cft->Other1_person = $request->Other1_person;
                     $Cft->Other1_Department_person = $request->Other1_Department_person;
-
                     $Cft->Other2_review = $request->Other2_review;
                     $Cft->Other2_person = $request->Other2_person;
                     $Cft->Other2_Department_person = $request->Other2_Department_person;
-
                     $Cft->Other3_review = $request->Other3_review;
                     $Cft->Other3_person = $request->Other3_person;
                     $Cft->Other3_Department_person = $request->Other3_Department_person;
-
                     $Cft->Other4_review = $request->Other4_review;
                     $Cft->Other4_person = $request->Other4_person;
                     $Cft->Other4_Department_person = $request->Other4_Department_person;
-
                     $Cft->Other5_review = $request->Other5_review;
                     $Cft->Other5_person = $request->Other5_person;
                     $Cft->Other5_Department_person = $request->Other5_Department_person;
                 }
-                $Cft->RA_assessment = $request->RA_assessment;
-                $Cft->RA_feedback = $request->RA_feedback;
-
-                $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
-                $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
-
-                $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
-                $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
-
-                $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
-                $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
-
-                $Cft->Store_feedback = $request->Store_feedback;
-                $Cft->Store_assessment = $request->Store_assessment;
-
-                $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
-                $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
-
-                $Cft->Microbiology_feedback = $request->Microbiology_feedback;
-                $Cft->Microbiology_assessment = $request->Microbiology_assessment;
-
-                $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
-                $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
-
-                $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
-                $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
-
-                $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
-                $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
-
+                $Cft->Production_assessment = $request->Production_assessment;
+                $Cft->Production_feedback = $request->Production_feedback;
+                $Cft->Warehouse_assessment = $request->Warehouse_assessment;
+                $Cft->Warehouse_feedback = $request->Warehouse_feedback;
                 $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
                 $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-
                 $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
                 $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
-
                 $Cft->Engineering_assessment = $request->Engineering_assessment;
                 $Cft->Engineering_feedback = $request->Engineering_feedback;
-
+                $Cft->Analytical_Development_assessment = $request->Analytical_Development_assessment;
+                $Cft->Analytical_Development_feedback = $request->Analytical_Development_feedback;
+                $Cft->Kilo_Lab_assessment = $request->Kilo_Lab_assessment;
+                $Cft->Kilo_Lab_feedback = $request->Kilo_Lab_feedback;
+                $Cft->Technology_transfer_assessment = $request->Technology_transfer_assessment;
+                $Cft->Technology_transfer_feedback = $request->Technology_transfer_feedback;
                 $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
                 $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
-
                 $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
                 $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
-
                 $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
                 $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-
                 $Cft->Project_management_assessment = $request->Project_management_assessment;
                 $Cft->Project_management_feedback = $request->Project_management_feedback;
-
                 $Cft->Other1_assessment = $request->Other1_assessment;
                 $Cft->Other1_feedback = $request->Other1_feedback;
-
                 $Cft->Other2_Assessment = $request->Other2_Assessment;
                 $Cft->Other2_feedback = $request->Other2_feedback;
-
                 $Cft->Other3_Assessment = $request->Other3_Assessment;
                 $Cft->Other3_feedback = $request->Other3_feedback;
-
                 $Cft->Other4_Assessment = $request->Other4_Assessment;
                 $Cft->Other4_feedback = $request->Other4_feedback;
-
                 $Cft->Other5_Assessment = $request->Other5_Assessment;
                 $Cft->Other5_feedback = $request->Other5_feedback;
 
 
-                if (!empty ($request->RA_attachment)) {
+                if (!empty ($request->production_attachment)) {
                     $files = [];
-                    if ($request->hasfile('RA_attachment')) {
-                        foreach ($request->file('RA_attachment') as $file) {
-                            $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    if ($request->hasfile('production_attachment')) {
+                        foreach ($request->file('production_attachment') as $file) {
+                            $name = $request->name . 'production_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                             $file->move('upload/', $name);
                             $files[] = $name;
                         }
                     }
-                    $Cft->RA_attachment = json_encode($files);
+
+                    $Cft->production_attachment = json_encode($files);
+                }
+                if (!empty ($request->Warehouse_attachment)) {
+                    $files = [];
+                    if ($request->hasfile('Warehouse_attachment')) {
+                        foreach ($request->file('Warehouse_attachment') as $file) {
+                            $name = $request->name . 'Warehouse_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move('upload/', $name);
+                            $files[] = $name;
+                        }
+                    }
+
+                    $Cft->Warehouse_attachment = json_encode($files);
+                }
+                if (!empty ($request->Quality_Control_attachment)) {
+                    $files = [];
+                    if ($request->hasfile('Quality_Control_attachment')) {
+                        foreach ($request->file('Quality_Control_attachment') as $file) {
+                            $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move('upload/', $name);
+                            $files[] = $name;
+                        }
+                    }
+
+                    $Cft->Quality_Control_attachment = json_encode($files);
                 }
                 if (!empty ($request->Quality_Assurance_attachment)) {
                     $files = [];
@@ -3542,72 +2490,6 @@ class RiskManagementController extends Controller
                     }
                     $Cft->Quality_Assurance_attachment = json_encode($files);
                 }
-                if (!empty ($request->Production_Table_Attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Production_Table_Attachment')) {
-                        foreach ($request->file('Production_Table_Attachment') as $file) {
-                            $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Production_Table_Attachment = json_encode($files);
-                }
-                if (!empty ($request->ProductionLiquid_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('ProductionLiquid_attachment')) {
-                        foreach ($request->file('ProductionLiquid_attachment') as $file) {
-                            $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->ProductionLiquid_attachment = json_encode($files);
-                }
-                if (!empty ($request->Production_Injection_Attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Production_Injection_Attachment')) {
-                        foreach ($request->file('Production_Injection_Attachment') as $file) {
-                            $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Production_Injection_Attachment = json_encode($files);
-                }
-                if (!empty ($request->Store_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Store_attachment')) {
-                        foreach ($request->file('Store_attachment') as $file) {
-                            $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Store_attachment = json_encode($files);
-                }
-                if (!empty ($request->Quality_Control_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('Quality_Control_attachment')) {
-                        foreach ($request->file('Quality_Control_attachment') as $file) {
-                            $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->Quality_Control_attachment = json_encode($files);
-                }
-                if (!empty ($request->ResearchDevelopment_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('ResearchDevelopment_attachment')) {
-                        foreach ($request->file('ResearchDevelopment_attachment') as $file) {
-                            $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->ResearchDevelopment_attachment = json_encode($files);
-                }
                 if (!empty ($request->Engineering_attachment)) {
                     $files = [];
                     if ($request->hasfile('Engineering_attachment')) {
@@ -3619,49 +2501,41 @@ class RiskManagementController extends Controller
                     }
                     $Cft->Engineering_attachment = json_encode($files);
                 }
-                if (!empty ($request->Human_Resource_attachment)) {
+                if (!empty ($request->Analytical_Development_attachment)) {
                     $files = [];
-                    if ($request->hasfile('Human_Resource_attachment')) {
-                        foreach ($request->file('Human_Resource_attachment') as $file) {
-                            $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    if ($request->hasfile('Analytical_Development_attachment')) {
+                        foreach ($request->file('Analytical_Development_attachment') as $file) {
+                            $name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                             $file->move('upload/', $name);
                             $files[] = $name;
                         }
                     }
-                    $Cft->Human_Resource_attachment = json_encode($files);
+
+                    $Cft->Analytical_Development_attachment = json_encode($files);
                 }
-                if (!empty ($request->Microbiology_attachment)) {
+                if (!empty ($request->Kilo_Lab_attachment)) {
                     $files = [];
-                    if ($request->hasfile('Microbiology_attachment')) {
-                        foreach ($request->file('Microbiology_attachment') as $file) {
-                            $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    if ($request->hasfile('Kilo_Lab_attachment')) {
+                        foreach ($request->file('Kilo_Lab_attachment') as $file) {
+                            $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                             $file->move('upload/', $name);
                             $files[] = $name;
                         }
                     }
-                    $Cft->Microbiology_attachment = json_encode($files);
+
+                    $Cft->Kilo_Lab_attachment = json_encode($files);
                 }
-                if (!empty ($request->RegulatoryAffair_attachment)) {
+                if (!empty ($request->Technology_transfer_attachment)) {
                     $files = [];
-                    if ($request->hasfile('RegulatoryAffair_attachment')) {
-                        foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                            $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    if ($request->hasfile('Technology_transfer_attachment')) {
+                        foreach ($request->file('Technology_transfer_attachment') as $file) {
+                            $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                             $file->move('upload/', $name);
                             $files[] = $name;
                         }
                     }
-                    $Cft->RegulatoryAffair_attachment = json_encode($files);
-                }
-                if (!empty ($request->CorporateQualityAssurance_attachment)) {
-                    $files = [];
-                    if ($request->hasfile('CorporateQualityAssurance_attachment')) {
-                        foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                            $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                            $file->move('upload/', $name);
-                            $files[] = $name;
-                        }
-                    }
-                    $Cft->CorporateQualityAssurance_attachment = json_encode($files);
+
+                    $Cft->Technology_transfer_attachment = json_encode($files);
                 }
                 if (!empty ($request->Environment_Health_Safety_attachment)) {
                     $files = [];
@@ -3672,9 +2546,21 @@ class RiskManagementController extends Controller
                             $files[] = $name;
                         }
                     }
+
                     $Cft->Environment_Health_Safety_attachment = json_encode($files);
                 }
+                if (!empty ($request->Human_Resource_attachment)) {
+                    $files = [];
+                    if ($request->hasfile('Human_Resource_attachment')) {
+                        foreach ($request->file('Human_Resource_attachment') as $file) {
+                            $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move('upload/', $name);
+                            $files[] = $name;
+                        }
+                    }
 
+                    $Cft->Human_Resource_attachment = json_encode($files);
+                }
                 if (!empty ($request->Information_Technology_attachment)) {
                     $files = [];
                     if ($request->hasfile('Information_Technology_attachment')) {
@@ -3684,18 +2570,20 @@ class RiskManagementController extends Controller
                             $files[] = $name;
                         }
                     }
+
                     $Cft->Information_Technology_attachment = json_encode($files);
                 }
-                if (!empty ($request->ContractGiver_attachment)) {
+                if (!empty ($request->Project_management_attachment)) {
                     $files = [];
-                    if ($request->hasfile('ContractGiver_attachment')) {
-                        foreach ($request->file('ContractGiver_attachment') as $file) {
-                            $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    if ($request->hasfile('Project_management_attachment')) {
+                        foreach ($request->file('Project_management_attachment') as $file) {
+                            $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                             $file->move('upload/', $name);
                             $files[] = $name;
                         }
                     }
-                    $Cft->ContractGiver_attachment = json_encode($files);
+
+                    $Cft->Project_management_attachment = json_encode($files);
                 }
                 if (!empty ($request->Other1_attachment)) {
                     $files = [];
@@ -3706,6 +2594,8 @@ class RiskManagementController extends Controller
                             $files[] = $name;
                         }
                     }
+
+
                     $Cft->Other1_attachment = json_encode($files);
                 }
                 if (!empty ($request->Other2_attachment)) {
@@ -3717,6 +2607,7 @@ class RiskManagementController extends Controller
                             $files[] = $name;
                         }
                     }
+
                     $Cft->Other2_attachment = json_encode($files);
                 }
                 if (!empty ($request->Other3_attachment)) {
@@ -3751,12 +2642,72 @@ class RiskManagementController extends Controller
                             $files[] = $name;
                         }
                     }
+
+
                     $Cft->Other5_attachment = json_encode($files);
                 }
 
+             $Cft->save();
 
-            $Cft->save();
+                    $IsCFTRequired = RiskAssesmentCftResponce::withoutTrashed()->where(['is_required' => 1, 'risk_id' => $id])->latest()->first();
+                    $cftUsers = DB::table('risk_managment_cfts')->where(['risk_id' => $id])->first();
+                    // Define the column names
+                    $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
+
+                    // Initialize an array to store the values
+                    $valuesArray = [];
+
+                    foreach ($columns as $index => $column) {
+                        $value = $cftUsers->$column;
+                        // Check if the value is not null and not equal to 0
+                        if ($value != null && $value != 0) {
+                            $valuesArray[] = $value;
+                        }
+                    }
+                    // Remove duplicates from the array
+                    $valuesArray = array_unique($valuesArray);
+
+                    // Convert the array to a re-indexed array
+                    $valuesArray = array_values($valuesArray);
+
+                    foreach ($valuesArray as $u) {
+                            $email = Helpers::getInitiatorEmail($u);
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $data],
+                                        function ($message) use ($email) {
+                                            $message->to($email)
+                                                ->subject("CFT Assgineed by " . Auth::user()->name);
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    //log error
+                                }
+                        }
+                    }
+                    if (!empty ($request->Initial_attachment)) {
+                    $files = [];
+
+                    if ($data->Initial_attachment) {
+                        $files = is_array(json_decode($data->Initial_attachment)) ? $data->Initial_attachment : [];
+                    }
+
+                    if ($request->hasfile('Initial_attachment')) {
+                        foreach ($request->file('Initial_attachment') as $file) {
+                            $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move('upload/', $name);
+                            $files[] = $name;
+                        }
+                    }
+
+                    $data->Initial_attachment = json_encode($files);
+
+                }
+
             }
+
 
              $data1 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'effect_analysis')->first();
 
@@ -3988,10 +2939,8 @@ class RiskManagementController extends Controller
             $history->save();
             }
 
-
             if ($lastDocument->scope != $data->scope) {
                 $history = new RiskAuditTrail();
-
 
             $history->risk_id = $data->id;
             $history->activity_type = 'Scope';
@@ -4376,7 +3325,6 @@ class RiskManagementController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-
 
             $history->save();
         }
@@ -5576,9 +4524,6 @@ class RiskManagementController extends Controller
             //     $history->save();
             // }
 
-
-
-
             // Find the current and previous data
             // $lastDocument = RiskAssesmentGrid::find($id);
             // $data = RiskAssesmentGrid::find($id);
@@ -5823,224 +4768,66 @@ class RiskManagementController extends Controller
 
     public function riskAssesmentStateChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $changeControl = RiskManagement::find($id);
-            $updateCFT = RiskManagmentCft::where('risk_id', $id)->latest()->first();
-            $lastDocument =  RiskManagement::find($id);
-            $data =  RiskManagement::find($id);
-            $cftDetails = RiskAssesmentCftResponce::withoutTrashed()->where(['status' => 'In-progress', 'risk_id' => $id])->distinct('cft_user_id')->count();
+        try {
+            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+                $incident = RiskManagement::find($id);
+                $updateCFT = RiskManagmentCft::where('risk_id', $id)->latest()->first();
+                $lastDocument = RiskManagement::find($id);
+                $cftDetails = RiskAssesmentCftResponce::withoutTrashed()->where(['status' => 'In-progress', 'risk_id' => $id])->distinct('cft_user_id')->count();
 
+                if ($incident->stage == 1) {
+                    // if ($incident->form_progress !== 'general-open')
+                    // {
+                    //     // dd('emnter');
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'General Information Tab is yet to be filled'
+                    //     ]);
 
-            if ($changeControl->stage == 1) {
-                $changeControl->stage = "2";
-                $changeControl->status = 'Risk Analysis & Work Group Assignment';
-                $changeControl->submitted_by = Auth::user()->name;
-                $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
-                $changeControl->submit_comment =$request->comment;
+                    //     return redirect()->back();
+                    // } else {
 
-                $history = new RiskAuditTrail();
-                $history->risk_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changeControl->submitted_by;
-                $history->comment = $request->comment;
-                $history->action = 'Submit';
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Risk Analysis & Work Group Assignment";
-                $history->change_from = $lastDocument->status;
-                $history->action_name = 'Submit';
-                $history->stage = 'Risk Analysis & Work Group Assignment';
-                $history->save();
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for HOD review state'
+                    //     ]);
+                    // }
 
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            // if ($changeControl->stage == 2) {
-            //     $changeControl->stage = "3";
-            //     $changeControl->status = 'Risk Processing & Action Plan';
-            //     $changeControl->evaluated_by = Auth::user()->name;
-            //     $changeControl->evaluated_on = Carbon::now()->format('d-M-Y');
-            //     $changeControl->evaluation_complete_comment =$request->comment;
-
-
-            //     $history = new RiskAuditTrail();
-
-            //     $history->risk_id = $id;
-            //     $history->activity_type = 'Activity Log';
-            //     $history->previous = "";
-            //     $history->current = $changeControl->evaluated_by;
-            //     $history->comment = $request->comment;
-            //     $history->action = 'Evaluation Complete';
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $lastDocument->status;
-            //     $history->change_to =   "Risk Processing & Action Plan";
-            //     $history->change_from = $lastDocument->status;
-            //     $history->action_name = "Update";
-            //     $history->stage = 'Risk Processing & Action Plan';
-
-            //     $history->save();
-
-            //     $changeControl->update();
-            //     toastr()->success('Document Sent');
-            //     return back();
-            // }
-            if ($changeControl->stage == 3) {
-                $IsCFTRequired = RiskManagmentCft::withoutTrashed()->where(['is_required' => 1, 'risk_id' => $id])->latest()->first();
-                $cftUsers = DB::table('risk_managment_cfts')->where(['risk_id' => $id])->first();
-
-                $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
-                $valuesArray = [];
-
-                foreach ($columns as $index => $column) {
-                    $value = $cftUsers->$column;
-                    if($index == 0 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Quality_Control_by = Auth::user()->name;
-                        $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 1 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->QualityAssurance_by = Auth::user()->name;
-                        $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 2 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Engineering_by = Auth::user()->name;
-                        $updateCFT->Engineering_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 3 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Environment_Health_Safety_by = Auth::user()->name;
-                        $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 4 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Human_Resource_by = Auth::user()->name;
-                        $updateCFT->Human_Resource_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 5 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Information_Technology_by = Auth::user()->name;
-                        $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 6 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Other1_by = Auth::user()->name;
-                        $updateCFT->Other1_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 7 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Other2_by = Auth::user()->name;
-                        $updateCFT->Other2_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 8 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Other3_by = Auth::user()->name;
-                        $updateCFT->Other3_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 9 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Other4_by = Auth::user()->name;
-                        $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 10 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Other5_by = Auth::user()->name;
-                        $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 11 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->RA_by = Auth::user()->name;
-                        $updateCFT->RA_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 12 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Production_Table_By = Auth::user()->name;
-                        $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 13 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->ProductionLiquid_by = Auth::user()->name;
-                        $updateCFT->ProductionLiquid_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 14 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Production_Injection_By = Auth::user()->name;
-                        $updateCFT->Production_Injection_On = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 15 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Store_by = Auth::user()->name;
-                        $updateCFT->Store_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 16 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->ResearchDevelopment_by = Auth::user()->name;
-                        $updateCFT->ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 17 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->Microbiology_by = Auth::user()->name;
-                        $updateCFT->Microbiology_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 18 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->RegulatoryAffair_by = Auth::user()->name;
-                        $updateCFT->RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 19 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->CorporateQualityAssurance_by = Auth::user()->name;
-                        $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
-                    }
-                    if($index == 20 && $cftUsers->$column == Auth::user()->id){
-                        $updateCFT->ContractGiver_by = Auth::user()->name;
-                        $updateCFT->ContractGiver_by = Carbon::now()->format('Y-m-d');
-                    }
-                    $updateCFT->update();
-
-                    if ($value != null && $value != 0) {
-                        $valuesArray[] = $value;
-                    }
-                }
-                if ($IsCFTRequired) {
-                    if (count(array_unique($valuesArray)) == ($cftDetails + 1)) {
-                        $stage = new RiskManagmentCft();
-                        $stage->cc_id = $id;
-                        $stage->cft_user_id = Auth::user()->id;
-                        $stage->status = "Completed";
-                        $stage->comment = $request->comment;
-                        $stage->save();
-                    } else {
-                        $stage = new RiskManagmentCft();
-                        $stage->cc_id = $id;
-                        $stage->cft_user_id = Auth::user()->id;
-                        $stage->status = "In-progress";
-                        $stage->comment = $request->comment;
-                        $stage->save();
-                    }
-                }
-
-                $checkCFTCount = RiskManagmentCft::withoutTrashed()->where(['status' => 'Completed', 'risk_id' => $id])->count();
-
-                if (!$IsCFTRequired || $checkCFTCount) {
-                    $changeControl->stage = "6";
-                    $changeControl->status = "QA Final Review";
-                    $changeControl->cft_review_by = Auth::user()->name;
-                    $changeControl->cft_review_on = Carbon::now()->format('d-M-Y');
-                    $changeControl->cft_review_comment = $request->comments;
-
+                    $incident->stage = "2";
+                    $incident->status = "Risk Analysis & Work Group Assignmet";
+                    $incident->submitted_by = Auth::user()->name;
+                    $incident->submitted_on = Carbon::now()->format('d-M-Y');
+                    $incident->submit_comment = $request->comment;
 
                     $history = new RiskAuditTrail();
-                    $history->cc_id = $id;
+                    $history->risk_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action='CFT Review Complete';
-                    $history->current = "Not Applicable";
-                    $history->comment = $request->comments;
+                    $history->action='Submit';
+                    $history->current = $incident->submitted_by;
+                    $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA Final Review";
+                    $history->change_to =   "Risk Analysis & Work Group Assignment";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
-                    // $list = Helpers::getQAUserList();
+
+
+                    // $list = Helpers::getHodUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $changeControl->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
+
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $changeControl],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -6052,169 +4839,705 @@ class RiskManagementController extends Controller
                     //         }
                     //     }
                     // }
-                    $changeControl->update();
+
+                    // $list = Helpers::getHeadoperationsUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+
+                    //             Mail::send(
+                    //                 'mail.Categorymail',
+                    //                 ['data' => $incident],
+                    //                 function ($message) use ($email) {
+                    //                     $message->to($email)
+                    //                         ->subject("Activity Performed By " . Auth::user()->name);
+                    //                 }
+                    //             );
+                    //         }
+                    //     }
+                    // }
+                    // dd($incident);
+                    $incident->update();
+                    return back();
                 }
-                toastr()->success('Document Sent');
+                if ($incident->stage == 2) {
+
+                    // Check HOD remark value
+                    // if (!$incident->HOD_Remarks) {
+
+                    //     Session::flash('swal', [
+                    //         'title' => 'Mandatory Fields Required!',
+                    //         'message' => 'HOD Remarks is yet to be filled!',
+                    //         'type' => 'warning',
+                    //     ]);
+
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for QA initial review state'
+                    //     ]);
+                    // }
+
+                    $incident->stage = "3";
+                    $incident->status = "CFT";
+                    $incident->HOD_Review_Complete_By = Auth::user()->name;
+                    $incident->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $incident->HOD_Review_Comments = $request->comment;
+                    $history = new RiskAuditTrail();
+                    $history->risk_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->current = $incident->HOD_Review_Complete_By;
+                    $history->comment = $request->comment;
+                    $history->action= 'Risk Analysis';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "QA Initial Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Approved';
+                    $history->save();
+                    // dd($history->action);
+                    // $list = Helpers::getQAUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $incident],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    // }
+
+
+                    $incident->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+                if ($incident->stage == 3) {
+                    // if ($incident->form_progress !== 'cft')
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'QA initial review / CFT Mandatory Tab is yet to be filled!'
+                    //     ]);
+
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for CFT review state'
+                    //     ]);
+                    // }
+
+                    $incident->stage = "4";
+                    $incident->status = "In QA Review";
+
+                    // Code for the CFT required
+                    $stage = new RiskAssesmentCftResponce();
+                    $stage->risk_id = $id;
+                    $stage->cft_user_id = Auth::user()->id;
+                    $stage->status = "CFT Required";
+                    // $stage->cft_stage = ;
+                    $stage->comment = $request->comment;
+                    $stage->is_required = 1;
+                    $stage->save();
+
+                    $incident->QA_Initial_Review_Complete_By = Auth::user()->name;
+                    $incident->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $incident->QA_Initial_Review_Comments = $request->comment;
+                    $history = new RiskAuditTrail();
+                    $history->risk_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action= 'CFT';
+                    $history->current = $incident->QA_Initial_Review_Complete_By;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->change_to =   "CFT Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = 'Completed';
+                    $history->save();
+                    // $list = Helpers::getQAUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $incident],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    // }
+
+
+
+                    $incident->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+                if ($incident->stage == 4) {
+
+                    // CFT review state update form_progress
+                    // if ($incident->form_progress !== 'cft')
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'CFT Tab is yet to be filled'
+                    //     ]);
+
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for Investigation and CAPA review state'
+                    //     ]);
+                    // }
+
+
+                    $IsCFTRequired = RiskAssesmentCftResponce::withoutTrashed()->where(['is_required' => 1, 'risk_id' => $id])->latest()->first();
+                    $cftUsers = DB::table('risk_managment_cfts')->where(['risk_id' => $id])->first();
+                    // Define the column names
+                    $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
+                    // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
+
+                    // Initialize an array to store the values
+                    $valuesArray = [];
+
+                    // Iterate over the columns and retrieve the values
+                    foreach ($columns as $index => $column) {
+                        $value = $cftUsers->$column;
+                        if($index == 0 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Production_by = Auth::user()->name;
+                            $updateCFT->production_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 1 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Warehouse_by = Auth::user()->name;
+                            $updateCFT->Warehouse_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 4 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Engineering_by = Auth::user()->name;
+                            $updateCFT->Engineering_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 2 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Quality_Control_by = Auth::user()->name;
+                            $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 3 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->QualityAssurance_by = Auth::user()->name;
+                            $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 5 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Analytical_Development_by = Auth::user()->name;
+                            $updateCFT->Analytical_Development_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 6 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Kilo_Lab_attachment_by = Auth::user()->name;
+                            $updateCFT->Kilo_Lab_attachment_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 7 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Technology_transfer_by = Auth::user()->name;
+                            $updateCFT->Technology_transfer_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 8 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Environment_Health_Safety_by = Auth::user()->name;
+                            $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 9 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Human_Resource_by = Auth::user()->name;
+                            $updateCFT->Human_Resource_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 10 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Information_Technology_by = Auth::user()->name;
+                            $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 11 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Project_management_by = Auth::user()->name;
+                            $updateCFT->Project_management_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 12 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Other1_by = Auth::user()->name;
+                            $updateCFT->Other1_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 13 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Other2_by = Auth::user()->name;
+                            $updateCFT->Other2_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 14 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Other3_by = Auth::user()->name;
+                            $updateCFT->Other3_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 15 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Other4_by = Auth::user()->name;
+                            $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
+                        }
+                        if($index == 16 && $cftUsers->$column == Auth::user()->id){
+                            $updateCFT->Other5_by = Auth::user()->name;
+                            $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
+                        }
+                        $updateCFT->update();
+
+                        // Check if the value is not null and not equal to 0
+                        if ($value != null && $value != 0) {
+                            $valuesArray[] = $value;
+                        }
+                    }
+                    // dd($valuesArray, count(array_unique($valuesArray)), ($cftDetails+1));
+                    if ($IsCFTRequired) {
+                        if (count(array_unique($valuesArray)) == ($cftDetails + 1)) {
+                            $stage = new RiskAssesmentCftResponce();
+                            $stage->risk_id = $id;
+                            $stage->cft_user_id = Auth::user()->id;
+                            $stage->status = "Completed";
+                            // $stage->cft_stage = ;
+                            $stage->comment = $request->comment;
+                            $stage->save();
+                        } else {
+                            $stage = new RiskAssesmentCftResponce();
+                            $stage->risk_id = $id;
+                            $stage->cft_user_id = Auth::user()->id;
+                            $stage->status = "In-progress";
+                            // $stage->cft_stage = ;
+                            $stage->comment = $request->comment;
+                            $stage->save();
+                        }
+                    }
+
+                    $checkCFTCount = RiskAssesmentCftResponce::withoutTrashed()->where(['status' => 'Completed', 'incident_id' => $id])->count();
+                    // dd(count(array_unique($valuesArray)), $checkCFTCount);
+
+
+                    if (!$IsCFTRequired || $checkCFTCount) {
+
+                        $incident->stage = "5";
+                        $incident->status = "In Approve";
+                        $incident->CFT_Review_Complete_By = Auth::user()->name;
+                        $incident->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                        $incident->CFT_Review_Comments = $request->comment;
+
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action='In QA Review Complete';
+                        $history->current = $incident->CFT_Review_Complete_By;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_to =   "QA Final Review";
+                        $history->change_from = $lastDocument->status;
+                        $history->stage = 'Complete';
+                        $history->save();
+                        // $list = Helpers::getQAUserList();
+                        // foreach ($list as $u) {
+                        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                        //         $email = Helpers::getInitiatorEmail($u->user_id);
+                        //         if ($email !== null) {
+                        //             try {
+                        //                 Mail::send(
+                        //                     'mail.view-mail',
+                        //                     ['data' => $incident],
+                        //                     function ($message) use ($email) {
+                        //                         $message->to($email)
+                        //                             ->subject("Activity Performed By " . Auth::user()->name);
+                        //                     }
+                        //                 );
+                        //             } catch (\Exception $e) {
+                        //                 //log error
+                        //             }
+                        //         }
+                        //     }
+                        // }
+                        $incident->update();
+                    }
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+
+                if ($incident->stage == 5) {
+
+                    // if ($incident->form_progress === 'capa' && !empty($incident->QA_Feedbacks))
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for QA Head/Manager Designee Approval'
+                    //     ]);
+
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
+                    //     ]);
+
+                    //     return redirect()->back();
+                    // }
+
+
+                    $incident->stage = "6";
+                    $incident->status = "In Approval";
+                    $incident->QA_Final_Review_Complete_By = Auth::user()->name;
+                    $incident->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $incident->QA_Final_Review_Comments = $request->comment;
+
+                    $history = new RiskAuditTrail();
+                    $history->risk_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->current = $incident->QA_Final_Review_Complete_By;
+                    $history->comment = $request->comment;
+                    $history->action ='QA Final Review Complete';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "QA Head/Manager Designee Approval";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Approved';
+                    $history->save();
+                    // $list = Helpers::getQAUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $incident],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    $incident->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+                if ($incident->stage == 6) {
+
+                    if ($incident->form_progress !== 'qah')
+                    {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'QAH/Designee Approval Tab is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Incident sent to Intiator Update'
+                        ]);
+                    }
+
+                    $extension = Extension::where('parent_id', $incident->id)->first();
+
+                    $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
+
+                    if ($extension && $extension->status !== 'Closed-Done') {
+                        Session::flash('swal', [
+                            'title' => 'Extension record pending!',
+                            'message' => 'There is an Extension record which is yet to be closed/done!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    }
+
+                    if ($rca && $rca->status !== 'Closed-Done') {
+                        Session::flash('swal', [
+                            'title' => 'RCA record pending!',
+                            'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    }
+
+                    // return "PAUSE";
+
+                    $incident->stage = "7";
+                    $incident->status = "Pending Initiator Update";
+                    $incident->QA_head_approved_by = Auth::user()->name;
+                    $incident->QA_head_approved_on = Carbon::now()->format('d-M-Y');
+                    $incident->QA_head_approved_comment	 = $request->comment;
+
+                    $history = new RiskAuditTrail();
+                    $history->incident_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action ='Approved';
+                    $history->current = $incident->QA_head_approved_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Pending Initiator Update";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Completed';
+                    $history->save();
+                    // $list = Helpers::getQAUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $incident],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    $incident->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+                if ($incident->stage == 7) {
+
+                    if ($incident->form_progress !== 'qah')
+                    {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'QAH/Designee Approval Tab is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Incident sent to QA Final Approval.'
+                        ]);
+                    }
+
+                    $extension = Extension::where('parent_id', $incident->id)->first();
+
+                    $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
+
+                    if ($extension && $extension->status !== 'Closed-Done') {
+                        Session::flash('swal', [
+                            'title' => 'Extension record pending!',
+                            'message' => 'There is an Extension record which is yet to be closed/done!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    }
+
+                    if ($rca && $rca->status !== 'Closed-Done') {
+                        Session::flash('swal', [
+                            'title' => 'RCA record pending!',
+                            'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    }
+
+                    // return "PAUSE";
+
+                    $incident->stage = "8";
+                    $incident->status = "QA Final Approval";
+                    $incident->pending_initiator_approved_by = Auth::user()->name;
+                    $incident->pending_initiator_approved_on = Carbon::now()->format('d-M-Y');
+                    $incident->pending_initiator_approved_comment = $request->comment;
+
+                    $history = new RiskAuditTrail();
+                    $history->incident_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action ='Initiator Updated Complete';
+                    $history->current = $incident->pending_initiator_approved_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "QA Final Approval";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Completed';
+                    $history->save();
+                    // $list = Helpers::getQAUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $incident],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    $incident->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+
+
+                if ($incident->stage == 8) {
+
+                    if ($incident->form_progress !== 'qah')
+                    {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'QAH/Designee Approval Tab is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Incident sent to Closed/Done state'
+                        ]);
+                    }
+
+                    $extension = Extension::where('parent_id', $incident->id)->first();
+
+                    $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
+
+                    if ($extension && $extension->status !== 'Closed-Done') {
+                        Session::flash('swal', [
+                            'title' => 'Extension record pending!',
+                            'message' => 'There is an Extension record which is yet to be closed/done!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    }
+
+                    if ($rca && $rca->status !== 'Closed-Done') {
+                        Session::flash('swal', [
+                            'title' => 'RCA record pending!',
+                            'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    }
+
+                    // return "PAUSE";
+
+                    $incident->stage = "9";
+                    $incident->status = "Closed-Done";
+                    $incident->QA_final_approved_by = Auth::user()->name;
+                    $incident->QA_final_approved_on = Carbon::now()->format('d-M-Y');
+                    $incident->QA_final_approved_comment = $request->comment;
+
+                    $history = new RiskAuditTrail();
+                    $history->incident_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action ='Closed-Done';
+                    $history->current = $incident->QA_final_approved_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Closed-Done";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Completed';
+                    $history->save();
+                    // $list = Helpers::getQAUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $incident],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    $incident->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+            } else {
+                toastr()->error('E-signature Not match');
                 return back();
             }
-            if ($changeControl->stage == 3) {
-                $changeControl->stage = "4";
-                $changeControl->status = 'Pending HOD Approval';
-
-                $changeControl->evaluated_by = Auth::user()->name;
-                $changeControl->evaluated_on = Carbon::now()->format('d-M-Y');
-                $changeControl->action_plan_complete_comment =$request->comment;
-
-
-                $history = new RiskAuditTrail();
-
-                $history->risk_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changeControl->evaluated_by;
-                $history->comment = $request->comment;
-                $history->action = 'Action Plan Complete';
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Pending HOD Approval";
-                $history->change_from = $lastDocument->status;
-                $history->action_name = "Update";
-                $history->stage = 'Pending HOD Approval';
-
-                $history->save();
-
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 4) {
-                $changeControl->stage = "5";
-                $changeControl->status = 'Actions Items in Progress';
-                $changeControl->plan_approved_by = Auth::user()->name;
-                $changeControl->plan_approved_on = Carbon::now()->format('d-M-Y');
-                $changeControl->action_plan_approved_comment =$request->comment;
-
-                $history = new RiskAuditTrail();
-                $history->risk_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changeControl->plan_approved_by;
-                $history->comment = $request->comment;
-                $history->action = 'Action Plan Approved';
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Actions Items in Progress";
-                $history->change_from = $lastDocument->status;
-                $history->action_name = "Update";
-                $history->stage = 'Actions Items in Progress';
-                $history->save();
-            //     $list = Helpers::getQAHeadUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document is Send By".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      }
-            //   }
-                $changeControl->update();
-
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 5) {
-                $changeControl->stage = "6";
-                $changeControl->status = 'Residual Risk Evaluation';
-                $changeControl->plan_approved_by = Auth::user()->name;
-                $changeControl->plan_approved_on = Carbon::now()->format('d-M-Y');
-                $changeControl->all_actions_completed_comment = $request->comment;
-
-
-                $history = new RiskAuditTrail();
-                $history->risk_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changeControl->plan_approved_by;
-                $history->comment = $request->comment;
-                $history->action = 'All Action Completed';
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Residual Risk Evaluation";
-                $history->change_from = $lastDocument->status;
-                $history->action_name = "Update";
-                $history->stage = 'Residual Risk Evaluation';
-                $history->save();
-            //     $list = Helpers::getHodUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document is Send By".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      }
-            //   }
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
-
-            if ($changeControl->stage == 6) {
-                $changeControl->stage = "7";
-                $changeControl->status = 'Closed - Done';
-                $changeControl->risk_analysis_completed_by = Auth::user()->name;
-                $changeControl->risk_analysis_completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->risk_eveluation_comment =$request->comment;
-
-                $history = new RiskAuditTrail();
-                $history->risk_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changeControl->risk_analysis_completed_by;
-                $history->comment = $request->comment;
-                $history->action = 'All Action Completed Completed';
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Close-Done";
-                $history->change_from = $lastDocument->status;
-                $history->action_name = "Update";
-                $history->stage = 'Close-Done';
-                $history->save();
-
-
-                $changeControl->update();
-
-
-                toastr()->success('Document Sent');
-                return back();
-            }
-        } else {
-            toastr()->error('E-signature Not match');
-            return back();
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage()
+            ], 500);
         }
+
     }
 
 

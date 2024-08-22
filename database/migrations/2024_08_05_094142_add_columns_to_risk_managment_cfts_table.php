@@ -44,6 +44,8 @@ return new class extends Migration
             $table->text('ContractGiver_feedback')->nullable();
             $table->text('ContractGiver_by')->nullable();
             $table->text('ContractGiver_on')->nullable();
+            $table->text('is_required')->nullable();
+            $table->text('status')->nullable();
 
         });
     }

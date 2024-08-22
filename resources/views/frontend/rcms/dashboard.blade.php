@@ -710,7 +710,7 @@
 
         $("#record-modal .drop-list").hide();
 
-        function showAction() {
+        function showAction() {----------------------------------------------------------------------------------------------------------------------
             $("#record-modal .drop-list").toggle();
         }
     </script>
@@ -723,7 +723,7 @@
                     // AJAX request
                     var url = "{{ route('ccView', ['id' => ':auditid', 'type' => ':formType']) }}";
                     url = url.replace(':auditid', auditid).replace(':formType', formType);
-                    url = url.replace('http://', 'https://');
+                    // url = url.replace('http://', 'https://');
                     // Empty modal data
                     $('#auditTableinfo').empty();
                     $.ajax({
