@@ -12260,23 +12260,62 @@
                             </div>
                         </div>
 
-                        <div class="sub-head">HOD Review Completed</div>
+                        <div class="sub-head">HOD Initial Review Completed</div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="HOD Review Complete By">HOD Review Complete By :-</label>
-                                <div class="static">{{ $data->HOD_Review_Complete_By }}</div>
+                                <label for="HOD Review Complete By">HOD Initial Review Complete By :-</label>
+                                <div class="static">{{ $data->HOD_Initial_Review_Complete_By }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="HOD Review Complete On">HOD Review Complete On :-</label>
-                                <div class="static">{{ $data->HOD_Review_Complete_On }}</div>
+                                <label for="HOD Review Complete On">HOD Initial Review Complete On :-</label>
+                                <div class="static">{{ $data->HOD_Initial_Review_Complete_On }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style=" ">
-                                <label for="HOD Review Comments">HOD Review Comments :-</label>
-                                <div class="">{{ $data->HOD_Review_Comments }}</div>
+                                <label for="HOD Review Comments">HOD Initial Review Comments :-</label>
+                                <div class="">{{ $data->HOD_Initial_Review_Comments }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required By :-</label>
+                                <div class="static">{{ $data->more_info_req_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required On :-</label>
+                                <div class="static">{{ $data->more_info_req_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required Comments-</label>
+                                <div class="static">{{ $data->more_info_req_cmt }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit by">cancelled By :-</label>
+                                <div class="static">{{ $data->Hod_Cancelled_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="cancelled on">cancelled On :-</label>
+                                <div class="static">{{ $data->Hod_Cancelled_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submit on">Cancelled Comments-</label>
+                                <div class="static">{{ $data->Hod_Cancelled_cmt }}</div>
                             </div>
                         </div>
 
@@ -12300,68 +12339,194 @@
                                 <div class="">{{ $data->QA_Initial_Review_Comments }}</div>
                             </div>
                         </div>
-
-                        <div class="sub-head">CFT Review Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="CFT Review Complete By">CFT Review Complete By :-</label>
-                                <div class="static">{{ $data->CFT_Review_Complete_By }}</div>
+                                <label for="submit on">More Information
+                                    Required By :-</label>
+                                <div class="static">{{ $data->Qa_more_info_req_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="CFT Review Complete On">CFT Review Complete On :-</label>
-                                <div class="static">{{ $data->CFT_Review_Complete_On }}</div>
+                                <label for="submit on">More Information
+                                    Required On :-</label>
+                                <div class="static">{{ $data->Qa_more_info_req_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required Comments-</label>
+                                <div class="static">{{ $data->Qa_more_info_req_cmt }}</div>
+                            </div>
+                        </div>
+                        <div class="sub-head">Pending Initiator Update Complete</div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Pending Initiator Update Complete By">Pending Initiator Update Complete By :-</label>
+                                <div class="static">{{ $data->Pending_Review_Complete_By }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="Pending Initiator Update Complete On">Pending Initiator Update Complete On :-</label>
+                                <div class="static">{{ $data->Pending_Review_Complete_On }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="CFT Review Comments">CFT Review Comments :-</label>
-                                <div class="">{{ $data->CFT_Review_Comments }}</div>
+                                <label for="CFT Review Comments">Pending Initiator Update Comments :-</label>
+                                <div class="">{{ $data->Pending_Review_Comments }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required By :-</label>
+                                <div class="static">{{ $data->Pending_more_info_req_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required On :-</label>
+                                <div class="static">{{ $data->Pending_more_info_req_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required Comments-</label>
+                                <div class="static">{{ $data->Pending_more_info_req_cmt }}</div>
                             </div>
                         </div>
 
-                        <div class="sub-head"> QA Final Review Completed</div>
+                        <div class="sub-head"> HOD Final Review Completed</div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="QA Final Review Complete By"> HOD Final Review Complete By :-</label>
+                                <div class="static">{{ $data->Hod_Final_Review_Complete_By}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="QA Final Review Complete On"> HOD Final Review Complete On :-</label>
+                                <div class="static">{{ $data->Hod_Final_Review_Complete_On }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <label for="QA Final Review Comments"> HOD Final Review Comments :-</label>
+                                <div class="">{{ $data->Hod_Final_Review_Comments }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required By :-</label>
+                                <div class="static">{{ $data->Hod_more_info_req_by}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required On :-</label>
+                                <div class="static">{{ $data->Hod_more_info_req_on}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required Comments-</label>
+                                <div class="static">{{ $data->Hod_more_info_req_cmt}}</div>
+                            </div>
+                        </div>
+                  <div class="sub-head"> QA Final Review Completed</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
-                                <div class="static">{{ $data->QA_Final_Review_Complete_By }}</div>
+                                <div class="static">{{ $data->Qa_Final_Review_Complete_By}}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="QA Final Review Complete On"> QA Final Review Complete On :-</label>
-                                <div class="static">{{ $data->QA_Final_Review_Complete_On }}</div>
+                                <div class="static">{{ $data->Qa_Final_Review_Complete_On}}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                 <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
-                                <div class="">{{ $data->QA_Final_Review_Comments }}</div>
+                                <div class="">{{ $data->Qa_Final_Review_Comments}}</div>
                             </div>
                         </div>
-
-                        <div class="sub-head">QA Head/Manager Designee Approval</div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete By">QA Head/Manager Designee Approval Complete By :-</label>
+                                <label for="submit on">More Information
+                                    Required By :-</label>
+                                <div class="static">{{ $data->Qa_final_more_info_req_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required On :-</label>
+                                <div class="static">{{ $data->Qa_final_more_info_req_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required Comments-</label>
+                                <div class="static">{{ $data->Qa_final_more_info_req_cmt }}</div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="sub-head">Approved</div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="QA Final Review Complete By">Approved By :-</label>
                                 <div class="static">{{ $data->QA_head_approved_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete On">QA Head/Manager Designee Approval Complete On :-</label>
+                                <label for="QA Final Review Complete On">Approved On :-</label>
                                 <div class="static">{{ $data->QA_head_approved_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments">QA Head/Manager Designee Approval Comments :-</label>
+                                <label for="QA Final Review Comments">Approved Comments :-</label>
                                 <div class="">{{ $data->QA_head_approved_comment }}</div>
                             </div>
                         </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required By :-</label>
+                                <div class="static">{{ $data->approved_more_info_req_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required On :-</label>
+                                <div class="static">{{ $data->approved_more_info_req_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required Comments-</label>
+                                <div class="static">{{ $data->approved_more_info_req_cmt }}</div>
+                            </div>
+                        </div>
 
-                        <div class="sub-head">Initiator Update</div>
+                       
+                        
+                        {{-- <div class="sub-head">Initiator Update</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
@@ -12380,9 +12545,32 @@
                                 <div class="">{{ $data->pending_initiator_approved_comment }}</div>
                             </div>
                         </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required By :-</label>
+                                <div class="static">{{ $data->more_info_req_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required On :-</label>
+                                <div class="static">{{ $data->more_info_req_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required Comments-</label>
+                                <div class="static">{{ $data->more_info_req_cmt }}</div>
+                            </div>
+                      </div> --}}
+                        
 
 
-                        <div class="sub-head">QA Final Approval</div>
+
+                        {{-- <div class="sub-head">QA Final Approval</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="Approved By">QA Final Approved By :-</label>
@@ -12399,6 +12587,46 @@
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                 <label for="Approved Comments">QA Final Approved Comments :-</label>
                                 <div class="">{{ $data->QA_final_approved_comment }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required By :-</label>
+                                <div class="static">{{ $data->more_info_req_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required On :-</label>
+                                <div class="static">{{ $data->more_info_req_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submit on">More Information
+                                    Required Comments-</label>
+                                <div class="static">{{ $data->more_info_req_cmt }}</div>
+                            </div>
+                        </div> --}}
+                        <div class="sub-head">cancelled</div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit by">cancelled By :-</label>
+                                <div class="static">{{ $data->Cancelled_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="cancelled on">cancelled On :-</label>
+                                <div class="static">{{ $data->Cancelled_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submit on">Cancelled Comments-</label>
+                                <div class="static">{{ $data->Cancelled_cmt }}</div>
                             </div>
                         </div>
                     </div>
