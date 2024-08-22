@@ -177,6 +177,7 @@ Route::get('manageshow/{id}', [ManagementReviewController::class, 'manageshow'])
 Route::post('manage/stage/{id}', [ManagementReviewController::class, 'manage_send_stage'])->name('manage_send_stage');
 Route::post('manage/cancel/{id}', [ManagementReviewController::class, 'manageCancel'])->name('manageCancel');
 Route::post('manage/reject/{id}', [ManagementReviewController::class, 'manage_reject'])->name('manage_reject');
+Route::post('manage_send_more_require_stage/{id}', [ManagementReviewController::class, 'manage_send_more_require_stage'])->name('manage_send_more_require_stage');
 Route::post('manage/Qa/{id}', [ManagementReviewController::class, 'manage_qa_more_info'])->name('manage_qa_more_info');
 Route::get('ManagementReviewAuditTrial/{id}', [ManagementReviewController::class, 'ManagementReviewAuditTrial']);
 Route::get('ManagementReviewAuditDetails/{id}', [ManagementReviewController::class, 'ManagementReviewAuditDetails']);
@@ -594,5 +595,6 @@ Route::post('resapling-stage-cancel/{id}', [ResamplingController::class, 'resamp
 Route::get('resampling-audittrialshow/{id}', [ResamplingController::class, 'resamplingAuditTrialShow'])->name('resampling-audittrialshow');
 Route::post('send-resampling/{id}', [ResamplingController::class, 'stageChange'])->name('send-resampling');
 Route::post('moreinfoState_resampling/{id}', [ResamplingController::class, 'resamplingmoreinfo'])->name('moreinfoState_resampling');
+
 
 // ============================================

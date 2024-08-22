@@ -46,11 +46,58 @@
                             </button>
                         @elseif($data->stage == 2 && (in_array(15, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                All Actions Completed
+                               Completed
+                            </button>
+                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button> -->
+
+                            @elseif($data->stage == 3 && (in_array(15, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            QA Head Review Complete
+                            </button>
+                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button> -->
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            More Info Required
+                            </button>
+                            @elseif($data->stage == 4 && (in_array(15, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Meeting and Summary Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+                            @elseif($data->stage == 5 && (in_array(15, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                All AI Completed By Respective Department
+                            </button>
+                            
+
+                            @elseif($data->stage == 6 && (in_array(15, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                HOD Finale Review Complete
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            More Info Required
+                            </button>
+                            @elseif($data->stage == 7 && (in_array(15, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                QA Verification Complete
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            More Info Required
+                            </button>
+                            @elseif($data->stage == 8 && (in_array(15, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Approved
+                            </button>
+                            
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            More Info Required
+                            </button>
+                            
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -80,6 +127,36 @@
                                 <div class="">In Progress</div>
                             @endif
                             @if ($data->stage >= 3)
+                                <div class="active">QA Head Review </div>
+                            @else
+                                <div class="">QA Head Review</div>
+                            @endif
+                            @if ($data->stage >= 4)
+                                <div class="active">Meeting And Summary </div>
+                            @else
+                                <div class="">Meeting And Summary</div>
+                            @endif
+                            @if ($data->stage >= 5)
+                                <div class="active">All AI Update By Respective Department </div>
+                            @else
+                                <div class="">All AI Update By Respective Department</div>
+                            @endif
+                            @if ($data->stage >= 6)
+                                <div class="active">HOD Final Review </div>
+                            @else
+                                <div class="">HOD Final Review</div>
+                            @endif
+                            @if ($data->stage >= 7)
+                                <div class="active">QA Verification </div>
+                            @else
+                                <div class="">QA Verification</div>
+                            @endif
+                            @if ($data->stage >= 8)
+                                <div class="active">QA Head Closure Approval </div>
+                            @else
+                                <div class="">QA Head Closure Approval</div>
+                            @endif
+                            @if ($data->stage >= 9)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
@@ -1191,14 +1268,14 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">All Actions Completed By</label>
+                                        <label for="Completed By">Completed By</label>
                                         <div class="static">{{ $data->completed_by }}</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed On">All Actions Completed On</label>
+                                        <label for="Completed On">Completed On</label>
                                         <div class="static">{{ $data->completed_on }}</div>
                                     </div>
                                 </div>
@@ -1208,6 +1285,122 @@
                                         <div class="static">{{ $data->Completed_Comment }}</div>
                                     </div>
                                 </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">QA Head Review Complete By</label>
+                                        <div class="static">{{ $data->qaHeadReviewComplete_By }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">QA Head Review Complete On</label>
+                                        <div class="static">{{ $data->qaHeadReviewComplete_On }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Comment</label>
+                                        <div class="static">{{ $data->qaHeadReviewComplete_Comment }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Meeting and Summary  Complete By</label>
+                                        <div class="static">{{ $data->meeting_summary_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Meeting and Summary Complete On</label>
+                                        <div class="static">{{ $data->meeting_summary_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Comment</label>
+                                        <div class="static">{{ $data->meeting_summary_comment }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">All AI Completed by Respective Department By</label>
+                                        <div class="static">{{ $data->ALLAICompleteby_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">All AI Completed by Respective Department On</label>
+                                        <div class="static">{{ $data->ALLAICompleteby_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Comment</label>
+                                        <div class="static">{{ $data->ALLAICompleteby_comment }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">HOD Final Review Complete By</label>
+                                        <div class="static">{{ $data->hodFinaleReviewComplete_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">HOD Final Review Complete On</label>
+                                        <div class="static">{{ $data->hodFinaleReviewComplete_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Comment</label>
+                                        <div class="static">{{ $data->hodFinaleReviewComplete_comment }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">QA Verification Complete By</label>
+                                        <div class="static">{{ $data->QAVerificationComplete_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">QA Verification Complete On</label>
+                                        <div class="static">{{ $data->QAVerificationComplete_On }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Comment</label>
+                                        <div class="static">{{ $data->QAVerificationComplete_Comment }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Approved By</label>
+                                        <div class="static">{{ $data->Approved_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Approved On</label>
+                                        <div class="static">{{ $data->Approved_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Comment</label>
+                                        <div class="static">{{ $data->Approved_comment }}</div>
+                                    </div>
+                                </div>
+
+
+                                
 
 
                             </div>
@@ -1270,7 +1463,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('capa_reject', $data->id) }}" method="POST">
+                <form action="{{ route('manage_send_more_require_stage', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">

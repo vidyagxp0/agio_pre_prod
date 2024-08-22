@@ -243,7 +243,6 @@ $users = DB::table('users')->get();
                             </div>
 
 
-                            {{-- <div class="col-lg-6"> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -270,15 +269,35 @@ $users = DB::table('users')->get();
                                         </select>
                                     </div>
                                 </div>
-                            {{-- </div> --}}
+
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Description">Short Description <span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <input type="text" name="description_ooc" >
+                                    <p id="char-count"></p>
+                                    <input type="text" name="description_ooc" id = "description_ooc" >
                                     
                                 </div>
                             </div>
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                            <script>
+    $(document).ready(function() {
+        var maxLength = 255;
+        $('#description_ooc').on('input', function() {
+            var inputLength = $(this).val().length;
+            var remaining = maxLength - inputLength;
+            $('#char-count').text(remaining + ' characters remaining');
+            
+            if (remaining < 0) {
+                $(this).val($(this).val().substring(0, maxLength));
+                $('#char-count').text('0 characters remaining');
+            }
+        });
+    });
+</script>
+
+
+
 
                             
                             <div class="col-lg-12">
