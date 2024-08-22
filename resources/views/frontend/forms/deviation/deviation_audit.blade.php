@@ -285,36 +285,36 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- <form action="" method="POST"> -->
-                                    <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
-                                        @csrf
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                            <div class="group-input">
-                                                <label for="Reviewer commnet">Reviewer Comment <span id=""
-                                                        class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                        does not require completion</small></div>
-                                                <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
-                                            </div>
-                                            <div class="group-input">
-                                                <label for="Reviewer Completed By">Reviewer Completed By</label>
-                                                <input disabled type="text" class="form-control"
-                                                    name="reviewer_completed_by" id="reviewer_completed_by"
-                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
-                                            </div>
-                                            <div class="group-input">
-                                                <label for="Reviewer Completed on">Reviewer Completed On</label>
-                                                <input disabled type="text" class="form-control"
-                                                    name="reviewer_completed_on" id="reviewer_completed_on"
-                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
-                                            </div>
-                                            <input type="hidden" id="type" name="type" value="Deviation">
+                                <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
+                                    @csrf
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="group-input">
+                                            <label for="Reviewer commnet">Reviewer Comment <span id=""
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
                                         </div>
-                                        <div class="modal-footer">
-                                            {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
-                                            <button type="button" data-bs-dismiss="modal">Close</button>
+                                        <div class="group-input">
+                                            <label for="Reviewer Completed By">Reviewer Completed By</label>
+                                            <input disabled type="text" class="form-control" name="reviewer_completed_by"
+                                                id="reviewer_completed_by"
+                                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
                                         </div>
-                                    </form>
+                                        <div class="group-input">
+                                            <label for="Reviewer Completed on">Reviewer Completed On</label>
+                                            <input disabled type="text" class="form-control" name="reviewer_completed_on"
+                                                id="reviewer_completed_on"
+                                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                        </div>
+                                        <input type="hidden" id="type" name="type" value="Deviation">
+                                    </div>
+                                    <div class="modal-footer">
+                                        {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
+                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
 
                             </div>
                         </div>
@@ -332,7 +332,9 @@
                                 :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date :
+                                {{ \Carbon\Carbon::parse($document->due_date)->format('d-M-Y') }}
+                            </div>
 
                         </div>
         </div>
@@ -359,15 +361,17 @@
                         <th>Performer</th>
                     </tr>
 
+
+
+
                     <tr>
                         @php
                             $previousItem = null;
                         @endphp
 
                         @foreach ($audit as $audits => $dataDemo)
-                                    
-                            <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
-                            </td>
+                            <td>{{ $loop->iteration }}</td>
+
 
                             <td>
                                 <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
@@ -378,26 +382,63 @@
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="{{ url('DeviationAuditTrialDetails', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                    <strong> Data Field Name
+                                        :</strong>{{ $dataDemo->activity_type ?: 'Not Applicable' }}</a>
                                 </div>
-                                <div style="margin-top: 5px;">
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
+                                <div style="margin-top: 5px;" class="imageContainer">
+                                    <!-- Assuming $dataDemo->image_url contains the URL of your image -->
+                                    @if ($dataDemo->activity_type == 'Activity Log')
+                                        <strong>Change From :</strong>
+                                        @if ($dataDemo->change_from)
+                                            {{-- Check if the change_from is a date --}}
+                                            @if (strtotime($dataDemo->change_from))
+                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d-M-Y') }}
+                                            @else
+                                                {{ str_replace(',', ', ', $dataDemo->change_from) }}
+                                            @endif
+                                        @elseif($dataDemo->change_from && trim($dataDemo->change_from) == '')
+                                            NULL
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                        <strong>Change From :</strong>
+                                        @if (!empty(strip_tags($dataDemo->previous)))
+                                            {{-- Check if the previous is a date --}}
+                                            @if (strtotime($dataDemo->previous))
+                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d-M-Y') }}
+                                            @else
+                                                {!! $dataDemo->previous !!}
+                                            @endif
+                                        @elseif($dataDemo->previous == null)
+                                            Null
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     @endif
                                 </div>
                                 <br>
-                                <div>
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change To :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
+
+                                <div class="imageContainer">
+                                    @if ($dataDemo->activity_type == 'Activity Log')
+                                        <strong>Change To :</strong>
+                                        @if (strtotime($dataDemo->change_to))
+                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
+                                        @else
+                                            {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
+                                        @endif
                                     @else
-                                        <strong>Change To :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
+                                        <strong>Change To :</strong>
+                                        @if (strtotime($dataDemo->current))
+                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
+                                        @else
+                                            {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
+                                        @endif
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">
-                                    <strong>Change Type :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
+                                    <strong>Change Type
+                                        :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
                                 </div>
                             </td>
                             <td>
@@ -412,7 +453,7 @@
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at : 'Not Applicable' }}
+                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
