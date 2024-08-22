@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Api\LogFilterController;
+use App\Http\Controllers\rcms\FailureInvestigationController;
 
 
 /*
@@ -68,3 +69,6 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::post('/ooc',[LogFilterController::class,'ooc_filter'])->name('api.ooc.filter');
  Route::post('/capa',[LogFilterController::class,'capa_filter'])->name('api.capa.filter');
  Route::post('/risk-management',[LogFilterController::class,'risk_management_filter'])->name('api.riskmanagement.filter');
+
+
+ Route::get('/risk-management/{id}',[FailureInvestigationController::class,'audit_trail_filter'])->name('api.failure.filter');

@@ -123,6 +123,7 @@
         </script>
     @endif
 
+
     <script>
         function otherController(value, checkValue, blockID) {
             let block = document.getElementById(blockID)
@@ -2697,7 +2698,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-
+                                                'q_m_s_roles_id' => 50,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -2714,12 +2715,13 @@
                                                 id="RA_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}" @if ($user->id == $data1->RA_person) selected @endif>
+                                                    <option value="{{ $user->name }}" @if ($user->name == $data1->RA_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-md-12 mb-3 ra_review">
                                         <div class="group-input">
                                             <label for="RA assessment">Impact Assessment (By RA) <span id="asteriskRA1"
@@ -2727,10 +2729,11 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea @if ($data1->RA_Review == 'yes' && $data->stage == 4) required @endif class="summernote RA_assessment"
-                                                @if ($data->stage == 3 || (isset($data1->RA_person) && Auth::user()->id != $data1->RA_person)) readonly @endif name="RA_assessment" id="summernote-17">{{ $data1->RA_assessment }}</textarea>
+                                            <textarea class="summernote RA_assessment" name="RA_assessment" id="summernote-17"
+                                                @if ($data->stage == 4) @else readonly @endif>{{ $data1->RA_assessment }}</textarea>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-md-12 mb-3 ra_review">
                                         <div class="group-input">
                                             <label for="RA feedback">RA Feedback <span id="asteriskRA2"
@@ -2738,10 +2741,12 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class="summernote RA_feedback" @if ($data->stage == 3 || (isset($data1->RA_person) && Auth::user()->id != $data1->RA_person)) readonly @endif name="RA_feedback"
-                                                id="summernote-18" @if ($data1->RA_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->RA_feedback }}</textarea>
+                                            <textarea class="summernote RA_feedback" name="RA_feedback" id="summernote-18"
+                                                @if ($data->stage == 4) @else readonly @endif>{{ $data1->RA_feedback }}</textarea>
                                         </div>
                                     </div>
+                                    
+                                                                        
                                     <div class="col-12 ra_review">
                                         <div class="group-input">
                                             <label for="RA attachment">RA Attachments</label>
@@ -2848,7 +2853,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 50,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -2862,8 +2867,8 @@
                                             <select name="RA_person" disabled id="RA_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->RA_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->RA_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -3021,7 +3026,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 26,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3038,8 +3043,8 @@
                                                 class="QualityAssurance_person" id="QualityAssurance_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->QualityAssurance_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->QualityAssurance_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -3056,7 +3061,7 @@
                                             <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote QualityAssurance_assessment"
                                                 @if (
                                                     $data->stage == 3 ||
-                                                        (isset($data1->QualityAssurance_person) && Auth::user()->id != $data1->QualityAssurance_person)) readonly @endif name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
+                                                        (isset($data1->QualityAssurance_person) && Auth::user()->name != $data1->QualityAssurance_person)) readonly @endif name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 QualityAssurance">
@@ -3068,7 +3073,7 @@
                                                     does not require completion</small></div>
                                             <textarea class="summernote QualityAssurance_feedback" @if (
                                                 $data->stage == 3 ||
-                                                    (isset($data1->QualityAssurance_person) && Auth::user()->id != $data1->QualityAssurance_person)) readonly @endif
+                                                    (isset($data1->QualityAssurance_person) && Auth::user()->name != $data1->QualityAssurance_person)) readonly @endif
                                                 name="QualityAssurance_feedback" id="summernote-18" @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->QualityAssurance_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -3179,7 +3184,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 26,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3336,7 +3341,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 51,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3353,8 +3358,8 @@
                                                 class="Production_Table_Person" id="Production_Table_Person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Production_Table_Person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->Production_Table_Person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -3371,9 +3376,13 @@
                                             <textarea @if ($data1->Production_Table_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_Table_Assessment"
                                                 @if (
                                                     $data->stage == 3 ||
-                                                        (isset($data1->Production_Table_Person) && Auth::user()->id != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
+                                                  
+                                                
+                                                    (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                         </div>
                                     </div>
+
+                                    
                                     <div class="col-md-12 mb-3 productionTable">
                                         <div class="group-input">
                                             <label for="Production Tablet feedback">Production Tablet Feedback <span id="asteriskPT2"
@@ -3383,7 +3392,7 @@
                                                     does not require completion</small></div>
                                             <textarea class="summernote Production_Table_Feedback" @if (
                                                 $data->stage == 3 ||
-                                                    (isset($data1->Production_Table_Person) && Auth::user()->id != $data1->Production_Table_Person)) readonly @endif
+                                                    (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif
                                                 name="Production_Table_Feedback" id="summernote-18" @if ($data1->Production_Table_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Production_Table_Feedback }}</textarea>
                                         </div>
                                     </div>
@@ -3494,7 +3503,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 51,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3667,7 +3676,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 52,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3684,8 +3693,8 @@
                                                 class="ProductionLiquid_person" id="ProductionLiquid_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->ProductionLiquid_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->ProductionLiquid_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -3702,7 +3711,7 @@
                                             <textarea @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 4) required @endif class="summernote ProductionLiquid_assessment"
                                                 @if (
                                                     $data->stage == 3 ||
-                                                        (isset($data1->ProductionLiquid_person) && Auth::user()->id != $data1->ProductionLiquid_person)) readonly @endif name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
+                                                        (isset($data1->ProductionLiquid_person) && Auth::user()->name != $data1->ProductionLiquid_person)) readonly @endif name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 productionLiquid">
@@ -3714,7 +3723,7 @@
                                                     does not require completion</small></div>
                                             <textarea class="summernote ProductionLiquid_feedback" @if (
                                                 $data->stage == 3 ||
-                                                    (isset($data1->ProductionLiquid_person) && Auth::user()->id != $data1->ProductionLiquid_person)) readonly @endif
+                                                    (isset($data1->ProductionLiquid_person) && Auth::user()->name != $data1->ProductionLiquid_person)) readonly @endif
                                                 name="ProductionLiquid_feedback" id="summernote-18" @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ProductionLiquid_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -3825,7 +3834,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 52,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -3839,8 +3848,8 @@
                                             <select name="ProductionLiquid_person" disabled id="ProductionLiquid_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->ProductionLiquid_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->ProductionLiquid_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -3984,7 +3993,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 53,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4002,8 +4011,8 @@
                                                 class="Production_Injection_Person" id="Production_Injection_Person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Production_Injection_Person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->Production_Injection_Person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -4020,7 +4029,7 @@
                                             <textarea @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_Injection_Assessment"
                                                 @if (
                                                     $data->stage == 3 ||
-                                                        (isset($data1->Production_Injection_Person) && Auth::user()->id != $data1->Production_Injection_Person)) readonly @endif name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
+                                                        (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 productionInjection">
@@ -4033,7 +4042,7 @@
                                                     does not require completion</small></div>
                                             <textarea class="summernote Production_Injection_Feedback" @if (
                                                 $data->stage == 3 ||
-                                                    (isset($data1->Production_Injection_Person) && Auth::user()->id != $data1->Production_Injection_Person)) readonly @endif
+                                                    (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif
                                                 name="Production_Injection_Feedback" id="summernote-18" @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Production_Injection_Feedback }}</textarea>
                                         </div>
                                     </div>
@@ -4144,7 +4153,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 53,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4158,8 +4167,8 @@
                                             <select name="Production_Injection_Person" disabled id="Production_Injection_Person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Production_Injection_Person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->Production_Injection_Person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -4317,7 +4326,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 54,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4334,8 +4343,8 @@
                                                 class="Store_person" id="Store_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Store_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->Store_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -4349,7 +4358,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif class="summernote Store_assessment"
-                                                @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->id != $data1->Store_person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
+                                                @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->name != $data1->Store_person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 store">
@@ -4359,7 +4368,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class="summernote Store_feedback" @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->id != $data1->Store_person)) readonly @endif name="Store_feedback"
+                                            <textarea class="summernote Store_feedback" @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->name != $data1->Store_person)) readonly @endif name="Store_feedback"
                                                 id="summernote-18" @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Store_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -4470,7 +4479,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 54,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4629,7 +4638,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 24,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4646,8 +4655,8 @@
                                                 class="Quality_Control_Person" id="Quality_Control_Person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Quality_Control_Person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->Quality_Control_Person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -4662,7 +4671,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea @if ($data1->Quality_review == 'yes' && $data->stage == 4) required @endif class="summernote Quality_Control_assessment"
-                                                @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->id != $data1->Quality_Control_Person)) readonly @endif name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
+                                                @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 qualityControl">
@@ -4672,7 +4681,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class="summernote Quality_Control_feedback" @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->id != $data1->Quality_Control_Person)) readonly @endif
+                                            <textarea class="summernote Quality_Control_feedback" @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif
                                                 name="Quality_Control_feedback" id="summernote-18" @if ($data1->Quality_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Quality_Control_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -4783,7 +4792,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 24,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4940,7 +4949,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 55,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -4959,8 +4968,8 @@
                                                 id="ResearchDevelopment_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->ResearchDevelopment_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->ResearchDevelopment_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -4977,7 +4986,7 @@
                                             <textarea @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif class="summernote ResearchDevelopment_assessment"
                                                 @if (
                                                     $data->stage == 3 ||
-                                                        (isset($data1->ResearchDevelopmentStore_person) && Auth::user()->id != $data1->ResearchDevelopmentStore_person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
+                                                        (isset($data1->ResearchDevelopmentStore_person) && Auth::user()->name != $data1->ResearchDevelopmentStore_person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 researchDevelopment">
@@ -4990,7 +4999,7 @@
                                                     does not require completion</small></div>
                                             <textarea class="summernote ResearchDevelopment_feedback" @if (
                                                 $data->stage == 3 ||
-                                                    (isset($data1->ResearchDevelopmentStore_person) && Auth::user()->id != $data1->ResearchDevelopmentStore_person)) readonly @endif
+                                                    (isset($data1->ResearchDevelopmentStore_person) && Auth::user()->name != $data1->ResearchDevelopmentStore_person)) readonly @endif
                                                 name="ResearchDevelopment_feedback" id="summernote-18" @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -5101,7 +5110,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 55,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5260,7 +5269,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 25,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5277,8 +5286,8 @@
                                                 class="Engineering_person" id="Engineering_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Engineering_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->Engineering_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -5293,7 +5302,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif class="summernote Engineering_assessment"
-                                                @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->id != $data1->Engineering_person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 Engineering">
@@ -5303,7 +5312,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class="summernote Engineering_feedback" @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->id != $data1->Engineering_person)) readonly @endif
+                                            <textarea class="summernote Engineering_feedback" @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif
                                                 name="Engineering_feedback" id="summernote-18" @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Engineering_feedback }}</textarea>
                                         </div>
                                     </div>
@@ -5414,7 +5423,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 25,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5574,7 +5583,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 31,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5591,8 +5600,8 @@
                                                 class="Human_Resource_person" id="Human_Resource_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Human_Resource_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->Human_Resource_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -5728,7 +5737,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 31,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5885,7 +5894,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 56,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -5902,8 +5911,8 @@
                                                 class="Microbiology_person" id="Microbiology_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Microbiology_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->Microbiology_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -6039,7 +6048,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 56,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6197,7 +6206,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 57,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6214,8 +6223,8 @@
                                                 class="RegulatoryAffair_person" id="RegulatoryAffair_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->RegulatoryAffair_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->RegulatoryAffair_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -6355,7 +6364,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 57,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6513,7 +6522,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 58,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6532,8 +6541,8 @@
                                                 id="CorporateQualityAssurance_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->CorporateQualityAssurance_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->CorporateQualityAssurance_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -6680,7 +6689,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 58,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6695,8 +6704,8 @@
                                                 id="CorporateQualityAssurance_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->CorporateQualityAssurance_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->CorporateQualityAssurance_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -6844,7 +6853,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 59,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -6862,8 +6871,8 @@
                                                 id="Environment_Health_Safety_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Environment_Health_Safety_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->Environment_Health_Safety_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -7004,7 +7013,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 59,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7165,7 +7174,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 32,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7184,8 +7193,8 @@
                                                 id="Information_Technology_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->Information_Technology_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->Information_Technology_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -7327,7 +7336,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 32,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7487,7 +7496,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 60,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -7504,8 +7513,8 @@
                                                 class="ContractGiver_person" id="ContractGiver_person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        @if ($user->id == $data1->ContractGiver_person) selected @endif>
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->ContractGiver_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -7641,7 +7650,7 @@
                                     @php
                                         $userRoles = DB::table('user_roles')
                                             ->where([
-                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_roles_id' => 60,
                                                 'q_m_s_divisions_id' => $data->division_id,
                                             ])
                                             ->get();
@@ -8026,8 +8035,8 @@
                                                 id="Other2_person">
                                                 <option value="0">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
-                                                        value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option {{ $data1->Other2_person == $user->name ? 'selected' : '' }}
+                                                        value="{{ $user->name }}">{{ $user->name }}</option>
                                                 @endforeach
                                             </select>
 
@@ -8248,8 +8257,8 @@
                                                 id="Other3_person">
                                                 <option value="0">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
-                                                        value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option {{ $data1->Other3_person == $user->name ? 'selected' : '' }}
+                                                        value="{{ $user->name }}">{{ $user->name }}</option>
                                                 @endforeach
 
                                             </select>
@@ -8468,8 +8477,8 @@
                                                 id="Other4_person">
                                                 <option value="0">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option {{ $data1->Other4_person == $user->id ? 'selected' : '' }}
-                                                        value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option {{ $data1->Other4_person == $user->name ? 'selected' : '' }}
+                                                        value="{{ $user->name }}">{{ $user->name }}</option>
                                                 @endforeach
                                             </select>
 
@@ -8692,8 +8701,8 @@
                                                 id="Other5_person">
                                                 <option value="0">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
-                                                        value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option {{ $data1->Other5_person == $user->name ? 'selected' : '' }}
+                                                        value="{{ $user->name }}">{{ $user->name }}</option>
                                                 @endforeach
                                             </select>
 
@@ -8895,8 +8904,8 @@
                                                 id="Other1_person">
                                                 <option value="0">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
-                                                        value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option {{ $data1->Other1_person == $user->name ? 'selected' : '' }}
+                                                        value="{{ $user->name }}">{{ $user->name }}</option>
                                                 @endforeach
 
                                             </select>
@@ -12136,14 +12145,14 @@
                     <div class="col-md-12">
                         <div class="group-input">
                             <label for="Closure Comments">Closure Comments <span class="text-danger">
-                                    @if ($data->stage == 8)
+                                    @if ($data->stage == 6)
                                         *
                                     @else
                                     @endif
                                 </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea @if ($data->stage != 8) disabled @endif required class="tiny"
+                            <textarea @if ($data->stage != 6) disabled @endif required class="tiny"
                                 name="Closure_Comments"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-15">{{ $data->Closure_Comments }}</textarea>
                         </div>
                         @error('Closure_Comments')
@@ -12153,14 +12162,14 @@
                     <div class="col-md-12">
                         <div class="group-input">
                             <label for="Disposition of Batch">Disposition of Batch <span class="text-danger">
-                                    @if ($data->stage == 8)
+                                    @if ($data->stage == 6)
                                         *
                                     @else
                                     @endif
                                 </span></label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea @if ($data->stage != 8) readonly @endif required class="tiny"
+                            <textarea @if ($data->stage != 6) readonly @endif required class="tiny"
                                 name="Disposition_Batch"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-16">{{ $data->Disposition_Batch }}</textarea>
                         </div>
                         @error('Disposition_Batch')
@@ -15049,5 +15058,8 @@
             }
         });
     </script>
+
+
+    
 
 @endsection
