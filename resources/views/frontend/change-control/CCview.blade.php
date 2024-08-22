@@ -225,6 +225,10 @@
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
                         </div>
+                    @elseif($data->stage == 8)
+                        <div class="progress-bars">
+                            <div class="bg-danger">Closed - Rejected</div>
+                        </div>
                     @else
                         <div class="progress-bars">
                             @if ($data->stage >= 1)
@@ -233,19 +237,19 @@
                                 <div class="">Opened</div>
                             @endif
                             @if ($data->stage >= 2)
-                                <div class="active">HOD Review</div>
+                                <div class="active">HOD Assessment</div>
                             @else
-                                <div class="">HOD Review</div>
+                                <div class="">HOD Assessment</div>
                             @endif
                             @if ($data->stage >= 3)
-                                <div class="active">QA Initial Review</div>
+                                <div class="active">QA Initial Assessment</div>
                             @else
-                                <div class="">QA Initial Review</div>
+                                <div class="">QA Initial Assessment</div>
                             @endif
                             @if ($data->stage >= 4)
-                                <div class="active">CFT Review</div>
+                                <div class="active">CFT Assessment</div>
                             @else
-                                <div class="">CFT Review</div>
+                                <div class="">CFT Assessment</div>
                             @endif
                             @if ($data->stage >= 5)
                                 <div class="active">QA Final Review</div>
@@ -263,13 +267,31 @@
                                 <div class="">QA Head/Manager Designee Approval</div>
                             @endif
 
-                            @if ($data->stage >= 8)
-                                <div class="bg-danger" @if($data->stage > 8) style="display: none" @endif>Closed - Rejected</div>
+                            @if ($data->stage >= 9)
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>Pending Initiator Update</div>
                             @else
-                                <div class="" @if($data->stage > 8) style="display: none" @endif>Closed - Rejected</div>
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>Pending Initiator Update</div>
                             @endif
 
-                            @if ($data->stage >= 9)
+                            @if ($data->stage >= 10)
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>HOD Final Review</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>HOD Final Review</div>
+                            @endif
+
+                            @if ($data->stage >= 11)
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>Implementation Verification by QA</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>Implementation Verification by QA</div>
+                            @endif
+
+                            @if ($data->stage >= 12)
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>QA Closure Approval</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>QA Closure Approval</div>
+                            @endif
+
+                            <!-- @if ($data->stage >= 9)
                                 <div class="active" @if($data->stage == 8) style="display: none" @endif>Post Implementation</div>
                             @else
                                 <div class="" @if($data->stage == 8) style="display: none" @endif>Post Implementation</div>
@@ -285,7 +307,7 @@
                                 <div class="active bg-danger" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
                             @else
                                 <div class="" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
-                            @endif
+                            @endif -->
                         </div>
                     @endif
                 </div>
@@ -393,7 +415,7 @@
                                                 <div class="group-input">
                                                     <label for="Microbiology">CFT Reviewer</label>
                                                     <select name="Microbiology">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option value="yes" selected>Yes</option>
                                                         <option value="no">No</option>
                                                     </select>
@@ -586,8 +608,8 @@
                                                         characters remaining</span>
 
 
-                                                    <textarea name="short_description" id="docname" type="text" maxlength="255" required
-                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                    <input name="short_description" id="docname" type="text" maxlength="255" required type="text"
+                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} value="{{ $data->short_description }}">
                                                 </div>
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
 
@@ -656,8 +678,8 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="nature-change">Nature Of Change</label>
-                                                    <select name="naturechange">
-                                                        <option value="0">-- Select --</option>
+                                                    <select name="doc_change">
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $data->doc_change == 'Temporary' ? 'selected' : '' }}
                                                             value="Temporary">Temporary
                                                         </option>
@@ -678,7 +700,7 @@
                                                 <div class="group-input">
                                                     <label for="div_code">Division Code</label>
                                                     <select name="div_code">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option
                                                             {{ $data->Division_Code == 'Instrumental Lab' ? 'selected' : '' }}
                                                             value="Instrumental Lab">Instrumental Lab</option>
@@ -709,6 +731,14 @@
                                                     </select>
                                                 </div>
                                             </div> -->
+                                            @if ($data->in_attachment)
+                                                @foreach (json_decode($data->in_attachment) as $file)
+                                                    <input id="initialFile-{{ $loop->index }}" type="hidden"
+                                                        name="existing_initial_files[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
+
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="others">Initial attachment</label>
@@ -726,6 +756,7 @@
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
+                                                                            data-remove-id="initialFile-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
@@ -829,14 +860,14 @@
                                                     <select name="Detection" id="analysisN"
                                                         onchange='calculateRiskAnalysis(this)'>
                                                         <option value="">-- Select --</option>
-                                                        <option {{ $data->Detection == '5' ? 'selected' : '' }}
-                                                            value="5">Impossible</option>
                                                         <option {{ $data->Detection == '4' ? 'selected' : '' }}
-                                                            value="4">Rare</option>
+                                                            value="4">Impossible</option>
                                                         <option {{ $data->Detection == '3' ? 'selected' : '' }}
-                                                            value="3">Unlikely</option>
+                                                            value="3">Rare</option>
                                                         <option {{ $data->Detection == '2' ? 'selected' : '' }}
-                                                            value="2">Likely</option>
+                                                            value="2">Unlikely</option>
+                                                        <option {{ $data->Detection == '1' ? 'selected' : '' }}
+                                                            value="1">Likely</option>
                                                         {{-- <option  {{   $data ->Detection=='Very-Likely'? 'selected' : ''}} value="Very-Likely">Very Likely</option> --}}
                                                     </select>
                                                 </div>
@@ -861,6 +892,13 @@
                                                 </div>
                                             </div>
 
+                                            @if ($data->risk_assessment_atch)
+                                                @foreach (json_decode($data->risk_assessment_atch) as $file)
+                                                    <input id="riskAssessmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinRiskAssessmentFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="group-input">
                                                 <label for="tran-attach">Risk Assessment Attachment</label>
                                                 <div class="file-attachment-field">
@@ -873,8 +911,9 @@
                                                                     <a href="{{ asset('upload/' . $file) }}"
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
+                                                                    <a type="button" class="remove-file"                                                                    
+                                                                            data-remove-id="riskAssessmentFile-{{ $loop->index }}"
+                                                                            data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
@@ -988,6 +1027,13 @@
                                             </div>
                                             <div class="col-12">
                                                 @if ($data->stage == 2)
+                                                    @if ($data->HOD_attachment)
+                                                        @foreach (json_decode($data->HOD_attachment) as $file)
+                                                            <input id="hodAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                                name="existinHodFile[{{ $loop->index }}]"
+                                                                value="{{ $file }}">
+                                                        @endforeach
+                                                    @endif
                                                     <div class="group-input">
                                                         <label for="Inv Attachments">HOD Attachments</label>
                                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -1003,6 +1049,7 @@
                                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
                                                                             <a class="remove-file"
+                                                                                data-remove-id="hodAttachmentFile-{{ $loop->index }}"
                                                                                 data-file-name="{{ $file }}"><i
                                                                                     class="fa-solid fa-circle-xmark"
                                                                                     style="color:red; font-size:20px;"></i></a>
@@ -1021,6 +1068,13 @@
                                                         </div>
                                                     </div>
                                                 @else
+                                                    @if ($data->HOD_attachment)
+                                                        @foreach (json_decode($data->HOD_attachment) as $file)
+                                                            <input id="hodAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                                name="existinHodFile[{{ $loop->index }}]"
+                                                                value="{{ $file }}">
+                                                        @endforeach
+                                                    @endif
                                                     <div class="group-input">
                                                         <label for="Inv Attachments">HOD Attachments</label>
                                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -1036,7 +1090,8 @@
                                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
                                                                             <a class="remove-file"
-                                                                                data-file-name="{{ $file }}"><i
+                                                                                    data-remove-id="hodAttachmentFile-{{ $loop->index }}"
+                                                                                    data-file-name="{{ $file }}"><i
                                                                                     class="fa-solid fa-circle-xmark"
                                                                                     style="color:red; font-size:20px;"></i></a>
                                                                         </h6>
@@ -1098,7 +1153,7 @@
                                                 <div class="group-input">
                                                     <label for="type_change">Type of Change</label>
                                                     <select name="type_chnage">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $review->type_chnage == 'major' ? 'selected' : '' }}
                                                             value="major">Major</option>
                                                         <option {{ $review->type_chnage == 'minor' ? 'selected' : '' }}
@@ -1119,7 +1174,7 @@
                                                     <select multiple name="cft_reviewer[]"
                                                         placeholder="Select CFT Reviewers" data-search="false"
                                                         data-silent-initial-value-set="true" id="cft_reviewer">
-                                                        <option value="">-- Select --</option>
+                                                        <!-- <option value="">-- Select --</option> -->
                                                         @foreach ($cft as $data1)
                                                             @if (Helpers::checkUserRolesMicrobiology_Person($data1))
                                                                 @if (in_array($data1->id, $cftReviewerIds))
@@ -1184,6 +1239,13 @@
                                                 </div>
                                             </div>
 
+                                            @if ($data->qa_head)
+                                                @foreach (json_decode($data->qa_head) as $file)
+                                                    <input id="QaAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinQAFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="qa head">QA Attachments</label>
@@ -1199,6 +1261,7 @@
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
+                                                                            data-remove-id="QaAttachmentFile-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1318,6 +1381,14 @@
                                                         id="summernote-18" @if ($data1->RA_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->RA_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->RA_attachment)
+                                                @foreach (json_decode($data1->RA_attachment) as $file)
+                                                    <input id="RaAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinRAFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 ra_review">
                                                 <div class="group-input">
                                                     <label for="RA attachment">RA Attachments</label>
@@ -1333,7 +1404,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="RaAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -1493,6 +1564,13 @@
                                                     </div>
                                                 </div>
                                             @endif
+                                            @if ($data1->RA_attachment)
+                                                @foreach (json_decode($data1->RA_attachment) as $file)
+                                                    <input id="RaAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinRAFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 ra_review">
                                                 <div class="group-input">
                                                     <label for="RA attachment">RA Attachments</label>
@@ -1508,7 +1586,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="RaAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -1636,6 +1714,13 @@
                                                         name="QualityAssurance_feedback" id="summernote-18" @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->QualityAssurance_feedback }}</textarea>
                                                 </div>
                                             </div>
+                                            @if ($data1->Quality_Assurance_attachment)
+                                                @foreach (json_decode($data1->Quality_Assurance_attachment) as $file)
+                                                    <input id="qualityAssuranceAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinQualityAssuranceFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 QualityAssurance">
                                                 <div class="group-input">
                                                     <label for="Quality Assurance attachment">Quality Assurance Attachments</label>
@@ -1651,7 +1736,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="qualityAssuranceAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -1796,6 +1881,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Quality_Assurance_attachment)
+                                                @foreach (json_decode($data1->Quality_Assurance_attachment) as $file)
+                                                    <input id="qualityAssuranceAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinQualityAssuranceFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 QualityAssurance">
                                                 <div class="group-input">
                                                     <label for="Quality Assurance attachment">Quality Assurance Attachments</label>
@@ -1811,7 +1904,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="qualityAssuranceAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -1937,6 +2030,14 @@
                                                         name="Production_Table_Feedback" id="summernote-18" @if ($data1->Production_Table_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Production_Table_Feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Table_Attachment)
+                                                @foreach (json_decode($data1->Production_Table_Attachment) as $file)
+                                                    <input id="producttiontabletAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProducttiontabletFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 productionTable">
                                                 <div class="group-input">
                                                     <label for="Production Tablet attachment">Production Tablet Attachments</label>
@@ -1952,7 +2053,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="producttiontabletAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -2113,6 +2214,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Production_Table_Attachment)
+                                                @foreach (json_decode($data1->Production_Table_Attachment) as $file)
+                                                    <input id="producttiontabletAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProducttiontabletFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 productionTable">
                                                 <div class="group-input">
                                                     <label for="Production Tablet attachment">Production Tablet Attachments</label>
@@ -2128,7 +2237,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="producttiontabletAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -2256,6 +2365,14 @@
                                                         name="ProductionLiquid_feedback" id="summernote-18" @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ProductionLiquid_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->ProductionLiquid_attachment)
+                                                @foreach (json_decode($data1->ProductionLiquid_attachment) as $file)
+                                                    <input id="productionLiquidAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionLiquidFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 productionLiquid">
                                                 <div class="group-input">
                                                     <label for="Production Liquid attachment">Production Liquid Attachments</label>
@@ -2271,7 +2388,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -2416,6 +2533,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->ProductionLiquid_attachment)
+                                                @foreach (json_decode($data1->ProductionLiquid_attachment) as $file)
+                                                    <input id="productionLiquidAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionLiquidFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 productionLiquid">
                                                 <div class="group-input">
                                                     <label for="Production Liquid attachment">Production Liquid Attachments</label>
@@ -2431,7 +2556,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -2561,6 +2686,14 @@
                                                         name="Production_Injection_Feedback" id="summernote-18" @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Production_Injection_Feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 productionInjection">
                                                 <div class="group-input">
                                                     <label for="Production Injection attachment">Production Injection Attachments</label>
@@ -2576,7 +2709,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="productionInjectionAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -2737,6 +2870,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 productionInjection">
                                                 <div class="group-input">
                                                     <label for="Production Injection attachment">Production Injection Attachments</label>
@@ -2752,7 +2893,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -2880,6 +3021,14 @@
                                                         name="Store_feedback" id="summernote-18" @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Store_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 store">
                                                 <div class="group-input">
                                                     <label for="Store attachment">Store Attachments</label>
@@ -2895,7 +3044,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -3040,6 +3189,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 store">
                                                 <div class="group-input">
                                                     <label for="Store attachment">Store Attachments</label>
@@ -3055,7 +3212,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -3185,6 +3342,14 @@
                                                         name="Quality_Control_feedback" id="summernote-18" @if ($data1->Quality_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Quality_Control_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 qualityControl">
                                                 <div class="group-input">
                                                     <label for="Quality Control attachment">Quality Control Attachments</label>
@@ -3200,7 +3365,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -3345,6 +3510,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 qualityControl">
                                                 <div class="group-input">
                                                     <label for="Quality Control attachment">Quality Control Attachments</label>
@@ -3360,7 +3533,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -3487,6 +3660,14 @@
                                                         name="ResearchDevelopment_feedback" id="summernote-18" @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 researchDevelopment">
                                                 <div class="group-input">
                                                     <label for="Research Development attachment">Research Development Attachments</label>
@@ -3502,7 +3683,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -3647,6 +3828,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 researchDevelopment">
                                                 <div class="group-input">
                                                     <label for="Research Development attachment">Research Development Attachments</label>
@@ -3662,7 +3851,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -3791,6 +3980,14 @@
                                                         name="Engineering_feedback" id="summernote-18" @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Engineering_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 Engineering">
                                                 <div class="group-input">
                                                     <label for="Engineering attachment">Engineering Attachments</label>
@@ -3806,7 +4003,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -3951,6 +4148,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 Engineering">
                                                 <div class="group-input">
                                                     <label for="Engineering attachment">Engineering Attachments</label>
@@ -3966,7 +4171,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -4096,6 +4301,14 @@
                                                         name="Human_Resource_feedback" id="summernote-18" @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Human_Resource_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 Human_Resource">
                                                 <div class="group-input">
                                                     <label for="Human Resource attachment">Human Resource Attachments</label>
@@ -4111,7 +4324,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -4256,6 +4469,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 Human_Resource">
                                                 <div class="group-input">
                                                     <label for="Human Resource attachment">Human Resource Attachments</label>
@@ -4271,7 +4492,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -4399,6 +4620,14 @@
                                                         name="Microbiology_feedback" id="summernote-18" @if ($data1->Microbiology_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Microbiology_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 Microbiology">
                                                 <div class="group-input">
                                                     <label for="Microbiology attachment">Microbiology Attachments</label>
@@ -4414,7 +4643,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -4559,6 +4788,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 Microbiology">
                                                 <div class="group-input">
                                                     <label for="Microbiology attachment">Microbiology Attachments</label>
@@ -4574,7 +4811,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -4703,6 +4940,14 @@
                                                         name="RegulatoryAffair_feedback" id="summernote-18" @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 RegulatoryAffair">
                                                 <div class="group-input">
                                                     <label for="Regulatory Affair attachment">Regulatory Affair Attachments</label>
@@ -4718,7 +4963,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -4863,6 +5108,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 RegulatoryAffair">
                                                 <div class="group-input">
                                                     <label for="Regulatory Affair attachment">Regulatory Affair Attachments</label>
@@ -4878,7 +5131,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -5007,6 +5260,14 @@
                                                         name="CorporateQualityAssurance_feedback" id="summernote-18" @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 CQA">
                                                 <div class="group-input">
                                                     <label for="Corporate Quality Assurance attachment">Corporate Quality Assurance Attachments</label>
@@ -5022,7 +5283,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -5167,6 +5428,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 CQA">
                                                 <div class="group-input">
                                                     <label for="Corporate Quality Assurance attachment">Corporate Quality Assurance Attachments</label>
@@ -5182,7 +5451,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -5311,6 +5580,14 @@
                                                         name="Health_Safety_feedback" id="summernote-18" @if ($data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Health_Safety_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 safety">
                                                 <div class="group-input">
                                                     <label for="Safety attachment">Safety Attachments</label>
@@ -5326,7 +5603,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -5471,6 +5748,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 safety">
                                                 <div class="group-input">
                                                     <label for="Safety attachment">Safety Attachments</label>
@@ -5486,7 +5771,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -5616,6 +5901,14 @@
                                                         name="Information_Technology_feedback" id="summernote-18" @if ($data1->Information_Technology_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Information_Technology_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 Information_Technology">
                                                 <div class="group-input">
                                                     <label for="Information Technology attachment">Information Technology Attachments</label>
@@ -5631,7 +5924,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -5776,6 +6069,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 Information_Technology">
                                                 <div class="group-input">
                                                     <label for="Information Technology attachment">Information Technology Attachments</label>
@@ -5791,7 +6092,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -5920,6 +6221,14 @@
                                                         name="ContractGiver_feedback" id="summernote-18" @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ContractGiver_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 store">
                                                 <div class="group-input">
                                                     <label for="Contract Giver attachment">Contract Giver Attachments</label>
@@ -5935,7 +6244,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -6080,6 +6389,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 ContractGiver">
                                                 <div class="group-input">
                                                     <label for="Contract Giver attachment">Contract Giver Attachments</label>
@@ -6095,7 +6412,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -6156,7 +6473,7 @@
                                                     <label for="Review Required1"> Other's 1 Review Required? </label>
                                                     <select name="Other1_review" @if ($data->stage == 4) disabled @endif id="Other1_review"
                                                         value="{{ $data1->Other1_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other1_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other1_review == 'no') selected @endif value="no">
@@ -6183,7 +6500,7 @@
                                                             style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other1_person" @if ($data->stage == 4) disabled @endif id="Other1_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6281,6 +6598,14 @@
                                                     });
                                                 });
                                             </script>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 other1_reviews ">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 1 Attachments</label>
@@ -6296,7 +6621,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -6348,7 +6673,7 @@
                                                     <label for="review2"> Other's 2 Review Required ?</label>
                                                     <select name="Other2_review" @if ($data->stage == 4) disabled @endif id="Other2_review"
                                                         value="{{ $data1->Other2_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other2_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other2_review == 'no') selected @endif value="no">
@@ -6375,7 +6700,7 @@
                                                             style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other2_person" @if ($data->stage == 4) disabled @endif id="Other2_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6474,6 +6799,14 @@
                                                         @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-44">{{ $data1->Other2_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 Other2_reviews">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 2 Attachments</label>
@@ -6489,7 +6822,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -6541,7 +6874,7 @@
                                                     <label for="review3"> Other's 3 Review Required ?</label>
                                                     <select name="Other3_review" @if ($data->stage == 4) disabled @endif id="Other3_review"
                                                         value="{{ $data1->Other3_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other3_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other3_review == 'no') selected @endif value="no">
@@ -6570,7 +6903,7 @@
                                                             style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other3_person" @if ($data->stage == 4) disabled @endif id="Other3_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6669,6 +7002,14 @@
                                                         @if ($data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-46">{{ $data1->Other3_Assessment }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 Other3_reviews">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 3 Attachments</label>
@@ -6684,7 +7025,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -6735,7 +7076,7 @@
                                                     <label for="review4">Other's 4 Review Required ?</label>
                                                     <select name="Other4_review" @if ($data->stage == 4) disabled @endif id="Other4_review"
                                                         value="{{ $data1->Other4_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other4_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other4_review == 'no') selected @endif value="no">
@@ -6763,7 +7104,7 @@
                                                             style="display: {{ $data1->Other4_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other4_person" @if ($data->stage == 4) disabled @endif id="Other4_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other4_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6861,6 +7202,14 @@
                                                         @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-48">{{ $data1->Other4_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 Other4_reviews">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 4 Attachments</label>
@@ -6876,7 +7225,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -6931,7 +7280,7 @@
                                                     <label for="review5">Other's 5 Review Required ?</label>
                                                     <select name="Other5_review" @if ($data->stage == 4) disabled @endif id="Other5_review"
                                                         value="{{ $data1->Other5_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other5_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other5_review == 'no') selected @endif value="no">
@@ -6959,7 +7308,7 @@
                                                             class="text-danger">*</span>
                                                     </label>
                                                     <select name="Other5_person" @if ($data->stage == 4) disabled @endif id="Other5_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7058,6 +7407,13 @@
                                                 </div>
                                             </div>
 
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12 Other5_reviews">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 5 Attachments</label>
@@ -7073,7 +7429,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -7110,7 +7466,7 @@
                                                     <label for="Review Required1"> Other's 1 Review Required? </label>
                                                     <select disabled name="Other1_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_review" value="{{ $data1->Other1_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other1_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other1_review == 'no') selected @endif value="no">
@@ -7136,7 +7492,7 @@
                                                     <label for="Person1"> Other's 1 Person </label>
                                                     <select disabled name="Other1_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7152,7 +7508,7 @@
                                                     <select disabled
                                                         name="Other1_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other1_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other1_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other1_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7196,6 +7552,14 @@
                                                         name="Other1_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 1 Attachments</label>
@@ -7211,7 +7575,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -7249,7 +7613,7 @@
                                                     <label for="review2"> Other's 2 Review Required ?</label>
                                                     <select disabled name="Other2_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_review" value="{{ $data1->Other2_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other2_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other2_review == 'no') selected @endif value="no">
@@ -7275,7 +7639,7 @@
                                                     <label for="Person2"> Other's 2 Person</label>
                                                     <select disabled name="Other2_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7290,7 +7654,7 @@
                                                     <select disabled
                                                         name="Other2_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other2_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other2_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other2_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7335,6 +7699,14 @@
                                                         name="Other2_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-44">{{ $data1->Other2_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 2 Attachments</label>
@@ -7350,7 +7722,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -7387,7 +7759,7 @@
                                                     <label for="review3"> Other's 3 Review Required ?</label>
                                                     <select disabled name="Other3_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_review" value="{{ $data1->Other3_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other3_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other3_review == 'no') selected @endif value="no">
@@ -7415,7 +7787,7 @@
                                                     <label for="Person3">Other's 3 Person</label>
                                                     <select disabled name="Other3_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7431,7 +7803,7 @@
                                                     <select disabled
                                                         name="Other3_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other3_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other3_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other3_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7474,6 +7846,14 @@
                                                         name="Other3_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-46">{{ $data1->Other3_Assessment }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 3 Attachments</label>
@@ -7489,7 +7869,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -7525,7 +7905,7 @@
                                                     <label for="review4">Other's 4 Review Required ?</label>
                                                     <select disabled name="Other4_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_review" value="{{ $data1->Other4_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other4_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other4_review == 'no') selected @endif value="no">
@@ -7552,7 +7932,7 @@
                                                     <label for="Person4"> Other's 4 Person</label>
                                                     <select name="Other4_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other4_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7567,7 +7947,7 @@
                                                     <select disabled
                                                         name="Other4_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other4_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other4_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other4_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7610,6 +7990,14 @@
                                                         name="Other4_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-48">{{ $data1->Other4_feedback }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 4 Attachments</label>
@@ -7625,7 +8013,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -7665,7 +8053,7 @@
                                                     <label for="review5">Other's 5 Review Required ?</label>
                                                     <select disabled name="Other5_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_review" value="{{ $data1->Other5_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other5_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other5_review == 'no') selected @endif value="no">
@@ -7691,7 +8079,7 @@
                                                     <label for="Person5">Other's 5 Person</label>
                                                     <select disabled name="Other5_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7706,7 +8094,7 @@
                                                     <select disabled
                                                         name="Other5_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other5_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other5_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other5_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7750,6 +8138,13 @@
                                                 </div>
                                             </div>
 
+                                            @if ($data1->Production_Injection_Attachment)
+                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 5 Attachments</label>
@@ -7765,7 +8160,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -7825,6 +8220,14 @@
                                             <label for="qa-eval-comments">QA Evaluation Comments</label>
                                             <textarea name="qa_eval_comments">{{ $evaluation->qa_eval_comments }}</textarea>
                                         </div>
+
+                                        @if ($data1->Production_Injection_Attachment)
+                                            @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                    name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
                                         <div class="group-input">
                                             <label for="qa-eval-attach">QA Evaluation Attachments</label>
                                             <div class="file-attachment-field">
@@ -7837,7 +8240,7 @@
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
+                                                                <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
@@ -7875,6 +8278,14 @@
                                             <label for="feedback">Training Feedback</label>
                                             <textarea name="feedback">{{ $approcomments->feedback }}</textarea>
                                         </div>
+
+                                        @if ($data1->Production_Injection_Attachment)
+                                            @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                    name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
                                         <div class="group-input">
                                             <label for="tran-attach">Training Attachments</label>
                                             <div class="file-attachment-field">
@@ -7887,7 +8298,7 @@
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
+                                                                <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
@@ -7995,6 +8406,14 @@
                                     <label for="qa-closure-comments">QA Closure Comments</label>
                                     <textarea name="qa_closure_comments">{{ $closure->qa_closure_comments }}</textarea>
                                 </div>
+
+                                @if ($closure->tran_attach)
+                                    @foreach (json_decode($closure->tran_attach) as $file)
+                                        <input id="trainingAttachmentFile-{{ $loop->index }}" type="hidden"
+                                            name="existinTrainingFile[{{ $loop->index }}]"
+                                            value="{{ $file }}">
+                                    @endforeach
+                                @endif
                                 <div class="group-input">
                                     <label for="attach-list">List Of Attachments</label>
                                     <div class="file-attachment-field">
@@ -8007,7 +8426,7 @@
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
+                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -8030,7 +8449,7 @@
                                                         <div class="group-input">
                                                             <label for="effective-check">Effectivess Check Required?</label>
                                                             <select name="effective_check">
-                                                                <option value="0">-- Select --</option>
+                                                                <option value="">-- Select --</option>
                                                                 <option {{ $closure->effective_check == 'yes' ? 'selected' : '' }}
                                                                     value="yes">Yes</option>
                                                                 <option {{ $closure->effective_check == 'no' ? 'selected' : '' }}
@@ -8054,7 +8473,7 @@
                                                         <div class="group-input">
                                                             <label for="Effectiveness_checker">Effectiveness Checker</label>
                                                             <select name="Effectiveness_checker">
-                                                                <option value="0">Enter Your Selection Here</option>
+                                                                <option value="">Enter Your Selection Here</option>
                                                                 @foreach ($users as $datas)
     <option {{ $info->Effectiveness_checker == $datas->id ? 'selected' : '' }}
                                                                          value="{{ $datas->id }}">{{ $datas->name }}
@@ -9256,4 +9675,15 @@
             $('#rchars').text(textlen);
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.remove-file').click(function() {
+                const removeId = $(this).data('remove-id')
+                console.log('removeId', removeId);
+                $('#' + removeId).remove();
+            })
+        })
+    </script>
+
 @endsection
