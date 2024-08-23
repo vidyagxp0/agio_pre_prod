@@ -127,7 +127,6 @@
                                 More Info Required
                             </button>
                         @elseif($extensionNew->stage == 5 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
-
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                              CQA Approval Complete
                             </button>

@@ -190,9 +190,10 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
-                                            <input disabled type="text" name="record_number"
-                                                value="{{ Helpers::getDivisionName($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
-                                            {{-- <div class="static"></div> --}}
+                                            <input type="hidden" name="record_number">
+                                            <input disabled type="text"
+                                                value="{{  Helpers::getDivisionName(session()->get('division')) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                    
                                         </div>
                                     </div>
                                     <div class="col-lg-6">

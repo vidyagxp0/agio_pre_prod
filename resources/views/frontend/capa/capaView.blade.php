@@ -213,8 +213,9 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CAPA Closure</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                     </div>
+                  
 
-                    <form action="{{ route('capaUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
+                    <form id="formSubmit" action="{{ route('capaUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div id="step-form">
 
@@ -654,7 +655,7 @@
 
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" id="ChangesaveButton" class="saveButton"
+                                        <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> Save</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -1904,7 +1905,7 @@
                             <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form action="{{ route('capa_send_stage', $data->id) }}" method="POST">
+                        <form id="forwardActivity" action="{{ route('capa_send_stage', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -1933,10 +1934,19 @@
                                 <button>Close</button>
                             </div> -->
                             <div class="modal-footer">
-                              <button type="submit">Submit</button>
+                              <button type="submit" class="on-submit-disable">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
+
+                        <script>
+                            $(document).ready(function() {
+                                
+                                $('#forwardActivity').on('submit', function() {
+                                    $('.on-submit-disable').prop('disabled', true);
+                                });
+                            })
+                        </script>
                     </div>
                 </div>
             </div>
@@ -1985,6 +1995,15 @@
                     </div>
                 </div>
             </div>
+
+            <script>
+                $(document).ready(function() {
+                    
+                    $('#formSubmit').on('submit', function(e) {
+                        $('.on-submit-disable-button').prop('disabled', true);
+                    });
+                })
+            </script>
 
             <style>
                 #step-form>div {
