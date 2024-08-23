@@ -237,7 +237,7 @@
                                             Assigned To <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to"
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
+                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $key => $value)
                                                 <option
@@ -258,7 +258,7 @@
                                                 iscrossed</small></div>
                                         <input readonly type="text"
                                             value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                            name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                            name="due_date"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                       
 
                                     </div>
@@ -284,7 +284,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
                                         <select name="initiator_Group"
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                             id="initiator_group">
                                             <option value="CQA" @if ($data->initiator_Group == 'CQA') selected @endif>
                                                 Corporate
@@ -354,7 +354,7 @@
                                                                                                                                                         <label for="Short Description">Short Description <span
                                                                                                                                                                 class="text-danger">*</span></label>
                                                                                                                                                         <div><small class="text-primary">Please mention brief summary</small></div>
-                                                                                                                                                        <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                                                                                                                        <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                                                                                                                                     </div>
                                                                                                                                                 </div> -->
                                 <div class="col-12">
@@ -364,7 +364,7 @@
                                         characters remaining
 
                                         <textarea name="short_description" id="docname" type="text" maxlength="255" required
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
 
                                         <p id="docnameError" style="color:red">**Short Description is required</p>
 
@@ -374,7 +374,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
-                                        <select {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                        <select {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                             name="type">
                                             <option value="0">-- Select type --</option>
                                             <option @if ($data->type == 'Other') selected @endif value="Other">
@@ -402,7 +402,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Priority Level">Priority Level</label>
-                                        <select {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                        <select {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                             name="priority_level">
                                             <option @if ($data->priority_level == 'High') selected @endif value="High">
                                                 High
@@ -420,7 +420,7 @@
                                         <label for="Scheduled Start Date">Scheduled Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"/>
-                                            <input type="date"  id="start_date_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->start_date}} "
+                                            <input type="date"  id="start_date_checkdate" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} value="{{ $data->start_date}} "
                                             name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
@@ -431,10 +431,10 @@
                                     <div class="group-input input-date">
                                         <label for="Scheduled end date">Scheduled end date</label>
                                         {{-- <input type="text" name="end_date"
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}> --}}
+                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> --}}
                                 {{-- <div class="calenderauditee">
                                                 <input type="text" id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"/>
-                                                <input type="date"  id="end_date_checkdate" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} name="end_date" value="{{ $data->end_date }} "
+                                                <input type="date"  id="end_date_checkdate" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} name="end_date" value="{{ $data->end_date }} "
                                                 class="hide-input"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
@@ -447,7 +447,7 @@
                                             <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->start_date) }}" />
                                             <input type="date" id="start_date_checkdate"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                 name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $data->start_date }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
@@ -461,7 +461,7 @@
                                             <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->end_date) }}" />
                                             <input type="date" id="end_date_checkdate"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                 name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $data->end_date }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
@@ -471,7 +471,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Attendees">Attendess</label>
-                                        <textarea name="attendees" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->attendees }}</textarea>
+                                        <textarea name="attendees" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->attendees }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -497,7 +497,7 @@
                                                 @foreach (unserialize($agenda->topic) as $key => $temps)
                                                     <tr>
                                                         <td><input disabled type="text" name="serial_number[]"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ $key + 1 }}"></td>
 
                                                         <td>
@@ -506,11 +506,11 @@
                                                                     <div class="calenderauditee">
                                                                         <input type="text"
                                                                             id="date{{ $key }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                             readonly placeholder="DD-MMM-YYYY"
                                                                             value="{{ Helpers::getdateFormat(unserialize($agenda->date)[$key] ?? null) }}" />
                                                                         <input type="date" name="date[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                             value="{{ unserialize($agenda->date)[$key] ?? null }}"
                                                                             class="hide-input"
@@ -520,28 +520,28 @@
                                                             </div>
                                                         </td>
                                                         <td><input type="text" name="topic[]"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->topic)[$key] ?? '' }}">
                                                         </td>
                                                         <td><input type="text" name="responsible[]"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->responsible)[$key] ? unserialize($agenda->responsible)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="time" name="start_time[]"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->start_time)[$key] ? unserialize($agenda->start_time)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="time"
-                                                                name="end_time[]"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                name="end_time[]"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->end_time)[$key] ? unserialize($agenda->end_time)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="text" name="comment[]"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->comment)[$key] ? unserialize($agenda->comment)[$key] : '' }}">
                                                         </td>
                                                         <td>
                                                             <button type="button"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 class="removeRow">remove
 
                                                             </button>
@@ -555,7 +555,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Description">Description</label>
-                                        <textarea name="description" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->description }}</textarea>
+                                        <textarea name="description" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->description }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -589,39 +589,39 @@
                                                 @foreach (unserialize($management_review_participants->invited_Person) as $key => $temps)
                                                     <tr>
                                                         <td><input disabled type="text" name="serial_number[]"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ $key + 1 }}"></td>
                                                         <td><input type="text" name="invited_Person[]"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->invited_Person)[$key] ? unserialize($management_review_participants->invited_Person)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="text" name="designee[]"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->designee)[$key] ? unserialize($management_review_participants->designee)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="text" name="department[]"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->department)[$key] ? unserialize($management_review_participants->department)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="text" name="meeting_Attended[]"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->meeting_Attended)[$key] ? unserialize($management_review_participants->meeting_Attended)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="text" name="designee_Name[]"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->designee_Name)[$key] ? unserialize($management_review_participants->designee_Name)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="text" name="designee_Department[]"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->designee_Department)[$key] ? unserialize($management_review_participants->designee_Department)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="text" name="remarks[]"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->remarks)[$key] ? unserialize($management_review_participants->remarks)[$key] : '' }}">
                                                         </td>
                                                         <td>
                                                             <button type="button"
-                                                                {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                 class="removeBtnaid">remove
 
                                                             </button>
@@ -661,7 +661,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="audit_file_attachment" name="inv_attachment[]"
-                                                    {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
                                             </div>
                                         </div>
@@ -670,7 +670,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton"
-                                    {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>Save</button>
+                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
@@ -689,7 +689,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="Operations" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->Operations }}</textarea>
+                                <textarea name="Operations" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->Operations }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="requirement_products_services">
@@ -700,7 +700,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="requirement_products_services" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->requirement_products_services }}</textarea>
+                                <textarea name="requirement_products_services" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->requirement_products_services }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="design_development_product_services">
@@ -711,7 +711,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="design_development_product_services" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->design_development_product_services }}</textarea>
+                                <textarea name="design_development_product_services" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->design_development_product_services }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="control_externally_provide_services">
@@ -722,7 +722,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="control_externally_provide_services" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->control_externally_provide_services }}</textarea>
+                                <textarea name="control_externally_provide_services" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->control_externally_provide_services }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="production_service_provision">
@@ -733,7 +733,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="production_service_provision" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->production_service_provision }}</textarea>
+                                <textarea name="production_service_provision" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->production_service_provision }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="release_product_services">
@@ -744,7 +744,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="release_product_services" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->release_product_services }}</textarea>
+                                <textarea name="release_product_services" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->release_product_services }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="control_nonconforming_outputs">
@@ -755,7 +755,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="control_nonconforming_outputs" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->control_nonconforming_outputs }}</textarea>
+                                <textarea name="control_nonconforming_outputs" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->control_nonconforming_outputs }}</textarea>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
@@ -782,38 +782,38 @@
                                         </thead>
                                         <!-- <tbody>
                                                                                                                                                         <tr>
-                                                                                                                                                            <td><input type="text" name="row_no" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  value="1" disabled></td>
-                                                                                                                                                            <td><input type="text" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  name="monitoring"></td>
-                                                                                                                                                            <td><input type="text" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} name="measurement"></td>
-                                                                                                                                                            <td><input type="text" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  name="analysis"></td>
-                                                                                                                                                            <td><input type="text" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  name="evaluation"></td>
+                                                                                                                                                            <td><input type="text" name="row_no" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}  value="1" disabled></td>
+                                                                                                                                                            <td><input type="text" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}  name="monitoring"></td>
+                                                                                                                                                            <td><input type="text" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} name="measurement"></td>
+                                                                                                                                                            <td><input type="text" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}  name="analysis"></td>
+                                                                                                                                                            <td><input type="text" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}  name="evaluation"></td>
                                                                                                                                                         </tr>
                                                                                                                                                     </tbody> -->
                                         <tbody>
                                             @foreach (unserialize($performance_evaluation->monitoring) as $key => $temps)
                                                 <tr>
                                                     <td><input disabled type="text" name="serial_number[]"
-                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                             value="{{ $key + 1 }}"></td>
                                                     <td><input type="text" name="monitoring[]"
-                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                             value="{{ unserialize($performance_evaluation->monitoring)[$key] ? unserialize($performance_evaluation->monitoring)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="measurement[]"
-                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                             value="{{ unserialize($performance_evaluation->measurement)[$key] ? unserialize($performance_evaluation->measurement)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="analysis[]"
-                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                             value="{{ unserialize($performance_evaluation->analysis)[$key] ? unserialize($performance_evaluation->analysis)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="evaluation[]"
-                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                             value="{{ unserialize($performance_evaluation->evaluation)[$key] ? unserialize($performance_evaluation->evaluation)[$key] : '' }}">
                                                     </td>
                                                     <td>
                                                         <button type="button"
-                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                             class="removeBtn">remove
 
                                                         </button>
@@ -837,39 +837,39 @@
                         <div class="inner-block-content">
                             <div class="group-input">
                                 <label for="risk_opportunities">Risk & Opportunities</label>
-                                <textarea name="risk_opportunities" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->risk_opportunities }}</textarea>
+                                <textarea name="risk_opportunities" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->risk_opportunities }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="external_supplier_performance">External Supplier Performance</label>
-                                <textarea name="external_supplier_performance" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->external_supplier_performance }}</textarea>
+                                <textarea name="external_supplier_performance" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->external_supplier_performance }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="customer_satisfaction_level">Customer Satisfaction Level</label>
-                                <textarea name="customer_satisfaction_level" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->customer_satisfaction_level }}</textarea>
+                                <textarea name="customer_satisfaction_level" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->customer_satisfaction_level }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="budget_estimates">Budget Estimates</label>
-                                <textarea name="budget_estimates" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->budget_estimates }}</textarea>
+                                <textarea name="budget_estimates" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->budget_estimates }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="completion_of_previous_tasks">Completion of Previous Tasks</label>
-                                <textarea name="completion_of_previous_tasks" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->completion_of_previous_tasks }}</textarea>
+                                <textarea name="completion_of_previous_tasks" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->completion_of_previous_tasks }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="production">Production</label>
-                                <textarea name="production_new" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->production_new }}</textarea>
+                                <textarea name="production_new" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->production_new }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="plans">Plans</label>
-                                <textarea name="plans_new" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->plans_new }}</textarea>
+                                <textarea name="plans_new" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->plans_new }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="forecast">Forecast</label>
-                                <textarea name="forecast_new" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->forecast_new }}</textarea>
+                                <textarea name="forecast_new" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->forecast_new }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="additional_suport_required">Any Additional Support Required</label>
-                                <textarea name="additional_suport_required" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->additional_suport_required }}</textarea>
+                                <textarea name="additional_suport_required" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->additional_suport_required }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="file_attchment_if_any">File Attachment, if any</label>
@@ -897,7 +897,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="file_attchment_if_any[]"
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                             oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
                                     </div>
                                 </div>
@@ -937,10 +937,10 @@
                                         @foreach (unserialize($action_item_details->date_due) as $key => $temps)
                                             <tr>
                                                 <td><input disabled type="text" name="serial_number[]"
-                                                        {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                         value="{{ $key + 1 }}"></td>
                                                 <td><input type="text" name="short_desc[]"
-                                                        {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                         value="{{ unserialize($action_item_details->short_desc)[$key] ? unserialize($action_item_details->short_desc)[$key] : '' }}">
                                                 </td>
 
@@ -953,8 +953,8 @@
                                                                     value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_due)[$key]) }}" />
                                                                 <input type="date"
                                                                     id="date_due{{ $key }}_checkdate"
-                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                    {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                     value="{{ unserialize($action_item_details->date_due)[$key] }}"
                                                                     name="date_due[]"
                                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -967,13 +967,13 @@
                                                 </td>
 
                                                 <td><input type="text" name="site[]"
-                                                        {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                         value="{{ unserialize($action_item_details->site)[$key] ?? null }}">
                                                 </td>
 
                                                 <td> <select id="select-state" placeholder="Select..."
                                                         name="responsible_person[]"
-                                                        {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
+                                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $undata)
                                                             <option
@@ -984,7 +984,7 @@
                                                         @endforeach
                                                     </select></td>
                                                 <td><input type="text" name="current_status[]"
-                                                        {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                         value="{{ unserialize($action_item_details->current_status)[$key] ?? null ? unserialize($action_item_details->current_status)[$key] : '' }}">
                                                 </td>
 
@@ -1001,7 +1001,7 @@
                                                                     value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key]) }}" />
                                                                 <input type="date"
                                                                     id="date_closed{{ $key }}_checkdate"
-                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                     value="{{ unserialize($action_item_details->date_closed)[$key] }}"
                                                                     name="date_closed[]"
                                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -1012,12 +1012,12 @@
                                                     </div>
                                                 </td>
                                                 <td><input type="text" name="remark[]"
-                                                        {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                         value="{{ unserialize($action_item_details->remark)[$key] ?? '' }}">
                                                 </td>
                                                 <td>
                                                     <button type="button"
-                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                         class="removeBtnaid">remove
 
                                                     </button>
@@ -1055,17 +1055,17 @@
                                                 <tr>
                                                     <td>
                                                         <input disabled type="text" name="serial_number[]"
-                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                             value="{{ $key + 1 }}">
                                                     </td>
                                                     <td>
                                                         <input type="text" name="Details[]"
-                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                             value="{{ unserialize($capa_detail_details->Details)[$key] ? unserialize($capa_detail_details->Details)[$key] : '' }}">
                                                     </td>
                                                     {{-- <td> <select id="select-state" placeholder="Select..."
-                                                        {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  name="capa_type[]"  >
+                                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}  name="capa_type[]"  >
                                                                     <option value="">Select a value</option>
                                                             @foreach ($users as $undata)
                                                                         <!-- <option value="{{ $undata->id }}">{{ $undata->name }}
@@ -1104,13 +1104,13 @@
                                                     </td>
                                                     <td>
                                                         <input type="text" name="site2[]"
-                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                             value="{{ unserialize($capa_detail_details->site2)[$key] ? unserialize($capa_detail_details->site2)[$key] : '' }}">
                                                     </td>
                                                     <td>
                                                         <select id="select-state" placeholder="Select..."
                                                             name="responsible_person2[]"
-                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                             <option value="">Select a value</option>
                                                             @foreach ($users as $undata)
                                                                 <option
@@ -1124,7 +1124,7 @@
 
                                                     <td>
                                                         <input type="text" name="current_status2[]"
-                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                             value="{{ unserialize($capa_detail_details->current_status2)[$key] ? unserialize($capa_detail_details->current_status2)[$key] : '' }}">
                                                     </td>
 
@@ -1134,12 +1134,12 @@
                                                                 <div class="calenderauditee">
                                                                     <input type="text"
                                                                         id="date_closed2{{ $key }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                         readonly placeholder="DD-MMM-YYYY"
                                                                         value="{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}" />
                                                                     <input type="date"
                                                                         id="date_closed2{{ $key }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                         value="{{ unserialize($capa_detail_details->date_closed2)[$key] }}"
                                                                         name="date_closed2[]"
                                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -1152,12 +1152,12 @@
 
                                                     <td>
                                                         <input type="text" name="remark2[]"
-                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                             value="{{ unserialize($capa_detail_details->remark2)[$key] ? unserialize($capa_detail_details->remark2)[$key] : '' }}">
                                                     </td>
                                                     <td>
                                                         <button type="button"
-                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                             class="removeRowBtn">remove
 
                                                         </button>
@@ -1174,11 +1174,11 @@
                                     <label for="next_managment_review_date">Next Management Review Date</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="next_managment_review_date" readonly
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                             placeholder="DD-MMM-YYYY"
                                             value="{{ Helpers::getdateFormat($data->next_managment_review_date) }}" />
                                         <input type="date" name="next_managment_review_date"
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="{{ $data->next_managment_review_date }} " class="hide-input"
                                             oninput="handleDateInput(this, 'next_managment_review_date')" />
@@ -1187,11 +1187,11 @@
                             </div>
                             <div class="group-input">
                                 <label for="summary_recommendation">Summary & Recommendation</label>
-                                <textarea name="summary_recommendation" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->summary_recommendation }}</textarea>
+                                <textarea name="summary_recommendation" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->summary_recommendation }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="conclusion">Conclusion</label>
-                                <textarea name="conclusion_new"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->conclusion_new }}</textarea>
+                                <textarea name="conclusion_new"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->conclusion_new }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="closure_attachments">Closure Attachments</label>
@@ -1218,7 +1218,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="closure_attachments[]"
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                             oninput="addMultipleFiles(this, 'closure_attachments')" multiple>
                                     </div>
                                 </div>
@@ -1230,7 +1230,7 @@
                                 <label for="due_date_extension">Due Date Extension Justification</label>
                                 <div><small class="text-primary">Please Mention justification if due date is
                                         crossed</small></div>
-                                <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
+                                <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -1884,7 +1884,7 @@
 
                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed2' +
                         serialNumber +
-                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed2[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed2' +
+                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed2[]" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed2' +
                     serialNumber + '`)" /></div></div></div></td>' +
 
                         '<td><input type="text" name="remark2[]"></td>' +

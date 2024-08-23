@@ -2392,19 +2392,27 @@ class ManagementReviewController extends Controller
                 $changeControl->Submited_Comment  = $request->comment;
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Submit By ,   Submit On';
                 $history->action ='Submit';
-                $history->previous = $lastDocument->Submited_by;
-                $history->current = $changeControl->Submited_by;    
+                if (is_null($lastDocument->Submited_by) || $lastDocument->Submited_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->Submited_by . ' , ' . $lastDocument->Submited_on;
+                }
+                $history->current = $changeControl->Submited_by . ' , ' . $changeControl->Submited_on; 
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Submited';
+                $history->stage='Submit';
                 $history->change_to= "In Progress";
                 $history->change_from= "Opened";
-                $history->action_name ='Not Applicable';
+                if (is_null($lastDocument->Submited_by) || $lastDocument->Submited_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                 
                 // $list = Helpers::getResponsibleUserList();
@@ -2432,7 +2440,7 @@ class ManagementReviewController extends Controller
                 $changeControl->status = 'QA Head Review';
                 $changeControl->completed_by = Auth::user()->name;
                 $changeControl->completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->meeting_summary_comment  = $request->comment;
+                $changeControl->Completed_Comment  = $request->comment;
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
                 $history->activity_type = 'Completed By     , Completed On';
