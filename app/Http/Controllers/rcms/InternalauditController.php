@@ -1279,7 +1279,7 @@ class InternalauditController extends Controller
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date= $request->due_date;
-        $internalAudit->initiator_group= $request->initiator_group;
+        // $internalAudit->initiator_group= $request->initiator_group;
         $internalAudit->initiator_group_code= $request->initiator_group_code;
         $internalAudit->short_description = $request->short_description;
         $internalAudit->audit_type = $request->audit_type;
@@ -1316,6 +1316,7 @@ class InternalauditController extends Controller
         } else {
             $internalAudit->checklists = $request->checklists; 
         }
+        // dd($request->checklists);
         $internalAudit->Auditee =  implode(',', $request->Auditee);
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->Comments = $request->Comments;
@@ -2268,6 +2269,10 @@ $Checklist_Capsule->save();
         //     $history->save();
         // }
 
+
+        // dd(Helpers::getInitiatorGroupData($internalAudit->Initiator_Group));
+        // dd($request->initiator_Group);
+        // dd($request->initiator_Group);
         if($lastDocument->Initiator_Group != $request->Initiator_Group){
             $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
             ->where('activity_type', 'Initiator Group')
@@ -2280,7 +2285,7 @@ $Checklist_Capsule->save();
             } else{
                 $history->previous = $lastDocument->Initiator_Group;
             }
-            $history->current = $request->Initiator_Group;
+            $history->current = Helpers::getInitiatorGroupData($request->initiator_Group);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3198,9 +3203,10 @@ if ($areIniAttachmentsSame2 != true) {
                         }
 
 
-                        $checklist1 = $lastDocument->checklists;
-                        $checklistdata1 = $checklist1 == $internalAudit->checklists;
-
+                        $checklist1 = Helpers::getfullnameChecklist($lastDocument->checklists);
+                        $checklistdata1 = $checklist1 == Helpers::getfullnameChecklist($internalAudit->checklists);
+                        // dd($lastDocument->checklists);
+                            // dd($checklistdata1);
                         if ($checklistdata1 != true) {
                             $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
                                 ->where('activity_type', 'Checklists')
@@ -3209,8 +3215,8 @@ if ($areIniAttachmentsSame2 != true) {
                                     $history->InternalAudit_id = $id;
                                     $history->activity_type = 'Checklists';
                                     $history->previous = $checklist1;
-                                    // $history->current = Helpers::getChecklistData($internalAudit->checklists);
-                                    $history->current = $internalAudit->checklists;
+                                    $history->current = Helpers::getfullnameChecklist($internalAudit->checklists);  
+                                    // $history->current = $internalAudit->checklists;
                                     $history->comment = "Not Applicable";
                                     $history->user_id = Auth::user()->id;
                                     $history->user_name = Auth::user()->name;
@@ -3731,8 +3737,8 @@ if ($areIniAttachmentsSame2 != true) {
             // }
             
             if ($changeControl->stage == 4) {
-                $changeControl->stage = "6";
-                $changeControl->status = "Closed - Done";    
+                $changeControl->stage = "5";
+                $changeControl->status = "Response Verification";    
                 $changeControl->no_capa_plan_by = Auth::user()->name;
                 $changeControl->no_capa_plan_on = Carbon::now()->format('d-M-Y');
                 $changeControl->no_capa_plan_required_comment = $request->comment;
@@ -3751,9 +3757,9 @@ if ($areIniAttachmentsSame2 != true) {
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            $history->change_to = "Closed - Done";
+                            $history->change_to = "Response Verification";
                             $history->change_from = $lastDocument->status;
-                            $history->stage = "Closed - Done";
+                            $history->stage = "Response Verification";
                             if (is_null($lastDocument->no_capa_plan_by) || $lastDocument->no_capa_plan_by === '') {
                                 $history->action_name = 'New';
                             } else {
@@ -3773,7 +3779,7 @@ if ($areIniAttachmentsSame2 != true) {
                         //                     $message->to($email)
                         //                         ->subject("Document is Rejected ".Auth::user()->name);
                         //                 }
-                        //               );
+                        //               );`
                         //             }
                         //      }
                         //   }

@@ -27,154 +27,6 @@
         });
     </script>
 
-<script>
-
-const virtualSelectInstance = VirtualSelect.init({
-        ele: '#checklists'
-    });
-
-    document.querySelector('.abc').addEventListener('change', function() {
-        const selectedOptions = $('#checklists').val()
-
-
-        if (selectedOptions.includes('1')) {
-            console.log('print1',selectedOptions);
-            var abc = document.getElementById('button1');
-            document.getElementById('button1').style.display = 'block';
-            // console.log('data',abc);
-        } else {
-            document.getElementById('button1').style.display = 'none';
-            console.log('print1e');
-        }
-
-        if (selectedOptions.includes('2')) {
-            console.log('print2',selectedOptions);
-            document.getElementById('button2').style.display = 'block';
-        } else {
-            document.getElementById('button2').style.display = 'none';
-            console.log('print2e');
-        }
-        if (selectedOptions.includes('3')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button3').style.display = 'block';
-        } else {
-            document.getElementById('button3').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('4')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button4').style.display = 'block';
-        } else {
-            document.getElementById('button4').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('5')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button5').style.display = 'block';
-        } else {
-            document.getElementById('button5').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('6')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button6').style.display = 'block';
-        } else {
-            document.getElementById('button6').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('7')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button7').style.display = 'block';
-        } else {
-            document.getElementById('button7').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('8')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button8').style.display = 'block';
-        } else {
-            document.getElementById('button8').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('9')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button9').style.display = 'block';
-        } else {
-            document.getElementById('button9').style.display = 'none';
-            // console.log('print3e');
-        }
-
-        if (selectedOptions.includes('10')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button10').style.display = 'block';
-        } else {
-            document.getElementById('button10').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('11')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button11').style.display = 'block';
-        } else {
-            document.getElementById('button11').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('12')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button12').style.display = 'block';
-        } else {
-            document.getElementById('button12').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('13')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button13').style.display = 'block';
-        } else {
-            document.getElementById('button13').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('14')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button14').style.display = 'block';
-        } else {
-            document.getElementById('button14').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('15')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button15').style.display = 'block';
-        } else {
-            document.getElementById('button15').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('16')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button16').style.display = 'block';
-        } else {
-            document.getElementById('button16').style.display = 'none';
-            // console.log('print3e');
-        }
-        
-        if (selectedOptions.includes('17')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button17').style.display = 'block';
-        } else {
-            document.getElementById('button17').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('18')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button18').style.display = 'block';
-        } else {
-            document.getElementById('button18').style.display = 'none';
-            // console.log('print3e');
-        }
-    });
-
-    function openCity(evt, cityName) {
-        console.log('Open city:', cityName);
-    }
-</script>
-
     <script>
         function otherController(value, checkValue, blockID) {
             let block = document.getElementById(blockID)
@@ -915,6 +767,155 @@ const virtualSelectInstance = VirtualSelect.init({
                                 </div>
                             </div>
 
+                            
+                            <script>
+
+const virtualSelectInstance = VirtualSelect.init({
+        ele: '#checklists'
+    });
+
+    document.querySelector('.abc').addEventListener('change', function() {
+        const selectedOptions = $('#checklists').val()
+
+
+        if (selectedOptions.includes('1')) {
+            console.log('print1',selectedOptions);
+            var abc = document.getElementById('button1');
+            document.getElementById('button1').style.display = 'block';
+            // console.log('data',abc);
+        } else {
+            document.getElementById('button1').style.display = 'none';
+            console.log('print1e');
+        }
+
+        if (selectedOptions.includes('2')) {
+            console.log('print2',selectedOptions);
+            document.getElementById('button2').style.display = 'block';
+        } else {
+            document.getElementById('button2').style.display = 'none';
+            console.log('print2e');
+        }
+        if (selectedOptions.includes('3')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button3').style.display = 'block';
+        } else {
+            document.getElementById('button3').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('4')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button4').style.display = 'block';
+        } else {
+            document.getElementById('button4').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('5')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button5').style.display = 'block';
+        } else {
+            document.getElementById('button5').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('6')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button6').style.display = 'block';
+        } else {
+            document.getElementById('button6').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('7')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button7').style.display = 'block';
+        } else {
+            document.getElementById('button7').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('8')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button8').style.display = 'block';
+        } else {
+            document.getElementById('button8').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('9')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button9').style.display = 'block';
+        } else {
+            document.getElementById('button9').style.display = 'none';
+            // console.log('print3e');
+        }
+
+        if (selectedOptions.includes('10')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button10').style.display = 'block';
+        } else {
+            document.getElementById('button10').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('11')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button11').style.display = 'block';
+        } else {
+            document.getElementById('button11').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('12')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button12').style.display = 'block';
+        } else {
+            document.getElementById('button12').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('13')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button13').style.display = 'block';
+        } else {
+            document.getElementById('button13').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('14')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button14').style.display = 'block';
+        } else {
+            document.getElementById('button14').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('15')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button15').style.display = 'block';
+        } else {
+            document.getElementById('button15').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('16')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button16').style.display = 'block';
+        } else {
+            document.getElementById('button16').style.display = 'none';
+            // console.log('print3e');
+        }
+        
+        if (selectedOptions.includes('17')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button17').style.display = 'block';
+        } else {
+            document.getElementById('button17').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('18')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button18').style.display = 'block';
+        } else {
+            document.getElementById('button18').style.display = 'none';
+            // console.log('print3e');
+        }
+    });
+
+    function openCity(evt, cityName) {
+        console.log('Open city:', cityName);
+    }
+</script>
+
 
                                 <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
@@ -1515,8 +1516,8 @@ const virtualSelectInstance = VirtualSelect.init({
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record</label>
-                                        <select multiple id="refrence_record" name="refrence_record[]" id="">
-                                            <option value="">--Select---</option>
+                                        <select multiple id="reference_record" name="refrence_record[]" id="">
+                                            <!-- <option value="">--Select---</option> -->
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
@@ -30444,94 +30445,94 @@ const virtualSelectInstance = VirtualSelect.init({
     </script>
 
 
-    <script>
-        VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record,'
-        });
+<script>
+                VirtualSelect.init({
+                    ele: '#Facility, #Group, #Audit, #Auditee , #reference_record'
+                });
 
-        function openCity(evt, cityName) {
-            var i, cctabcontent, cctablinks;
-            cctabcontent = document.getElementsByClassName("cctabcontent");
-            for (i = 0; i < cctabcontent.length; i++) {
-                cctabcontent[i].style.display = "none";
-            }
-            cctablinks = document.getElementsByClassName("cctablinks");
-            for (i = 0; i < cctablinks.length; i++) {
-                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
+                function openCity(evt, cityName) {
+                    var i, cctabcontent, cctablinks;
+                    cctabcontent = document.getElementsByClassName("cctabcontent");
+                    for (i = 0; i < cctabcontent.length; i++) {
+                        cctabcontent[i].style.display = "none";
+                    }
+                    cctablinks = document.getElementsByClassName("cctablinks");
+                    for (i = 0; i < cctablinks.length; i++) {
+                        cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
 
 
 
-        function openCity(evt, cityName) {
-            var i, cctabcontent, cctablinks;
-            cctabcontent = document.getElementsByClassName("cctabcontent");
-            for (i = 0; i < cctabcontent.length; i++) {
-                cctabcontent[i].style.display = "none";
-            }
-            cctablinks = document.getElementsByClassName("cctablinks");
-            for (i = 0; i < cctablinks.length; i++) {
-                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
+                function openCity(evt, cityName) {
+                    var i, cctabcontent, cctablinks;
+                    cctabcontent = document.getElementsByClassName("cctabcontent");
+                    for (i = 0; i < cctabcontent.length; i++) {
+                        cctabcontent[i].style.display = "none";
+                    }
+                    cctablinks = document.getElementsByClassName("cctablinks");
+                    for (i = 0; i < cctablinks.length; i++) {
+                        cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
 
-            // Find the index of the clicked tab button
-            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+                    // Find the index of the clicked tab button
+                    const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
 
-            // Update the currentStep to the index of the clicked tab
-            currentStep = index;
-        }
+                    // Update the currentStep to the index of the clicked tab
+                    currentStep = index;
+                }
 
-        const saveButtons = document.querySelectorAll(".saveButton");
-        const nextButtons = document.querySelectorAll(".nextButton");
-        const form = document.getElementById("step-form");
-        const stepButtons = document.querySelectorAll(".cctablinks");
-        const steps = document.querySelectorAll(".cctabcontent");
-        let currentStep = 0;
+                const saveButtons = document.querySelectorAll(".saveButton");
+                const nextButtons = document.querySelectorAll(".nextButton");
+                const form = document.getElementById("step-form");
+                const stepButtons = document.querySelectorAll(".cctablinks");
+                const steps = document.querySelectorAll(".cctabcontent");
+                let currentStep = 0;
 
-        function nextStep() {
-            // Check if there is a next step
-            if (currentStep < steps.length - 1) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
+                function nextStep() {
+                    // Check if there is a next step
+                    if (currentStep < steps.length - 1) {
+                        // Hide current step
+                        steps[currentStep].style.display = "none";
 
-                // Show next step
-                steps[currentStep + 1].style.display = "block";
+                        // Show next step
+                        steps[currentStep + 1].style.display = "block";
 
-                // Add active class to next button
-                stepButtons[currentStep + 1].classList.add("active");
+                        // Add active class to next button
+                        stepButtons[currentStep + 1].classList.add("active");
 
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
+                        // Remove active class from current button
+                        stepButtons[currentStep].classList.remove("active");
 
-                // Update current step
-                currentStep++;
-            }
-        }
+                        // Update current step
+                        currentStep++;
+                    }
+                }
 
-        function previousStep() {
-            // Check if there is a previous step
-            if (currentStep > 0) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
+                function previousStep() {
+                    // Check if there is a previous step
+                    if (currentStep > 0) {
+                        // Hide current step
+                        steps[currentStep].style.display = "none";
 
-                // Show previous step
-                steps[currentStep - 1].style.display = "block";
+                        // Show previous step
+                        steps[currentStep - 1].style.display = "block";
 
-                // Add active class to previous button
-                stepButtons[currentStep - 1].classList.add("active");
+                        // Add active class to previous button
+                        stepButtons[currentStep - 1].classList.add("active");
 
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
+                        // Remove active class from current button
+                        stepButtons[currentStep].classList.remove("active");
 
-                // Update current step
-                currentStep--;
-            }
-        }
-    </script>
+                        // Update current step
+                        currentStep--;
+                    }
+                }
+            </script>
 
     <script>
         // document.addEventListener('DOMContentLoaded', function() {
