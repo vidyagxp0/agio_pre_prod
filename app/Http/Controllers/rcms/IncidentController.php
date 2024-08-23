@@ -3847,7 +3847,7 @@ if ($incident->Initial_attachment) {
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for HOD review state'
+                            'message' => 'Sent for HOD Initial Review state'
                         ]);
                     }
                     $incident->stage = "2";
@@ -3998,7 +3998,7 @@ if ($incident->Initial_attachment) {
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for CFT review state'
+                            'message' => 'Sent for Pending Initiator Update state'
                         ]);
                     }
                     $incident->stage = "4";
@@ -4144,7 +4144,7 @@ if ($incident->Initial_attachment) {
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for Investigation and CAPA review state'
+                            'message' => ' Sent For HOD Final Review state'
                         ]);
                     }
 
@@ -4314,7 +4314,7 @@ if ($incident->Initial_attachment) {
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for QA Head/Manager Designee Approval'
+                            'message' => 'Sent for QA Final Review'
                         ]);
 
                     } else {
@@ -4389,7 +4389,7 @@ if ($incident->Initial_attachment) {
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Incident sent to Intiator Update'
+                            'message' => ' Sent For QAH Approval state'
                         ]);
                     }
 

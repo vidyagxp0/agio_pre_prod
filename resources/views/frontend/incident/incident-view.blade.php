@@ -733,7 +733,7 @@
                                             </button> --}}
                                 @elseif(
                                     $data->stage == 4 &&(in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
-                                    @if (!$cftCompleteUser)
+                                    {{-- @if (!$cftCompleteUser) --}}
                                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                             Pending Initiator Update Complete
                                             </button>
@@ -744,7 +744,7 @@
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                             Child
                                         </button> 
-                                    @endif
+                                    {{-- @endif --}}
                                 @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                                     {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                         Send to Initiator
@@ -756,7 +756,8 @@
                                         Send to QA Initial Review
                                     </button> --}}
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                        HOD Final Review Complete                            </button>
+                                        HOD Final Review Complete
+                                    </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
@@ -13681,15 +13682,15 @@
                                         </label>
                                         
                                         <label for="major">
-                                            <input type="radio" name="child_type" id="major" value="extension">
+                                            <input type="radio" name="child_type" id="major" value="capa">
                                             CAPA
                                         </label>
                                         <label for="major">
-                                            <input type="radio" name="child_type" id="major" value="capa">
+                                            <input type="radio" name="child_type" id="major" value=" Action_Item">
                                             Action-Item
                                         </label>
                                         <label for="major">
-                                            <input type="radio" name="child_type" id="major" value="rca">
+                                            <input type="radio" name="child_type" id="major" value="extension">
                                                 Extension
                                         </label>
                                     
@@ -13717,7 +13718,7 @@
                         <div class="modal-header">
                             <h4 class="modal-title">Child</h4>
                         </div>
-                        <form action="{{ route('capa_effectiveness_check', $data->id) }}" method="POST">
+                        <form action="{{ route('incident_child_1', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
