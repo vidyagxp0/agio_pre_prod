@@ -59,7 +59,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button>
             </div>
 
-            <form action="{{ route('capastore') }}" method="post" enctype="multipart/form-data">
+            <form id="formSubmit" action="{{ route('capastore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -375,11 +375,11 @@
                                         <select multiple id="capa_related_record" name="capa_related_record[]"
                                             id="">
                                             <option value="">--Select---</option>
-                                            @foreach ($old_records as $new)
-                                                <option value="{{ $new->id }}">
+                                            {{-- @foreach ($old_records as $new) --}}
+                                                {{-- <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
-                                                </option>
-                                            @endforeach
+                                                </option> --}}
+                                            {{-- @endforeach --}}
                                         </select>
                                         {{-- <div class="related-record-block">
                                             <input type="text" name="capa_related_record">
@@ -451,7 +451,7 @@
                               
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -1221,7 +1221,14 @@
 
         </div>
         </form>
-
+        <script>
+            $(document).ready(function() {
+                
+                $('#formSubmit').on('submit', function(e) {
+                    $('.on-submit-disable-button').prop('disabled', true);
+                });
+            })
+        </script>
     </div>
     </div>
 

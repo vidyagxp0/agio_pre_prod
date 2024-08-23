@@ -687,10 +687,10 @@
             <div class="col-lg-12 new-date-data-field">
             <div class="group-input input-date">
                         <label for="due_date">Due Date</label>
-                        <!-- <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div> -->
-    <div class="calenderauditee">
-<input type="text" id="due_date" name="due_date" readonly placeholder="DD-MMM-YYYY" />
-    </div>
+                                        <!-- <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div> -->
+                    <div class="calenderauditee">
+                <input type="text" id="due_date" name="due_date" readonly placeholder="DD-MMM-YYYY" />
+                    </div>
             </div>
             </div>
             <script>
