@@ -66,7 +66,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
-                                        <input disabled type="text" name="division_code"
+                                        <input disabled type="text" name="division_id" id="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
@@ -76,7 +76,7 @@
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                        <input disabled type="text" name="division_code"
+                                        <input disabled type="text" name="initiator_id"
                                             value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
@@ -106,7 +106,7 @@
                                 </div>
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
+                                        <label for="due-date">Due Date </label>
                                         <div class="calenderauditee">
                                             <!-- Display the formatted date in a readonly input -->
                                             <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />

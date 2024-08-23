@@ -126,6 +126,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-effectiveness/{id}', [EffectivenessCheckController::class, 'stageChange']);
             Route::post('effectiveness-reject/{id}', [EffectivenessCheckController::class, 'reject']);
             Route::post('moreinfo_effectiveness/{id}',[EffectivenessCheckController::class,'cancel'])->name('moreinfo_effectiveness');
+            Route::post('effectiveness_child/{id}', [EffectivenessCheckController::class, 'effectiveness_child'])->name('effectiveness_child');
+
             Route::view('helpdesk-personnel', 'frontend.rcms.helpdesk-personnel');
             Route::view('send-notification', 'frontend.rcms.send-notification');
             Route::get('new-change-control', [CCController::class, 'changecontrol']);
@@ -181,8 +183,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('observationupdate/{id}', [ObservationController::class, 'observationupdate'])->name('observationupdate');
             Route::post('observation_send_stage/{id}', [ObservationController::class, 'observation_send_stage'])->name('observation_change_stage');
             Route::post('RejectStateChange/{id}', [ObservationController::class, 'RejectStateChange'])->name('RejectStateChangeObservation');
-            Route::post('observation_child/{id}', [ObservationController::class, 'observation_child'])->name('observationchild');
-            Route::post('boostStage/{id}', [ObservationController::class, 'boostStage'])->name('updatestageobservation');
+            Route::post('observation_child/{id}', [ObservationController::class, 'observation_child'])->name('observation_child');
+            Route::post('observation_capanot_stage/{id}', [ObservationController::class, 'CapanotStage'])->name('observation_capanot_stage');
             Route::get('Observation_AuditTrial_Show/{id}', [ObservationController::class, 'ObservationAuditTrialShow'])->name('ShowObservationAuditTrial');
             Route::get('ObservationAuditTrialDetails/{id}', [ObservationController::class, 'ObservationAuditTrialDetails'])->name('showaudittrialobservation');
             Route::get('ObservationSingleReport/{id}', [ObservationController::class, 'ObservationSingleReport']);

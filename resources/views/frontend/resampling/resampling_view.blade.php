@@ -85,11 +85,11 @@
                                 Child
                             </button></a> --}}
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Acknowledgement Complete
+                                Approved
                             </button></a>
                             @elseif($data->stage == 3 && (in_array(8, $userRoleIds) || in_array(18, $userRoleIds)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                 Complete
+                                Acknowledge  Complete
                             </button></a>
                             <a href="#more-info-required-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
@@ -130,14 +130,14 @@
                                 <div class="">HOD Review</div>
                             @endif --}}
                             @if ($data->stage >= 2)
-                                <div class="active">Acknowledgement</div>
+                                <div class="active">Head QA Approval</div>
                             @else
-                                <div class="">Acknowledgement</div>
+                                <div class="">Head QA Approval</div>
                             @endif 
                             @if ($data->stage >= 3)
-                            <div class="active">work Completion</div>
+                            <div class="active">Acknowledge</div>
                         @else
-                            <div class="">Work Completion </div>
+                            <div class="">Acknowledge </div>
                         @endif
                         @if ($data->stage >= 4)
                         <div class="active">QA Verification</div>
