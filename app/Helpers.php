@@ -876,4 +876,131 @@ class Helpers
         
     }
 
+    public static function getInitiatorGroupData($shortName)
+    {
+        $full_department_name = '';
+
+        switch ($shortName) {
+            case 'Corporate Quality Assurance':
+                $full_department_name = 'Corporate Quality Assurance';
+                break;
+            case 'QAB':
+                $full_department_name = 'Quality Assurance Biopharma';
+                break;
+            case 'CQC':
+                $full_department_name = 'Central Quality Control';
+                break;
+            case 'MANU':
+                $full_department_name = 'Manufacturing';
+                break;
+            case 'PSG':
+                $full_department_name = 'Plasma Sourcing Group';
+                break;
+            case 'CS':
+                $full_department_name = 'Central Stores';
+                break;
+            case 'ITG':
+                $full_department_name = 'Information Technology Group';
+                break;
+            case 'MM':
+                $full_department_name = 'Molecular Medicine';
+                break;
+            case 'CL':
+                $full_department_name = 'Central Laboratory';
+                break;
+            case 'TT':
+                $full_department_name = 'Tech Team';
+                break;
+            case 'QA':
+                $full_department_name = 'Quality Assurance';
+                break;
+            case 'QM':
+                $full_department_name = 'Quality Management';
+                break;
+            case 'IA':
+                $full_department_name = 'IT Administration';
+                break;
+            case 'ACC':
+                $full_department_name = 'Accounting';
+                break;
+            case 'LOG':
+                $full_department_name = 'Logistics';
+                break;
+            case 'SM':
+                $full_department_name = 'Senior Management';
+                break;
+            case 'BA':
+                $full_department_name = 'Business Administration';
+                break;
+            default:
+                $full_department_name = '';
+                break;
+        }
+
+        return $full_department_name;
+
+    }
+
+    static function getfullnameChecklist($check){
+        $checklist = '';
+
+        switch($check){
+            case'1':
+            $checklist = "Checklist - Tablet Dispensing & Granulation";
+            break;
+            case'2':
+            $checklist = "Checklist - Tablet Compression";
+            break;
+            case'3':
+            $checklist = "Checklist - Tablet Coating";
+            break;
+            case'4':
+            $checklist = "Checklist - Tablet/Capsule Packing";
+            break;
+            case'5':
+            $checklist = "Checklist - Capsule";
+            break;
+            case'6':
+            $checklist = "Checklist - Liquid/Ointment Dispensing & Manufacturing";
+            break;
+            case'7':
+            $checklist = "Checklist - Liquid/Ointment Packing";
+            break;
+            case'8':
+            $checklist = "Checklist - Quality Assurance";
+            break;
+            case'9':
+            $checklist = "Checklist - Engineering";
+            break;
+            case'10':
+            $checklist = "Checklist - Quality Control";
+            break;
+            case'11':
+            $checklist = "Checklist - Stores";
+            break;
+            case'12':
+            $checklist = "Checklist - Human Resource";
+            break;
+            case'13':
+            $checklist = "Checklist - Production (Injection Dispensing & Manufacturing)";
+            break;
+            case'14':
+            $checklist = "Checklist - Production (Injection Packing)";
+            break;
+            case'15':
+            $checklist = "Checklist - Production (Powder Manufacturing and Packing)";
+            break;
+            case'16':
+            $checklist = "Checklist - Analytical Research and Development";
+            break;
+            case'17':
+            $checklist = "Checklist - Formulation Research and Development";
+            break;
+            case'18':
+            $checklist = "Checklist - LL / P2P";
+        break;
+        }
+        return $checklist;
+    }
+
 }

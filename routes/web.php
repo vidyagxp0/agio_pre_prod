@@ -188,6 +188,7 @@ Route::post('deviation_child/{id}', [DeviationController::class, 'deviation_chil
 
 Route::get('DeviationAuditTrial/{id}', [DeviationController::class, 'DeviationAuditTrial']);
 Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audit_review'])->name('store_audit_review');
+Route::get('/Deviation/{id}',[DeviationController::class,'audit_trail_filter'])->name('api.Deviation.filter');
 
 /********************************************* Deviation Ends *******************************************/
 
@@ -196,7 +197,6 @@ Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audi
 Route::post('failure_investigation_child_1/{id}', [FailureInvestigationController::class, 'failure_investigation_child_1'])->name('failure_investigation_child_1');
 Route::post('non_conformances_child_1/{id}', [NonConformaceController::class, 'non_conformances_child_1'])->name('non_conformances_child_1');
 Route::post('incident_child_1/{id}', [IncidentController::class, 'incident_child_1'])->name('incident_child_1');
-
 /********************************************* Deviation Ends *******************************************/
 
 // ==============================end ==============================

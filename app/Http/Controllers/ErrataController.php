@@ -463,54 +463,146 @@ class ErrataController extends Controller
             // $evaluation = Evaluation::where('cc_id', $id)->first();
             if ($ErrataControl->stage == 1) {
                 $ErrataControl->stage = "2";
-                $ErrataControl->status = "Pending Review";
+                $ErrataControl->status = "HOD Review";
                 $ErrataControl->submitted_by = Auth::user()->name;
                 $ErrataControl->submitted_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->comment = $request->comment;
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $ErrataControl->submitted_by;
+                $history->activity_type = 'Submitted By, Submittedd On';
+                    if(is_null($lastDocument->submitted_by) || $lastDocument->submitted_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->submitted_by. ' ,' . $lastDocument->submitted_on;
+                    }
+                    $history->action='Submit';
+                    $history->current = $ErrataControl->submitted_by. ',' . $ErrataControl->submitted_on;
                 $history->comment = $request->comment;
-                $history->action = 'Review Complete';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Pending Review";
+                $history->change_to =   "HOD Review";
                 $history->change_from = $lastDocument->status;
-                $history->action_name = 'Submit';
                 $history->stage = 'Plan Approved';
+                if(is_null($lastDocument->submitted_by) || $lastDocument->submitted_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                 $history->save();
 
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($ErrataControl->stage == 2) {
+               if ($ErrataControl->stage == 2) {
                 $ErrataControl->stage = "3";
-                $ErrataControl->status = "Pending Correction";
+                $ErrataControl->status = "QA Initial Review";
                 $ErrataControl->review_completed_by = Auth::user()->name;
                 $ErrataControl->review_completed_on = Carbon::now()->format('d-M-Y');
-                $ErrataControl->review_completed_comment = $request->comment;
+                $ErrataControl->comment = $request->review_completed_comment;
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $ErrataControl->review_completed_by;
+                $history->activity_type = 'Review Completed By, Review Completed On';
+                    if(is_null($lastDocument->review_completed_by) || $lastDocument->review_completed_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->review_completed_by. ' ,' . $lastDocument->review_completed_on;
+                    }
+                    $history->action='Review Complete';
+                    $history->current = $ErrataControl->review_completed_by. ',' . $ErrataControl->review_completed_on;
                 $history->comment = $request->comment;
-                $history->action = 'Correction Complete';
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "QA Initial Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Approved';
+                if(is_null($lastDocument->review_completed_by) || $lastDocument->review_completed_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                $history->save();
+
+                $ErrataControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+               if ($ErrataControl->stage == 3) {
+                $ErrataControl->stage = "4";
+                $ErrataControl->status = "QA Approval";
+                $ErrataControl->Reviewed_by = Auth::user()->name;
+                $ErrataControl->Reviewed_on = Carbon::now()->format('d-M-Y');
+                $ErrataControl->Reviewed_commemt = $request->comment;
+
+                $history = new ErrataAuditTrail();
+                $history->errata_id = $id;
+                $history->activity_type = 'Review Completed By, Review Completed On';
+                    if(is_null($lastDocument->Reviewed_by) || $lastDocument->Reviewed_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->Reviewed_by. ' ,' . $lastDocument->Reviewed_on;
+                    }
+                    $history->action='Review Complete';
+                    $history->current = $ErrataControl->Reviewed_by. ',' . $ErrataControl->Reviewed_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "QA Approval";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Approved';
+                if(is_null($lastDocument->Reviewed_by) || $lastDocument->Reviewed_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                $history->save();
+
+                $ErrataControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ErrataControl->stage == 4) {
+                $ErrataControl->stage = "5";
+                $ErrataControl->status = "Pending Correction";
+                $ErrataControl->approved_by = Auth::user()->name;
+                $ErrataControl->approved_on = Carbon::now()->format('d-M-Y');
+                $ErrataControl->approved_comment = $request->comment;
+
+                $history = new ErrataAuditTrail();
+                $history->errata_id = $id;
+                $history->activity_type = 'Approval Completed By, Approval Completed On';
+                    if(is_null($lastDocument->approved_by) || $lastDocument->approved_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->approved_by. ' ,' . $lastDocument->approved_on;
+                    }
+                    $history->action='Approval Complete';
+                    $history->current = $ErrataControl->approved_by. ',' . $ErrataControl->approved_on;
+                $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "Pending Correction";
                 $history->change_from = $lastDocument->status;
-                $history->stage = 'Correction Completed';
-                $history->action_name = 'Update';
+                $history->stage = 'Approval Completed';
+                if(is_null($lastDocument->approved_by) || $lastDocument->approved_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                 $history->save();
 
                 // $ErrataControl->status = "Pending Correction";
@@ -518,8 +610,8 @@ class ErrataController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($ErrataControl->stage == 3) {
-                $ErrataControl->stage = "4";
+            if ($ErrataControl->stage == 5) {
+                $ErrataControl->stage = "6";
                 $ErrataControl->status = "Pending HOD Review";
                 $ErrataControl->correction_completed_by = Auth::user()->name;
                 $ErrataControl->correction_completed_on = Carbon::now()->format('d-M-Y');
@@ -527,19 +619,28 @@ class ErrataController extends Controller
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $ErrataControl->correction_completed_by;
+                $history->activity_type = 'Correction Completed By, Correction Completed On';
+                 if(is_null($lastDocument->correction_completed_by) || $lastDocument->correction_completed_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->correction_completed_by. ' ,' . $lastDocument->correction_completed_on;
+                    }
+                    $history->action='Correction Complete';
+                    $history->current = $ErrataControl->correction_completed_by. ',' . $ErrataControl->correction_completed_on;
                 $history->comment = $request->comment;
-                $history->action = 'HOD Review Complete';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "Pending HOD Review";
                 $history->change_from = $lastDocument->status;
-                $history->stage = 'HOD Review Completed';
-                $history->action_name = 'Update';
+                $history->stage = 'Correction Completed';
+                 if(is_null($lastDocument->correction_completed_by) || $lastDocument->correction_completed_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                 $history->save();
 
                 // $ErrataControl->status = "Pending HOD Review";
@@ -548,8 +649,8 @@ class ErrataController extends Controller
                 return back();
             }
 
-            if ($ErrataControl->stage == 4) {
-                $ErrataControl->stage = "5";
+            if ($ErrataControl->stage == 6) {
+                $ErrataControl->stage = "7";
                 $ErrataControl->status = "Pending QA Head Approval";
                 $ErrataControl->hod_review_complete_by = Auth::user()->name;
                 $ErrataControl->hod_review_complete_on = Carbon::now()->format('d-M-Y');
@@ -557,19 +658,28 @@ class ErrataController extends Controller
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $ErrataControl->hod_review_complete_by;
+                $history->activity_type = 'HOD Review Completed By, HOD Review Completed On';
+                 if(is_null($lastDocument->hod_review_complete_by) || $lastDocument->hod_review_complete_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->hod_review_complete_by. ' ,' . $lastDocument->hod_review_complete_on;
+                    }
+                    $history->action='HOD Review Complete';
+                    $history->current = $ErrataControl->hod_review_complete_by. ',' . $ErrataControl->hod_review_complete_on;
                 $history->comment = $request->comment;
-                $history->action = 'QA Head Approval Complete';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "Pending QA Head Approval";
                 $history->change_from = $lastDocument->status;
-                $history->action_name = 'Update';
                 $history->stage = 'QA Head Approval Completed';
+                if(is_null($lastDocument->hod_review_complete_by) || $lastDocument->hod_review_complete_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                 $history->save();
 
                 // $ErrataControl->status = "Pending QA Head Approval";
@@ -578,8 +688,8 @@ class ErrataController extends Controller
                 return back();
             }
 
-            if ($ErrataControl->stage == 5) {
-                $ErrataControl->stage = "6";
+            if ($ErrataControl->stage == 7) {
+                $ErrataControl->stage = "8";
                 $ErrataControl->status = "Closed Done";
                 $ErrataControl->qa_head_approval_completed_by = Auth::user()->name;
                 $ErrataControl->qa_head_approval_completed_on = Carbon::now()->format('d-M-Y');
@@ -587,9 +697,14 @@ class ErrataController extends Controller
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $ErrataControl->qa_head_approval_completed_by;
+                $history->activity_type = 'QA Head Aproval Completed By, QA Head Aproval Completed On';
+                 if(is_null($lastDocument->qa_head_approval_completed_by) || $lastDocument->qa_head_approval_completed_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->qa_head_approval_completed_by. ' ,' . $lastDocument->qa_head_approval_completed_on;
+                    }
+                    $history->action='QA Head Aproval Complete';
+                    $history->current = $ErrataControl->qa_head_approval_completed_by. ',' . $ErrataControl->qa_head_approval_completed_on;
                 $history->comment = $request->comment;
                 $history->action = 'Closed-Done';
                 $history->user_id = Auth::user()->id;
@@ -598,8 +713,13 @@ class ErrataController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "Closed Done";
                 $history->change_from = $lastDocument->status;
-                $history->action_name = 'Update';
                 $history->stage = 'Closed-Done';
+                if(is_null($lastDocument->qa_head_approval_completed_by) || $lastDocument->qa_head_approval_completed_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                 $history->save();
 
 
@@ -630,19 +750,27 @@ class ErrataController extends Controller
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $ErrataControl->hod_review_complete_by;
-                $history->comment = $request->comment;
-                $history->action = 'Opened';
+                 $history->activity_type = 'Reject By, Reject On';
+                 if(is_null($lastDocument->reject_by) || $lastDocument->reject_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->reject_by. ' ,' . $lastDocument->reject_on;
+                    }
+                    $history->action='Reject';
+                    $history->current = $ErrataControl->reject_by. ',' . $ErrataControl->reject_on;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastDocument->status;
-                $history->action_name = 'Update';
                 $history->stage = 'Opened';
+                if(is_null($lastDocument->reject_by) || $lastDocument->reject_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                 $history->save();
 
                 $ErrataControl->update();
@@ -651,25 +779,35 @@ class ErrataController extends Controller
             }
             if ($ErrataControl->stage == 3) {
                 $ErrataControl->stage = "2";
-                $ErrataControl->status = "Pending Review";
+                $ErrataControl->status = "HOD Review";
                 $ErrataControl->sent_to_open_state_by = Auth::user()->name;
                 $ErrataControl->sent_to_open_state_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->sent_to_open_state_comment = $request->comment;
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $ErrataControl->sent_to_open_state_by;
+                 $history->activity_type = 'Reject By, Reject On';
+                 if(is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->sent_to_open_state_by. ' ,' . $lastDocument->sent_to_open_state_on;
+                    }
+                    $history->action='Reject';
+                    $history->current = $ErrataControl->sent_to_open_state_by. ',' . $ErrataControl->sent_to_open_state_on;
                 $history->comment = $request->comment;
-                $history->action = 'Pending Reviewed';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Pending Review";
+                $history->change_to =   "HOD Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Pending Reviewed';
+                if(is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                 $history->save();
 
                 $ErrataControl->update();
@@ -681,41 +819,128 @@ class ErrataController extends Controller
                 $ErrataControl->sent_to_open_state_by = Auth::user()->name;
                 $ErrataControl->sent_to_open_state_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->sent_to_open_state_comment = $request->comment;
-                $ErrataControl->status = "Pending CAPA Plan";
+                $ErrataControl->status = "QA Initial Review";
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $ErrataControl->sent_to_open_state_by;
+                $history->activity_type = 'Reject By, Reject On';
+                 if(is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->sent_to_open_state_by. ' ,' . $lastDocument->sent_to_open_state_on;
+                    }
+                    $history->action='Reject';
+                    $history->current = $ErrataControl->sent_to_open_state_by. ',' . $ErrataControl->sent_to_open_state_on;
                 $history->comment = $request->comment;
-                $history->action = 'Pending CAPA Plan';
+                
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Pending CAPA Plan";
+                $history->change_to =   "QA Initial Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Pending CAPA Plan';
+                if(is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                 $history->save();
 
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-
             if ($ErrataControl->stage == 5) {
+                $ErrataControl->stage = "4";
+                $ErrataControl->sent_to_open_state_by = Auth::user()->name;
+                $ErrataControl->sent_to_open_state_on = Carbon::now()->format('d-M-Y');
+                $ErrataControl->sent_to_open_state_comment = $request->comment;
+                $ErrataControl->status = "QA Approval";
+
+                $history = new ErrataAuditTrail();
+                $history->errata_id = $id;
+                 $history->activity_type = 'Request More Info By, Request More Info On';
+                 if(is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->sent_to_open_state_by. ' ,' . $lastDocument->sent_to_open_state_on;
+                    }
+                    $history->action='Request More Info';
+                    $history->current = $ErrataControl->sent_to_open_state_by. ',' . $ErrataControl->sent_to_open_state_on;        
+                    $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "QA Approval";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Pending CAPA Plan';
+                if(is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                $history->save();
+
+                $ErrataControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($ErrataControl->stage == 6) {
+                $ErrataControl->stage = "5";
+                $ErrataControl->sent_to_open_state_by = Auth::user()->name;
+                $ErrataControl->sent_to_open_state_on = Carbon::now()->format('d-M-Y');
+                $ErrataControl->sent_to_open_state_comment = $request->comment;
+                $ErrataControl->status = "Pending Correction";
+
+                $history = new ErrataAuditTrail();
+                $history->errata_id = $id;
+                $history->activity_type = 'Request More Info By, Request More Info On';
+                 if(is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->sent_to_open_state_by. ' ,' . $lastDocument->sent_to_open_state_on;
+                    }
+                    $history->action='Request More Info';
+                    $history->current = $ErrataControl->sent_to_open_state_by. ',' . $ErrataControl->sent_to_open_state_on; 
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Pending Correction";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Pending CAPA Plan';
+                if(is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                $history->save();
+
+                $ErrataControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            
+
+            if ($ErrataControl->stage == 7) {
                 $ErrataControl->stage = "1";
                 $ErrataControl->sent_to_open_state_by = Auth::user()->name;
                 $ErrataControl->sent_to_open_state_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->sent_to_open_state_comment = $request->comment;
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $ErrataControl->sent_to_open_state_by;
-                $history->comment = $request->comment;
-                $history->action = 'Opened';
+                $history->activity_type = 'Send To Opened By, Send To Opened On';
+                 if(is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->sent_to_open_state_by. ' ,' . $lastDocument->sent_to_open_state_on;
+                    }
+                    $history->action='Send To Opened';
+                    $history->current = $ErrataControl->sent_to_open_state_by. ',' . $ErrataControl->sent_to_open_state_on; 
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -723,6 +948,12 @@ class ErrataController extends Controller
                 $history->change_to =   "Opened";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Opened';
+                if(is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                 $history->save();
 
                 $ErrataControl->update();
@@ -759,18 +990,27 @@ class ErrataController extends Controller
                 $ErrataControl->sent_to_open_state_comment = $request->comment;
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $ErrataControl->sent_to_open_state_by;
-                $history->comment = $request->comment;
-                $history->action = 'Opened';
+                $history->activity_type = 'Cancel By, Cancel On';
+                 if(is_null($lastDocument->cancel_by) || $lastDocument->cancel_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->cancel_by. ' ,' . $lastDocument->cancel_on;
+                    }
+                    $history->action='Cancel';
+                    $history->current = $ErrataControl->cancel_by. ',' . $ErrataControl->cancel_on; 
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Closed-Cancelled";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Opened';
+                if(is_null($lastDocument->cancel_by) || $lastDocument->cancel_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                 $history->save();
 
                 $ErrataControl->update();
