@@ -2034,8 +2034,8 @@ class OOTController extends Controller
                 toastr()->success('P-II A QAH/CQAH Review');
                 return back();
             }
-            if ($changestage->stage == 20) {
-                $changestage->stage = "21";
+            if ($changestage->stage == 19) {
+                $changestage->stage = "20";
                 $changestage->P_II_A_Assignable_Cause_Found_by = Auth::user()->name;
                 $changestage->P_II_A_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
                 $changestage->P_II_A_Assignable_Cause_Found_comment = $request->comments;
