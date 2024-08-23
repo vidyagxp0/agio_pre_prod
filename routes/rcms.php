@@ -239,7 +239,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('dev-launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('dev-launch-extension-capa');
             Route::post('dev-launch-extension-qrm/{id}', [DeviationController::class, 'launchExtensionQrm'])->name('dev-launch-extension-qrm');
             Route::post('dev-launch-extension-investigation/{id}', [DeviationController::class, 'launchExtensionInvestigation'])->name('dev-launch-extension-investigation');
-
+            Route::post('deviation/ReqCancel/{id}', [DeviationController::class, 'Request_Cancel'])->name('Request_Cancel');
             /********************* Deviation Routes Ends *******************/
 
             Route::get('action-items-create', [ActionItemController::class, 'showAction']);
