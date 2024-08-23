@@ -59,7 +59,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button>
             </div>
 
-            <form id="formSubmit" action="{{ route('capastore') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('capastore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -95,7 +95,7 @@
                                         {{-- <input disabled type="text" name="record" value=""> --}}
                                         {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record}}"> --}}
                                         <input disabled type="text" name="record" id="record" 
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('y') }}/{{ $record }}">
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('y') }}/{{ $record_number }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -375,11 +375,11 @@
                                         <select multiple id="capa_related_record" name="capa_related_record[]"
                                             id="">
                                             <option value="">--Select---</option>
-                                            {{-- @foreach ($old_records as $new) --}}
-                                                {{-- <option value="{{ $new->id }}">
+                                            @foreach ($old_records as $new)
+                                                <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
-                                                </option> --}}
-                                            {{-- @endforeach --}}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         {{-- <div class="related-record-block">
                                             <input type="text" name="capa_related_record">
@@ -451,7 +451,7 @@
                               
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -1125,34 +1125,6 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Plan Approved By">Plan Approved By</label>
-                                    <input type="hidden" name="Plan_approved_by">
-                                    <div class="static"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Plan Approved On">Plan Approved On</label>
-                                    <input type="hidden" name="Plan_approved_on">
-                                    <div class="static"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="QA More Info Required By">QA More Info Required By</label>
-                                    <input type="hidden" name="qa_more_info_required_by">
-                                    <div class="static"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="QA More Info Required On">QA More Info Required On</label>
-                                    <input type="hidden" name="qa_more_info_required_on">
-                                    <div class="static"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
                                     <label for="Cancelled By">Cancelled By</label>
                                     <input type="hidden" name="cancelled_by">
                                     <div class="static"></div>
@@ -1167,15 +1139,58 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Completed By">Completed By</label>
-                                    <input type="hidden" name="completed_by">
+                                    <label for="Plan Approved By">HOD Review Completed By</label>
+                                    <input type="hidden" name="hod_review_completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Completed On">Completed On</label>
-                                    <input type="hidden" name="completed_on">
+                                    <label for="HOD Review Completed On">HOD Review Completed On</label>
+                                    <input type="hidden" name="hod_review_completed_on">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required By"> More Info Required By</label>
+                                    <input type="hidden" name="more_info_required_by">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required On"> More Info Required On</label>
+                                    <input type="hidden" name="more_info_required_on">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                    
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Completed By"> QA Review Completed By</label>
+                                    <input type="hidden" name="qa_review_completed_by">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Completed On"> QA Review Completed On</label>
+                                    <input type="hidden" name="qa_review_completed_on">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required By"> More Info Required By</label>
+                                    <input type="hidden" name="qa_more_info_required_by">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required On"> More Info Required On</label>
+                                    <input type="hidden" name="qa_more_info_required_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -1189,25 +1204,138 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Approved On">Approved On</label>
+                                    <label for="Approved On"> Approved On</label>
                                     <input type="hidden" name="approved_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Rejected By">Rejected By</label>
-                                    <input type="hidden" name="rejected_by">
+                                    <label for="QA More Info Required By"> More Info Required By</label>
+                                    <input type="hidden" name="app_more_info_required_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Rejected On">Rejected On</label>
-                                    <input type="hidden" name="rejected_on">
+                                    <label for="QA More Info Required On"> More Info Required On</label>
+                                    <input type="hidden" name="app_more_info_required_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Rejected By">Completed By</label>
+                                    <input type="hidden" name="completed_by">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="completed On">Completed On</label>
+                                    <input type="hidden" name="completed_on">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required By"> More Info Required By</label>
+                                    <input type="hidden" name="com_more_info_required_by">
+                                    <div class="static"></div>
+                                </div>
+                            </div>  
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required On"> More Info Required On</label>
+                                    <input type="hidden" name="com_more_info_required_on">
+                                    <div class="static"></div>
+                                </div>
+                            </div>~ --}}
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Rejected By">HOD Final Review Completed By</label>
+                                    <input type="hidden" name="hod_final_review_completed_by">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Rejected On">HOD Final Review Completed On</label>
+                                    <input type="hidden" name="hod_final_review_completed_on">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required By"> More Info Required By</label>
+                                    <input type="hidden" name="hod_more_info_required_by">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required On"> More Info Required On</label>
+                                    <input type="hidden" name="hod_more_info_required_on">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required By"> QA Closure Review Completed By</label>
+                                    <input type="hidden" name="qa_closure_review_completed_by">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA QA Closure Review Completed On"> QA Closure Review Completed On</label>
+                                    <input type="hidden" name="qa_closure_review_completed_on">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required By"> More Info Required By</label>
+                                    <input type="hidden" name="closure_more_info_required_by">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required On"> More Info Required On</label>
+                                    <input type="hidden" name="closure_qa_more_info_required_on">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required By"> QAH Approval Completed By</label>
+                                    <input type="hidden" name="qah_approval_completed_by">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA QAH Approval Completed On"> QAH Approval Completed On</label>
+                                    <input type="hidden" name="qah_approval_completed_on">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required By"> More Info Required By</label>
+                                    <input type="hidden" name="qah_more_info_required_by">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA More Info Required On"> More Info Required On</label>
+                                    <input type="hidden" name="qah_more_info_required_on">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                                 
                         </div>
                         <div class="button-block">
                              <button type="submit" class="saveButton">Save</button>
@@ -1221,14 +1349,7 @@
 
         </div>
         </form>
-        <script>
-            $(document).ready(function() {
-                
-                $('#formSubmit').on('submit', function(e) {
-                    $('.on-submit-disable-button').prop('disabled', true);
-                });
-            })
-        </script>
+
     </div>
     </div>
 
