@@ -3352,7 +3352,7 @@
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$data->correction_ooc_comment}}</div>
+                                <div class="static">{{$data->correction_data_comment}}</div>
 
                             </div>
                         </div>
@@ -3364,7 +3364,7 @@
                       <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Assignable Cause Found Complete By : </label>
-                                <div class="static">{{$data->approved_ooc_completed_by}}</div>
+                                <div class="static">{{$data->approved_data_completed_by}}</div>
 
 
                             </div>
@@ -3374,7 +3374,7 @@
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Assignable Cause Found Complete On : </label>
-                                <div class="static">{{$data->approved_ooc_completed_on}}</div>
+                                <div class="static">{{$data->approved_data_completed_on}}</div>
 
 
 
@@ -3385,7 +3385,7 @@
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$data->approved_ooc_comment}}</div>
+                                <div class="static">{{$data->approved_data_comment}}</div>
 
                             </div>
                         </div>
@@ -3426,7 +3426,7 @@
                       <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IB Investigation By : </label>
-                                <div class="static">{{$data->correction_ooc_completed_by}}</div>
+                                <div class="static">{{$data->correction_ooT_completed_by}}</div>
 
 
                             </div>
@@ -3436,7 +3436,7 @@
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Phase IB Investigation  On : </label>
-                                <div class="static">{{$data->correction_ooc_completed_on}}</div>
+                                <div class="static">{{$data->correction_ooT_completed_on}}</div>
 
 
 
@@ -3447,7 +3447,7 @@
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$data->correction_ooc_comment}}</div>
+                                <div class="static">{{$data->correction_ooT_comment}}</div>
 
                             </div>
                         </div>
@@ -5754,7 +5754,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">E-Signature reject</h4>
+                    <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
