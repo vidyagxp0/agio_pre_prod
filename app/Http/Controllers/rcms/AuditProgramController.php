@@ -90,7 +90,7 @@ class AuditProgramController extends Controller
         $data->City = $request->City;
         $data->state = $request->state;
         $data->severity1_level = $request->severity1_level;
-        $data->comment = $request->comment;
+        // $data->comment = $request->comment;
         
         
 
@@ -1225,11 +1225,15 @@ class AuditProgramController extends Controller
                 $changeControl->Submitted_comment  = $request->comment;
                 $history = new AuditProgramAuditTrial();
                 $history->AuditProgram_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Submit By, Submit On';
                 $history->action ='Submit';
-                $history->previous = $lastDocument->submitted_by;
-                $history->current = $changeControl->submitted_by;
-                $history->Submitted_comment = $request->comment;
+                if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                $history->previous = "Null";
+                } else {
+                $history->previous = $lastDocument->submitted_by . ' , ' . $lastDocument->submitted_on;
+                }
+                $history->current = $changeControl->submitted_by . ' , ' . $changeControl->submitted_on;
+                $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1238,6 +1242,11 @@ class AuditProgramController extends Controller
                 $history->change_to= "Pending Approval";
                 $history->change_from= "Opened";
                 $history->action_name ='Not Applicable';
+                if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                     $history->save();
                 //     $list = Helpers::getInitiatorUserList();
                 //     foreach ($list as $u) {
@@ -1268,11 +1277,15 @@ class AuditProgramController extends Controller
                 $changeControl->approved_comment  = $request->comment;
                     $history = new AuditProgramAuditTrial();
                     $history->AuditProgram_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'Approve By, Approve On';
                     $history->action ='Approve';
-                    $history->previous = $lastDocument->approved_by;
-                    $history->current = $changeControl->approved_by;
-                    $history->approved_comment = $request->comment;
+                    if (is_null($lastDocument->approved_by) || $lastDocument->approved_by === '') {
+                        $history->previous = "Null";
+                        } else {
+                        $history->previous = $lastDocument->approved_by . ' , ' . $lastDocument->approved_on;
+                        }
+                        $history->current = $changeControl->approved_by . ' , ' . $changeControl->approved_on;
+                    $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1281,6 +1294,11 @@ class AuditProgramController extends Controller
                     $history->change_to= "Pending Audit";
                     $history->change_from= "Pending Approval";
                     $history->action_name ='Not Applicable';
+                    if (is_null($lastDocument->approved_by) || $lastDocument->approved_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1294,11 +1312,15 @@ class AuditProgramController extends Controller
                 $changeControl->Audit_Completed_comment  = $request->comment;
                 $history = new AuditProgramAuditTrial();
                 $history->AuditProgram_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Audit Completed On , Audit Completed By ';
                 $history->action ='Audit Completed';
-                $history->previous = $lastDocument->Audit_Completed_By;
-                $history->current = $changeControl->Audit_Completed_By;
-                $history->Audit_Completed_comment = $request->comment;
+                if (is_null($lastDocument->Audit_Completed_By) || $lastDocument->Audit_Completed_By === '') {
+                    $history->previous = "Null";
+                    } else {
+                    $history->previous = $lastDocument->Audit_Completed_By . ' , ' . $lastDocument->Audit_Completed_On;
+                    }
+                    $history->current = $changeControl->Audit_Completed_By . ' , ' . $changeControl->Audit_Completed_On;
+                $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1307,6 +1329,11 @@ class AuditProgramController extends Controller
                 $history->change_to= "Closed - Done";
                 $history->change_from= "Pending Audit";
                 $history->action_name ='Not Applicable';
+                if (is_null($lastDocument->Audit_Completed_By) || $lastDocument->Audit_Completed_By === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                     
                 $changeControl->update();
@@ -1333,11 +1360,15 @@ class AuditProgramController extends Controller
                 $changeControl->reject_comment  = $request->comment;
                 $history = new AuditProgramAuditTrial();
                 $history->AuditProgram_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->action ='Rejected';
-                $history->previous = $lastDocument->rejected_by;
-                $history->current = $changeControl->rejected_on;
-                $history->reject_comment = $request->comment;
+                $history->activity_type = 'More Info Required By, More Info Required On';
+                $history->action ='More Info Required';
+                if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
+                    $history->previous = "Null";
+                    } else {
+                    $history->previous = $lastDocument->rejected_by . ' , ' . $lastDocument->rejected_on;
+                    }
+                    $history->current = $changeControl->rejected_by . ' , ' . $changeControl->rejected_on;
+                $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1346,6 +1377,11 @@ class AuditProgramController extends Controller
                 $history->change_to= "Opened";
                 $history->change_from= "Pending Approval";
                 $history->action_name ='Not Applicable';
+                if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                   
                     //     $list = Helpers::getAuditManagerUserList();
@@ -1390,11 +1426,15 @@ class AuditProgramController extends Controller
                 $changeControl->Cancelled_comment  = $request->comment;
                 $history = new AuditProgramAuditTrial();
                 $history->AuditProgram_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Cancel By, Cancel On';
                 $history->action ='Cancel';
-                $history->previous = $lastDocument->cancelled_by;
-                $history->current = $changeControl->cancelled_on;
-                $history->Cancelled_comment = $request->comment;
+                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                    $history->previous = "Null";
+                    } else {
+                    $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                    }
+                    $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
+                $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1403,6 +1443,11 @@ class AuditProgramController extends Controller
                 $history->change_to= "Closed-Cancel ";
                 $history->change_from= "Opened";
                 $history->action_name ='Not Applicable';
+                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1416,11 +1461,15 @@ class AuditProgramController extends Controller
                 $changeControl->Cancelled_comment  = $request->comment;
                 $history = new AuditProgramAuditTrial();
                 $history->AuditProgram_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Cancel By, Cancel On';
                 $history->action ='Cancel';
-                $history->previous = $lastDocument->cancelled_by;
-                $history->current = $changeControl->cancelled_on;
-                $history->Cancelled_comment = $request->comment;
+                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                    $history->previous = "Null";
+                    } else {
+                    $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                    }
+                    $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
+                $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1429,6 +1478,11 @@ class AuditProgramController extends Controller
                 $history->change_to= "Closed-Cancel ";
                 $history->change_from= "Pending Approval";
                 $history->action_name ='Not Applicable';
+                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1442,11 +1496,15 @@ class AuditProgramController extends Controller
                 $changeControl->Cancelled_comment  = $request->comment;
                 $history = new AuditProgramAuditTrial();
                 $history->AuditProgram_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Cancel By, Cancel On';
                 $history->action ='Cancel';
-                $history->previous = $lastDocument->cancelled_by;
-                $history->current = $changeControl->cancelled_on;
-                $history->Cancelled_comment = $request->comment;
+                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                    $history->previous = "Null";
+                    } else {
+                    $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                    }
+                    $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
+                $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1455,6 +1513,11 @@ class AuditProgramController extends Controller
                 $history->change_to= "Closed-Cancel ";
                 $history->change_from= "Pending Audit";
                 $history->action_name ='Not Applicable';
+                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');

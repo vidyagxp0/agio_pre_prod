@@ -9,4 +9,9 @@ class extension_new extends Model
 {
     use HasFactory;
     protected $table = 'extension_news';
+
+    public function record_initiator()
+    {
+        return $this->belongsTo(User::class,'initiator_id');
+    }
 }

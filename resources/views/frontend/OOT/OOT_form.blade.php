@@ -37,29 +37,16 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Lab Investigation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm18')">Other Then Stability Batches </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist - Preliminary Laboratory
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Other Then Stability Batches </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Checklist - Preliminary Laboratory
                     Investigation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Checklist - Part B: Applicable if
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Checklist - Part B: Applicable if
                     Laboratory error identified</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist -Part D: Communication of
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Checklist -Part D: Communication of
                     Confirmed of OOT With Technical Committee </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Justification Of Delay</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure Conclusion</button>
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Investigation Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QC Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOT Conclusion</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOT Conclusion Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOT CQ Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Under Addendum Approval</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Justification Of Delay</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Closure Conclusion</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Activity Log</button>
             </div>
 
             <form action="{{ route('oot.store') }}" method="POST" enctype="multipart/form-data">
@@ -734,7 +721,7 @@
 
                     <!-- ==============Tab-2 start=============== -->
 
-                    <di v id="CCForm2" class="inner-block cctabcontent">
+                    <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
 
@@ -814,8 +801,8 @@
                                     </a> </button>
                             </div>
                         </div>
-                    </di>
-                    <div id="CCForm18" class="inner-block cctabcontent">
+                    </div>
+                    <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
 
@@ -930,7 +917,7 @@
                         </div>
                     </div>
 
-                    <div id="CCForm19" class="inner-block cctabcontent">
+                    <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -1911,7 +1898,7 @@
                         </div>
                     </div>
 
-                    <div id="CCForm20" class="inner-block cctabcontent">
+                    <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-6">
@@ -2011,7 +1998,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="CCForm21" class="inner-block cctabcontent">
+                    <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div style=" background: #4274da; color: #ffffff;" class="sub-head">
@@ -2078,7 +2065,7 @@
                         </div>
                     </div>
                     <!-- ==============Tab-3 start=============== -->
-                    <div id="CCForm3" class="inner-block cctabcontent">
+                    <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-md-6 ">
@@ -2141,7 +2128,7 @@
 
                     <!------------------- Tab -8 Start ----------------- -->
 
-                    <div id="CCForm4" class="inner-block cctabcontent">
+                    <div id="CCForm8" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
 
@@ -2192,1594 +2179,834 @@
                                     </a> </button>
                             </div>
                         </div>
-                        </di>
-
-                        {{-- </div>
-
-                <!-- ==============Tab-4 start=============== -->
-                <div id="CCForm4" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4">Review Comment</label>
-                                    <textarea class="summernote" name="ReviewComment" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="group-input">
-                                <label for="audit-agenda-grid">
-                                    Summary Of Earlier OTT And CAPA
-                                    <button type="button" name="audit-agenda-grid" id="summaryadd">+</button>
-                                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-
-                                    </span>
-                                </label>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="summary_table_details">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 5%">Row#</th>
-                                                <th style="width: 12%">OOT No.</th>
-                                                <th style="width: 16%"> OOT Reported Date</th>
-                                                <th style="width: 15%">Description Of OOT</th>
-                                                <th style="width: 15%">Previous OOT Root Cause</th>
-                                                <th style="width: 15%">CAPA </th>
-                                                <th style="width: 15%">Closure Date Of CAPA</th>
-                                                <!-- <th style="width: 15%">CAPA Required</th>
-                                                <th style="width: 15%">CAPA Reference</th>
-                                                <th style="width: 15%">Phase II Inves. Req</th>
-                                                <th style="width: 15%">Supporting Attachment</th>
-                                                <th style="width: 15%">Pre. Lab Invest. Review By</th>
-                                                <th style="width: 15%">Pre. Lab Invest. Review On</th> -->
-
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <td><input disabled type="text" name="serial[]" value="1"></td>
-
-                                            <td><input type="text" name="OOTNo[]"></td>
-                                            <td><input type="text" name="OOTReportedDate[]"></td>
-                                            <td><input type="text" name="DescriptionOfOOT[]"></td>
-                                            <td><input type="text" name="previousIntervalDetails[]"></td>
-                                            <td><input type="text" name="CAPA[]"></td>
-                                            <td><input type="text" name="ClosureDateOfCAPA[]"></td>
-
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>CAPA Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores"> CAPA Reference </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Phase II Inves. Req<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="closure attachment">Supporting Attachment </label>
-                                    <div><small class="text-primary">
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="File_Attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="ConclusionAttachment[]" oninput="addMultipleFiles(this, 'ConclusionAttachment')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
                     </div>
+                    <!--------------------------Tab Activity ------------------------------------>
+                    <div id="CCForm9" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+    
+    
+    
+                            <center><div class="sub-head">
+                                Activity Log
+                            </div></center>
+    
+                            <div class="sub-head col-lg-12">
+                                Submit
+                            </div>
+                            <div class="col-lg-4">
+    
+                                <div class="group-input">
+                                    <label for="Initiator Group">Submit By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Submit On: </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="comment">Comment : </label>
+                                    <div class="static"></div>
+                            </div>
+                            </div>
+    
+                            <div class="sub-head col-lg-12">HOD Primary Review</div>
+    
+                            <div class="col-lg-4">
+    
+                                <div class="group-input">
+                                    <label for="Initiator Group">HOD Primary Review Completed By: </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-4 new-date-data-field">
+    
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">HOD Primary Review Completed On</label>
+                                    <div class="static"></div>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="hod_review_occ_comment"> Comment : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+    
+                            <div class="sub-head col-lg-12">
+                            CQA/QA Head Primary Review
+                            </div>
+                            <div class="col-lg-4">
+    
+                                <div class="group-input">
+    
+                                    <label for="Initiator Group">CQA/QA Head Primary Review Complete By :</label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">CQA/QA Head Primary Review Complete On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="qa_intial_review_ooc_comment">Comment</label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+                            <div class="sub-head col-lg-12">
+                                Phase IA Investigation
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Phase IA Investigation Complete By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Phase IA Investigation Complete On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+    
+    
+                            <div class="sub-head col-lg-12">
+                            Phase IA HOD Primary Review 
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Phase IA HOD Primary Review Complete By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Phase IA HOD Primary Review Complete On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+                            <div class="sub-head col-lg-12">
+                            Phase IA QA Review
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Phase IA QA Review Complete By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Phase IA QA Review Complete On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="sub-head col-lg-12">
+                            Assignable Cause Found
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Assignable Cause Found Complete By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Assignable Cause Found Complete On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+                            <div class="sub-head col-lg-12">
+                            Assignable Cause Not Found
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Assignable Cause Not Found Complete By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Assignable Cause Not Found Complete On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+                            <div class="sub-head col-lg-12">
+                                Phase IB Investigation</div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Phase IB Investigation By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Phase IB Investigation  On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="sub-head col-lg-12">
+                            Phase IB HOD Review Complete
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Phase IB HOD Review Complete By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Phase IB HOD Review Complete On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+    
+    
+    
+                            <div class="sub-head col-lg-12">
+                                Phase IB QA Review Complete
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Phase IB QA Review Complete By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Phase IB QA Review Complete  On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+                            <div class="sub-head col-lg-12">
+                            P-IB Assignable Cause Found
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">P-IB Assignable Cause Found By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">P-IB Assignable Cause Found On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+    
+    
+    
+                            <div class="sub-head col-lg-12">
+                            P-IB Assignable Cause Not Found
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">P-IB Assignable Cause Not Found By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">P-IB Assignable Cause Found On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="sub-head col-lg-12">
+                            Phase II A Investigation
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Phase II A Investigation By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Phase II A Investigation On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+    
+    
+                            <div class="sub-head col-lg-12">
+                            Phase II A HOD Review Complete
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Phase II A HOD Review Complete By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Phase II A HOD Review Complete On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="sub-head col-lg-12">
+                            Phase II A QA Review Complete
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Phase II A QA Review Complete By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Phase II A QA Review Complete On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="sub-head col-lg-12">
+                            P-II A Assignable Cause Found
+                            </div>
+                          <div class="col-lg-4">
+                            
+                                <div class="group-input">
+                                    <label for="Initiator Group">P-II A Assignable Cause Found By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">P-II A Assignable Cause Found On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+                            <div class="sub-head col-lg-12">
+                            P-II A Assignable Cause Not Found
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">P-II A Assignable Cause Not Found By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">P-II A Assignable Cause Not Found On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="sub-head col-lg-12">
+                            Phase II B Investigation
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Phase II B Investigation By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Phase II B Investigation On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="sub-head col-lg-12">
+                            Phase II B HOD Review Complete
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Phase II B HOD Review Complete By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Phase II B HOD Review Complete On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+                            <div class="sub-head col-lg-12">
+                            Phase II B QA Review Complete
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Phase II B QA Review Complete By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Phase II B QA Review Complete On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="sub-head col-lg-12">
+                            P-II B Assignable Cause Found
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">P-II B Assignable Cause Found By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">P-II B Assignable Cause Found On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="sub-head col-lg-12">
+                            P-II B Assignable Cause Not Found
+                            </div>
+                          <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">P-II B Assignable Cause Not Found By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">P-II B Assignable Cause Not Found On : </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="closure_ooc_comment">Comment : </label>
+                                    <div class="static"></div>
+    
+                                </div>
+                            </div>
+    
+                            <div class="sub-head col-lg-12">
+                                Cancel
+                            </div>
+                            <div class="col-lg-4">
+    
+                                <div class="group-input">
+                                    <label for="Initiator Group">Cancelled By : </label>
+                                    <div class="static"></div>
+    
+    
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Cancelled On: </label>
+                                    <div class="static"></div>
+    
+    
+    
+    
+    
+                                </div>
+                            </div>
+                            <div class="col-lg-4 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="comment">Comment : </label>
+                                    <div class="static"></div>
+                            </div>
+                            </div>
+    
+                        </div>
+                        </div>
+                    
+
+
+
+                
+                
+                
+                
+                
+                
+
+                
+
+
+
+
+                
+
+
+
+
+                
+
+
+
+
                 </div>
-                <!-- ==============Tab-5 start=============== -->
-                <div id="CCForm5" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> QA Approver Report</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Manufacturing Investigation Required <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Manufacturing Investigation Type</label>
-                                    <select multiple id="reference_record" name="Manufacturing[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Manufacturing Investigation Refrence</label>
-                                    <select multiple id="reference_record" name="Manufacturing[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Re-Sampling Required <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Re-Sampling Refrence No</label>
-                                    <select multiple id="reference_record" name="Manufacturing[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Hypo/Exp Required <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Hypo/Exp Refrence</label>
-                                    <select multiple id="reference_record" name="Manufacturing[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="closure attachment"> Attachment </label>
-                                    <div><small class="text-primary">
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="File_Attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                        </div>
-                        <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- ==============Tab-6 start=============== -->
-                <div id="CCForm6" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div class="sub-head">Summary Of Phase II Testing</div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> Summary Of Exp./Hyp.</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> Summary Of Manufacturing Investigation</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Root Cause Identified <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>OOT Category-Reason Identified <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label>Others (OOT Category) <span class="text-danger"></span></label>
-                                    <input />
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> Details Of Root Cause</label>
-                                    <textarea class="summernote" name="Details" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> Impact Assessment</label>
-                                    <textarea class="summernote" name="ImpactAssessment" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Recommended Action Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Recommended Action Refrence</label>
-                                    <select multiple id="reference_record" name="PhaseIIInvestigationProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Investigation Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Investigation Refrence</label>
-                                    <select multiple id="reference_record" name="PhaseIIInvestigationProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> Justify If No Investigation Required</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="closure attachment">QC Review Attachment </label>
-                                    <div><small class="text-primary">
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="File_Attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                        </div>
-                        <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- ==============Tab-7 start=============== -->
-                <div id="CCForm7" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> Review Comment</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Additional Test Proposal<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Additional Test Refrence</label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Any Other Actions Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Action Task Refrence</label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="closure attachment">Additional Testing Attachment</label>
-                                    <div><small class="text-primary">
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="File_Attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-                        </div>
-                        <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- ==============Tab-8 start=============== -->
-                <div id="CCForm8" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> Summary Of OOT Test Results</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-
-                            <div class="group-input">
-                                <label for="audit-agenda-grid">
-                                    Details Of Stability Study
-                                    <button type="button" name="audit-agenda-grid" id="sumarryOfOotAdd">+</button>
-                                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-
-                                    </span>
-                                </label>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="sumarryOfOotAddDetails-Table">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 5%">Row#</th>
-                                                <th style="width: 12%">Initial Analysis</th>
-                                                <th style="width: 16%"> Result From Phase I Investigation</th>
-                                                <th style="width: 15%">Retesting Results After Correction Of Assignable Cause</th>
-                                                <th style="width: 15%">Hypothesis/Experimentation Results</th>
-                                                <th style="width: 15%">Result Of additional Tessting </th>
-                                                <th style="width: 15%">Hypothesis Experiment Refrence/Additional Testing Refrence No</th>
-                                                <th style="width: 15%">Results </th>
-                                                <th style="width: 15%">Analyst Name </th>
-                                                <th style="width: 15%">Remarks </th>
-
-
-
-
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <td><input disabled type="text" name="serial[]" value="1"></td>
-
-                                            <td><input type="text" name="InitialAnalysis[]"></td>
-                                            <td><input type="text" name="ResultFromPhaseIInvestigation[]"></td>
-                                            <td><input type="text" name="RetestingResultsAfterCorrectionOfAssignableCause[]"></td>
-                                            <td><input type="text" name="Hypothesis/ExperimentationResults[]"></td>
-                                            <td><input type="text" name="ResultOfadditionalTessting[]"></td>
-                                            <td><input type="text" name="HypothesisExperimentRefrence/AdditionalTestingRefrenceNo[]"></td>
-                                            <td><input type="text" name="Results[]"></td>
-                                            <td><input type="text" name="AnalystName[]"></td>
-                                            <td><input type="text" name="Remarks[]"></td>
-
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-
-
-
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="">Trend Limit</label>
-                                    <input />
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>OOT Stands<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Result To Be Reported<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="">Reporting Results</label>
-                                    <input />
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>CAPA Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores"> CAPA Reference No </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Action Plan Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores"> Action Plan Refrence </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Justification For Delay</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="closure attachment">Attachment If any</label>
-                                    <div><small class="text-primary">
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="File_Attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                        </div>
-                        <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- ==============Tab-9 start=============== -->
-                <div id="CCForm9" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> Conclusion Review Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-
-                            <div class="group-input">
-                                <label for="audit-agenda-grid">
-                                    Impacted Product/Material
-                                    <button type="button" name="audit-agenda-grid" id="impactedAdd">+</button>
-                                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-
-                                    </span>
-                                </label>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="impacted-Table">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 5%">Row#</th>
-                                                <th style="width: 12%">Material/Product Name</th>
-                                                <th style="width: 16%"> Batch No (s)/A.R.No (s)</th>
-                                                <th style="width: 15%">Any Other Information </th>
-                                                <th style="width: 15%">Action Taken On Affected Batch</th>
-
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <td><input disabled type="text" name="serial[]" value="1"></td>
-
-                                            <td><input type="text" name="Material/ProductName[]"></td>
-                                            <td><input type="text" name="BatchNO[]"></td>
-                                            <td><input type="text" name="AnyOtherInformation[]"></td>
-                                            <td><input type="text" name="ActionTakenOnAffectedBatch[]"></td>
-
-
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-
-
-
-
-
-
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>CAPA Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores"> CAPA Reference </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Required Action Plan<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores"> Refrence Record Plan </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label> Action Task Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Action Task Refrence </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label> Risk Assessment Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Risk Assessment Refrence </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="closure attachment">File Attachment </label>
-                                    <div><small class="text-primary">
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="File_Attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores"> CQ Approver </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-
-
-
-                        </div>
-                        <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- ==============Tab-10 start=============== -->
-
-                <div id="CCForm10" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> CQ Review Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>CAPA Requirement<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores"> Reference Of CAPA </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label> Action Plan Requirement<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores"> Refrence Action Plan </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="closure attachment">CQ Attachment </label>
-                                    <div><small class="text-primary">
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="File_Attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- ==============Tab-11 start=============== -->
-
-                <div id="CCForm11" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Disposition Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>OOT Category<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Others</label>
-                                    <input />
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label> Material Batch Release<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Conclusion</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Justify For Delay In Activity</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="closure attachment">File Attachment </label>
-                                    <div><small class="text-primary">
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="File_Attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                        </div>
-                        <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ==============Tab-12 start=============== -->
-
-                <div id="CCForm12" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> Reason For Reopen</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="closure attachment">Reopen Attachment </label>
-                                    <div><small class="text-primary">
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="File_Attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-
-
-
-                        </div>
-                        <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ==============Tab-13 start=============== -->
-
-                <div id="CCForm13" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments"> Approval Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="closure attachment">Approval Attachment </label>
-                                    <div><small class="text-primary">
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="File_Attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                        </div>
-                        <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- ==============Tab-14 start=============== -->
-
-                <div id="CCForm14" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Execution Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Action Task Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Action Task Reference </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label> Add. Testing Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Add. Testing Refrence </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label> Investigation Requirement<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Investigation Refrence </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label> Hypothesis Experiment Requirement<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Hypothesis Experiment Refrence </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="closure attachment">Any Attachment </label>
-                                    <div><small class="text-primary">
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="File_Attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                        </div>
-                        <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- ==============Tab-15 start=============== -->
-
-                <div id="CCForm15" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Addendum Review Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-
-
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="closure attachment">Required Attachment </label>
-                                    <div><small class="text-primary">
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="File_Attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                        </div>
-                        <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ==============Tab-16 start=============== -->
-
-                <div id="CCForm16" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Verification Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="closure attachment">Verification Attachment </label>
-                                    <div><small class="text-primary">
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="File_Attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                        </div>
-                        <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div> --}}
-
-                        <!-- ==============Tab-17 start=============== -->
-
-                        <div id="CCForm17" class="inner-block cctabcontent">
-                            <div class="inner-block-content">
-                                <div class="row">
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="submitted by">Submitted By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="submitted on">Submitted On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">Preliminary Lab Investigation done By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">Preliminary Lab Investigation done On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">Preliminary Lab Investigation Conclusion By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">Preliminary Lab Investigation Conclusion On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">Preliminary Lab Investigation Review By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">Preliminary Lab Investigation Review On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">Phase II Investigation Proposed By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">Phase II Investigation Proposed On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">Phase II QC Review Proposed By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">Phase II QC Review Proposed On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">Additional TestProposed By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">Additional TestProposed On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">OOT Conclusion Complete By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">OOT Conclusion Complete On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">OOT Conclusion Review By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">OOT Conclusion Review On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by"> CQ Review Done By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on"> CQ Review On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">Disposition Decision Done By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">Disposition Decision On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">Reopen Addendum Done By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">Reopen Addendum On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">Addendum Approved Done By </label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">Addendum Approved On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">Addendum Execution Done By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">Addendum Execution On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">Addendum Review Done By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">Addendum Review On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Reviewed by">Verification Review Done By</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Approved on">Verification Review On</label>
-                                            <div class="Date"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="button-block">
-                                        <button type="submit" class="saveButton">Save</button>
-                                        <button type="button" class="backButton"
-                                            onclick="previousStep()">Back</button>
-                                        <button type="button"> <a class="text-white"
-                                                href="{{ url('rcms/qms-dashboard') }}">Exit
-                                            </a> </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
             </form>
 
         </div>
     </div>
+</div>
+</div>
 
     <style>
         #step-form>div {

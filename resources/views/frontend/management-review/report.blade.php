@@ -805,18 +805,94 @@ Not Applicable
                 <table>
 
                     <tr>
-                        <th class="w-20">Completed By</th>
-                        <td class="w-30">{{ $managementReview->completed_by }}</td>
-                        <th class="w-20">Completed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($managementReview->completed_on) }}</td>
-                    </tr>
-                    <tr>
                         <th class="w-20">Submited By</th>
                         <td class="w-30">{{ $managementReview->Submited_by }}</td>
                         <th class="w-20">Submited On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($managementReview->Submited_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->Submited_Comment }}</td>
+
+
+
                     </tr>
 
+                    <tr>
+                        <th class="w-20">Completed By</th>
+                        <td class="w-30">{{ $managementReview->completed_by }}</td>
+                        <th class="w-20">Completed On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($managementReview->completed_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->Completed_Comment }}</td>
+                    </tr>  
+                    <tr>
+                        <th class="w-20">QA Head Review Complete By</th>
+                        <td class="w-30">{{ $managementReview->qaHeadReviewComplete_By }}</td>
+                        <th class="w-20">QA Head Review Complete On</th>
+                        <td class="w-30">{{ $managementReview->qaHeadReviewComplete_On }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->qaHeadReviewComplete_Comment }}</td>
+
+
+
+                    </tr>    
+                    <tr>
+                        <th class="w-20">Meeting and Summary  Complete By</th>
+                        <td class="w-30">{{ $managementReview->meeting_summary_by }}</td>
+                        <th class="w-20">Meeting and Summary  Complete On</th>
+                        <td class="w-30">{{ $managementReview->meeting_summary_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->meeting_summary_comment }}</td>
+
+
+
+                    </tr>  
+                    <tr>
+                        <th class="w-20">All AI Completed by Respective Department By</th>
+                        <td class="w-30">{{ $managementReview->ALLAICompleteby_by }}</td>
+                        <th class="w-20">All AI Completed by Respective Department On</th>
+                        <td class="w-30">{{ $managementReview->ALLAICompleteby_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->ALLAICompleteby_comment }}</td>
+
+
+
+                    </tr>  
+                    
+                    <tr>
+                        <th class="w-20">HOD Final Review Complete By</th>
+                        <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_by }}</td>
+                        <th class="w-20">HOD Final Review Complete On</th>
+                        <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_comment }}</td>
+
+
+
+                    </tr>  
+
+                    <tr>
+                        <th class="w-20">QA Verification Complete By</th>
+                        <td class="w-30">{{ $managementReview->QAVerificationComplete_by }}</td>
+                        <th class="w-20">QA Verification Complete On</th>
+                        <td class="w-30">{{ $managementReview->QAVerificationComplete_On }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->QAVerificationComplete_Comment }}</td>
+
+
+
+                    </tr>  
+
+                    <tr>
+                        <th class="w-20">Approved By</th>
+                        <td class="w-30">{{ $managementReview->Approved_by }}</td>
+                        <th class="w-20">Approved On</th>
+                        <td class="w-30">{{ $managementReview->Approved_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->Approved_comment }}</td>
+
+
+
+                    </tr>  
 
 
                 </table>

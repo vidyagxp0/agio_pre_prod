@@ -3094,8 +3094,9 @@ if ($incident->Initial_attachment) {
 
                 $incident->stage = "1";
                 $incident->status = "Opened";
-                $incident->rejected_by = Auth::user()->name;
-                $incident->rejected_on = Carbon::now()->format('d-M-Y');
+                $incident->more_info_req_by = Auth::user()->name;
+                $incident->more_info_req_on = Carbon::now()->format('d-M-Y');
+                $incident->more_info_req_cmt = $request->comment;
                 $incident->update();
                 $history = new IncidentHistory();
                 $history->type = "Incident";
@@ -3133,14 +3134,15 @@ if ($incident->Initial_attachment) {
                 $incident->stage = "2";
                 $incident->status = "HOD Review";
                 $incident->form_progress = 'hod';
-                $incident->qa_more_info_required_by = Auth::user()->name;
-                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->Qa_more_info_req_by = Auth::user()->name;
+                $incident->Qa_more_info_req_on = Carbon::now()->format('d-M-Y');
+                $incident->Qa_more_info_req_cmt = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $incident->qa_more_info_required_by;
+                $history->current = $incident->Qa_more_info_req_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3204,14 +3206,15 @@ if ($incident->Initial_attachment) {
                 $incident->status = "QA Initial Review";
                 $incident->form_progress = 'qa';
 
-                $incident->qa_more_info_required_by = Auth::user()->name;
-                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->Pending_more_info_req_by = Auth::user()->name;
+                $incident->Pending_more_info_req_on = Carbon::now()->format('d-M-Y');
+                $incident->Pending_more_info_req_cmt = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $incident->qa_more_info_required_by;
+                $history->current = $incident->Pending_more_info_req_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3251,20 +3254,129 @@ if ($incident->Initial_attachment) {
                 toastr()->success('Document Sent');
                 return back();
             }
-
-            if ($incident->stage == 6) {
-                $incident->stage = "5";
-                $incident->status = "QA Final Review";
+            if ($incident->stage == 5) {
+                $incident->stage = "4";
+                $incident->status = "Pending Initiator Update";
                 $incident->form_progress = 'capa';
-
-                $incident->qa_more_info_required_by = Auth::user()->name;
-                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->Hod_more_info_req_by = Auth::user()->name;
+                $incident->Hod_more_info_req_on = Carbon::now()->format('d-M-Y');
+                $incident->Hod_more_info_req_cmt = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $incident->qa_more_info_required_by;
+                $history->current = $incident->Hod_more_info_req_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'More Info Required';
+                $history->save();
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $incident->stage;
+                $history->status = "More Info Required";
+
+                // foreach ($list as $u) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                //         $email = Helpers::getInitiatorEmail($u->user_id);
+                //         if ($email !== null) {
+
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $incident],
+                //                     function ($message) use ($email) {
+                //                         $message->to($email)
+                //                             ->subject("Activity Performed By " . Auth::user()->name);
+                //                     }
+                //                 );
+                //             } catch (\Exception $e) {
+                //                 //log error
+                //             }
+                //         }
+                //     }
+                // }
+
+                $history->save();
+
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($incident->stage == 6) {
+                $incident->stage = "5";
+                $incident->status = "QA Final Review";
+                $incident->form_progress = 'capa';
+
+                $incident->Qa_final_more_info_req_by = Auth::user()->name;
+                $incident->Qa_final_more_info_req_on = Carbon::now()->format('d-M-Y');
+                $incident->Qa_final_more_info_req_cmt = $request->comment;
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->action='More Information Required';
+                $history->current = $incident->Qa_final_more_info_req_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'More Info Required';
+                // dd();
+                // foreach ($list as $u) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                //         $email = Helpers::getInitiatorEmail($u->user_id);
+                //         if ($email !== null) {
+
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $incident],
+                //                     function ($message) use ($email) {
+                //                         $message->to($email)
+                //                             ->subject("Activity Performed By " . Auth::user()->name);
+                //                     }
+                //                 );
+                //             } catch (\Exception $e) {
+                //                 //log error
+                //             }
+                //         }
+                //     }
+                // }
+                $history->save();
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $incident->stage;
+                $history->status = "More Info Required";
+                $history->save();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($incident->stage == 7) {
+                $incident->stage = "6";
+                $incident->status = "QA Final Review";
+                $incident->form_progress = 'capa';
+
+                $incident->approved_more_info_req_by = Auth::user()->name;
+                $incident->approved_more_info_req_on = Carbon::now()->format('d-M-Y');
+                 $incident->approved_more_info_req_cmt = $request->comment;
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->action='More Information Required';
+                $history->current = $incident->approved_more_info_req_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3306,6 +3418,7 @@ if ($incident->Initial_attachment) {
                 return back();
             }
 
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -3322,10 +3435,13 @@ if ($incident->Initial_attachment) {
             $incident->status = "Closed-Cancelled";
             $incident->cancelled_by = Auth::user()->name;
             $incident->cancelled_on = Carbon::now()->format('d-M-Y');
+            $incident->Hod_Cancelled_by = Auth::user()->name;
+            $incident->Hod_Cancelled_on = Carbon::now()->format('d-M-Y');
             $history = new IncidentAuditTrail();
             $history->incident_id = $id;
             $history->activity_type = 'Activity Log';
             $history->previous = "";
+            $history->current = $incident->Hod_Cancelled_by;
             $history->current = $incident->cancelled_by;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
@@ -3647,6 +3763,7 @@ if ($incident->Initial_attachment) {
            // Soft delete all records
         //    $cftResponse->each(function ($response) {
         //     $response->delete();
+
         // });
 
 
@@ -3730,12 +3847,11 @@ if ($incident->Initial_attachment) {
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for HOD review state'
+                            'message' => 'Sent for HOD Initial Review state'
                         ]);
                     }
-
                     $incident->stage = "2";
-                    $incident->status = "HOD Review";
+                    $incident->status = "HOD Initial Review";
                     $incident->submit_by = Auth::user()->name;
                     $incident->submit_on = Carbon::now()->format('d-M-Y');
                     $incident->submit_comment = $request->comment;
@@ -3751,9 +3867,9 @@ if ($incident->Initial_attachment) {
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "HOD Review";
+                    $history->change_to =   "HOD Initial Review";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
+                    $history->stage = 'HOD Initial Review';
                     $history->save();
 
 
@@ -3822,14 +3938,14 @@ if ($incident->Initial_attachment) {
 
                     $incident->stage = "3";
                     $incident->status = "QA Initial Review";
-                    $incident->HOD_Review_Complete_By = Auth::user()->name;
-                    $incident->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                    $incident->HOD_Review_Comments = $request->comment;
+                    $incident->HOD_Initial_Review_Complete_By = Auth::user()->name;
+                    $incident->HOD_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $incident->HOD_Initial_Review_Comments = $request->comment;
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->current = $incident->HOD_Review_Complete_By;
+                    $history->current = $incident->HOD_Initial_Review_Complete_By;
                     $history->comment = $request->comment;
                     $history->action= 'HOD Review Complete';
                     $history->user_id = Auth::user()->id;
@@ -3838,7 +3954,8 @@ if ($incident->Initial_attachment) {
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "QA Initial Review";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Approved';
+                    $history->stage = 'HOD Review Complete';
+
                     $history->save();
                     // dd($history->action);
                     // $list = Helpers::getQAUserList();
@@ -3869,8 +3986,8 @@ if ($incident->Initial_attachment) {
                 }
                 if ($incident->stage == 3) {
                     if ($incident->form_progress !== 'cft')
-                    {
-                        Session::flash('swal', [
+                    {                    
+                            Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
                             'message' => 'QA initial review / CFT Mandatory Tab is yet to be filled!'
@@ -3881,18 +3998,17 @@ if ($incident->Initial_attachment) {
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for CFT review state'
+                            'message' => 'Sent for Pending Initiator Update state'
                         ]);
                     }
-
                     $incident->stage = "4";
-                    $incident->status = "CFT Review";
+                    $incident->status = "Pending Initiator Update";
 
                     // Code for the CFT required
                     $stage = new IncidentCftResponse();
                     $stage->incident_id = $id;
                     $stage->cft_user_id = Auth::user()->id;
-                    $stage->status = "CFT Required";
+                    $stage->status = "Pending Initiator Update";
                     // $stage->cft_stage = ;
                     $stage->comment = $request->comment;
                     $stage->is_required = 1;
@@ -3910,11 +4026,11 @@ if ($incident->Initial_attachment) {
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->change_to =   "CFT Review";
+                    $history->change_to =   "Pending Initiator Update";
                     $history->change_from = $lastDocument->status;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->stage = 'Completed';
+                    $history->stage = 'Pending Initiator Update';
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
@@ -4012,7 +4128,7 @@ if ($incident->Initial_attachment) {
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($incident->stage == 4) {
+                if ($incident->stage == 4) {    
 
                     // CFT review state update form_progress
                     if ($incident->form_progress !== 'cft')
@@ -4028,10 +4144,9 @@ if ($incident->Initial_attachment) {
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for Investigation and CAPA review state'
+                            'message' => ' Sent For HOD Final Review state'
                         ]);
                     }
-
 
                     $IsCFTRequired = IncidentCftResponse::withoutTrashed()->where(['is_required' => 1, 'incident_id' => $id])->latest()->first();
                     $cftUsers = DB::table('incident_cfts')->where(['incident_id' => $id])->first();
@@ -4144,29 +4259,27 @@ if ($incident->Initial_attachment) {
                     $checkCFTCount = IncidentCftResponse::withoutTrashed()->where(['status' => 'Completed', 'incident_id' => $id])->count();
                     // dd(count(array_unique($valuesArray)), $checkCFTCount);
 
-
-                    if (!$IsCFTRequired || $checkCFTCount) {
-
-                        $incident->stage = "5";
-                        $incident->status = "QA Final Review";
-                        $incident->CFT_Review_Complete_By = Auth::user()->name;
-                        $incident->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                        $incident->CFT_Review_Comments = $request->comment;
+                    if ($IsCFTRequired || $checkCFTCount) {
+                        $incident->stage = "5"; 
+                        $incident->status = "HOD Final Review";
+                        $incident->Pending_Review_Complete_By = Auth::user()->name;
+                        $incident->Pending_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                        $incident->Pending_Review_Comments = $request->comment;
 
                         $history = new IncidentAuditTrail();
                         $history->incident_id = $id;
                         $history->activity_type = 'Activity Log';
                         $history->previous = "";
-                        $history->action='CFT Review Complete';
-                        $history->current = $incident->CFT_Review_Complete_By;
+                        $history->action='Pending Initiator Update Complete';
+                        $history->current = $incident->Pending_Review_Complete_By;
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                        $history->change_to =   "QA Final Review";
+                        $history->change_to =   "HOD Final Review";
                         $history->change_from = $lastDocument->status;
-                        $history->stage = 'Complete';
+                        $history->stage = 'HOD Final Review';
                         $history->save();
                         // $list = Helpers::getQAUserList();
                         // foreach ($list as $u) {
@@ -4201,7 +4314,7 @@ if ($incident->Initial_attachment) {
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for QA Head/Manager Designee Approval'
+                            'message' => 'Sent for QA Final Review'
                         ]);
 
                     } else {
@@ -4216,23 +4329,23 @@ if ($incident->Initial_attachment) {
 
 
                     $incident->stage = "6";
-                    $incident->status = "QA Head/Manager Designee Approval";
-                    $incident->QA_Final_Review_Complete_By = Auth::user()->name;
-                    $incident->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                    $incident->QA_Final_Review_Comments = $request->comment;
+                    $incident->status = "QA Final Review";
+                    $incident->Hod_Final_Review_Complete_By = Auth::user()->name;
+                    $incident->Hod_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $incident->Hod_Final_Review_Comments = $request->comment;
 
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->current = $incident->QA_Final_Review_Complete_By;
+                    $history->current = $incident->Hod_Final_Review_Complete_By;
                     $history->comment = $request->comment;
-                    $history->action ='QA Final Review Complete';
+                    $history->action ='HOD Final Review Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA Head/Manager Designee Approval";
+                    $history->change_to =   "QA Final Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Approved';
                     $history->save();
@@ -4276,7 +4389,7 @@ if ($incident->Initial_attachment) {
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Incident sent to Intiator Update'
+                            'message' => ' Sent For QAH Approval state'
                         ]);
                     }
 
@@ -4307,25 +4420,25 @@ if ($incident->Initial_attachment) {
                     // return "PAUSE";
 
                     $incident->stage = "7";
-                    $incident->status = "Pending Initiator Update";
-                    $incident->QA_head_approved_by = Auth::user()->name;
-                    $incident->QA_head_approved_on = Carbon::now()->format('d-M-Y');
-                    $incident->QA_head_approved_comment	 = $request->comment;
+                    $incident->status = "QAH Approval";
+                    $incident->Qa_Final_Review_Complete_By= Auth::user()->name;
+                    $incident->Qa_Final_Review_Complete_On= Carbon::now()->format('d-M-Y');
+                    $incident->Qa_Final_Review_Comments= $request->comment;
 
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action ='Approved';
-                    $history->current = $incident->QA_head_approved_by;
+                    $history->action ='QA Final Review Complete';
+                    $history->current = $incident->Qa_Final_Review_Complete_By;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Pending Initiator Update";
+                    $history->change_to =   "QAH Approval";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'Completed';
+                    $history->stage = 'QAH Approval';
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
@@ -4351,100 +4464,100 @@ if ($incident->Initial_attachment) {
                     toastr()->success('Document Sent');
                     return back();
                 }
+                // if ($incident->stage == 7) {
+
+                //     if ($incident->form_progress !== 'qah')
+                //     {
+
+                //         Session::flash('swal', [
+                //             'title' => 'Mandatory Fields!',
+                //             'message' => 'QAH/Designee Approval Tab is yet to be filled!',
+                //             'type' => 'warning',
+                //         ]);
+
+                //         return redirect()->back();
+                //     } else {
+                //         Session::flash('swal', [
+                //             'type' => 'success',
+                //             'title' => 'Success',
+                //             'message' => 'Incident sent to QA Final Approval.'
+                //         ]);
+                //     }
+
+                //     $extension = Extension::where('parent_id', $incident->id)->first();
+
+                //     $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
+
+                //     if ($extension && $extension->status !== 'Closed-Done') {
+                //         Session::flash('swal', [
+                //             'title' => 'Extension record pending!',
+                //             'message' => 'There is an Extension record which is yet to be closed/done!',
+                //             'type' => 'warning',
+                //         ]);
+
+                //         return redirect()->back();
+                //     }
+
+                //     if ($rca && $rca->status !== 'Closed-Done') {
+                //         Session::flash('swal', [
+                //             'title' => 'RCA record pending!',
+                //             'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
+                //             'type' => 'warning',
+                //         ]);
+
+                //         return redirect()->back();
+                //     }
+
+                //     // return "PAUSE";
+
+                //     $incident->stage = "8";
+                //     $incident->status = "Closed - Done";
+                //     $incident->pending_initiator_approved_by = Auth::user()->name;
+                //     $incident->pending_initiator_approved_on = Carbon::now()->format('d-M-Y');
+                //     $incident->pending_initiator_approved_comment = $request->comment;
+
+                //     $history = new IncidentAuditTrail();
+                //     $history->incident_id = $id;
+                //     $history->activity_type = 'Activity Log';
+                //     $history->previous = "";    
+                //     $history->action ='Approved';
+                //     $history->current = $incident->pending_initiator_approved_by;
+                //     $history->comment = $request->comment;
+                //     $history->user_id = Auth::user()->id;
+                //     $history->user_name = Auth::user()->name;
+                //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //     $history->origin_state = $lastDocument->status;
+                //     $history->change_to =   "Closed - Done";
+                //     $history->change_from = $lastDocument->status;
+                //     $history->stage = 'Closed - Done';
+                //     $history->save();
+                //     // $list = Helpers::getQAUserList();
+                //     // foreach ($list as $u) {
+                //     //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                //     //         $email = Helpers::getInitiatorEmail($u->user_id);
+                //     //         if ($email !== null) {
+                //     //             try {
+                //     //                 Mail::send(
+                //     //                     'mail.view-mail',
+                //     //                     ['data' => $incident],
+                //     //                     function ($message) use ($email) {
+                //     //                         $message->to($email)
+                //     //                             ->subject("Activity Performed By " . Auth::user()->name);
+                //     //                     }
+                //     //                 );
+                //     //             } catch (\Exception $e) {
+                //     //                 //log error
+                //     //             }
+                //     //         }
+                //     //     }
+                //     // }
+                //     $incident->update();
+                //     toastr()->success('Document Sent');
+                //     return back();
+                // }
+
+
                 if ($incident->stage == 7) {
-
-                    if ($incident->form_progress !== 'qah')
-                    {
-
-                        Session::flash('swal', [
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'QAH/Designee Approval Tab is yet to be filled!',
-                            'type' => 'warning',
-                        ]);
-
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Incident sent to QA Final Approval.'
-                        ]);
-                    }
-
-                    $extension = Extension::where('parent_id', $incident->id)->first();
-
-                    $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
-
-                    if ($extension && $extension->status !== 'Closed-Done') {
-                        Session::flash('swal', [
-                            'title' => 'Extension record pending!',
-                            'message' => 'There is an Extension record which is yet to be closed/done!',
-                            'type' => 'warning',
-                        ]);
-
-                        return redirect()->back();
-                    }
-
-                    if ($rca && $rca->status !== 'Closed-Done') {
-                        Session::flash('swal', [
-                            'title' => 'RCA record pending!',
-                            'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
-                            'type' => 'warning',
-                        ]);
-
-                        return redirect()->back();
-                    }
-
-                    // return "PAUSE";
-
-                    $incident->stage = "8";
-                    $incident->status = "QA Final Approval";
-                    $incident->pending_initiator_approved_by = Auth::user()->name;
-                    $incident->pending_initiator_approved_on = Carbon::now()->format('d-M-Y');
-                    $incident->pending_initiator_approved_comment = $request->comment;
-
-                    $history = new IncidentAuditTrail();
-                    $history->incident_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->action ='Initiator Updated Complete';
-                    $history->current = $incident->pending_initiator_approved_by;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA Final Approval";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Completed';
-                    $history->save();
-                    // $list = Helpers::getQAUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $incident],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
-                    // }
-                    $incident->update();
-                    toastr()->success('Document Sent');
-                    return back();
-                }
-
-
-                if ($incident->stage == 8) {
 
                     if ($incident->form_progress !== 'qah')
                     {
@@ -4490,18 +4603,18 @@ if ($incident->Initial_attachment) {
 
                     // return "PAUSE";
 
-                    $incident->stage = "9";
+                    $incident->stage = "8";
                     $incident->status = "Closed-Done";
-                    $incident->QA_final_approved_by = Auth::user()->name;
-                    $incident->QA_final_approved_on = Carbon::now()->format('d-M-Y');
-                    $incident->QA_final_approved_comment = $request->comment;
+                    $incident->QA_head_approved_by = Auth::user()->name;
+                    $incident->QA_head_approved_on = Carbon::now()->format('d-M-Y');
+                    $incident->QA_head_approved_comment = $request->comment;
 
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action ='Closed-Done';
-                    $history->current = $incident->QA_final_approved_by;
+                    $history->action ='Approved';
+                    $history->current = $incident->QA_head_approved_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4509,7 +4622,7 @@ if ($incident->Initial_attachment) {
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Closed-Done";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'Completed';
+                    $history->stage = 'Closed-Done';
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
@@ -4741,8 +4854,71 @@ if ($incident->Initial_attachment) {
                 toastr()->success('Document Sent');
                 return back();
             }
+
+            if ($incident->stage == 5) {
+                $incident->stage = "4";
+                $incident->status = "Pending Initiator Update";
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->action='More Information Required';
+                $history->current = $incident->qa_more_info_required_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'More Info Required';
+                $history->save();
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $incident->stage;
+                $history->status = $incident->status;
+                $history->save();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            
+            if ($incident->stage == 6) {
+                $incident->stage = "5";
+                $incident->status = "HOD Final Review";
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->action='More Information Required';
+                $history->current = $incident->qa_more_info_required_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'More Info Required';
+                $history->save();
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $incident->stage;
+                $history->status = $incident->status;
+                $history->save();
+                toastr()->success('Document Sent');
+                return back();
+            }
         } else {
-            toastr()->error('E-signature Not match');
+            dd($history->stage);
+            toastr()->error('E-signature Not match');   
             return back();
         }
     }

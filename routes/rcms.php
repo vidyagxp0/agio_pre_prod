@@ -126,6 +126,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-effectiveness/{id}', [EffectivenessCheckController::class, 'stageChange']);
             Route::post('effectiveness-reject/{id}', [EffectivenessCheckController::class, 'reject']);
             Route::post('moreinfo_effectiveness/{id}',[EffectivenessCheckController::class,'cancel'])->name('moreinfo_effectiveness');
+            Route::post('effectiveness_child/{id}', [EffectivenessCheckController::class, 'effectiveness_child'])->name('effectiveness_child');
+
             Route::view('helpdesk-personnel', 'frontend.rcms.helpdesk-personnel');
             Route::view('send-notification', 'frontend.rcms.send-notification');
             Route::get('new-change-control', [CCController::class, 'changecontrol']);
@@ -138,6 +140,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('InternalAuditStateChange/{id}', [InternalauditController::class, 'InternalAuditStateChange'])->name('AuditStateChange');
             Route::get('InternalAuditTrialShow/{id}', [InternalauditController::class, 'InternalAuditTrialShow'])->name('ShowInternalAuditTrial');
             Route::get('InternalAuditTrialDetails/{id}', [InternalauditController::class, 'InternalAuditTrialDetails'])->name('showaudittrialinternalaudit');
+            Route::get('internalObservationSingleReport/{id}', [InternalauditController::class, 'observationSingleReport']);
 
             //-------------------------
 
@@ -181,8 +184,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('observationupdate/{id}', [ObservationController::class, 'observationupdate'])->name('observationupdate');
             Route::post('observation_send_stage/{id}', [ObservationController::class, 'observation_send_stage'])->name('observation_change_stage');
             Route::post('RejectStateChange/{id}', [ObservationController::class, 'RejectStateChange'])->name('RejectStateChangeObservation');
-            Route::post('observation_child/{id}', [ObservationController::class, 'observation_child'])->name('observationchild');
-            Route::post('boostStage/{id}', [ObservationController::class, 'boostStage'])->name('updatestageobservation');
+            Route::post('observation_child/{id}', [ObservationController::class, 'observation_child'])->name('observation_child');
+            Route::post('observation_capanot_stage/{id}', [ObservationController::class, 'CapanotStage'])->name('observation_capanot_stage');
             Route::get('Observation_AuditTrial_Show/{id}', [ObservationController::class, 'ObservationAuditTrialShow'])->name('ShowObservationAuditTrial');
             Route::get('ObservationAuditTrialDetails/{id}', [ObservationController::class, 'ObservationAuditTrialDetails'])->name('showaudittrialobservation');
             Route::get('ObservationSingleReport/{id}', [ObservationController::class, 'ObservationSingleReport']);
@@ -236,7 +239,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('dev-launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('dev-launch-extension-capa');
             Route::post('dev-launch-extension-qrm/{id}', [DeviationController::class, 'launchExtensionQrm'])->name('dev-launch-extension-qrm');
             Route::post('dev-launch-extension-investigation/{id}', [DeviationController::class, 'launchExtensionInvestigation'])->name('dev-launch-extension-investigation');
-
+            Route::post('deviation/ReqCancel/{id}', [DeviationController::class, 'Request_Cancel'])->name('Request_Cancel');
             /********************* Deviation Routes Ends *******************/
 
             Route::get('action-items-create', [ActionItemController::class, 'showAction']);
@@ -314,6 +317,13 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('ootcSingleReport/{id}', [OOTController::class, 'singleReport']);
             Route::post('sendstage/{id}',[OOTController::class,'oot_send_stage']);
             Route::post('cancel/{id}', [OOTController::class, 'ootCancel']);
+            Route::post('RejectStateChangeNew/{id}', [OOTController::class, 'RejectStateChangeNew'])->name('RejectStateChangeNew');
+            Route::post('OOTChildRoot/{id}', [OOTController::class, 'OOTChildRoot'])->name('o_o_t_root_child');
+            Route::post('oo_t_capa_child/{id}', [OOTController::class, 'oo_t_capa_child'])->name('oo_t_capa_child');
+
+
+
+
             Route::post('thirdStage/{id}', [OOTController::class, 'stageChange']);
             Route::post('reject/{id}', [OOTController::class, 'oot_reject']);
             Route::get('audit_pdf/{id}',[OOTController::class,'auditTiailPdf']);

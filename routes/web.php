@@ -177,6 +177,7 @@ Route::get('manageshow/{id}', [ManagementReviewController::class, 'manageshow'])
 Route::post('manage/stage/{id}', [ManagementReviewController::class, 'manage_send_stage'])->name('manage_send_stage');
 Route::post('manage/cancel/{id}', [ManagementReviewController::class, 'manageCancel'])->name('manageCancel');
 Route::post('manage/reject/{id}', [ManagementReviewController::class, 'manage_reject'])->name('manage_reject');
+Route::post('manage_send_more_require_stage/{id}', [ManagementReviewController::class, 'manage_send_more_require_stage'])->name('manage_send_more_require_stage');
 Route::post('manage/Qa/{id}', [ManagementReviewController::class, 'manage_qa_more_info'])->name('manage_qa_more_info');
 Route::get('ManagementReviewAuditTrial/{id}', [ManagementReviewController::class, 'ManagementReviewAuditTrial']);
 Route::get('ManagementReviewAuditDetails/{id}', [ManagementReviewController::class, 'ManagementReviewAuditDetails']);
@@ -188,6 +189,7 @@ Route::post('deviation_child/{id}', [DeviationController::class, 'deviation_chil
 
 Route::get('DeviationAuditTrial/{id}', [DeviationController::class, 'DeviationAuditTrial']);
 Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audit_review'])->name('store_audit_review');
+Route::get('/Deviation/{id}',[DeviationController::class,'audit_trail_filter'])->name('api.Deviation.filter');
 
 /********************************************* Deviation Ends *******************************************/
 
@@ -196,7 +198,6 @@ Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audi
 Route::post('failure_investigation_child_1/{id}', [FailureInvestigationController::class, 'failure_investigation_child_1'])->name('failure_investigation_child_1');
 Route::post('non_conformances_child_1/{id}', [NonConformaceController::class, 'non_conformances_child_1'])->name('non_conformances_child_1');
 Route::post('incident_child_1/{id}', [IncidentController::class, 'incident_child_1'])->name('incident_child_1');
-
 /********************************************* Deviation Ends *******************************************/
 
 // ==============================end ==============================
@@ -236,6 +237,7 @@ Route::get('auditDetailsRoot/{id}', [RootCauseController::class, 'auditDetailsro
 Route::post('internalauditreject/{id}', [InternalauditController::class, 'RejectStateChange']);
 Route::post('InternalAuditCancel/{id}', [InternalauditController::class, 'InternalAuditCancel']);
 Route::post('InternalAuditChild/{id}', [InternalauditController::class, 'internal_audit_child'])->name('internal_audit_child');
+Route::post('multiple_child/{id}', [InternalauditController::class, 'multiple_child'])->name('multiple_child');
 
 // external audit----------------------------
 
@@ -248,6 +250,7 @@ Route::post('CancelStateExternalAudit/{id}', [AuditeeController::class, 'externa
 Route::get('ExternalAuditTrialShow/{id}', [AuditeeController::class, 'AuditTrialExternalShow'])->name('ShowexternalAuditTrial');
 Route::get('ExternalAuditTrialDetails/{id}', [AuditeeController::class, 'AuditTrialExternalDetails'])->name('ExternalAuditTrialDetailsShow');
 Route::post('child_external/{id}', [AuditeeController::class, 'child_external'])->name('childexternalaudit');
+Route::post('UpdateStateAuditee/{id}', [AuditeeController::class, 'UpdateStateChange'])->name('UpdateStateAuditee');
 
 //----------------------Lab Incident view-----------------
 Route::get('lab-incident', [LabIncidentController::class, 'labincident']);
@@ -468,8 +471,11 @@ Route::post('OOCStateChange/{id}', [OOCController::class, 'OOCStateChange'])->na
 Route::post('OOCStateChangetwo/{id}', [OOCController::class, 'OOCStateChangetwo'])->name('StageChangeOOCtwo');
 Route::post('OOCStateCancel/{id}', [OOCController::class, 'OOCStateCancel'])->name('OOCCancel');
 Route::post('RejectoocStateChange/{id}', [OOCController::class, 'RejectoocStateChange'])->name('RejectStateChangeOOC');
+Route::post('RejectStateChangeTwo/{id}', [OOCController::class, 'RejectStateChangeTwo'])->name('RejectStateChangeTwo');
 Route::post('OOCChildRoot/{id}', [OOCController::class, 'OOCChildRoot'])->name('o_o_c_root_child');
 Route::post('OOCChildCapa/{id}', [OOCController::class, 'oo_c_capa_child'])->name('oo_c_capa_child');
+Route::post('OOCChildExtension/{id}', [OOCController::class, 'OOCChildExtension'])->name('OOCChildExtension');
+Route::post('OOCChildAction/{id}', [OOCController::class, 'OOCChildAction'])->name('OOCChildAction');
 Route::get('OOCAuditTrial/{id}', [OOCController::class, 'OOCAuditTrial'])->name('audittrialooc');
 Route::get('auditDetailsooc/{id}', [OOCController::class, 'auditDetailsooc'])->name('OOCauditDetails');
 Route::get('/rcms/ooc_Audit_Report/{id}', [OOCController::class, 'auditReportooc'])->name('ooc_Audit_Report');
@@ -591,5 +597,6 @@ Route::post('resapling-stage-cancel/{id}', [ResamplingController::class, 'resamp
 Route::get('resampling-audittrialshow/{id}', [ResamplingController::class, 'resamplingAuditTrialShow'])->name('resampling-audittrialshow');
 Route::post('send-resampling/{id}', [ResamplingController::class, 'stageChange'])->name('send-resampling');
 Route::post('moreinfoState_resampling/{id}', [ResamplingController::class, 'resamplingmoreinfo'])->name('moreinfoState_resampling');
+
 
 // ============================================

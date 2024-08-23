@@ -651,6 +651,64 @@
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <th class="w-20">Review Completed By</th>
+                        <td class="w-30">
+                            @if ($data->Reviewed_by)
+                                {{ $data->Reviewed_by }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                        <th class="w-20">Review Completed On</th>
+                        <td class="w-30">
+                            @if ($data->Reviewed_on)
+                                {{ $data->Reviewed_on }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Comment</th>
+                        <td class="w-80">
+                            @if ($data->Reviewed_commemt)
+                                {{ $data->Reviewed_commemt }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Approval Completed By</th>
+                        <td class="w-30">
+                            @if ($data->approved_by)
+                                {{ $data->approved_by }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                        <th class="w-20">Approval Completed On</th>
+                        <td class="w-30">
+                            @if ($data->approved_on)
+                                {{ $data->approved_on }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Comment</th>
+                        <td class="w-80">
+                            @if ($data->approved_comment)
+                                {{ $data->approved_comment }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
 
 
                     <tr>
@@ -768,36 +826,6 @@
                         <td class="w-80">
                             @if ($data->sent_to_open_state_comment)
                                 {{ $data->sent_to_open_state_comment }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Reject By</th>
-                        <td class="w-30">
-                            @if ($data->reject_by)
-                                {{ $data->reject_by }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Reject On</th>
-                        <td class="w-30">
-                            @if ($data->reject_on)
-                                {{ $data->reject_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comment</th>
-                        <td class="w-80">
-                            @if ($data->reject_comment)
-                                {{ $data->reject_comment }}
                             @else
                                 Not Applicable
                             @endif

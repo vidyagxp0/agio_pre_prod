@@ -48,8 +48,9 @@ class ObservationController extends Controller
         $data->parent_id = $request->parent_id;
         $data->parent_type = $request->parent_type;
         $data->division_code = $request->division_id;
+        $data->record_number = $request->record_number;
         $data->intiation_date = $request->intiation_date;
-        $data->due_date = $request->input('due_date');
+        $data->due_date = $request->due_date;
         $data->short_description = $request->short_description;
         $data->assign_to = $request->assign_to;
         $data->grading = $request->grading;
@@ -263,66 +264,70 @@ if(!empty($request->attach_files2)){
     //     $history->action_name = 'Create';
     //     $history->save();
     // }
-    // if (!empty($data->division_code)) {
-    //     $history = new AuditTrialObservation();
-    //     $history->Observation_id = $data->id;
-    //     $history->activity_type = 'Division Code';
-    //     $history->previous = "Null";
-    //     $history->current = $data->division_code;
-    //     $history->comment = "NA";
-    //     $history->user_id = Auth::user()->id;
-    //     $history->user_name = Auth::user()->name;
-    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    //     $history->origin_state = $data->status;
-    //     $history->change_to =   "Opened";
-    //     $history->change_from = "Initiator";
-    //     $history->action_name = 'Create';
-    //     $history->save();
-    // }
-    // if (!empty($data->intiation_date)) {
-    //     $history = new AuditTrialObservation();
-    //     $history->Observation_id = $data->id;
-    //     $history->activity_type = 'Date of Initiation';
-    //     $history->previous ="Null";
-    //     $history->current = $data->intiation_date;
-    //     $history->comment = "NA";
-    //     $history->user_id = Auth::user()->id;
-    //     $history->user_name = Auth::user()->name;
-    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    //     $history->origin_state = $data->status;
-    //     $history->change_to =   "Opened";
-    //     $history->change_from = "Initiator";
-    //     $history->action_name = 'Create';
-    //     $history->save();
-    // }
-    // if (!empty($data->due_date)) {
-    //     $history = new AuditTrialObservation();
-    //     $history->Observation_id = $data->id;
-    //     $history->activity_type = 'Date Due';
-    //     $history->previous ="Null";
-    //     $history->current = $data->due_date;
-    //     $history->comment = "NA";
-    //     $history->user_id = Auth::user()->id;
-    //     $history->user_name = Auth::user()->name;
-    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    //     $history->origin_state = $data->status;
-    //     $history->change_to =   "Opened";
-    //     $history->change_from = "Initiator";
-    //     $history->action_name = 'Create';
-    //     $history->save();
-
-        // $history = new AuditTrialObservation();
-        // $history->Observation_id = $data->id;
-        // $history->activity_type = 'Short Description';
-        // $history->previous = "Null";
-        // $history->current = $data->short_description;
-        // $history->comment = "NA";
-        // $history->user_id = Auth::user()->id;
-        // $history->user_name = Auth::user()->name;
-        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        // $history->origin_state = $data->status;
-        // $history->save();
-    // }
+    if (!empty($data->division_code)) {
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Division Code';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName($data->division_code);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+    }
+    if (!empty($data->record_number)) {
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Record Number';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName(session()->get('division')) . "/Observation/" . Helpers::year($data->created_at) . "/" . str_pad($request->record_number, 4, '0', STR_PAD_LEFT);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+    }
+    if (!empty($data->intiation_date)) {
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Date of Initiation';
+        $history->previous ="Null";
+        $history->current =  Helpers::getdateFormat($data->intiation_date);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+    }
+    if (!empty($data->due_date)) {
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Date Due';
+        $history->previous ="Null";
+        $history->current =  Helpers::getdateFormat($data->due_date);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+    }
     if (!empty($data->short_description)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -335,7 +340,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -351,7 +356,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -367,7 +372,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -383,7 +388,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -399,7 +404,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -415,7 +420,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -431,7 +436,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -447,7 +452,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -463,7 +468,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -479,7 +484,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -495,7 +500,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -511,7 +516,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -527,7 +532,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -543,7 +548,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -559,7 +564,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -575,7 +580,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -591,7 +596,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -607,7 +612,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -623,7 +628,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -639,7 +644,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -655,7 +660,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -671,7 +676,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -687,7 +692,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -703,7 +708,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -719,7 +724,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
 
@@ -747,7 +752,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -763,7 +768,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -779,7 +784,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -795,7 +800,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -812,7 +817,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -828,7 +833,7 @@ if(!empty($request->attach_files2)){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
+        $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
     }
@@ -847,9 +852,9 @@ if(!empty($request->attach_files2)){
         $data->initiator_id = Auth::user()->id;
         $data->parent_id = $request->parent_id;
         $data->parent_type = $request->parent_type;
-        $data->division_code = $request->division_code;
-        $data->intiation_date = $request->intiation_date;
-        $data->due_date = $request->due_date;
+        // $data->division_code = $request->division_code;
+        // $data->intiation_date = $request->intiation_date;
+        // $data->due_date = $request->due_date;
         $data->short_description = $request->short_description;
         $data->assign_to = $request->assign_to;
         $data->grading = $request->grading;
@@ -1159,14 +1164,18 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->short_description) || $lastDocument->short_description === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Assign To1';
+            $history->activity_type = 'Assign To';
             $history->previous = $lastDocument->assign_to;
             $history->current = $data->assign_to;
             $history->comment = $request->assign_to_comment;
@@ -1176,7 +1185,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->assign_to) || $lastDocument->assign_to === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->grading != $data->grading || !empty($request->grading_comment)) {
@@ -1193,7 +1206,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->grading_comment) || $lastDocument->grading_comment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->category_observation != $data->category_observation || !empty($request->category_observation_comment)) {
@@ -1210,7 +1227,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->category_observation) || $lastDocument->category_observation === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->reference_guideline != $data->reference_guideline || !empty($request->reference_guideline_comment)) {
@@ -1227,7 +1248,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->reference_guideline) || $lastDocument->reference_guideline === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->description != $data->description || !empty($request->description_comment)) {
@@ -1244,7 +1269,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->description) || $lastDocument->description === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->attach_files_gi != $data->attach_files_gi || !empty($request->attach_files_gi_comment)) {
@@ -1261,7 +1290,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->attach_files_gi) || $lastDocument->attach_files_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->recomendation_capa_date_due != $data->recomendation_capa_date_due || !empty($request->recomendation_capa_date_due_comment)) {
@@ -1278,7 +1311,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->recomendation_capa_date_due) || $lastDocument->recomendation_capa_date_due === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->audit_response_date != $data->audit_response_date || !empty($request->audit_response_date_comment)) {
@@ -1295,7 +1332,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->audit_response_date) || $lastDocument->audit_response_date === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->non_compliance != $data->non_compliance || !empty($request->non_compliance_comment)) {
@@ -1312,7 +1353,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->non_compliance) || $lastDocument->non_compliance === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->recommend_action != $data->recommend_action || !empty($request->recommend_action_comment)) {
@@ -1329,7 +1374,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->recommend_action) || $lastDocument->recommend_action === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->date_Response_due2 != $data->date_Response_due2 || !empty($request->date_Response_due2_comment)) {
@@ -1346,7 +1395,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->date_Response_due2) || $lastDocument->date_Response_due2 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->capa_date_due != $data->capa_date_due || !empty($request->capa_date_due_comment)) {
@@ -1363,7 +1416,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->capa_date_due) || $lastDocument->capa_date_due === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->assign_to2 != $data->assign_to2 || !empty($request->assign_to2_comment)) {
@@ -1380,7 +1437,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->assign_to2) || $lastDocument->assign_to2 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->cro_vendor != $data->cro_vendor || !empty($request->cro_vendor_comment)) {
@@ -1397,7 +1458,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->cro_vendor) || $lastDocument->cro_vendor === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->comments != $data->comments || !empty($request->comments_comment)) {
@@ -1414,7 +1479,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->comments) || $lastDocument->comments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->impact != $data->impact || !empty($request->impact_comment)) {
@@ -1431,7 +1500,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->impact) || $lastDocument->impact === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->impact_analysis != $data->impact_analysis || !empty($request->impact_analysis_comment)) {
@@ -1448,7 +1521,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->impact_analysis) || $lastDocument->impact_analysis === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->severity_rate != $data->severity_rate || !empty($request->severity_rate_comment)) {
@@ -1465,7 +1542,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->severity_rate) || $lastDocument->severity_rate === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->occurrence != $data->occurrence || !empty($request->occurrence_comment)) {
@@ -1482,7 +1563,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->occurrence) || $lastDocument->occurrence === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->detection != $data->detection || !empty($request->detection_comment)) {
@@ -1499,7 +1584,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->detection) || $lastDocument->detection === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->analysisRPN != $data->analysisRPN || !empty($request->analysisRPN_comment)) {
@@ -1516,7 +1605,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->analysisRPN) || $lastDocument->analysisRPN === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->actual_start_date != $data->actual_start_date || !empty($request->actual_start_date_comment)) {
@@ -1533,7 +1626,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->actual_start_date) || $lastDocument->actual_start_date === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->actual_end_date != $data->actual_end_date || !empty($request->actual_end_date_comment)) {
@@ -1550,7 +1647,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->actual_end_date) || $lastDocument->actual_end_date === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->action_taken != $data->action_taken || !empty($request->action_taken_comment)) {
@@ -1567,7 +1668,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->action_taken) || $lastDocument->action_taken === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->date_response_due1 != $data->date_response_due1 || !empty($request->date_response_due1_comment)) {
@@ -1584,7 +1689,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->date_response_due1) || $lastDocument->date_response_due1 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->response_date != $data->response_date || !empty($request->response_date_comment)) {
@@ -1601,26 +1710,14 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->response_date) || $lastDocument->response_date === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
-        if ($lastDocument->attach_files2 != $data->attach_files2 || !empty($request->attach_files2_comment)) {
-
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Attach Files2 ';
-            $history->previous = $lastDocument->attach_files2;
-            $history->current = $data->attach_files2;
-            $history->comment = $request->attach_files2_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
+        
         if ($lastDocument->related_url != $data->related_url || !empty($request->related_url_comment)) {
 
             $history = new AuditTrialObservation();
@@ -1635,26 +1732,14 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->related_url) || $lastDocument->related_url === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
-        if ($lastDocument->response_summary != $data->response_summary || !empty($request->response_summary_comment)) {
-
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Response Summary ';
-            $history->previous = $lastDocument->response_summary;
-            $history->current = $data->response_summary;
-            $history->comment = $request->response_summary_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
+        
         if ($lastDocument->response_summary != $data->response_summary || !empty($request->response_summary_comment)) {
 
             $history = new AuditTrialObservation();
@@ -1669,7 +1754,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->response_summary) || $lastDocument->response_summary === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
         if ($lastDocument->attach_files2 != $data->attach_files2 || !empty($request->attach_files2_comment)) {
@@ -1686,7 +1775,11 @@ if(!empty($request->attach_files2)){
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
+            if (is_null($lastDocument->attach_files2) || $lastDocument->attach_files2 === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
 
@@ -1716,7 +1809,7 @@ if(!empty($request->attach_files2)){
             $lastDocument = Observation::find($id);
             if ($changestage->stage == 1) {
                 $changestage->stage = "2";
-                $changestage->status = "Pending CAPA Plan";
+                $changestage->status = "Pending Response";
                 $changestage->report_issued_by = Auth::user()->name;
                 $changestage->report_issued_on = Carbon::now()->format('d-M-Y');
                 $changestage->report_issued_comment = $request->comment;
@@ -1726,15 +1819,28 @@ if(!empty($request->attach_files2)){
                 $history->previous = "";
                 $history->current = $changestage->submitted_by;
                 $history->comment = $request->comment;
-                $history->action = 'Pending Complete';
+                $history->action = 'Report Issue';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Pending CAPA Plan";
+                $history->change_to =   "Pending Response";
                 $history->change_from = $lastDocument->status;
-                $history->action_name = 'Submit';
-                $history->stage = 'Plan Approved';
+                // $history->stage = '';
+                // $history->stage = '2';
+
+                $history->activity_type = 'Report Issue By, Report Issue On';
+                if (is_null($lastDocument->report_issued_by) || $lastDocument->report_issued_on === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->report_issued_by . ' , ' . $lastDocument->report_issued_on;
+                }
+                $history->current = $changestage->report_issued_by . ' , ' . $changestage->report_issued_on;
+                if (is_null($lastDocument->report_issued_by) || $lastDocument->report_issued_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
 
                 $changestage->update();
@@ -1743,7 +1849,7 @@ if(!empty($request->attach_files2)){
             }
             if ($changestage->stage == 2) {
                 $changestage->stage = "3";
-                $changestage->status = "Pending Approval";
+                $changestage->status = "Response Verification";
                 $changestage->complete_By = Auth::user()->name;
                 $changestage->complete_on = Carbon::now()->format('d-M-Y');
                 $changestage->complete_comment = $request->comment;
@@ -1753,15 +1859,26 @@ if(!empty($request->attach_files2)){
                 $history->previous = "";
                 $history->current = $changestage->submitted_by;
                 $history->comment = $request->comment;
-                $history->action = 'Approval Complete';
+                $history->action = 'CAPA Plan Proposed';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Pending Approval";
+                $history->change_to =   "Response Verification";
                 $history->change_from = $lastDocument->status;
-                $history->action_name = 'Submit';
-                $history->stage = 'Plan Approval';
+                // $history->stage = '';
+                $history->activity_type = 'CAPA Plan Proposed By, CAPA Plan Proposed On';
+                if (is_null($lastDocument->complete_By) || $lastDocument->complete_on === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->complete_By . ' , ' . $lastDocument->complete_on;
+                }
+                $history->current = $changestage->complete_By . ' , ' . $changestage->complete_on;
+                if (is_null($lastDocument->complete_By) || $lastDocument->complete_By === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
             //     $list = Helpers::getQAUserList();
             //     foreach ($list as $u) {
@@ -1784,91 +1901,108 @@ if(!empty($request->attach_files2)){
                 toastr()->success('Document Sent');
                 return back();
             }
+            // if ($changestage->stage == 3) {
+            //     $changestage->stage = "4";
+            //     $changestage->status = "CAPA Execution in Progress";
+            //     $changestage->QA_Approved_By = Auth::user()->name;
+            //     $changestage->QA_Approved_on = Carbon::now()->format('d-M-Y');
+            //                 // $history = new AuditTrialObservation();
+            //                 // $history->Observation_id = $id;
+            //                 // $history->activity_type = 'Activity Log';
+            //                 // $changestage->qa_appproval_by = Auth::user()->name;
+            //                 // $changestage->qa_appproval_on = Carbon::now()->format('d-M-Y');
+            //                 // $changestage->qa_appproval_comment = $request->comment;
+
+            //                 // $history->current = $changestage->QA_Approved_By;
+            //                 // $history->comment = $request->comment;
+            //                 // $history->user_id = Auth::user()->id;
+            //                 // $history->user_name = Auth::user()->name;
+            //                 // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //                 // $history->origin_state = $lastDocument->status;
+            //                 // $history->stage = "QA Approved";
+            //                 // $history->save();
+            //             //     $list = Helpers::getLeadAuditeeUserList();
+            //             //     foreach ($list as $u) {
+            //             //         if($u->q_m_s_divisions_id == $changestage->division_id){
+            //             //             $email = Helpers::getInitiatorEmail($u->user_id);
+            //             //              if ($email !== null) {
+
+            //             //               Mail::send(
+            //             //                   'mail.view-mail',
+            //             //                    ['data' => $changestage],
+            //             //                 function ($message) use ($email) {
+            //             //                     $message->to($email)
+            //             //                         ->subject("Document sent ".Auth::user()->name);
+            //             //                 }
+            //             //               );
+            //             //             }
+            //             //      }
+            //             //   }
+            //     $changestage->update();
+            //     toastr()->success('Document Sent');
+            //     return back();
+            // }
+            // if ($changestage->stage == 4) {
+            //     $changestage->stage = "5";
+            //     $changestage->status = "Pending Final Approval";
+            //     $changestage->all_capa_closed_by = Auth::user()->name;
+            //     $changestage->all_capa_closed_on = Carbon::now()->format('d-M-Y');
+            //     $changestage->all_capa_closed_comment = $request->comment;
+            // //     $list = Helpers::getLeadAuditeeUserList();
+            // //     foreach ($list as $u) {
+            // //         if($u->q_m_s_divisions_id == $changestage->division_id){
+            // //             $email = Helpers::getInitiatorEmail($u->user_id);
+            // //              if ($email !== null) {
+
+            // //               Mail::send(
+            // //                   'mail.view-mail',
+            // //                    ['data' => $changestage],
+            // //                 function ($message) use ($email) {
+            // //                     $message->to($email)
+            // //                         ->subject("Document sent ".Auth::user()->name);
+            // //                 }
+            // //               );
+            // //             }
+            // //      }
+            // //   }
+            //     $changestage->update();
+            //     toastr()->success('Document Sent');
+            //     return back();
+            // }
+
             if ($changestage->stage == 3) {
                 $changestage->stage = "4";
-                $changestage->status = "CAPA Execution in Progress";
-                $changestage->QA_Approved_By = Auth::user()->name;
-                $changestage->QA_Approved_on = Carbon::now()->format('d-M-Y');
-                            // $history = new AuditTrialObservation();
-                            // $history->Observation_id = $id;
-                            // $history->activity_type = 'Activity Log';
-                            // $changestage->qa_appproval_by = Auth::user()->name;
-                            // $changestage->qa_appproval_on = Carbon::now()->format('d-M-Y');
-                            // $changestage->qa_appproval_comment = $request->comment;
-
-                            // $history->current = $changestage->QA_Approved_By;
-                            // $history->comment = $request->comment;
-                            // $history->user_id = Auth::user()->id;
-                            // $history->user_name = Auth::user()->name;
-                            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            // $history->origin_state = $lastDocument->status;
-                            // $history->stage = "QA Approved";
-                            // $history->save();
-                        //     $list = Helpers::getLeadAuditeeUserList();
-                        //     foreach ($list as $u) {
-                        //         if($u->q_m_s_divisions_id == $changestage->division_id){
-                        //             $email = Helpers::getInitiatorEmail($u->user_id);
-                        //              if ($email !== null) {
-
-                        //               Mail::send(
-                        //                   'mail.view-mail',
-                        //                    ['data' => $changestage],
-                        //                 function ($message) use ($email) {
-                        //                     $message->to($email)
-                        //                         ->subject("Document sent ".Auth::user()->name);
-                        //                 }
-                        //               );
-                        //             }
-                        //      }
-                        //   }
-                $changestage->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changestage->stage == 4) {
-                $changestage->stage = "5";
-                $changestage->status = "Pending Final Approval";
-                $changestage->all_capa_closed_by = Auth::user()->name;
-                $changestage->all_capa_closed_on = Carbon::now()->format('d-M-Y');
-                $changestage->all_capa_closed_comment = $request->comment;
-            //     $list = Helpers::getLeadAuditeeUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changestage->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changestage],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      }
-            //   }
-                $changestage->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
-
-            if ($changestage->stage == 5) {
-                $changestage->stage = "6";
                 $changestage->status = "Closed - Done";
                 $changestage->Final_Approval_By = Auth::user()->name;
                 $changestage->Final_Approval_on = Carbon::now()->format('d-M-Y');
                 $changestage->Final_Approval_comment = $request->comment;
+
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changestage->Final_Approval_By;
+                $history->previous = "";
+                $history->current = $changestage->submitted_by;
                 $history->comment = $request->comment;
+                $history->action = 'Response Reviewed';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = "Final Approval";
+                $history->change_to =   "Closed - Done";
+                $history->change_from = $lastDocument->status;
+                // $history->stage = '';
+                $history->activity_type = 'Response Reviewed By, Response Reviewed On';
+                if (is_null($lastDocument->Final_Approval_By) || $lastDocument->Final_Approval_on === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->Final_Approval_By . ' , ' . $lastDocument->Final_Approval_on;
+                }
+                $history->current = $changestage->Final_Approval_By . ' , ' . $changestage->Final_Approval_on;
+                if (is_null($lastDocument->Final_Approval_By) || $lastDocument->Final_Approval_By === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
             //     $list = Helpers::getLeadAuditeeUserList();
             //     foreach ($list as $u) {
@@ -1930,6 +2064,23 @@ if(!empty($request->attach_files2)){
                 $changeControl->more_info_required_by = Auth::user()->name;
                 $changeControl->more_info_required_on = Carbon::now()->format('d-M-Y');
                 $changeControl->more_info_required_comment = $request->comment;
+
+
+                $history = new AuditTrialObservation();
+                $history->Observation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->current = $changeControl->submitted_by;
+                $history->comment = $request->comment;
+                $history->action = 'More Info Required';
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $changeControl->status;
+                $history->change_to =   "Opened";
+                $history->change_from = $changeControl->status;
+                $history->stage = '';
+                $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1937,10 +2088,12 @@ if(!empty($request->attach_files2)){
 
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "2";
-                $changeControl->status = "Pending CAPA Plan";
+                $changeControl->status = "Pending Response";
                 $changeControl->reject_capa_plan_by = Auth::user()->name;
                 $changeControl->reject_capa_plan_on = Carbon::now()->format('d-M-Y');
                 $changeControl->reject_capa_plan_comment = $request->comment;
+
+                
                 $changeControl->update();
             //     $list = Helpers::getLeadAuditeeUserList();
             //     foreach ($list as $u) {
@@ -1963,75 +2116,52 @@ if(!empty($request->attach_files2)){
                 return back();
             }
 
-            if ($changeControl->stage == 1) {
-                $changeControl->stage = "0";
-                $changeControl->status = "Closed - Cancelled";
-                $changeControl->cancel_by = Auth::user()->name;
-                $changeControl->cancel_on = Carbon::now()->format('d-M-Y');
-                $changeControl->cancel_comment = $request->comment;
-            //     $list = Helpers::getQAUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      }
-            //   }
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 5) {
-                $changeControl->stage = "2";
-                $changeControl->status = "Pending CAPA Plan";
-            //     $list = Helpers::getLeadAuditeeUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      }
-            //   }
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
+          
         } else {
             toastr()->error('E-signature Not match');
             return back();
         }
     }
 
-    public function boostStage(Request $request, $id)
+    public function CapanotStage(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Observation::find($id);
+            $lastDocument = Observation::find($id);
 
-
-            if ($changeControl->stage == 3) {
-                $changeControl->stage = "6";
-                $changeControl->status = "Closed - Done";
+            if ($changeControl->stage == 2) {
+                $changeControl->stage = "3";
+                $changeControl->status = "Response Verification";
                 $changeControl->qa_approval_without_capa_by = Auth::user()->name;
                 $changeControl->qa_approval_without_capa_on = Carbon::now()->format('d-M-Y');
                 $changeControl->qa_approval_without_capa_comment = $request->comment;
+
+                 $history = new AuditTrialObservation();
+                $history->Observation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->current = $changeControl->submitted_by;
+                $history->comment = $request->comment;
+                $history->action = 'No CAPAs Required';
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Closed - Done";
+                $history->change_from = $lastDocument->status;
+                // $history->stage = '';
+                $history->activity_type = 'No CAPAs Required By, No CAPAs Required On';
+                if (is_null($lastDocument->qa_approval_without_capa_by) || $lastDocument->qa_approval_without_capa_on === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->qa_approval_without_capa_by . ' , ' . $lastDocument->qa_approval_without_capa_on;
+                }
+                $history->current = $changeControl->qa_approval_without_capa_by . ' , ' . $changeControl->qa_approval_without_capa_on;
+                if (is_null($lastDocument->qa_approval_without_capa_by) || $lastDocument->qa_approval_without_capa_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
             //     $list = Helpers::getLeadAuditeeUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -2061,18 +2191,38 @@ if(!empty($request->attach_files2)){
 
     public function observation_child(Request $request, $id)
     {
+        $cc = Observation::find($id);
         $cft = [];
         $parent_id = $id;
-        $parent_type = "Capa";
-        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $parent_type = "Observation";
+        $old_records = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+        $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_initiator_id = $id;
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $changeControl = OpenStage::find(1);
-        if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
+        // if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        if ($request->revision == "capa-child") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+        }
+        if ($request->revision == "Action-Item") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            $record = $record_number;
+            return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+        }
+        if ($request->revision == "RCA") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+    
+        }
+        
+        // return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
     }
 
 
