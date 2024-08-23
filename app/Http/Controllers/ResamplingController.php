@@ -1117,7 +1117,7 @@ class ResamplingController extends Controller
             
             if ($changeControl->stage == 1) {
                 $changeControl->stage = '2';
-                $changeControl->status = 'Acknowledge';
+                $changeControl->status = 'Head QA Approval';
                 $changeControl->acknowledgement_by = Auth::user()->name;
                 $changeControl->acknowledgement_on = Carbon::now()->format('d-M-Y');
                 $changeControl->acknowledgement_comment = $request->comment;
@@ -1125,7 +1125,7 @@ class ResamplingController extends Controller
                       $history = new ResamplingAudittrail;
                         $history->resampling_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->action = "HOD Review Complete";
+                        $history->action = "Submit";
                         $history->previous = $lastopenState->completed_by;
                         $history->current = $changeControl->completed_by;
                         $history->comment = $request->comment;
@@ -1133,8 +1133,8 @@ class ResamplingController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status;
-                        $history->stage = "Acknowledge";
-                        $history->change_to = "Acknowledge";
+                        $history->stage = "Submit";
+                        $history->change_to = "Head QA Approval";
                         $history->change_from = $lastopenState->status;
                         $history->save();
                 $changeControl->update();
@@ -1174,12 +1174,12 @@ class ResamplingController extends Controller
 
             if ($changeControl->stage == 2) {
                 $changeControl->stage = '3';
-                $changeControl->status = 'Work Completion';
+                $changeControl->status = 'Acknowledge';
                 $changeControl->work_completion_by = Auth::user()->name;
                 $changeControl->work_completion_on = Carbon::now()->format('d-M-Y');
                 $changeControl->acknowledgement_comment = $request->comment;
                 $history = new ResamplingAudittrail;
-                $history->action = "Acknowledgement Complete";
+                $history->action = "Approved";
 
                      
                         $history->resampling_id = $id;
@@ -1191,7 +1191,7 @@ class ResamplingController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status;
-                        $history->stage = "Work Completion";
+                        $history->stage = "Approved";
                         $history->save();
                 $changeControl->update();
                 // $history = new CCStageHistory();
@@ -1201,7 +1201,7 @@ class ResamplingController extends Controller
                 // $history->user_name = Auth::user()->name;
                 // $history->stage_id = $changeControl->stage;
                 // $history->status = $lastopenState->status;
-                $history->change_to = "Work Completion";
+                $history->change_to = "Acknowledge";
                 $history->change_from = $lastopenState->status;
                 $history->save();
             //   
@@ -1227,7 +1227,7 @@ class ResamplingController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status;
-                        $history->stage = "Work Completion";
+                        $history->stage = "Acknowledgement Complete";
                         $history->save();
                 $changeControl->update();
                 // $history = new CCStageHistory();
@@ -1253,7 +1253,7 @@ class ResamplingController extends Controller
                 $changeControl->completed_on = Carbon::now()->format('d-M-Y');
                 $changeControl->completed_comment = $request->comment;
                 $history = new ResamplingAudittrail;
-                $history->action = "Complete";
+                $history->action = "Varification Complete";
                 $history->resampling_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = $lastopenState->completed_by;
@@ -1263,7 +1263,7 @@ class ResamplingController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastopenState->status;
-                $history->stage = "Closed - Done";
+                $history->stage = "Varification Complete";
                 $history->save();
                 $changeControl->update();
                 // $history = new CCStageHistory();

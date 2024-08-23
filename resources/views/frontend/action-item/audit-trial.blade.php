@@ -207,7 +207,7 @@
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ $document->initiator ? $document->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
-                                {{ $document->description }}</div>
+                                {{ $document->short_description }}</div>
                                 @php
                                 use Carbon\Carbon;
                                 @endphp

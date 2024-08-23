@@ -4071,10 +4071,109 @@
                         </table>
                     </div>
                 </div>
+                
             </div>
+            <div class="block">
+                <div class="block-head">
+                    Activity Log
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">Submit By </th>
+                        <td class="w-30">{{ $data->submit_by }}</td>
+                        <th class="w-20">Submit On </th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->submit_on) }}</td>
+                    </tr>
+                 
+                    <tr>
+                        <th class="w-20">HOD Initial Review completed by</th>
+                        <td class="w-30">{{ $data->HOD_Initial_Review_Complete_By }}</td>
+                        <th class="w-20">HOD Initial Review completed On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->HOD_Initial_Review_Complete_On) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Information Required By</th>
+                        <td class="w-30">{{ $data->more_info_req_by }}</td>
+                        <th class="w-20">More Information Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->more_info_req_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->Hod_Cancelled_by}}</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Hod_Cancelled_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA Initial Review Complete By</th>
+                        <td class="w-30">{{ $data->QA_Initial_Review_Complete_By }}</td>
+                        <th class="w-20">QA Initial Review Complete On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->QA_Initial_Review_Complete_On) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Information Required By</th>
+                        <td class="w-30">{{ $data->Qa_more_info_req_by }}</td>
+                        <th class="w-20">More Information Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Qa_more_info_req_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Pending Initiator Update Complete By</th>
+                        <td class="w-30">{{ $data->Pending_Review_Complete_By }}</td>
+                        <th class="w-20">Pending Initiator Update CompleteOn</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Pending_Review_Complete_On) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Information Required By</th>
+                        <td class="w-30">{{ $data->Pending_more_info_req_by }}</td>
+                        <th class="w-20">More Information Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Pending_more_info_req_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">HOD Final Review Completed By</th>
+                        <td class="w-30">{{ $data->Hod_Final_Review_Complete_By }}</td>
+                        <th class="w-20">HOD Final Review Completed On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Hod_Final_Review_Complete_On) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Information Required By</th>
+                        <td class="w-30">{{ $data->Hod_more_info_req_by }}</td>
+                        <th class="w-20">More Information Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Hod_more_info_req_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20"> QA Final Review Complete By</th>
+                        <td class="w-30">{{ $data->Qa_Final_Review_Complete_By }}</td>
+                        <th class="w-20"> QA Final Review Complete On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Qa_Final_Review_Complete_On) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Information Required By</th>
+                        <td class="w-30">{{ $data->Qa_final_more_info_req_by }}</td>
+                        <th class="w-20">More Information Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Qa_final_more_info_req_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Approved By</th>
+                        <td class="w-30">{{ $data->QA_head_approved_by }}</td>
+                        <th class="w-20">Approved On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->QA_head_approved_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Information Required By</th>
+                        <td class="w-30">{{ $data->approved_more_info_req_by }}</td>
+                        <th class="w-20">More Information Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->approved_more_info_req_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->Cancelled_by}}</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Cancelled_on) }}</td>
+                    </tr>
 
+                </table>
+            </div>
     </div>
-
+             
     <footer>
         <table>
             <tr>

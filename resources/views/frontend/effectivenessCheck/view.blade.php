@@ -56,8 +56,8 @@
                         $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                     @endphp
-                        <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button>
+                        {{-- <button class="button_theme1" onclick="window.print();return false;"
+                            class="new-doc-btn">Print</button> --}}
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 
                         <button class="button_theme1"> <a class="text-white"
@@ -82,14 +82,27 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                     More Info Required
                                 </button>
-                                @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 3 && (in_array(14, $userRoleIds) || in_array(18, $userRoleIds)))
+                                <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                   Effective
+                               </button>
+                               <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                   Not Effective
+                               </button>  -->
+                               <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                   Complete
+                               </button>
+                               <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                   More Info Required
+                               </button>
+                                @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                   HOD Review Complete
                                 </button>
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                     More Information Required
                                 </button>
-                            @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                                 <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Effective Approval Completed
                                 </button> 
@@ -102,20 +115,25 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-modal">
                                     Not Effective
                                 </button> 
-                            @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Effective Approval Completed
                                 </button>
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                     More Information Required
                                 </button>
-                            @elseif($data->stage == 7 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            @elseif($data->stage == 8 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-modal">
                                     Not Effective Approval Completed
                                 </button>
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                     More Information Required
                                 </button>
+                                @elseif($data->stage == 9 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-child-model">
+                                 Child
+                                </button>
+                                
                             @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                     </div>
@@ -141,17 +159,23 @@
                             <div class="">Acknowledge</div>
                         @endif
                         @if ($data->stage >= 3)
+                            <div class="active">Work Completion </div>
+                        @else
+                            <div class="">Work Completion </div>
+                        @endif
+                        
+                        @if ($data->stage >= 4)
                             <div class="active">HOD Review</div>
                         @else
                             <div class="">HOD Review</div>
                         @endif
-                        @if ($data->stage >= 4)
+                        @if ($data->stage >= 5)
                             <div class="active">QA Review</div>
                         @else
                             <div class="">QA Review</div>
                         @endif
 
-                        @if ($data->stage >= 5)
+                        @if ($data->stage >= 6)
                             <div class="active">QA Approval Effective</div>
                             <div style="display: none">QA Approval Not-Effective</div>
                             <div style="display: none">Closed Not-Effective</div>
@@ -159,7 +183,7 @@
                             <div class="" style="display: none">QA Approval Effective</div>
                         @endif
 
-                        @if ($data->stage == 6)
+                        @if ($data->stage == 7)
                             <div class="active bg-danger">Closed - Effective</div>
                             <div style="display: none">QA Approval Not-Effective</div>
                             <div style="display: none">Closed Not-Effective</div>
@@ -167,7 +191,7 @@
                             <div class="" style="display: none">Closed - Effective</div>
                         @endif
 
-                        @if ($data->stage >= 7)
+                        @if ($data->stage >= 8)
                             <div class="active">QA Approval Not-Effective</div>
                             <div style="display: none">QA Approval Effective</div>
                             <div style="display: none">Closed -Effective</div>
@@ -175,7 +199,7 @@
                             <div class="" style="display: none">QA Approval Not-Effective</div>
                         @endif
 
-                        @if ($data->stage == 8)
+                        @if ($data->stage == 9)
                             <div class="active bg-danger">Closed Not-Effective</div>
                             <div style="display: none">QA Approval Effective</div>
                             <div style="display: none">Closed -Effective</div>
@@ -1316,49 +1340,37 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="child-modal">
+    <div class="modal fade" id="not-effective-child-model">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Document Revision</h4>
+                    <h4 class="modal-title">Child</h4>
                 </div>
-                <form method="{{ url('rcms/child-AT', $data->id) }}" action="post">
+                <form action="{{ route('effectiveness_child', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="group-input">
-                            <label for="revision">Choose Change Implementation</label>
-                            <label for="major">
-                                <input type="radio" name="revision" id="major" value="Action-Item">
-                                Action Item
+                            {{-- @if ($data->stage == 3) --}}
+                                <label for="major">
+                                    <input type="radio" name="child_type" id="major" value="capa-child">
+                                    CAPA
+                                </label>
+                               
+                            {{-- @endif --}}
 
-                            </label>
-                            <label for="minor">
-                                <input type="radio" name="revision" id="minor">
-                                Extension
-                            </label>
-
-                            <label for="minor">
-                                <input type="radio" name="revision" id="minor">
-                                New Document
-                            </label>
-
-
+                           
                         </div>
 
                     </div>
 
                     <!-- Modal footer -->
-                    <!-- <div class="modal-footer">
-                        <button type="button" data-bs-dismiss="modal">Close</button>
-                        <button type="submit">Submit</button>
-                    </div> -->
                     <div class="modal-footer">
-                              <button type="submit">Submit</button>
-                                <button type="button" data-bs-dismiss="modal">Close</button>
-                            </div>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        <button type="submit">Continue</button>
+                    </div>
                 </form>
 
             </div>
