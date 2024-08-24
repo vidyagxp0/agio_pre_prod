@@ -5483,18 +5483,74 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = LabIncident::find($id);
+            $lastDocument = LabIncident::find($id);
 
 
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
+                $changeControl->more_info_req_1_by = Auth::user()->name;
+                $changeControl->more_info_req_1_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_info_req_1_comment =$request->comment;
+                $history = new LabIncidentAuditTrial();
+                $history->LabIncident_id = $id;
+                $history->activity_type = 'More Information Required By, More Information Required On';
+                if (is_null($lastDocument->more_info_req_1_by) || $lastDocument->more_info_req_1_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->more_info_req_1_by . ' , ' . $lastDocument->more_info_req_1_on;
+                }
+                $history->current = $changeControl->more_info_req_1_by . ' , ' . $changeControl->more_info_req_1_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to = "Opened";
+                $history->change_from = $lastDocument->status;
+                $history->origin_state = $lastDocument->status;
+                $history->stage='More Information Required';
+                $history->action='More Information Required';   
+                if (is_null($lastDocument->more_info_req_1_by) || $lastDocument->more_info_req_1_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
                 $changeControl->update();
+
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "2";
-                $changeControl->status = "QA Head/HOD Initial Review";
+                $changeControl->status = "QC Head/HOD Initial Review";
+                $changeControl->more_info_req_2_by = Auth::user()->name;
+                $changeControl->more_info_req_2_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_info_req_2_comment =$request->comment;
+                $history = new LabIncidentAuditTrial();
+                $history->LabIncident_id = $id;
+                $history->activity_type = 'More Information Required By, More Information Required On';
+                if (is_null($lastDocument->more_info_req_2_by) || $lastDocument->more_info_req_2_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->more_info_req_2_by . ' , ' . $lastDocument->more_info_req_2_on;
+                }
+                $history->current = $changeControl->more_info_req_2_by . ' , ' . $changeControl->more_info_req_2_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to = "QC Head/HOD Initial Review";
+                $history->change_from = $lastDocument->status;
+                $history->origin_state = $lastDocument->status;
+                $history->stage='More Information Required';
+                $history->action='More Information Required';   
+                if (is_null($lastDocument->more_info_req_2_by) || $lastDocument->more_info_req_2_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5502,6 +5558,33 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "3";
                 $changeControl->status = "QA Initial Review";
+                $changeControl->more_info_req_3_by = Auth::user()->name;
+                $changeControl->more_info_req_3_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_info_req_3_comment =$request->comment;
+                $history = new LabIncidentAuditTrial();
+                $history->LabIncident_id = $id;
+                $history->activity_type = 'More Information Required By, More Information Required On';
+                if (is_null($lastDocument->more_info_req_3_by) || $lastDocument->more_info_req_3_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->more_info_req_3_by . ' , ' . $lastDocument->more_info_req_3_on;
+                }
+                $history->current = $changeControl->more_info_req_3_by . ' , ' . $changeControl->more_info_req_3_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to = "QA Initial Review";
+                $history->change_from = $lastDocument->status;
+                $history->origin_state = $lastDocument->status;
+                $history->stage='More Information Required';
+                $history->action='More Information Required';   
+                if (is_null($lastDocument->more_info_req_3_by) || $lastDocument->more_info_req_3_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5509,13 +5592,67 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "4";
                 $changeControl->status = "Pending Initiator Update";
+                $changeControl->more_info_req_4_by = Auth::user()->name;
+                $changeControl->more_info_req_4_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_info_req_4_comment =$request->comment;
+                $history = new LabIncidentAuditTrial();
+                $history->LabIncident_id = $id;
+                $history->activity_type = 'More Information Required By, More Information Required On';
+                if (is_null($lastDocument->more_info_req_4_by) || $lastDocument->more_info_req_4_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->more_info_req_4_by . ' , ' . $lastDocument->more_info_req_4_on;
+                }
+                $history->current = $changeControl->more_info_req_4_by . ' , ' . $changeControl->more_info_req_4_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to = "Pending Initiator Update";
+                $history->change_from = $lastDocument->status;
+                $history->origin_state = $lastDocument->status;
+                $history->stage='More Information Required';
+                $history->action='More Information Required';   
+                if (is_null($lastDocument->more_info_req_4_by) || $lastDocument->more_info_req_4_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 6) {
                 $changeControl->stage = "5";
-                $changeControl->status = "QA Head/HOD Secondary Review";
+                $changeControl->status = "QC Head/HOD Secondary Review";
+                $changeControl->more_info_req_5_by = Auth::user()->name;
+                $changeControl->more_info_req_5_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_info_req_5_comment =$request->comment;
+                $history = new LabIncidentAuditTrial();
+                $history->LabIncident_id = $id;
+                $history->activity_type = 'More Information Required By, More Information Required On';
+                if (is_null($lastDocument->more_info_req_5_by) || $lastDocument->more_info_req_5_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->more_info_req_5_by . ' , ' . $lastDocument->more_info_req_5_on;
+                }
+                $history->current = $changeControl->more_info_req_5_by . ' , ' . $changeControl->more_info_req_5_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to = "QC Head/HOD Secondary Review";
+                $history->change_from = $lastDocument->status;
+                $history->origin_state = $lastDocument->status;
+                $history->stage='More Information Required';
+                $history->action='More Information Required';   
+                if (is_null($lastDocument->more_info_req_5_by) || $lastDocument->more_info_req_5_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5523,6 +5660,33 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             if ($changeControl->stage == 7) {
                 $changeControl->stage = "6";
                 $changeControl->status = "QA Secondary Review";
+                $changeControl->more_info_req_6_by = Auth::user()->name;
+                $changeControl->more_info_req_6_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_info_req_6_comment =$request->comment;
+                $history = new LabIncidentAuditTrial();
+                $history->LabIncident_id = $id;
+                $history->activity_type = 'More Information Required By, More Information Required On';
+                if (is_null($lastDocument->more_info_req_6_by) || $lastDocument->more_info_req_6_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->more_info_req_6_by . ' , ' . $lastDocument->more_info_req_6_on;
+                }
+                $history->current = $changeControl->more_info_req_6_by . ' , ' . $changeControl->more_info_req_6_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to = "QA Secondary Review";
+                $history->change_from = $lastDocument->status;
+                $history->origin_state = $lastDocument->status;
+                $history->stage='More Information Required';
+                $history->action='More Information Required';   
+                if (is_null($lastDocument->more_info_req_6_by) || $lastDocument->more_info_req_6_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5530,6 +5694,33 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             if ($changeControl->stage == 8) {
                 $changeControl->stage = "7";
                 $changeControl->status = "QAH Approval";
+                $changeControl->more_info_req_7_by = Auth::user()->name;
+                $changeControl->more_info_req_7_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_info_req_7_comment =$request->comment;
+                $history = new LabIncidentAuditTrial();
+                $history->LabIncident_id = $id;
+                $history->activity_type = 'More Information Required By, More Information Required On';
+                if (is_null($lastDocument->more_info_req_7_by) || $lastDocument->more_info_req_7_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->more_info_req_7_by . ' , ' . $lastDocument->more_info_req_7_on;
+                }
+                $history->current = $changeControl->more_info_req_7_by . ' , ' . $changeControl->more_info_req_7_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to = "QAH Approval";
+                $history->change_from = $lastDocument->status;
+                $history->origin_state = $lastDocument->status;
+                $history->stage='More Information Required';
+                $history->action='More Information Required';   
+                if (is_null($lastDocument->more_info_req_7_by) || $lastDocument->more_info_req_7_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5560,12 +5751,37 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = LabIncident::find($id);
+            $lastDocument = LabIncident::find($id);
 
             $changeControl->stage = "0";
             $changeControl->status = "Closed - Cancelled";
             $changeControl->cancelled_by = Auth::user()->name;
             $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
             $changeControl->cancell_comment =$request->comment;
+            $history = new LabIncidentAuditTrial();
+                $history->LabIncident_id = $id;
+                $history->activity_type = 'Cancel By, Cancel On';
+                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                }
+                $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to = "Opened";
+                $history->change_from = $lastDocument->status;
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Cancel';
+                $history->action='Cancel';   
+                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
             $changeControl->update();
             toastr()->success('Document Sent');
             return back();

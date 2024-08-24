@@ -1826,7 +1826,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <button type="button"> <a href="{{ url('rcms/internalObservationSingleReport', $data->id) }}" class="text-white">
-                                        Single Report (AO) </a> </button>
+                                        Audit Observation Report </a> </button>
                             </div>
                         </div>
                     </div>
