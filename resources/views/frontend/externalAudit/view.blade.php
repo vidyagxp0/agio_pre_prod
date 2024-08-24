@@ -245,7 +245,7 @@ function addMultipleFiles(input, block_id) {
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
                             </button> --}}
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal1">
                                 CFT Review Not Required
                             </button>
                         @elseif($data->stage == 3 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -277,13 +277,10 @@ function addMultipleFiles(input, block_id) {
                             </button>
                            
                         @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(11, $userRoleIds) ))
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                            Re-Open
-                        </button>
-                        <form id="auditform" action="{{ route('auditee_store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <button type="submit" class="button_theme1 text-white">Re-Open1</button>
-                        </form>
+                        
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('auditee') }}">
+                            Reopen
+                        </a> </button>
                         
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
@@ -321,9 +318,9 @@ function addMultipleFiles(input, block_id) {
                             @endif
 
                             @if ($data->stage >= 4)
-                                <div class="active">QA Head Approval</div>
+                                <div class="active"> QA/CQA Head Approval</div>
                             @else
-                                <div class="">QA Head Approval</div>
+                                <div class="">QA/CQA Head Approval</div>
                             @endif
                             {{-- @if ($data->stage >= 5)
                                 <div class="active">CAPA Execution in Progress</div>
@@ -1898,7 +1895,7 @@ function addMultipleFiles(input, block_id) {
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="cancel-modal">
+            <div class="modal fade" id="cancel-modal1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
 
@@ -1930,6 +1927,11 @@ function addMultipleFiles(input, block_id) {
                                 </div>
                                 
                             </div>
+                            <style>
+                                .group-input {
+                                    margin-bottom: 45px; /* Adjust the margin value as needed */
+                                }
+                            </style>
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
@@ -2067,13 +2069,7 @@ function addMultipleFiles(input, block_id) {
                                          Action-Item  
                                     </label>
                                 </div>
-                                <div class="group-input">
-                                    <label></lable>
-                                    <label for="major">
-                                        <input type="radio" name="child_type" value="external-audit">
-                                         External-Audit
-                                    </label>
-                                </div>
+                               
                             </div>
 
 

@@ -214,6 +214,8 @@ Route::post('reject_Risk/{id}', [RiskManagementController::class, 'RejectStateCh
 Route::get('riskAuditTrial/{id}', [RiskManagementController::class, 'riskAuditTrial']);
 Route::get('auditDetailsrisk/{id}', [RiskManagementController::class, 'auditDetailsrisk'])->name('showriskAuditDetails');
 Route::post('child/{id}', [RiskManagementController::class, 'child'])->name('riskAssesmentChild');
+Route::post('riskassesmentCancel/{id}', [RiskManagementController::class, 'riskassesmentCancel'])->name('riskassesmentCancel');
+
 
 
 

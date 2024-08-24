@@ -2655,7 +2655,7 @@ use Illuminate\Support\Facades\Hash;
             }
              if ($root->stage == 2) {
                 $root->stage = "3";
-                $root->status = 'Initial QA Review';
+                $root->status = 'Initial QA/CQA Review';
                 $root->HOD_Review_Complete_By = Auth::user()->name;
                 $root->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $root->HOD_Review_Complete_Comment = $request->comment;
@@ -2671,10 +2671,10 @@ use Illuminate\Support\Facades\Hash;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Initial QA Review";
+                $history->change_to =   "Initial QA/CQA Review";
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
-                $history->stage = 'Initial QA Review';
+                $history->stage = 'Initial QA/CQA Review';
               
                 $history->save();
                 $root->update();
@@ -2694,7 +2694,7 @@ use Illuminate\Support\Facades\Hash;
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous ="Initial QA Review";
+                $history->previous ="Initial QA/CQA Review";
                 $history->current = $root->QQQA_Review_Complete_By;
                 $history->comment = $request->comment;
                 $history->action = 'QA Review Complete';
@@ -2831,7 +2831,7 @@ use Illuminate\Support\Facades\Hash;
             // }
             if ($root->stage == 5) {
                 $root->stage = "6";
-                $root->status = "Final QA Review";
+                $root->status = "Final QA/CQA Review";
                 $root->HOD_Final_Review_Complete_By = Auth::user()->name;
                 $root->HOD_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $root->HOD_Final_Review_Complete_Comment = $request->comment;
@@ -2847,9 +2847,9 @@ use Illuminate\Support\Facades\Hash;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Final QA Review";
+                $history->change_to =   "Final QA/CQA Review";
                 $history->change_from = $lastDocument->status;
-                $history->stage='Final QA Review';
+                $history->stage='Final QA/CQA Review';
                 $history->action_name = 'Update';
                 $history->save();
 
@@ -2859,7 +2859,7 @@ use Illuminate\Support\Facades\Hash;
             }
                if ($root->stage == 6) {
                 $root->stage = "7";
-                $root->status = "QAH Final Review";
+                $root->status = "QAH/CQAH Final Review";
                 $root->Final_QA_Review_Complete_By = Auth::user()->name;
                 $root->Final_QA_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $root->Final_QA_Review_Complete_Comment = $request->comment;
@@ -2872,14 +2872,14 @@ use Illuminate\Support\Facades\Hash;
                 $history->current = $root->Final_QA_Review_Complete_By;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
-                $history->action = 'Final QA Review Complete';
+                $history->action = 'Final QA/CQA Review Complete';
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->change_to =   "QAH Final Review";
+                $history->change_to =   "QAH/CQAH Final Review";
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
 
-                $history->stage='QAH Final Review';
+                $history->stage='QAH/CQAH Final Review';
                 $history->save();
 
                 $root->update();
@@ -2901,7 +2901,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->current = $root->evaluation_complete_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
-                $history->action = 'QAH Closure';
+                $history->action = 'QAH/CQAH Closure';
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 // $history->origin_state = $lastDocument->status;
@@ -3046,7 +3046,7 @@ use Illuminate\Support\Facades\Hash;
 
                     $history = new RootAuditTrial();    
                     $history->root_id = $id;
-                    $history->previous = "Initial QA Review";
+                    $history->previous = "Initial QA/CQA Review";
                     $history->activity_type = 'Activity Log';
                    // $history->previous = $lastDocument->More_Info_hrc_by;
                     $history->current = $capa->More_Info_hrc_by;
@@ -3072,7 +3072,7 @@ use Illuminate\Support\Facades\Hash;
             }
             if ($capa->stage == 4) {
                 $capa->stage = "3";
-                $capa->status = "Initial QA Review";
+                $capa->status = "Initial QA/CQA Review";
 
                 $capa->More_Info_qac_by = Auth::user()->name;
                 $capa->More_Info_qac_on = Carbon::now()->format('d-M-Y');
@@ -3090,10 +3090,10 @@ use Illuminate\Support\Facades\Hash;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Initial QA Review";
+                    $history->change_to =   "Initial QA/CQA Review";
                     $history->change_from = $lastDocument->status;
                     $history->action_name = 'Update';
-                    $history->stage='Initial QA Review';
+                    $history->stage='Initial QA/CQA Review';
                     $history->save();
 
 
@@ -3146,7 +3146,7 @@ use Illuminate\Support\Facades\Hash;
 
                     $history = new RootAuditTrial();    
                     $history->root_id = $id;
-                    $history->previous = "Final QA Review";
+                    $history->previous = "Final QA/CQA Review";
                     $history->activity_type = 'Activity Log';
                    // $history->previous = $lastDocument->More_Info_hfr_by;
                     $history->current = $capa->More_Info_hfr_by;
@@ -3171,14 +3171,14 @@ use Illuminate\Support\Facades\Hash;
             }
                 if ($capa->stage == 7) {
                 $capa->stage = "6";
-                $capa->status = "Final QA Review";
+                $capa->status = "Final QA/CQA Review";
 
                 $capa->qA_review_complete_by = Auth::user()->name;
                 $capa->qA_review_complete_on = Carbon::now()->format('d-M-Y');
                 $capa->qA_review_complete_comment = $request->comment;
                     $history = new RootAuditTrial();    
                     $history->root_id = $id;
-                    $history->previous = "QAH Final Review";
+                    $history->previous = "QAH/CQAH Final Review";
                     $history->activity_type = 'Activity Log';
                    // $history->previous = $lastDocument->qA_review_complete_by;
                     $history->current = $capa->qA_review_complete_by;
@@ -3188,10 +3188,10 @@ use Illuminate\Support\Facades\Hash;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Final QA Review";
+                    $history->change_to =   "Final QA/CQA Review";
                     $history->change_from = $lastDocument->status;
                     $history->action_name = 'Update';
-                    $history->stage='Final QA Review';
+                    $history->stage='Final QA/CQA Review';
                     $history->save();
 
 
@@ -3297,7 +3297,7 @@ use Illuminate\Support\Facades\Hash;
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $record = $record_number;
                 $old_records = $old_record;
-                return view('frontend.forms.capa', compact('record', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
                 }
 
                if ($request->revision == "Action-Item") {
