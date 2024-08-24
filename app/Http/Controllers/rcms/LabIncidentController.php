@@ -4880,9 +4880,13 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             $labstate->status = "Closed - Done";
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Activity Log';
-            // $history->previous = $lastDocument->submitted_by;
-            $history->current = $labstate->no_assignable_cause_by;
+            $history->activity_type = 'Approved By, Approved On';
+            if (is_null($lastDocument->no_assignable_cause_by) || $lastDocument->no_assignable_cause_by === '') {
+                $history->previous = "";
+            } else {
+                $history->previous = $lastDocument->no_assignable_cause_by . ' , ' . $lastDocument->no_assignable_cause_on;
+            }
+            $history->current = $labstate->no_assignable_cause_by . ' , ' . $labstate->no_assignable_cause_on;
             $history->current = $labstate->verification_complete_completed_by;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
@@ -4891,8 +4895,13 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             $history->change_to = "Closed - Done";
             $history->change_from = $lastDocument->status;
             $history->origin_state = $lastDocument->status;
-            $history->stage='Root Cause Found';
-            $history->action='Root Cause Found';
+            $history->stage='Approved';
+            $history->action='Approved';   
+            if (is_null($lastDocument->no_assignable_cause_by) || $lastDocument->no_assignable_cause_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
 
 
