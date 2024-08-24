@@ -11454,14 +11454,12 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
 
                                   
-                                $query->where('activity_type',$stage);
+                                $query->whereIn('activity_type',$stage);
                                 break;
                                 
                                 case 'user_action':
                                     $user_action = [
-                                        'Submit', 'HOD Review Complete', 'QA Initial Review Complete',
-                                        'CFT Review Complete', 'RA Review Required', 'Approved','QA Final Review Complete','Rejected','Send For Final Approval',
-                                        'Initiator Updated Complete', 'More Info Required','More Info Required','Cancel','More Info Required','Cancel'
+                                        'Submit', 'HOD Assessment Complete', 'QA Initial Assessment Complete','CFT Assessment Complete', 'RA Approval Required','RA Approval Complete', 'Approved','QA Final Review Complete','HOD Final Review Complete','Initiator Updated Complete','Rejected', 'Send For Final QA Head Approval','Send For Final Approval','Closure Approved','More Info Required','Send To Initiator','Send To HOD','Send To QA Initial','Initiator Updated Completed', 'More Info Required','More Info Required','Cancel','More Info Required','Cancel','Rejected'
                                     ];
                                 $query->whereIn('action',$user_action);     
                                 break;
