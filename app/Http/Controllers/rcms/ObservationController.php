@@ -1807,6 +1807,8 @@ if(!empty($request->attach_files2)){
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changestage = Observation::find($id);
             $lastDocument = Observation::find($id);
+            $capaRequired = $request->capaNotReq;
+            // dd($capaRequired);
             if ($changestage->stage == 1) {
                 $changestage->stage = "2";
                 $changestage->status = "Pending Response";
@@ -1847,129 +1849,105 @@ if(!empty($request->attach_files2)){
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changestage->stage == 2) {
-                $changestage->stage = "3";
-                $changestage->status = "Response Verification";
-                $changestage->complete_By = Auth::user()->name;
-                $changestage->complete_on = Carbon::now()->format('d-M-Y');
-                $changestage->complete_comment = $request->comment;
-                $history = new AuditTrialObservation();
-                $history->Observation_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changestage->submitted_by;
-                $history->comment = $request->comment;
-                $history->action = 'CAPA Plan Proposed';
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Response Verification";
-                $history->change_from = $lastDocument->status;
-                // $history->stage = '';
-                $history->activity_type = 'CAPA Plan Proposed By, CAPA Plan Proposed On';
-                if (is_null($lastDocument->complete_By) || $lastDocument->complete_on === '') {
+
+            if($capaRequired == "Yes"){
+                if ($changestage->stage == 2) {
+                    $changestage->stage = "3";
+                    $changestage->status = "Response Verification";
+                    $changestage->complete_By = Auth::user()->name;
+                    $changestage->complete_on = Carbon::now()->format('d-M-Y');
+                    $changestage->complete_comment = $request->comment;
+
+                    $history = new AuditTrialObservation();
+                    $history->Observation_id = $id;
+                    $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->complete_By . ' , ' . $lastDocument->complete_on;
+                    $history->current = $changestage->submitted_by;
+                    $history->comment = $request->comment;
+                    $history->action = 'CAPA Plan Proposed';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Response Verification";
+                    $history->change_from = $lastDocument->status;
+                    // $history->stage = '';
+                    $history->activity_type = 'CAPA Plan Proposed By, CAPA Plan Proposed On';
+                    if (is_null($lastDocument->complete_By) || $lastDocument->complete_on === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->complete_By . ' , ' . $lastDocument->complete_on;
+                    }
+                    $history->current = $changestage->complete_By . ' , ' . $changestage->complete_on;
+                    if (is_null($lastDocument->complete_By) || $lastDocument->complete_By === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                    $changestage->update();
+                    toastr()->success('Document Sent');
+                    return back();
                 }
-                $history->current = $changestage->complete_By . ' , ' . $changestage->complete_on;
-                if (is_null($lastDocument->complete_By) || $lastDocument->complete_By === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+            } else {
+                if ($changestage->stage == 2) {
+                    $changestage->stage = "3";
+                    $changestage->status = "Response Verification";
+                    $changestage->qa_approval_without_capa_by = Auth::user()->name;
+                    $changestage->qa_approval_without_capa_on = Carbon::now()->format('d-M-Y');
+                    $changestage->qa_approval_without_capa_comment = $request->comment;
+    
+                     $history = new AuditTrialObservation();
+                    $history->Observation_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->current = $changestage->submitted_by;
+                    $history->comment = $request->comment;
+                    $history->action = 'No CAPAs Required';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Closed - Done";
+                    $history->change_from = $lastDocument->status;
+                    // $history->stage = '';
+                    $history->activity_type = 'No CAPAs Required By, No CAPAs Required On';
+                    if (is_null($lastDocument->qa_approval_without_capa_by) || $lastDocument->qa_approval_without_capa_on === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->qa_approval_without_capa_by . ' , ' . $lastDocument->qa_approval_without_capa_on;
+                    }
+                    $history->current = $changestage->qa_approval_without_capa_by . ' , ' . $changestage->qa_approval_without_capa_on;
+                    if (is_null($lastDocument->qa_approval_without_capa_by) || $lastDocument->qa_approval_without_capa_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                //     $list = Helpers::getLeadAuditeeUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $changestage->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+    
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changestage],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document sent ".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
                 $history->save();
-            //     $list = Helpers::getQAUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changestage->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changestage],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      }
-            //   }
-                $changestage->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            // if ($changestage->stage == 3) {
-            //     $changestage->stage = "4";
-            //     $changestage->status = "CAPA Execution in Progress";
-            //     $changestage->QA_Approved_By = Auth::user()->name;
-            //     $changestage->QA_Approved_on = Carbon::now()->format('d-M-Y');
-            //                 // $history = new AuditTrialObservation();
-            //                 // $history->Observation_id = $id;
-            //                 // $history->activity_type = 'Activity Log';
-            //                 // $changestage->qa_appproval_by = Auth::user()->name;
-            //                 // $changestage->qa_appproval_on = Carbon::now()->format('d-M-Y');
-            //                 // $changestage->qa_appproval_comment = $request->comment;
-
-            //                 // $history->current = $changestage->QA_Approved_By;
-            //                 // $history->comment = $request->comment;
-            //                 // $history->user_id = Auth::user()->id;
-            //                 // $history->user_name = Auth::user()->name;
-            //                 // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //                 // $history->origin_state = $lastDocument->status;
-            //                 // $history->stage = "QA Approved";
-            //                 // $history->save();
-            //             //     $list = Helpers::getLeadAuditeeUserList();
-            //             //     foreach ($list as $u) {
-            //             //         if($u->q_m_s_divisions_id == $changestage->division_id){
-            //             //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //             //              if ($email !== null) {
-
-            //             //               Mail::send(
-            //             //                   'mail.view-mail',
-            //             //                    ['data' => $changestage],
-            //             //                 function ($message) use ($email) {
-            //             //                     $message->to($email)
-            //             //                         ->subject("Document sent ".Auth::user()->name);
-            //             //                 }
-            //             //               );
-            //             //             }
-            //             //      }
-            //             //   }
-            //     $changestage->update();
-            //     toastr()->success('Document Sent');
-            //     return back();
-            // }
-            // if ($changestage->stage == 4) {
-            //     $changestage->stage = "5";
-            //     $changestage->status = "Pending Final Approval";
-            //     $changestage->all_capa_closed_by = Auth::user()->name;
-            //     $changestage->all_capa_closed_on = Carbon::now()->format('d-M-Y');
-            //     $changestage->all_capa_closed_comment = $request->comment;
-            // //     $list = Helpers::getLeadAuditeeUserList();
-            // //     foreach ($list as $u) {
-            // //         if($u->q_m_s_divisions_id == $changestage->division_id){
-            // //             $email = Helpers::getInitiatorEmail($u->user_id);
-            // //              if ($email !== null) {
-
-            // //               Mail::send(
-            // //                   'mail.view-mail',
-            // //                    ['data' => $changestage],
-            // //                 function ($message) use ($email) {
-            // //                     $message->to($email)
-            // //                         ->subject("Document sent ".Auth::user()->name);
-            // //                 }
-            // //               );
-            // //             }
-            // //      }
-            // //   }
-            //     $changestage->update();
-            //     toastr()->success('Document Sent');
-            //     return back();
-            // }
-
+                    $changestage->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+            }           
+            
+            
             if ($changestage->stage == 3) {
                 $changestage->stage = "4";
                 $changestage->status = "Closed - Done";

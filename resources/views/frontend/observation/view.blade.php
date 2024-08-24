@@ -1492,6 +1492,7 @@
                                     <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
+                                <input type="hidden" name="capaNotReq" id="capaNotReq" value="Yes">
                                 <div class="group-input">
                                     <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
@@ -1524,7 +1525,7 @@
                             <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form action="{{ route('observation_capanot_stage', $data->id) }}" method="POST">
+                        <form action="{{ route('observation_change_stage', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -1537,6 +1538,7 @@
                                     <label for="username">Username <span class="text-danger">*</span></label>
                                     <input class="observation_style" type="text" name="username" required>
                                 </div>
+                                <input type="hidden" name="capaNotReq" id="capaNotReq" value="No">
                                 <div class="group-input">
                                     <label for="password">Password <span class="text-danger">*</span></label>
                                     <input class="observation_style" type="password" name="password" required>
