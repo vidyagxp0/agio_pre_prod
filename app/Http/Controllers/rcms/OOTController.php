@@ -2194,6 +2194,34 @@ class OOTController extends Controller
                 toastr()->success('Closed - Done');
                 return back();
             }
+            if ($changestage->stage == 25) {
+                $changestage->stage = "26";
+                $changestage->P_II_B_Assignable_Cause_Found_by = Auth::user()->name;
+                $changestage->P_II_B_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
+                $changestage->P_II_B_Assignable_Cause_Found_comment = $request->comments;
+                $changestage->status = "Closed - Done";
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'P-III Investigation Applicable/Not Applicable By ,  P-III Investigation Applicable/Not Applicable On';
+                $history->previous = $lastDocument->P_II_B_Assignable_Cause_Found_by;
+                $history->current = $changestage->P_II_B_Assignable_Cause_Found_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Closed - Done";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'P-III Investigation Applicable/Not Applicable';
+                $history->action = 'P-III Investigation Applicable/Not Applicable';
+                $history->stage='P-III Investigation Applicable/Not Applicable';
+                $history->save();
+                $changestage->update();
+                toastr()->success('Closed - Done');
+                return back();
+            }
+
+            
 
         } else {
             toastr()->error('E-signature Not match');
@@ -2209,6 +2237,8 @@ class OOTController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $data = Ootc::find($id);
             $lastDocument = Ootc::find($id);
+            $changestage = Ootc::find($id);
+
 
             if ($data->stage == 2) {
                 $data->stage = "1";
@@ -2415,6 +2445,33 @@ class OOTController extends Controller
                 return back();
             }
 
+            // if ($changestage->stage == 25) {
+            //     $changestage->stage = "24";
+            //     $changestage->P_II_B_Assignable_Cause_Found_by = Auth::user()->name;
+            //     $changestage->P_II_B_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
+            //     $changestage->P_II_B_Assignable_Cause_Found_comment = $request->comments;
+            //     $changestage->status = "Closed - Done";
+            //     $history = new OotAuditTrial();
+            //     $history->ootcs_id = $id;
+            //     $history->activity_type = 'P-III Investigation Applicable/Not Applicable By ,   P-III Investigation Applicable/Not Applicable On';
+            //     $history->previous = $lastDocument->P_II_B_Assignable_Cause_Found_by;
+            //     $history->current = $changestage->P_II_B_Assignable_Cause_Found_by;
+            //     $history->comment = $request->comment;
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $lastDocument->status;
+            //     $history->change_to = "Closed - Done";
+            //     $history->change_from = $lastDocument->status;
+            //     $history->action_name = 'P-III Investigation Applicable/Not Applicable';
+            //     $history->action = 'P-III Investigation Applicable/Not Applicable';
+            //     $history->stage='P-III Investigation Applicable/Not Applicable';
+            //     $history->save();
+            //     $changestage->update();
+            //     toastr()->success('Closed - Done');
+            //     return back();
+            // }
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -2426,40 +2483,40 @@ class OOTController extends Controller
         $data = Ootc::find($id);
         $lastDocument = Ootc::find($id);
 
-        if ($data->stage == 24) {
-            $data->stage = "4";
-            $data->status = "Phase II B QA  Review ";
-            $data->new_stage_reject_by = Auth::user()->name;
-            $data->new_stage_reject_on = Carbon::now()->format('d-M-Y');
-            $data->new_stage_reject_comment = $request->comment;
-            $history = new OotAuditTrial();
-            $history->ootcs_id = $id;
-            $history->activity_type = 'P-II A Assignable Cause Not Found By  ,   P-II A Assignable Cause Not Found On';
-            if (is_null($lastDocument->new_stage_reject_by) || $lastDocument->new_stage_reject_by === '') {
-                $history->previous = "Null";
-            } else {
-                $history->previous = $lastDocument->new_stage_reject_by . ' , ' . $lastDocument->new_stage_reject_on;
-            }
-            $history->current = $data->new_stage_reject_by . ' , ' . $data->new_stage_reject_on;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Under Phase-II B Investigation";
-            $history->change_from = $lastDocument->status;
-            $history->action = 'P-II A Assignable Cause Not Found';
-            $history->stage='P-II A Assignable Cause Not Found';
-            if (is_null($lastDocument->new_stage_reject_by) || $lastDocument->new_stage_reject_by === '') {
-                $history->action_name = 'New';
-            } else {
-                $history->action_name = 'Update';
-            }
-            $history->save();
-            $data->update();
-            toastr()->success('Document Sent');
-            return back();
-        }
+        // if ($data->stage == 24) {
+        //     $data->stage = "4";
+        //     $data->status = "Phase II B QA  Review ";
+        //     $data->new_stage_reject_by = Auth::user()->name;
+        //     $data->new_stage_reject_on = Carbon::now()->format('d-M-Y');
+        //     $data->new_stage_reject_comment = $request->comment;
+        //     $history = new OotAuditTrial();
+        //     $history->ootcs_id = $id;
+        //     $history->activity_type = 'P-II A Assignable Cause Not Found By  ,   P-II A Assignable Cause Not Found On';
+        //     if (is_null($lastDocument->new_stage_reject_by) || $lastDocument->new_stage_reject_by === '') {
+        //         $history->previous = "Null";
+        //     } else {
+        //         $history->previous = $lastDocument->new_stage_reject_by . ' , ' . $lastDocument->new_stage_reject_on;
+        //     }
+        //     $history->current = $data->new_stage_reject_by . ' , ' . $data->new_stage_reject_on;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Under Phase-II B Investigation";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action = 'P-II A Assignable Cause Not Found';
+        //     $history->stage='P-II A Assignable Cause Not Found';
+        //     if (is_null($lastDocument->new_stage_reject_by) || $lastDocument->new_stage_reject_by === '') {
+        //         $history->action_name = 'New';
+        //     } else {
+        //         $history->action_name = 'Update';
+        //     }
+        //     $history->save();
+        //     $data->update();
+        //     toastr()->success('Document Sent');
+        //     return back();
+        // }
 
     }
 
@@ -2659,6 +2716,37 @@ public function stageChange(Request $request, $id){
                             toastr()->success('Under Phase-II B Investigation ');
                             return back();
                         }
+
+                        if ($changestage->stage == 24) {
+                            $changestage->stage = "25";
+                            $changestage->P_II_B_Assignable_Cause_Found_by = Auth::user()->name;
+                            $changestage->P_II_B_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
+                            $changestage->P_II_B_Assignable_Cause_Found_comment = $request->comments;
+                            $changestage->status = "Closed - Done";
+                            $history = new OotAuditTrial();
+                            $history->ootcs_id = $id;
+                            $history->activity_type = 'P-II B Assignable Cause Not Found By ,   P-II B Assignable Cause Not Found On';
+                            $history->previous = $lastDocument->P_II_B_Assignable_Cause_Found_by;
+                            $history->current = $changestage->P_II_B_Assignable_Cause_Found_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->change_to = "Closed - Done";
+                            $history->change_from = $lastDocument->status;
+                            $history->action_name = 'P-II B Assignable Cause Found';
+                            $history->action = 'P-II B Assignable Cause Found';
+                            $history->stage='P-II B Assignable Cause Found';
+                            $history->save();
+                            $changestage->update();
+                            toastr()->success('Closed - Done');
+                            return back();
+                        }
+
+
+
+                        
                     }
                         
         
