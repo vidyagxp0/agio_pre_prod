@@ -1168,14 +1168,14 @@
                     
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Completed By"> QA Review Completed By</label>
+                                    <label for="Completed By"> QA/CQA Review Completed By</label>
                                     <input type="hidden" name="qa_review_completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Completed On"> QA Review Completed On</label>
+                                    <label for="Completed On"> QA/CQA Review Completed On</label>
                                     <input type="hidden" name="qa_review_completed_on">
                                     <div class="static"></div>
                                 </div>
@@ -1281,14 +1281,14 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="QA More Info Required By"> QA Closure Review Completed By</label>
+                                    <label for="QA More Info Required By"> QA/CQA Closure Review Completed By</label>
                                     <input type="hidden" name="qa_closure_review_completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="QA QA Closure Review Completed On"> QA Closure Review Completed On</label>
+                                    <label for="QA/CQA QA/CQA Closure Review Completed On"> QA/CQA Closure Review Completed On</label>
                                     <input type="hidden" name="qa_closure_review_completed_on">
                                     <div class="static"></div>
                                 </div>
@@ -1309,14 +1309,14 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="QA More Info Required By"> QAH Approval Completed By</label>
+                                    <label for="QA More Info Required By"> QAH/CQA Approval Completed By</label>
                                     <input type="hidden" name="qah_approval_completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="QA QAH Approval Completed On"> QAH Approval Completed On</label>
+                                    <label for="QA QA/CQA Approval Completed On"> QAH/CQA Approval Completed On</label>
                                     <input type="hidden" name="qah_approval_completed_on">
                                     <div class="static"></div>
                                 </div>
