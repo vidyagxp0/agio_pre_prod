@@ -5838,11 +5838,11 @@ class RiskManagementController extends Controller
                         }
                     }
 
-                    $checkCFTCount = RiskAssesmentCftResponce::withoutTrashed()->where(['status' => 'Completed', 'incident_id' => $id])->count();
+                    $checkCFTCount = RiskAssesmentCftResponce::withoutTrashed()->where(['status' => 'Completed', 'risk_id' => $id])->count();
                     // dd(count(array_unique($valuesArray)), $checkCFTCount);
 
 
-                    if (!$IsCFTRequired || $checkCFTCount) {
+                    // if (!$IsCFTRequired || $checkCFTCount) {
 
                         $incident->stage = "5";
                         $incident->status = "In Approve";
@@ -5886,7 +5886,7 @@ class RiskManagementController extends Controller
                         //     }
                         // }
                         $incident->update();
-                    }
+                    // }
                     toastr()->success('Document Sent');
                     return back();
                 }
@@ -6009,7 +6009,7 @@ class RiskManagementController extends Controller
                     $incident->QA_head_approved_comment     = $request->comment;
 
                     $history = new RiskAuditTrail();
-                    $history->incident_id = $id;
+                    $history->risk_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action = 'Approved';
@@ -6099,7 +6099,7 @@ class RiskManagementController extends Controller
                     $incident->pending_initiator_approved_comment = $request->comment;
 
                     $history = new RiskAuditTrail();
-                    $history->incident_id = $id;
+                    $history->risk_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action = 'Initiator Updated Complete';
