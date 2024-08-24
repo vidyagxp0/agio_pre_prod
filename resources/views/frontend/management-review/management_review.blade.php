@@ -77,7 +77,7 @@
 
                             @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                HOD Finale Review Complete
+                                HOD Final Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Info Required
@@ -1345,19 +1345,19 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">HOD Final Review Complete By</label>
-                                        <div class="static">{{ $data->hodFinaleReviewComplete_by }}</div>
+                                        <div class="static">{{ $data->hodFinalReviewComplete_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">HOD Final Review Complete On</label>
-                                        <div class="static">{{ $data->hodFinaleReviewComplete_on }}</div>
+                                        <div class="static">{{ $data->hodFinalReviewComplete_on }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Comment</label>
-                                        <div class="static">{{ $data->hodFinaleReviewComplete_comment }}</div>
+                                        <div class="static">{{ $data->hodFinalReviewComplete_comment }}</div>
                                     </div>
                                 </div>
 
