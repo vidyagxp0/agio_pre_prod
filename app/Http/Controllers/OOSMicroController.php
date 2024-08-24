@@ -29,7 +29,7 @@ class OOSMicroController extends Controller
     public function index()
     {
         $cft = [];
-        $old_record = OOS_micro::select('id', 'division_id', 'record')->get();
+        $old_records = OOS_micro::select('id', 'division_id', 'record')->get();
         
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -48,7 +48,7 @@ class OOSMicroController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('Y-m-d');
 
-        return view('frontend.OOS_Micro.oos_micro', compact('due_date', 'record_number', 'old_record', 'cft'));
+        return view('frontend.OOS_Micro.oos_micro', compact('due_date', 'record_number', 'old_records', 'cft'));
     }
 
      public function store(Request $request){
@@ -680,7 +680,7 @@ class OOSMicroController extends Controller
        public function edit($id){
 
             $micro_data = OOS_micro::find($id);
-            $old_record = OOS_micro::select('id', 'division_id', 'record')->get();
+            $old_records = OOS_micro::select('id', 'division_id', 'record')->get();
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             // =========grid data========
@@ -693,7 +693,7 @@ class OOSMicroController extends Controller
             $oos_conclusions = $micro_data->grids()->where('identifier', 'oos_conclusion')->first();
             $oos_conclusion_reviews = $micro_data->grids()->where('identifier', 'oos_conclusion_review')->first();
             
-            return view('frontend.OOS_Micro.oos_micro_view',compact('micro_data','record_number','old_record',
+            return view('frontend.OOS_Micro.oos_micro_view',compact('micro_data','record_number','old_records',
              'info_product_materials','products_details','instrument_details','details_stabilities','oos_details','oos_capas','oos_conclusions','oos_conclusion_reviews'));
        }
         public function update(Request $request, $id){
@@ -2387,16 +2387,16 @@ if($lastDocument->$key != $request->$key){
         $parent_short_description = OOS_MICRO::where('id', $id)->value('description_gi');
         $hod = User::where('role', 4)->get();
         // dd($record_number);
-        $old_record = OOS_MICRO::select('id', 'division_id', 'record')->get();
+        $old_records = OOS_MICRO::select('id', 'division_id', 'record')->get();
 
         if ($request->child_type == "capa") {
             $parent_name = "CAPA";
             $Capachild = OOS_MICRO::find($id);
             $Capachild->Capachild = $record;
             $Capachild->save();
-         return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record',
+         return view('frontend.forms.capa', compact('parent_id','record_number', 'parent_record','parent_type', 'record',
           'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date',
-           'parent_name', 'parent_division_id', 'parent_record', 'old_record', 'cft'));
+           'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
         } elseif ($request->child_type == "Action_Item")
          {
             $parent_name = "CAPA";
@@ -2406,14 +2406,14 @@ if($lastDocument->$key != $request->$key){
             $actionchild->save();
 
             return view('frontend.action-item.action-item', compact('parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id',
-             'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'old_record'));
+             'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'old_records'));
         }
         else {
             $parent_name = "Root";
             $Rootchild = OOS_MICRO::find($id);
             $Rootchild->Rootchild = $record;
             $Rootchild->save();
-            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record'));
+            return view('frontend.forms.root-cause-analysis', compact('parent_id','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record'));
         }
     }
 // ================= close workflow ===================
