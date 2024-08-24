@@ -2416,6 +2416,8 @@ class RiskManagementController extends Controller
                 $Cft->Technology_transfer_person = $request->Technology_transfer_person == null ? $Cft->Technology_transfer_person : $request->Technology_transfer_person;
                 $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
+                $Cft->ContractGiver_Review = $request->ContractGiver_Review == null ? $Cft->ContractGiver_Review : $request->ContractGiver_Review;
+                $Cft->ContractGiver_person = $request->ContractGiver_person == null ? $Cft->ContractGiver_person : $request->ContractGiver_person;
                 $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
                 $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review == null ? $Cft->CorporateQualityAssurance_Review : $request->CorporateQualityAssurance_Review;
@@ -2456,6 +2458,8 @@ class RiskManagementController extends Controller
                 $Cft->QualityAssurance_person = $request->QualityAssurance_person;
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
+                $Cft->Microbiology_Review = $request->Microbiology_Review;
+                $Cft->Microbiology_person = $request->ProductionLiquid_person;
                 $Cft->Engineering_review = $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person;
                 $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
@@ -2468,6 +2472,8 @@ class RiskManagementController extends Controller
                 $Cft->Technology_transfer_person = $request->Technology_transfer_person;
                 $Cft->Environment_Health_review = $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
+                $Cft->ContractGiver_Review = $request->ContractGiver_Review;
+                $Cft->ContractGiver_person = $request->ContractGiver_person;
                 $Cft->Human_Resource_review = $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person;
                 $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
@@ -2523,6 +2529,8 @@ class RiskManagementController extends Controller
             $Cft->Technology_transfer_feedback = $request->Technology_transfer_feedback;
             $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
             $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
+            $Cft->ContractGiver_assessment = $request->Health_Safety_assessment;
+            $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
             $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
             $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
             $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
@@ -6537,5 +6545,50 @@ class RiskManagementController extends Controller
         $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
 
         return view('frontend.action-item.action-item', compact('parent_id', 'parent_type', 'record', 'currentDate', 'formattedDate', 'due_date', 'parent_record', 'parent_record', 'parent_division_id', 'parent_initiator_id', 'parent_intiation_date', 'parent_short_description', 'old_record'));
+    }
+
+    public function riskassesmentCancel(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changeControl = RiskManagement::find($id);
+            $lastDocument =  RiskManagement::find($id);
+
+            if ($changeControl->stage == 2) {
+                $changeControl->stage = "0";
+                $changeControl->status = "Closed - Cancelled";
+                $changeControl->cancelled_by = Auth::user()->name;
+                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->cancelled_comment = $request->comment;
+                $history = new RiskAuditTrail();
+                $history->market_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'Cancel';
+                $history->previous = "";
+                $history->current = $changeControl->closed_done_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Closed - Cancelled";
+                $history->change_from = "Supervisor Review";
+                $history->stage='Closed - Cancelled';
+                $history->save();
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            // $changeControl->stage = "2";
+            // // $changeControl->status = "Closed - Cancelled";
+            // $changeControl->cancelled_by = Auth::user()->name;
+            // $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+            // $changeControl->update();
+            // toastr()->success('Document Sent');
+            // return back();
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
     }
 }

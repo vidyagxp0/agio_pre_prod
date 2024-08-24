@@ -56,13 +56,16 @@
                             </button>
                         @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            QA Head/HOD Initial Review Complete
+                            QC Head/HOD Initial Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
                             </button>
                         @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -92,7 +95,7 @@
                             </button> --}}
                         @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Head/HOD Secondary Review Complete
+                                QC Head/HOD Secondary Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -114,10 +117,7 @@
                         
                         @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#root-modal">
-                                Root Cause Found
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Root Cause Not Found
+                                Aprroved
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -191,9 +191,9 @@
                             @endif
 
                             @if ($data->stage >= 2)
-                                <div class="active"  style="width: 8% ">QA Head/HOD Initial Review</div>
+                                <div class="active"  style="width: 8% ">QC Head/HOD Initial Review</div>
                             @else
-                                <div class="">QA Head/HOD Initial Review</div>
+                                <div class="">QC Head/HOD Initial Review</div>
                             @endif
 
                             @if ($data->stage >= 3)
@@ -208,9 +208,9 @@
                                 <div class="">Pending Initiator Update</div>
                             @endif
                             @if ($data->stage >= 5)
-                                <div class="active">QA Head/HOD Secondary Review</div>
+                                <div class="active">QC Head/HOD Secondary Review</div>
                             @else
-                                <div class="">QA Head/HOD Secondary Review</div>
+                                <div class="">QC Head/HOD Secondary Review</div>
                             @endif
                             @if ($data->stage >= 6)
                                 <div class="active">QA Secondary Review</div>
@@ -222,7 +222,7 @@
                             @else
                                 <div class="">QAH Approval</div>
                             @endif
-                             @if ($data->stage >= 8)
+                             <!-- @if ($data->stage >= 8)
                                 <div class="active">QA Head/HOD Final Review</div>
                             @else
                                 <div class="">QA Head/HOD Final Review</div>
@@ -237,7 +237,7 @@
                                 <div class="active" >QAH Final Approval</div>
                             @else
                                 <div class="">QAH Final Approval</div>
-                            @endif
+                            @endif -->
 
                             @if ($data->stage >= 11)
                                 <div class="bg-danger" >Closed - Done</div>

@@ -678,7 +678,7 @@
                                 More Info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Initial Review Complete
+                                QA/CQA Initial Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-not-reqired">
                                 CFT Review Not Required
@@ -704,16 +704,16 @@
                                 Send to HOD
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                                Send to QA Initial Review
+                                Send to QA/CQA Initial Review
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Final Assessment Complete
+                                QA/CQA Final Assessment Complete
                             </button>
                         @elseif($data->stage == 6 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approved
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
@@ -746,6 +746,9 @@
                                 HOD Final Review Complete
                             </button>
                         @elseif($data->stage == 9 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                          <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pending-initiator-update">
+                                Send to Pending Initiator Update
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Implementation verification Complete
                             </button>
@@ -760,6 +763,7 @@
                                 Closure Approved
                             </button>
                         @elseif($data->stage == 11 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                       
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
@@ -802,10 +806,10 @@
                             @endif
 
                             @if ($data->stage >= 3)
-                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>QA
+                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>QA/CQA
                                     Initial Assessment</div>
                             @else
-                                <div class="" @if ($data->stage == 11) style="display: none" @endif>QA
+                                <div class="" @if ($data->stage == 11) style="display: none" @endif>QA/CQA
                                     Initial Assessment</div>
                             @endif
 
@@ -820,17 +824,17 @@
 
 
                             @if ($data->stage >= 5)
-                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>QA
+                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>QA/CQA
                                     Final Assessment</div>
                             @else
-                                <div class="" @if ($data->stage == 11) style="display: none" @endif>QA
+                                <div class="" @if ($data->stage == 11) style="display: none" @endif>QA/CQA
                                     Final Assessment</div>
                             @endif
                             @if ($data->stage >= 6)
-                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>QA
+                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>QA/CQA
                                     Head/Manager Designee Approval</div>
                             @else
-                                <div class="" @if ($data->stage == 11) style="display: none" @endif>QA
+                                <div class="" @if ($data->stage == 11) style="display: none" @endif>QA/CQA
                                     Head/Manager Designee Approval</div>
                             @endif
                             @if ($data->stage >= 7)
@@ -848,9 +852,9 @@
                             @endif
                             @if ($data->stage >= 9)
                                 <div class="active" @if ($data->stage == 11) style="display: none" @endif>
-                                    Implementation verification by QA</div>
+                                    Implementation verification by QA/CQA</div>
                             @else
-                                <div class="">Implementation verification by QA</div>
+                                <div class="">Implementation verification by QA/CQA</div>
                             @endif
                             @if ($data->stage >= 10)
                                 <div class="active" @if ($data->stage == 11) style="display: none" @endif>Head
@@ -13948,22 +13952,22 @@
                     </div>
 
 
-                    <div class="sub-head">QA Initial Review Completed</div>
+                    <div class="sub-head">QA/CQA Initial Review Completed</div>
                     <div class="col-lg-3">
                         <div class="group-input">
-                            <label for="QA Initial Review Complete By">QA Initial Review Complete By :-</label>
+                            <label for="QA/CQA Initial Review Complete By">QA/CQA Initial Review Complete By :-</label>
                             <div class="static">{{ $data->QA_Initial_Review_Complete_By }}</div>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="group-input">
-                            <label for="QA Initial Review Complete On">QA Initial Review Complete On :-</label>
+                            <label for="QA/CQA Initial Review Complete On">QA/CQA Initial Review Complete On :-</label>
                             <div class="static">{{ $data->QA_Initial_Review_Complete_On }}</div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                            <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
+                            <label for="QA/CQA Initial Review Comments">QA/CQA Initial Review Comments:-</label>
                             <div class="">{{ $data->QA_Initial_Review_Comments }}</div>
                         </div>
                     </div>
@@ -13988,44 +13992,44 @@
                         </div>
                     </div>
 
-                    <div class="sub-head"> QA Final Review Completed</div>
+                    <div class="sub-head"> QA/CQA Final Review Completed</div>
                     <div class="col-lg-3">
                         <div class="group-input">
-                            <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
+                            <label for="QA/CQA Final Review Complete By"> QA/CQA Final Review Complete By :-</label>
                             <div class="static">{{ $data->QA_Final_Review_Complete_By }}</div>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="group-input">
-                            <label for="QA Final Review Complete On"> QA Final Review Complete On :-</label>
+                            <label for="QA/CQA Final Review Complete On"> QA/CQA Final Review Complete On :-</label>
                             <div class="static">{{ $data->QA_Final_Review_Complete_On }}</div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                            <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
+                            <label for="QA/CQA Final Review Comments"> QA/CQA Final Review Comments :-</label>
                             <div class="">{{ $data->QA_Final_Review_Comments }}</div>
                         </div>
                     </div>
 
-                    <div class="sub-head">QA Head/Manager Designee Approval</div>
+                    <div class="sub-head">QA/CQA Head/Manager Designee Approval</div>
                     <div class="col-lg-3">
                         <div class="group-input">
-                            <label for="QA Final Review Complete By">QA Head/Manager Designee Approval Complete By
+                            <label for="QA/CQA Final Review Complete By">QA/CQA Head/Manager Designee Approval Complete By
                                 :-</label>
                             <div class="static">{{ $data->QA_head_approved_by }}</div>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="group-input">
-                            <label for="QA Final Review Complete On">QA Head/Manager Designee Approval Complete On
+                            <label for="QA/CQA Final Review Complete On">QA/CQA Head/Manager Designee Approval Complete On
                                 :-</label>
                             <div class="static">{{ $data->QA_head_approved_on }}</div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                            <label for="QA Final Review Comments">QA Head/Manager Designee Approval Comments :-</label>
+                            <label for="QA/CQA Final Review Comments">QA/CQA Head/Manager Designee Approval Comments :-</label>
                             <div class="">{{ $data->QA_head_approved_comment }}</div>
                         </div>
                     </div>

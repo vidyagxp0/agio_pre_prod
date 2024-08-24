@@ -141,7 +141,7 @@
                                 More Info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Review Complete
+                                QA/CQA Review Complete
                             </button>
                         @elseif($data->stage == 4)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
@@ -170,7 +170,7 @@
                                 Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Final QA Review Complete
+                                Final QA/CQA Review Complete
                             </button>
                         @elseif($data->stage == 7 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
@@ -178,7 +178,7 @@
                                 Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QAH Closure
+                                QAH/CQAH Closure
                             </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
@@ -208,9 +208,9 @@
                                 <div class="">HOD Review</div>
                             @endif
                             @if ($data->stage >= 3)
-                                <div class="active">Initial QA Review</div>
+                                <div class="active">Initial QA/CQA Review</div>
                             @else
-                                <div class="">Initial QA Review</div>
+                                <div class="">Initial QA/CQA Review</div>
                             @endif
 
 
@@ -240,14 +240,14 @@
 
 
                             @if ($data->stage >= 6)
-                                <div class="active">Final QA Review</div>
+                                <div class="active">Final QA/CQA Review </div>
                             @else
-                                <div class="">Final QA Review</div>
+                                <div class="">Final QA/CQA Review </div>
                             @endif
                             @if ($data->stage >= 7)
-                                <div class="active">QAH Final Review</div>
+                                <div class="active">QAH/CQAH Final Review</div>
                             @else
-                                <div class="">QAH Final Review</div>
+                                <div class="">QAH/CQAH Final Review</div>
                             @endif
                             @if ($data->stage >= 8)
                                 <div class="bg-danger">Closed - Done</div>
@@ -1879,13 +1879,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QQQA_Review_Complete_By">QA Review Complete By</label>
+                                        <label for="QQQA_Review_Complete_By">QA/CQA Review Complete By</label>
                                         <div class="static">{{ $data->QQQA_Review_Complete_By }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QQQA_Review_Complete_On">QA Review Complete On</label>
+                                        <label for="QQQA_Review_Complete_On">QA/CQA Review Complete On</label>
                                         <div class="static">{{ $data->QQQA_Review_Complete_On }}</div>
                                     </div>
                                 </div>
@@ -1997,13 +1997,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Final_QA_Review_Complete_By">Final QA Review Complete By</label>
+                                        <label for="Final_QA_Review_Complete_By">Final QA/CQA Review Complete By</label>
                                         <div class="static">{{ $data->Final_QA_Review_Complete_By }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Final_QA_Review_Complete_On">Final QA Review Complete On</label>
+                                        <label for="Final_QA_Review_Complete_On">Final QA/CQA Review Complete On</label>
                                         <div class="static">{{ $data->Final_QA_Review_Complete_On }}</div>
                                     </div>
                                 </div>
@@ -2035,13 +2035,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="evaluation_complete_by">QAH Closure By</label>
+                                        <label for="evaluation_complete_by">QAH/CQAH Closure By</label>
                                         <div class="static">{{ $data->evaluation_complete_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="evaluation_complete_on">QAH Closure On</label>
+                                        <label for="evaluation_complete_on">QAH/CQAH Closure On</label>
                                         <div class="static">{{ $data->evaluation_complete_on }}</div>
                                     </div>
                                 </div>
