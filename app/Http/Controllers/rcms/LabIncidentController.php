@@ -4690,7 +4690,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                if ($request->revision == "Action-Item") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $record = $record_number;
-                   return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                   return view('frontend.forms.action-item', compact('record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
                }
 
@@ -4710,7 +4710,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                if ($request->revision == "capa") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $record = $record_number;
-                  return view('frontend.forms.capa', compact('record', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+                  return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
                }
                if ($request->revision == "rca") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
