@@ -46,7 +46,7 @@
                             </button>
                         @elseif($data->stage == 2 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                               Completed
+                               Complete
                             </button>
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
