@@ -247,6 +247,9 @@
                                Send To CFT
                             </button></a>
                             {{-- <a href="#signature-modal"></a> --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
 
                         @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
                         <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
@@ -257,7 +260,7 @@
                                 CFT Review Complete
                             </button></a> --}}
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                CFT  Complete
+                                CFT  Review Complete
                             </button></a>
 
                         @elseif($data->stage == 5 && (in_array(1, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -269,7 +272,7 @@
                             </button></a>
                         @elseif($data->stage == 6 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                         <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Approve Complete
+                            ApprovalComplete
                         </button></a>
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -333,10 +336,10 @@
                             @endif
 
                             @if ($data->stage >= 5)
-                                <div class="active">All Action Complete Complete Verification by
+                                <div class="active">All Action Completion Verification by
                                     QA/CQA </div>
                             @else
-                                <div class="">All Action Complete Complete Verification by
+                                <div class="">All Action Completion Verification by
                                     QA/CQA </div>
                             @endif
                             @if ($data->stage >= 6)
@@ -3786,7 +3789,7 @@ Approval </div>
                                     name="Store_feedback" id="summernote-18" @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Store_feedback }}</textarea>
                             </div>
                         </div>
-                        <div class="col-12 store">
+                        {{-- <div class="col-12 store">
                             <div class="group-input">
                                 <label for="Store attachment">Store Attachments</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
@@ -3818,7 +3821,7 @@ Approval </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-md-6 mb-3 store">
                             <div class="group-input">
                                 <label for="Store Completed By">Store Completed
@@ -9926,12 +9929,12 @@ document.getElementById('initiator_group').addEventListener('change', function()
                                 Action Item
                             </label>
                         </div>
-                        {{-- <div class="group-input">
+                        <div class="group-input">
                             <label for="root-item">
                              <input type="radio" name="revision" id="root-item" value="effectiveness-check">
-                                Effectiveness check
+                                RCA
                             </label>
-                        </div> --}}
+                        </div>
                     </div>
 
                     <!-- Modal footer -->
