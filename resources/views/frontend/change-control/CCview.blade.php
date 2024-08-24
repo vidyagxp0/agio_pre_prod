@@ -135,15 +135,15 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button>
+                            </button>  --}}
                         @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                HOD Review Complete
+                                HOD Assessment Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
@@ -153,14 +153,15 @@
                                 More Information Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Initial Review Complete
+                                QA Initial Assessment Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
                         @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                CFT Review Complete
+                                CFT Assessment Complete
+                                
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -186,7 +187,7 @@
                             </button>
                         @elseif($data->stage == 6 && (in_array(18, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                RA Review Complete
+                                RA Approval Complete
                             </button>
                         @elseif($data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
@@ -198,21 +199,48 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval">
                                 Rejected
                             </button>
-                        @elseif ($data->stage == 9 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif ($data->stage == 9 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
-                                Send For Final Approval
+                                Initiator Updated Completed
+                            </button>
+                            {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Info Required
+                            </button>  --}}
+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-stage_8">
+                                Child
+                            </button>
+                        @elseif ($data->stage == 10 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                                HOD Final Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Info Required
+                                More Information Required
                             </button>
-                        @elseif ($data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+
+                        @elseif ($data->stage == 11 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                                Send For Final QA Head Approval
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Information Required
+                            </button>    
+
+                            @elseif ($data->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Closure Approved
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Info Required
+                                More Information Required
+                            </button> 
+                            
+                            @elseif ($data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child_effective_ness">
+                                Child
                             </button>
+                              
                         @else
+                        
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -290,6 +318,16 @@
                             @else
                                 <div class="" @if($data->stage == 8) style="display: none" @endif>QA Closure Approval</div>
                             @endif
+
+
+
+                            @if ($data->stage >= 13)
+                                <div class="active bg-danger" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
+                            @endif
+
+                            
 
                             <!-- @if ($data->stage >= 9)
                                 <div class="active" @if($data->stage == 8) style="display: none" @endif>Post Implementation</div>
@@ -1293,30 +1331,35 @@
                                     <div class="inner-block-content">
                                         <div class="row">
 
-                                        <div class="sub-head">
-                                            RA Review
-                                        </div>
-                                        <script>
-                                            $(document).ready(function() {
-                                                $('.ra_review').hide();
+                                            <div class="sub-head">
+                                                RA Review
+                                            </div>
+                                            @php
+                                                $data1 = DB::table('cc_cfts')
+                                                    ->where('cc_id', $data->id)
+                                                    ->first();
+                                            @endphp
 
-                                                $('[name="RA_Review"]').change(function() {
-                                                    if ($(this).val() === 'yes') {
-
-                                                        $('.ra_review').show();
-                                                        $('.ra_review span').show();
-                                                    } else {
+                                                <script>
+                                                $(document).ready(function() {
+                                         
+                                                   @if($data1->RA_Review!=='yes')
                                                         $('.ra_review').hide();
-                                                        $('.ra_review span').hide();
-                                                    }
-                                                });
-                                            });
-                                        </script>
-                                        @php
-                                            $data1 = DB::table('cc_cfts')
-                                                ->where('cc_id', $data->id)
-                                                ->first();
-                                        @endphp
+            
+                                                        $('[name="RA_Review"]').change(function() {
+                                                            if ($(this).val() === 'yes') {
+            
+                                                                $('.ra_review').show();
+                                                                $('.ra_review span').show();
+                                                            } else {
+                                                                $('.ra_review').hide();
+                                                                $('.ra_review span').hide();
+                                                            }
+                                                        });
+                                                        @endif
+                                                    });
+                                                </script>
+                                        
 
                                         @if ($data->stage == 3 || $data->stage == 4)
                                             <div class="col-lg-6">
@@ -1334,10 +1377,11 @@
 
                                                 </div>
                                             </div>
+                                            
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 50,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -1353,7 +1397,7 @@
                                                         id="RA_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->RA_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->RA_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -1367,7 +1411,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->RA_Review == 'yes' && $data->stage == 4) required @endif class="summernote RA_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->RA_person) && Auth::user()->id != $data1->RA_person)) readonly @endif name="RA_assessment" id="summernote-17">{{ $data1->RA_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->RA_person) && Auth::user()->name != $data1->RA_person)) readonly @endif name="RA_assessment" id="summernote-17">{{ $data1->RA_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 ra_review">
@@ -1377,18 +1421,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote RA_feedback" @if ($data->stage == 3 || (isset($data1->RA_person) && Auth::user()->id != $data1->RA_person)) readonly @endif name="RA_feedback"
+                                                    <textarea class="summernote RA_feedback" @if ($data->stage == 3 || (isset($data1->RA_person) && Auth::user()->name != $data1->RA_person)) readonly @endif name="RA_feedback"
                                                         id="summernote-18" @if ($data1->RA_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->RA_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->RA_attachment)
-                                                @foreach (json_decode($data1->RA_attachment) as $file)
-                                                    <input id="RaAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinRAFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 ra_review">
                                                 <div class="group-input">
                                                     <label for="RA attachment">RA Attachments</label>
@@ -1404,7 +1440,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="RaAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -1493,7 +1529,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 50,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -1507,7 +1543,7 @@
                                                     <select name="RA_person" disabled id="RA_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->RA_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->RA_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -1564,13 +1600,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                            @if ($data1->RA_attachment)
-                                                @foreach (json_decode($data1->RA_attachment) as $file)
-                                                    <input id="RaAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinRAFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 ra_review">
                                                 <div class="group-input">
                                                     <label for="RA attachment">RA Attachments</label>
@@ -1586,7 +1615,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="RaAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -1625,8 +1654,11 @@
                                         <div class="sub-head">
                                             Quality Assurance
                                         </div>
+                                      
                                         <script>
                                             $(document).ready(function() {
+
+                                                @if($data1->Quality_Assurance_Review!=='yes')
                                                 $('.QualityAssurance').hide();
 
                                                 $('[name="Quality_Assurance_Review"]').change(function() {
@@ -1639,6 +1671,7 @@
                                                         $('.QualityAssurance span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -1667,7 +1700,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 26,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -1684,7 +1717,7 @@
                                                         class="QualityAssurance_person" id="QualityAssurance_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->QualityAssurance_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->QualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -1699,7 +1732,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote QualityAssurance_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->QualityAssurance_person) && Auth::user()->id != $data1->QualityAssurance_person)) readonly @endif 
+                                                    @if ($data->stage == 3 || (isset($data1->QualityAssurance_person) && Auth::user()->name != $data1->QualityAssurance_person)) readonly @endif 
                                                         name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
                                                 </div>
                                             </div>
@@ -1710,17 +1743,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote QualityAssurance_feedback" @if ($data->stage == 3 || (isset($data1->QualityAssurance_person) && Auth::user()->id != $data1->QualityAssurance_person)) readonly @endif
+                                                    <textarea class="summernote QualityAssurance_feedback" @if ($data->stage == 3 || (isset($data1->QualityAssurance_person) && Auth::user()->name != $data1->QualityAssurance_person)) readonly @endif
                                                         name="QualityAssurance_feedback" id="summernote-18" @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->QualityAssurance_feedback }}</textarea>
                                                 </div>
                                             </div>
-                                            @if ($data1->Quality_Assurance_attachment)
-                                                @foreach (json_decode($data1->Quality_Assurance_attachment) as $file)
-                                                    <input id="qualityAssuranceAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinQualityAssuranceFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 QualityAssurance">
                                                 <div class="group-input">
                                                     <label for="Quality Assurance attachment">Quality Assurance Attachments</label>
@@ -1736,7 +1762,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="qualityAssuranceAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -1826,7 +1852,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 26,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -1840,7 +1866,7 @@
                                                     <select name="QualityAssurance_person" disabled id="QualityAssurance_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->QualityAssurance_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->QualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -1881,14 +1907,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Quality_Assurance_attachment)
-                                                @foreach (json_decode($data1->Quality_Assurance_attachment) as $file)
-                                                    <input id="qualityAssuranceAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinQualityAssuranceFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 QualityAssurance">
                                                 <div class="group-input">
                                                     <label for="Quality Assurance attachment">Quality Assurance Attachments</label>
@@ -1904,7 +1922,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="qualityAssuranceAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -1946,6 +1964,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Production_Table_Review!=='yes')
                                                 $('.productionTable').hide();
 
                                                 $('[name="Production_Table_Review"]').change(function() {
@@ -1958,6 +1977,7 @@
                                                         $('.productionTable span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -1985,7 +2005,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 51,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -2002,7 +2022,7 @@
                                                         class="Production_Table_Person" id="Production_Table_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Production_Table_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Production_Table_Person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2016,7 +2036,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Production_Table_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_Table_Assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Production_Table_Person) && Auth::user()->id != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 productionTable">
@@ -2026,18 +2046,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Production_Table_Feedback" @if ($data->stage == 3 || (isset($data1->Production_Table_Person) && Auth::user()->id != $data1->Production_Table_Person)) readonly @endif
+                                                    <textarea class="summernote Production_Table_Feedback" @if ($data->stage == 3 || (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif
                                                         name="Production_Table_Feedback" id="summernote-18" @if ($data1->Production_Table_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Production_Table_Feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Table_Attachment)
-                                                @foreach (json_decode($data1->Production_Table_Attachment) as $file)
-                                                    <input id="producttiontabletAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProducttiontabletFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 productionTable">
                                                 <div class="group-input">
                                                     <label for="Production Tablet attachment">Production Tablet Attachments</label>
@@ -2053,7 +2065,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="producttiontabletAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -2143,7 +2155,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 51,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -2157,7 +2169,7 @@
                                                     <select name="Production_Table_Person" disabled id="Production_Table_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Production_Table_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Production_Table_Person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2214,14 +2226,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Production_Table_Attachment)
-                                                @foreach (json_decode($data1->Production_Table_Attachment) as $file)
-                                                    <input id="producttiontabletAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProducttiontabletFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 productionTable">
                                                 <div class="group-input">
                                                     <label for="Production Tablet attachment">Production Tablet Attachments</label>
@@ -2237,7 +2241,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="producttiontabletAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -2279,6 +2283,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->ProductionLiquid_Review!=='yes')
                                                 $('.productionLiquid').hide();
 
                                                 $('[name="ProductionLiquid_Review"]').change(function() {
@@ -2291,6 +2296,7 @@
                                                         $('.productionLiquid span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -2319,7 +2325,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 52,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -2336,7 +2342,7 @@
                                                         class="ProductionLiquid_person" id="ProductionLiquid_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ProductionLiquid_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ProductionLiquid_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2351,7 +2357,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 4) required @endif class="summernote ProductionLiquid_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->ProductionLiquid_person) && Auth::user()->id != $data1->ProductionLiquid_person)) readonly @endif name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->ProductionLiquid_person) && Auth::user()->name != $data1->ProductionLiquid_person)) readonly @endif name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 productionLiquid">
@@ -2361,18 +2367,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote ProductionLiquid_feedback"  @if ($data->stage == 3 || (isset($data1->ProductionLiquid_person) && Auth::user()->id != $data1->ProductionLiquid_person)) readonly @endif
+                                                    <textarea class="summernote ProductionLiquid_feedback"  @if ($data->stage == 3 || (isset($data1->ProductionLiquid_person) && Auth::user()->name != $data1->ProductionLiquid_person)) readonly @endif
                                                         name="ProductionLiquid_feedback" id="summernote-18" @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ProductionLiquid_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->ProductionLiquid_attachment)
-                                                @foreach (json_decode($data1->ProductionLiquid_attachment) as $file)
-                                                    <input id="productionLiquidAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionLiquidFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 productionLiquid">
                                                 <div class="group-input">
                                                     <label for="Production Liquid attachment">Production Liquid Attachments</label>
@@ -2388,7 +2386,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -2492,7 +2490,7 @@
                                                     <select name="ProductionLiquid_person" disabled id="ProductionLiquid_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ProductionLiquid_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ProductionLiquid_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2533,14 +2531,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->ProductionLiquid_attachment)
-                                                @foreach (json_decode($data1->ProductionLiquid_attachment) as $file)
-                                                    <input id="productionLiquidAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionLiquidFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 productionLiquid">
                                                 <div class="group-input">
                                                     <label for="Production Liquid attachment">Production Liquid Attachments</label>
@@ -2556,7 +2546,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -2600,6 +2590,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Production_Injection_Review!=='yes')
                                                 $('.productionInjection').hide();
 
                                                 $('[name="Production_Injection_Review"]').change(function() {
@@ -2612,6 +2603,7 @@
                                                         $('.productionInjection span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -2640,7 +2632,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 53,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -2657,7 +2649,7 @@
                                                         class="Production_Injection_Person" id="Production_Injection_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Production_Injection_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Production_Injection_Person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2672,7 +2664,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_Injection_Assessment"
-                                                        @if ($data->stage == 3 || (isset($data1->Production_Injection_Person) && Auth::user()->id != $data1->Production_Injection_Person)) readonly @endif name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
+                                                        @if ($data->stage == 3 || (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 productionInjection">
@@ -2682,18 +2674,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Production_Injection_Feedback" @if ($data->stage == 3 || (isset($data1->Production_Injection_Person) && Auth::user()->id != $data1->Production_Injection_Person)) readonly @endif
+                                                    <textarea class="summernote Production_Injection_Feedback" @if ($data->stage == 3 || (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif
                                                         name="Production_Injection_Feedback" id="summernote-18" @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Production_Injection_Feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 productionInjection">
                                                 <div class="group-input">
                                                     <label for="Production Injection attachment">Production Injection Attachments</label>
@@ -2709,7 +2693,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="productionInjectionAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -2813,7 +2797,7 @@
                                                     <select name="Production_Injection_Person" disabled id="Production_Injection_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Production_Injection_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Production_Injection_Person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2870,14 +2854,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 productionInjection">
                                                 <div class="group-input">
                                                     <label for="Production Injection attachment">Production Injection Attachments</label>
@@ -2893,7 +2869,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -2935,6 +2911,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Store_Review!=='yes')
                                                 $('.store').hide();
 
                                                 $('[name="Store_Review"]').change(function() {
@@ -2947,6 +2924,7 @@
                                                         $('.store span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -2975,7 +2953,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 54,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -2992,7 +2970,7 @@
                                                         class="Store_person" id="Store_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Store_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Store_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3007,7 +2985,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif class="summernote Store_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->id != $data1->Store_person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->name != $data1->Store_person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 store">
@@ -3017,18 +2995,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Store_feedback" @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->id != $data1->Store_person)) readonly @endif
+                                                    <textarea class="summernote Store_feedback" @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->name != $data1->Store_person)) readonly @endif
                                                         name="Store_feedback" id="summernote-18" @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Store_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 store">
                                                 <div class="group-input">
                                                     <label for="Store attachment">Store Attachments</label>
@@ -3044,7 +3014,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -3148,7 +3118,7 @@
                                                     <select name="Store_person" disabled id="Store_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Store_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Store_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3189,14 +3159,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 store">
                                                 <div class="group-input">
                                                     <label for="Store attachment">Store Attachments</label>
@@ -3212,7 +3174,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -3256,6 +3218,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Quality_review!=='yes')
                                                 $('.qualityControl').hide();
 
                                                 $('[name="Quality_review"]').change(function() {
@@ -3268,6 +3231,8 @@
                                                         $('.qualityControl span').hide();
                                                     }
                                                 });
+                                                @endif
+
                                             });
                                         </script>
                                         @php
@@ -3296,7 +3261,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 24,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -3313,7 +3278,7 @@
                                                         class="Quality_Control_Person" id="Quality_Control_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Quality_Control_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Quality_Control_Person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3328,7 +3293,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Quality_review == 'yes' && $data->stage == 4) required @endif class="summernote Quality_Control_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->id != $data1->Quality_Control_Person)) readonly @endif name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 qualityControl">
@@ -3338,18 +3303,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Quality_Control_feedback" @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->id != $data1->Quality_Control_Person)) readonly @endif
+                                                    <textarea class="summernote Quality_Control_feedback" @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif
                                                         name="Quality_Control_feedback" id="summernote-18" @if ($data1->Quality_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Quality_Control_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 qualityControl">
                                                 <div class="group-input">
                                                     <label for="Quality Control attachment">Quality Control Attachments</label>
@@ -3365,7 +3322,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -3469,7 +3426,7 @@
                                                     <select name="Quality_Control_Person" disabled id="Quality_Control_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Quality_Control_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Quality_Control_Person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3510,14 +3467,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 qualityControl">
                                                 <div class="group-input">
                                                     <label for="Quality Control attachment">Quality Control Attachments</label>
@@ -3533,7 +3482,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -3574,6 +3523,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->ResearchDevelopment_Review!=='yes')
                                                 $('.researchDevelopment').hide();
 
                                                 $('[name="ResearchDevelopment_Review"]').change(function() {
@@ -3586,6 +3536,7 @@
                                                         $('.researchDevelopment span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -3614,7 +3565,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 55,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -3631,7 +3582,7 @@
                                                         class="ResearchDevelopment_person" id="ResearchDevelopment_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ResearchDevelopment_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ResearchDevelopment_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3646,7 +3597,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif class="summernote ResearchDevelopment_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->ResearchDevelopmentStore_Person) && Auth::user()->id != $data1->ResearchDevelopmentStore_Person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->ResearchDevelopmentStore_Person) && Auth::user()->name != $data1->ResearchDevelopmentStore_Person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 researchDevelopment">
@@ -3656,18 +3607,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote ResearchDevelopment_feedback" @if ($data->stage == 3 || (isset($data1->ResearchDevelopmentStore_Person) && Auth::user()->id != $data1->ResearchDevelopmentStore_Person)) readonly @endif
+                                                    <textarea class="summernote ResearchDevelopment_feedback" @if ($data->stage == 3 || (isset($data1->ResearchDevelopmentStore_Person) && Auth::user()->name != $data1->ResearchDevelopmentStore_Person)) readonly @endif
                                                         name="ResearchDevelopment_feedback" id="summernote-18" @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 researchDevelopment">
                                                 <div class="group-input">
                                                     <label for="Research Development attachment">Research Development Attachments</label>
@@ -3683,7 +3626,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -3787,7 +3730,7 @@
                                                     <select name="ResearchDevelopment_person" disabled id="ResearchDevelopment_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ResearchDevelopment_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ResearchDevelopment_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3828,14 +3771,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 researchDevelopment">
                                                 <div class="group-input">
                                                     <label for="Research Development attachment">Research Development Attachments</label>
@@ -3851,7 +3786,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -3894,6 +3829,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Engineering_review!=='yes')
                                                 $('.Engineering').hide();
 
                                                 $('[name="Engineering_review"]').change(function() {
@@ -3906,6 +3842,7 @@
                                                         $('.Engineering span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -3934,7 +3871,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 25,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -3951,7 +3888,7 @@
                                                         class="Engineering_person" id="Engineering_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Engineering_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Engineering_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3966,7 +3903,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif class="summernote Engineering_assessment"
-                                                        @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->id != $data1->Engineering_person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                        @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 Engineering">
@@ -3976,18 +3913,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Engineering_feedback" @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->id != $data1->Engineering_person)) readonly @endif
+                                                    <textarea class="summernote Engineering_feedback" @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif
                                                         name="Engineering_feedback" id="summernote-18" @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Engineering_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 Engineering">
                                                 <div class="group-input">
                                                     <label for="Engineering attachment">Engineering Attachments</label>
@@ -4003,7 +3932,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -4107,7 +4036,7 @@
                                                     <select name="Engineering_person" disabled id="Engineering_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Engineering_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Engineering_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4148,14 +4077,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 Engineering">
                                                 <div class="group-input">
                                                     <label for="Engineering attachment">Engineering Attachments</label>
@@ -4171,7 +4092,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -4215,6 +4136,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Human_Resource_review!=='yes')
                                                 $('.Human_Resource').hide();
 
                                                 $('[name="Human_Resource_review"]').change(function() {
@@ -4227,6 +4149,7 @@
                                                         $('.Human_Resource span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -4255,7 +4178,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 31,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -4272,7 +4195,7 @@
                                                         class="Human_Resource_person" id="Human_Resource_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Human_Resource_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Human_Resource_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4287,7 +4210,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif class="summernote Human_Resource_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Human_Resource_person) && Auth::user()->id != $data1->Human_Resource_person)) readonly @endif name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Human_Resource_person) && Auth::user()->name != $data1->Human_Resource_person)) readonly @endif name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 Human_Resource">
@@ -4297,18 +4220,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Human_Resource_feedback" @if ($data->stage == 3 || (isset($data1->Human_Resource_person) && Auth::user()->id != $data1->Human_Resource_person)) readonly @endif
+                                                    <textarea class="summernote Human_Resource_feedback" @if ($data->stage == 3 || (isset($data1->Human_Resource_person) && Auth::user()->name != $data1->Human_Resource_person)) readonly @endif
                                                         name="Human_Resource_feedback" id="summernote-18" @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Human_Resource_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 Human_Resource">
                                                 <div class="group-input">
                                                     <label for="Human Resource attachment">Human Resource Attachments</label>
@@ -4324,7 +4239,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -4428,7 +4343,7 @@
                                                     <select name="Human_Resource_person" disabled id="Human_Resource_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Human_Resource_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Human_Resource_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4469,14 +4384,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 Human_Resource">
                                                 <div class="group-input">
                                                     <label for="Human Resource attachment">Human Resource Attachments</label>
@@ -4492,7 +4399,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -4534,6 +4441,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Microbiology_Review!=='yes')
                                                 $('.Microbiology').hide();
 
                                                 $('[name="Microbiology_Review"]').change(function() {
@@ -4546,6 +4454,7 @@
                                                         $('.Microbiology span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -4591,7 +4500,7 @@
                                                         class="Microbiology_person" id="Microbiology_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Microbiology_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Microbiology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4606,7 +4515,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Microbiology_Review == 'yes' && $data->stage == 4) required @endif class="summernote Microbiology_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Microbiology_person) && Auth::user()->id != $data1->Microbiology_person)) readonly @endif name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Microbiology_person) && Auth::user()->name != $data1->Microbiology_person)) readonly @endif name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 Microbiology">
@@ -4616,18 +4525,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Microbiology_feedback" @if ($data->stage == 3 || (isset($data1->Microbiology_person) && Auth::user()->id != $data1->Microbiology_person)) readonly @endif
+                                                    <textarea class="summernote Microbiology_feedback" @if ($data->stage == 3 || (isset($data1->Microbiology_person) && Auth::user()->name != $data1->Microbiology_person)) readonly @endif
                                                         name="Microbiology_feedback" id="summernote-18" @if ($data1->Microbiology_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Microbiology_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 Microbiology">
                                                 <div class="group-input">
                                                     <label for="Microbiology attachment">Microbiology Attachments</label>
@@ -4643,7 +4544,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -4733,7 +4634,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 56,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -4747,7 +4648,7 @@
                                                     <select name="Microbiology_person" disabled id="Microbiology_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Microbiology_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Microbiology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4788,14 +4689,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 Microbiology">
                                                 <div class="group-input">
                                                     <label for="Microbiology attachment">Microbiology Attachments</label>
@@ -4811,7 +4704,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -4854,6 +4747,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->RegulatoryAffair_Review!=='yes')
                                                 $('.RegulatoryAffair').hide();
 
                                                 $('[name="RegulatoryAffair_Review"]').change(function() {
@@ -4866,6 +4760,7 @@
                                                         $('.RegulatoryAffair span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -4894,7 +4789,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 57,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -4911,7 +4806,7 @@
                                                         class="RegulatoryAffair_person" id="RegulatoryAffair_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->RegulatoryAffair_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->RegulatoryAffair_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4926,7 +4821,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4) required @endif class="summernote RegulatoryAffair_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->RegulatoryAffair_person) && Auth::user()->id != $data1->RegulatoryAffair_person)) readonly @endif name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->RegulatoryAffair_person) && Auth::user()->name != $data1->RegulatoryAffair_person)) readonly @endif name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 RegulatoryAffair">
@@ -4936,18 +4831,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote RegulatoryAffair_feedback" @if ($data->stage == 3 || (isset($data1->RegulatoryAffair_person) && Auth::user()->id != $data1->RegulatoryAffair_person)) readonly @endif
+                                                    <textarea class="summernote RegulatoryAffair_feedback" @if ($data->stage == 3 || (isset($data1->RegulatoryAffair_person) && Auth::user()->name != $data1->RegulatoryAffair_person)) readonly @endif
                                                         name="RegulatoryAffair_feedback" id="summernote-18" @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 RegulatoryAffair">
                                                 <div class="group-input">
                                                     <label for="Regulatory Affair attachment">Regulatory Affair Attachments</label>
@@ -4963,7 +4850,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -5067,7 +4954,7 @@
                                                     <select name="RegulatoryAffair_person" disabled id="RegulatoryAffair_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->RegulatoryAffair_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->RegulatoryAffair_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5108,14 +4995,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 RegulatoryAffair">
                                                 <div class="group-input">
                                                     <label for="Regulatory Affair attachment">Regulatory Affair Attachments</label>
@@ -5131,7 +5010,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -5174,6 +5053,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->CorporateQualityAssurance_Review!=='yes')
                                                 $('.CQA').hide();
 
                                                 $('[name="CorporateQualityAssurance_Review"]').change(function() {
@@ -5186,6 +5066,8 @@
                                                         $('.CQA span').hide();
                                                     }
                                                 });
+
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -5214,7 +5096,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 58,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -5231,7 +5113,7 @@
                                                         class="CorporateQualityAssurance_person" id="CorporateQualityAssurance_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->CorporateQualityAssurance_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->CorporateQualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5246,7 +5128,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote CorporateQualityAssurance_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->CorporateQualityAssurance_person) && Auth::user()->id != $data1->CorporateQualityAssurance_person)) readonly @endif name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->CorporateQualityAssurance_person) && Auth::user()->name != $data1->CorporateQualityAssurance_person)) readonly @endif name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 CQA">
@@ -5256,18 +5138,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote CorporateQualityAssurance_feedback" @if ($data->stage == 3 || (isset($data1->CorporateQualityAssurance_person) && Auth::user()->id != $data1->CorporateQualityAssurance_person)) readonly @endif
+                                                    <textarea class="summernote CorporateQualityAssurance_feedback" @if ($data->stage == 3 || (isset($data1->CorporateQualityAssurance_person) && Auth::user()->name != $data1->CorporateQualityAssurance_person)) readonly @endif
                                                         name="CorporateQualityAssurance_feedback" id="summernote-18" @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 CQA">
                                                 <div class="group-input">
                                                     <label for="Corporate Quality Assurance attachment">Corporate Quality Assurance Attachments</label>
@@ -5283,7 +5157,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -5373,7 +5247,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 58,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -5387,7 +5261,7 @@
                                                     <select name="CorporateQualityAssurance_person" disabled id="CorporateQualityAssurance_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->CorporateQualityAssurance_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->CorporateQualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5428,14 +5302,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 CQA">
                                                 <div class="group-input">
                                                     <label for="Corporate Quality Assurance attachment">Corporate Quality Assurance Attachments</label>
@@ -5451,7 +5317,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -5494,6 +5360,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Environment_Health_review!=='yes')
                                                 $('.safety').hide();
 
                                                 $('[name="Environment_Health_review"]').change(function() {
@@ -5506,6 +5373,7 @@
                                                         $('.safety span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -5534,7 +5402,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 59,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -5551,7 +5419,7 @@
                                                         class="Environment_Health_Safety_person" id="Environment_Health_Safety_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Environment_Health_Safety_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Environment_Health_Safety_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5566,7 +5434,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif class="summernote Health_Safety_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Environment_Health_Safety_person) && Auth::user()->id != $data1->Environment_Health_Safety_person)) readonly @endif name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Environment_Health_Safety_person) && Auth::user()->name != $data1->Environment_Health_Safety_person)) readonly @endif name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 safety">
@@ -5576,18 +5444,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Health_Safety_feedback" @if ($data->stage == 3 || (isset($data1->Environment_Health_Safety_person) && Auth::user()->id != $data1->Environment_Health_Safety_person)) readonly @endif
+                                                    <textarea class="summernote Health_Safety_feedback" @if ($data->stage == 3 || (isset($data1->Environment_Health_Safety_person) && Auth::user()->name != $data1->Environment_Health_Safety_person)) readonly @endif
                                                         name="Health_Safety_feedback" id="summernote-18" @if ($data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Health_Safety_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 safety">
                                                 <div class="group-input">
                                                     <label for="Safety attachment">Safety Attachments</label>
@@ -5603,7 +5463,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -5693,7 +5553,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 59,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -5707,7 +5567,7 @@
                                                     <select name="Environment_Health_Safety_person" disabled id="Environment_Health_Safety_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Environment_Health_Safety_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Environment_Health_Safety_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5748,14 +5608,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 safety">
                                                 <div class="group-input">
                                                     <label for="Safety attachment">Safety Attachments</label>
@@ -5771,7 +5623,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -5815,6 +5667,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Information_Technology_review!=='yes')
                                                 $('.Information_Technology').hide();
 
                                                 $('[name="Information_Technology_review"]').change(function() {
@@ -5827,6 +5680,7 @@
                                                         $('.Information_Technology span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -5855,7 +5709,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 32,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -5872,7 +5726,7 @@
                                                         class="Information_Technology_person" id="Information_Technology_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Information_Technology_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Information_Technology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5887,7 +5741,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Information_Technology_review == 'yes' && $data->stage == 4) required @endif class="summernote Information_Technology_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Information_Technology_person) && Auth::user()->id != $data1->Information_Technology_person)) readonly @endif name="Information_Technology_assessment" id="summernote-17">{{ $data1->Information_Technology_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Information_Technology_person) && Auth::user()->name != $data1->Information_Technology_person)) readonly @endif name="Information_Technology_assessment" id="summernote-17">{{ $data1->Information_Technology_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 Information_Technology">
@@ -5897,18 +5751,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Information_Technology_feedback" @if ($data->stage == 3 || (isset($data1->Information_Technology_person) && Auth::user()->id != $data1->Information_Technology_person)) readonly @endif
+                                                    <textarea class="summernote Information_Technology_feedback" @if ($data->stage == 3 || (isset($data1->Information_Technology_person) && Auth::user()->name != $data1->Information_Technology_person)) readonly @endif
                                                         name="Information_Technology_feedback" id="summernote-18" @if ($data1->Information_Technology_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Information_Technology_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 Information_Technology">
                                                 <div class="group-input">
                                                     <label for="Information Technology attachment">Information Technology Attachments</label>
@@ -5924,7 +5770,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -6014,7 +5860,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 32,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -6028,7 +5874,7 @@
                                                     <select name="Information_Technology_person" disabled id="Information_Technology_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Information_Technology_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Information_Technology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -6069,14 +5915,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 Information_Technology">
                                                 <div class="group-input">
                                                     <label for="Information Technology attachment">Information Technology Attachments</label>
@@ -6092,7 +5930,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -6135,6 +5973,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->ContractGiver_Review!=='yes')
                                                 $('.ContractGiver').hide();
 
                                                 $('[name="ContractGiver_Review"]').change(function() {
@@ -6147,6 +5986,7 @@
                                                         $('.ContractGiver span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -6175,7 +6015,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 60,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -6192,7 +6032,7 @@
                                                         class="ContractGiver_person" id="ContractGiver_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ContractGiver_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ContractGiver_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -6207,7 +6047,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif class="summernote ContractGiver_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->id != $data1->ContractGiver_person)) readonly @endif name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 store">
@@ -6217,18 +6057,10 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->id != $data1->ContractGiver_person)) readonly @endif
+                                                    <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif
                                                         name="ContractGiver_feedback" id="summernote-18" @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ContractGiver_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 store">
                                                 <div class="group-input">
                                                     <label for="Contract Giver attachment">Contract Giver Attachments</label>
@@ -6244,7 +6076,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -6334,7 +6166,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 60,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -6348,7 +6180,7 @@
                                                     <select name="ContractGiver_person" disabled id="ContractGiver_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ContractGiver_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ContractGiver_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -6389,14 +6221,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 ContractGiver">
                                                 <div class="group-input">
                                                     <label for="Contract Giver attachment">Contract Giver Attachments</label>
@@ -6412,7 +6236,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -6455,6 +6279,7 @@
                                             </div>
                                             <script>
                                                 $(document).ready(function() {
+                                                 @if($data1->Other1_review!=='yes')
                                                     $('.other1_reviews').hide();
 
                                                     $('[name="Other1_review"]').change(function() {
@@ -6466,6 +6291,7 @@
                                                             $('.other1_reviews span').hide();
                                                         }
                                                     });
+                                                    @endif
                                                 });
                                             </script>
                                             <div class="col-lg-6">
@@ -6473,7 +6299,7 @@
                                                     <label for="Review Required1"> Other's 1 Review Required? </label>
                                                     <select name="Other1_review" @if ($data->stage == 4) disabled @endif id="Other1_review"
                                                         value="{{ $data1->Other1_review }}">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other1_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other1_review == 'no') selected @endif value="no">
@@ -6500,7 +6326,7 @@
                                                             style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other1_person" @if ($data->stage == 4) disabled @endif id="Other1_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6598,14 +6424,6 @@
                                                     });
                                                 });
                                             </script>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 other1_reviews ">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 1 Attachments</label>
@@ -6621,7 +6439,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -6655,6 +6473,7 @@
                                             </div>
                                             <script>
                                                 $(document).ready(function() {
+                                                    @if($data1->Other2_review!=='yes')
                                                     $('.Other2_reviews').hide();
 
                                                     $('[name="Other2_review"]').change(function() {
@@ -6666,6 +6485,7 @@
                                                             $('.Other2_reviews span').hide();
                                                         }
                                                     });
+                                                    @endif
                                                 });
                                             </script>
                                             <div class="col-lg-6">
@@ -6673,7 +6493,7 @@
                                                     <label for="review2"> Other's 2 Review Required ?</label>
                                                     <select name="Other2_review" @if ($data->stage == 4) disabled @endif id="Other2_review"
                                                         value="{{ $data1->Other2_review }}">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other2_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other2_review == 'no') selected @endif value="no">
@@ -6700,7 +6520,7 @@
                                                             style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other2_person" @if ($data->stage == 4) disabled @endif id="Other2_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6799,14 +6619,6 @@
                                                         @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-44">{{ $data1->Other2_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 Other2_reviews">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 2 Attachments</label>
@@ -6822,7 +6634,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -6856,6 +6668,7 @@
                                             </div>
                                             <script>
                                                 $(document).ready(function() {
+                                                 @if($data1->Other3_review!=='yes')
                                                     $('.Other3_reviews').hide();
 
                                                     $('[name="Other3_review"]').change(function() {
@@ -6867,6 +6680,7 @@
                                                             $('.Other3_reviews span').hide();
                                                         }
                                                     });
+                                                    @endif
                                                 });
                                             </script>
                                             <div class="col-lg-6">
@@ -6874,7 +6688,7 @@
                                                     <label for="review3"> Other's 3 Review Required ?</label>
                                                     <select name="Other3_review" @if ($data->stage == 4) disabled @endif id="Other3_review"
                                                         value="{{ $data1->Other3_review }}">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other3_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other3_review == 'no') selected @endif value="no">
@@ -6903,7 +6717,7 @@
                                                             style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other3_person" @if ($data->stage == 4) disabled @endif id="Other3_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7002,14 +6816,6 @@
                                                         @if ($data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-46">{{ $data1->Other3_Assessment }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 Other3_reviews">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 3 Attachments</label>
@@ -7025,7 +6831,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -7058,6 +6864,7 @@
                                             </div>
                                             <script>
                                                 $(document).ready(function() {
+                                                    @if($data1->Other4_review!=='yes')
                                                     $('.Other4_reviews').hide();
 
                                                     $('[name="Other4_review"]').change(function() {
@@ -7069,6 +6876,7 @@
                                                             $('.Other4_reviews span').hide();
                                                         }
                                                     });
+                                                    @endif
                                                 });
                                             </script>
                                             <div class="col-lg-6">
@@ -7076,7 +6884,7 @@
                                                     <label for="review4">Other's 4 Review Required ?</label>
                                                     <select name="Other4_review" @if ($data->stage == 4) disabled @endif id="Other4_review"
                                                         value="{{ $data1->Other4_review }}">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other4_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other4_review == 'no') selected @endif value="no">
@@ -7104,7 +6912,7 @@
                                                             style="display: {{ $data1->Other4_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other4_person" @if ($data->stage == 4) disabled @endif id="Other4_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other4_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7202,14 +7010,6 @@
                                                         @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-48">{{ $data1->Other4_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 Other4_reviews">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 4 Attachments</label>
@@ -7225,7 +7025,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -7262,6 +7062,7 @@
                                             </div>
                                             <script>
                                                 $(document).ready(function() {
+                                                   @if($data1->Other5_review!=='yes')
                                                     $('.Other5_reviews').hide();
 
                                                     $('[name="Other5_review"]').change(function() {
@@ -7273,6 +7074,7 @@
                                                             $('.Other5_reviews span').hide();
                                                         }
                                                     });
+                                                    @endif
                                                 });
                                             </script>
                                             <div class="col-lg-6">
@@ -7280,7 +7082,7 @@
                                                     <label for="review5">Other's 5 Review Required ?</label>
                                                     <select name="Other5_review" @if ($data->stage == 4) disabled @endif id="Other5_review"
                                                         value="{{ $data1->Other5_review }}">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other5_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other5_review == 'no') selected @endif value="no">
@@ -7308,7 +7110,7 @@
                                                             class="text-danger">*</span>
                                                     </label>
                                                     <select name="Other5_person" @if ($data->stage == 4) disabled @endif id="Other5_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7407,13 +7209,6 @@
                                                 </div>
                                             </div>
 
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12 Other5_reviews">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 5 Attachments</label>
@@ -7429,7 +7224,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -7466,7 +7261,7 @@
                                                     <label for="Review Required1"> Other's 1 Review Required? </label>
                                                     <select disabled name="Other1_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_review" value="{{ $data1->Other1_review }}">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other1_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other1_review == 'no') selected @endif value="no">
@@ -7492,7 +7287,7 @@
                                                     <label for="Person1"> Other's 1 Person </label>
                                                     <select disabled name="Other1_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7508,7 +7303,7 @@
                                                     <select disabled
                                                         name="Other1_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other1_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other1_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other1_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7552,14 +7347,6 @@
                                                         name="Other1_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 1 Attachments</label>
@@ -7575,7 +7362,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -7613,7 +7400,7 @@
                                                     <label for="review2"> Other's 2 Review Required ?</label>
                                                     <select disabled name="Other2_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_review" value="{{ $data1->Other2_review }}">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other2_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other2_review == 'no') selected @endif value="no">
@@ -7639,7 +7426,7 @@
                                                     <label for="Person2"> Other's 2 Person</label>
                                                     <select disabled name="Other2_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7654,7 +7441,7 @@
                                                     <select disabled
                                                         name="Other2_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_Department_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other2_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other2_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other2_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7699,14 +7486,6 @@
                                                         name="Other2_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-44">{{ $data1->Other2_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 2 Attachments</label>
@@ -7722,7 +7501,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -7759,7 +7538,7 @@
                                                     <label for="review3"> Other's 3 Review Required ?</label>
                                                     <select disabled name="Other3_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_review" value="{{ $data1->Other3_review }}">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other3_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other3_review == 'no') selected @endif value="no">
@@ -7787,7 +7566,7 @@
                                                     <label for="Person3">Other's 3 Person</label>
                                                     <select disabled name="Other3_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7803,7 +7582,7 @@
                                                     <select disabled
                                                         name="Other3_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_Department_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other3_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other3_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other3_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7846,14 +7625,6 @@
                                                         name="Other3_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-46">{{ $data1->Other3_Assessment }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 3 Attachments</label>
@@ -7869,7 +7640,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -7905,7 +7676,7 @@
                                                     <label for="review4">Other's 4 Review Required ?</label>
                                                     <select disabled name="Other4_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_review" value="{{ $data1->Other4_review }}">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other4_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other4_review == 'no') selected @endif value="no">
@@ -7932,7 +7703,7 @@
                                                     <label for="Person4"> Other's 4 Person</label>
                                                     <select name="Other4_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other4_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7947,7 +7718,7 @@
                                                     <select disabled
                                                         name="Other4_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_Department_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other4_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other4_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other4_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7990,14 +7761,6 @@
                                                         name="Other4_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-48">{{ $data1->Other4_feedback }}</textarea>
                                                 </div>
                                             </div>
-
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 4 Attachments</label>
@@ -8013,7 +7776,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -8053,7 +7816,7 @@
                                                     <label for="review5">Other's 5 Review Required ?</label>
                                                     <select disabled name="Other5_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_review" value="{{ $data1->Other5_review }}">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other5_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other5_review == 'no') selected @endif value="no">
@@ -8079,7 +7842,7 @@
                                                     <label for="Person5">Other's 5 Person</label>
                                                     <select disabled name="Other5_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -8094,7 +7857,7 @@
                                                     <select disabled
                                                         name="Other5_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_Department_person">
-                                                        <option value="">-- Select --</option>
+                                                        <option value="0">-- Select --</option>
                                                         <option @if ($data1->Other5_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other5_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other5_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -8138,13 +7901,6 @@
                                                 </div>
                                             </div>
 
-                                            @if ($data1->Production_Injection_Attachment)
-                                                @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                    <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Audit Attachments">Other's 5 Attachments</label>
@@ -8160,7 +7916,7 @@
                                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}" data-file-name="{{ $file }}"><i
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                                     </h6>
                                                                 @endforeach
@@ -8989,6 +8745,112 @@
     </div>
 
 
+    <!-- modal for stage 9 child-modal-stage_8 start-->
+
+    <div class="modal fade" id="child-modal-stage_8">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Child</h4>
+                </div>
+                <form action="{{ url('rcms/child', $cc_lid) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="group-input">
+                            @if($data->stage == 9)
+                            <div>
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="RCA">
+                                    RCA
+                                </label>
+                            </div>
+                            <div>   
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="Extension">
+                                    Extension
+                                </label> 
+                            </div>   
+
+
+                            @endif
+                            @if($data->stage == 9)
+                            <div>
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="Capa">
+                                    Capa
+                                </label>
+                                                        
+                            </div>  
+                            @endif
+                        </div>
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        <button type="submit">Continue</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- modal for stage 9 child-modal-stage_8 End-->
+    
+
+
+
+    <div class="modal fade" id="child_effective_ness">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Child</h4>
+                </div>
+                <form action="{{ url('rcms/child', $cc_lid) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="group-input">
+                            @if($data->stage == 13)
+                            <div>
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="Effective-Check">
+                                    Effectiveness Check
+                                </label>
+                            </div>
+                           
+
+                            @endif
+                            
+                        </div>
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        <button type="submit">Continue</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
     <!-- /************ Open State Modal ***********/ -->
     <div class="modal fade" id="opened-state-modal">
         <div class="modal-dialog modal-dialog-centered">
@@ -9098,7 +8960,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" class="form-control" name="comments" required>
+                            <input type="comment" class="form-control" name="comments">
                         </div>
                     </div>
 
@@ -9139,7 +9001,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" class="form-control" name="comments" required>
+                            <input type="comment" class="form-control" name="comments">
                         </div>
                     </div>
 

@@ -10,7 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Api\LogFilterController;
 use App\Http\Controllers\rcms\FailureInvestigationController;
-
+use App\Http\Controllers\rcms\CCController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,3 +72,5 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
 
 
  Route::get('/risk-management/{id}',[FailureInvestigationController::class,'audit_trail_filter'])->name('api.failure.filter');
+ 
+ Route::get('/chngecontrol-management/{id}',[CCController::class,'audit_trail_filter'])->name('api.Change_Control.filter');
