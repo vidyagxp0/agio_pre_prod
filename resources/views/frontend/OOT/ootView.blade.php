@@ -3570,7 +3570,7 @@
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">P-IB Assignable Cause Found On : </label>
+                                <label for="OOC Logged On">P-IB Assignable Cause Not Found On : </label>
                                 <div class="static">{{$data->Under_Phase_II_A_Investigation_on}}</div>
 
 
@@ -3851,7 +3851,7 @@
                             </div>
                         </div>
 
-
+                                
                         <div class="sub-head col-lg-12">
                         P-II B Assignable Cause Found
                         </div>
