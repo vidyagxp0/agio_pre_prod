@@ -186,9 +186,7 @@
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         $auditCollect = DB::table('audit_reviewers_details')
-                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
-                            ->latest()
-                            ->first();
+                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])->latest()->first();
                     @endphp
 
                     <div class="d-flex justify-content-between align-items-center">
@@ -199,13 +197,16 @@
                         @endif
                         <div class="buttons-new">
                             @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
-                                {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
+                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                     Review
-                                </button>  --}}
+                                </button> 
                             @endif
-                            {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
+                                Review
+                            </button> 
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
                                 View
-                            </button>  --}}
+                            </button> 
                             <button class="button_theme1"><a class="text-white"
                                     href="{{ url('rootshow/' . $document->id) }}"> Back
                                 </a>

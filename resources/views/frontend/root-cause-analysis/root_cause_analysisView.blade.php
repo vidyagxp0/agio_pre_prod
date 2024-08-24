@@ -329,6 +329,7 @@
                                             <select name="initiator_Group"
                                                 {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 id="initiator_group">
+                                                <option value="0">-- Select --</option>
                                                 <option value="CQA" @if ($data->initiator_Group == 'CQA') selected @endif>
                                                     Corporate
                                                     Quality Assurance</option>
@@ -399,8 +400,8 @@
                                                     class="text-danger">*</span></label><span id="rchars">255</span>
                                             characters remaining
 
-                                            <textarea name="short_description" id="docname" type="text" maxlength="255" required
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                            <input name="short_description" id="docname" type="text" maxlength="255" required
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} value="{{ $data->short_description }}">
                                         </div>
                                         <p id="docnameError" style="color:red">**Short Description is required</p>
 

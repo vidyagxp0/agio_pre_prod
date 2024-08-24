@@ -24,55 +24,91 @@
                  <button class="button_theme1"> <a class="text-white" href="{{ route('oos_micro.audit_trial', $micro_data->id) }}"> Audit Trail </a> </button>
             @if ($micro_data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Submit</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal"> Cancel  </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
             @elseif($micro_data->stage == 2 && (in_array([4,14], $userRoleIds) || in_array(18, $userRoleIds)))
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal"> Initial Phase I Investigation  </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal"> HOD Primary Review Complete </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
             @elseif($micro_data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Found</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Assignable Cause Not Found</button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">Cancel</button>
+
+            @elseif($micro_data->stage == 4 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">CQA/QA Head Primary Review Complete</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
 
-            @elseif($micro_data->stage == 4 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Correction Completed</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
             @elseif($micro_data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Proposed Hypothesis Experiment</button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Phase IA Investigation</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-            @elseif($micro_data->stage == 6 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Obvious Error Found</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">No Assignable Cause Found</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
+            @elseif($micro_data->stage == 6 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IA HOD Review Complete </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
             @elseif($micro_data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Repeat Analysis Completed</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IA QA Review Complete</button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
             @elseif($micro_data->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Full Scale Investigation</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Found</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Not Found</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
             @elseif($micro_data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Found (Manufacturing Defect)</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">No Assignable Cause Found (No Manufacturing Defect)</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB Investigation</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
             @elseif($micro_data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Phase II Correction Complete</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A Correction Inconclusive</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB HOD Review Complete</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
             @elseif($micro_data->stage == 11 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Retesting/resampling</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Correction Inconclusive</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB QA Review Complete</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
             @elseif($micro_data->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause"> Final Approval </button>
-            @elseif($micro_data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Approval Completed</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">P-IB Assignable Cause Found</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-I B Assignable Cause Not Found</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
+            @elseif($micro_data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause"> Phase II A Investigation </button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
+            @elseif($micro_data->stage == 14 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A HOD Review Complete</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
+            @elseif($micro_data->stage == 15 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A QA Review Complete</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
+            @elseif($micro_data->stage == 16 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II A Assignable Cause Found</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II A Assignable Cause Not Found</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
+            @elseif($micro_data->stage == 17 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Investigation</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
+            @elseif($micro_data->stage == 18 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B HOD Review Complete</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
+            @elseif($micro_data->stage == 19 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B QA Review Complete</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
+            @elseif($micro_data->stage == 20 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II B Assignable Cause Found</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II B Assignable Cause Not Found</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
+            @elseif($micro_data->stage == 21 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button> --}}
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-III Investigation Applicable/Not Applicable</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button>
             @endif
             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit</a> </button>
 
@@ -256,7 +292,35 @@
                 <div class="modal-body">
                     <div class="group-input">
                         <label style="display: flex; align-items: baseline;" for="major">
-                        <input style="width: 10px;" type="radio" name="child_type" value="Rootcause_Analysis">   Rootcause Analysis
+                        <input style="width: 10px;" type="radio" name="child_type" value="Action_Item">Action Item </label>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                    <button type="submit">Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="child-modal-rootcause-analysis-Action-item">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <form action="{{ route('oos_micro.child', $micro_data->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="group-input">
+                        <label style="display: flex; align-items: baseline;" for="major">
+                            <input style="width: 10px;" type="radio" name="child_type" value="Action_Item">Action Item
+                        </label>
+                        <label style="display: flex; align-items: baseline;" for="major">
+                            <input style="width: 10px;" type="radio" name="child_type" value="Rootcause_Analysis">RCA
                         </label>
                     </div>
                 </div>
@@ -289,6 +353,12 @@
                         <input style="width: 10px;" type="radio" name="child_type" value="Action_Item">
                             Action Item
                         </label>
+                        <label style="display: flex; align-items: baseline;" for="major">
+                            <input style="width: 10px;" type="radio" name="child_type" value="Rootcause_Analysis">RCA
+                        </label>
+                        <label style="display: flex; align-items: baseline;" for="major">
+                                <input style="width: 10px;" type="radio" name="child_type" value="Rootcause_Analysis">Resampling
+                        </label>    
                     </div>
                 </div>
                 <!-- Modal footer -->
@@ -316,63 +386,79 @@
                 @endif
 
                 @if ($micro_data->stage >= 2)
-                    <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Pending Initial Assessment & Lab Incident</div>
+                    <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">HOD Primary Review</div>
                 @else
-                <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Pending Initial Assessment & Lab Incident</div>
+                <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">HOD Primary Review</div>
+                @endif
+                {{-- @if ($data->stage < 4)
+                @if ($data->stage >= 3)
+                    <div class="active">QA Head Approval</div>
+                @else
+                    <div class="">QA Head Approval</div>
+                @endif
+                @endif --}}
+
+                @if ($micro_data->stage < 4)
+                @if ($micro_data->stage >= 3)
+                    <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">QA Head Approval</div>
+                @else
+                <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">QA Head Approval</div>
+                @endif
                 @endif
 
-                @if ($micro_data->stage >= 3)
-                <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase I Investigation</div>
-                @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase I Investigation</div>
-                @endif
 
                 @if ($micro_data->stage >= 4)
-                    <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase I Correction</div>
+                <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Primary Review</div>
                 @else
-                    <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase I Correction</div>
+                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Primary Review</div>
                 @endif
 
                 @if ($micro_data->stage >= 5)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase I b Investigation</div>
+                    <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase-IA Investigation </div>
                 @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase I b Investigation</div>
+                    <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase-IA Investigation</div>
                 @endif
 
                 @if ($micro_data->stage >= 6)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Hypothesis Experiment</div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA HOD Primary Review</div>
                 @else
-                <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Hypothesis Experiment</div>
+                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA HOD Primary Review</div>
                 @endif
+
                 @if ($micro_data->stage >= 7)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Repeat Analysis</div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA QA Review</div>
                 @else
-                <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Repeat Analysis</div>
+                <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA QA Review</div>
                 @endif
                 @if ($micro_data->stage >= 8)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase II Investigation</div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-IA CQAH/QAH Review</div>
                 @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase II Investigation</div>
+                <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-IA CQAH/QAH Review</div>
                 @endif
                 @if ($micro_data->stage >= 9)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Full Scale Investigation Phase II</div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase-IB Investigation</div>
                 @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under  Manufacturing Investigation Phase II a</div>
+                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase-IB Investigation</div>
                 @endif
                 @if ($micro_data->stage >= 10)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase II a correction</div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB HOD Primary Review</div>
                 @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase II a correction</div>
+                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB HOD Primary Review</div>
                 @endif
                 @if ($micro_data->stage >= 11)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase II  b Additional Lab Investigation</div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase IB QA Review </div>
                 @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase II  b Additional Lab Investigation</div>
+                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB QA Review </div>
                 @endif
                 @if ($micro_data->stage >= 12)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Batch Disposition</div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> P-IB CQAH/QAH Review</div>
                 @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Batch Disposition</div>
+                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-IB CQAH/QAH Review</div>
+                @endif
+                @if ($micro_data->stage >= 13)
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase-II A Investigation </div>
+                @else
+                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase-II A Investigation</div>
                 @endif
 
                 {{-- @if ($micro_data->stage >= 13)
@@ -381,16 +467,47 @@
                 <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase III Investigation</div>
                 @endif --}}
 
-                @if ($micro_data->stage >= 13)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Pending Final Approval</div>
+                @if ($micro_data->stage >= 14)
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II A HOD Primary Review</div>
                 @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Pending Final Approval</div>
+                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II A HOD Primary Review</div>
                 @endif
 
-                @if ($micro_data->stage >= 14)
-                <div class="bg-danger d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Close Done</div>
+                @if ($micro_data->stage >= 15)
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase II A QA Review</div>
                 @else
-                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Close Done</div>
+                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase II A QA Review</div>
+                @endif
+
+                @if ($micro_data->stage >= 16)
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-II A QAH/CQAH Review</div>
+                @else
+                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-II A QAH/CQAH Review</div>
+                @endif
+                @if ($micro_data->stage >= 17)
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase-II B Investigation</div>
+                @else
+                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase-II B Investigation</div>
+                @endif
+                @if ($micro_data->stage >= 18)
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B HOD Primary Review</div>
+                @else
+                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B HOD Primary Review</div>
+                @endif
+                @if ($micro_data->stage >= 19)
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B QA Review</div>
+                @else
+                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B QA Review</div>
+                @endif
+                @if ($micro_data->stage >= 20)
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-II B QAH/CQAH Review</div>
+                @else
+                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-II B QAH/CQAH Review</div>
+                @endif
+                @if ($micro_data->stage >= 21)
+                <div class="bg-danger d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Closed - Done</div>
+                @else
+                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Closed - Done</div>
                 @endif
             </div>
             @endif

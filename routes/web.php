@@ -250,6 +250,7 @@ Route::post('CancelStateExternalAudit/{id}', [AuditeeController::class, 'externa
 Route::get('ExternalAuditTrialShow/{id}', [AuditeeController::class, 'AuditTrialExternalShow'])->name('ShowexternalAuditTrial');
 Route::get('ExternalAuditTrialDetails/{id}', [AuditeeController::class, 'AuditTrialExternalDetails'])->name('ExternalAuditTrialDetailsShow');
 Route::post('child_external/{id}', [AuditeeController::class, 'child_external'])->name('childexternalaudit');
+Route::post('UpdateStateAuditee/{id}', [AuditeeController::class, 'UpdateStateChange'])->name('UpdateStateAuditee');
 
 //----------------------Lab Incident view-----------------
 Route::get('lab-incident', [LabIncidentController::class, 'labincident']);
