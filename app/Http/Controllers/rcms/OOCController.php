@@ -3927,7 +3927,7 @@ public function OOCAuditTrial($id){
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $record = $record_number;
                 $old_records = $old_record;
-                return view('frontend.forms.capa', compact('record', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+                return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
                 }
 
                if ($request->revision == "Action-Item") {
@@ -3988,7 +3988,7 @@ public function OOCAuditTrial($id){
 
 
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                return view('frontend.forms.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
 
@@ -4080,7 +4080,7 @@ public function OOCAuditTrial($id){
 
 
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.forms.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
         }
     }
