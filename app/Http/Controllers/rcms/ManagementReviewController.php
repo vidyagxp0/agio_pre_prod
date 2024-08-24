@@ -2389,7 +2389,8 @@ class ManagementReviewController extends Controller
                 $changeControl->status = 'In Progress';
                 $changeControl->Submited_by = Auth::user()->name;
                 $changeControl->Submited_on = Carbon::now()->format('d-M-Y');
-                $changeControl->Submited_Comment  = $request->comment;
+                $changeControl->Submited_Comment  = 
+                $request->comment;
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
                 $history->activity_type = 'Submit By ,   Submit On';
@@ -2860,7 +2861,7 @@ class ManagementReviewController extends Controller
             
 
             if ($changeControl->stage == 6) {
-                $changeControl->stage = "5";
+                $changeControl->stage = "4";
                 $changeControl->status = 'All AI Update by Respective Department';
                 $changeControl->requireactivitydepartment_by = Auth::user()->name;
                 $changeControl->requireactivitydepartment_on = Carbon::now()->format('d-M-Y');

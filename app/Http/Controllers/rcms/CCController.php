@@ -11445,14 +11445,21 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                 break;
 
                              case 'stage':
-                                $query->where('activity_type','Activity Log');
+
+                                $stage = ['Submit By, Submit On','HOD Assessment Complete By,
+                                 HOD Assessment Complete On','QA Initial Assessment Complete By,
+                                  QA Initial Assessment Complete On','CFT Assessment Complete By','RA Approval By, RA Approval On','RA Approval Complete By, RA Approval Complete On','Rejected By, Rejected On','QA Final Review Complete By, QA Final Review Complete On','QA Head/Manager Designee Approval By, QA Head/Manager Designee ApprovalOn','Initiator Updated Complete By, Initiator Updated Complete On','HOD Final Review Complete By, HOD Final Review Complete On', 'Implementation verification by QA Complete By, Implementation verification by QAComplete On','QA Head/Manager Designee Approval By, QA Head/Manager Designee Approval On','Pending Initiator Update By, Pending Initiator Update On','Approved By, Approved On','HOD Final Review Complete By, HOD Final Review Complete On','Implementation verification by QA By, Implementation verification by QA On','QA Closure Approval By, Closure Approval On','More Info Required By, More Info Required On'];
+
+
+
+
+                                  
+                                $query->whereIn('activity_type',$stage);
                                 break;
                                 
                                 case 'user_action':
                                     $user_action = [
-                                        'Submit', 'HOD Review Complete', 'QA Initial Review Complete',
-                                        'CFT Review Complete', 'RA Review Required', 'Approved','QA Final Review Complete','Rejected','Send For Final Approval',
-                                        'Initiator Updated Complete', 'More Info Required','More Info Required','Cancel','More Info Required','Cancel'
+                                        'Submit', 'HOD Assessment Complete', 'QA Initial Assessment Complete','CFT Assessment Complete', 'RA Approval Required','RA Approval Complete', 'Approved','QA Final Review Complete','HOD Final Review Complete','Initiator Updated Complete','Rejected', 'Send For Final QA Head Approval','Send For Final Approval','Closure Approved','More Info Required','Send To Initiator','Send To HOD','Send To QA Initial','Initiator Updated Completed', 'More Info Required','More Info Required','Cancel','More Info Required','Cancel','Rejected'
                                     ];
                                 $query->whereIn('action',$user_action);     
                                 break;

@@ -130,9 +130,9 @@
                                 <div class="">HOD Review</div>
                             @endif --}}
                             @if ($data->stage >= 2)
-                                <div class="active">Head QA Approval</div>
+                                <div class="active">Head QA/CQA Approval</div>
                             @else
-                                <div class="">Head QA Approval</div>
+                                <div class="">Head QA/CQA Approval</div>
                             @endif 
                             @if ($data->stage >= 3)
                             <div class="active">Acknowledge</div>
@@ -140,9 +140,9 @@
                             <div class="">Acknowledge </div>
                         @endif
                         @if ($data->stage >= 4)
-                        <div class="active">QA Verification</div>
+                        <div class="active">QA/CQA Verification</div>
                     @else
-                        <div class="">QA Verification </div>
+                        <div class="">QA/CQA Verification </div>
                     @endif
                         @if ($data->stage >= 5)
                         <div class="bg-danger">Closed - Done</div>

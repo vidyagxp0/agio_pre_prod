@@ -500,7 +500,7 @@ class ErrataController extends Controller
             }
                if ($ErrataControl->stage == 2) {
                 $ErrataControl->stage = "3";
-                $ErrataControl->status = "QA Initial Review";
+                $ErrataControl->status = "QA/CQA Initial Review";
                 $ErrataControl->review_completed_by = Auth::user()->name;
                 $ErrataControl->review_completed_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->comment = $request->review_completed_comment;
@@ -520,7 +520,7 @@ class ErrataController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "QA Initial Review";
+                $history->change_to =   "QA/CQA Initial Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Approved';
                 if(is_null($lastDocument->review_completed_by) || $lastDocument->review_completed_on == '')
@@ -537,7 +537,7 @@ class ErrataController extends Controller
             }
                if ($ErrataControl->stage == 3) {
                 $ErrataControl->stage = "4";
-                $ErrataControl->status = "QA Approval";
+                $ErrataControl->status = "QA/CQA Approval";
                 $ErrataControl->Reviewed_by = Auth::user()->name;
                 $ErrataControl->Reviewed_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->Reviewed_commemt = $request->comment;
@@ -557,7 +557,7 @@ class ErrataController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "QA Approval";
+                $history->change_to =   "QA/CQA Approval";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Approved';
                 if(is_null($lastDocument->Reviewed_by) || $lastDocument->Reviewed_on == '')
@@ -651,7 +651,7 @@ class ErrataController extends Controller
 
             if ($ErrataControl->stage == 6) {
                 $ErrataControl->stage = "7";
-                $ErrataControl->status = "Pending QA Head Approval";
+                $ErrataControl->status = "Pending QA/CQA Head Approval";
                 $ErrataControl->hod_review_complete_by = Auth::user()->name;
                 $ErrataControl->hod_review_complete_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->hod_review_complete_comment = $request->comment;
@@ -671,9 +671,9 @@ class ErrataController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Pending QA Head Approval";
+                $history->change_to =   "Pending QA/CQA Head Approval";
                 $history->change_from = $lastDocument->status;
-                $history->stage = 'QA Head Approval Completed';
+                $history->stage = 'QA/CQA Head Approval Completed';
                 if(is_null($lastDocument->hod_review_complete_by) || $lastDocument->hod_review_complete_on == '')
                     {
                         $history->action_name = 'New';
@@ -819,7 +819,7 @@ class ErrataController extends Controller
                 $ErrataControl->sent_to_open_state_by = Auth::user()->name;
                 $ErrataControl->sent_to_open_state_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->sent_to_open_state_comment = $request->comment;
-                $ErrataControl->status = "QA Initial Review";
+                $ErrataControl->status = "QA/CQA Initial Review";
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
@@ -837,7 +837,7 @@ class ErrataController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "QA Initial Review";
+                $history->change_to =   "QA/CQA Initial Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Pending CAPA Plan';
                 if(is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == '')
@@ -857,7 +857,7 @@ class ErrataController extends Controller
                 $ErrataControl->sent_to_open_state_by = Auth::user()->name;
                 $ErrataControl->sent_to_open_state_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->sent_to_open_state_comment = $request->comment;
-                $ErrataControl->status = "QA Approval";
+                $ErrataControl->status = "QA/CQA Approval";
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
@@ -873,7 +873,7 @@ class ErrataController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "QA Approval";
+                $history->change_to =   "QA/CQA Approval";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Pending CAPA Plan';
                 if(is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == '')
@@ -962,7 +962,7 @@ class ErrataController extends Controller
             }
             if ($ErrataControl->stage == 6) {
                 $ErrataControl->stage = "5";
-                $ErrataControl->status = "Pending QA Head Approval";
+                $ErrataControl->status = "Pending QA/CQA Head Approval";
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
                 return back();

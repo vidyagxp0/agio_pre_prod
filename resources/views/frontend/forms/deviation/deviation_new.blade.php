@@ -27,16 +27,16 @@
         }
 
         /* .sub-head {
-                                                            margin-left: 280px;
-                                                            margin-right: 280px;
-                                                            color: #4274da;
-                                                            border-bottom: 2px solid #4274da;
-                                                            padding-bottom: 5px;
-                                                            margin-bottom: 20px;
-                                                            font-weight: bold;
-                                                            font-size: 1.2rem;
+                                                                margin-left: 280px;
+                                                                margin-right: 280px;
+                                                                color: #4274da;
+                                                                border-bottom: 2px solid #4274da;
+                                                                padding-bottom: 5px;
+                                                                margin-bottom: 20px;
+                                                                font-weight: bold;
+                                                                font-size: 1.2rem;
 
-                                                        } */
+                                                            } */
 
         .create-entity {
             background: #323c50;
@@ -70,8 +70,8 @@
         }
 
         /* .modal-header{
-                                                            background: gainsboro !important;
-                                                        } */
+                                                                background: gainsboro !important;
+                                                            } */
         .main_head_modal li {
             margin-bottom: 10px;
         }
@@ -115,10 +115,10 @@
         }
 
         /* .saveButton:disabled{
-                                                                background: black!important;
-                                                                border:  black!important;
+                                                                    background: black!important;
+                                                                    border:  black!important;
 
-                                                            } */
+                                                                } */
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -679,12 +679,12 @@
                                 @endphp
 
                                 <!-- <div class="col-lg-6">
-                                                                                    <div class="group-input">
-                                                                                        <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                                                                        <input type="date" id="intiation_date" name="intiation_date" required />
-                                                                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
-                                                                                    </div>
-                                                                                </div> -->
+                                                                                        <div class="group-input">
+                                                                                            <label for="Date of Initiation"><b>Date of Initiation</b></label>
+                                                                                            <input type="date" id="intiation_date" name="intiation_date" required />
+                                                                                             <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                                                                        </div>
+                                                                                    </div> -->
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -1291,19 +1291,19 @@
                                                     <td>
 
                                                         <!-- <select name="product_stage[]" id="product_stage"
-                                                                                                            class="productStage">
-                                                                                                            <option value="">-- Select --</option>
-                                                                                                            <option value="">1</option>
-                                                                                                            <option value="">2</option>
-                                                                                                            <option value="">3</option>
-                                                                                                            <option value="">4</option>
-                                                                                                            <option value="">5</option>
-                                                                                                            <option value="">6</option>
-                                                                                                            <option value="">7</option>
-                                                                                                            <option value="">8</option>
-                                                                                                            <option value="">9</option>
-                                                                                                            <option value="">Final</option>
-                                                                                                        </select> -->
+                                                                                                                class="productStage">
+                                                                                                                <option value="">-- Select --</option>
+                                                                                                                <option value="">1</option>
+                                                                                                                <option value="">2</option>
+                                                                                                                <option value="">3</option>
+                                                                                                                <option value="">4</option>
+                                                                                                                <option value="">5</option>
+                                                                                                                <option value="">6</option>
+                                                                                                                <option value="">7</option>
+                                                                                                                <option value="">8</option>
+                                                                                                                <option value="">9</option>
+                                                                                                                <option value="">Final</option>
+                                                                                                            </select> -->
                                                         <input type="text" class="productStage"
                                                             name="product_stage[]">
 
@@ -1370,55 +1370,55 @@
                                     });
                                 </script>
                                 <!-- <div class="col-lg-6">
-                                                                                        <div class="group-input" id="external_agencies_req">
-                                                                                            <label for="others">HOD / Designee<span class="text-danger d-none">*</span></label>
-                                                                                          <select name="hod_designee" id="">
-                                                                                            <option value="">-- Select --</option>
-                                                                                            <option value="person1">person 1</option>
-                                                                                            <option value="person2">person 2</option>
-                                                                                          </select>
+                                                                                            <div class="group-input" id="external_agencies_req">
+                                                                                                <label for="others">HOD / Designee<span class="text-danger d-none">*</span></label>
+                                                                                              <select name="hod_designee" id="">
+                                                                                                <option value="">-- Select --</option>
+                                                                                                <option value="person1">person 1</option>
+                                                                                                <option value="person2">person 2</option>
+                                                                                              </select>
 
 
 
-                                                                                        </div>
-                                                                          </div> -->
+                                                                                            </div>
+                                                                              </div> -->
                                 <!-- <div class="col-lg-6">
-                                                                                        <div class="group-input" id="external_agencies_req">
-                                                                                            <label for="others">Head QA / Designee<span class="text-danger d-none">*</span></label>
-                                                                                          <select name="hod_designee" id="">
-                                                                                            <option value="">-- Select --</option>
-                                                                                            <option value="person1">person 1</option>
-                                                                                            <option value="person2">person 2</option>
-                                                                                          </select>
+                                                                                            <div class="group-input" id="external_agencies_req">
+                                                                                                <label for="others">Head QA / Designee<span class="text-danger d-none">*</span></label>
+                                                                                              <select name="hod_designee" id="">
+                                                                                                <option value="">-- Select --</option>
+                                                                                                <option value="person1">person 1</option>
+                                                                                                <option value="person2">person 2</option>
+                                                                                              </select>
 
 
 
-                                                                                        </div>
-                                                                          </div> -->
+                                                                                            </div>
+                                                                              </div> -->
                                 <!-- <div class="col-lg-6">
-                                                                                        <div class="group-input" id="external_agencies_req">
-                                                                                            <label for="others">QA<span class="text-danger d-none">*</span></label>
-                                                                                          <select name="hod_designee" id="">
-                                                                                            <option value="">-- Select --</option>
-                                                                                            <option value="person1">person 1</option>
-                                                                                            <option value="person2">person 2</option>
-                                                                                          </select>
+                                                                                            <div class="group-input" id="external_agencies_req">
+                                                                                                <label for="others">QA<span class="text-danger d-none">*</span></label>
+                                                                                              <select name="hod_designee" id="">
+                                                                                                <option value="">-- Select --</option>
+                                                                                                <option value="person1">person 1</option>
+                                                                                                <option value="person2">person 2</option>
+                                                                                              </select>
 
 
-                                                                                        </div>
-                                                                          </div> -->
+                                                                                            </div>
+                                                                              </div> -->
                                 <!-- <div class="col-6">
-                                                                                        <div class="group-input">
-                                                                                            <label for="Facility Name">Notify To</label>
-                                                                                            <select multiple name="Facility[]" placeholder="Select Facility Name"
-                                                                                                data-search="false" data-silent-initial-value-set="true" id="Facility">
-                                                                                                <option value="Plant 1"> 1</option>
-                                                                                                <option value="Plant 1"> 2</option>
-                                                                                                <option value="Plant 1"> 3</option>
+                                                                                            <div class="group-input">
+                                                                                                <label for="Facility Name">Notify To</label>
+                                                                                                <select multiple name="Facility[]" placeholder="Select Facility Name"
+                                                                                                    data-search="false" data-silent-initial-value-set="true" id="Facility">
+                                                                                                    <option value="Plant 1"> 1</option>
+                                                                                                    <option value="Plant 1"> 2</option>
+                                                                                                    <option value="Plant 1"> 3</option>
 
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div> -->
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div> -->
 
                                 {{-- <div class="col-6">
                                     <div class="group-input">
@@ -1656,10 +1656,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                        class="button  launch_extension" data-bs-toggle="modal"
-                                                                                        data-bs-target="#launch_extension">
-                                                                                        Launch Extension
-                                                                                    </a> -->
+                                                                                            class="button  launch_extension" data-bs-toggle="modal"
+                                                                                            data-bs-target="#launch_extension">
+                                                                                            Launch Extension
+                                                                                        </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -1871,8 +1871,7 @@
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <button type="button" class="backButton">Back</button>
                                 </a> --}}
-                                   <button type="button" class="backButton"
-                                                        onclick="previousStep()">Back</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
 
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="nextButton" onclick="nextStep()">Next</button>
@@ -1880,10 +1879,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                        class="button  launch_extension" data-bs-toggle="modal"
-                                                                                        data-bs-target="#launch_extension">
-                                                                                        Launch Extension
-                                                                                    </a> -->
+                                                                                            class="button  launch_extension" data-bs-toggle="modal"
+                                                                                            data-bs-target="#launch_extension">
+                                                                                            Launch Extension
+                                                                                        </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -4229,18 +4228,17 @@
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <button type="button" class="backButton">Back</button>
                                 </a> --}}
-                                   <button type="button" class="backButton"
-                                                        onclick="previousStep()">Back</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                        class="button  launch_extension" data-bs-toggle="modal"
-                                                                                        data-bs-target="#launch_extension">
-                                                                                        Launch Extension
-                                                                                    </a> -->
+                                                                                            class="button  launch_extension" data-bs-toggle="modal"
+                                                                                            data-bs-target="#launch_extension">
+                                                                                            Launch Extension
+                                                                                        </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -4919,8 +4917,7 @@
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <button type="button" class="backButton">Back</button>
                                 </a> --}}
-                                   <button type="button" class="backButton"
-                                                        onclick="previousStep()">Back</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     onclick="nextStep()">Next</button>
@@ -4928,10 +4925,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                        class="button  launch_extension" data-bs-toggle="modal"
-                                                                                        data-bs-target="#launch_extension">
-                                                                                        Launch Extension
-                                                                                    </a> -->
+                                                                                            class="button  launch_extension" data-bs-toggle="modal"
+                                                                                            data-bs-target="#launch_extension">
+                                                                                            Launch Extension
+                                                                                        </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -5133,18 +5130,17 @@
                                         style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                         class="backButton">Back</button>
                                 </a> --}}
-                                   <button type="button" class="backButton"
-                                                        onclick="previousStep()">Back</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                        class="button  launch_extension" data-bs-toggle="modal"
-                                                                                        data-bs-target="#launch_extension">
-                                                                                        Launch Extension
-                                                                                    </a> -->
+                                                                                            class="button  launch_extension" data-bs-toggle="modal"
+                                                                                            data-bs-target="#launch_extension">
+                                                                                            Launch Extension
+                                                                                        </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -5392,8 +5388,7 @@
                                         style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                         <button type="button" class="backButton">Back</button>
                                     </a> --}}
-                                       <button type="button" class="backButton"
-                                                        onclick="previousStep()">Back</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button"
                                         style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                         class="nextButton" onclick="nextStep()">Next</button>
@@ -5402,10 +5397,10 @@
                                             href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                             Exit </a> </button>
                                     <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                            class="button  launch_extension" data-bs-toggle="modal"
-                                                                                            data-bs-target="#launch_extension">
-                                                                                            Launch Extension
-                                                                                        </a> -->
+                                                                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                data-bs-target="#launch_extension">
+                                                                                                Launch Extension
+                                                                                            </a> -->
                                     {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
@@ -5595,18 +5590,17 @@
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <button type="button" class="backButton">Back</button>
                                 </a> --}}
-                                   <button type="button" class="backButton"
-                                                        onclick="previousStep()">Back</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                            class="button  launch_extension" data-bs-toggle="modal"
-                                                                                            data-bs-target="#launch_extension">
-                                                                                            Launch Extension
-                                                                                        </a> -->
+                                                                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                data-bs-target="#launch_extension">
+                                                                                                Launch Extension
+                                                                                            </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -5681,18 +5675,17 @@
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <button type="button" class="backButton">Back</button>
                                 </a> --}}
-                                   <button type="button" class="backButton"
-                                                        onclick="previousStep()">Back</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                        class="button  launch_extension" data-bs-toggle="modal"
-                                                                                        data-bs-target="#launch_extension">
-                                                                                        Launch Extension
-                                                                                    </a> -->
+                                                                                            class="button  launch_extension" data-bs-toggle="modal"
+                                                                                            data-bs-target="#launch_extension">
+                                                                                            Launch Extension
+                                                                                        </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -6380,18 +6373,17 @@
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <button type="button" class="backButton">Back</button>
                                 </a> --}}
-                                   <button type="button" class="backButton"
-                                                        onclick="previousStep()">Back</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                            class="button  launch_extension" data-bs-toggle="modal"
-                                                                                            data-bs-target="#launch_extension">
-                                                                                            Launch Extension
-                                                                                        </a> -->
+                                                                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                data-bs-target="#launch_extension">
+                                                                                                Launch Extension
+                                                                                            </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
@@ -6469,24 +6461,24 @@
                             </div>
 
 
-                            <div class="sub-head">QA Initial Review Completed</div>
+                            <div class="sub-head">QA/CQA Initial Review Completed</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA Initial Review Complete By">QA Initial Review Complete By
+                                    <label for="QA/CQA Initial Review Complete By">QA/CQA Initial Review Complete By
                                         :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA Initial Review Complete On">QA Initial Review Complete On
+                                    <label for="QA/CQA Initial Review Complete On">QA/CQA Initial Review Complete On
                                         :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
+                                    <label for="QA/CQA Initial Review Comments">QA/CQA Initial Review Comments:-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -6531,22 +6523,24 @@
                                 </div>
                             </div>
 
-                            <div class="sub-head"> QA Final Review Completed</div>
+                            <div class="sub-head"> QA/CQA Final Review Completed</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
+                                    <label for="QA/CQA Final Review Complete By"> QA/CQA Final Review Complete By
+                                        :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="QA Final Review Complete On"> QA Final Review Complete On :-</label>
+                                    <label for="QA/CQA Final Review Complete On"> QA/CQA Final Review Complete On
+                                        :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
+                                    <label for="QA/CQA Final Review Comments"> QA/CQA Final Review Comments :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -6570,25 +6564,26 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                             <div class="sub-head">Implementation verification Complete</div>
-                    <div class="col-lg-3">
-                        <div class="group-input">
-                            <label for="Approved By">Implementation verification Complete By :-</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="group-input">
-                            <label for="Approved On">Implementation verification Complete On :-</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                            <label for="Approved Comments">Implementation verification Complete Comments :-</label>
-                            <div class=""></div>
-                        </div>
-                    </div>
+                            <div class="sub-head">Implementation verification Complete</div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Approved By">Implementation verification Complete By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Approved On">Implementation verification Complete On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                    <label for="Approved Comments">Implementation verification Complete Comments
+                                        :-</label>
+                                    <div class=""></div>
+                                </div>
+                            </div>
                             <div class="sub-head">Closure Approved</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
@@ -6640,8 +6635,7 @@
                             {{-- <a href="/rcms/qms-dashboard">
                                 <button type="button" class="backButton">Back</button>
                             </a> --}}
-                               <button type="button" class="backButton"
-                                                        onclick="previousStep()">Back</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             {{-- <button type="submit">Submit</button> --}}
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                     Exit </a> </button>

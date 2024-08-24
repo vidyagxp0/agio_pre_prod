@@ -189,9 +189,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <a href="#cancel-modal">  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button>
+                            </button> </a>
                         @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -199,13 +199,13 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Evaluation Complete
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
 
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
-                            </button>
+                            </button> --}}
                         @elseif($data->stage == 3 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -11844,6 +11844,53 @@
             </div>
         </div>
 
+        <div class="modal fade" id="cancel-modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <form action="{{ route('riskassesmentCancel', $data->id) }}" method="POST">
+                        @csrf
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="mb-3 text-justify">
+                                Please select a meaning and a outcome for this task and enter your username
+                                and password for this task. You are performing an electronic signature,
+                                which is legally binding equivalent of a hand written signature.
+                            </div>
+                            <div class="group-input">
+                                <label for="username">Username <span class="text-danger">*</span></label>
+                                <input type="text" name="username" required>
+                            </div>
+                            <div class="group-input">
+                                <label for="password">Password <span class="text-danger">*</span></label>
+                                <input type="password" name="password" required>
+                            </div>
+                            <div class="group-input">
+                                <label for="comment">Comment <span class="text-danger">*</span></label>
+                                <input type="comment" name="comment" required>
+                            </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <!-- <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
+                        <div class="modal-footer">
+                            <button type="submit">Submit</button>
+                            <button type="button" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="modal fade" id="signature-modal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -11936,10 +11983,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="child-modal">
+        {{-- <div class="modal fade" id="child-modal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Child</h4>
@@ -11951,7 +11997,19 @@
                             <div class="group-input">
                                 <label for="major">
                                     <input type="radio" name="revision" id="major" value="Action-Item">
-                                    Create Action Item
+                                     Action Item
+                                </label>
+
+
+
+                                <label for="major">
+                                    <input type="radio" name="revision" id="major" value="Action-Item">
+                                    Capa
+                                </label>
+
+                                <label for="major">
+                                    <input type="radio" name="revision" id="major" value="Action-Item">
+                                    Change control
                                 </label>
 
 
@@ -11968,7 +12026,53 @@
 
                 </div>
             </div>
+        </div> --}}
+        <div class="modal fade" id="child-modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Child</h4>
+                    </div>
+                    <form action="{{ route('riskAssesmentChild', $data->id) }}" method="POST">
+                        @csrf
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="group-input">
+
+                                @if ($data->stage == 4)
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="Action_Item">
+                                        Action Item
+                                    </label>
+
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="capa">
+                                        CAPA
+                                    </label>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="Change_control">
+                                        Change Control
+                                    </label>
+                                @endif
+
+
+                            </div>
+
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" data-bs-dismiss="modal">Close</button>
+                            <button type="submit">Continue</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
         </div>
+
 
 
         <style>

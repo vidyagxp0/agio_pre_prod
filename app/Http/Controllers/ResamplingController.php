@@ -1117,7 +1117,7 @@ class ResamplingController extends Controller
             
             if ($changeControl->stage == 1) {
                 $changeControl->stage = '2';
-                $changeControl->status = 'Head QA Approval';
+                $changeControl->status = 'Head QA/CQA Approval';
                 $changeControl->acknowledgement_by = Auth::user()->name;
                 $changeControl->acknowledgement_on = Carbon::now()->format('d-M-Y');
                 $changeControl->acknowledgement_comment = $request->comment;
@@ -1134,7 +1134,7 @@ class ResamplingController extends Controller
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status;
                         $history->stage = "Submit";
-                        $history->change_to = "Head QA Approval";
+                        $history->change_to = "Head QA/CQA Approval";
                         $history->change_from = $lastopenState->status;
                         $history->save();
                 $changeControl->update();
@@ -1211,7 +1211,7 @@ class ResamplingController extends Controller
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = '4';
-                $changeControl->status = 'QA Verification';
+                $changeControl->status = 'QA/CQA Verification';
                 $changeControl->qa_varification_by = Auth::user()->name;
                 $changeControl->qa_varification_on = Carbon::now()->format('d-M-Y');
                 $changeControl->qa_varification_comment = $request->comment;
@@ -1237,7 +1237,7 @@ class ResamplingController extends Controller
                 // $history->user_name = Auth::user()->name;
                 // $history->stage_id = $changeControl->stage;
                 // $history->status = $lastopenState->status;
-                $history->change_to = "Work Completion";
+                $history->change_to = "QA/CQA Verification";
                 $history->change_from = $lastopenState->status;
                 $history->save();
             //   

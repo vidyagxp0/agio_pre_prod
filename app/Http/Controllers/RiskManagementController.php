@@ -18,6 +18,8 @@ use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use App\Models\RootCauseAnalysis;
 use App\Models\Extension;
+use App\Models\RiskAssessment;
+use App\Models\CC;
 
 
 use PDF;
@@ -2416,6 +2418,8 @@ class RiskManagementController extends Controller
                 $Cft->Technology_transfer_person = $request->Technology_transfer_person == null ? $Cft->Technology_transfer_person : $request->Technology_transfer_person;
                 $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
+                $Cft->ContractGiver_Review = $request->ContractGiver_Review == null ? $Cft->ContractGiver_Review : $request->ContractGiver_Review;
+                $Cft->ContractGiver_person = $request->ContractGiver_person == null ? $Cft->ContractGiver_person : $request->ContractGiver_person;
                 $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
                 $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review == null ? $Cft->CorporateQualityAssurance_Review : $request->CorporateQualityAssurance_Review;
@@ -2456,6 +2460,8 @@ class RiskManagementController extends Controller
                 $Cft->QualityAssurance_person = $request->QualityAssurance_person;
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
+                $Cft->Microbiology_Review = $request->Microbiology_Review;
+                $Cft->Microbiology_person = $request->ProductionLiquid_person;
                 $Cft->Engineering_review = $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person;
                 $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
@@ -2468,6 +2474,8 @@ class RiskManagementController extends Controller
                 $Cft->Technology_transfer_person = $request->Technology_transfer_person;
                 $Cft->Environment_Health_review = $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
+                $Cft->ContractGiver_Review = $request->ContractGiver_Review;
+                $Cft->ContractGiver_person = $request->ContractGiver_person;
                 $Cft->Human_Resource_review = $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person;
                 $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
@@ -2523,6 +2531,8 @@ class RiskManagementController extends Controller
             $Cft->Technology_transfer_feedback = $request->Technology_transfer_feedback;
             $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
             $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
+            $Cft->ContractGiver_assessment = $request->Health_Safety_assessment;
+            $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
             $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
             $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
             $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
@@ -6519,12 +6529,42 @@ class RiskManagementController extends Controller
         }
     }
 
+    // public function child(Request $request, $id)
+    // {
+    //     $parent_id = $id;
+    //     $parent_type = "Action-Item";
+    //     $record = ((RecordNumber::first()->value('counter')) + 1);
+    //     $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+    //     $currentDate = Carbon::now();
+    //     $formattedDate = $currentDate->addDays(30);
+    //     $due_date = $formattedDate->format('d-M-Y');
+    //     $parent_record = RiskManagement::where('id', $id)->value('record');
+    //     $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+    //     $parent_division_id = RiskManagement::where('id', $id)->value('division_id');
+    //     $parent_initiator_id = RiskManagement::where('id', $id)->value('initiator_id');
+    //     $parent_intiation_date = RiskManagement::where('id', $id)->value('intiation_date');
+    //     $parent_short_description = RiskManagement::where('id', $id)->value('short_description');
+    //     // $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
+
+
+    //     return view('frontend.action-item.action-item', compact('parent_id', 'parent_type', 'record', 'currentDate', 'formattedDate', 'due_date', 'parent_record', 'parent_record', 'parent_division_id', 'parent_initiator_id', 'parent_intiation_date', 'parent_short_description', 'old_record'));
+
+    //     $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
+
+
+
+
+
+    // }
+
     public function child(Request $request, $id)
     {
+
+        $cft = [];
         $parent_id = $id;
-        $parent_type = "Action-Item";
-        $record = ((RecordNumber::first()->value('counter')) + 1);
-        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $parent_type = "Audit_Program";
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -6533,9 +6573,116 @@ class RiskManagementController extends Controller
         $parent_division_id = RiskManagement::where('id', $id)->value('division_id');
         $parent_initiator_id = RiskManagement::where('id', $id)->value('initiator_id');
         $parent_intiation_date = RiskManagement::where('id', $id)->value('intiation_date');
+        $parent_created_at = RiskManagement::where('id', $id)->value('created_at');
         $parent_short_description = RiskManagement::where('id', $id)->value('short_description');
-        $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
+        $hod = User::where('role', 4)->get();
+        if ($request->child_type == "extension") {
+            $parent_due_date = "";
+            $parent_id = $id;
+            $parent_name = $request->parent_name;
+            if ($request->due_date) {
+                $parent_due_date = $request->due_date;
+            }
 
-        return view('frontend.action-item.action-item', compact('parent_id', 'parent_type', 'record', 'currentDate', 'formattedDate', 'due_date', 'parent_record', 'parent_record', 'parent_division_id', 'parent_initiator_id', 'parent_intiation_date', 'parent_short_description', 'old_record'));
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $Extensionchild = RiskManagement::find($id);
+            $Extensionchild->Extensionchild = $record_number;
+            $Extensionchild->save();
+            return view('frontend.extension.extension_new', compact('parent_id','parent_type','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at'));
+        }
+        $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
+        // dd($request->child_type)
+        if ($request->child_type == "capa") {
+            $parent_name = "CAPA";
+            $Capachild = RiskManagement::find($id);
+            $Capachild->Capachild = $record_number;
+            $record = $record_number;
+            $old_records = $old_record;
+            $Capachild->save();
+
+            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'record_number'));
+        } elseif ($request->child_type == "Action_Item")
+         {
+            $parent_name = "CAPA";
+            $actionchild = RiskManagement::find($id);
+            $actionchild->actionchild = $record_number;
+            $parent_id = $id;
+            $actionchild->save();
+
+            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+
+        elseif ($request->child_type == "effectiveness_check")
+         {
+            $parent_name = "CAPA";
+            $effectivenesschild = RiskManagement::find($id);
+            $effectivenesschild->effectivenesschild = $record_number;
+            $effectivenesschild->save();
+        return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        elseif ($request->child_type == "Change_control") {
+            $parent_name = "CAPA";
+            $Changecontrolchild = RiskManagement::find($id);
+            $Changecontrolchild->Changecontrolchild = $record_number;
+            $preRiskAssessment = RiskAssessment::all();
+            $pre = CC::all();
+
+            $Changecontrolchild->save();
+
+            return view('frontend.change-control.new-change-control', compact('pre', 'preRiskAssessment', 'cft','hod','parent_short_description',  'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        // else {
+        //     $parent_name = "Root";
+        //     $Rootchild = RiskManagement::find($id);
+        //     $Rootchild->Rootchild = $record_number;
+        //     $Rootchild->save();
+        //     return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
+        // }
+    }
+
+    public function riskassesmentCancel(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changeControl = RiskManagement::find($id);
+            $lastDocument =  RiskManagement::find($id);
+
+            if ($changeControl->stage == 2) {
+                $changeControl->stage = "0";
+                $changeControl->status = "Closed - Cancelled";
+                $changeControl->cancelled_by = Auth::user()->name;
+                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->cancelled_comment = $request->comment;
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'Cancel';
+                $history->previous = "";
+                $history->current = $changeControl->closed_done_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Closed - Cancelled";
+                $history->change_from = "Supervisor Review";
+                $history->stage='Closed - Cancelled';
+                $history->save();
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            // $changeControl->stage = "2";
+            // // $changeControl->status = "Closed - Cancelled";
+            // $changeControl->cancelled_by = Auth::user()->name;
+            // $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+            // $changeControl->update();
+            // toastr()->success('Document Sent');
+            // return back();
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
     }
 }

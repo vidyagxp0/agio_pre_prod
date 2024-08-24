@@ -2752,7 +2752,7 @@ public function OOTChildRoot(Request $request ,$id)
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             // $record = $record_number;
             $old_records = $old_record;
-            return view('frontend.forms.capa', compact('    record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
             }
 
            if ($request->revision == "Action-Item") {
@@ -2775,6 +2775,39 @@ public function OOTChildRoot(Request $request ,$id)
 
     }
 
+    }
+
+
+    public function OOTChildExtensionOOT(Request $request ,$id)
+    {
+        $cc = Ootc::find($id);
+               $cft = [];
+               $parent_id = $id;
+               $parent_type = "OOT";
+               $currentDate = Carbon::now();
+               $formattedDate = $currentDate->addDays(30);
+               $due_date= $formattedDate->format('d-M-Y');
+               $old_record = Capa::select('id', 'division_id', 'record')->get();
+               $record_number = ((RecordNumber::first()->value('counter')) + 1);
+               $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+               $record = ((RecordNumber::first()->value('counter')) + 1);
+               $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+               $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+               $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+               $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+               $parent_initiator_id = $id;
+
+
+               $formattedDate = $currentDate->addDays(30);
+               $due_date = $formattedDate->format('d-M-Y');
+               $oocOpen = OpenStage::find(1);
+               if (!empty($oocOpen->cft)) $cft = explode(',', $oocOpen->cft);
+
+                if ($request->revision == "Extension") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+    
+            }
     }
 
 public function oo_t_capa_child(Request $request ,$id)
@@ -2813,7 +2846,7 @@ public function oo_t_capa_child(Request $request ,$id)
 
 
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                return view('frontend.forms.action-item', compact('record','record_number' ,'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
 

@@ -4262,14 +4262,14 @@ Not Applicable
                         <td class="w-30">{{ $data->pending_Cancel_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA Initial Review Complete by</th>
+                        <th class="w-20">QA/CQA Initial Review Complete by</th>
                         <td class="w-30">{{ $data->QA_Initial_Review_Complete_By }}</td>
-                        <th class="w-20">QA Initial Review Complete On</th>
+                        <th class="w-20">QA/CQA Initial Review Complete On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->QA_Initial_Review_Complete_On) }}</td>
 
                     </tr>
                     <tr>
-                        <th class="w-20">QA Initial Review Comments</th>
+                        <th class="w-20">QA/CQA Initial Review Comments</th>
                         <td class="w-30">{{ $data->QA_Initial_Review_Comments }}</td>
                     </tr>
                     <tr>
@@ -4284,14 +4284,14 @@ Not Applicable
                         <td class="w-30">{{ $data->CFT_Review_Comments }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA Final Review Complete By</th>
+                        <th class="w-20">QA/CQA Final Review Complete By</th>
                         <td class="w-30">{{ $data->QA_Final_Review_Complete_By }}</td>
-                        <th class="w-20">QA Final Review Complete On</th>
+                        <th class="w-20">QA/CQA Final Review Complete On</th>
                         <td class="w-30">{{ $data->QA_Final_Review_Complete_On }}</td>
 
                     </tr>
                     <tr>
-                        <th class="w-20">QA Final Review Comments</th>
+                        <th class="w-20">QA/CQA Final Review Comments</th>
                         <td class="w-30">{{ $data->QA_Final_Review_Comments }}</td>
                     </tr>
                     <tr>
@@ -4306,14 +4306,14 @@ Not Applicable
                         <td class="w-30">{{ $data->Approved_Comments }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA Head/Manager Designee Approva By</th>
+                        <th class="w-20">QA/CQA Head/Manager Designee Approva By</th>
                         <td class="w-30">{{ $data->QA_head_approved_by }}</td>
-                        <th class="w-20">QA Head/Manager Designee Approva ON</th>
+                        <th class="w-20">QA/CQA Head/Manager Designee Approva ON</th>
                         <td class="w-30">{{ $data->QA_head_approved_on }}</td>
 
                     </tr>
                     <tr>
-                        <th class="w-20">QA Head/Manager Designee Approva Comments</th>
+                        <th class="w-20">QA/CQA Head/Manager Designee Approva Comments</th>
                         <td class="w-30">{{ $data->QA_head_approved_comment }}</td>
                     </tr>
                     <tr>

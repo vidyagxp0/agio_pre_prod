@@ -87,9 +87,7 @@
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Propose Plan
                             </button> </a>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
-                            </button>
+                            
                         @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                            <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                 More Info Required
@@ -100,6 +98,9 @@
                             <a href="#child-modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button></a>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
+                            </button>
                             {{-- <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button></a> --}}
@@ -111,7 +112,7 @@
                                More Info Required
                             </button></a>
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            QA Review Complete
+                            QA/CQA Review Complete
                             </button></a>
                             <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#child-modal">
@@ -159,7 +160,7 @@
                              @elseif($data->stage == 7 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                              
                               <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Closure Review Complete
+                                QA/CQA Closure Review Complete
   
                              </button></a>
                              <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
@@ -172,7 +173,7 @@
                             @elseif($data->stage == 8 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                              
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QAH Approval Complete
+                                QA/CQA Approval  Complete
 
                            </button></a>
                            
@@ -219,15 +220,15 @@
                             @endif
 
                             @if ($data->stage >= 3)
-                                <div class="active">QA Review</div>
+                                <div class="active">QA/CQA Review</div>
                             @else
-                                <div class="">QA Review</div>
+                                <div class="">QA/CQA Review</div>
                             @endif
 
                             @if ($data->stage >= 4)
-                                <div class="active">QA Approval</div>
+                                <div class="active">QA/CQA Approval</div>
                             @else
-                                <div class="">QA Approval</div>
+                                <div class="">QA/CQA Approval</div>
                             @endif
 
 
@@ -242,14 +243,14 @@
                                 <div class="">HOD Final Review</div>
                             @endif
                             @if ($data->stage >= 7)
-                            <div class="active">QA Closure Review</div>
+                            <div class="active">QA/CQA Closure Review</div>
                                 @else
-                            <div class="">QA Closure Review</div>
+                            <div class="">QA/CQA Closure Review</div>
                             @endif
                             @if ($data->stage >= 8)
-                            <div class="active">QAH Approval</div>
+                            <div class="active">QA/CQA Approval </div>
                                @else
-                            <div class="">QAH Approval</div>
+                            <div class="">QA/CQA Approval </div>
                               @endif
                               @if ($data->stage >= 9)
                               <div class="bg-danger">Closed - Done</div>
@@ -1630,14 +1631,14 @@
                                         
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Completed By"> QA Review Completed By</label>
+                                                <label for="Completed By"> QA/CQA Review Completed By</label>
                                                 <input type="hidden" name="qa_review_completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->qa_review_completed_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Completed On"> QA Review Completed On</label>
+                                                <label for="Completed On"> QA/CQA Review Completed On</label>
                                                 <input type="hidden" name="qa_review_completed_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->qa_review_completed_on }}</div>
                                             </div>
@@ -1805,14 +1806,14 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Rejected By">QA Closure Review Completed By</label>
+                                        <label for="Rejected By">QA/CQA Closure Review Completed By</label>
                                         <input type="hidden" name="qa_closure_review_completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                         <div class="static">{{ $data->qa_closure_review_completed_by }}</div>
                                     </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected By">QA Closure Review Completed On</label>
+                                    <label for="Rejected By">QA/CQA Closure Review Completed On</label>
                                     <input type="hidden" name="qa_closure_review_completed_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                     <div class="static">{{ $data->qa_closure_review_completed_on }}</div>
                                 </div>
@@ -1847,14 +1848,14 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected By">QAH Approval Completed By</label>
+                                    <label for="Rejected By">QA/CQA Approval  Completed By</label>
                                     <input type="hidden" name="qah_approval_completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                     <div class="static">{{ $data->qah_approval_completed_by }}</div>
                                 </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Rejected By">QAH Approval Completed On</label>
+                                <label for="Rejected By">QA/CQA Approval  Completed On</label>
                                 <input type="hidden" name="qah_approval_completed_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                 <div class="static">{{ $data->qah_approval_completed_on }}</div>
                             </div>

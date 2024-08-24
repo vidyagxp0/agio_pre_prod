@@ -135,15 +135,15 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button>
+                            </button>  --}}
                         @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                HOD Review Complete
+                                HOD Assessment Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
@@ -153,14 +153,15 @@
                                 More Information Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Initial Review Complete
+                                QA Initial Assessment Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
                         @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                CFT Review Complete
+                                CFT Assessment Complete
+                                
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -186,7 +187,7 @@
                             </button>
                         @elseif($data->stage == 6 && (in_array(18, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                RA Review Complete
+                                RA Approval Complete
                             </button>
                         @elseif($data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
@@ -198,7 +199,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval">
                                 Rejected
                             </button>
-                        @elseif ($data->stage == 9 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif ($data->stage == 9 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Initiator Updated Completed
                             </button>
@@ -209,7 +210,23 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-stage_8">
                                 Child
                             </button>
-                        @elseif ($data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif ($data->stage == 10 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                                HOD Final Review Complete
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Information Required
+                            </button>
+
+                        @elseif ($data->stage == 11 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                                Send For Final QA Head Approval
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Information Required
+                            </button>    
+
+                            @elseif ($data->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 HOD Final Review Complete
                             </button>
@@ -257,6 +274,7 @@
                             <div class="bg-danger">Closed - Rejected</div>
                         </div>
                     @else
+                      
                         <div class="progress-bars" >
                             @if ($data->stage >= 1)
                                 <div class="active">Opened</div>

@@ -85,18 +85,18 @@
                                 Child
                             </button></a> --}}
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Acknowledgement Complete
+                                Acknowledge Complete
                             </button></a>
                             @elseif($data->stage == 3 && (in_array(8, $userRoleIds) || in_array(18, $userRoleIds)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                  Complete
                             </button></a>
-                            <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            {{-- <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
-                            </button></a>
+                            </button></a> --}}
                             @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                           Varification  Complete
+                           Verification  Complete
                             </button></a>
                             <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
@@ -130,9 +130,9 @@
                                 <div class="">HOD Review</div>
                             @endif --}}
                             @if ($data->stage >= 2)
-                                <div class="active">Acknowledgement</div>
+                                <div class="active">Acknowledge</div>
                             @else
-                                <div class="">Acknowledgement</div>
+                                <div class="">Acknowledge</div>
                             @endif 
                             @if ($data->stage >= 3)
                             <div class="active">work Completion</div>
@@ -140,9 +140,9 @@
                             <div class="">Work Completion </div>
                         @endif
                         @if ($data->stage >= 4)
-                        <div class="active">QA Verification</div>
+                        <div class="active">QA/CQA Verification</div>
                     @else
-                        <div class="">QA Verification </div>
+                        <div class="">QA/CQA Verification </div>
                     @endif
                         @if ($data->stage >= 5)
                         <div class="bg-danger">Closed - Done</div>
