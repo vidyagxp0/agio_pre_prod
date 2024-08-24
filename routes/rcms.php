@@ -315,6 +315,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('oot_audit_history/{id}', [OOTController::class, 'OotAuditTrial']);
             Route::get('rcms/auditdetails/{id}', [OOTController::class, 'OotAuditDetail'])->name('auditdetails');
             Route::get('ootcSingleReport/{id}', [OOTController::class, 'singleReport']);
+            Route::post('OOTChildExtensionOOT/{id}', [OOTController::class, 'OOTChildExtensionOOT'])->name('OOTChildExtensionOOT');
+
             Route::post('sendstage/{id}',[OOTController::class,'oot_send_stage']);
             Route::post('cancel/{id}', [OOTController::class, 'ootCancel']);
             Route::post('RejectStateChangeNew/{id}', [OOTController::class, 'RejectStateChangeNew'])->name('RejectStateChangeNew');

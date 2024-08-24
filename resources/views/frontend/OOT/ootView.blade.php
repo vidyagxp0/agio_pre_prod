@@ -96,7 +96,7 @@
                 More Info Required
                 </button>
   
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                     Child
                 </button>
                 @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -5896,6 +5896,8 @@
     </div>
 </div>
 
+
+
 <div class="modal fade" id="child-modal1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -5911,6 +5913,34 @@
                             Action Item
                         </label>
                     </div>
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Extension">
+                            Extension
+                        </label>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="child-modal2">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('OOTChildExtensionOOT', $data->id) }}" method="POST">
+                    @csrf
+                    
                     <div class="group-input">
                         <label for="root-item">
                             <input type="radio" name="revision" id="root-item" value="Extension">
