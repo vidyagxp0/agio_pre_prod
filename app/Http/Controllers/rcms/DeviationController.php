@@ -6216,7 +6216,7 @@ class DeviationController extends Controller
                   
 
                     $deviation->stage = "3";
-                    $deviation->status = "QA Initial Assessment";
+                    $deviation->status = "QA/CQA Initial Assessment";
                     $deviation->qa_more_info_required_by = Auth::user()->name;
                     $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
                     // $deviation->pending_Cancel_comment = $request->comment;
@@ -6236,7 +6236,7 @@ class DeviationController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA Initial Assessment";
+                    $history->change_to =   "QA/CQA Initial Assessment";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
@@ -6256,7 +6256,7 @@ class DeviationController extends Controller
                   
 
                     $deviation->stage = "5";
-                    $deviation->status = "QA Final Assessment";
+                    $deviation->status = "QA/CQA Final Assessment";
                     $deviation->qa_more_info_required_by = Auth::user()->name;
                     $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
                     // $deviation->pending_Cancel_comment = $request->comment;
@@ -6276,7 +6276,7 @@ class DeviationController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA Final Assessment";
+                    $history->change_to =   "QA/CQA Final Assessment";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
@@ -6525,7 +6525,7 @@ class DeviationController extends Controller
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
             $deviation->stage = "5";
-            $deviation->status = "QA Final Review";
+            $deviation->status = "QA/CQA Final Review";
             $deviation->CFT_Review_Complete_By = Auth::user()->name;
             $deviation->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
             $history = new DeviationAuditTrail();
@@ -6694,27 +6694,27 @@ class DeviationController extends Controller
                   
 
                     $deviation->stage = "3";
-                    $deviation->status = "QA Initial Assessment";
+                    $deviation->status = "QA/CQA Initial Assessment";
                     $deviation->qa_more_info_required_by = Auth::user()->name;
                     $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
                     // $deviation->pending_Cancel_comment = $request->comment;
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                    $history->activity_type = 'Send to QA Initial Review By, Send to QA Initial Review On';
+                    $history->activity_type = 'Send to QA/CQA Initial Review By, Send to QA/CQA Initial Review On';
                     if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == ''){
                         $history->previous = "";
                     }else{
                         $history->previous = $lastDocument->qa_more_info_required_by. ' ,' . $lastDocument->qa_more_info_required_on;
                     }
-                    $history->action='Send to QA Initial Review';
+                    $history->action='Send to QA/CQA Initial Review';
                     $history->current = $deviation->qa_more_info_required_by. ',' . $deviation->qa_more_info_required_on;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA Initial Assessment";
+                    $history->change_to =   "QA/CQA Initial Assessment";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
@@ -6739,7 +6739,7 @@ class DeviationController extends Controller
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
-             if ($deviation->stage == 10) {
+         if ($deviation->stage == 10) {
                   
 
                   
@@ -6775,55 +6775,53 @@ class DeviationController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
+                    $deviation->update();
+                    return back();
+                }
+                 if ($deviation->stage == 9) {
+                  
 
+                  
 
-                    // $list = Helpers::getHodUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
+                    $deviation->stage = "7";
+                    $deviation->status = "Pending Initiator Update";
+                    $deviation->qa_more_info_required_by = Auth::user()->name;
+                    $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                    // $deviation->qa_more_info_required_comment = $request->comment;
 
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $deviation],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
-                    // }
-
-                    // $list = Helpers::getHeadoperationsUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-
-                    //             Mail::send(
-                    //                 'mail.Categorymail',
-                    //                 ['data' => $deviation],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Activity Performed By " . Auth::user()->name);
-                    //                 }
-                    //             );
-                    //         }
-                    //     }
-                    // }
-                    // dd($deviation);
+                    $history = new DeviationAuditTrail();
+                    $history->deviation_id = $id;
+                    $history->activity_type = 'Send to Pending Initiator Update By, Send to Pending Initiator Update On';
+                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->qa_more_info_required_by. ' ,' . $lastDocument->qa_more_info_required_on;
+                    }
+                    $history->action='Send to Pending Initiator Update';
+                    $history->current = $deviation->qa_more_info_required_by. ',' . $deviation->qa_more_info_required_on;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Pending Initiator Update";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
                     $deviation->update();
                     return back();
                 }
         
 
 
-        } else {
+        } 
+        else {
             toastr()->error('E-signature Not match');
             return back();
         }
@@ -6951,12 +6949,12 @@ class DeviationController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for QA initial review state'
+                            'message' => 'Sent for QA/CQA initial review state'
                         ]);
                     }
 
                     $deviation->stage = "3";
-                    $deviation->status = "QA Initial Assessment";
+                    $deviation->status = "QA/CQA Initial Assessment";
                     $deviation->HOD_Review_Complete_By = Auth::user()->name;
                     $deviation->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $deviation->HOD_Review_Comments = $request->comment;
@@ -6978,7 +6976,7 @@ class DeviationController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA Initial Assessment";
+                    $history->change_to =   "QA/CQA Initial Assessment";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Approved';
                                         if(is_null($lastDocument->HOD_Review_Complete_By) || $lastDocument->HOD_Review_Complete_On == '')
@@ -7021,7 +7019,7 @@ class DeviationController extends Controller
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
-                            'message' => 'QA initial review / CFT Mandatory Tab is yet to be filled!'
+                            'message' => 'QA/CQA initial review / CFT Mandatory Tab is yet to be filled!'
                         ]);
 
                         return redirect()->back();
@@ -7051,13 +7049,13 @@ class DeviationController extends Controller
                     $deviation->QA_Initial_Review_Comments = $request->comment;
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                     $history->activity_type = 'QA Initial Review Completed By, QA Initial Review Completed On';
+                     $history->activity_type = 'QA/CQA Initial Review Completed By, QA/CQA Initial Review Completed On';
                     if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On == ''){
                         $history->previous = "";
                     }else{
                         $history->previous = $lastDocument->QA_Initial_Review_Complete_By. ' ,' . $lastDocument->QA_Initial_Review_Complete_On;
                     }
-                    $history->action='QA Initial Review Complete';
+                    $history->action='QA/CQA Initial Review Complete';
                     $history->current = $deviation->QA_Initial_Review_Complete_By. ',' . $deviation->QA_Initial_Review_Complete_On;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
@@ -7844,7 +7842,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     if (!$IsCFTRequired || $checkCFTCount) {
 
                         $deviation->stage = "5";
-                        $deviation->status = "QA Final Assessment";
+                        $deviation->status = "QA/CQA Final Assessment";
                         $deviation->CFT_Review_Complete_By = Auth::user()->name;
                         $deviation->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
                         $deviation->CFT_Review_Comments = $request->comment;
@@ -7864,7 +7862,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                        $history->change_to =   "QA Final Assessment";
+                        $history->change_to =   "QA/CQA Final Assessment";
                         $history->change_from = $lastDocument->status;
                         $history->stage = 'Complete';
                         if(is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_On == '')
@@ -7907,14 +7905,14 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for QA Head/Manager Designee Approval'
+                            'message' => 'Sent for QA/CQA Head/Manager Designee Approval'
                         ]);
 
                     } else {
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
-                            'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
+                            'message' => 'Investigation and CAPA / QA/CQA Final review Tab is yet to be filled!'
                         ]);
 
                         return redirect()->back();
@@ -7922,27 +7920,27 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
 
                     $deviation->stage = "6";
-                    $deviation->status = "QA Head/Manager Designee Approval";
+                    $deviation->status = "QA/CQA Head/Manager Designee Approval";
                     $deviation->QA_Final_Review_Complete_By = Auth::user()->name;
                     $deviation->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $deviation->QA_Final_Review_Comments = $request->comment;
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                    $history->activity_type = 'QA Final Assessment Complete By, QA Final Assessment Completed On';
+                    $history->activity_type = 'QA/CQA Final Assessment Complete By, QA/CQA Final Assessment Completed On';
                     if(is_null($lastDocument->QA_Final_Review_Complete_By) || $lastDocument->QA_Final_Review_Complete_On == ''){
                         $history->previous = "";
                     }else{
                         $history->previous = $lastDocument->QA_Final_Review_Complete_By. ' ,' . $lastDocument->QA_Final_Review_Complete_On;
                     }
-                    $history->action='QA Final Assessment Complete';
+                    $history->action='QA/CQA Final Assessment Complete';
                     $history->current = $deviation->QA_Final_Review_Complete_By. ',' . $deviation->QA_Final_Review_Complete_On;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA Head/Manager Designee Approval";
+                    $history->change_to =   "QA/CQA Head/Manager Designee Approval";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Approved';
                     if(is_null($lastDocument->QA_Final_Review_Complete_By) || $lastDocument->QA_Final_Review_Complete_On == '')
@@ -8133,7 +8131,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
 
                     $deviation->stage = "9";
-                    $deviation->status = "Implementation verification by QA";
+                    $deviation->status = "Implementation verification by QA/CQA";
                     $deviation->Hod_final_by = Auth::user()->name;
                     $deviation->Hod_final_on = Carbon::now()->format('d-M-Y');
                     $deviation->Hod_final_comment = $request->comment;
@@ -8153,7 +8151,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Implementation verification by QA";
+                    $history->change_to =   "Implementation verification by QA/CQA";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Completed';
                     if(is_null($lastDocument->Hod_final_by) || $lastDocument->Hod_final_on == '')
@@ -8214,7 +8212,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                   
 
                     $deviation->stage = "10";
-                    $deviation->status = "Head QA / Designee Closure Approval";
+                    $deviation->status = "Head QA/CQA / Designee Closure Approval";
                     $deviation->QA_final_approved_by = Auth::user()->name;
                     $deviation->QA_final_approved_on = Carbon::now()->format('d-M-Y');
                     $deviation->QA_final_approved_comment = $request->comment;
@@ -8234,7 +8232,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Head QA / Designee Closure Approval";
+                    $history->change_to =   "Head QA/CQA / Designee Closure Approval";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Completed';
                     if(is_null($lastDocument->QA_final_approved_by) || $lastDocument->QA_final_approved_on == '')
@@ -8355,7 +8353,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                   
 
                     $deviation->stage = "5";
-                    $deviation->status = "QA Final Assessment";
+                    $deviation->status = "QA/CQA Final Assessment";
                     $deviation->QA_Initial_Review_Complete_By = Auth::user()->name;
                     $deviation->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $deviation->QA_Initial_Review_Comments = $request->comment;
@@ -8375,7 +8373,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA Final Assessment";
+                    $history->change_to =   "QA/CQA Final Assessment";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On == '')
@@ -8503,18 +8501,18 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
             if ($deviation->stage == 4) {
                 $deviation->stage = "3";
-                $deviation->status = "QA Initial Review";
+                $deviation->status = "QA/CQA Initial Review";
                 $deviation->qa_more_info_required_by = Auth::user()->name;
                 $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
                 $history = new DeviationAuditTrail();
                 $history->deviation_id = $id;
-                $history->activity_type = 'QA Final Review Complete By, QA Final Review Completed On';
+                $history->activity_type = 'QA/CQA Final Review Complete By, QA/CQA Final Review Completed On';
                     if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == ''){
                         $history->previous = "";
                     }else{
                         $history->previous = $lastDocument->qa_more_info_required_by. ' ,' . $lastDocument->qa_more_info_required_on;
                     }
-                    $history->action='QA Final Review Complete';
+                    $history->action='QA/CQA Final Review Complete';
                     $history->current = $deviation->qa_more_info_required_by. ',' . $deviation->qa_more_info_required_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -8541,6 +8539,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 toastr()->success('Document Sent');
                 return back();
             }
+         
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -8612,18 +8611,18 @@ public function audit_trail_filter(Request $request, $id)
 
             case 'stage':
                 // Filter by activity log stage changes
-                $stage=[  'Submit', 'HOD Review Complete', 'QA Initial Review Complete','Request For Cancellation',
-                    'CFT Review Complete', 'QA Final Assessment Complete', 'Approved',
-                    'QA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+                $stage=[  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved',
+                    'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
                     'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
                 $query->whereIn('action', $stage); // Ensure correct activity_type value
                 break;
 
             case 'user_action':
                 // Filter by various user actions
-                $user_action = [  'Submit', 'HOD Review Complete', 'QA Initial Review Complete','Request For Cancellation',
-                    'CFT Review Complete', 'QA Final Assessment Complete', 'Approved',
-                    'QA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+                $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved',
+                    'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
                     'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
                 $query->whereIn('action', $user_action);
                 break;
