@@ -49,7 +49,7 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::get('/logout', [UserLoginController::class, 'rcmslogout'])->name('rcms.logout');
 
     Route::get('/qms-logs/{slug}', [LogController::class, 'index'])->name('rcms.logs.show');
-    
+
 
 
     Route::middleware(['rcms'])->group(
@@ -349,9 +349,9 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('audit_report/{id}', [OOSController::class, 'auditReport'])->name('audit_report');
                 Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
             });
-    
 
-            /** 
+
+            /**
              * oos micro
              */
 
@@ -401,7 +401,7 @@ Route::group(['prefix' => 'rcms'], function () {
 
             /********************* Incident Routes Starts *******************/
 
-            Route::get('incident', [IncidentController::class, 'index'])->name('incident');    
+            Route::get('incident', [IncidentController::class, 'index'])->name('incident');
             Route::post('incident-store', [IncidentController::class, 'store'])->name('incident-store');
             Route::get('incident-show/{id}', [IncidentController::class, 'incidentShow'])->name('incident-show');
             Route::post('incident-update/{id}', [IncidentController::class, 'update'])->name('incident-update');

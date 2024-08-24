@@ -278,15 +278,15 @@
                         <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Send Letter
                         </button></a>
-                            <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="">
+                            {{-- <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="">
                                 Reopen
-                            </button></a>
+                            </button></a> --}}
 
                             @elseif($data->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             {{-- <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Send Letter
                             </button></a> --}}
-                                <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="">
+                                <a href="{{url('rcms/market_complaint_new')}}"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="">
                                     Reopen
                                 </button></a>
                           @endif
@@ -313,9 +313,9 @@
                             @endif
 
                             @if ($data->stage >= 2)
-                                <div class="active">QA Head Review </div>
+                                <div class="active">QA/CQA Head Review</div>
                             @else
-                                <div class="">QA Head Review</div>
+                                <div class="">QA/CQA Head Review</div>
                             @endif
 
                             @if ($data->stage >= 3)
@@ -333,14 +333,18 @@
                             @endif
 
                             @if ($data->stage >= 5)
-                                <div class="active">All Action Complete</div>
+                                <div class="active">All Action Complete Complete Verification by
+                                    QA/CQA </div>
                             @else
-                                <div class="">All Action Complete</div>
+                                <div class="">All Action Complete Complete Verification by
+                                    QA/CQA </div>
                             @endif
                             @if ($data->stage >= 6)
-                            <div class="active">QA Head Approve</div>
+                            <div class="active">QA/CQA Head
+                                Approval </div>
                             @else
-                            <div class="">QA Head Approve</div>
+                            <div class="">QA/CQA Head
+Approval </div>
                             @endif
                              @if ($data->stage >= 7)
                                 <div class="active">Pending Response Letter</div>

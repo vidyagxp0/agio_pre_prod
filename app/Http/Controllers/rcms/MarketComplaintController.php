@@ -3485,8 +3485,6 @@ public function marketComplaintStateChange(Request $request,$id)
 
                 if ($marketstat->stage == 2) {
 
-
-
                     $marketstat->stage = "3";
                     $marketstat->status = "Investigation CAPA And Root Cause Analysis";
 
@@ -3630,7 +3628,7 @@ public function marketComplaintStateChange(Request $request,$id)
 
 
                     $marketstat->stage = "5";
-                    $marketstat->status = "Pendign Approval";
+                    $marketstat->status = "All Action Complete";
 
                     // Code for the CFT required
                     $stage = new MarketComplaintcftResponce();
@@ -3719,7 +3717,7 @@ public function marketComplaintStateChange(Request $request,$id)
 
 
                     $marketstat->stage = "6";
-                    $marketstat->status = "Pendig Action Completion";
+                    $marketstat->status = "QA Head Approve";
                     $marketstat->approve_plan_by = Auth::user()->name;
                     $marketstat->closed_done_on = Carbon::now()->format('d-M-Y');
                     // $marketstat->QA_Final_Review_Comments = $request->comment;
@@ -3778,7 +3776,7 @@ public function marketComplaintStateChange(Request $request,$id)
 
 
                     $marketstat->stage = "7";
-                    $marketstat->status = "Pendig Action Completion";
+                    $marketstat->status = "Pending Response Letter";
                     $marketstat->approve_plan_by = Auth::user()->name;
                     $marketstat->approve_plan_on = Carbon::now()->format('d-M-Y');
                     // $marketstat->QA_Final_Review_Comments = $request->comment;
@@ -3876,10 +3874,9 @@ public function marketComplaintStateChange(Request $request,$id)
             $marketstat = MarketComplaint::find($id);
             $lastDocument =  MarketComplaint::find($id);
 
-
-            if ($marketstat->stage == 7) {
-                $marketstat->stage = "6";
-                $marketstat->status = "Pending Action Completion";
+            if ($marketstat->stage == 8) {
+                $marketstat->stage = "7";
+                $marketstat->status = "Pending Response Letter";
                 $marketstat->reject_by = Auth::user()->name;
                 $marketstat->reject_on = Carbon::now()->format('d-M-Y');
                 $marketstat->reject_comment = $request->comment;
@@ -3894,7 +3891,33 @@ public function marketComplaintStateChange(Request $request,$id)
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Pending Action Completion";
+                $history->change_to = "Pending Response Letter";
+                $history->change_from = "close - done";
+                $history->stage='Pending Response Letter';
+                $history->save();
+                $marketstat->update();
+
+                return back();
+            }
+
+            if ($marketstat->stage == 7) {
+                $marketstat->stage = "6";
+                $marketstat->status = "QA Head Approve";
+                $marketstat->reject_by = Auth::user()->name;
+                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
+                $marketstat->reject_comment = $request->comment;
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'Reject';
+                $history->previous = "";
+                $history->current = $marketstat->closed_done_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "QA Head Approve";
                 $history->change_from = "Pending Response Letter";
                 $history->stage='In QA Review';
                 $history->save();
@@ -3905,7 +3928,7 @@ public function marketComplaintStateChange(Request $request,$id)
 
             if ($marketstat->stage == 6) {
                 $marketstat->stage = "5";
-                $marketstat->status = "Pending Approval";
+                $marketstat->status = "All Action Complete";
                 $marketstat->reject_by = Auth::user()->name;
                 $marketstat->reject_on = Carbon::now()->format('d-M-Y');
                 $marketstat->reject_comment = $request->comment;
@@ -3920,8 +3943,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Pending Approval";
-                $history->change_from = "Pending Action Completion";
+                $history->change_to = "All Action Complete";
+                $history->change_from = "QA Head Approve";
                 $history->stage='In QA Review';
                 $history->save();
                 $marketstat->update();
@@ -3930,8 +3953,8 @@ public function marketComplaintStateChange(Request $request,$id)
             }
 
             if ($marketstat->stage == 5) {
-                $marketstat->stage = "4";
-                $marketstat->status = "CFT Review";
+                $marketstat->stage = "3";
+                $marketstat->status = "Investigation CAPA And Root Cause Analysis";
                 $marketstat->reject_by = Auth::user()->name;
                 $marketstat->reject_on = Carbon::now()->format('d-M-Y');
                 $marketstat->reject_comment = $request->comment;
@@ -3946,8 +3969,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "CFT Review";
-                $history->change_from = "Pending Approval";
+                $history->change_to = "Investigation CAPA And Root Cause Analysis";
+                $history->change_from = "All Action Complete";
                 $history->stage='CFT Review';
                 $history->save();
                 $marketstat->update();
@@ -3957,7 +3980,7 @@ public function marketComplaintStateChange(Request $request,$id)
 
             if ($marketstat->stage == 4) {
                 $marketstat->stage = "3";
-                $marketstat->status = "In QA Review";
+                $marketstat->status = "Investigation CAPA And Root Cause Analysis";
                 $marketstat->reject_by = Auth::user()->name;
                 $marketstat->reject_on = Carbon::now()->format('d-M-Y');
                 $marketstat->reject_comment = $request->comment;
