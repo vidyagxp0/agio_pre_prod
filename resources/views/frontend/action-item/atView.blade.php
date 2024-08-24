@@ -91,12 +91,12 @@
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                  Complete
                             </button></a>
-                            <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            {{-- <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
-                            </button></a>
+                            </button></a> --}}
                             @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                           Varification  Complete
+                           Verification  Complete
                             </button></a>
                             <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
