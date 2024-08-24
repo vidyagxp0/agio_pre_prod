@@ -11983,6 +11983,50 @@
                 </div>
             </div>
         </div>
+        {{-- <div class="modal fade" id="child-modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Child</h4>
+                    </div>
+                    <form action="{{ route('riskAssesmentChild', $data->id) }}" method="POST">
+                        @csrf
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="group-input">
+                                <label for="major">
+                                    <input type="radio" name="revision" id="major" value="Action-Item">
+                                     Action Item
+                                </label>
+
+
+
+                                <label for="major">
+                                    <input type="radio" name="revision" id="major" value="Action-Item">
+                                    Capa
+                                </label>
+
+                                <label for="major">
+                                    <input type="radio" name="revision" id="major" value="Action-Item">
+                                    Change control
+                                </label>
+
+
+                            </div>
+
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" data-bs-dismiss="modal">Close</button>
+                            <button type="submit">Continue</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div> --}}
         <div class="modal fade" id="child-modal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -11996,10 +12040,22 @@
                         <!-- Modal body -->
                         <div class="modal-body">
                             <div class="group-input">
-                                <label for="major">
-                                    <input type="radio" name="revision" id="major" value="Action-Item">
-                                    Create Action Item
-                                </label>
+
+                                @if ($data->stage == 4)
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="Action_Item">
+                                        Action Item
+                                    </label>
+
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="capa">
+                                        CAPA
+                                    </label>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="Change_control">
+                                        Change Control
+                                    </label>
+                                @endif
 
 
                             </div>
