@@ -231,14 +231,22 @@
                                 <th class="w-25">Remarks</th>
                             </tr>
                             @php $investreport = 1; @endphp
+
+                        @if (!empty($labgrid->data) && is_iterable($labgrid->data))
                             @foreach ($labgrid->data as $item)
-                            <tr>
-                                <td class="w-15">{{ $investreport++ }}</td>
-                                <td class="w-15">{{ $item['name_of_product'] }}</td>
-                                <td class="w-15">{{ $item['batch_no'] }}</td>
-                                <td class="w-15">{{ $item['remarks'] }}</td>
-                            </tr>
+                                <tr>
+                                    <td class="w-15">{{ $investreport++ }}</td>
+                                    <td class="w-15">{{ $item['name_of_product'] }}</td>
+                                    <td class="w-15">{{ $item['batch_no'] }}</td>
+                                    <td class="w-15">{{ $item['remarks'] }}</td>
+                                </tr>
                             @endforeach
+                        @else
+                            <tr>
+                                <td colspan="4">No data available</td>
+                            </tr>
+                        @endif
+
                         </table>
                     </div>
                 </div>
