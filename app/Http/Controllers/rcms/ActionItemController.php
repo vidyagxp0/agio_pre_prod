@@ -1578,8 +1578,8 @@ public function actionmoreinfo(Request $request, $id)
             return redirect('rcms/actionItem/'.$id);
         }
         if ($changeControl->stage == 4) {
-            $changeControl->stage = "3";
-            $changeControl->status = "work Completion";
+            $changeControl->stage = "2";
+            $changeControl->status = "Acknowledge";
             $changeControl->more_work_completion_by = (string)Auth::user()->name;
             $changeControl->more_work_completion_on = Carbon::now()->format('d-M-Y');
             $changeControl->more_work_completion_comment =$request->comment;
@@ -1593,7 +1593,7 @@ public function actionmoreinfo(Request $request, $id)
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->stage = "work Completion";
+            $history->stage = "Acknowledge";
             $history->save();
             $changeControl->update();
             // $history = new CCStageHistory();
