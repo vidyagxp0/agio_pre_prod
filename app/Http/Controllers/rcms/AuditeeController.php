@@ -2379,7 +2379,7 @@ class AuditeeController extends Controller
             
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
-                $changeControl->status = "QA Head Approval";
+                $changeControl->status = "QA/CQA Head Approval";
                 $changeControl->cft_review_complete_by = Auth::user()->name;
                 $changeControl->cft_review_complete_on = Carbon::now()->format('d-M-Y');
                 $changeControl->cft_review_complete_comment = $request->comment;
@@ -2397,10 +2397,10 @@ class AuditeeController extends Controller
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
                        
-                        $history->change_to =   "QA Head Approval";
+                        $history->change_to =   "QA/CQA Head Approval";
                         $history->change_from = $lastDocument->status;
                         $history->action_name = 'Update';
-                        $history->stage = 'QA Head Approval';
+                        $history->stage = 'QA/CQA Head Approval';
                      
                         $history->save();
                     //     $list = Helpers::getLeadAuditeeUserList();
@@ -2694,7 +2694,7 @@ class AuditeeController extends Controller
 
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "4";
-                $changeControl->status = "QA Head Approval";
+                $changeControl->status = "QA/CQA Head Approval";
                 $changeControl->cft_review_not_req_by = Auth::user()->name;
                 $changeControl->cft_review_not_req_on = Carbon::now()->format('d-M-Y');
                 $changeControl->cft_review_not_req_on_comment = $request->comment;
@@ -2711,10 +2711,10 @@ class AuditeeController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                        $history->change_to =   "QA Head Approval";
+                        $history->change_to =   "QA/CQA Head Approval";
                         $history->change_from = $lastDocument->status;
                         $history->action_name = 'Update';
-                        $history->stage = 'QA Head Approval';
+                        $history->stage = 'QA/CQA Head Approval';
                      
                         $history->save();
 
