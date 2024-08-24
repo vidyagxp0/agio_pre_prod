@@ -2357,7 +2357,7 @@ if($lastDocument->$key != $request->$key){
                     $history->origin_state =  $data->status;
                     //$history->action = 'Correction Complete';
                     $history->change_from = $lastDocument->status;
-                    $history->change_to =   "Pending Correction";
+                    $history->change_to =   "Closed-Cancelled";
                     $history->action_name = 'Update';
                     $history->save();
             $data->update();

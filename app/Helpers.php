@@ -850,6 +850,11 @@ class Helpers
 
     }
 
+    public static function getChemicalGridData($date)
+    {
+        
+    }
+
     public function getChecklistData(){
         $checklists = [
             '1' => 'Checklist - Tablet Dispensing & Granulation',

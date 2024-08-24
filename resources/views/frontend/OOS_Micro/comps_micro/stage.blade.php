@@ -64,7 +64,7 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
             @elseif($micro_data->stage == 11 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB QA Review Complete</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB CQA/QA Review Complete</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
             @elseif($micro_data->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
@@ -81,7 +81,7 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
             @elseif($micro_data->stage == 15 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A QA Review Complete</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A CQA/QA Review Complete</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
             @elseif($micro_data->stage == 16 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
@@ -98,7 +98,7 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
             @elseif($micro_data->stage == 19 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B QA Review Complete</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B QCQA/QA Review Complete</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
             @elseif($micro_data->stage == 20 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
@@ -400,9 +400,9 @@
 
                 @if ($micro_data->stage < 4)
                 @if ($micro_data->stage >= 3)
-                    <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">QA Head Approval</div>
+                    <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Approval</div>
                 @else
-                <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">QA Head Approval</div>
+                <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Approval</div>
                 @endif
                 @endif
 
@@ -426,9 +426,9 @@
                 @endif
 
                 @if ($micro_data->stage >= 7)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA QA Review</div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQA/QA Review</div>
                 @else
-                <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA QA Review</div>
+                <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQA/QA Review</div>
                 @endif
                 @if ($micro_data->stage >= 8)
                 <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-IA CQAH/QAH Review</div>
@@ -446,9 +446,9 @@
                 <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB HOD Primary Review</div>
                 @endif
                 @if ($micro_data->stage >= 11)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase IB QA Review </div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase IB CQA/QA Review </div>
                 @else
-                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB QA Review </div>
+                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB CQA/QA Review </div>
                 @endif
                 @if ($micro_data->stage >= 12)
                 <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> P-IB CQAH/QAH Review</div>
@@ -474,9 +474,9 @@
                 @endif
 
                 @if ($micro_data->stage >= 15)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase II A QA Review</div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase II A CQA/QA Review</div>
                 @else
-                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase II A QA Review</div>
+                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase II A CQA/QA Review</div>
                 @endif
 
                 @if ($micro_data->stage >= 16)
@@ -495,9 +495,9 @@
                     <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B HOD Primary Review</div>
                 @endif
                 @if ($micro_data->stage >= 19)
-                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B QA Review</div>
+                <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B CQA/QA Review</div>
                 @else
-                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B QA Review</div>
+                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B CQA/QA Review</div>
                 @endif
                 @if ($micro_data->stage >= 20)
                 <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">P-II B QAH/CQAH Review</div>

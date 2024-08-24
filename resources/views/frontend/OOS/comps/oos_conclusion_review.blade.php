@@ -39,7 +39,7 @@
                                 <th style="widht: 16%">Action </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        {{-- <tbody>
                             @if ($oos_conclusion_reviews)
                                 @foreach ($oos_conclusion_reviews->data as $oos_conclusion_review)
                                     <tr>
@@ -52,7 +52,7 @@
                                     </tr>
                                 @endforeach
                             @endif
-                        </tbody>
+                        </tbody> --}}
                     </table>
                 </div>
             </div>
