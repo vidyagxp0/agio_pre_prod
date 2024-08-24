@@ -310,7 +310,7 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 P-II B Assignable Cause Found
                 </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal2">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
                 P-II B Assignable Cause Not Found
                 </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
@@ -319,7 +319,18 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button>
-
+                @elseif($data->stage == 25 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                P-III Investigation Applicable/Not Applicable
+                </button>
+                @elseif($data->stage == 26 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                
+                
+                <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/action-items-create') }}"> Action Item
+                </a> </button>
+                <button class="button_theme1"> <a class="text-white" href="{{ url('root-cause-analysis') }}"> Root Cause Analysis
+                </a> </button>
                 @endif
             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                 </a> </button>
@@ -486,6 +497,8 @@
             @else
                 <div class="">Closed - Done</div>
             @endif
+
+            
         </div>
     @endif
 </div>
