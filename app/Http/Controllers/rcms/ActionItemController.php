@@ -1248,7 +1248,7 @@ class ActionItemController extends Controller
                      
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->action = "Acknowledgement Complete";
+                        $history->action = " Acknowledge Complete";
                         $history->previous = $lastopenState->completed_by;
                         $history->current = $changeControl->completed_by;
                         $history->comment = $request->comment;
@@ -1258,7 +1258,7 @@ class ActionItemController extends Controller
                         $history->origin_state = $lastopenState->status;
                         $history->action_name = 'Not Applicable';
                         $history->stage = '3';
-                        $history->activity_type = 'Acknowledgement Complete By, Acknowledgement Complete On';
+                        $history->activity_type = ' Acknowledge Complete By,  Acknowledge Complete On';
                         if (is_null($lastopenState->work_completion_by) || $lastopenState->work_completion_by === '') {
                             $history->previous = "";
                         } else {
@@ -1289,7 +1289,7 @@ class ActionItemController extends Controller
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = '4';
-                $changeControl->status = 'QA Verification';
+                $changeControl->status = 'QA/CQA Verification';
                 $changeControl->qa_varification_by = Auth::user()->name;
                 $changeControl->qa_varification_on = Carbon::now()->format('d-M-Y');
                 $changeControl->qa_varification_comment = $request->comment;

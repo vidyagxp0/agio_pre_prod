@@ -1098,7 +1098,7 @@ class EffectivenessCheckController extends Controller
                             // $history->previous = "";
                             // $history->current = $effective->submitted_by;
                             $history->comment = $request->comment;
-                            $history->action = 'Work Completion';
+                            $history->action = 'Complete';
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1172,7 +1172,7 @@ class EffectivenessCheckController extends Controller
                 //     return back();
                 // } else {
                     $effective->stage = '5';
-                    $effective->status = 'QA Review';
+                    $effective->status = 'QA/CQA Review';
                     $effective->hod_review_complete_by =  Auth::user()->name;
                     $effective->hod_review_complete_on = Carbon::now()->format('d-M-Y');
                     $effective->hod_review_complete_comment = $request->comment;
@@ -1200,7 +1200,7 @@ class EffectivenessCheckController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastopenState->status;
-                            $history->change_to =   "QA Review";
+                            $history->change_to =   "QA/CQA Review";
                             $history->change_from = $lastopenState->status;
                             $history->action_name = 'Not Applicable';
                             $history->stage = '4';
@@ -1255,7 +1255,7 @@ class EffectivenessCheckController extends Controller
             }
             if ($effective->stage == 5) {
                 $effective->stage = '6';
-                $effective->status = 'QA Approval - Effective';
+                $effective->status = 'QA/CQA Approval - Effective';
                 $effective->effective_by =  Auth::user()->name;
                 $effective->effective_on = Carbon::now()->format('d-M-Y');
                 $effective->effective_comment = $request->comment;
@@ -1271,7 +1271,7 @@ class EffectivenessCheckController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
-                $history->change_to = "QA Approval - Effective";
+                $history->change_to = "QA/CQA Approval - Effective";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
                 $history->action_name = 'Not Applicable';
                 $history->stage = '2';
@@ -1383,7 +1383,7 @@ class EffectivenessCheckController extends Controller
             $lastopenState = EffectivenessCheck::find($id);
             if ($effective->stage == 5) {
                 $effective->stage = '8';
-                $effective->status = 'QA Approval Not-Effective';
+                $effective->status = 'QA/CQA Approval Not-Effective';
                 $effective->qa_review_complete_by =  Auth::user()->name;
                 $effective->qa_review_complete_on = Carbon::now()->format('d-M-Y');
                 $effective->qa_review_complete_comment = $request->comment;
@@ -1399,7 +1399,7 @@ class EffectivenessCheckController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
-                $history->change_to = "QA Approval Not-Effective";
+                $history->change_to = "QA/CQA Approval Not-Effective";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
                 // $history->action_name = 'Not Applicable';
 
@@ -1478,7 +1478,7 @@ class EffectivenessCheckController extends Controller
             $lastopenState = EffectivenessCheck::find($id);
             if ($effective->stage == 2) {
                 $effective->stage = '5';
-                $effective->status = 'QA Approval-Not Effective';
+                $effective->status = 'QA/CQA Approval-Not Effective';
                 $effective->not_effective_by =  Auth::user()->name;
                 $effective->not_effective_on = Carbon::now()->format('d-M-Y');
                 $effective->not_effective_comment = $request->comment;
@@ -1506,7 +1506,7 @@ class EffectivenessCheckController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastopenState->status; // Corrected variable name here
-                            $history->change_to = "QA Approval-Not Effective";
+                            $history->change_to = "QA/CQA Approval-Not Effective";
                             $history->change_from = $lastopenState->status; // Corrected variable name here
                             $history->action_name = 'Not Applicable';
                             $history->stage = '2';
@@ -1684,7 +1684,7 @@ class EffectivenessCheckController extends Controller
 
             if ($effective->stage == 8) {
                 $effective->stage = '5';
-                $effective->status = 'QA Review';
+                $effective->status = 'QA/CQA Review';
                 $effective->final_moreinfo_by =  Auth::user()->name;
                 $effective->final_moreinfo_on = Carbon::now()->format('d-M-Y');
                 $effective->final_moreinfo_comment = $request->effectiveness_check_complete_moreinfo_comment;
@@ -1700,7 +1700,7 @@ class EffectivenessCheckController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
-                $history->change_to = "QA Review";
+                $history->change_to = "QA/CQA Review";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
                 $history->action_name = 'Not Applicable';
                 // $history->stage = '6';
@@ -1722,7 +1722,7 @@ class EffectivenessCheckController extends Controller
             }
             if ($effective->stage == 6) {
                 $effective->stage = '5';
-                $effective->status = 'QA Review';
+                $effective->status = 'QA/CQA Review';
                 $effective->final_moreinfo_by =  Auth::user()->name;
                 $effective->final_moreinfo_on = Carbon::now()->format('d-M-Y');
                 $effective->final_moreinfo_comment = $request->effectiveness_check_complete_moreinfo_comment;
@@ -1738,7 +1738,7 @@ class EffectivenessCheckController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
-                $history->change_to = "QA Review";
+                $history->change_to = "QA/CQA Review";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
                 $history->action_name = 'Not Applicable';
                 // $history->stage = '6';
@@ -1776,7 +1776,7 @@ class EffectivenessCheckController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
-                $history->change_to = "QA Review";
+                $history->change_to = "QA/CQA Review";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
                 $history->action_name = 'Not Applicable';
                 // $history->stage = '6';
