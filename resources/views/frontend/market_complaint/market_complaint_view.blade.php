@@ -9918,6 +9918,13 @@ document.getElementById('initiator_group').addEventListener('change', function()
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="group-input">
+                            <label for="root-item">
+                             <input type="radio" name="revision" id="root-item" value="rca">
+                                RCA
+                            </label>
+                        </div>
+
+                        <div class="group-input">
                             <label style="  display: flex;     gap: 18px; width: 60px;" for="capa-child">
                                 <input type="radio" name="revision" id="capa-child" value="capa-child">
                                 CAPA
@@ -9929,12 +9936,7 @@ document.getElementById('initiator_group').addEventListener('change', function()
                                 Action Item
                             </label>
                         </div>
-                        <div class="group-input">
-                            <label for="root-item">
-                             <input type="radio" name="revision" id="root-item" value="effectiveness-check">
-                                RCA
-                            </label>
-                        </div>
+
                     </div>
 
                     <!-- Modal footer -->
