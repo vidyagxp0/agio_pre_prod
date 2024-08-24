@@ -5065,7 +5065,7 @@ if ($incident->Initial_attachment) {
             $Capachild->save();
 
 
-            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
+            return view('frontend.forms.capa', compact('parent_id','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
         } elseif ($request->child_type == "Action_Item")
          {
             $parent_name = "CAPA";
