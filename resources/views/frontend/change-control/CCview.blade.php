@@ -153,7 +153,7 @@
                                 More Information Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Initial Assessment Complete
+                                QA/CQA Initial Assessment Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
@@ -180,10 +180,10 @@
                                 Send to HOD
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#initalQA-review-modal">
-                                Send to QA Initial Review
+                                Send to QA/CQA Initial Review
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval">
-                                QA Final Review Complete
+                                QA/CQA Final Review Complete
                             </button>
                         @elseif($data->stage == 6 && (in_array(18, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -236,7 +236,7 @@
 
                         @elseif ($data->stage == 11 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
-                                Send For Final QA Head Approval
+                                Send For Final QA/CQA Head Approval
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -287,9 +287,11 @@
                                 <div class="">HOD Assessment</div>
                             @endif
                             @if ($data->stage >= 3)
-                                <div class="active">QA Initial Assessment</div>
+                                <div class="active">QA/CQA Initial
+                                    Assessment</div>
                             @else
-                                <div class="">QA Initial Assessment</div>
+                                <div class="">QA/CQA Initial
+                                    Assessment</div>
                             @endif
                             @if ($data->stage >= 4)
                                 <div class="active">CFT Assessment</div>
@@ -297,9 +299,9 @@
                                 <div class="">CFT Assessment</div>
                             @endif
                             @if ($data->stage >= 5)
-                                <div class="active">QA Final Review</div>
+                                <div class="active">QA/CQA Final Review</div>
                             @else
-                                <div class="">QA Final Review</div>
+                                <div class="">QA/CQA Final Review</div>
                             @endif
                             @if ($data->stage >= 6)
                                 <div class="active">Pending RA Review</div>
@@ -307,9 +309,10 @@
                                 <div class="">Pending RA Review</div>
                             @endif
                             @if ($data->stage >= 7)
-                                <div class="active">QA Head/Manager Designee Approval</div>
+                                <div class="active">QA/CQA Head/Manager
+Designee Approval</div>
                             @else
-                                <div class="">QA Head/Manager Designee Approval</div>
+                                <div class="">QA/CQA Head/Manager Designee Approval</div>
                             @endif
 
                             @if ($data->stage >= 9)
@@ -325,15 +328,15 @@
                             @endif
 
                             @if ($data->stage >= 11)
-                                <div class="active" @if($data->stage == 8) style="display: none" @endif>Implementation Verification by QA</div>
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>Implementation Verification by QA/CQA</div>
                             @else
-                                <div class="" @if($data->stage == 8) style="display: none" @endif>Implementation Verification by QA</div>
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>Implementation Verification by QA/CQA</div>
                             @endif
 
                             @if ($data->stage >= 12)
-                                <div class="active" @if($data->stage == 8) style="display: none" @endif>QA Closure Approval</div>
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>QA/CQA Closure Approval</div>
                             @else
-                                <div class="" @if($data->stage == 8) style="display: none" @endif>QA Closure Approval</div>
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>QA/CQA Closure Approval</div>
                             @endif
 
 

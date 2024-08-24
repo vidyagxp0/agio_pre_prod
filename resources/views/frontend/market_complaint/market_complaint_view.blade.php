@@ -286,7 +286,7 @@
                             {{-- <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Send Letter
                             </button></a> --}}
-                                <a href="{{url('rcms/market_complaint_new')}}"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="">
+                                <a href="{{ route('marketcomplaint.market_complaint_new') }}"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="">
                                     Reopen
                                 </button></a>
                           @endif
@@ -3793,7 +3793,7 @@ Approval </div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Store_attachment">
-                                        @if ($data1->Store_attachment)
+                                        @if (property_exists($data1, 'Store_attachment') && $data1->Store_attachment)
                                             @foreach (json_decode($data1->Store_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -3963,7 +3963,7 @@ Approval </div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Store_attachment">
-                                        @if ($data1->Store_attachment)
+                                        @if (property_exists($data1, 'Store_attachment') && $data1->Store_attachment)
                                             @foreach (json_decode($data1->Store_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -4456,7 +4456,7 @@ Approval </div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list"
                                         id="RegulatoryAffair_attachment">
-                                        @if ($data1->RegulatoryAffair_attachment)
+                                        @if (property_exists($data1, 'RegulatoryAffair_attachment') && $data1->RegulatoryAffair_attachment)
                                             @foreach (json_decode($data1->RegulatoryAffair_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -4634,7 +4634,7 @@ Approval </div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list"
                                         id="RegulatoryAffair_attachment">
-                                        @if ($data1->RegulatoryAffair_attachment)
+                                        @if (property_exists($data1, 'RegulatoryAffair_attachment') && $data1->RegulatoryAffair_attachment)
                                             @foreach (json_decode($data1->RegulatoryAffair_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -4811,7 +4811,7 @@ Approval </div>
                             <div class="file-attachment-field">
                                 <div disabled class="file-attachment-list"
                                     id="Quality_Assurance_attachment">
-                                    @if ($data1->Quality_Assurance_attachment)
+                                    @if (property_exists($data1, 'Quality_Assurance_attachment') && $data1->Quality_Assurance_attachment)
                                         @foreach (json_decode($data1->Quality_Assurance_attachment) as $file)
                                             <h6 type="button" class="file-container text-dark"
                                                 style="background-color: rgb(243, 242, 240);">
@@ -4981,7 +4981,7 @@ Approval </div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list"
                                         id="ProductionLiquid_attachment">
-                                        @if ($data1->ProductionLiquid_attachment)
+                                        @if (property_exists($data1, 'ProductionLiquid_attachment') && $data1->ProductionLiquid_attachment)
                                             @foreach (json_decode($data1->ProductionLiquid_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -5160,7 +5160,7 @@ require completion</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list"
                                         id="ProductionLiquid_attachment">
-                                        @if ($data1->ProductionLiquid_attachment)
+                                        @if (property_exists($data1, 'ProductionLiquid_attachment') && $data1->ProductionLiquid_attachment)
                                             @foreach (json_decode($data1->ProductionLiquid_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -5318,7 +5318,7 @@ require completion</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list"
                                         id="Quality_Control_attachment">
-                                        @if ($data1->Quality_Control_attachment)
+                                        @if (property_exists($data1, 'Quality_Control_attachment') && $data1->Quality_Control_attachment)
                                             @foreach (json_decode($data1->Quality_Control_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -5493,7 +5493,7 @@ require completion</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list"
                                         id="Quality_Control_attachment">
-                                        @if ($data1->Quality_Control_attachment)
+                                        @if (property_exists($data1, 'Quality_Control_attachment') && $data1->Quality_Control_attachment)
                                             @foreach (json_decode($data1->Quality_Control_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -5651,7 +5651,7 @@ require completion</small></div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Microbiology_attachment">
-                                        @if ($data1->Microbiology_attachment)
+                                        @if (property_exists($data1, 'Microbiology_attachment') && $data1->Microbiology_attachment)
                                             @foreach (json_decode($data1->Microbiology_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -5829,7 +5829,7 @@ require completion</small></div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Microbiology_attachment">
-                                        @if ($data1->Microbiology_attachment)
+                                        @if (property_exists($data1, 'Microbiology_attachment') && $data1->Microbiology_attachment)
                                             @foreach (json_decode($data1->Microbiology_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -5994,7 +5994,7 @@ require completion</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list"
                                         id="Environment_Health_Safety_attachment">
-                                        @if ($data1->Environment_Health_Safety_attachment)
+                                        @if (property_exists($data1, 'Environment_Health_Safety_attachment') && $data1->Environment_Health_Safety_attachment)
                                             @foreach (json_decode($data1->Environment_Health_Safety_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -6173,7 +6173,7 @@ require completion</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list"
                                         id="Environment_Health_Safety_attachment">
-                                        @if ($data1->Environment_Health_Safety_attachment)
+                                        @if (property_exists($data1, 'Environment_Health_Safety_attachment') && $data1->Environment_Health_Safety_attachment)
                                             @foreach (json_decode($data1->Environment_Health_Safety_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -6337,7 +6337,7 @@ require completion</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list"
                                         id="ContractGiver_attachment">
-                                        @if ($data1->ContractGiver_attachment)
+                                        @if (property_exists($data1, 'ContractGiver_attachment') && $data1->ContractGiver_attachment)
                                             @foreach (json_decode($data1->ContractGiver_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -6516,7 +6516,7 @@ require completion</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list"
                                         id="ContractGiver_attachment">
-                                        @if ($data1->ContractGiver_attachment)
+                                        @if (property_exists($data1, 'ContractGiver_attachment') && $data1->ContractGiver_attachment)
                                             @foreach (json_decode($data1->ContractGiver_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -6773,7 +6773,7 @@ require completion</small></div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Other1_attachment">
-                                        @if ($data1->Other1_attachment)
+                                        @if (property_exists($data1, 'Other1_attachment') && $data1->Other1_attachment)
                                             @foreach (json_decode($data1->Other1_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -7019,7 +7019,7 @@ require completion</small></div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Other2_attachment">
-                                        @if ($data1->Other2_attachment)
+                                        @if (property_exists($data1, 'Other2_attachment') && $data1->Other2_attachment)
                                             @foreach (json_decode($data1->Other2_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -7267,7 +7267,7 @@ require completion</small></div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Other3_attachment">
-                                        @if ($data1->Other3_attachment)
+                                        @if (property_exists($data1, 'Other3_attachment') && $data1->Other3_attachment)
                                             @foreach (json_decode($data1->Other3_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -7512,7 +7512,7 @@ require completion</small></div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Other4_attachment">
-                                        @if ($data1->Other4_attachment)
+                                        @if (property_exists($data1, 'Other4_attachment') && $data1->Other4_attachment)
                                             @foreach (json_decode($data1->Other4_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -7763,7 +7763,7 @@ require completion</small></div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Other5_attachment">
-                                        @if ($data1->Other5_attachment)
+                                        @if (property_exists($data1, 'Other5_attachment') && $data1->Other5_attachment)
                                             @foreach (json_decode($data1->Other5_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -7928,7 +7928,7 @@ require completion</small></div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Other1_attachment">
-                                        @if ($data1->Other1_attachment)
+                                        @if (property_exists($data1, 'Other1_attachment') && $data1->Other1_attachment)
                                             @foreach (json_decode($data1->Other1_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -8094,7 +8094,7 @@ require completion</small></div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Other2_attachment">
-                                        @if ($data1->Other2_attachment)
+                                        @if (property_exists($data1, 'Other2_attachment') && $data1->Other2_attachment)
                                             @foreach (json_decode($data1->Other2_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -8259,7 +8259,7 @@ require completion</small></div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Other3_attachment">
-                                        @if ($data1->Other3_attachment)
+                                        @if (property_exists($data1, 'Other3_attachment') && $data1->Other3_attachment)
                                             @foreach (json_decode($data1->Other3_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -8421,7 +8421,7 @@ require completion</small></div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Other4_attachment">
-                                        @if ($data1->Other4_attachment)
+                                        @if (property_exists($data1, 'Other4_attachment') && $data1->Other4_attachment)
                                             @foreach (json_decode($data1->Other4_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
 
@@ -8588,7 +8588,7 @@ require completion</small></div>
                                         documents</small></div>
                                 <div class="file-attachment-field">
                                     <div disabled class="file-attachment-list" id="Other5_attachment">
-                                        @if ($data1->Other5_attachment)
+                                        @if (property_exists($data1, 'Other5_attachment') && $data1->Other5_attachment)
                                             @foreach (json_decode($data1->Other5_attachment) as $file)
                                                 <h6 type="button" class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
@@ -9240,7 +9240,7 @@ require completion</small></div>
                             <div class="file-attachment-field">
                                 <div class="file-attachment-list" id="initial_attachment_ca">
 
-                                    @if ($data->initial_attachment_ca)
+                                    @if (property_exists($data1, 'initial_attachment_ca') && $data->initial_attachment_ca)
                                         @foreach (json_decode($data->initial_attachment_ca) as $file)
                                             <h6 type="button" class="file-container text-dark"
                                                 style="background-color: rgb(243, 242, 240);">
@@ -9304,7 +9304,7 @@ require completion</small></div>
                         <div class="file-attachment-field">
                             <div class="file-attachment-list" id="initial_attachment_c">
 
-                                @if ($data->initial_attachment_c)
+                                @if (property_exists($data1, 'initial_attachment_c') && $data->initial_attachment_c)
                                     @foreach (json_decode($data->initial_attachment_c) as $file)
                                         <h6 type="button" class="file-container text-dark"
                                             style="background-color: rgb(243, 242, 240);">
