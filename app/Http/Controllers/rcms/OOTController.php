@@ -2725,7 +2725,8 @@ public function stageChange(Request $request, $id){
                             $changestage->status = "Closed - Done";
                             $history = new OotAuditTrial();
                             $history->ootcs_id = $id;
-                            $history->activity_type = 'P-II B Assignable Cause Not Found By ,   P-II B Assignable Cause Not Found On';
+                            $history->activity_type = 'P-III Investigation 
+Applicable/Not Applicable By ,   P-II B Assignable Cause Not Found On';
                             $history->previous = $lastDocument->P_II_B_Assignable_Cause_Found_by;
                             $history->current = $changestage->P_II_B_Assignable_Cause_Found_by;
                             $history->comment = $request->comment;
@@ -2738,6 +2739,32 @@ public function stageChange(Request $request, $id){
                             $history->action_name = 'P-II B Assignable Cause Found';
                             $history->action = 'P-II B Assignable Cause Found';
                             $history->stage='P-II B Assignable Cause Found';
+                            $history->save();
+                            $changestage->update();
+                            toastr()->success('Closed - Done');
+                            return back();
+                        }
+                        if ($changestage->stage == 25) {
+                            $changestage->stage = "26";
+                            $changestage->P_II_B_Assignable_Cause_Found_by = Auth::user()->name;
+                            $changestage->P_II_B_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
+                            $changestage->P_II_B_Assignable_Cause_Found_comment = $request->comments;
+                            $changestage->status = "Closed - Done";
+                            $history = new OotAuditTrial();
+                            $history->ootcs_id = $id;
+                            $history->activity_type = 'P-III Investigation Applicable/Not Applicable By ,   P-III Investigation Applicable/Not Applicable On';
+                            $history->previous = $lastDocument->P_II_B_Assignable_Cause_Found_by;
+                            $history->current = $changestage->P_II_B_Assignable_Cause_Found_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->change_to = "Closed - Done";
+                            $history->change_from = $lastDocument->status;
+                            $history->action_name = 'P-III Investigation Applicable/Not Applicable';
+                            $history->action = 'P-III Investigation Applicable/Not Applicable';
+                            $history->stage='P-III Investigation Applicable/Not Applicable';
                             $history->save();
                             $changestage->update();
                             toastr()->success('Closed - Done');
