@@ -548,9 +548,9 @@ $users = DB::table('users')->get();
             @endif
 
             @if ($ooc->stage >= 8)
-                <div class="active">P-IA CQAH/QAH Review</div>
+                <div class="active">P-IA QAH Review</div>
             @else
-                <div class="">P-IA CQAH/QAH Review</div>
+                <div class="">P-IA QAH Review</div>
             @endif
 
             @if ($ooc->stage < 10)
