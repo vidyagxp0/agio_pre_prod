@@ -1906,7 +1906,7 @@
 
             </div>
 
-            <div class="modal fade" id="child-modal1">
+            {{-- <div class="modal fade" id="child-modal1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
 
@@ -1916,21 +1916,15 @@
                         </div>
                         <form action="{{ route('capa_child_changecontrol', $data->id) }}" method="POST">
                             @csrf
-                            <!-- Modal body -->
+                           
                             <div class="modal-body">
                                 <div class="group-input">
-                                    {{-- <label for="major">
-                                        <input type="hidden" name="parent_name" value="Capa">
-                                        <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                                        <input type="radio" name="child_type" value="effectiveness_check">
-                                        Effectiveness Check
-                                    </label> --}}
-                                    {{-- @if ($data->stage == 6) --}}
+                                    
                                     <label for="major">
                                        <input type="radio" name="child_type" value="extension">
                                           Extension
                                     </label>
-                                {{-- @endif --}}
+                            
 
                                 </div>
 
@@ -1945,7 +1939,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="modal fade" id="child-modal">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
