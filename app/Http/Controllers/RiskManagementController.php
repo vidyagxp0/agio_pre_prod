@@ -4991,7 +4991,7 @@ class RiskManagementController extends Controller
                     // }
 
                     $incident->stage = "3";
-                    $incident->status = "CFT";
+                    $incident->status = "CFT Review";
                     $incident->cft_completed_by = Auth::user()->name;
                     $incident->cft_completed_on = Carbon::now()->format('d-M-Y');
                     $incident->cft_comments = $request->comment;
@@ -5056,7 +5056,7 @@ class RiskManagementController extends Controller
                     // }
 
                     $incident->stage = "4";
-                    $incident->status = "In QA Review";
+                    $incident->status = "In QA/CQA Review";
 
                     // Code for the CFT required
                     $stage = new RiskAssesmentCftResponce();
@@ -5075,7 +5075,7 @@ class RiskManagementController extends Controller
                     $history->risk_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action = 'CFT';
+                    $history->action = 'CFT Review';
                     $history->current = $incident->QA_Initial_Review_Complete_By;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
@@ -5854,7 +5854,7 @@ class RiskManagementController extends Controller
                         $history->risk_id = $id;
                         $history->activity_type = 'Activity Log';
                         $history->previous = "";
-                        $history->action = 'In QA Review Complete';
+                        $history->action = '';
                         $history->current = $incident->CFT_Review_Complete_By;
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
@@ -5913,7 +5913,7 @@ class RiskManagementController extends Controller
 
 
                     $incident->stage = "6";
-                    $incident->status = "In Approval";
+                    $incident->status = "Closed - Done";
                     $incident->QA_Final_Review_Complete_By = Auth::user()->name;
                     $incident->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $incident->QA_Final_Review_Comments = $request->comment;

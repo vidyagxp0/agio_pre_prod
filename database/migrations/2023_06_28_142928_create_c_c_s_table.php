@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->string('form_type')->nullable();
             $table->integer('record')->nullable();
-            $table->integer('record_number')->nullable();
+            $table->longText('record_number')->nullable();
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();
             $table->longText('short_description')->nullable();
