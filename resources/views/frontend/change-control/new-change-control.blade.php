@@ -169,7 +169,7 @@
                                     $initiationDate = date('Y-m-d'); // Current date as initiation date
                                     $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
                                 @endphp
-                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
@@ -341,8 +341,8 @@
                                                     <label for="Risk Assessment Required">Risk Assessment Required? </label>
                                                     <select name="risk_assessment_required" id="risk_assessment_required">
                                                         <option value="">-- Select --</option>
-                                                        <option @if ($data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
-                                                        <option @if ($data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
+                                                        <option @if (isset($data) && $data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
+                                                        <option @if (isset($data) && $data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
                                                     </select>
                                                     <!-- @error('capa_required')
                                                         <div class="text-danger">{{ $message }}</div>
@@ -508,7 +508,7 @@
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="in_attachment[]"
                                                     oninput="addMultipleFiles(this, 'in_attachment')" multiple>
-                                                    
+
                                             </div>
                                         </div>
 
@@ -535,6 +535,7 @@
                                     <label for="risk_assessment_related_record">Related Records</label>
                                     <select multiple id="risk_assessment_related_record" name="risk_assessment_related_record[]"
                                         placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true">
+
                                         @foreach ($preRiskAssessment as $prix)
                                             <option value="{{ $prix->id }}">
                                                 {{ Helpers::getDivisionName($prix->division_id) }}/Risk-Assessment/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
@@ -623,7 +624,7 @@
                                                     <div>Add</div>
                                                     <input type="file" id="myfile" name="risk_assessment_atch[]"
                                                         oninput="addMultipleFiles(this, 'risk_assessment_atch')" multiple>
-                                                        
+
                                                 </div>
                                             </div>
 
@@ -676,7 +677,7 @@
                                         </table>
                                     </div>
                                 </div> -->
-                                
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="current-practice">
@@ -732,7 +733,7 @@
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                            
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Microbiology-Person">CFT Reviewer Person</label>
@@ -842,8 +843,8 @@
 
                     <div id="CCForm12" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="row">                   
-                            
+                            <div class="row">
+
                                 <div class="sub-head">
                                     RA Review
                                 </div>
@@ -1328,7 +1329,7 @@
 
 
 
-                                                    
+
                                 <div class="sub-head">
                                     Stores
                                 </div>
@@ -1529,7 +1530,7 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="sub-head">
                                     Research & Development
                                 </div>
@@ -1598,7 +1599,7 @@
                                         <textarea class="summernote ResearchDevelopment_feedback" name="ResearchDevelopment_feedback" id="summernote-18"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-12 researchDevelopment"> 
+                                <div class="col-12 researchDevelopment">
                                     <div class="group-input">
                                         <label for="Research Development attachment">Research Development Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -2238,7 +2239,7 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="sub-head">
                                     Information Technology
                                 </div>
@@ -2346,7 +2347,7 @@
                                     </div>
                                 </div>
 
-                                    
+
 
                                 <div class="sub-head">
                                     Contract Giver
@@ -5151,7 +5152,7 @@
                                             </tr>
 
                                         </tbody>
-                                     
+
                                     </table>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
@@ -5159,17 +5160,17 @@
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                                 Exit </a> </button>
-        
+
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
 
-                   
 
-                    
+
+
                 </div>
 
                     <!-- <div id="CCForm6" class="inner-block cctabcontent">
@@ -5417,9 +5418,9 @@
                     </div>
                 </div>
 
-                
 
-                
+
+
         </div>
         @php
             $product = DB::table('products')->get();
@@ -5599,8 +5600,8 @@
             </div>
         </div>
 
-        
-           
+
+
     </div>
     </form>
 
@@ -5883,7 +5884,7 @@
                                             });
                                         });
                                     </script>
-                                    
+
     <script>
 
         document.addEventListener('DOMContentLoaded', function() {

@@ -18,6 +18,13 @@ return new class extends Migration
             $table->text('cft_completed_on')->nullable();
             $table->text('cft_comments')->nullable();
             $table->text('cancelled_comment')->nullable();
+            $table->text('QA_Initial_Review_Complete_By')->nullable();
+            $table->text('QA_Initial_Review_Complete_On')->nullable();
+            $table->text('QA_Initial_Review_Comments')->nullable();
+            $table->text('actionchild')->nullable();
+            $table->text('Capachild')->nullable();
+            $table->text('Changecontrolchild')->nullable();
+
         });
     }
 

@@ -18,6 +18,8 @@ use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use App\Models\RootCauseAnalysis;
 use App\Models\Extension;
+use App\Models\RiskAssessment;
+use App\Models\CC;
 
 
 use PDF;
@@ -6527,12 +6529,42 @@ class RiskManagementController extends Controller
         }
     }
 
+    // public function child(Request $request, $id)
+    // {
+    //     $parent_id = $id;
+    //     $parent_type = "Action-Item";
+    //     $record = ((RecordNumber::first()->value('counter')) + 1);
+    //     $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+    //     $currentDate = Carbon::now();
+    //     $formattedDate = $currentDate->addDays(30);
+    //     $due_date = $formattedDate->format('d-M-Y');
+    //     $parent_record = RiskManagement::where('id', $id)->value('record');
+    //     $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+    //     $parent_division_id = RiskManagement::where('id', $id)->value('division_id');
+    //     $parent_initiator_id = RiskManagement::where('id', $id)->value('initiator_id');
+    //     $parent_intiation_date = RiskManagement::where('id', $id)->value('intiation_date');
+    //     $parent_short_description = RiskManagement::where('id', $id)->value('short_description');
+    //     // $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
+
+
+    //     return view('frontend.action-item.action-item', compact('parent_id', 'parent_type', 'record', 'currentDate', 'formattedDate', 'due_date', 'parent_record', 'parent_record', 'parent_division_id', 'parent_initiator_id', 'parent_intiation_date', 'parent_short_description', 'old_record'));
+
+    //     $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
+
+
+
+
+
+    // }
+
     public function child(Request $request, $id)
     {
+
+        $cft = [];
         $parent_id = $id;
-        $parent_type = "Action-Item";
-        $record = ((RecordNumber::first()->value('counter')) + 1);
-        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $parent_type = "Audit_Program";
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -6541,10 +6573,72 @@ class RiskManagementController extends Controller
         $parent_division_id = RiskManagement::where('id', $id)->value('division_id');
         $parent_initiator_id = RiskManagement::where('id', $id)->value('initiator_id');
         $parent_intiation_date = RiskManagement::where('id', $id)->value('intiation_date');
+        $parent_created_at = RiskManagement::where('id', $id)->value('created_at');
         $parent_short_description = RiskManagement::where('id', $id)->value('short_description');
-        $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
+        $hod = User::where('role', 4)->get();
+        if ($request->child_type == "extension") {
+            $parent_due_date = "";
+            $parent_id = $id;
+            $parent_name = $request->parent_name;
+            if ($request->due_date) {
+                $parent_due_date = $request->due_date;
+            }
 
-        return view('frontend.action-item.action-item', compact('parent_id', 'parent_type', 'record', 'currentDate', 'formattedDate', 'due_date', 'parent_record', 'parent_record', 'parent_division_id', 'parent_initiator_id', 'parent_intiation_date', 'parent_short_description', 'old_record'));
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $Extensionchild = RiskManagement::find($id);
+            $Extensionchild->Extensionchild = $record_number;
+            $Extensionchild->save();
+            return view('frontend.extension.extension_new', compact('parent_id','parent_type','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at'));
+        }
+        $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
+        // dd($request->child_type)
+        if ($request->child_type == "capa") {
+            $parent_name = "CAPA";
+            $Capachild = RiskManagement::find($id);
+            $Capachild->Capachild = $record_number;
+            $record = $record_number;
+            $old_records = $old_record;
+            $Capachild->save();
+
+            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'record_number'));
+        } elseif ($request->child_type == "Action_Item")
+         {
+            $parent_name = "CAPA";
+            $actionchild = RiskManagement::find($id);
+            $actionchild->actionchild = $record_number;
+            $parent_id = $id;
+            $actionchild->save();
+
+            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+
+        elseif ($request->child_type == "effectiveness_check")
+         {
+            $parent_name = "CAPA";
+            $effectivenesschild = RiskManagement::find($id);
+            $effectivenesschild->effectivenesschild = $record_number;
+            $effectivenesschild->save();
+        return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        elseif ($request->child_type == "Change_control") {
+            $parent_name = "CAPA";
+            $Changecontrolchild = RiskManagement::find($id);
+            $Changecontrolchild->Changecontrolchild = $record_number;
+            $preRiskAssessment = RiskAssessment::all();
+            $pre = CC::all();
+
+            $Changecontrolchild->save();
+
+            return view('frontend.change-control.new-change-control', compact('pre', 'preRiskAssessment', 'cft','hod','parent_short_description',  'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        // else {
+        //     $parent_name = "Root";
+        //     $Rootchild = RiskManagement::find($id);
+        //     $Rootchild->Rootchild = $record_number;
+        //     $Rootchild->save();
+        //     return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
+        // }
     }
 
     public function riskassesmentCancel(Request $request, $id)
@@ -6560,7 +6654,7 @@ class RiskManagementController extends Controller
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
                 $changeControl->cancelled_comment = $request->comment;
                 $history = new RiskAuditTrail();
-                $history->market_id = $id;
+                $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->action = 'Cancel';
                 $history->previous = "";
