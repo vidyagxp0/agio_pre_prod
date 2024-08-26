@@ -6309,7 +6309,7 @@ Designee Approval</div>
                                                     <label for="Review Required1"> Other's 1 Review Required? </label>
                                                     <select name="Other1_review" @if ($data->stage == 4) disabled @endif id="Other1_review"
                                                         value="{{ $data1->Other1_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other1_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other1_review == 'no') selected @endif value="no">
@@ -6336,7 +6336,7 @@ Designee Approval</div>
                                                             style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other1_person" @if ($data->stage == 4) disabled @endif id="Other1_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6354,6 +6354,7 @@ Designee Approval</div>
                                                             class="text-danger">*</span></label>
                                                     <select name="Other1_Department_person" @if ($data->stage == 4) disabled @endif
                                                         id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
+                                                           <option value="">-- Select --</option>
                                                             <option value="CQA" @if ($data1->Other1_Department_person == 'CQA') selected @endif>Corporate Quality Assurance</option>
                                                             <option value="QA" @if ($data1->Other1_Department_person == 'QA') selected @endif>Quality Assurance</option>
                                                             <option value="QC" @if ($data1->Other1_Department_person == 'QC') selected @endif>Quality Control</option>
@@ -6503,7 +6504,7 @@ Designee Approval</div>
                                                     <label for="review2"> Other's 2 Review Required ?</label>
                                                     <select name="Other2_review" @if ($data->stage == 4) disabled @endif id="Other2_review"
                                                         value="{{ $data1->Other2_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other2_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other2_review == 'no') selected @endif value="no">
@@ -6530,7 +6531,7 @@ Designee Approval</div>
                                                             style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other2_person" @if ($data->stage == 4) disabled @endif id="Other2_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6698,7 +6699,7 @@ Designee Approval</div>
                                                     <label for="review3"> Other's 3 Review Required ?</label>
                                                     <select name="Other3_review" @if ($data->stage == 4) disabled @endif id="Other3_review"
                                                         value="{{ $data1->Other3_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other3_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other3_review == 'no') selected @endif value="no">
@@ -6727,7 +6728,7 @@ Designee Approval</div>
                                                             style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other3_person" @if ($data->stage == 4) disabled @endif id="Other3_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6894,7 +6895,7 @@ Designee Approval</div>
                                                     <label for="review4">Other's 4 Review Required ?</label>
                                                     <select name="Other4_review" @if ($data->stage == 4) disabled @endif id="Other4_review"
                                                         value="{{ $data1->Other4_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other4_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other4_review == 'no') selected @endif value="no">
@@ -6922,7 +6923,7 @@ Designee Approval</div>
                                                             style="display: {{ $data1->Other4_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other4_person" @if ($data->stage == 4) disabled @endif id="Other4_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other4_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7092,7 +7093,7 @@ Designee Approval</div>
                                                     <label for="review5">Other's 5 Review Required ?</label>
                                                     <select name="Other5_review" @if ($data->stage == 4) disabled @endif id="Other5_review"
                                                         value="{{ $data1->Other5_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other5_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other5_review == 'no') selected @endif value="no">
@@ -7120,7 +7121,7 @@ Designee Approval</div>
                                                             class="text-danger">*</span>
                                                     </label>
                                                     <select name="Other5_person" @if ($data->stage == 4) disabled @endif id="Other5_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7271,7 +7272,7 @@ Designee Approval</div>
                                                     <label for="Review Required1"> Other's 1 Review Required? </label>
                                                     <select disabled name="Other1_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_review" value="{{ $data1->Other1_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other1_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other1_review == 'no') selected @endif value="no">
@@ -7297,7 +7298,7 @@ Designee Approval</div>
                                                     <label for="Person1"> Other's 1 Person </label>
                                                     <select disabled name="Other1_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7313,7 +7314,7 @@ Designee Approval</div>
                                                     <select disabled
                                                         name="Other1_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other1_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other1_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other1_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7410,7 +7411,7 @@ Designee Approval</div>
                                                     <label for="review2"> Other's 2 Review Required ?</label>
                                                     <select disabled name="Other2_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_review" value="{{ $data1->Other2_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other2_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other2_review == 'no') selected @endif value="no">
@@ -7436,7 +7437,7 @@ Designee Approval</div>
                                                     <label for="Person2"> Other's 2 Person</label>
                                                     <select disabled name="Other2_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7451,7 +7452,7 @@ Designee Approval</div>
                                                     <select disabled
                                                         name="Other2_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other2_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other2_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other2_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7548,7 +7549,7 @@ Designee Approval</div>
                                                     <label for="review3"> Other's 3 Review Required ?</label>
                                                     <select disabled name="Other3_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_review" value="{{ $data1->Other3_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other3_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other3_review == 'no') selected @endif value="no">
@@ -7576,7 +7577,7 @@ Designee Approval</div>
                                                     <label for="Person3">Other's 3 Person</label>
                                                     <select disabled name="Other3_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7592,7 +7593,7 @@ Designee Approval</div>
                                                     <select disabled
                                                         name="Other3_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other3_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other3_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other3_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7686,7 +7687,7 @@ Designee Approval</div>
                                                     <label for="review4">Other's 4 Review Required ?</label>
                                                     <select disabled name="Other4_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_review" value="{{ $data1->Other4_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other4_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other4_review == 'no') selected @endif value="no">
@@ -7713,7 +7714,7 @@ Designee Approval</div>
                                                     <label for="Person4"> Other's 4 Person</label>
                                                     <select name="Other4_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other4_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7728,7 +7729,7 @@ Designee Approval</div>
                                                     <select disabled
                                                         name="Other4_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other4_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other4_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other4_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7826,7 +7827,7 @@ Designee Approval</div>
                                                     <label for="review5">Other's 5 Review Required ?</label>
                                                     <select disabled name="Other5_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_review" value="{{ $data1->Other5_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other5_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other5_review == 'no') selected @endif value="no">
@@ -7852,7 +7853,7 @@ Designee Approval</div>
                                                     <label for="Person5">Other's 5 Person</label>
                                                     <select disabled name="Other5_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7867,7 +7868,7 @@ Designee Approval</div>
                                                     <select disabled
                                                         name="Other5_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other5_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other5_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other5_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
