@@ -331,8 +331,8 @@
                 <tr>
                     <th class="w-20">Date Response Due</th>
                     <td class="w-80">
-                        @if ($data->date_response_due1)
-                            {!! $data->date_response_due1 !!}
+                        @if ($data->date_Response_due2)
+                            {!! $data->date_Response_due2 !!}
                         @else
                             Not Applicable
                         @endif
