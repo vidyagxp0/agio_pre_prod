@@ -5,8 +5,10 @@
                             $previousItem = null;
                         @endphp
 
-                            <td>{{ $dataDemo && !isset($filter_request) ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
-                            </td>
+                        <td>
+                            {{ $dataDemo && !isset($filter_request) ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : $loop->index + 1 }}
+                        </td>
+                        
 
                             <td>
                                 <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
