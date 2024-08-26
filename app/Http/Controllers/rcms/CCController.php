@@ -218,9 +218,11 @@ class CCController extends Controller
             $openState->risk_assessment_atch = json_encode($files);
         }
 
-
+        
         $openState->status = 'Opened';
         $openState->stage = 1;
+
+
         $openState->save();
 
 
@@ -2438,7 +2440,7 @@ class CCController extends Controller
             $openState->record_number = $request->record_number;
         }
 
-        $openState->doc_change = $request->naturechange;
+        $openState->doc_change = $request->doc_change;
         $openState->hod_person = $request->hod_person;
         $openState->If_Others = $request->others;
         $openState->severity_level1 = $request->severity_level1;
@@ -2453,8 +2455,12 @@ class CCController extends Controller
         $openState->other_comment = $request->other_comment;
         $openState->supervisor_comment = $request->supervisor_comment;
         $openState->qa_comments = $request->qa_comments;
+
+        if ($request->related_records) {
+            $openState->related_records = implode(',', $request->related_records);
+        }
         // $openState->related_records = implode(',', $request->related_records);
-        $openState->qa_head = $request->qa_head;
+      //  $openState->qa_head = $request->qa_head;
 
         // $openState->qa_eval_comments = $request->qa_eval_comments;
         $openState->qa_eval_attach = $request->qa_eval_attach;
@@ -2588,6 +2594,20 @@ class CCController extends Controller
         //     }
         //     $openState->in_attachment = json_encode($files);
         // }
+
+        $qa_files = is_array($request->existinQAFile) ? $request->existinQAFile : [];
+        
+        if ($request->hasfile('qa_head')) {
+            foreach ($request->file('qa_head') as $file) {
+                $name = "CC" . '-qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $qa_files[] = $name;
+            }
+        }
+
+
+        $openState->qa_head = $qa_files;
+
         $openState->update();
 
 
@@ -4113,23 +4133,7 @@ class CCController extends Controller
             $review->related_records = implode(',', $request->related_records);
         }
 
-        $files = is_array($request->existinQAFile) ? $request->existinQAFile : null;
-        if (!empty($request->qa_head)) {
-            if ($review->qa_head) {
-                $existingFiles = json_decode($review->qa_head, true);
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
-                }
-            }
-
-            if ($request->hasfile('qa_head')) {
-                foreach ($request->file('qa_head') as $file) {
-                    $name = "CC" . '-qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-        }
+        
         $review->risk_assessment_atch = !empty($files) ? json_encode($files) : null;
         $areQaHeadAttachSame = $lastreview->qa_head == $review->qa_head;
         $review->update();
@@ -10203,7 +10207,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
     if ($changeControl->stage == 12) {
         $changeControl->stage = "13";
-        $changeControl->status = "Close-done";
+        $changeControl->status = "Closed Done";
         $changeControl->closure_approved_by = Auth::user()->name;
         $changeControl->closure_approved_on = Carbon::now()->format('d-M-Y');
         $changeControl->closure_approved_comment = $request->comments;
@@ -10230,7 +10234,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->change_to = "Close-done";
+        $history->change_to = "Closed Done";
         $history->change_from = $lastDocument->status;
         $history->stage = 'Plan Proposed';
         $history->save();
@@ -11464,6 +11468,23 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                 $query->whereIn('action',$user_action);     
                                 break;
 
+
+
+                                case 'notification':
+                                    $notification = [ 'user notification'
+                                        
+                                    ];
+                                $query->where('action',$notification);     
+                                break;
+
+
+
+                                case 'business':
+                                    $business = [ 'business'
+                                        
+                                    ];
+                                $query->where('action',$business);     
+                                break;
                               default;
                               break;  
                         }
@@ -11611,6 +11632,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
+       
         $pdf = PDF::loadview('frontend.change-control.audit_trial_pdf', compact('data', 'doc'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',

@@ -1285,7 +1285,7 @@ Designee Approval</div>
                                                 </div>
                                             </div>
 
-                                            @if ($data->qa_head)
+                                         @if ($data->qa_head)
                                                 @foreach (json_decode($data->qa_head) as $file)
                                                     <input id="QaAttachmentFile-{{ $loop->index }}" type="hidden"
                                                         name="existinQAFile[{{ $loop->index }}]"
@@ -1297,8 +1297,8 @@ Designee Approval</div>
                                                     <label for="qa head">QA Attachments</label>
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="qa_head">
-                                                            @if ($review->qa_head)
-                                                                @foreach (json_decode($review->qa_head) as $file)
+                                                            @if ($data->qa_head)
+                                                                @foreach (json_decode($data->qa_head) as $file)
                                                                     <h6 type="button" class="file-container text-dark"
                                                                         style="background-color: rgb(243, 242, 240);">
                                                                         <b>{{ $file }}</b>
@@ -1322,7 +1322,9 @@ Designee Approval</div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>  
+
+
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
