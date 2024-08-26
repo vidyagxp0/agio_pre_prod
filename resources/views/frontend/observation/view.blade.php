@@ -73,7 +73,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Report Issued
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-model">
                                 Cancel
                             </button>
                         @elseif($data->stage == 2 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -1597,6 +1597,57 @@
                                     <label for="comment">Comment <span class="text-danger">*</span></label>
                                     <input type="comment" name="comment" required>
                                 </div>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <!-- <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                                <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="cancel-model">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ route('observation_cancel-model', $data->id) }}" method="POST">
+                            @csrf
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input class="observation_style" type="text" name="username" required>
+                                </div>
+                                <input type="hidden" name="capaNotReq" id="capaNotReq" value="No">
+                                <div class="group-input">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input class="observation_style" type="password" name="password" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="comment">Comment</label>
+                                    <input class="observation_style" type="comment" required name="comment">
+                                </div>
+                                {{-- <div class="group-input">
+                                    <label for="comment">Comment</label>
+                                    <input type="hidden" name="comment"> 
+                                </div> --}}
                             </div>
 
                             <!-- Modal footer -->

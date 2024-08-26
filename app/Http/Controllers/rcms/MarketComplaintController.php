@@ -18,6 +18,7 @@ use App\Models\RecordNumber;
 use App\Models\RoleGroup;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\CC;
 use Illuminate\Support\Facades\App;
 use Helpers;
 
@@ -4218,13 +4219,13 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        $parent_record = RiskManagement::where('id', $id)->value('record');
+        $parent_record = MarketComplaint::where('id', $id)->value('record');
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
-        $parent_division_id = RiskManagement::where('id', $id)->value('division_id');
-        $parent_initiator_id = RiskManagement::where('id', $id)->value('initiator_id');
-        $parent_intiation_date = RiskManagement::where('id', $id)->value('intiation_date');
-        $parent_created_at = RiskManagement::where('id', $id)->value('created_at');
-        $parent_short_description = RiskManagement::where('id', $id)->value('short_description');
+        $parent_division_id = MarketComplaint::where('id', $id)->value('division_id');
+        $parent_initiator_id = MarketComplaint::where('id', $id)->value('initiator_id');
+        $parent_intiation_date = MarketComplaint::where('id', $id)->value('intiation_date');
+        $parent_created_at = MarketComplaint::where('id', $id)->value('created_at');
+        $parent_short_description = MarketComplaint::where('id', $id)->value('short_description');
         $hod = User::where('role', 4)->get();
         if ($request->child_type == "extension") {
             $parent_due_date = "";
@@ -4236,16 +4237,16 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
 
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-            $Extensionchild = RiskManagement::find($id);
+            $Extensionchild = MarketComplaint::find($id);
             $Extensionchild->Extensionchild = $record_number;
             $Extensionchild->save();
             return view('frontend.extension.extension_new', compact('parent_id','parent_type','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at'));
         }
-        $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
+        $old_record = MarketComplaint::select('id', 'division_id', 'record')->get();
         // dd($request->child_type)
         if ($request->child_type == "capa") {
             $parent_name = "CAPA";
-            $Capachild = RiskManagement::find($id);
+            $Capachild = MarketComplaint::find($id);
             $Capachild->Capachild = $record_number;
             $record = $record_number;
             $old_records = $old_record;
@@ -4255,7 +4256,7 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         } elseif ($request->child_type == "Action_Item")
          {
             $parent_name = "CAPA";
-            $actionchild = RiskManagement::find($id);
+            $actionchild = MarketComplaint::find($id);
             $actionchild->actionchild = $record_number;
             $parent_id = $id;
             $actionchild->save();
@@ -4266,16 +4267,16 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         elseif ($request->child_type == "effectiveness_check")
          {
             $parent_name = "CAPA";
-            $effectivenesschild = RiskManagement::find($id);
+            $effectivenesschild = MarketComplaint::find($id);
             $effectivenesschild->effectivenesschild = $record_number;
             $effectivenesschild->save();
         return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         elseif ($request->child_type == "Change_control") {
             $parent_name = "CAPA";
-            $Changecontrolchild = RiskManagement::find($id);
+            $Changecontrolchild = MarketComplaint::find($id);
             $Changecontrolchild->Changecontrolchild = $record_number;
-            $preRiskAssessment = RiskAssessment::all();
+            $preRiskAssessment = MarketComplaint::all();
             $pre = CC::all();
 
             $Changecontrolchild->save();
