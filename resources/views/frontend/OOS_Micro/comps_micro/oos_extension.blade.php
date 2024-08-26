@@ -1,4 +1,4 @@
-        <div id="CCForm24" class="inner-block cctabcontent">
+        {{-- <div id="CCForm24" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="row">
                     <div class="sub-head"> OOS Extension </div>
@@ -405,8 +405,9 @@
                                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
-                                        </a> -->
+                                        </a> 
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
+        

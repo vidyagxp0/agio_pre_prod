@@ -66,8 +66,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
+                                        <input disabled type="text"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                            <input type="hidden" name="record_number" id="record_number"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">                                            
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -125,27 +127,38 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6 new-date-data-field">
+                                <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                reason in "Due Date Extension Justification" data field.</small>
-                                        </div>
+                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="due_date"
-                                                id="due_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                            <!-- Display the formatted date in a readonly input -->
+                                            <input type="text" name="due_date" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                           
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                         </div>
-                                        {{-- <div class="calenderauditee">
-                                            <input disabled type="text" name="due_date" id="due_date" value="{{ \Carbon\Carbon::now()->addDays(30)->format('d-M-Y') }}" />
-                                            <input type="hidden" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
-                                        </div> --}}
                                     </div>
                                 </div>
+                                
+                                <script>
+                                function handleDateInput(dateInput, displayId) {
+                                    const date = new Date(dateInput.value);
+                                    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                    document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                }
+                                
+                                // Call this function initially to ensure the correct format is shown on page load
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const dateInput = document.querySelector('input[name="due_date"]');
+                                    handleDateInput(dateInput, 'due_date_display');
+                                });
+                                </script>
+                                
+                                <style>
+                                .hide-input {
+                                    display: none;
+                                }
+                                </style>
+                                     
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span

@@ -1143,13 +1143,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QQQA_Review_Complete_By">QA Review Complete By</label>
+                                        <label for="QQQA_Review_Complete_By">QA/CQA Review  Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QQQA_Review_Complete_On">QA Review Complete On</label>
+                                        <label for="QQQA_Review_Complete_On">QA/CQA Review  Complete On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1264,13 +1264,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Final_QA_Review_Complete_By">Final QA Review Complete By</label>
+                                        <label for="Final_QA_Review_Complete_By">Final QA/CQA Review  Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Final_QA_Review_Complete_On">Final QA Review Complete On</label>
+                                        <label for="Final_QA_Review_Complete_On">Final QA/CQA Review  Complete On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1305,13 +1305,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="evaluation_complete_by">QAH Closure By</label>
+                                        <label for="evaluation_complete_by">QAH/CQAH Closure By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="evaluation_complete_on">QAH Closure On</label>
+                                        <label for="evaluation_complete_on">QAH/CQAH Closure On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>

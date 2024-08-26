@@ -227,6 +227,7 @@ function addMultipleFiles(input, block_id) {
                         @if ($data->stage == 1 && (in_array(13, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Audit Details Summary
+                                Audit Details Summary
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
@@ -1845,7 +1846,7 @@ function addMultipleFiles(input, block_id) {
 
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
 
             <div class="modal fade" id="signature-modal">

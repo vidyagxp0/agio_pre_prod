@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Root Cause Analysis Single Report
+                   CAPA Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -174,10 +174,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Root Cause Analysis No.</strong>
+                    <strong>CAPA No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($data->division_id) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/CAPA/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}            
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -346,34 +346,35 @@
                     <div class="block-head">
                         File Attachment, if any
                     </div>
-                    <table>
-
-                        <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
-                        </tr>
-                        @if ($data->root_cause_initial_attachment)
-                            @foreach (json_decode($data->root_cause_initial_attachment) as $key => $file)
-                                <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                            target="_blank"><b>{{ $file }}</b></a> </td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td class="w-20">1</td>
-                                <td class="w-20">Not Applicable</td>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">File </th>
                             </tr>
-                        @endif
+                                @if($data->capa_attachment)
+                                @foreach(json_decode($data->capa_attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
 
-                    </table>
-                </div>
-
+                        </table>
+                      </div>
+                </table>
             </div>
-            <div class="block">
+
+          
+            {{-- <div class="block">
                 <div class="block-head">
-                    Investigation & Root Cause
+                   Product Material Details
                 </div>
                 <table>
                     <tr>
@@ -412,128 +413,48 @@
 
                 </table>
                 <div class="block-head">
-                    Fishbone or Ishikawa Diagram
+                    Equipment/Instruments Details
                 </div>
-                <table>
-                    - <tr>
-                        <th class="w-20">Measurement</th>
-                        {{-- <td class="w-80">@if ($riskgrdfishbone->measurement){{ $riskgrdfishbone->measurement }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $measurement = unserialize($data->measurement);
-                            @endphp
+                <div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-25">SR no.</th>
+                            <th class="w-25">Equipment/Instruments Name</th>
+                            <th class="w-25">Equipment/Instruments ID</th>
+                            <th class="w-25">Equipment/Instruments Comments</th>
+                        </tr>
+                        @if($data->Instruments_Details->equipment)
+                        @foreach (unserialize($data->Instruments_Details->equipment) as $key => $dataDemo)
+                        <tr>
+                            <td class="w-15">{{ $dataDemo ? $key +1  : "Not Applicable" }}</td>
 
-                            @if (is_array($measurement))
-                                @foreach ($measurement as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Materials</th>
-                        {{-- <td class="w-80">@if ($data->materials){{ $data->materials }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $materials = unserialize($data->materials);
-                            @endphp
+                            <td class="w-15">{{ $dataDemo ? $dataDemo : "Not Applicable"}}</td>
+                            <td class="w-15">{{unserialize($data->Instruments_Details->equipment_instruments)[$key] ?  unserialize($data->Instruments_Details->equipment_instruments)[$key] : "Not Applicable" }}</td>
+                            <td class="w-15">{{unserialize($data->Instruments_Details->equipment_comments)[$key] ?  unserialize($data->Instruments_Details->equipment_comments)[$key] : "Not Applicable" }}</td>
 
-                            @if (is_array($materials))
-                                @foreach ($materials as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($materials))
-                                {{ htmlspecialchars($materials) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
 
-                    </tr>
-                    <tr>
-                        <th class="w-20">Methods</th>
-                        {{-- <td class="w-80">@if ($data->methods){{ $data->methods }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $methods = unserialize($data->methods);
-                            @endphp
-
-                            @if (is_array($methods))
-                                @foreach ($methods as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($methods))
-                                {{ htmlspecialchars($methods) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Environment</th>
-                        {{-- <td class="w-80">@if ($data->environment){{ $data->environment }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $environment = unserialize($data->environment);
-                            @endphp
-
-                            @if (is_array($environment))
-                                @foreach ($environment as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($environment))
-                                {{ htmlspecialchars($environment) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Manpower</th>
-                        {{-- <td class="w-80">@if ($data->manpower){{ $data->manpower }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $manpower = unserialize($data->manpower);
-                            @endphp
-
-                            @if (is_array($manpower))
-                                @foreach ($manpower as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($manpower))
-                                {{ htmlspecialchars($manpower) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Machine</th>
-                        {{-- <td class="w-80">@if ($data->machine){{ $data->machine }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $machine = unserialize($data->machine);
-                            @endphp
-
-                            @if (is_array($machine))
-                                @foreach ($machine as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($machine))
-                                {{ htmlspecialchars($machine) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Problem Statement1</th>
-                        <td class="w-80">
-                            @if ($data->problem_statement)
-                                {{ $data->problem_statement }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
+                        @endif
+                    </table>
+                </div>
+            </div> --}}
+                    
+            <div class="block">
+                <div class="block-head">
+                   HOD Review
+                </div>
+                <div>
+                   <table>
+                    <tr>  
+                        <th class="w-20">HOD Remark</th>
+                        <td class="w-80">@if($data->hod_remarks){{ $data->hod_remarks }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
 
@@ -976,225 +897,255 @@
                 </div>
                 <div class="block">
                     <div class="block-head">
-                        QA Review
+                       CAPA Closure
                     </div>
+                  <tr>
+                      
+                    <th class="w-20">
+                        QA Review & Closure
+                       </th>
+                     <td class="w-80">
+                        @if($data->qa_review){{ $data->qa_review }}@else Not Applicable @endif      </td>     
+                  </tr>
+                    
+               
+                   <tr>
+                    <th class="w-20">Due Date Extension Justification</th>
+                    <td class="w-80">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
+                   </tr>
+                </table>
+            </div>
+           
+                    
+                    {{-- <tr>
+                        <th class="w-20">Closure Attachment</th>
+                        <td class="w-80">@if($data->closure_attachment)<a href="{{asset('upload/document/',$data->closure_attachment)}}">{{ $data->closure_attachment }}</a>@else Not Applicable @endif</td>
 
-                    <table>
-
-                        <tr>
-                            <th class="w-20">Final Comments</th>
-                            <td class="w-80">
-                                @if ($data->cft_comments_new)
-                                    {{ $data->cft_comments_new }}
-                                @else
-                                    Not Applicable
-                                @endif
-                            </td>
-                        </tr>
-
-                    </table>
-                    <div class="border-table">
-                        <div class="block-head">
-                            Final Attachment
-
-                        </div>
-                        <table>
-
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
-                            </tr>
-                            @if ($data->cft_attchament_new)
-                                @foreach (json_decode($data->cft_attchament_new) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                                target="_blank"><b>{{ $file }}</b></a> </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
-                                </tr>
-                            @endif
-
-                        </table>
-                    </div>
-                </div>
-
-
-                <div class="block">
-                    <div class="block-head">
-                        Activity log
-                    </div>
-                    <table>
-
-                        <tr>
-                            <th class="w-20">Acknowledge By</th>
-                            <td class="w-30">{{ $data->acknowledge_by }}</td>
-                            <th class="w-20">Acknowledge On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->acknowledge_on) }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">{{ $data->ack_comments }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">More Info Req.By</th>
-                            <td class="w-30">{{ $data->More_Info_ack_by }}</td>
-                            <th class="w-20">More Info Req. On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->More_Info_ack_on) }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">{{ $data->More_Info_ack_comment }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">HOD Review Complete By</th>
-                            <td class="w-30">{{ $data->HOD_Review_Complete_By }}</td>
-                            <th class="w-20">HOD Review Complete On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->HOD_Review_Complete_On) }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">{{ $data->HOD_Review_Complete_Comment }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">More Info Req.By</th>
-                            <td class="w-30">{{ $data->More_Info_hrc_by }}</td>
-                            <th class="w-20">More Info Req. On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->More_Info_hrc_on) }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">{{ $data->More_Info_hrc_comment }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">QA Review Complete By</th>
-                            <td class="w-30">{{ $data->QQQA_Review_Complete_By }}</td>
-                            <th class="w-20">QA Review Complete On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->QQQA_Review_Complete_On) }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">{{ $data->QAQQ_Review_Complete_comment }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">More Info Req.By</th>
-                            <td class="w-30">{{ $data->More_Info_qac_by }}</td>
-                            <th class="w-20">More Info Req. On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->More_Info_qac_on) }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">{{ $data->More_Info_qac_comment }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Submited By</th>
-                            <td class="w-30">{{ $data->submitted_by }}</td>
-                            <th class="w-20">Submited On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">{{ $data->qa_comments_new }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">More Info Req.By</th>
-                            <td class="w-30">{{ $data->More_Info_sub_by }}</td>
-                            <th class="w-20">More Info Req. On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->More_Info_sub_on) }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">{{ $data->More_Info_sub_comment }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">HOD Final Review Complete By</th>
-                            <td class="w-30">{{ $data->HOD_Final_Review_Complete_By }}</td>
-                            <th class="w-20">HOD Final Review Complete On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->HOD_Final_Review_Complete_On) }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">{{ $data->HOD_Final_Review_Complete_Comment }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">More Info Req.By</th>
-                            <td class="w-30">{{ $data->More_Info_hfr_by }}</td>
-                            <th class="w-20">More Info Req. On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->More_Info_hfr_on) }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">{{ $data->More_Info_hfr_comment }}</td>
-                        </tr>
-
-                        <tr>
-                            <th class="w-20">Final QA Review Complete By</th>
-                            <td class="w-30">{{ $data->Final_QA_Review_Complete_By }}</td>
-                            <th class="w-20">Final QA Review Complete On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->Final_QA_Review_Complete_On) }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">{{ $data->Final_QA_Review_Complete_Comment }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">More Info Req.By</th>
-                            <td class="w-30">{{ $data->qA_review_complete_by }}</td>
-                            <th class="w-20">More Info Req. On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->qA_review_complete_on) }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">{{ $data->qA_review_complete_comment }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">QAH Closure By</th>
-                            <td class="w-30">{{ $data->evaluation_complete_by }}</td>
-                            <th class="w-20">QAH Closure On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->evaluation_complete_on) }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-30">{{ $data->evalution_Closure_comment }}</td>
-                        </tr>
-
-                        {{-- <tr>
-                        <th class="w-20">Audit preparation completed by</th>
-                        <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
-                        <th class="w-20">Audit preparation completed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
                     </tr> --}}
-                        <tr>
-                            <th class="w-20">Cancelled By</th>
-                            <td class="w-30">{{ $data->cancelled_by }}</td>
-                            <th class="w-20">Cancelled On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
-                        </tr>
 
-                    </table>
+                <div class="block-head">
+                    Closure Attachment
+                 </div>
+                   <div class="border-table">
+                     <table>
+                         <tr class="table_bg">
+                             <th class="w-20">S.N.</th>
+                             <th class="w-60">File </th>
+                         </tr>
+                             @if($data->closure_attachment)
+                             @foreach(json_decode($data->closure_attachment) as $key => $file)
+                                 <tr>
+                                     <td class="w-20">{{ $key + 1 }}</td>
+                                     <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                 </tr>
+                             @endforeach
+                             @else
+                             <tr>
+                                 <td class="w-20">1</td>
+                                 <td class="w-20">Not Applicable</td>
+                             </tr>
+                         @endif
+
+                     </table>
+                   </div>
+            </div>
+        
+                    </div>
+                    </div>
+
+
+            <div class="block">
+                <div class="block-head">
+                    Activity Log
                 </div>
+                <table>
+                    <tr>
+                        <th class="w-30">Plan Proposed By
+                        </th>
+                        <td class="w-40">{{ $data->plan_proposed_by }}</td>
+                        <th class="w-20">
+                            Plan Proposed On</th>
+                        <td class="w-30">{{ $data->plan_proposed_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">HOD Review Completed By
+                        </th>
+                        <td class="w-30">{{ $data->hod_review_completed_by }}</td>
+                        <th class="w-20">
+                            HOD Review Completed On</th>
+                        <td class="w-30">{{ $data->hod_review_completed_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->hod_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20"> More Info Required By
+                        </th>
+                        <td class="w-30">{{ $data->more_info_required_by }}</td>
+                        <th class="w-20">
+                             More Info Required On</th>
+                        <td class="w-30">{{ $data->more_info_required_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->hod_comment1 }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancelled By
+                        </th>
+                        <td class="w-30">{{ $data->cancelled_by }}</td>
+                        <th class="w-20">
+                            Cancelled On</th>
+                        <td class="w-30">{{ $data->cancelled_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->cancel_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20"> QA Review Completed By
+                        </th>
+                        <td class="w-30">{{ $data->qa_review_completed_by }}</td>
+                        <th class="w-20">
+                            QA Review Completed On</th>
+                        <td class="w-30">{{ $data->qa_review_completed_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->qa_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Info Required By
+                        </th>
+                        <td class="w-30">{{ $data->qa_more_info_required_by }}</td>
+                        <th class="w-20">
+                             More Info Required On</th>
+                        <td class="w-30">{{ $data->qa_more_info_required_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->qa_commenta }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Approved By</th>
+                        <td class="w-30">{{ $data->approved_by }}</td>
+                        <th class="w-20">Approved On</th>
+                        <td class="w-30">{{ $data->approved_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->approved_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Info Required By
+                        </th>
+                        <td class="w-30">{{ $data->app_more_info_required_by }}</td>
+                        <th class="w-20">
+                             More Info Required On</th>
+                        <td class="w-30">{{ $data->app_more_info_required_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->app_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Completed By</th>
+                        <td class="w-30">{{ $data->completed_by }}</td>
+                        <th class="w-20">Completed On</th>
+                        <td class="w-30">{{ $data->completed_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->com_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Info Required By
+                        </th>
+                        <td class="w-30">{{ $data->com_more_info_required_by }}</td>
+                        <th class="w-20">
+                             More Info Required On</th>
+                        <td class="w-30">{{ $data->com_more_info_required_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->com_comment1 }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">HOD Final Review Completed By</th>
+                        <td class="w-30">{{ $data->hod_final_review_completed_by }}</td>
+                        <th class="w-20">HOD Final Review Completed On</th>
+                        <td class="w-30">{{ $data->hod_final_review_completed_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->final_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Info Required By
+                        </th>
+                        <td class="w-30">{{ $data->hod_more_info_required_by }}</td>
+                        <th class="w-20">
+                             More Info Required On</th>
+                        <td class="w-30">{{ $data->hod_more_info_required_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->hod_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA Closure Review Completed By</th>
+                        <td class="w-30">{{ $data->qa_closure_review_completed_by }}</td>
+                        <th class="w-20">QA Closure Review Completed On</th>
+                        <td class="w-30">{{ $data->qa_closure_review_completed_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->qa_closure_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Info Required By
+                        </th>
+                        <td class="w-30">{{ $data->closure_more_info_required_by }}</td>
+                        <th class="w-20">
+                             More Info Required On</th>
+                        <td class="w-30">{{ $data->closure_more_info_required_on }}</td>
+                        <th class="w-20">
+                            closurement</th>
+                        <td class="w-30">{{ $data->closure_qa_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QAH Approval Completed By</th>
+                        <td class="w-30">{{ $data->qah_approval_completed_by }}</td>
+                        <th class="w-20">QAH Approval Completed On</th>
+                        <td class="w-30">{{ $data->qah_comment }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->final_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Info Required By
+                        </th>
+                        <td class="w-30">{{ $data->qah_more_info_required_by }}</td>
+                        <th class="w-20">
+                             More Info Required On</th>
+                        <td class="w-30">{{ $data->qah_more_info_required_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->qah_comment1 }}</td>
+                    </tr>
+
+                </table>
             </div>
         </div>
+    </div>
 
-        <footer>
-            <table>
-                <tr>
-                    <td class="w-30">
-                        <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                    </td>
-                    <td class="w-40">
-                        <strong>Printed By :</strong> {{ Auth::user()->name }}
-                    </td>
-                    {{--  <td class="w-30">
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
                     <strong>Page :</strong> 1 of 1
-                </td>  --}}
-                </tr>
-            </table>
-        </footer>
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
 
 </body>
 

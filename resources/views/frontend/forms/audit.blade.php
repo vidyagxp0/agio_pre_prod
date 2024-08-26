@@ -16,8 +16,11 @@
     </style>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/virtual-select@1.0.0/dist/virtual-select.min.css"> -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/virtual-select@1.0.0"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/virtual-select@1.0.0"></script> -->
     <script>
         $(function() {
             $("#datepicker").datepicker();
@@ -138,6 +141,108 @@
             });
         });
     </script>
+
+<script>
+        $(document).ready(function() {
+            $('#internalaudit-observation').click(function(e) {
+
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="observations[0][serial_number]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="observations[' + serialNumber + '][observation]"></td>' +
+                        '<td><input type="text" name="observations[' + serialNumber + '][category]"></td>' +
+                        '<td><input type="text" name="observations[' + serialNumber + '][remarks]"></td>' +
+                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                        '</tr>';
+
+                    return html;
+                }
+
+                var tableBody = $('#internalaudit-odtable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
+<script>
+        $(document).ready(function() {
+            $('#internalaudit-auditorroles').click(function(e) {
+
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+
+                    var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="auditorroles[0][serial_number]" value="' + serialNumber +
+                    '"></td>' +
+                    '<td><input type="text" name="auditorroles[' + serialNumber + '][role]"></td>' +
+                    '<td><input type="text" name="auditorroles[' + serialNumber + '][name]"></td>' +
+                    '<td>' +
+                    '<div class="group-input new-date-data-field mb-0">' +
+                    '<div class="input-date ">' +
+                    '<div class="calenderauditee">' +
+                    '<input type="text" class="test" id="internal_start_date_' + serialNumber + '" readonly placeholder="DD-MMM-YYYY" />' +
+                    '<input type="date" id="internal_start_date_input_' + serialNumber + '" name="auditorroles[' + serialNumber + '][internal_start_date]" class="hide-input" oninput="handleDateInput(this, \'internal_start_date_' + serialNumber + '\'); checkDate(\'internal_start_date_' + serialNumber + '\',\'internal_start_date_checkdate_' + serialNumber + '\')" />' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</td>' +
+                    '<td><input type="text" name="auditorroles[' + serialNumber + '][remarks]"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+
+                return html;
+                }
+
+                var tableBody = $('#internalaudit-rolestab tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+      <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
+    </script>
+
+<script>
+        $(document).ready(function() {
+            $('#internalaudit-initial').click(function(e) {
+
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="Initial[0][serial_number]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][observation]"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][impact_assesment]"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][responsiblity]"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][remarks]"></td>' +
+                        '<td><input type="text" name="Initial[' + serialNumber + '][closure_date]"></td>' +
+                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                        '</tr>';
+
+                    return html;
+                }
+
+                var tableBody = $('#internalaudit-initialtable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
     <script>
         $(document).ready(function() {
             $('#ObservationAdd').click(function(e) {
@@ -204,7 +309,6 @@
             });
         });
     </script>
-
     <style>
         .calenderauditee {
             position: relative;
@@ -230,6 +334,13 @@
             width: 100%;
         }
     </style>
+<!-- 
+        <style>
+            .data  {
+                display: none;
+            }
+        </style> -->
+    
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -257,53 +368,54 @@
                       <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Audit Response & Closure</button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
+                      <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
                       Granulation</button>
-                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Checklist - Tablet Compression</button>
-                     <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
-                     <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
+                     <button class="cctablinks" style="display:none;" id="button2" onclick="openCity(event, 'CCForm8')">Checklist - Tablet Compression</button>
+                     <button class="cctablinks" style="display:none;" id="button3" onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
+                     <button class="cctablinks" style="display:none;" id="button4" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
                     </button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Checklist - Capsule
-                    </button>
-
-                     <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Checklist - Liquid/Ointment Dispensing & Manufacturing
-                    </button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Checklist - Liquid/Ointment Packing
+                      <button class="cctablinks" style="display:none;" id="button5" onclick="openCity(event, 'CCForm11')">Checklist - Capsule
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Checklist - Quality Assurance
+                     <button class="cctablinks" style="display:none;" id="button6" onclick="openCity(event, 'CCForm12')">Checklist - Liquid/Ointment Dispensing & Manufacturing
+                    </button>
+                    <button class="cctablinks" style="display:none;" id="button7" onclick="openCity(event, 'CCForm13')">Checklist - Liquid/Ointment Packing
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Checklist - Engineering
+                    <button class="cctablinks"  style="display:none;" id="button8" onclick="openCity(event, 'CCForm14')">Checklist - Quality Assurance
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Checklist - Quality Control
+                    <button class="cctablinks" style="display:none;" id="button9" onclick="openCity(event, 'CCForm15')">Checklist - Engineering
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Checklist - Stores
+                    <button class="cctablinks" style="display:none;" id="button10" onclick="openCity(event, 'CCForm16')">Checklist - Quality Control
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm18')">Checklist - Human Resource
+                    <button class="cctablinks" style="display:none;" id="button11" onclick="openCity(event, 'CCForm17')">Checklist - Stores
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing)
+                    <button class="cctablinks" style="display:none;" id="button12" onclick="openCity(event, 'CCForm18')">Checklist - Human Resource
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Checklist -
+                    <button class="cctablinks" style="display:none;" id="button13" onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing)
+                    </button>
+
+                    <button class="cctablinks" style="display:none;" id="button14" onclick="openCity(event, 'CCForm20')">Checklist -
                         Production (Injection Packing)
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Production (Powder Manufacturing and Packing)
+                    <button class="cctablinks" style="display:none;" id="button15" onclick="openCity(event, 'CCForm21')">Checklist - Production (Powder Manufacturing and Packing)
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Analytical Research and Development
+                    <button class="cctablinks" style="display:none;" id="button16" onclick="openCity(event, 'CCForm22')">Checklist - Analytical Research and Development
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
+                    <button class="cctablinks" style="display:none;" id="button17" onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
                     </button>
 
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist -LL / P2P
+                    <button class="cctablinks" style="display:none;" id="button18" onclick="openCity(event, 'CCForm24')">Checklist -LL / P2P
                     </button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
@@ -627,6 +739,184 @@
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="checklists">Checklists</label>
+                                    <select multiple id="checklists" class="abc" name="checklists[]">
+                                        <option value="1">Checklist - Tablet Dispensing & Granulation</option>
+                                        <option value="2">Checklist - Tablet Compression</option>
+                                        <option value="3">Checklist - Tablet Coating</option>
+                                        <option value="4">Checklist - Tablet/Capsule Packing</option>
+                                        <option value="5">Checklist - Capsule</option>
+                                        <option value="6">Checklist - Liquid/Ointment Dispensing & Manufacturing</option>
+                                        <option value="7">Checklist - Liquid/Ointment Packing</option>
+                                        <option value="8">Checklist - Quality Assurance</option>
+                                        <option value="9">Checklist - Engineering</option>
+                                        <option value="10">Checklist - Quality Control</option>
+                                        <option value="11">Checklist - Stores</option>
+                                        <option value="12">Checklist - Human Resource</option>
+                                        <option value="13">Checklist - Production (Injection Dispensing & Manufacturing)</option>
+                                        <option value="14">Checklist - Production (Injection Packing)</option>
+                                        <option value="15">Checklist - Production (Powder Manufacturing and Packing)</option>
+                                        <option value="16">Checklist - Analytical Research and Development</option>
+                                        <option value="17">Checklist - Formulation Research and Development</option>
+                                        <option value="18">Checklist - LL / P2P</option>
+                                    </select>
+ 
+                                </div>
+                            </div>
+
+                            
+                            <script>
+
+const virtualSelectInstance = VirtualSelect.init({
+        ele: '#checklists'
+    });
+
+    document.querySelector('.abc').addEventListener('change', function() {
+        const selectedOptions = $('#checklists').val()
+
+
+        if (selectedOptions.includes('1')) {
+            console.log('print1',selectedOptions);
+            var abc = document.getElementById('button1');
+            document.getElementById('button1').style.display = 'block';
+            // console.log('data',abc);
+        } else {
+            document.getElementById('button1').style.display = 'none';
+            console.log('print1e');
+        }
+
+        if (selectedOptions.includes('2')) {
+            console.log('print2',selectedOptions);
+            document.getElementById('button2').style.display = 'block';
+        } else {
+            document.getElementById('button2').style.display = 'none';
+            console.log('print2e');
+        }
+        if (selectedOptions.includes('3')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button3').style.display = 'block';
+        } else {
+            document.getElementById('button3').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('4')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button4').style.display = 'block';
+        } else {
+            document.getElementById('button4').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('5')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button5').style.display = 'block';
+        } else {
+            document.getElementById('button5').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('6')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button6').style.display = 'block';
+        } else {
+            document.getElementById('button6').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('7')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button7').style.display = 'block';
+        } else {
+            document.getElementById('button7').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('8')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button8').style.display = 'block';
+        } else {
+            document.getElementById('button8').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('9')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button9').style.display = 'block';
+        } else {
+            document.getElementById('button9').style.display = 'none';
+            // console.log('print3e');
+        }
+
+        if (selectedOptions.includes('10')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button10').style.display = 'block';
+        } else {
+            document.getElementById('button10').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('11')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button11').style.display = 'block';
+        } else {
+            document.getElementById('button11').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('12')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button12').style.display = 'block';
+        } else {
+            document.getElementById('button12').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('13')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button13').style.display = 'block';
+        } else {
+            document.getElementById('button13').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('14')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button14').style.display = 'block';
+        } else {
+            document.getElementById('button14').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('15')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button15').style.display = 'block';
+        } else {
+            document.getElementById('button15').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('16')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button16').style.display = 'block';
+        } else {
+            document.getElementById('button16').style.display = 'none';
+            // console.log('print3e');
+        }
+        
+        if (selectedOptions.includes('17')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button17').style.display = 'block';
+        } else {
+            document.getElementById('button17').style.display = 'none';
+            // console.log('print3e');
+        }
+        if (selectedOptions.includes('18')) {
+            // console.log('print2',selectedOptions);
+            document.getElementById('button18').style.display = 'block';
+        } else {
+            document.getElementById('button18').style.display = 'none';
+            // console.log('print3e');
+        }
+    });
+
+    function openCity(evt, cityName) {
+        console.log('Open city:', cityName);
+    }
+</script>
+
+
                                 <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Audit  Start </label>
@@ -1119,6 +1409,97 @@
                         </div>
                     </div>
 
+                    <div id="CCForm25" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                               
+                            <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Internal Audit (Observations/Discrepancy)<button type="button" name="audit-agenda-grid"
+                                                id="internalaudit-observation">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="internalaudit-odtable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 120px;">Sr. No</th>
+                                                    <th>Observations/Discrepancy</th>
+                                                    <th>Category</th>
+                                                    <th>Remarks</th>
+                                                    <th style="width: 15%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="observations[0][serial_number]" value="1">
+                                                </td>
+                                                <td><input type="text" name="observations[0][observation]"></td>
+                                                <td><input type="text" name="observations[0][category]"></td>
+                                                <td><input type="text" name="observations[0][remarks]"></td>
+                                                <td>
+                                                    <button type="text"class="removeRowBtn">Remove</button>
+                                                </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Auditors Roles(Names)<button type="button" name="audit-agenda-grid"
+                                                id="internalaudit-auditorroles">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="internalaudit-rolestab">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 120px;">Sr. No</th>
+                                                    <th>Role</th>
+                                                    <th>Name</th>
+                                                    <th>Date</th>
+                                                    <th>Remarks</th>
+                                                    <th style="width: 15%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="auditorroles[0][serial_number]" value="1">
+                                                </td>
+                                                <td><input type="text" name="auditorroles[0][role]"></td>
+                                                <td><input type="text" name="auditorroles[0][name]"></td>
+                                                <td>
+                                                <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" class="test"
+                                                                    id="internal_start_date" readonly
+                                                                    placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" id="internal_start_date"
+                                                                    name="auditorroles[0][internal_start_date]"
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, `internal_start_date`);checkDate('internal_start_date','internal_start_date_checkdate')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><input type="text" name="auditorroles[0][remarks]"></td>
+                                                <td>
+                                                    <button type="text"class="removeRowBtn">Remove</button>
+                                                </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Audit Response & Closure content -->
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1136,7 +1517,7 @@
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record</label>
                                         <select multiple id="reference_record" name="refrence_record[]" id="">
-                                            <option value="">--Select---</option>
+                                            <!-- <option value="">--Select---</option> -->
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
@@ -1145,6 +1526,41 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Initial Response<button type="button" name="audit-agenda-grid"
+                                                id="internalaudit-initial">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="internalaudit-initialtable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Sr. No</th>
+                                                    <th>Observation</th>
+                                                    <th>Response with impact assesment & CAPA (If Applicable)</th>
+                                                    <th>Responsibility</th>
+                                                    <th>Remarks</th>
+                                                    <th>Proposed Closure Date</th>
+                                                    <th style="width: 8%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="Initial[0][serial_number]" value="1">
+                                                </td>
+                                                <td><input type="text" name="Initial[0][observation]"></td>
+                                                <td><input type="text" name="Initial[0][impact_assesment]"></td>
+                                                <td><input type="text" name="Initial[0][responsiblity]"></td>
+                                                <td><input type="text" name="Initial[0][remarks]"></td>
+                                                <td><input type="text" name="Initial[0][closure_date]"></td>
+                                                <td>
+                                                    <button type="text"class="removeRowBtn">Remove</button>
+                                                </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Report Attachments">Report Attachments</label>
@@ -30029,94 +30445,94 @@
     </script>
 
 
-    <script>
-        VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record'
-        });
+<script>
+                VirtualSelect.init({
+                    ele: '#Facility, #Group, #Audit, #Auditee , #reference_record'
+                });
 
-        function openCity(evt, cityName) {
-            var i, cctabcontent, cctablinks;
-            cctabcontent = document.getElementsByClassName("cctabcontent");
-            for (i = 0; i < cctabcontent.length; i++) {
-                cctabcontent[i].style.display = "none";
-            }
-            cctablinks = document.getElementsByClassName("cctablinks");
-            for (i = 0; i < cctablinks.length; i++) {
-                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
+                function openCity(evt, cityName) {
+                    var i, cctabcontent, cctablinks;
+                    cctabcontent = document.getElementsByClassName("cctabcontent");
+                    for (i = 0; i < cctabcontent.length; i++) {
+                        cctabcontent[i].style.display = "none";
+                    }
+                    cctablinks = document.getElementsByClassName("cctablinks");
+                    for (i = 0; i < cctablinks.length; i++) {
+                        cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
 
 
 
-        function openCity(evt, cityName) {
-            var i, cctabcontent, cctablinks;
-            cctabcontent = document.getElementsByClassName("cctabcontent");
-            for (i = 0; i < cctabcontent.length; i++) {
-                cctabcontent[i].style.display = "none";
-            }
-            cctablinks = document.getElementsByClassName("cctablinks");
-            for (i = 0; i < cctablinks.length; i++) {
-                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
+                function openCity(evt, cityName) {
+                    var i, cctabcontent, cctablinks;
+                    cctabcontent = document.getElementsByClassName("cctabcontent");
+                    for (i = 0; i < cctabcontent.length; i++) {
+                        cctabcontent[i].style.display = "none";
+                    }
+                    cctablinks = document.getElementsByClassName("cctablinks");
+                    for (i = 0; i < cctablinks.length; i++) {
+                        cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
 
-            // Find the index of the clicked tab button
-            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+                    // Find the index of the clicked tab button
+                    const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
 
-            // Update the currentStep to the index of the clicked tab
-            currentStep = index;
-        }
+                    // Update the currentStep to the index of the clicked tab
+                    currentStep = index;
+                }
 
-        const saveButtons = document.querySelectorAll(".saveButton");
-        const nextButtons = document.querySelectorAll(".nextButton");
-        const form = document.getElementById("step-form");
-        const stepButtons = document.querySelectorAll(".cctablinks");
-        const steps = document.querySelectorAll(".cctabcontent");
-        let currentStep = 0;
+                const saveButtons = document.querySelectorAll(".saveButton");
+                const nextButtons = document.querySelectorAll(".nextButton");
+                const form = document.getElementById("step-form");
+                const stepButtons = document.querySelectorAll(".cctablinks");
+                const steps = document.querySelectorAll(".cctabcontent");
+                let currentStep = 0;
 
-        function nextStep() {
-            // Check if there is a next step
-            if (currentStep < steps.length - 1) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
+                function nextStep() {
+                    // Check if there is a next step
+                    if (currentStep < steps.length - 1) {
+                        // Hide current step
+                        steps[currentStep].style.display = "none";
 
-                // Show next step
-                steps[currentStep + 1].style.display = "block";
+                        // Show next step
+                        steps[currentStep + 1].style.display = "block";
 
-                // Add active class to next button
-                stepButtons[currentStep + 1].classList.add("active");
+                        // Add active class to next button
+                        stepButtons[currentStep + 1].classList.add("active");
 
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
+                        // Remove active class from current button
+                        stepButtons[currentStep].classList.remove("active");
 
-                // Update current step
-                currentStep++;
-            }
-        }
+                        // Update current step
+                        currentStep++;
+                    }
+                }
 
-        function previousStep() {
-            // Check if there is a previous step
-            if (currentStep > 0) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
+                function previousStep() {
+                    // Check if there is a previous step
+                    if (currentStep > 0) {
+                        // Hide current step
+                        steps[currentStep].style.display = "none";
 
-                // Show previous step
-                steps[currentStep - 1].style.display = "block";
+                        // Show previous step
+                        steps[currentStep - 1].style.display = "block";
 
-                // Add active class to previous button
-                stepButtons[currentStep - 1].classList.add("active");
+                        // Add active class to previous button
+                        stepButtons[currentStep - 1].classList.add("active");
 
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
+                        // Remove active class from current button
+                        stepButtons[currentStep].classList.remove("active");
 
-                // Update current step
-                currentStep--;
-            }
-        }
-    </script>
+                        // Update current step
+                        currentStep--;
+                    }
+                }
+            </script>
 
     <script>
         // document.addEventListener('DOMContentLoaded', function() {

@@ -13,4 +13,6 @@ class FailureInvestigationAuditTrail extends Model
     public function failureInvestigation() {
         return $this->belongsTo(FailureInvestigation::class);
     }
+
+   
 }

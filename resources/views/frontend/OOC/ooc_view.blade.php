@@ -246,8 +246,6 @@ $users = DB::table('users')->get();
             $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $ooc->division_id])->get();
             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
         @endphp
-            {{-- <button class="button_theme1" onclick="window.print();return false;"
-                class="new-doc-btn">Print</button> --}}
             <button class="button_theme1"> <a class="text-white"
                     href="{{ route('audittrialooc', $ooc->id) }}"> Audit Trail </a> </button>
 
@@ -260,55 +258,51 @@ $users = DB::table('users')->get();
                 </button>
             @elseif($ooc->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                    Initial Phase I Investigation
+                HOD Primary Review Complete
                 </button>
-                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                    Cancellation Request
-                </button> --}}
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                    Request More Info
+                More Info Required
                 </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                    Cancel
+                </button> 
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                     Child
                 </button>
             @elseif($ooc->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            
             <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                Assignable Cause Found
-            </button>
-            <button class="button_theme1" name="no_assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal1">
-                Assignable Cause Not Found
+                QA Head Primary Review Complete
             </button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                Request More Info
+                 More Info Required
             </button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
+                    Child
+                </button>
                
                 
-            @elseif($ooc->stage == 4 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($ooc->stage == 4 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
            
             
             <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                Correction Completed
+                Phase IA Investigation
             </button>
-            <button class="button_theme1" name="no_assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal1">
-                Cause Failed
-            </button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button> 
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                 Child
             </button>   
-            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                    All Activities Completed
-                </button> --}}
-            @elseif($ooc->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                    Obvious Results Not Found
-                </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
-                    Obvious Results Found
-                </button>
-                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+            @elseif($ooc->stage == 5 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                
+                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                 Phase IA HOD Review Complete
+                </button> 
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
-                </button> --}}
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                </button> 
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button> 
                 {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
@@ -321,25 +315,33 @@ $users = DB::table('users')->get();
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
                 </button> --}}
-            @elseif($ooc->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+            @elseif($ooc->stage == 7 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                    Cause Identification
-                </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
-                    Cause Not Identification
-                </button>
-                
-             @elseif($ooc->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                    Pending Approval
-                </button> --}}
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                    Correction Complete
+                    Phase IA QA Review Complete
                 </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                    Result Failed
+                    Request More Info
                 </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
+                    Child
+                </button>
+                <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                    Cause Not Identification
+                </button> -->
+                
+             @elseif($ooc->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Assignable Cause Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                    Assignable Cause Not Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                     Child
                 </button> 
                 
@@ -347,46 +349,153 @@ $users = DB::table('users')->get();
                 @elseif($ooc->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 
                
-                @elseif($ooc->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                @elseif($ooc->stage == 10 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                    Correction Complete
+                    Phase IB Investigation
                 </button>
-           
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>           
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                     Child
                 </button>
                
-                @elseif($ooc->stage == 11 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
-                    QA Review Complete
+                @elseif($ooc->stage == 11 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Phase IB HOD Review Complete
                 </button>
-           
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>           
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button>
                
-                @elseif($ooc->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                @elseif($ooc->stage == 12 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                    Pending Initial Assessment & Lab Investigation
+                    Phase IB QA Review Complete
                 </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                    Send to HOD Review
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
                 </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                    Send to QA Initial Review
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
+                    Child
                 </button>
+               
+                @elseif($ooc->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Approved
                 </button>
-                       
-               
-               
+                <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                    P-IB Assignable Cause Not Found
+                </button> -->
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
+                    Child
+                </button>
 
+                @elseif($ooc->stage == 14 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 
-                <!-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                        Exit
-                    </a> </button> -->
-            @endif
+                @elseif($ooc->stage == 15 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Phase II A Investigation
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                    Child
+                </button>
+
+                @elseif($ooc->stage == 16 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Phase II A  HOD Review Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @elseif($ooc->stage == 17 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Phase II A QA Review Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @elseif($ooc->stage == 18 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                P-II A Assignable Cause Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                P-II A Assignable Cause Not Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @elseif($ooc->stage == 19 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                
+
+                @elseif($ooc->stage == 20 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                Phase II B Investigation
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                     More Information Required
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                    Child
+                </button>
+
+                @elseif($ooc->stage == 21 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                Phase II B HOD Review Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                     More Information Required
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @elseif($ooc->stage == 22 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                Phase II B QA Review Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                     More Information Required
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @elseif($ooc->stage == 23 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                P-II B Assignable Cause Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal2">
+                P-II B Assignable Cause Not Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                     More Information Required
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @endif
             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                 </a> </button>
 
@@ -394,91 +503,164 @@ $users = DB::table('users')->get();
 
     </div>
     <div class="status">
-        <div class="head">Current Status</div>
-        {{-- ------------------------------By Pankaj-------------------------------- --}}
-        @if ($ooc->stage == 0)
-            <div class="progress-bars">
-                <div class="bg-danger">Closed-Cancelled</div>
-
-            </div>
-        
-        @else
-            <div class="progress-bars d-flex">
-                @if ($ooc->stage >= 1)
-                    <div class="active">Opened</div>
-                @else
-                    <div class="">Opened</div>
-                @endif
-
-                @if ($ooc->stage >= 2)
-                    <div class="active"  style="width: 8% ">Pending Intial Assesment & Lab Investigation </div>
-                @else
-                    <div class="">Pending Intial Assesment & Lab Investigation</div>
-                @endif
-
-                @if ($ooc->stage >= 3)
-                    <div class="active">Under Stage I Investigation</div>
-                @else
-                    <div class="">Under Stage I Investigation</div>
-                @endif
-
-                @if ($ooc->stage >= 4)
-                    <div class="active">Under Stage I Corrective</div>
-                @else
-                    <div class="">Under Stage I Corrective</div>
-                @endif
-                @if ($ooc->stage >= 5)
-                    <div class="active">Under Stage II A Investigation</div>
-                @else
-                    <div class="">Under Stage II A Investigation</div>
-                @endif
-                {{-- @if ($ooc->stage >= 6)
-                    <div class="active">To Pending Final Approval</div>
-                @else
-                    <div class="">To Pending Final Approval</div>
-                @endif --}}
-                @if ($ooc->stage >= 7)
-                    <div class="active">Under Stage II B Investigation</div>
-                @else
-                    <div class="">Under Stage II B Investigation</div>
-                @endif
-                 @if ($ooc->stage >= 8)
-                    <div class="active">Under Stage II A Correction</div>
-                @else
-                    <div class="">Under Stage II A Correction</div>    
-                @endif
-                {{-- @if ($ooc->stage >= 9)
-                    <div class="active">To Pending Final Approval</div>
-                @else
-                    <div class="">To Pending Final Approval</div>    
-                @endif --}}
-                @if ($ooc->stage >= 10)
-                    <div class="active">Under Stage II A Correction</div>
-                @else
-                    <div class="">Under Stage II A Correction</div>    
-                @endif
-                @if ($ooc->stage >= 11)
-                    <div class="active">Discussion Manufacturing QA Correction</div>
-                @else
-                    <div class="">Discussion Manufacturing QA Correction</div>    
-                @endif
-                @if ($ooc->stage >= 12)
-                    <div class="active">Pending Final Approval</div>
-                @else
-                    <div class="">Pending Final Approval</div>    
-                @endif
-                
-                @if ($ooc->stage >= 13)
-                    <div class="bg-danger" >Closed - Done</div>
-                @else
-                    <div class="">Closed - Done</div>
-                @endif
-        @endif
-
-
-
+    <div class="head">Current Status</div>
+    {{-- ------------------------------By Pankaj-------------------------------- --}}
+    @if ($ooc->stage == 0)
+        <div class="progress-bars">
+            <div class="bg-danger">Closed-Cancelled</div>
         </div>
-    </div>
+    @else
+        <div class="progress-bars d-flex">
+            @if ($ooc->stage >= 1)
+                <div class="active">Opened</div>
+            @else
+                <div class="">Opened</div>
+            @endif
+
+            @if ($ooc->stage >= 2)
+                <div class="active" style="width: 8%">HOD Primary Review</div>
+            @else
+                <div class="">HOD Primary Review</div>
+            @endif
+
+            @if ($ooc->stage >= 3)
+                <div class="active">QA Head Primary Review</div>
+            @else
+                <div class="">QA Head Primary Review</div>
+            @endif
+
+            @if ($ooc->stage >= 4)
+                <div class="active">Under Phase-IA Investigation</div>
+            @else
+                <div class="">Under Phase-IA Investigation</div>
+            @endif
+
+            @if ($ooc->stage >= 5)
+                <div class="active">Phase IA HOD Primary Review</div>
+            @else
+                <div class="">Phase IA HOD Primary Review</div>
+            @endif
+
+            @if ($ooc->stage >= 7)
+                <div class="active">Phase IA QA Review</div>
+            @else
+                <div class="">Phase IA QA Review</div>
+            @endif
+
+            @if ($ooc->stage >= 8)
+                <div class="active">P-IA QAH Review</div>
+            @else
+                <div class="">P-IA QAH Review</div>
+            @endif
+
+            @if ($ooc->stage < 10)
+                @if ($ooc->stage >= 9)
+                    <div class="bg-danger">Closed Done</div>
+                @else
+                    <div class="">Closed Done</div>
+                @endif
+            @endif
+            @if ($ooc->stage >= 10)
+                <div class="active">Under Phase-IB Investigation</div>
+            @else
+                <div class="">Under Phase-IB Investigation</div>
+            @endif
+
+            @if ($ooc->stage >= 11)
+                <div class="active">Phase IB HOD Primary Review</div>
+            @else
+                <div class="">Phase IB HOD Primary Review</div>
+            @endif
+
+            @if ($ooc->stage >= 12)
+                <div class="active">Phase IB QA Review</div>
+            @else
+                <div class="">Phase IB QA Review</div>
+            @endif
+            
+            @if ($ooc->stage >= 13)
+                <div class="active">P-IB QAH Review</div>
+            @else
+                <div class="">P-IB QAH Review</div>
+            @endif
+            
+
+                @if ($ooc->stage >= 14)
+                    <div class="bg-danger">Closed Done</div>
+                @else
+                    <div class="">Closed Done</div>
+                @endif
+            
+
+            <!-- @if ($ooc->stage >= 15)
+                <div class="active">Under Phase-II A Investigation</div>
+            @else
+                <div class="">Under Phase-II A Investigation</div>
+            @endif
+
+            @if ($ooc->stage >= 16)
+                <div class="active">Phase II A HOD Primary Review</div>
+            @else
+                <div class="">Phase II A HOD Primary Review</div>
+            @endif
+
+            @if ($ooc->stage >= 17)
+                <div class="active">Phase II A QA Review</div>
+            @else
+                <div class="">Phase II A QA Review</div>
+            @endif
+
+            @if ($ooc->stage >= 18)
+                <div class="active">P-II A QAH/CQAH Review</div>
+            @else
+                <div class="">P-II A QAH/CQAH Review</div>
+            @endif
+
+            @if ($ooc->stage < 20)
+                @if ($ooc->stage >= 19)
+                    <div class="bg-danger">Closed Done</div>
+                @else
+                    <div class="">Closed Done</div>
+                @endif
+            @endif
+
+            @if ($ooc->stage >= 20)
+                <div class="active">Under Phase-II B Investigation</div>
+            @else
+                <div class="">Under Phase-II B Investigation</div>
+            @endif
+
+            @if ($ooc->stage >= 21)
+                <div class="active">Phase II B HOD Primary Review</div>
+            @else
+                <div class="">Phase II B HOD Primary Review</div>
+            @endif
+
+            @if ($ooc->stage >= 22)
+                <div class="active">Phase II B QA Review</div>
+            @else
+                <div class="">Phase II B QA Review</div>
+            @endif
+
+            @if ($ooc->stage >= 23)
+                <div class="active">P-II B QAH/CQAH Review</div>
+            @else
+                <div class="">P-II B QAH/CQAH Review</div>
+            @endif
+
+            @if ($ooc->stage >= 24)
+                <div class="bg-danger">Closed - Done</div>
+            @else
+                <div class="">Closed - Done</div>
+            @endif -->
+        </div>
+    @endif
+</div>
+
+
+
+
+
       {{-- @endif --}}
       {{-- ---------------------------------------------------------------------------------------- --}}
 </div>
@@ -658,19 +840,21 @@ $users = DB::table('users')->get();
                             Action Item
                         </label>
                     </div>
-                    {{-- <div class="group-input">
-                        <label for="root-item">
-                         <input type="radio" name="revision" id="root-item" value="effectiveness-check">
-                            Effectiveness check
+                    <div class="group-input">
+                        <label for="capa-child">
+                            <input type="radio" name="revision" id="capa-child" value="Root-Cause-Analysis">
+                            RCA
                         </label>
-                    </div> --}}
-                </div>
+                    </div>
 
-                <!-- Modal footer -->
-                <!-- <div class="modal-footer">
-                    <button type="button" data-bs-dismiss="modal">Close</button>
-                    <button type="submit">Continue</button>
-                </div> -->
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Extension">
+                            Extension
+                        </label>
+                    </div>
+
+                </div>
                 <div class="modal-footer">
                           <button type="submit">Submit</button>
                          <button type="button" data-bs-dismiss="modal">Close</button>                         
@@ -692,14 +876,79 @@ $users = DB::table('users')->get();
                     @csrf
                     <div class="group-input">
                         <label for="capa-child">
-                            <input type="radio" name="revision" id="capa-child" value="extension-child">
+                            <input type="radio" name="revision" id="capa-child" value="Action-child">
+                            Action Item
+                        </label>
+                    </div>
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Extension">
                             Extension
                         </label>
                     </div>
                     <div class="group-input">
                         <label for="root-item">
-                            <input type="radio" name="revision" id="root-item" value="risk-Item">
-                            Risk Assessment
+                            <input type="radio" name="revision" id="root-item" value="CAPA">
+                            CAPA
+                        </label>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="child-modal2">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('OOCChildExtension', $ooc->id) }}" method="POST">
+                    @csrf
+                    
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Extension">
+                            Extension
+                        </label>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="child-modal3">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('OOCChildAction', $ooc->id) }}" method="POST">
+                    @csrf
+                    
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Action-child">
+                            Action Item
+                        </label>
+                    </div>
+
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Extension">
+                            Extension
                         </label>
                     </div>
                     
@@ -757,6 +1006,49 @@ $users = DB::table('users')->get();
                             <button type="button" data-bs-dismiss="modal">Close</button>
                           
                  </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="rejection-modal2">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('RejectStateChangeTwo', $ooc->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and an outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comment <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="comment" required>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </form>
         </div>
     </div>
@@ -887,7 +1179,7 @@ $users = DB::table('users')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator Group"><b>Initiator Group</b></label>
-                                    <select name="Initiator_Group" {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }}
+                                    <select name="Initiator_Group" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}
                                          id="initiator_group">
                                         <option value="Corporate Quality Assurance"
                                             @if ($ooc->Initiator_Group== 'Corporate Quality Assurance') selected @endif>Corporate
@@ -949,7 +1241,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="Description">Short Description</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <input type="text" name="description_ooc" value="{{$ooc->description_ooc}}">
+                                    <input type="text" name="description_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} value="{{$ooc->description_ooc}}">
                                     
                                 </div>
                             </div>
@@ -958,7 +1250,7 @@ $users = DB::table('users')->get();
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Initiator Group Code</label>
-                                    <input type="text" name="initiator_group_code" id="initiator_group_code" value="{{$ooc->Initiator_Group}}" readonly>
+                                    <input type="text" name="initiator_group_code" id="initiator_group_code" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} value="{{$ooc->Initiator_Group}}" readonly>
                                 </div>
                             </div>
 
@@ -1037,7 +1329,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="Initiator Group">Initiated Through</label>
                                     <div><small class="text-primary">Please select related information</small></div>
-                                    <select name="initiated_through" onchange="">
+                                    <select name="initiated_through" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onchange="">
                                         <option value="0">-- select --</option>
                                         <option value="recall" {{ isset($ooc) && $ooc->initiated_through == 'recall' ? 'selected' : '' }}>Recall</option>
                                         <option value="return" {{ isset($ooc) && $ooc->initiated_through == 'return' ? 'selected' : '' }}>Return</option>
@@ -1056,15 +1348,16 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="If Other">If Other</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="initiated_if_other" id="summernote-1">{{$ooc->initiated_if_other}}</textarea>
+                                    <textarea class="summernote" name="initiated_if_other" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} id="summernote-1">{{$ooc->initiated_if_other}}</textarea>
                                 </div>
                             </div>
+
 
                             
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Is Repeat"><b>Is Repeat</b></label>
-                                    <select  id="initiator_group" name="is_repeat_ooc">
+                                    <select  id="initiator_group" name="is_repeat_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>
                                         <option value="0" {{ $ooc->is_repeat_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
                                         <option value="Yes" {{ $ooc->is_repeat_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                         <option value="No" {{ $ooc->is_repeat_ooc == 'No' ? 'selected' : '' }}>No</option>
@@ -1078,7 +1371,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="Repeat Nature">Repeat Nature</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Repeat_Nature" id="summernote-1">
+                                    <textarea class="summernote" name="Repeat_Nature" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>
                                         {{$ooc->Repeat_Nature}}
                                     </textarea>
                                 </div>
@@ -1117,7 +1410,7 @@ $users = DB::table('users')->get();
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }} type="file" id="initial_attachment_ooc" name="initial_attachment_ooc[]"
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} type="file" id="initial_attachment_ooc" name="initial_attachment_ooc[]"
                                                 oninput="addMultipleFiles(this, 'initial_attachment_ooc')" multiple>
                                         </div>
                                     </div>
@@ -1131,7 +1424,7 @@ $users = DB::table('users')->get();
                                     <label for="search">
                                         OOC Logged by <span class="text-danger"></span>
                                     </label>
-                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }}>
+                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>
                                         {{-- <option value="">Select a value</option> --}}
                                         @foreach ($users as $key=> $value)
                                             <option  @if ($ooc->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1179,9 +1472,9 @@ $users = DB::table('users')->get();
                             
                                     <div class="calenderauditee">
                                         <input type="text" id="ooc_due_date_display" readonly
-                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($ooc->ooc_due_date) }}" />
+                                            placeholder="DD-MMM-YYYY" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} value="{{ Helpers::getdateFormat($ooc->ooc_due_date) }}" />
                                         <input type="date" id="ooc_due_date" name="ooc_due_date"
-                                            class="hide-input"
+                                            class="hide-input" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}
                                             value="{{ $ooc->ooc_due_date }}" oninput="handleDateInput(this, 'ooc_due_date_display')" />
                                     </div>
                                 </div>
@@ -1236,12 +1529,12 @@ $users = DB::table('users')->get();
 
                     <tr>
                     <td disabled >{{ $serialNumber++ }}</td>
-                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][instrument_name]" value="{{$oogrid['instrument_name']}}"></td>
-                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][instrument_id]" value="{{$oogrid['instrument_id']}}"></td>
-                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][remarks]" value="{{$oogrid['remarks']}}"></td>
-                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][calibration]" value="{{$oogrid['calibration']}}"></td>
-                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][acceptancecriteria]" value="{{$oogrid['acceptancecriteria']}}"></td>
-                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][results]" value="{{$oogrid['results']}}"></td>
+                    <td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="instrumentdetails[{{$loop->index}}][instrument_name]" value="{{$oogrid['instrument_name']}}"></td>
+                    <td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="instrumentdetails[{{$loop->index}}][instrument_id]" value="{{$oogrid['instrument_id']}}"></td>
+                    <td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="instrumentdetails[{{$loop->index}}][remarks]" value="{{$oogrid['remarks']}}"></td>
+                    <td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="instrumentdetails[{{$loop->index}}][calibration]" value="{{$oogrid['calibration']}}"></td>
+                    <td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="instrumentdetails[{{$loop->index}}][acceptancecriteria]" value="{{$oogrid['acceptancecriteria']}}"></td>
+                    <td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="instrumentdetails[{{$loop->index}}][results]" value="{{$oogrid['results']}}"></td>
                     <td><button class="removeRowBtn">Remove</button>
 
                     @endforeach   
@@ -1303,12 +1596,12 @@ $(document).ready(function() {
             var html =
                 '<tr>' +
                 '<td><input disabled type="text" value="' + serialNumber + '"></td>' +
-                '<td><input type="text" name="instrumentdetails[' + investdetails + '][instrument_name]" value=""></td>' +
-                '<td><input type="text" name="instrumentdetails[' + investdetails + '][instrument_id]" value=""></td>' +
-                '<td><input type="text" name="instrumentdetails[' + investdetails + '][remarks]" value=""></td>' +
-                '<td><input type="text" name="instrumentdetails[' + investdetails + '][calibration]" value=""></td>' +
-                '<td><input type="text" name="instrumentdetails[' + investdetails + '][acceptancecriteria]" value=""></td>' +
-                '<td><input type="text" name="instrumentdetails[' + investdetails + '][results]" value=""></td>' +
+                '<td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}  name="instrumentdetails[' + investdetails + '][instrument_name]" value=""></td>' +
+                '<td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="instrumentdetails[' + investdetails + '][instrument_id]" value=""></td>' +
+                '<td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="instrumentdetails[' + investdetails + '][remarks]" value=""></td>' +
+                '<td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="instrumentdetails[' + investdetails + '][calibration]" value=""></td>' +
+                '<td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="instrumentdetails[' + investdetails + '][acceptancecriteria]" value=""></td>' +
+                '<td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="instrumentdetails[' + investdetails + '][results]" value=""></td>' +
                 '<td><button class="removeRowBtn">Remove</button>'+
 
                 '</tr>';
@@ -1338,15 +1631,15 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Delay Justification for Reporting">Delay Justification for Reporting</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Delay_Justification_for_Reporting" id="summernote-1">
+                                    <textarea class="summernote" name="Delay_Justification_for_Reporting" id="summernote-1"  {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>
                                     {{$ooc->Delay_Justification_for_Reporting}}</textarea>
                                 </div>
                             </div>
 
 
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="submit" class="saveButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>Save</button>
+                                <button type="button" class="nextButton" onclick="nextStep()" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>Next</button>
 
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
@@ -1363,7 +1656,7 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="HOD Remarks">HOD Remarks</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="HOD_Remarks" id="summernote-1">{{$ooc->HOD_Remarks}}</textarea>
+                                    <textarea class="summernote" name="HOD_Remarks" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>{{$ooc->HOD_Remarks}}</textarea>
                                 </div>
                             </div>
 
@@ -1393,7 +1686,7 @@ $(document).ready(function() {
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }} type="file" id="attachments_hod_ooc" name="attachments_hod_ooc[]"
+                                                <input {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} type="file" id="attachments_hod_ooc" name="attachments_hod_ooc[]"
                                                     oninput="addMultipleFiles(this, 'attachments_hod_ooc')" multiple>
                                             </div>
                                         </div>
@@ -1408,7 +1701,7 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Immediate Action">Immediate Action</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Immediate_Action_ooc" id="summernote-1">{{$ooc->Immediate_Action_ooc}}
+                                    <textarea class="summernote" name="Immediate_Action_ooc" id="summernote-1"  {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>{{$ooc->Immediate_Action_ooc}}
                                     </textarea>
                                 </div>
                             </div>
@@ -1417,7 +1710,7 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Preliminary Investigation">Preliminary Investigation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Preliminary_Investigation_ooc" id="summernote-1">
+                                    <textarea class="summernote" name="Preliminary_Investigation_ooc" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>
                                         {{$ooc->Preliminary_Investigation_ooc}}
                                     </textarea>
                                 </div>
@@ -1444,9 +1737,9 @@ $(document).ready(function() {
                                 </div> --}}
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button" class="nextButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onclick="nextStep()">Next</button>
 
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                     Exit </a> </button>
@@ -1496,10 +1789,10 @@ $(document).ready(function() {
                 <td>{{ $index + 1 }}</td>
                 <td style="background: #DCD8D8">{{ $item }}</td>
                 <td>
-                    <textarea name="oocevoluation[{{ $index }}][response]">{{ $oocEvolution->data[$index]['response'] }}</textarea>
+                    <textarea {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="oocevoluation[{{ $index }}][response]">{{ $oocEvolution->data[$index]['response'] }}</textarea>
                 </td>
                 <td>
-                    <textarea name="oocevoluation[{{ $index }}][remarks]">{{ $oocEvolution->data[$index]['remarks'] }}</textarea>
+                    <textarea {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="oocevoluation[{{ $index }}][remarks]">{{ $oocEvolution->data[$index]['remarks'] }}</textarea>
                 </td>
             </tr>
         @endif
@@ -1512,19 +1805,19 @@ $(document).ready(function() {
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="qa_comments">Evaluation Remarks</label>
-                                <textarea name="qa_comments_ooc">{{$ooc->qa_comments_ooc}}</textarea>
+                                <textarea name="qa_comments_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>{{$ooc->qa_comments_ooc}}</textarea>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="qa_comments">Description of Cause for OOC Results (If Identified)</label>
-                                <textarea name="qa_comments_description_ooc">{{$ooc->qa_comments_description_ooc}}</textarea>
+                                <textarea name="qa_comments_description_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>{{$ooc->qa_comments_description_ooc}}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Assignable root cause found?</label>
-                                <select  id="initiator_group" name="is_repeat_assingable_ooc">
+                                <select  id="initiator_group" name="is_repeat_assingable_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>
                                     <option value="NA"{{ $ooc->is_repeat_assingable_ooc == 'NA' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_assingable_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_assingable_ooc == 'No' ? 'selected' : '' }}>No</option>
@@ -1541,7 +1834,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Protocol Based Study/Hypothesis Study">Protocol Based Study/Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="protocol_based_study_hypthesis_study_ooc" id="summernote-1">
+                                <textarea class="summernote" name="protocol_based_study_hypthesis_study_ooc" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>
                                     {{$ooc->protocol_based_study_hypthesis_study_ooc}}</textarea>
                             </div>
                         </div>
@@ -1552,7 +1845,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Justification for Protocol study/ Hypothesis Study">Justification for Protocol study/ Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="justification_for_protocol_study_hypothesis_study_ooc" id="summernote-1">{{$ooc->justification_for_protocol_study_hypothesis_study_ooc}}
+                                <textarea class="summernote" name="justification_for_protocol_study_hypothesis_study_ooc" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>{{$ooc->justification_for_protocol_study_hypothesis_study_ooc}}
                                     </textarea>
                             </div>
                         </div>
@@ -1562,7 +1855,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Plan of Protocol Study/ Hypothesis Study">Plan of Protocol Study/ Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="plan_of_protocol_study_hypothesis_study" id="summernote-1">{{$ooc->plan_of_protocol_study_hypothesis_study}}
+                                <textarea class="summernote" name="plan_of_protocol_study_hypothesis_study" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>{{$ooc->plan_of_protocol_study_hypothesis_study}}
                                     </textarea>
                             </div>
                         </div>
@@ -1572,15 +1865,15 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Conclusion of Protocol based Study/Hypothesis Study">Conclusion of Protocol based Study/Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="conclusion_of_protocol_based_study_hypothesis_study_ooc" id="summernote-1">
+                                <textarea class="summernote" name="conclusion_of_protocol_based_study_hypothesis_study_ooc" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>
                                   {{$ooc->conclusion_of_protocol_based_study_hypothesis_study_ooc}}  </textarea>
                             </div>
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
+                        <button type="submit" class="saveButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} >Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button" class="nextButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onclick="nextStep()">Next</button>
 
                         <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                 Exit </a> </button>
@@ -1596,7 +1889,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Analyst Remarks">Analyst Remarks</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1">{{$ooc->analysis_remarks_stage_ooc}}  </textarea>
+                                <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>{{$ooc->analysis_remarks_stage_ooc}}  </textarea>
                             </div>
                         </div>
 
@@ -1605,13 +1898,13 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Calibration Results">Calibration Results</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="calibration_results_stage_ooc" id="summernote-1">{{$ooc->calibration_results_stage_ooc}}</textarea>
+                                <textarea class="summernote" name="calibration_results_stage_ooc" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>{{$ooc->calibration_results_stage_ooc}}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Results Naturey</label>
-                                <select name="is_repeat_result_naturey_ooc" onchange="">
+                                <select name="is_repeat_result_naturey_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onchange="">
                                     <option value="0" {{ $ooc->is_repeat_result_naturey_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_result_naturey_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_result_naturey_ooc == 'No' ? 'selected' : '' }}>No</option>
@@ -1627,7 +1920,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Review of Calibration Results of Analyst">Review of Calibration Results of Analyst</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="review_of_calibration_results_of_analyst_ooc" id="summernote-1">{{$ooc->review_of_calibration_results_of_analyst_ooc}}</textarea>
+                                <textarea class="summernote" name="review_of_calibration_results_of_analyst_ooc" id="summernote-1"  {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>{{$ooc->review_of_calibration_results_of_analyst_ooc}}</textarea>
                             </div>
                         </div>
 
@@ -1657,7 +1950,7 @@ $(document).ready(function() {
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }} type="file" id="attachments_stage_ooc" name="attachments_stage_ooc[]"
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} type="file" id="attachments_stage_ooc" name="attachments_stage_ooc[]"
                                                 oninput="addMultipleFiles(this, 'attachments_stage_ooc')" multiple>
                                         </div>
                                     </div>
@@ -1673,14 +1966,14 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Results Criteria">Results Criteria</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="results_criteria_stage_ooc" id="summernote-1">{{$ooc->results_criteria_stage_ooc}}</textarea>
+                                <textarea class="summernote" name="results_criteria_stage_ooc" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>{{$ooc->results_criteria_stage_ooc}}</textarea>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Invalidated & Validated</label>
-                                <select name="is_repeat_stae_ooc" onchange="">
+                                <select name="is_repeat_stae_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onchange="">
                                     <option value="0" {{ $ooc->is_repeat_stae_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_stae_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_stae_ooc == 'No' ? 'selected' : '' }}>No</option>
@@ -1694,15 +1987,15 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Additinal Remarks (if any)">Additinal Remarks (if any)</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="additional_remarks_stage_ooc" id="summernote-1">{{$ooc->additional_remarks_stage_ooc}}</textarea>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="additional_remarks_stage_ooc" id="summernote-1">{{$ooc->additional_remarks_stage_ooc}}</textarea>
                             </div>
                         </div>
 
                     </div>
                     <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
+                        <button type="submit" class="saveButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button" class="nextButton" onclick="nextStep()" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>Next</button>
 
                         <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                 Exit </a> </button>
@@ -1721,7 +2014,7 @@ $(document).ready(function() {
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Rectification by Service Engineer required</label>
-                                <select name="is_repeat_stageii_ooc" onchange="">
+                                <select name="is_repeat_stageii_ooc"  {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onchange="">
                                     <option value="NA" {{ $ooc->is_repeat_stageii_ooc == 'NA' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_stageii_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
@@ -1732,7 +2025,7 @@ $(document).ready(function() {
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Instrument is Out of Order</label>
-                                <select name="is_repeat_stage_instrument_ooc" onchange="">
+                                <select name="is_repeat_stage_instrument_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onchange="">
                                     <option value="NA" {{ $ooc->is_repeat_stage_instrument_ooc == 'NA' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_stage_instrument_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_stage_instrument_ooc == 'No' ? 'selected' : '' }}>No</option>
@@ -1744,7 +2037,7 @@ $(document).ready(function() {
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Proposed By</label>
-                                <select name="is_repeat_proposed_stage_ooc" onchange="">
+                                <select name="is_repeat_proposed_stage_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}  onchange="">
                                     <option value="0" {{ $ooc->is_repeat_proposed_stage_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_proposed_stage_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_proposed_stage_ooc == 'No' ? 'selected' : '' }}>No</option>
@@ -1779,7 +2072,7 @@ $(document).ready(function() {
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }} type="file" id="initial_attachment_stageii_ooc" name="initial_attachment_stageii_ooc[]"
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} type="file" id="initial_attachment_stageii_ooc" name="initial_attachment_stageii_ooc[]"
                                                 oninput="addMultipleFiles(this, 'initial_attachment_stageii_ooc')" multiple>
                                         </div>
                                     </div>
@@ -1789,7 +2082,7 @@ $(document).ready(function() {
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Compiled by:</label>
-                                <select name="is_repeat_compiled_stageii_ooc" onchange="">
+                                <select name="is_repeat_compiled_stageii_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onchange="">
                                     <option value="0" {{ $ooc->is_repeat_compiled_stageii_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_compiled_stageii_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_compiled_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
@@ -1801,7 +2094,7 @@ $(document).ready(function() {
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Release of Instrument for usage</label>
-                                <select name="is_repeat_realease_stageii_ooc" onchange="">
+                                <select name="is_repeat_realease_stageii_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onchange="">
                                     <option value="0" {{ $ooc->is_repeat_realease_stageii_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_realease_stageii_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_realease_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
@@ -1815,14 +2108,14 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Impact Assessment at Stage II">Impact Assessment at Stage II</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_throug_stageii_ooc" id="summernote-1">{{$ooc->initiated_throug_stageii_ooc}}</textarea>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="initiated_throug_stageii_ooc" id="summernote-1">{{$ooc->initiated_throug_stageii_ooc}}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Details of Impact Evaluation">Details of Impact Evaluation</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_stageii_ooc" id="summernote-1">{{$ooc->initiated_through_stageii_ooc}}</textarea>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="initiated_through_stageii_ooc" id="summernote-1">{{$ooc->initiated_through_stageii_ooc}}</textarea>
                             </div>
                         </div>
 
@@ -1831,7 +2124,7 @@ $(document).ready(function() {
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Result of Reanalysis:</label>
-                                <select name="is_repeat_reanalysis_stageii_ooc" onchange="">
+                                <select name="is_repeat_reanalysis_stageii_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onchange="">
                                     <option value="0" {{ $ooc->is_repeat_reanalysis_stageii_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_reanalysis_stageii_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_reanalysis_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
@@ -1845,16 +2138,16 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Cause for failure">Cause for failure</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_stageii_cause_failure_ooc" id="summernote-1">{{$ooc->initiated_through_stageii_cause_failure_ooc}}</textarea>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="initiated_through_stageii_cause_failure_ooc" id="summernote-1">{{$ooc->initiated_through_stageii_cause_failure_ooc}}</textarea>
                             </div>
                         </div>
 
 
                     </div>
                     <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
+                        <button type="submit" class="saveButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button" class="nextButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onclick="nextStep()">Next</button>
 
                         <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                             </a> </button>
@@ -1872,7 +2165,7 @@ $(document).ready(function() {
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">CAPA Type?</label>
-                                <select name="is_repeat_capas_ooc" onchange="">
+                                <select name="is_repeat_capas_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onchange="">
                                     <option value="0" {{ $ooc->is_repeat_capas_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_capas_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_capas_ooc == 'No' ? 'selected' : '' }}>No</option>
@@ -1886,7 +2179,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Corrective Action">Corrective Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capas_ooc" id="summernote-1">{{$ooc->initiated_through_capas_ooc}}</textarea>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="initiated_through_capas_ooc" id="summernote-1">{{$ooc->initiated_through_capas_ooc}}</textarea>
                             </div>
                         </div>
 
@@ -1894,7 +2187,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Preventive Action">Preventive Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capa_prevent_ooc" id="summernote-1">{{$ooc->initiated_through_capa_prevent_ooc}}</textarea>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="initiated_through_capa_prevent_ooc" id="summernote-1">{{$ooc->initiated_through_capa_prevent_ooc}}</textarea>
                             </div>
                         </div>
 
@@ -1902,7 +2195,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capa_corrective_ooc" id="summernote-1">{{$ooc->initiated_through_capa_corrective_ooc}}</textarea>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="initiated_through_capa_corrective_ooc" id="summernote-1">{{$ooc->initiated_through_capa_corrective_ooc}}</textarea>
                             </div>
                         </div>
 
@@ -1934,7 +2227,7 @@ $(document).ready(function() {
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }} type="file" id="initial_attachment_capa_ooc" name="initial_attachment_capa_ooc[]"
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} type="file" id="initial_attachment_capa_ooc" name="initial_attachment_capa_ooc[]"
                                                 oninput="addMultipleFiles(this, 'initial_attachment_capa_ooc')" multiple>
                                         </div>
                                     </div>
@@ -1953,7 +2246,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="CAPA Post Implementation Comments">CAPA Post Implementation Comments</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capa_ooc" id="summernote-1">{{$ooc->initiated_through_capa_ooc}}</textarea>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="initiated_through_capa_ooc" id="summernote-1">{{$ooc->initiated_through_capa_ooc}}</textarea>
                             </div>
                         </div>
 
@@ -1985,7 +2278,7 @@ $(document).ready(function() {
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $ooc->stage == 0 || $ooc->stage == 8 ? "disabled" : "" }} type="file" id="initial_attachment_capa_post_ooc" name="initial_attachment_capa_post_ooc[]"
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} type="file" id="initial_attachment_capa_post_ooc" name="initial_attachment_capa_post_ooc[]"
                                                 oninput="addMultipleFiles(this, 'initial_attachment_capa_post_ooc')" multiple>
                                         </div>
                                     </div>
@@ -1996,9 +2289,9 @@ $(document).ready(function() {
 
                     </div>
                     <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
+                        <button type="submit" class="saveButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button" class="nextButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onclick="nextStep()">Next</button>
 
                         <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                             </a> </button>
@@ -2016,7 +2309,7 @@ $(document).ready(function() {
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Short Description">Closure Comments
-                                    <input id="docname" type="text" name="short_description_closure_ooc" value="{{$ooc->short_description_closure_ooc}}">
+                                    <input id="docname" type="text" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="short_description_closure_ooc" value="{{$ooc->short_description_closure_ooc}}">
                             </div>
                         </div>
 
@@ -2048,7 +2341,7 @@ $(document).ready(function() {
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="initial_attachment_closure_ooc" name="initial_attachment_closure_ooc[]"
+                                            <input type="file" id="initial_attachment_closure_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="initial_attachment_closure_ooc[]"
                                                 oninput="addMultipleFiles(this, 'initial_attachment_closure_ooc')" multiple>
                                         </div>
                                     </div>
@@ -2057,14 +2350,14 @@ $(document).ready(function() {
                         <div class="col-6">
                             <div class="group-input">
                                 <label for="Short Description">Document Code
-                                    <input id="docname" type="text" name="document_code_closure_ooc" value="{{$ooc->document_code_closure_ooc}}">
+                                    <input id="docname" type="text" name="document_code_closure_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} value="{{$ooc->document_code_closure_ooc}}">
                             </div>
                         </div>
 
                         <div class="col-6">
                             <div class="group-input">
                                 <label for="Short Description">Remarks
-                                    <input id="docname" type="text" name="remarks_closure_ooc" value="{{$ooc->remarks_closure_ooc}}">
+                                    <input id="docname" type="text" name="remarks_closure_ooc" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} value="{{$ooc->remarks_closure_ooc}}">
                             </div>
                         </div>
 
@@ -2072,15 +2365,15 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Immediate Corrective Action">Immediate Corrective Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_closure_ooc" id="summernote-1">{{$ooc->initiated_through_closure_ooc}}</textarea>
+                                <textarea class="summernote" name="initiated_through_closure_ooc" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>{{$ooc->initiated_through_closure_ooc}}</textarea>
                             </div>
                         </div>
 
                     </div>
                     <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
+                        <button type="submit" class="saveButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button" class="nextButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onclick="nextStep()">Next</button>
 
                         <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                             </a> </button>
@@ -2098,7 +2391,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="HOD Remarks">HOD Remarks</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_hodreview_ooc" id="summernote-1">{{$ooc->initiated_through_hodreview_ooc}}</textarea>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="initiated_through_hodreview_ooc" id="summernote-1">{{$ooc->initiated_through_hodreview_ooc}}</textarea>
                             </div>
                         </div>
 
@@ -2131,7 +2424,7 @@ $(document).ready(function() {
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $ooc->stage == 0 || $ooc->stage == 8 ? "  " : "" }} type="file" id="initial_attachment_hodreview_ooc" name="initial_attachment_hodreview_ooc[]"
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 14 ? "  " : "" }} type="file" id="initial_attachment_hodreview_ooc" name="initial_attachment_hodreview_ooc[]"
                                                 oninput="addMultipleFiles(this, 'initial_attachment_hodreview_ooc')" multiple>
                                         </div>
                                     </div>
@@ -2144,7 +2437,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Root Cause Analysis">Root Cause Analysis</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_rootcause_ooc" id="summernote-1">{{$ooc->initiated_through_rootcause_ooc}}</textarea>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="initiated_through_rootcause_ooc" id="summernote-1">{{$ooc->initiated_through_rootcause_ooc}}</textarea>
                             </div>
                         </div>
 
@@ -2152,7 +2445,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Impact Assessment">Impact Assessment</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_impact_closure_ooc" id="summernote-1">{{$ooc->initiated_through_impact_closure_ooc}}</textarea>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} name="initiated_through_impact_closure_ooc" id="summernote-1">{{$ooc->initiated_through_impact_closure_ooc}}</textarea>
                             </div>
                         </div>
 
@@ -2161,9 +2454,9 @@ $(document).ready(function() {
 
                     </div>
                     <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
+                        <button type="submit" class="saveButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button" class="nextButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }} onclick="nextStep()">Next</button>
 
                         <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                             </a> </button>
@@ -2212,12 +2505,12 @@ $(document).ready(function() {
                         </div>
                         </div>
 
-                        <div class="sub-head col-lg-12">Initial Phase I Investigation</div>
+                        <div class="sub-head col-lg-12">HOD Primary Review</div>
 
                         <div class="col-lg-4">
 
                             <div class="group-input">
-                                <label for="Initiator Group">initial_phase_i_investigation_completed_by : </label>
+                                <label for="Initiator Group">HOD Primary Review Completed By: </label>
                                 <div class="static">{{$ooc->initial_phase_i_investigation_completed_by}}</div>
 
                             </div>
@@ -2226,7 +2519,7 @@ $(document).ready(function() {
                         <div class="col-lg-4 new-date-data-field">
 
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">initial_phase_i_investigation_completed_on</label>
+                                <label for="OOC Logged On">HOD Primary Review Completed On</label>
                                 <div class="static">{{$ooc->initial_phase_i_investigation_completed_on}}</div>
                                 
                             </div>
@@ -2244,13 +2537,13 @@ $(document).ready(function() {
                         </div>
 
                         <div class="sub-head col-lg-12">
-                            QA Intial Review
+                        CQA/QA Head Primary Review
                         </div>
                         <div class="col-lg-4">
 
                             <div class="group-input">
 
-                                <label for="Initiator Group">Assignable Cause Found Completed By :</label>
+                                <label for="Initiator Group">CQA/QA Head Primary Review Complete By :</label>
                                 <div class="static">{{$ooc->assignable_cause_f_completed_by}}</div>
 
                             </div>
@@ -2258,7 +2551,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Assignable Cause Found Completed On : </label>
+                                <label for="OOC Logged On">CQA/QA Head Primary Review Complete On : </label>
                                 <div class="static">{{$ooc->assignable_cause_f_completed_on}}</div>
 
 
@@ -2273,208 +2566,12 @@ $(document).ready(function() {
 
                             </div>
                         </div>
-
-
                         <div class="sub-head col-lg-12">
-                            Correction Completed
-                        </div>
-                        <div class="col-lg-4">
-
-                            <div class="group-input">
-                                <label for="Initiator Group">Correction Completed By : </label>
-                                <div class="static">{{$ooc->correction_completed_by}}</div>
-
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">Correction Completed On : </label>
-                                <div class="static">{{$ooc->correction_completed_on}}</div>
-
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="qa_final_review_comment">Comment : </label>
-                                <div class="static">{{$ooc->correction_completed_comment}}</div>
-
-                            </div>
-                        </div>
-                        <div class="sub-head col-lg-12">
-                            Obvious Results Not Found
+                            Phase IA Investigation
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Obvious Results Not Found Done By : </label>
-                                <div class="static">{{$ooc->obvious_r_n_completed_by}}</div>
-
-
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">Obvious Results Not Found  On : </label>
-                                <div class="static">{{$ooc->obvious_r_n_completed_on}}</div>
-
-
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->cause_i_ncompleted_comment}}</div>
-
-                            </div>
-                        </div>
-                        
-                        <div class="sub-head col-lg-12">
-                            Correction Complete
-                        </div>
-                      <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Initiator Group">Correction Complete By : </label>
-                                <div class="static">{{$ooc->correction_ooc_completed_by}}</div>
-
-
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">Correction Complete On : </label>
-                                <div class="static">{{$ooc->correction_ooc_completed_on}}</div>
-
-
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->correction_ooc_comment}}</div>
-
-                            </div>
-                        </div>
-
-
-                        <div class="sub-head col-lg-12">
-                            Cause Identification
-                        </div>
-                      <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Initiator Group">Cause Identification Done By : </label>
-                                <div class="static">{{$ooc->cause_i_completed_by}}</div>
-
-
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">Cause Identification Done  On : </label>
-                                <div class="static">{{$ooc->cause_i_completed_on}}</div>
-
-
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->cause_i_ncompleted_comment}}</div>
-
-                            </div>
-                        </div>
-
-
-                        <div class="sub-head col-lg-12">
-                            Correction Complete
-                        </div>
-                      <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Initiator Group">Correction Completed By : </label>
-                                <div class="static">{{$ooc->correction_ooc_completed_by}}</div>
-
-
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">Correction Completed  On : </label>
-                                <div class="static">{{$ooc->correction_ooc_completed_on}}</div>
-
-
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->correction_ooc_comment}}</div>
-
-                            </div>
-                        </div>
-
-
-                        <div class="sub-head col-lg-12">
-                            Assignable Cause Not Found
-                        </div>
-                      <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Initiator Group">Assignable Cause Not Found Complete By : </label>
-                                <div class="static">{{$ooc->assignable_cause_f_n_completed_by}}</div>
-
-
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">Assignable Cause Not Found Complete On : </label>
-                                <div class="static">{{$ooc->assignable_cause_f_n_completed_on}}</div>
-
-
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->assignable_cause_f__ncompleted_comment}}</div>
-
-                            </div>
-                        </div>
-
-
-                        <div class="sub-head col-lg-12">
-                            Cause Failed
-                        </div>
-                      <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Initiator Group">Cause Failed By : </label>
+                                <label for="Initiator Group">Phase IA Investigation Complete By : </label>
                                 <div class="static">{{$ooc->cause_f_completed_by}}</div>
 
 
@@ -2484,7 +2581,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Cause Failed On : </label>
+                                <label for="OOC Logged On">Phase IA Investigation Complete On : </label>
                                 <div class="static">{{$ooc->cause_f_completed_on}}</div>
 
 
@@ -2501,12 +2598,14 @@ $(document).ready(function() {
                             </div>
                         </div>
 
+
+
                         <div class="sub-head col-lg-12">
-                            Obvious Results Found
+                        Phase IA HOD Primary Review 
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Obvious Results Found By : </label>
+                                <label for="Initiator Group">Phase IA HOD Primary Review Complete By : </label>
                                 <div class="static">{{$ooc->obvious_r_completed_by}}</div>
 
 
@@ -2516,7 +2615,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Obvious Results Found  On : </label>
+                                <label for="OOC Logged On">Phase IA HOD Primary Review Complete On : </label>
                                 <div class="static">{{$ooc->obvious_r_completed_on}}</div>
 
 
@@ -2528,19 +2627,18 @@ $(document).ready(function() {
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->obvious_r_ncompleted_comment}}</div>
+                                <div class="static">{{$ooc->cause_i_ncompleted_comment}}</div>
 
                             </div>
                         </div>
 
-
                         <div class="sub-head col-lg-12">
-                            Cause Not Identified
+                        Phase IA QA Review
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Cause Not Identified By : </label>
-                                <div class="static">{{$ooc->cause_n_i_completed_by}}</div>
+                                <label for="Initiator Group">Phase IA QA Review Complete By : </label>
+                                <div class="static">{{$ooc->cause_i_completed_by}}</div>
 
 
                             </div>
@@ -2549,8 +2647,8 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Cause Not Identified  On : </label>
-                                <div class="static">{{$ooc->cause_n_i_completed_on}}</div>
+                                <label for="OOC Logged On">Phase IA QA Review Complete On : </label>
+                                <div class="static">{{$ooc->cause_i_completed_on}}</div>
 
 
 
@@ -2561,60 +2659,18 @@ $(document).ready(function() {
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->cause_n_i_completed_comment}}</div>
+                                <div class="static">{{$ooc->correction_ooc_comment}}</div>
 
                             </div>
                         </div>
 
 
                         <div class="sub-head col-lg-12">
-                            QA Review Complete
+                        Assignable Cause Found
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">QA Review Complete By : </label>
-                                <div class="static">{{$ooc->qareview_ooc_completed_by}}</div>
-
-
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">QA Review Complete  On : </label>
-                                <div class="static">{{$ooc->qareview_ooc_completed_on}}</div>
-
-
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->qareview_ooc_comment}}</div>
-
-                            </div>
-                        </div>
-
-
-
-
-
-
-
-
-
-
-
-                        <div class="sub-head col-lg-12">
-                            Approved
-                        </div>
-                      <div class="col-lg-4">
-                            <div class="group-input">
-                                <label for="Initiator Group">Approved By : </label>
+                                <label for="Initiator Group">Assignable Cause Found Complete By : </label>
                                 <div class="static">{{$ooc->approved_ooc_completed_by}}</div>
 
 
@@ -2624,7 +2680,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Approved  On : </label>
+                                <label for="OOC Logged On">Assignable Cause Found Complete On : </label>
                                 <div class="static">{{$ooc->approved_ooc_completed_on}}</div>
 
 
@@ -2641,15 +2697,216 @@ $(document).ready(function() {
                             </div>
                         </div>
 
+                        <div class="sub-head col-lg-12">
+                        Assignable Cause Not Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Assignable Cause Not Found Complete By : </label>
+                                <div class="static">{{$ooc->correction_r_completed_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Assignable Cause Not Found Complete On : </label>
+                                <div class="static">{{$ooc->correction_r_completed_on}}</div>
 
 
 
 
 
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->correction_r_ncompleted_comment}}</div>
+
+                            </div>
+                        </div>
+                        <div class="sub-head col-lg-12">
+                            Phase IB Investigation</div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB Investigation By : </label>
+                                <div class="static">{{$ooc->correction_ooc_completed_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IB Investigation  On : </label>
+                                <div class="static">{{$ooc->correction_ooc_completed_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->correction_ooc_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase IB HOD Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB HOD Review Complete By : </label>
+                                <div class="static">{{$ooc->Phase_IB_HOD_Review_Completed_BY}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IB HOD Review Complete On : </label>
+                                <div class="static">{{$ooc->Phase_IB_HOD_Review_Completed_ON}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->Phase_IB_HOD_Review_Completed_Comment}}</div>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="sub-head col-lg-12">
+                            Phase IB QA Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB QA Review Complete By : </label>
+                                <div class="static">{{$ooc->Phase_IB_QA_Review_Complete_12_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IB QA Review Complete  On : </label>
+                                <div class="static">{{$ooc->Phase_IB_QA_Review_Complete_12_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->Phase_IB_QA_Review_Complete_12_comment}}</div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        P-IB Assignable Cause Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-IB Assignable Cause Found By : </label>
+                                <div class="static">{{$ooc->P_IB_Assignable_Cause_Found_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-IB Assignable Cause Found On : </label>
+                                <div class="static">{{$ooc->P_IB_Assignable_Cause_Found_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$ooc->P_IB_Assignable_Cause_Found_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+
+
+                        
+                       
+
+
+
+                        
+                        
+
+                       
+                       
+                        
+                        <div class="sub-head col-lg-12">
+                            Cancel
+                        </div>
+                        <div class="col-lg-4">
+
+                            <div class="group-input">
+                                <label for="Initiator Group">Cancelled By : </label>
+                                <div class="static">{{$ooc->cancelled_by}}</div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Cancelled On: </label>
+                                <div class="static">{{$ooc->cancelled_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="comment">Comment : </label>
+                                <div class="static">{{$ooc->cancell_comment}}</div>
+                        </div>
+                        </div>
 
                     </div>
                     <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
+                        <button type="submit" class="saveButton" {{ $ooc->stage == 0 || $ooc->stage == 14 ? "disabled" : "" }}>Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
 
                         <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
@@ -2801,4 +3058,6 @@ $(document).ready(function() {
         $('#rchars').text(textlen);
     });
 </script>
+
+
 @endsection
