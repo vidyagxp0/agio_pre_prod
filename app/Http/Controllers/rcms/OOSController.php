@@ -566,6 +566,29 @@ class OOSController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
+            if ($changestage->stage == 21) {
+                $changestage->stage = "22";
+                $changestage->status = "Closed - Done";
+                $changestage->P_III_Investigation_Applicable_By= Auth::user()->name;
+                $changestage->P_III_Investigation_Applicable_On = Carbon::now()->format('d-M-Y');
+                $changestage->P_III_Investigation_Applicable_Comment = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    //$history->action = 'P-II A QAH/CQAH Review';
+                    $history->change_from = $lastDocument->status;
+                    $history->change_to =   "Closed - Done";
+                    $history->action_name = 'Update';
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
             // --------------------------------------------------------------------------------------------------------------
             // if ($changestage->stage == 2) {
             //     $changestage->stage = "3";
@@ -1911,7 +1934,7 @@ class OOSController extends Controller
     {
         $cft = [];
         $parent_id = $id;
-        $parent_type = "Audit_Program";
+        $parent_type = "OOS Chemical";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -1946,6 +1969,27 @@ class OOSController extends Controller
 
             return view('frontend.forms.action-item', compact('parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
         }
+        elseif ($request->child_type == "Resampling")
+         {
+            $parent_name = "CAPA";
+            $actionchild = OOS::find($id);
+            $actionchild->actionchild = $record_number;
+            $parent_id = $id;
+            $actionchild->save();
+
+            return view('frontend.resampling.resapling_create', compact('parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
+        }
+        elseif ($request->child_type == "Extension")
+        {
+           $parent_name = "CAPA";
+           $actionchild = OOS::find($id);
+           $actionchild->actionchild = $record_number;
+           $parent_id = $id;
+           $actionchild->save();
+
+           return view('frontend.extension.extension_new', compact('parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
+       }
+
         else {
             $parent_name = "Root";
             $Rootchild = OOS::find($id);
