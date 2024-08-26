@@ -1008,4 +1008,142 @@ class Helpers
         return $checklist;
     }
 
+    public static function getChildData($id, $parent_type){
+        $count = 0;
+        if($parent_type == 'LabIncident')
+       {
+        $count = extension_new::where('parent_type', 'LabIncident')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Deviation')
+       {
+        $count = extension_new::where('parent_type', 'Deviation')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOC')
+       {
+        $count = extension_new::where('parent_type', 'OOC')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOT')
+       {
+        $count = extension_new::where('parent_type', 'OOT')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Management Review')
+       {
+        $count = extension_new::where('parent_type', 'Management Review')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'CAPA')
+       {
+        $count = extension_new::where('parent_type', 'CAPA')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Action Item')
+       {
+        $count = extension_new::where('parent_type', 'Action Item')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Resampling')
+       {
+        $count = extension_new::where('parent_type', 'Resampling')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Observation')
+       {
+        $count = extension_new::where('parent_type', 'Observation')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'RCA')
+       {
+        $count = extension_new::where('parent_type', 'RCA')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Risk Assesment')
+       {
+        $count = extension_new::where('parent_type', 'Risk Assesment')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Management Review')
+       {
+        $count = extension_new::where('parent_type', 'Management Review')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'External Audit')
+       {
+        $count = extension_new::where('parent_type', 'External Audit')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Internal Audit')
+       {
+        $count = extension_new::where('parent_type', 'Internal Audit')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Audit Program')
+       {
+        $count = extension_new::where('parent_type', 'Audit Program')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'CC')
+       {
+        $count = extension_new::where('parent_type', 'CC')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'New Documnet')
+       {
+        $count = extension_new::where('parent_type', 'New Documnet')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Effectiveness Check')
+       {
+        $count = extension_new::where('parent_type', 'Effectiveness Check')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOS Micro')
+       {
+        $count = extension_new::where('parent_type', 'OOS Micro')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOS Chemical')
+       {
+        $count = extension_new::where('parent_type', 'OOS Chemical')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Market Complaint')
+       {
+        $count = extension_new::where('parent_type', 'Market Complaint')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Failure Investigation')
+       {
+        $count = extension_new::where('parent_type', 'Failure Investigation')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       
+        return $count;
+    }
+
 }
