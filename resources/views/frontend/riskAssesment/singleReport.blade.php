@@ -552,14 +552,14 @@
                             $row_number = 1;
                         @endphp
 
-                        @for ($i = 0; $i < count($measurement_1); $i++)
+                        {{-- @for ($i = 0; $i < count($measurement_1); $i++)
                             <tr>
                                 <td class="w-10">{{ $row_number++ }}</td>
                                 <td class="w-20">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
                                 <td class="w-20">{{ htmlspecialchars($measurement_2[$i] ?? 'Not Applicable') }}</td>
                                 <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
                             </tr>
-                        @endfor
+                        @endfor --}}
                     </tbody>
                 </table>
 
@@ -582,7 +582,7 @@
                             $row_number = 1; // Reset row number
                         @endphp
 
-                        @for ($i = 0; $i < count($measurement_4); $i++)
+                        {{-- @for ($i = 0; $i < count($measurement_4); $i++)
                             <tr>
                                 <td class="w-10">{{ $row_number++ }}</td>
                                 <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
@@ -590,7 +590,7 @@
                                 <td class="w-20">{{ htmlspecialchars($measurement_6[$i] ?? 'Not Applicable') }}</td>
                                 <td class="w-20">{{ htmlspecialchars($measurement_7[$i] ?? 'Not Applicable') }}</td>
                             </tr>
-                        @endfor
+                        @endfor --}}
                     </tbody>
                 </table>
 
@@ -615,16 +615,23 @@
                             $row_number = 1; // Reset row number
                         @endphp
 
-                        @for ($i = 0; $i < count($measurement_8); $i++)
+                            @if (is_array($measurement_8))
+                            @for ($i = 0; $i < count($measurement_8); $i++)
+                                <tr>
+                                    <td class="w-10">{{ $row_number++ }}</td>
+                                    <td class="w-20">{{ htmlspecialchars($measurement_8[$i] ?? 'Not Applicable') }}</td>
+                                    <td class="w-20">{{ htmlspecialchars($measurement_9[$i] ?? 'Not Applicable') }}</td>
+                                    <td class="w-20">{{ htmlspecialchars($measurement_10[$i] ?? 'Not Applicable') }}</td>
+                                    <td class="w-20">{{ htmlspecialchars($measurement_11[$i] ?? 'Not Applicable') }}</td>
+                                    <td class="w-20">{{ htmlspecialchars($measurement_12[$i] ?? 'Not Applicable') }}</td>
+                                </tr>
+                            @endfor
+                            @else
                             <tr>
-                                <td class="w-10">{{ $row_number++ }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_8[$i] ?? 'Not Applicable') }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_9[$i] ?? 'Not Applicable') }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_10[$i] ?? 'Not Applicable') }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_11[$i] ?? 'Not Applicable') }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_12[$i] ?? 'Not Applicable') }}</td>
+                                <td colspan="6">No measurements available</td>
                             </tr>
-                        @endfor
+                            @endif
+
                     </tbody>
                 </table>
 
@@ -639,13 +646,29 @@
                 </thead>
 
                 <tbody>
-                    @php
+                    {{-- @php
                         $measurement_13 = unserialize($failure_mode->risk_acceptance);
                         $measurement_14 = unserialize($failure_mode->mitigation_proposal);
                         $measurement_15 = unserialize($failure_mode->risk_acceptance2);
                         $max_count = max(count($measurement_13), count($measurement_14), count($measurement_15));
                         $row_number = 1;
-                    @endphp
+                    @endphp --}}
+
+                    @php
+                    $measurement_13 = unserialize($failure_mode->risk_acceptance);
+                    $measurement_14 = unserialize($failure_mode->mitigation_proposal);
+                    $measurement_15 = unserialize($failure_mode->risk_acceptance2);
+
+                    // Ensure each variable is an array; if not, set it to an empty array
+                    $measurement_13 = is_array($measurement_13) ? $measurement_13 : [];
+                    $measurement_14 = is_array($measurement_14) ? $measurement_14 : [];
+                    $measurement_15 = is_array($measurement_15) ? $measurement_15 : [];
+
+                    // Now you can safely use count() since all variables are arrays
+                    $max_count = max(count($measurement_13), count($measurement_14), count($measurement_15));
+                    $row_number = 1;
+                @endphp
+
 
                     @for ($i = 0; $i < $max_count; $i++)
                         <tr>
@@ -1357,7 +1380,16 @@
                         <td class="w-30">@if($data->criticality){{ $data->Production_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Production by</th>
+                        <td class="w-30">@if($data->impact){{ $data->Production_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">Production on</th>
+                        <td class="w-30">@if($data->criticality){{ $data->production_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Production Attechment
                         </div>
@@ -1381,12 +1413,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Production by</th>
-                        <td class="w-30">@if($data->impact){{ $data->Production_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Production on</th>
-                        <td class="w-30">@if($data->criticality){{ $data->production_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -1406,7 +1432,16 @@
                         <td class="w-30">@if($data->Production_Injection_Assessment){{ $data->Production_Injection_Assessment}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Production Injection by</th>
+                        <td class="w-30">@if($data->Production_Injection_By){{ $data->Production_Injection_By}}@else Not Applicable @endif</td>
+                        <th class="w-20">Production Injection on</th>
+                        <td class="w-30">@if($data->Production_Injection_On){{ $data->Production_Injection_On}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Production Injection Attechment
                         </div>
@@ -1430,12 +1465,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Production Injection by</th>
-                        <td class="w-30">@if($data->Production_Injection_By){{ $data->Production_Injection_By}}@else Not Applicable @endif</td>
-                        <th class="w-20">Production Injection on</th>
-                        <td class="w-30">@if($data->Production_Injection_On){{ $data->Production_Injection_On}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -1455,7 +1484,16 @@
                         <td class="w-30">@if($data->Quality_Control_feedback){{ $data->Quality_Control_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Quality Control By</th>
+                        <td class="w-30">@if($data->Quality_Control_by){{ $data->Quality_Control_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">Quality Control  on</th>
+                        <td class="w-30">@if($data->Quality_Control_on){{ $data->Quality_Control_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Quality Control Attechment
                         </div>
@@ -1479,12 +1517,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Quality Control By</th>
-                        <td class="w-30">@if($data->Quality_Control_by){{ $data->Quality_Control_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Quality Control  on</th>
-                        <td class="w-30">@if($data->Quality_Control_on){{ $data->Quality_Control_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -1504,7 +1536,16 @@
                         <td class="w-30">@if($data->QualityAssurance_feedback){{ $data->QualityAssurance_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Quality Control By</th>
+                        <td class="w-30">@if($data->QualityAssurance_by){{ $data->QualityAssurance_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">Quality Assurance on</th>
+                        <td class="w-30">@if($data->QualityAssurance_on){{ $data->QualityAssurance_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Quality Assurance Attechment
                         </div>
@@ -1528,12 +1569,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Quality Control By</th>
-                        <td class="w-30">@if($data->QualityAssurance_by){{ $data->QualityAssurance_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Quality Assurance on</th>
-                        <td class="w-30">@if($data->QualityAssurance_on){{ $data->QualityAssurance_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -1553,7 +1588,16 @@
                         <td class="w-30">@if($data->Engineering_feedback){{ $data->Engineering_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Engineering By</th>
+                        <td class="w-30">@if($data->Engineering_by){{ $data->Engineering_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">Engineering on</th>
+                        <td class="w-30">@if($data->Engineering_on){{ $data->Engineering_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Engineering Attechment
                         </div>
@@ -1577,12 +1621,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Engineering By</th>
-                        <td class="w-30">@if($data->Engineering_by){{ $data->Engineering_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Engineering on</th>
-                        <td class="w-30">@if($data->Engineering_on){{ $data->Engineering_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -1602,7 +1640,16 @@
                         <td class="w-30">@if($data->Analytical_Development_feedback){{ $data->Analytical_Development_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Analytical Development By</th>
+                        <td class="w-30">@if($data->Analytical_Development_by){{ $data->Analytical_Development_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">Analytical Development On</th>
+                        <td class="w-30">@if($data->Analytical_Development_on){{ $data->Analytical_Development_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Analytical Development Attechment
                         </div>
@@ -1626,12 +1673,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Analytical Development By</th>
-                        <td class="w-30">@if($data->Analytical_Development_by){{ $data->Analytical_Development_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Analytical Development On</th>
-                        <td class="w-30">@if($data->Analytical_Development_on){{ $data->Analytical_Development_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -1653,7 +1694,16 @@
                         <td class="w-30">@if($data->Technology_transfer_feedback){{ $data->Technology_transfer_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Technology Transfer By</th>
+                        <td class="w-30">@if($data->Technology_transfer_by){{ $data->Technology_transfer_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">Technology Development On</th>
+                        <td class="w-30">@if($data->Technology_transfer_on){{ $data->Technology_transfer_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Technology Transfer Attechment
                         </div>
@@ -1677,12 +1727,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Technology Transfer By</th>
-                        <td class="w-30">@if($data->Technology_transfer_by){{ $data->Technology_transfer_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Technology Development On</th>
-                        <td class="w-30">@if($data->Technology_transfer_on){{ $data->Technology_transfer_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -1703,7 +1747,16 @@
                         <td class="w-30">@if($data->Health_Safety_feedback){{ $data->Health_Safety_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Saftey By</th>
+                        <td class="w-30">@if($data->Environment_Health_Safety_by){{ $data->Environment_Health_Safety_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">Saftey On</th>
+                        <td class="w-30">@if($data->Environment_Health_Safety_on){{ $data->Environment_Health_Safety_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Saftey Attechment
                         </div>
@@ -1727,12 +1780,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Saftey By</th>
-                        <td class="w-30">@if($data->Environment_Health_Safety_by){{ $data->Environment_Health_Safety_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Saftey On</th>
-                        <td class="w-30">@if($data->Environment_Health_Safety_on){{ $data->Environment_Health_Safety_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -1752,7 +1799,16 @@
                         <td class="w-30">@if($data->Human_Resource_feedback){{ $data->Human_Resource_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Human Resource  By</th>
+                        <td class="w-30">@if($data->Human_Resource_by){{ $data->Human_Resource_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">Human Resource  On</th>
+                        <td class="w-30">@if($data->Human_Resource_on){{ $data->Human_Resource_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Human Resource Attechment
                         </div>
@@ -1776,12 +1832,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Human Resource  By</th>
-                        <td class="w-30">@if($data->Human_Resource_by){{ $data->Human_Resource_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Human Resource  On</th>
-                        <td class="w-30">@if($data->Human_Resource_on){{ $data->Human_Resource_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -1801,7 +1851,16 @@
                         <td class="w-30">@if($data->Information_Technology_feedback){{ $data->Information_Technology_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Information Technology By</th>
+                        <td class="w-30">@if($data->Information_Technology_by){{ $data->Information_Technology_by }}@else Not Applicable @endif</td>
+                        <th class="w-20"> Information Technology On</th>
+                        <td class="w-30">@if($data->Information_Technology_on){{ $data->Information_Technology_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Information Technology Attechment
                         </div>
@@ -1825,12 +1884,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Information Technology By</th>
-                        <td class="w-30">@if($data->Information_Technology_by){{ $data->Information_Technology_by }}@else Not Applicable @endif</td>
-                        <th class="w-20"> Information Technology On</th>
-                        <td class="w-30">@if($data->Information_Technology_on){{ $data->Information_Technology_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -1850,7 +1903,16 @@
                         <td class="w-30">@if($data->Project_management_feedback){{ $data->Project_management_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Project Managment By</th>
+                        <td class="w-30">@if($data->Project_management_by){{ $data->Project_management_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">Project Managment On</th>
+                        <td class="w-30">@if($data->Project_management_on){{ $data->Project_management_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Project Managment Attechment
                         </div>
@@ -1874,12 +1936,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Project Managment By</th>
-                        <td class="w-30">@if($data->Project_management_by){{ $data->Project_management_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Project Managment On</th>
-                        <td class="w-30">@if($data->Project_management_on){{ $data->Project_management_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -1899,7 +1955,16 @@
                         <td class="w-30">@if($data->RA_feedback){{ $data->RA_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">R A  By</th>
+                        <td class="w-30">@if($data->RA_by){{ $data->RA_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">R A On</th>
+                        <td class="w-30">@if($data->RA_on){{ $data->RA_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             R A  Attechment
                         </div>
@@ -1923,12 +1988,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">R A  By</th>
-                        <td class="w-30">@if($data->RA_by){{ $data->RA_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">R A On</th>
-                        <td class="w-30">@if($data->RA_on){{ $data->RA_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -1948,30 +2007,7 @@
                         <td class="w-30">@if($data->Store_feedback){{ $data->Store_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     {{-- <div class="border-table">
-                        <div class="block-head">
-                            R A  Attechment
-                        </div>
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
-                            </tr>
-                            @if($data->reference)
-                                @foreach(json_decode($data->RA_attachment) as $key => $file)
-                                    <tr>_
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-60">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div> --}}
+
                     <tr>
                         <th class="w-20">Store  By</th>
                         <td class="w-30">@if($data->Store_by){{ $data->Store_by }}@else Not Applicable @endif</td>
@@ -1979,6 +2015,31 @@
                         <td class="w-30">@if($data->Store_on){{ $data->Store_on}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
+
+                <div class="border-table">
+                    <div class="block-head">
+                        Store Attachment
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if($data->reference)
+                            @foreach(json_decode($data->Store_attachment) as $key => $file)
+                                <tr>_
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
 
             <div class="block">
@@ -1997,7 +2058,16 @@
                         <td class="w-30">@if($data->RegulatoryAffair_feedback){{ $data->RegulatoryAffair_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     {{-- <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Regulatory Affair By</th>
+                        <td class="w-30">@if($data->RegulatoryAffair_by){{ $data->RegulatoryAffair_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">Regulatory Affair On</th>
+                        <td class="w-30">@if($data->RegulatoryAffair_on){{ $data->RegulatoryAffair_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             R A  Attechment
                         </div>
@@ -2020,13 +2090,7 @@
                                 </tr>
                             @endif
                         </table>
-                    </div> --}}
-                    <tr>
-                        <th class="w-20">Regulatory Affair By</th>
-                        <td class="w-30">@if($data->RegulatoryAffair_by){{ $data->RegulatoryAffair_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Regulatory Affair On</th>
-                        <td class="w-30">@if($data->RegulatoryAffair_on){{ $data->RegulatoryAffair_on}}@else Not Applicable @endif</td>
-                    </tr>
+                    </div>
                 </table>
             </div>
 
@@ -2046,9 +2110,19 @@
                         <td class="w-30">@if($data->Microbiology_feedback){{ $data->Microbiology_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     {{-- <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Microbiology By</th>
+                        <td class="w-30">@if($data->Microbiology_by){{ $data->Microbiology_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">Microbiology On</th>
+                        <td class="w-30">@if($data->Microbiology_on){{ $data->Microbiology_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
-                            R A  Attechment
+                            Microbiology Attachment
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -2056,7 +2130,7 @@
                                 <th class="w-60">Batch No</th>
                             </tr>
                             @if($data->reference)
-                                @foreach(json_decode($data->RA_attachment) as $key => $file)
+                                @foreach(json_decode($data->Microbiology_attachment) as $key => $file)
                                     <tr>_
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
@@ -2069,13 +2143,7 @@
                                 </tr>
                             @endif
                         </table>
-                    </div> --}}
-                    <tr>
-                        <th class="w-20">Microbiology By</th>
-                        <td class="w-30">@if($data->Microbiology_by){{ $data->Microbiology_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Microbiology On</th>
-                        <td class="w-30">@if($data->Microbiology_on){{ $data->Microbiology_on}}@else Not Applicable @endif</td>
-                    </tr>
+                    </div>
                 </table>
             </div>
 
@@ -2095,9 +2163,18 @@
                         <td class="w-30">@if($data->ContractGiver_feedback){{ $data->ContractGiver_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                     {{-- <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">ContractGiver By</th>
+                        <td class="w-30">@if($data->ContractGiver_by){{ $data->ContractGiver_by}}@else Not Applicable @endif</td>
+                        <th class="w-20">ContractGiver On</th>
+                        <td class="w-30">@if($data->ContractGiver_on){{ $data->ContractGiver_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
-                            R A  Attechment
+                            ContractGiver Attachment
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -2105,7 +2182,7 @@
                                 <th class="w-60">Batch No</th>
                             </tr>
                             @if($data->reference)
-                                @foreach(json_decode($data->RA_attachment) as $key => $file)
+                                @foreach(json_decode($data->ContractGiver_attachment) as $key => $file)
                                     <tr>_
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
@@ -2118,13 +2195,7 @@
                                 </tr>
                             @endif
                         </table>
-                    </div> --}}
-                    <tr>
-                        <th class="w-20">Microbiology By</th>
-                        <td class="w-30">@if($data->ContractGiver_by){{ $data->ContractGiver_by}}@else Not Applicable @endif</td>
-                        <th class="w-20">Microbiology On</th>
-                        <td class="w-30">@if($data->ContractGiver_on){{ $data->ContractGiver_on}}@else Not Applicable @endif</td>
-                    </tr>
+                    </div>
                 </table>
             </div>
 
@@ -2151,7 +2222,16 @@
                         <td class="w-30">@if($data->Other1_feedback){{ $data->Other1_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                      <div class="border-table">
+                    <tr>
+                        <th class="w-20">Others 1  By</th>
+                        <td class="w-30">@if($data->Other1_by){{ $data->Other1_by}}@else Not Applicable @endif</td>
+                        <th class="w-20">Others 1  On</th>
+                        <td class="w-30">@if($data->Other1_on){{ $data->Other1_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Others 1 Attechment
                         </div>
@@ -2175,12 +2255,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Others 1  By</th>
-                        <td class="w-30">@if($data->Other1_by){{ $data->Other1_by}}@else Not Applicable @endif</td>
-                        <th class="w-20">Others 1  On</th>
-                        <td class="w-30">@if($data->Other1_on){{ $data->Other1_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -2207,7 +2281,16 @@
                         <td class="w-30">@if($data->Other2_feedback){{ $data->Other2_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                      <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Others 2  By</th>
+                        <td class="w-30">@if($data->Other1_by){{ $data->Other2_by}}@else Not Applicable @endif</td>
+                        <th class="w-20">Others 2  On</th>
+                        <td class="w-30">@if($data->Other2_on){{ $data->Other2_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Others 2 Attechment
                         </div>
@@ -2231,12 +2314,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Others 2  By</th>
-                        <td class="w-30">@if($data->Other1_by){{ $data->Other2_by}}@else Not Applicable @endif</td>
-                        <th class="w-20">Others 2  On</th>
-                        <td class="w-30">@if($data->Other2_on){{ $data->Other2_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -2264,7 +2341,16 @@
                         <td class="w-30">@if($data->Other3_feedback){{ $data->Other3_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                      <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Others 3 By</th>
+                        <td class="w-30">@if($data->Other3_by){{ $data->Other2_by}}@else Not Applicable @endif</td>
+                        <th class="w-20">Others 3 On</th>
+                        <td class="w-30">@if($data->Other3_on){{ $data->Other2_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Others 3 Attechment
                         </div>
@@ -2288,12 +2374,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Others 3 By</th>
-                        <td class="w-30">@if($data->Other3_by){{ $data->Other2_by}}@else Not Applicable @endif</td>
-                        <th class="w-20">Others 3 On</th>
-                        <td class="w-30">@if($data->Other3_on){{ $data->Other2_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -2320,7 +2400,16 @@
                         <td class="w-30">@if($data->Other4_feedback){{ $data->Other4_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                      <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Others 4 By</th>
+                        <td class="w-30">@if($data->Other4_by){{ $data->Other4_by}}@else Not Applicable @endif</td>
+                        <th class="w-20">Others 4 On</th>
+                        <td class="w-30">@if($data->Other4_on){{ $data->Other4_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Others 4 Attechment
                         </div>
@@ -2344,12 +2433,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Others 4 By</th>
-                        <td class="w-30">@if($data->Other4_by){{ $data->Other4_by}}@else Not Applicable @endif</td>
-                        <th class="w-20">Others 4 On</th>
-                        <td class="w-30">@if($data->Other4_on){{ $data->Other4_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 
@@ -2376,7 +2459,16 @@
                         <td class="w-30">@if($data->Other5_feedback){{ $data->Other5_feedback}}@else Not Applicable @endif</td>
                     </tr>
 
-                      <div class="border-table">
+
+                    <tr>
+                        <th class="w-20">Others 5 By</th>
+                        <td class="w-30">@if($data->Other5_by){{ $data->Other5_by}}@else Not Applicable @endif</td>
+                        <th class="w-20">Others 5 On</th>
+                        <td class="w-30">@if($data->Other5_on){{ $data->Other5_on}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
                         <div class="block-head">
                             Others 5 Attechment
                         </div>
@@ -2400,12 +2492,6 @@
                             @endif
                         </table>
                     </div>
-                    <tr>
-                        <th class="w-20">Others 5 By</th>
-                        <td class="w-30">@if($data->Other5_by){{ $data->Other5_by}}@else Not Applicable @endif</td>
-                        <th class="w-20">Others 5 On</th>
-                        <td class="w-30">@if($data->Other5_on){{ $data->Other5_on}}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
 

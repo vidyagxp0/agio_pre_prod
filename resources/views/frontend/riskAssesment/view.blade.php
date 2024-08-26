@@ -2820,8 +2820,6 @@
                                     </div>
 
 
-
-
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Evaluated By">Evaluated Complete By</label>
@@ -2843,13 +2841,9 @@
                                     </div>
 
 
-
-
-
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Evaluated By">More Information Required(Risk Analysis & Work Group
-                                                Assignment) By</label>
+                                            <label for="Evaluated By">More Information Required(Risk Analysis & Work Group     Assignment) By</label>
                                             <div class="static">{{ $data->cancelled_by }}</div>
                                         </div>
                                     </div>
@@ -2869,27 +2863,26 @@
                                     </div>
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        Risk Processing & Action Plan
+                                        CFT Review
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved By">Risk Processing & Action Plan Complete
-                                                By</label>
-                                            <div class="static">{{ $data->evaluated_by }}</div>
+                                            <label for="Plan Approved By">CFT Review Complete   By</label>
+                                            <div class="static">{{ $data->CFT_Review_Complete_By }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved On"> Risk Processing & Action Plan Complete
+                                            <label for="Plan Approved On"> CFT Review Complete
                                                 On</label>
-                                            <div class="static">{{ $data->evaluated_on }}</div>
+                                            <div class="static">{{ $data->CFT_Review_Complete_On }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->action_plan_complete_comment }}</div>
+                                            <div class="static">{{ $data->CFT_Review_Comments }}</div>
                                         </div>
                                     </div>
 
@@ -2915,41 +2908,39 @@
                                     </div>
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        Pending HOD Approval
+                                        In QA/CQA Review
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved By">Pending HOD Approval(Action Plan Approved)
-                                                By</label>
-                                            <div class="static">{{ $data->plan_approved_by }}</div>
+                                            <label for="Plan Approved By">QA Initial Review Complete By</label>
+                                            <div class="static">{{ $data->QA_Initial_Review_Complete_By }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved On">Pending HOD Approval(Action Plan Approved)
-                                                On</label>
-                                            <div class="static">{{ $data->plan_approved_on }}</div>
+                                            <label for="Plan Approved On">QA Initial Review Complete On</label>
+                                            <div class="static">{{ $data->QA_Initial_Review_Complete_On }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->action_plan_approved_comment }}</div>
+                                            <div class="static">{{ $data->QA_Initial_Review_Comments }}</div>
                                         </div>
                                     </div>
 
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved By">Pending HOD Approval(Reject Action Plan)
+                                            <label for="Plan Approved By">QA Initial Review Cancle
                                                 By</label>
                                             <div class="static">{{ $data->cancelled_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved On">Pending HOD Approval(Reject Action Plan)
+                                            <label for="Plan Approved On">QA Initial Review Cancle
                                                 On</label>
                                             <div class="static">{{ $data->cancelled_on }}</div>
                                         </div>
@@ -2963,28 +2954,26 @@
 
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        Actions Items in Progress
+                                        In Approval
                                     </div>
 
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved By">Actions Items in Progress(All Action Completed)
-                                                By</label>
-                                            <div class="static">{{ $data->plan_approved_by }}</div>
+                                            <label for="Plan Approved By">In  Approve By</label>
+                                            <div class="static">{{ $data->in_approve_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved On">Actions Items in Progress(All Action Completed)
-                                                On</label>
-                                            <div class="static">{{ $data->plan_approved_on }}</div>
+                                            <label for="Plan Approved On">In Approve On</label>
+                                            <div class="static">{{ $data->in_approve_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->all_actions_completed_comment }}</div>
+                                            <div class="static">{{ $data->in_approve_Comments }}</div>
                                         </div>
                                     </div>
 
@@ -3012,25 +3001,26 @@
 
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        Residual Risk Evaluation
+                                        Closed – Done
+
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved By">Residual Risk Evaluation Completed By</label>
-                                            <div class="static">{{ $data->risk_analysis_completed_by }}</div>
+                                            <label for="Plan Approved By">Close Done By</label>
+                                            <div class="static">{{ $data->close_done_By }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved On">Residual Risk Evaluation Completed On</label>
-                                            <div class="static">{{ $data->risk_analysis_completed_on }}</div>
+                                            <label for="Plan Approved On">Close Done On</label>
+                                            <div class="static">{{ $data->close_done_On }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->risk_eveluation_comment }}</div>
+                                            <div class="static">{{ $data->close_done_Comments }}</div>
                                         </div>
                                     </div>
 
@@ -3177,11 +3167,11 @@
                 </div>
                 <div class="col-12 p_erson">
                     <div class="group-input">
-                        <label for="production attachment">Production Attachments</label>
+                        <label for="production attachment">Production Table Attachments</label>
                         <div><small class="text-primary">Please Attach all relevant or supporting
                                 documents</small></div>
                         <div class="file-attachment-field">
-                            <div disabled class="file-attachment-list" id="production_attachment">
+                            <div disabled class="file-attachment-list" id="Production_Table_Attachment">
                                 @if ($data1->Production_Table_Attachment)
                                     @foreach (json_decode($data1->Production_Table_Attachment) as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -3202,8 +3192,8 @@
                                 <div>Add</div>
                                 <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                     type="file" id="myfile"
-                                    name="production_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                    oninput="addMultipleFiles(this, 'production_attachment')"
+                                    name="Production_Table_Attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                    oninput="addMultipleFiles(this, 'Production_Table_Attachment')"
                                     multiple>
                             </div>
                         </div>
@@ -6579,7 +6569,7 @@
                         name="ResearchDevelopment_feedback" id="summernote-18" @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ResearchDevelopment_feedback }}</textarea>
                 </div>
             </div>
-            {{-- <div class="col-12 researchDevelopment">
+            <div class="col-12 researchDevelopment">
                 <div class="group-input">
                     <label for="Research Development attachment">Research Development
                         Attachments</label>
@@ -6614,7 +6604,7 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
             <div class="col-md-6 mb-3 researchDevelopment">
                 <div class="group-input">
                     <label for="Research Development Completed By">Research Development Completed
@@ -7626,7 +7616,7 @@
                         name="Store_feedback" id="summernote-18" @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Store_feedback }}</textarea>
                 </div>
             </div>
-            {{-- <div class="col-12 store">
+            <div class="col-12 store">
                 <div class="group-input">
                     <label for="Store attachment">Store Attachments</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
@@ -7658,7 +7648,7 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
             <div class="col-md-6 mb-3 store">
                 <div class="group-input">
                     <label for="Store Completed By">Store Completed
@@ -7796,7 +7786,7 @@
                     </div>
                 </div>
             @endif
-            {{-- <div class="col-12 store">
+            <div class="col-12 store">
                 <div class="group-input">
                     <label for="Store attachment">Store Attachments</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
@@ -7828,15 +7818,13 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
             <div class="col-md-6 mb-3 store">
                 <div class="group-input">
                     <label for="Store Completed By">Store Completed
                         By</label>
                     <input readonly type="text" value="{{ $data1->Store_by }}"
                         name="Store_by" id="Store_by">
-
-
                 </div>
             </div>
             <div class="col-lg-6 store">
@@ -8287,7 +8275,7 @@
                             name="RegulatoryAffair_feedback" id="summernote-18" @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->RegulatoryAffair_feedback }}</textarea>
                     </div>
                 </div>
-                {{-- <div class="col-12 RegulatoryAffair">
+                <div class="col-12 RegulatoryAffair">
                     <div class="group-input">
                         <label for="Regulatory Affair attachment">Regulatory Affair
                             Attachments</label>
@@ -8322,7 +8310,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <div class="col-md-6 mb-3 RegulatoryAffair">
                     <div class="group-input">
                         <label for="Regulatory Affair Completed By">Regulatory Affair Completed
@@ -8465,7 +8453,7 @@
                         </div>
                     </div>
                 @endif
-                {{-- <div class="col-12 RegulatoryAffair">
+                <div class="col-12 RegulatoryAffair">
                     <div class="group-input">
                         <label for="Regulatory Affair attachment">Regulatory Affair
                             Attachments</label>
@@ -8501,7 +8489,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <div class="col-md-6 mb-3 RegulatoryAffair">
                     <div class="group-input">
                         <label for="Regulatory Affair Completed By">Regulatory Affair Completed
@@ -8807,7 +8795,7 @@
                             name="ProductionLiquid_feedback" id="summernote-18" @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->ProductionLiquid_feedback }}</textarea>
                     </div>
                 </div>
-                {{-- <div class="col-12 productionLiquid">
+                 <div class="col-12 productionLiquid">
                     <div class="group-input">
                         <label for="Production Liquid attachment">Production Liquid
                             Attachments</label>
@@ -8842,7 +8830,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <div class="col-md-6 mb-3 productionLiquid">
                     <div class="group-input">
                         <label for="Production Liquid Completed By">Production Liquid Completed
@@ -8985,7 +8973,7 @@
                         </div>
                     </div>
                 @endif
-                {{-- <div class="col-12 productionLiquid">
+                 <div class="col-12 productionLiquid">
                     <div class="group-input">
                         <label for="Production Liquid attachment">Production Liquid
                             Attachments</label>
@@ -9021,7 +9009,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <div class="col-md-6 mb-3 productionLiquid">
                     <div class="group-input">
                         <label for="Production Liquid Completed By">Production Liquid Completed
@@ -9146,7 +9134,7 @@
                             name="Microbiology_feedback" id="summernote-18" @if ($data1->Microbiology_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->Microbiology_feedback }}</textarea>
                     </div>
                 </div>
-                {{-- <div class="col-12 Microbiology">
+                 <div class="col-12 Microbiology">
                     <div class="group-input">
                         <label for="Microbiology attachment">Microbiology Attachments</label>
                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -9179,7 +9167,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <div class="col-md-6 mb-3 Microbiology">
                     <div class="group-input">
                         <label for="Microbiology Completed By">Microbiology Completed
@@ -9322,7 +9310,7 @@
                         </div>
                     </div>
                 @endif
-                {{-- <div class="col-12 Microbiology">
+                <div class="col-12 Microbiology">
                     <div class="group-input">
                         <label for="Microbiology attachment">Microbiology Attachments</label>
                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -9355,7 +9343,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <div class="col-md-6 mb-3 Microbiology">
                     <div class="group-input">
                         <label for="Microbiology Completed By">Microbiology Completed
@@ -9825,7 +9813,7 @@
                             name="ContractGiver_feedback" id="summernote-18" @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->ContractGiver_feedback }}</textarea>
                     </div>
                 </div>
-                {{-- <div class="col-12 store">
+                <div class="col-12 store">
                     <div class="group-input">
                         <label for="Contract Giver attachment">Contract Giver Attachments</label>
                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -9859,7 +9847,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <div class="col-md-6 mb-3 store">
                     <div class="group-input">
                         <label for="Contract Giver Completed By">Contract Giver Completed
@@ -9867,8 +9855,6 @@
                         <input readonly type="text" value="{{ $data1->ContractGiver_by }}"
                             name="ContractGiver_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                             id="ContractGiver_by">
-
-
                     </div>
                 </div>
                 <div class="col-lg-6 store">
@@ -10004,7 +9990,7 @@
                         </div>
                     </div>
                 @endif
-                {{-- <div class="col-12 ContractGiver">
+                <div class="col-12 ContractGiver">
                     <div class="group-input">
                         <label for="Contract Giver attachment">Contract Giver Attachments</label>
                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -10039,15 +10025,13 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <div class="col-md-6 mb-3 ContractGiver">
                     <div class="group-input">
                         <label for="Contract Giver Completed By">Contract Giver Completed
                             By</label>
                         <input readonly type="text" value="{{ $data1->ContractGiver_by }}"
                             name="ContractGiver_by" id="ContractGiver_by">
-
-
                     </div>
                 </div>
                 <div class="col-lg-6 ContractGiver">
