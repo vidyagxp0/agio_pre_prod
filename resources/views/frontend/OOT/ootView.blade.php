@@ -85,7 +85,7 @@
                 Request For Cancellation
                 </button>
                 
-            @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($data->stage == 2 && (in_array([4,14], $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
                 HOD Primary Review Complete
                 </button>
@@ -99,11 +99,11 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                     Child
                 </button>
-                @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                @elseif($data->stage == 3 && (in_array(42, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                     Cancel
                 </button>
-            @elseif($data->stage == 4 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($data->stage == 4 && (in_array(42, $userRoleIds) || in_array(18, $userRoleIds)))
             
             <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 CQA/QA Head Primary Review Complete
@@ -114,6 +114,7 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button>
+
                
                 
             @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -143,7 +144,7 @@
                     Child
                 </button> --}}
             
-            @elseif($data->stage == 8 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+            @elseif($data->stage == 8 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Phase IA QA/CQA Review Complete
                 </button>
@@ -245,7 +246,7 @@
                     Child
                 </button>
 
-                @elseif($data->stage == 18 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                @elseif($data->stage == 18 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Phase II A QA/CQA Review Complete
                 </button>
@@ -270,10 +271,10 @@
                     Child
                 </button>
 
-                @elseif($data->stage == 20 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                @elseif($data->stage == 20 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 
 
-                @elseif($data->stage == 21 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                @elseif($data->stage == 21 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 Phase II B Investigation
                 </button>
@@ -284,7 +285,7 @@
                     Child
                 </button>
 
-                @elseif($data->stage == 22 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                @elseif($data->stage == 22 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 Phase II B HOD Review Complete
                 </button>
