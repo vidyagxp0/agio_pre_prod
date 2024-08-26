@@ -20,6 +20,9 @@ class OOS_micro extends Model
     {
         return $this->morphOne(QmsRecordNumber::class, 'recordable');
     }
+    public function oosmicropage(){
+        return $this->hasOne(Ootc::class,'id');
+    }
 
     protected $fillable = [
         'record',
