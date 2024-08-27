@@ -206,10 +206,10 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
                                 View
                             </button>
-                            {{-- <button class="button_theme1"><a class="text-white"
-                                    href="{{ url('rcms/effectiveness' . $document->id) }}"> Back
+                            <button class="button_theme1"><a class="text-white"
+                                    href="{{ url('rcms/effectiveness/' . $document->id) }}"> Back
                                 </a>
-                            </button> --}}
+                            </button> 
                             <button class="button_theme1" onclick="window.print();">
                                 Print
                             </button>
@@ -327,12 +327,12 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong> {{ str_pad($document->record_number, 4, '0', STR_PAD_LEFT) }}</div>
+                            <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
+                                :{{ $document->initiator ? $document->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Helpers::getdateFormat($document->due_date) }}</div>
 
                         </div>
         </div>
@@ -384,7 +384,7 @@
                                     @if($dataDemo->activity_type == "Activity Log")
                                         <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
                                     @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
                                     @endif
                                 </div>
                                 <br>
@@ -411,7 +411,7 @@
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at : 'Not Applicable' }}
+                                        :</strong>{{ $dataDemo->created_at ? Helpers::getdateFormat($dataDemo->created_at) : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>

@@ -3065,34 +3065,41 @@ Not Applicable
 
                         </tr>
                         <tbody>
-                            @if ($affectedDoc && is_array($affectedDoc))
-                                @php
-                                    $serialNumber = 1;
-                                @endphp
-                                @foreach ($affectedDoc as $affectedDoc)
+                            @if (isset($affectedDoc) && is_array($affectedDoc))
+                            @php
+                                $serialNumber = 1;
+                            @endphp
+                            @foreach ($affectedDoc as $testing)
+                                @if(is_array($testing))
                                     <tr>
                                         <td class="w-20">{{ $serialNumber++ }}</td>
-                                        <td class="w-20">{{ $affectedDoc['afftectedDoc'] }}</td>
-                                        <td class="w-20">{{ $affectedDoc['documentName'] }}</td>
-                                        <td class="w-20">{{ $affectedDoc['documentNumber'] }}</td>
-                                        <td class="w-20">{{ $affectedDoc['versionNumber'] }}</td>
-                                        <td class="w-20">{{ $affectedDoc['implimentationDate'] }}</td>
-                                        <td class="w-20">{{ $affectedDoc['newDocumentNumber'] }}</td>
-                                        <td class="w-20">{{ $affectedDoc['newVersionNumber'] }}</td>
+                                        <td class="w-20">{{ $testing['afftectedDoc'] ?? '' }}</td>
+                                        <td class="w-20">{{ $testing['documentName'] ?? '' }}</td>
+                                        <td class="w-20">{{ $testing['documentNumber'] ?? '' }}</td>
+                                        <td class="w-20">{{ $testing['versionNumber'] ?? '' }}</td>
+                                        <td class="w-20">{{ $testing['implimentationDate'] ?? '' }}</td>
+                                        <td class="w-20">{{ $testing['newDocumentNumber'] ?? '' }}</td>
+                                        <td class="w-20">{{ $testing['newVersionNumber'] ?? '' }}</td>
                                     </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
-                                    <td class="w-20">Not Applicable</td>
-                                    <td class="w-20">Not Applicable</td>
-                                    <td class="w-20">Not Applicable</td>
-                                    <td class="w-20">Not Applicable</td>
-                                    <td class="w-20">Not Applicable</td>
-                                    <td class="w-20">Not Applicable</td>
-                                </tr>
-                            @endif
+                                @else
+                                    <tr>
+                                        <td class="w-20" colspan="8"></td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                                <td class="w-20">Not Applicable</td>
+                                <td class="w-20">Not Applicable</td>
+                                <td class="w-20">Not Applicable</td>
+                                <td class="w-20">Not Applicable</td>
+                                <td class="w-20">Not Applicable</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
                         </tbody>
                     </table>
                 </div>

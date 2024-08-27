@@ -51,6 +51,7 @@ return new class extends Migration
             $table->string('date_response_due1')->nullable();
             $table->string('response_date')->nullable();
             $table->text('attach_files2')->nullable();
+            $table->text('attach_files_gi')->nullable();
             $table->text('related_url')->nullable();
             $table->text('response_summary')->nullable();
             // $table->string('Completed_By')->nullable();

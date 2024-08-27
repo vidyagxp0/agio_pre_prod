@@ -208,7 +208,7 @@
                     
                     <tr>
                        <th class="w-20">Assigned To</th>
-                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->assign_to){{ $data->assign_to }} @else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
                        
@@ -303,17 +303,17 @@
                         </table>
                       </div>
                
-                    <div class="block-head">
+                    {{-- <div class="block-head">
                        Reopen
-                    </div>
-                    <table>
+                    </div> --}}
+                    {{-- <table>
                      <tr>
                         <th class="w-20">Addendum Comments</th>
                         <td class="w-80">@if($data->Addendum_Comments){{ $data->Addendum_Comments }}@else Not Applicable @endif</td>
                        
                       </tr>
-                  </table>
-                    <div class="block-head">
+                  </table> --}}
+                    {{-- <div class="block-head">
                     Addendum Attachment
                     </div>
                       <div class="border-table">
@@ -337,7 +337,7 @@
                             @endif
 
                         </table>
-                      </div>
+                      </div> --}}
 
                       <div class="block-head">
                       Reference Info comments
@@ -374,7 +374,7 @@
 
                         </table>
                       </div>
-                      <div class="block-head">
+                      {{-- <div class="block-head">
                       Reference Records
                     </div>
                       <div class="border-table">
@@ -398,7 +398,7 @@
                             @endif
 
                         </table>
-                      </div>
+                      </div> --}}
             <div class="block">
                 <div class="block-head">
                 Activity Log
@@ -411,22 +411,53 @@
                         <th class="w-20">
                         Submit On</th>
                         <td class="w-30">{{ $data->submit_on }}</td>
+                        <th class="w-20">
+                        Submit Comment</th>
+                        <td class="w-30">{{ $data->submit_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Acknowledge Complete by
+                        </th>
+                        <td class="w-30">{{ $data->work_complition_by }}</td>
+                        <th class="w-20">
+                            Acknowledge Complete On</th>
+                        <td class="w-30">{{ $data->work_complition_on }}</td>
+                        <th class="w-20">
+                            Acknowledge Complete Comment</th>
+                        <td class="w-30">{{ $data->work_complition_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20"> Complete By
+                        </th>
+                        <td class="w-30">{{ $data->effectiveness_check_complete_by }}</td>
+                        <th class="w-20">
+                         Complete On</th>
+                        <td class="w-30">{{ $data->effectiveness_check_complete_on }}</td>
+                        <th class="w-20">
+                         Complete Comment</th>
+                        <td class="w-30">{{ $data->effectiveness_check_complete_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">HOD Review Complete By
+                        </th>
+                        <td class="w-30">{{ $data->hod_review_complete_by }}</td>
+                        <th class="w-20">
+                        HOD Review Complete On</th>
+                        <td class="w-30">{{ $data->hod_review_complete_on }}</td>
+                        <th class="w-20">
+                        HOD Review Complete Comment</th>
+                        <td class="w-30">{{ $data->hod_review_complete_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Not Effective By
                         </th>
-                        <td class="w-30">{{ $data->not_effective_by }}</td>
+                        <td class="w-30">{{ $data->qa_review_complete_by }}</td>
                         <th class="w-20">
                         Not Effective On</th>
-                        <td class="w-30">{{ $data->not_effective_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Effective by
-                        </th>
-                        <td class="w-30">{{ $data->effective_by }}</td>
+                        <td class="w-30">{{ $data->qa_review_complete_on }}</td>
                         <th class="w-20">
-                        Effective On</th>
-                        <td class="w-30">{{ $data->effective_on }}</td>
+                        Not Effective Comment</th>
+                        <td class="w-30">{{ $data->qa_review_complete_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Not Effective Approval Complete By
@@ -435,7 +466,22 @@
                         <th class="w-20">
                         Not Effective Approval Complete On</th>
                         <td class="w-30">{{ $data->not_effective_approval_complete_on }}</td>
+                        <th class="w-20">
+                        Not Effective Approval Complete Comment</th>
+                        <td class="w-30">{{ $data->not_effective_approval_complete_comment }}</td>
                     </tr>
+                    <tr>
+                        <th class="w-20">Effective by
+                        </th>
+                        <td class="w-30">{{ $data->effective_by }}</td>
+                        <th class="w-20">
+                        Effective On</th>
+                        <td class="w-30">{{ $data->effective_on }}</td>
+                        <th class="w-20">
+                        Effective Comment</th>
+                        <td class="w-30">{{ $data->effective_comment }}</td>
+                    </tr>
+                  
                     <tr>
                         <th class="w-20">Effective Approval Complete By
                         </th>
@@ -443,6 +489,23 @@
                         <th class="w-20">
                         Effective Approval Complete On</th>
                         <td class="w-30">{{ $data->effective_approval_complete_on }}</td>
+                        <th class="w-20">
+                        Effective Approval Complete Comment</th>
+                        <td class="w-30">{{ $data->effective_approval_complete_comment }}</td>
+                    </tr>
+
+                    
+                  
+                    <tr>
+                        <th class="w-20">Cancel By
+                        </th>
+                        <td class="w-30">{{ $data->closed_cancelled_by }}</td>
+                        <th class="w-20">
+                        Cancel On</th>
+                        <td class="w-30">{{ $data->closed_cancelled_on }}</td>
+                        <th class="w-20">
+                        Cancel Comment</th>
+                        <td class="w-30">{{ $data->closed_cancelled_comment }}</td>
                     </tr>
                    
                 </table>

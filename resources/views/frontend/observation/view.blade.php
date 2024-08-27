@@ -73,7 +73,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Report Issued
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-model">
                                 Cancel
                             </button>
                         @elseif($data->stage == 2 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -81,36 +81,36 @@
                                 More Info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Complete
+                                CAPA Plan Proposed
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button> --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#capa-rejection-modal">
+                                No CAPAs Required
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
                         @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Approval
+                                Response Reviewed
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal1">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal1">
                                 QA Approval Without CAPA
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject CAPA Plan
-                            </button>
+                            </button> --}}
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                All CAPA Closed
-                            </button>
-                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Final Approval
-                            </button>
-                        @endif
+                            {{-- @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    All CAPA Closed
+                                </button>
+                            @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Final Approval
+                                </button>--}} 
+                            @endif 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
 
@@ -134,18 +134,18 @@
                             @endif
 
                             @if ($data->stage >= 2)
-                                <div class="active">Pending CAPA Plan </div>
+                                <div class="active">Pending Response </div>
                             @else
-                                <div class="">Pending CAPA Plan</div>
+                                <div class="">Pending Response</div>
                             @endif
 
                             @if ($data->stage >= 3)
-                                <div class="active">Pending Approval</div>
+                                <div class="active">Response  Verification</div>
                             @else
-                                <div class="">Pending Approval</div>
+                                <div class="">Response  Verification</div>
                             @endif
 
-                            @if ($data->stage >= 4)
+                            {{-- @if ($data->stage >= 4)
                                 <div class="active">CAPA Execution in Progress</div>
                             @else
                                 <div class="">CAPA Execution in Progress</div>
@@ -156,8 +156,8 @@
                                 <div class="active">Pending Final Approval</div>
                             @else
                                 <div class="">Pending Final Approval</div>
-                            @endif
-                            @if ($data->stage >= 6)
+                            @endif --}}
+                            @if ($data->stage >= 4)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
@@ -234,13 +234,11 @@
                 });
             </script>
 
-<script>
-    $(document).on('click', '.removeRowBtn', function() {
-        $(this).closest('tr').remove();
-    })
-</script>
-
-
+            <script>
+                $(document).on('click', '.removeRowBtn', function() {
+                    $(this).closest('tr').remove();
+                })
+            </script>
 
             @php
                 $users = DB::table('users')->get();
@@ -351,9 +349,9 @@
                                                 reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                             <div class="calenderauditee">
-                                                <input type="text" id="due_date"
+                                                <input disabled type="text" id="due_date"
                                                     placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->due_date) }}" />
-                                                <input type="date"
+                                                <input disabled type="date"
                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     value="{{ $data->due_date }}"
                                                     id="actual_end_date_checkdate"
@@ -388,8 +386,8 @@
                                                     id="rchars">255</span>
                                                 characters remaining
 
-                                                <textarea name="short_description" id="docname" type="text" maxlength="255" required
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                <input name="short_description" id="docname" type="text" maxlength="255" required value="{{ $data->short_description }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                             </div>
                                             {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
                                         </div>
@@ -1494,6 +1492,7 @@
                                     <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
+                                <input type="hidden" name="capaNotReq" id="capaNotReq" value="Yes">
                                 <div class="group-input">
                                     <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
@@ -1517,7 +1516,56 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="capa-rejection-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
 
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ route('observation_change_stage', $data->id) }}" method="POST">
+                            @csrf
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input class="observation_style" type="text" name="username" required>
+                                </div>
+                                <input type="hidden" name="capaNotReq" id="capaNotReq" value="No">
+                                <div class="group-input">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input class="observation_style" type="password" name="password" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="comment">Comment</label>
+                                    <input class="observation_style" type="comment" name="comment">
+                                </div>
+                                {{-- <div class="group-input">
+                                    <label for="comment">Comment</label>
+                                    <input type="hidden" name="comment"> 
+                                </div> --}}
+                            </div>
+
+                            <!-- Modal footer -->
+                            <!-- <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                                <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade" id="rejection-modal">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -1564,7 +1612,58 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="rejection-modal1">
+
+            <div class="modal fade" id="cancel-model">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ route('observation_cancel-model', $data->id) }}" method="POST">
+                            @csrf
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input class="observation_style" type="text" name="username" required>
+                                </div>
+                                <input type="hidden" name="capaNotReq" id="capaNotReq" value="No">
+                                <div class="group-input">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input class="observation_style" type="password" name="password" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="comment">Comment</label>
+                                    <input class="observation_style" type="comment" required name="comment">
+                                </div>
+                                {{-- <div class="group-input">
+                                    <label for="comment">Comment</label>
+                                    <input type="hidden" name="comment"> 
+                                </div> --}}
+                            </div>
+
+                            <!-- Modal footer -->
+                            <!-- <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                                <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="modal fade" id="rejection-modal1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
 
@@ -1609,7 +1708,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="modal fade" id="child-modal">
                 <div class="modal-dialog modal-dialog-centered">
@@ -1619,14 +1718,26 @@
                         <div class="modal-header">
                             <h4 class="modal-title">Child</h4>
                         </div>
-                        <form action="{{ route('observationchild', $data->id) }}" method="POST">
+                        <form action="{{ route('observation_child', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="group-input">
                                     <label for="major">
-                                        <input type="radio" name="child_type" value="Capa">
+                                        <input type="radio" name="revision" id="capa-child" value="capa-child">
                                         CAPA
+                                    </label>
+                                </div>
+                                <div class="group-input">
+                                    <label for="major">
+                                        <input type="radio" name="revision" value="Action-Item">
+                                        Action Item
+                                    </label>
+                                </div>
+                                <div class="group-input">
+                                    <label for="major">
+                                        <input type="radio" name="revision" value="RCA">
+                                        RCA
                                     </label>
                                 </div>
                             </div>
@@ -1649,6 +1760,11 @@
 
                 #step-form>div:nth-child(1) {
                     display: block;
+                }
+                .observation_style{
+                    width: 100%;
+                    border-radius: 5px;
+                    margin-bottom: 10px;
                 }
             </style>
 

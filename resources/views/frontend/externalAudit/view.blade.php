@@ -226,54 +226,62 @@ function addMultipleFiles(input, block_id) {
 
                         @if ($data->stage == 1 && (in_array(13, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Schedule Audit
+                                Audit Details Summary
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
-                            </button> --}}
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
                         @elseif($data->stage == 2 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            More Info Required
+                        </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Complete Audit Preparation
+                                Summary and Response Complete
                             </button>
                            
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
+                            </button> --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal1">
+                                CFT Review Not Required
                             </button>
                         @elseif($data->stage == 3 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
-                            </button> <button class="button_theme1" data-bs-toggle="modal"
+                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">
-                                Reject
+                                More Information Required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                CFT Review Complete
                             </button>
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Issue Report</button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
-                            </button>
+                            </button> --}}
                         @elseif($data->stage == 4 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                CAPA Plan Proposed
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Approval Complete
                             </button>
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                No CAPAs Required
+                                Send to Opened 
                             </button>
                            
                         @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(11, $userRoleIds) ))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                All CAPA Closed
-                            </button>
+                        
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('auditee') }}">
+                            Reopen
+                        </a> </button>
+                        
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -298,28 +306,28 @@ function addMultipleFiles(input, block_id) {
                             @endif
 
                             @if ($data->stage >= 2)
-                                <div class="active">Audit Preparation </div>
+                                <div class="active">Summary and Response  </div>
                             @else
-                                <div class="">Audit Preparation</div>
+                                <div class="">Summary and Response </div>
                             @endif
 
                             @if ($data->stage >= 3)
-                                <div class="active">Pending Audit</div>
+                                <div class="active">CFT Review </div>
                             @else
-                                <div class="">Pending Audit</div>
+                                <div class="">CFT Review </div>
                             @endif
 
                             @if ($data->stage >= 4)
-                                <div class="active">Pending Response</div>
+                                <div class="active"> QA/CQA Head Approval</div>
                             @else
-                                <div class="">Pending Response</div>
+                                <div class="">QA/CQA Head Approval</div>
                             @endif
-                            @if ($data->stage >= 5)
+                            {{-- @if ($data->stage >= 5)
                                 <div class="active">CAPA Execution in Progress</div>
                             @else
                                 <div class="">CAPA Execution in Progress</div>
-                            @endif
-                            @if ($data->stage >= 6)
+                            @endif --}}
+                            @if ($data->stage >= 5)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
@@ -431,6 +439,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
                                                 <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                      id="initiator_group">
+                                                     <option value="0">-- Select --</option>
                                                     <option value="CQA"
                                                         @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
@@ -509,8 +518,7 @@ function addMultipleFiles(input, block_id) {
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
                                                 
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
-                                            </div>
+                                                <input name="short_description"   id="docname" type="text" value="{{ $data->short_description }}"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 5 ? "disabled" : "" }} type="text"></div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
         
                                         </div>
@@ -1449,78 +1457,77 @@ function addMultipleFiles(input, block_id) {
                             <div id="CCForm6" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                     <div class="col-12 sub-head"  style="font-size: 16px">
+                                         <div class="col-12 sub-head"  style="font-size: 16px">
                                                Opened
                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Schedule On">Audit Schedule By</label>
-                                                <div class="static">{{ $data->audit_schedule_by }}</div>
+                                        <div>
+                                            <div class="col-lg-4">
+                                                <div class="group-input">
+                                                    <label for="Audit Details Summary On">Audit Details Summary By</label>
+                                                    <div class="static">{{ $data->audit_details_summary_by }}</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Schedule On">Audit Schedule On</label>
-                                                <div class="static">{{ $data->audit_schedule_on }}</div>
+                                            <div class="col-lg-4">
+                                                <div class="group-input">
+                                                    <label for="Audit Details Summary On">Audit Details Summary On</label>
+                                                    <div class="static">{{ $data->audit_details_summary_on }}</div>
+                                                </div>
                                             </div>
-                                        </div>
                                          <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->audit_schedule_on_comment }}</div>
-                                        </div>
-                                    </div>
-
-
-
-
-                                        <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Cancelled By">Cancelled(Opened Stage) By</label>
-                                                <div class="static">{{ $data->cancelled_by }}</div>
+                                                <label for="Comments">Comments</label>
+                                                <div class="static">{{ $data->audit_details_summary_on_comment }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Cancelled On">Cancelled (Opened Stage) On</label>
-                                                <div class="static">{{ $data->cancelled_on }}</div>
+                                        
+                                            <div class="col-lg-4">
+                                                <div class="group-input">
+                                                    <label for="Cancelled By">CancelledBy</label>
+                                                    <div class="static">{{ $data->cancelled_by }}</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->cancelled_on_comment }}</div>
+                                            <div class="col-lg-4">
+                                                <div class="group-input">
+                                                    <label for="Cancelled On">Cancelled On</label>
+                                                    <div class="static">{{ $data->cancelled_on }}</div>
+                                                </div>
+                                            </div>
+                                             <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Comments">Comments</label>
+                                                <div class="static">{{ $data->cancelled_on_comment }}</div>
+                                            </div>
                                         </div>
                                     </div>
                                      
 
 
 
-                                    <div class="col-12 sub-head"  style="font-size: 16px">
-                                               Audit Preparation
-                                       </div>
-                                    
-
-                                    <div class="col-lg-4">
+                                      <div class="col-12 sub-head"  style="font-size: 16px">
+                                        Summary and Response Complete
+                                     </div>
+                                    <div>
+                                        <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation Reject
+                                                <label for="Summary and Response Complete On">Summary and Response Complete 
                                                     By</label>
-                                                <div class="static">{{ $data->rejected_by }}</div>
+                                                <div class="static">{{ $data->summary_and_response_com_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation Reject
+                                                <label for="Summary and Response Complete By">Summary and Response Complete 
                                                     On</label>
-                                                <div class="static">{{ $data->rejected_on }}</div>
+                                                <div class="static">{{ $data->summary_and_response_com_on }}</div>
                                             </div>
                                         </div>
                                          <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->rejected_on_comment }}</div>
+                                            <div class="static">{{ $data->summary_and_response_com_on_comment }}</div>
                                         </div>
                                     </div>
+                                    
 
 
 
@@ -1529,22 +1536,20 @@ function addMultipleFiles(input, block_id) {
 
                                      <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation (Complete Audit Preparation)
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_preparation_completed_by }}</div>
+                                                <label for="Audit Preparation Completed On">CFT Review Not Required By</label>
+                                                <div class="static">{{ $data->cft_review_not_req_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation  (Complete Audit Preparation)
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_preparation_completed_on }}</div>
+                                                <label for="Audit Preparation Completed On">CFT Review Not Required On</label>
+                                                <div class="static">{{ $data->cft_review_not_req_on }}</div>
                                             </div>
                                         </div>
                                          <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->audit_preparation_completed_on_comment }}</div>
+                                            <div class="static">{{ $data->cft_review_not_req_on_comment }}</div>
                                         </div>
                                     </div>
 
@@ -1552,50 +1557,47 @@ function addMultipleFiles(input, block_id) {
 
                                     <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation (Cancel)
-                                                    By</label>
-                                                <div class="static">{{ $data->cancelled_by }}</div>
+                                                <label for="Audit Preparation Completed On">More Information Required By</label>
+                                                <div class="static">{{ $data->more_info_req_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation  (Cancel)
-                                                    On</label>
-                                                <div class="static">{{ $data->cancelled_on }}</div>
+                                                <label for="Audit Preparation Completed On">More Information Required On</label>
+                                                <div class="static">{{ $data->more_info_req_on }}</div>
                                             </div>
                                         </div>
                                          <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->cancelled_on_comment1 }}</div>
+                                            <div class="static">{{ $data->more_info_req_on_comment }}</div>
                                         </div>
                                     </div>
 
 
-                                    <div class="col-12 sub-head"  style="font-size: 16px">
-                                            Pending Audit
-                                       </div>
+                                     <div class="col-12 sub-head"  style="font-size: 16px">
+                                        CFT Review Complete
+                                     </div>
                                     
 
                                      
+                                       <div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Pending  Audit Reject
-                                                    By</label>
-                                                <div class="static">{{ $data->rejected_by }}</div>
+                                                <label for="Audit Preparation Completed On">CFT Review Complete By</label>
+                                                <div class="static">{{ $data->cft_review_complete_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Pending  Audit Reject
-                                                    On</label>
-                                                <div class="static">{{ $data->rejected_on }}</div>
+                                                <label for="Audit Preparation Completed On">CFT Review Complete On</label>
+                                                <div class="static">{{ $data->cft_review_complete_on }}</div>
                                             </div>
                                         </div>
-                                         <div class="col-lg-4">
+                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->reject_comment_1 }}</div>
+                                            <div class="static">{{ $data->cft_review_complete_comment }}</div>
                                         </div>
                                     </div>
 
@@ -1604,24 +1606,23 @@ function addMultipleFiles(input, block_id) {
 
                                      <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Pending  Audit Cancel
-                                                    By</label>
-                                                <div class="static">{{ $data->cancelled_by }}</div>
+                                                <label for="Audit Preparation Completed On">More Information Required By </label>
+                                                <div class="static">{{ $data->more_info_req_crc_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Pending  Audit Cancel
-                                                    On</label>
-                                                <div class="static">{{ $data->cancelled_on }}</div>
+                                                <label for="Audit Preparation Completed On">More Information Required On</label>
+                                                <div class="static">{{ $data->more_info_req_crc_on }}</div>
                                             </div>
                                         </div>
                                          <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->cancelled_on_comment2 }}</div>
+                                            <div class="static">{{ $data->more_info_req_crc_on_comment }}</div>
                                         </div>
                                     </div>
+                                       </div>
 
                                  
 
@@ -1630,7 +1631,7 @@ function addMultipleFiles(input, block_id) {
 
 
 
-                                        <div class="col-lg-4">
+                                        {{-- <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Audit Mgr.more Info Reqd By">Pending Response(Issue Report)
                                                     By</label>
@@ -1648,58 +1649,56 @@ function addMultipleFiles(input, block_id) {
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
                                             <div class="static">{{ $data->audit_mgr_more_info_reqd_on_comment }}</div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                        
-                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                        Pending Response
-                                       </div>
+                                  <div class="col-12 sub-head"  style="font-size: 16px">
+                                    Approval Complete
+                                  </div>
                                            
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Observation Submitted By">CAPA Plan Proposed 
-                                                    By</label>
-                                                <div class="static">{{ $data->audit_observation_submitted_by }}</div>
+                                        <div>
+                                            <div class="col-lg-4">
+                                                <div class="group-input">
+                                                    <label for="Audit Observation Submitted By">Approval Complete  By</label>
+                                                    <div class="static">{{ $data->approval_complete_by }}</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Observation Submitted On">CAPA Plan Proposed
-                                                    On</label>
-                                                <div class="static">{{ $data->audit_observation_submitted_on }}</div>
+                                            <div class="col-lg-4">
+                                                <div class="group-input">
+                                                    <label for="Audit Observation Submitted On">Approval Complete On</label>
+                                                    <div class="static">{{ $data->approval_complete_on }}</div>
+                                                </div>
                                             </div>
-                                        </div>
+                                             <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Comments">Comments</label>
+                                                <div class="static">{{ $data->approval_complete_on_comment }}</div>
+                                            </div>
+                                        
+    
+    
                                          <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->audit_observation_submitted_on_comment }}</div>
-                                        </div>
-                                    </div>
-
-
-                                     <div class="col-lg-4">
+                                                <div class="group-input">
+                                                    <label for="Audit Observation Submitted By">Send to Opened By</label>
+                                                    <div class="static">{{ $data->send_to_opened_by }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="group-input">
+                                                    <label for="Audit Observation Submitted On">Send to Opened On</label>
+                                                    <div class="static">{{ $data->send_to_opened_on }}</div>
+                                                </div>
+                                            </div>
+                                             <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Audit Observation Submitted By">No CAPAs Required 
-                                                    By</label>
-                                                <div class="static">{{ $data->rejected_by }}</div>
+                                                <label for="Comments">Comments</label>
+                                                <div class="static">{{ $data->send_to_opened_comment }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <div class="group-input">
-                                                <label for="Audit Observation Submitted On">No CAPAs Required
-                                                    On</label>
-                                                <div class="static">{{ $data->rejected_on }}</div>
-                                            </div>
                                         </div>
-                                         <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="Comments">Comments</label>
-                                            <div class="static">{{ $data->reject_comment_2 }}</div>
-                                        </div>
-                                    </div>
                                        
 
-                                        <div class="col-12 sub-head"  style="font-size: 16px">
+                                        {{-- <div class="col-12 sub-head"  style="font-size: 16px">
                                           CAPA Execution in Progress
                                        </div>
                                     
@@ -1721,8 +1720,8 @@ function addMultipleFiles(input, block_id) {
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
                                             <div class="static">{{ $data->audit_lead_more_info_reqd_on_comment }}</div>
-                                        </div>
-                                    </div>
+                                        </div> --}}
+                                    
 
 {{--                                      
                                         <div class="col-lg-4">
@@ -1786,7 +1785,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </div>  --}}
 
-                                    </div>
+                                    
                                     <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
@@ -1806,7 +1805,8 @@ function addMultipleFiles(input, block_id) {
 
                 </div>
             </div>
-            <div class="modal fade" id="child-modal1">
+        </div> 
+            {{-- <div class="modal fade" id="child-modal1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
 
@@ -1814,21 +1814,29 @@ function addMultipleFiles(input, block_id) {
                         <div class="modal-header">
                             <h4 class="modal-title">Child</h4>
                         </div>
-                        <form action="{{ route('extension_child', $data->id) }}" method="POST">
+                        <form action="{{ route('childexternalaudit', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
-                            {{-- <div class="modal-body">
+                            <div class="modal-body">
                                 <div class="group-input">
                                     <label for="major">
                                         <input type="hidden" name="parent_name" value="External_audit">
                                         <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                                        <input type="radio" name="child_type" value="extension">
-                                        extension
+                                        <input type="radio" name="child_type" value="Observations">
+                                        Observations
                                     </label>
 
                                 </div>
-
-                            </div> --}}
+                                <div class="group-input">
+                                   
+                                    <label for="major">
+                                        <input type="hidden" name="parent_name" value="External_audit">
+                                        <input type="hidden" name="due_date" value="{{ $data->due_date }}">
+                                        <input type="radio" name="child_type" value="Action-Item">
+                                         Action _Item
+                                    </label>
+                                </div>
+                            </div>
 
                             <!-- Modal footer -->
                             <div class="modal-footer">
@@ -1839,7 +1847,7 @@ function addMultipleFiles(input, block_id) {
 
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
 
             <div class="modal fade" id="signature-modal">
@@ -1880,7 +1888,58 @@ function addMultipleFiles(input, block_id) {
                                 <button>Close</button>
                             </div> -->
                             <div class="modal-footer">
-                              <button type="submit">Submit</button>
+                              <button type="submit" >Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="cancel-modal1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ route('UpdateStateAuditee', $data->id) }}" method="POST">
+                            @csrf
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input type="text" name="username" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input type="password" name="password" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="comment">Comment</label>
+                                    <input type="comment" name="comment">
+                                </div>
+                                
+                            </div>
+                            <style>
+                                .group-input {
+                                    margin-bottom: 45px; /* Adjust the margin value as needed */
+                                }
+                            </style>
+
+                            <!-- Modal footer -->
+                            <!-- <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                              <button type="submit" >Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -2003,7 +2062,62 @@ function addMultipleFiles(input, block_id) {
                                         Observations
                                     </label>
                                 </div>
+                                <div class="group-input">
+                                    <label></lable>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" value="Action-Item">
+                                         Action-Item  
+                                    </label>
+                                </div>
+                               
                             </div>
+
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                                <button type="submit">Continue</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="child-modal1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Child</h4>
+                        </div>
+                        <form action="{{ route('childexternalaudit', $data->id) }}" method="POST">
+                            @csrf
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                {{-- <div class="group-input">
+                                    <label></lable>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" value="Observations">
+                                        Observations
+                                    </label>
+                                </div>
+                                <div class="group-input">
+                                    <label></lable>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" value="Action-Item">
+                                         Action-Item  
+                                    </label>
+                                </div> --}}
+                                <div class="group-input">
+                                    <label></lable>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" value="external-audit">
+                                         External-Audit
+                                    </label>
+                                </div>
+                            </div>
+
 
                             <!-- Modal footer -->
                             <div class="modal-footer">
@@ -2024,6 +2138,15 @@ function addMultipleFiles(input, block_id) {
                     display: block;
                 }
             </style>
+            <style>
+                #signat-modal.group-input label,
+                {
+                    display: block;
+                      font-size: 0.9rem;
+                        font-weight: bold;
+                       margin-bottom: 5px;
+                }
+                </style>
 
             <script>
                 VirtualSelect.init({

@@ -186,8 +186,7 @@ return new class extends Migration
             $table->text('Description_Deviation')->nullable();
 
             // workflow start stage 
-            $table->text('cancelled_by')->nullable();
-            $table->text('cancelled_on')->nullable();
+           
             $table->text('comment_cancle')->nullable();
             $table->text('completed_by_pending_initial_assessment')->nullable();
             $table->text('completed_on_pending_initial_assessment')->nullable();

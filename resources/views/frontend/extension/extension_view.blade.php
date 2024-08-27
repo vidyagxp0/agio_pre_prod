@@ -115,10 +115,94 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
                                 Approved
                              </button>
-                                @if($count == 2)
+                             @if(Helpers::getChildData($extensionNew->parent_id, 'LabIncident') == 2)
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                         Send for CQA
                                     </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Deviation') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOC') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOT') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Management Review') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'CAPA') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Action Item') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Resampling') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Observation') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'RCA') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Risk Assesment') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Management Review') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'External Audit') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Internal Audit') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Audit Program') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'CC') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'New Documnet') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Effectiveness Check') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOS Micro') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOS Chemical') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Market Complaint') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Failure Investigation') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>   
                                 @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Reject
@@ -127,7 +211,6 @@
                                 More Info Required
                             </button>
                         @elseif($extensionNew->stage == 5 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
-
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                              CQA Approval Complete
                             </button>
@@ -382,9 +465,11 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                           <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                  
+                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                
+                          <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
 
@@ -451,8 +536,10 @@
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                      <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                      <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                                                   
                         <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
@@ -502,9 +589,12 @@
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                
+                        <button type="button">
+                         <a href="{{ url('TMS') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
                 </div>
@@ -560,6 +650,15 @@
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                 Exit </a> </button>
                     </div> --}}
+
+                     <div class="button-block">
+                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                       <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            
+                                     <button type="button">
+                         <a href="{{ url('TMS') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
                 </div>
             </div>
             </form>
@@ -856,7 +955,7 @@
         })
         wow.init();
     </script>
-    <script>
+    {{--  <script>
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
             cctabcontent = document.getElementsByClassName("cctabcontent");
@@ -871,12 +970,102 @@
             evt.currentTarget.className += " active";
         }
 
-        const saveButtons = document.querySelectorAll('.saveButton1');
+        const saveButtons = document.querySelectorAll('.saveButton');
         const form = document.getElementById('step-form');
-    </script>
+
+        
+    </script>  --}}
     <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #designee, #hod'
         });
     </script>
+
+
+     <script>
+           
+
+            function openCity(evt, cityName) {
+                var i, cctabcontent, cctablinks;
+                cctabcontent = document.getElementsByClassName("cctabcontent");
+                for (i = 0; i < cctabcontent.length; i++) {
+                    cctabcontent[i].style.display = "none";
+                }
+                cctablinks = document.getElementsByClassName("cctablinks");
+                for (i = 0; i < cctablinks.length; i++) {
+                    cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+
+
+
+            function openCity(evt, cityName) {
+                var i, cctabcontent, cctablinks;
+                cctabcontent = document.getElementsByClassName("cctabcontent");
+                for (i = 0; i < cctabcontent.length; i++) {
+                    cctabcontent[i].style.display = "none";
+                }
+                cctablinks = document.getElementsByClassName("cctablinks");
+                for (i = 0; i < cctablinks.length; i++) {
+                    cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+
+                // Find the index of the clicked tab button
+                const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+                // Update the currentStep to the index of the clicked tab
+                currentStep = index;
+            }
+
+            const saveButtons = document.querySelectorAll(".saveButton");
+            const nextButtons = document.querySelectorAll(".nextButton");
+            const form = document.getElementById("step-form");
+            const stepButtons = document.querySelectorAll(".cctablinks");
+            const steps = document.querySelectorAll(".cctabcontent");
+            let currentStep = 0;
+
+            function nextStep() {
+                // Check if there is a next step
+                if (currentStep < steps.length - 1) {
+                    // Hide current step
+                    steps[currentStep].style.display = "none";
+
+                    // Show next step
+                    steps[currentStep + 1].style.display = "block";
+
+                    // Add active class to next button
+                    stepButtons[currentStep + 1].classList.add("active");
+
+                    // Remove active class from current button
+                    stepButtons[currentStep].classList.remove("active");
+
+                    // Update current step
+                    currentStep++;
+                }
+            }
+
+            function previousStep() {
+                // Check if there is a previous step
+                if (currentStep > 0) {
+                    // Hide current step
+                    steps[currentStep].style.display = "none";
+
+                    // Show previous step
+                    steps[currentStep - 1].style.display = "block";
+
+                    // Add active class to previous button
+                    stepButtons[currentStep - 1].classList.add("active");
+
+                    // Remove active class from current button
+                    stepButtons[currentStep].classList.remove("active");
+
+                    // Update current step
+                    currentStep--;
+                }
+            }
+        </script>
 @endsection

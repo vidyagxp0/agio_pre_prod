@@ -13,4 +13,9 @@ class Extension extends Model
     {
         return $this->morphOne(QmsRecordNumber::class, 'recordable');
     }
+
+    public function record_initiator()
+    {
+        return $this->belongsTo(User::class,'initiator_id');
+    }
 }

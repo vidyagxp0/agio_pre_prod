@@ -104,7 +104,7 @@
                         @if (!empty($parent_id))
                                     <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                                     <input type="hidden" name="parent_type" value="{{ $parent_type }}">
-                                    <input type="hidden" name="parent_record" id="parent_record" value="{{ $parent_record }}">
+                                    {{-- <input type="hidden" name="parent_record" id="parent_record" value="{{ $parent_record }}"> --}}
                                 @endif
                         <div class="col-lg-6">
                             <div class="group-input">
@@ -173,6 +173,8 @@
                                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                         name="reviewers" placeholder="Select Reviewers"  >
                                         <option value="">-- Select --</option>
+                                     
+
                                         @if (!empty($reviewers))
                                         
                                             @foreach ($reviewers as $lan)
@@ -183,6 +185,7 @@
                                                 @endif
                                             @endforeach
                                         @endif
+
                                     </select>
                                 </div>
                             </div>
@@ -269,7 +272,10 @@
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                               <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                
+                  
                             <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
@@ -307,7 +313,10 @@
                     </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                
+                  
                         <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
@@ -342,7 +351,9 @@
                     </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                      <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                     
                         <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
@@ -399,13 +410,109 @@
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                 Exit </a> </button>
                     </div> --}}
+
+
+                    <div class="button-block">
+                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                       <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                           
+                                     <button type="button">
+                         <a href="{{ url('TMS') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
                 </div>
             </div>
             </form>
         </div>
     </div>
+     <script>
+           
 
-    <script>
+            function openCity(evt, cityName) {
+                var i, cctabcontent, cctablinks;
+                cctabcontent = document.getElementsByClassName("cctabcontent");
+                for (i = 0; i < cctabcontent.length; i++) {
+                    cctabcontent[i].style.display = "none";
+                }
+                cctablinks = document.getElementsByClassName("cctablinks");
+                for (i = 0; i < cctablinks.length; i++) {
+                    cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+
+
+
+            function openCity(evt, cityName) {
+                var i, cctabcontent, cctablinks;
+                cctabcontent = document.getElementsByClassName("cctabcontent");
+                for (i = 0; i < cctabcontent.length; i++) {
+                    cctabcontent[i].style.display = "none";
+                }
+                cctablinks = document.getElementsByClassName("cctablinks");
+                for (i = 0; i < cctablinks.length; i++) {
+                    cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+
+                // Find the index of the clicked tab button
+                const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+                // Update the currentStep to the index of the clicked tab
+                currentStep = index;
+            }
+
+            const saveButtons = document.querySelectorAll(".saveButton");
+            const nextButtons = document.querySelectorAll(".nextButton");
+            const form = document.getElementById("step-form");
+            const stepButtons = document.querySelectorAll(".cctablinks");
+            const steps = document.querySelectorAll(".cctabcontent");
+            let currentStep = 0;
+
+            function nextStep() {
+                // Check if there is a next step
+                if (currentStep < steps.length - 1) {
+                    // Hide current step
+                    steps[currentStep].style.display = "none";
+
+                    // Show next step
+                    steps[currentStep + 1].style.display = "block";
+
+                    // Add active class to next button
+                    stepButtons[currentStep + 1].classList.add("active");
+
+                    // Remove active class from current button
+                    stepButtons[currentStep].classList.remove("active");
+
+                    // Update current step
+                    currentStep++;
+                }
+            }
+
+            function previousStep() {
+                // Check if there is a previous step
+                if (currentStep > 0) {
+                    // Hide current step
+                    steps[currentStep].style.display = "none";
+
+                    // Show previous step
+                    steps[currentStep - 1].style.display = "block";
+
+                    // Add active class to previous button
+                    stepButtons[currentStep - 1].classList.add("active");
+
+                    // Remove active class from current button
+                    stepButtons[currentStep].classList.remove("active");
+
+                    // Update current step
+                    currentStep--;
+                }
+            }
+        </script>
+
+    {{--  <script>
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
             cctabcontent = document.getElementsByClassName("cctabcontent");
@@ -422,7 +529,7 @@
 
         const saveButtons = document.querySelectorAll('.saveButton1');
         const form = document.getElementById('step-form');
-    </script>
+    </script>  --}}
     <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #designee, #hod'

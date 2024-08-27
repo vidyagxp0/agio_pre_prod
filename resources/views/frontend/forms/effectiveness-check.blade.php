@@ -66,7 +66,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
-                                        <input disabled type="text" name="division_code"
+                                        <input disabled type="text" name="division_id" id="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
@@ -76,7 +76,7 @@
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                        <input disabled type="text" name="division_code"
+                                        <input disabled type="text" name="initiator_id"
                                             value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                <option value="{{ $data->name }}">{{ $data->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -104,19 +104,30 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-6 new-date-data-field">
+                                <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
-                                        </div>
+                                        <label for="due-date">Due Date </label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                            <!-- Display the formatted date in a readonly input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                           
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                         </div>
                                     </div>
                                 </div>
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+                                    
+                                    // Call this function initially to ensure the correct format is shown on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        handleDateInput(dateInput, 'due_date_display');
+                                    });
+                                </script>
 
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">

@@ -23,6 +23,9 @@ class FormDivisionController extends Controller
         elseif ($request->process_name == "Action Item") {
             return redirect('rcms/action-items-create');
         }
+        elseif ($request->process_name == "Resampling") {
+            return redirect('resampling-action-task-create');
+        }
          elseif ($request->process_name == "CAPA") {
             return redirect('capa');
         } elseif ($request->process_name == "Audit Program") {

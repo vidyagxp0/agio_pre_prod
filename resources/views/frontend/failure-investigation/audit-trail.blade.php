@@ -206,7 +206,8 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
                                 View
                             </button>
-                            <button class="button_theme1"><a class="text-white"
+                            <button class="button_theme1">
+                            <a class="text-white"
                                     href="{{ url('rcms/failure-investigation-show/' . $document->id) }}"> Back
                                 </a>
                             </button>
@@ -377,8 +378,10 @@
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                    <strong> Data Field Name :</strong>
+                                    {{--  <a
+                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>  --}}
+                               {{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")

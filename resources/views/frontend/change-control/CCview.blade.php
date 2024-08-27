@@ -131,24 +131,19 @@
 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/audit-trial', $data->id) }}"> Audit Trail </a> </button>
 
-                        <!-- @if ($data->stage >= 9)
-                            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/eCheck', $data->id) }}">
-                                    Close Done </a> </button>
-                        @endif -->
-
                         @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button>
+                            </button>  --}}
                         @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                HOD Review Complete
+                                HOD Assessment Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
@@ -157,30 +152,24 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-cft-from-QA-modal">
-                                QA Initial Review Complete
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-modal">
-                                CFT Review Not Required
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                QA/CQA Initial Assessment Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+                        @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                RA Review Required
-                            </button>
-                        @elseif($data->stage == 4 && (in_array(18, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                RA Review Complete
-                            </button>
-                        @elseif($data->stage == 5 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                CFT Review Complete
+                                CFT Assessment Complete
+                                
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
-                        @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                RA Review Required
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#opened-state-modal">
                                 Send to Initiator
                             </button>
@@ -191,35 +180,74 @@
                                 Send to HOD
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#initalQA-review-modal">
-                                Send to QA Initial Review
+                                Send to QA/CQA Initial Review
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval">
+                                QA/CQA Final Review Complete
+                            </button>
+                        @elseif($data->stage == 6 && (in_array(18, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Final Review Complete
+                                RA Approval Complete
                             </button>
                         @elseif($data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Pre-Approved
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                                Approved
                             </button>
-                        @elseif($data->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval">
+                                Rejected
+                            </button>
+                        @elseif ($data->stage == 9 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                                Initiator Updated Completed
+                            </button>
+                            {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Info Required
+                            </button>  --}}
+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-stage_8">
+                                Child
+                            </button>
+                        @elseif ($data->stage == 10 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                                HOD Final Review Complete
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Approved
+
+                           
+
+                           
+
+                        @elseif ($data->stage == 11 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                                Send For Final QA/CQA Head Approval
                             </button>
-                        @elseif ($data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#effectiveness-check-modal">
-                                Effectiveness Check
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Information Required
+                            </button>    
+
+                            @elseif ($data->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                                Closure Approved
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Information Required
+                            </button> 
+                            
+                            @elseif ($data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child_effective_ness">
+                                Child
+                            </button>
+                              
                         @else
+                        
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
-
-
                     </div>
 
                 </div>
@@ -229,53 +257,103 @@
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
                         </div>
-                    @else
+                    @elseif($data->stage == 8)
                         <div class="progress-bars">
+                            <div class="bg-danger">Closed - Rejected</div>
+                        </div>
+                    @else
+                      
+                        <div class="progress-bars" >
                             @if ($data->stage >= 1)
                                 <div class="active">Opened</div>
                             @else
                                 <div class="">Opened</div>
                             @endif
                             @if ($data->stage >= 2)
-                                <div class="active">HOD Review</div>
+                                <div class="active">HOD Assessment</div>
                             @else
-                                <div class="">HOD Review</div>
+                                <div class="">HOD Assessment</div>
                             @endif
                             @if ($data->stage >= 3)
-                                <div class="active">QA Initial Review</div>
+                                <div class="active">QA/CQA Initial
+                                    Assessment</div>
                             @else
-                                <div class="">QA Initial Review</div>
+                                <div class="">QA/CQA Initial
+                                    Assessment</div>
                             @endif
                             @if ($data->stage >= 4)
+                                <div class="active">CFT Assessment</div>
+                            @else
+                                <div class="">CFT Assessment</div>
+                            @endif
+                            @if ($data->stage >= 5)
+                                <div class="active">QA/CQA Final Review</div>
+                            @else
+                                <div class="">QA/CQA Final Review</div>
+                            @endif
+                            @if ($data->stage >= 6)
                                 <div class="active">Pending RA Review</div>
                             @else
                                 <div class="">Pending RA Review</div>
                             @endif
-                            @if ($data->stage >= 5)
-                                <div class="active">CFT Review</div>
-                            @else
-                                <div class="">CFT Review</div>
-                            @endif
-                            @if ($data->stage >= 6)
-                                <div class="active">QA Final Review</div>
-                            @else
-                                <div class="">QA Final Review</div>
-                            @endif
                             @if ($data->stage >= 7)
-                                <div class="active">QA Head/Manager Designee Pre-Approval</div>
+                                <div class="active">QA/CQA Head/Manager
+Designee Approval</div>
                             @else
-                                <div class="">QA Head/Manager Designee Pre-Approval</div>
+                                <div class="">QA/CQA Head/Manager Designee Approval</div>
                             @endif
-                            @if ($data->stage >= 8)
-                                <div class="active">QA Head/Manager Designee Approval</div>
-                            @else
-                                <div class="">QA Head/Manager Designee Approval</div>
-                            @endif
+
                             @if ($data->stage >= 9)
-                                <div class="bg-danger">Closed - Done</div>
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>Pending Initiator Update</div>
                             @else
-                                <div class="">Closed - Done</div>
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>Pending Initiator Update</div>
                             @endif
+
+                            @if ($data->stage >= 10)
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>HOD Final Review</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>HOD Final Review</div>
+                            @endif
+
+                            @if ($data->stage >= 11)
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>Implementation Verification by QA/CQA</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>Implementation Verification by QA/CQA</div>
+                            @endif
+
+                            @if ($data->stage >= 12)
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>QA/CQA Closure Approval</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>QA/CQA Closure Approval</div>
+                            @endif
+
+
+
+                            @if ($data->stage >= 13)
+                                <div class="active bg-danger" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
+                            @endif
+
+                            
+
+                            <!-- @if ($data->stage >= 9)
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>Post Implementation</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>Post Implementation</div>
+                            @endif
+
+                            @if ($data->stage >= 10)
+                                <div class="active" @if($data->stage == 8) style="display: none" @endif>QA Closure Approval</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>QA Closure Approval</div>
+                            @endif
+
+                            @if ($data->stage >= 11)
+                                <div class="active bg-danger" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
+                            @else
+                                <div class="" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
+                            @endif -->
                         </div>
                     @endif
                 </div>
@@ -383,7 +461,7 @@
                                                 <div class="group-input">
                                                     <label for="Microbiology">CFT Reviewer</label>
                                                     <select name="Microbiology">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option value="yes" selected>Yes</option>
                                                         <option value="no">No</option>
                                                     </select>
@@ -576,8 +654,8 @@
                                                         characters remaining</span>
 
 
-                                                    <textarea name="short_description" id="docname" type="text" maxlength="255" required
-                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                    <input name="short_description" id="docname" type="text" maxlength="255" required type="text"
+                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} value="{{ $data->short_description }}">
                                                 </div>
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
 
@@ -646,8 +724,8 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="nature-change">Nature Of Change</label>
-                                                    <select name="naturechange">
-                                                        <option value="0">-- Select --</option>
+                                                    <select name="doc_change">
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $data->doc_change == 'Temporary' ? 'selected' : '' }}
                                                             value="Temporary">Temporary
                                                         </option>
@@ -668,7 +746,7 @@
                                                 <div class="group-input">
                                                     <label for="div_code">Division Code</label>
                                                     <select name="div_code">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option
                                                             {{ $data->Division_Code == 'Instrumental Lab' ? 'selected' : '' }}
                                                             value="Instrumental Lab">Instrumental Lab</option>
@@ -699,6 +777,14 @@
                                                     </select>
                                                 </div>
                                             </div> -->
+                                            @if ($data->in_attachment)
+                                                @foreach (json_decode($data->in_attachment) as $file)
+                                                    <input id="initialFile-{{ $loop->index }}" type="hidden"
+                                                        name="existing_initial_files[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
+
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="others">Initial attachment</label>
@@ -716,6 +802,7 @@
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
+                                                                            data-remove-id="initialFile-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
@@ -819,14 +906,14 @@
                                                     <select name="Detection" id="analysisN"
                                                         onchange='calculateRiskAnalysis(this)'>
                                                         <option value="">-- Select --</option>
-                                                        <option {{ $data->Detection == '5' ? 'selected' : '' }}
-                                                            value="5">Impossible</option>
                                                         <option {{ $data->Detection == '4' ? 'selected' : '' }}
-                                                            value="4">Rare</option>
+                                                            value="4">Impossible</option>
                                                         <option {{ $data->Detection == '3' ? 'selected' : '' }}
-                                                            value="3">Unlikely</option>
+                                                            value="3">Rare</option>
                                                         <option {{ $data->Detection == '2' ? 'selected' : '' }}
-                                                            value="2">Likely</option>
+                                                            value="2">Unlikely</option>
+                                                        <option {{ $data->Detection == '1' ? 'selected' : '' }}
+                                                            value="1">Likely</option>
                                                         {{-- <option  {{   $data ->Detection=='Very-Likely'? 'selected' : ''}} value="Very-Likely">Very Likely</option> --}}
                                                     </select>
                                                 </div>
@@ -851,6 +938,13 @@
                                                 </div>
                                             </div>
 
+                                            @if ($data->risk_assessment_atch)
+                                                @foreach (json_decode($data->risk_assessment_atch) as $file)
+                                                    <input id="riskAssessmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinRiskAssessmentFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="group-input">
                                                 <label for="tran-attach">Risk Assessment Attachment</label>
                                                 <div class="file-attachment-field">
@@ -863,8 +957,9 @@
                                                                     <a href="{{ asset('upload/' . $file) }}"
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
+                                                                    <a type="button" class="remove-file"                                                                    
+                                                                            data-remove-id="riskAssessmentFile-{{ $loop->index }}"
+                                                                            data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
@@ -978,6 +1073,13 @@
                                             </div>
                                             <div class="col-12">
                                                 @if ($data->stage == 2)
+                                                    @if ($data->HOD_attachment)
+                                                        @foreach (json_decode($data->HOD_attachment) as $file)
+                                                            <input id="hodAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                                name="existinHodFile[{{ $loop->index }}]"
+                                                                value="{{ $file }}">
+                                                        @endforeach
+                                                    @endif
                                                     <div class="group-input">
                                                         <label for="Inv Attachments">HOD Attachments</label>
                                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -993,6 +1095,7 @@
                                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
                                                                             <a class="remove-file"
+                                                                                data-remove-id="hodAttachmentFile-{{ $loop->index }}"
                                                                                 data-file-name="{{ $file }}"><i
                                                                                     class="fa-solid fa-circle-xmark"
                                                                                     style="color:red; font-size:20px;"></i></a>
@@ -1011,6 +1114,13 @@
                                                         </div>
                                                     </div>
                                                 @else
+                                                    @if ($data->HOD_attachment)
+                                                        @foreach (json_decode($data->HOD_attachment) as $file)
+                                                            <input id="hodAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                                name="existinHodFile[{{ $loop->index }}]"
+                                                                value="{{ $file }}">
+                                                        @endforeach
+                                                    @endif
                                                     <div class="group-input">
                                                         <label for="Inv Attachments">HOD Attachments</label>
                                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -1026,7 +1136,8 @@
                                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
                                                                             <a class="remove-file"
-                                                                                data-file-name="{{ $file }}"><i
+                                                                                    data-remove-id="hodAttachmentFile-{{ $loop->index }}"
+                                                                                    data-file-name="{{ $file }}"><i
                                                                                     class="fa-solid fa-circle-xmark"
                                                                                     style="color:red; font-size:20px;"></i></a>
                                                                         </h6>
@@ -1088,7 +1199,7 @@
                                                 <div class="group-input">
                                                     <label for="type_change">Type of Change</label>
                                                     <select name="type_chnage">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option {{ $review->type_chnage == 'major' ? 'selected' : '' }}
                                                             value="major">Major</option>
                                                         <option {{ $review->type_chnage == 'minor' ? 'selected' : '' }}
@@ -1109,7 +1220,7 @@
                                                     <select multiple name="cft_reviewer[]"
                                                         placeholder="Select CFT Reviewers" data-search="false"
                                                         data-silent-initial-value-set="true" id="cft_reviewer">
-                                                        <option value="">-- Select --</option>
+                                                        <!-- <option value="">-- Select --</option> -->
                                                         @foreach ($cft as $data1)
                                                             @if (Helpers::checkUserRolesMicrobiology_Person($data1))
                                                                 @if (in_array($data1->id, $cftReviewerIds))
@@ -1174,13 +1285,20 @@
                                                 </div>
                                             </div>
 
+                                         @if ($data->qa_head)
+                                                @foreach (json_decode($data->qa_head) as $file)
+                                                    <input id="QaAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinQAFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="qa head">QA Attachments</label>
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="qa_head">
-                                                            @if ($review->qa_head)
-                                                                @foreach (json_decode($review->qa_head) as $file)
+                                                            @if ($data->qa_head)
+                                                                @foreach (json_decode($data->qa_head) as $file)
                                                                     <h6 type="button" class="file-container text-dark"
                                                                         style="background-color: rgb(243, 242, 240);">
                                                                         <b>{{ $file }}</b>
@@ -1189,6 +1307,7 @@
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
+                                                                            data-remove-id="QaAttachmentFile-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1203,7 +1322,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>  
+
+
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
@@ -1220,30 +1341,35 @@
                                     <div class="inner-block-content">
                                         <div class="row">
 
-                                        <div class="sub-head">
-                                            RA Review
-                                        </div>
-                                        <script>
-                                            $(document).ready(function() {
-                                                $('.ra_review').hide();
+                                            <div class="sub-head">
+                                                RA Review
+                                            </div>
+                                            @php
+                                                $data1 = DB::table('cc_cfts')
+                                                    ->where('cc_id', $data->id)
+                                                    ->first();
+                                            @endphp
 
-                                                $('[name="RA_Review"]').change(function() {
-                                                    if ($(this).val() === 'yes') {
-
-                                                        $('.ra_review').show();
-                                                        $('.ra_review span').show();
-                                                    } else {
+                                                <script>
+                                                $(document).ready(function() {
+                                         
+                                                   @if($data1->RA_Review!=='yes')
                                                         $('.ra_review').hide();
-                                                        $('.ra_review span').hide();
-                                                    }
-                                                });
-                                            });
-                                        </script>
-                                        @php
-                                            $data1 = DB::table('cc_cfts')
-                                                ->where('cc_id', $data->id)
-                                                ->first();
-                                        @endphp
+            
+                                                        $('[name="RA_Review"]').change(function() {
+                                                            if ($(this).val() === 'yes') {
+            
+                                                                $('.ra_review').show();
+                                                                $('.ra_review span').show();
+                                                            } else {
+                                                                $('.ra_review').hide();
+                                                                $('.ra_review span').hide();
+                                                            }
+                                                        });
+                                                        @endif
+                                                    });
+                                                </script>
+                                        
 
                                         @if ($data->stage == 3 || $data->stage == 4)
                                             <div class="col-lg-6">
@@ -1261,10 +1387,11 @@
 
                                                 </div>
                                             </div>
+                                            
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 50,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -1280,7 +1407,7 @@
                                                         id="RA_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->RA_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->RA_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -1294,7 +1421,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->RA_Review == 'yes' && $data->stage == 4) required @endif class="summernote RA_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->RA_person) && Auth::user()->id != $data1->RA_person)) readonly @endif name="RA_assessment" id="summernote-17">{{ $data1->RA_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->RA_person) && Auth::user()->name != $data1->RA_person)) readonly @endif name="RA_assessment" id="summernote-17">{{ $data1->RA_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 ra_review">
@@ -1304,7 +1431,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote RA_feedback" @if ($data->stage == 3 || (isset($data1->RA_person) && Auth::user()->id != $data1->RA_person)) readonly @endif name="RA_feedback"
+                                                    <textarea class="summernote RA_feedback" @if ($data->stage == 3 || (isset($data1->RA_person) && Auth::user()->name != $data1->RA_person)) readonly @endif name="RA_feedback"
                                                         id="summernote-18" @if ($data1->RA_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->RA_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -1412,7 +1539,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 50,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -1426,7 +1553,7 @@
                                                     <select name="RA_person" disabled id="RA_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->RA_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->RA_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -1537,8 +1664,11 @@
                                         <div class="sub-head">
                                             Quality Assurance
                                         </div>
+                                      
                                         <script>
                                             $(document).ready(function() {
+
+                                                @if($data1->Quality_Assurance_Review!=='yes')
                                                 $('.QualityAssurance').hide();
 
                                                 $('[name="Quality_Assurance_Review"]').change(function() {
@@ -1551,6 +1681,7 @@
                                                         $('.QualityAssurance span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -1579,7 +1710,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 26,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -1592,11 +1723,11 @@
                                                             style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="QualityAssurance_Person"
-                                                        class="QualityAssurance_Person" id="QualityAssurance_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="QualityAssurance_person"
+                                                        class="QualityAssurance_person" id="QualityAssurance_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->QualityAssurance_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->QualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -1611,7 +1742,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote QualityAssurance_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->QualityAssurance_Person) && Auth::user()->id != $data1->QualityAssurance_Person)) readonly @endif 
+                                                    @if ($data->stage == 3 || (isset($data1->QualityAssurance_person) && Auth::user()->name != $data1->QualityAssurance_person)) readonly @endif 
                                                         name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
                                                 </div>
                                             </div>
@@ -1622,7 +1753,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote QualityAssurance_feedback" @if ($data->stage == 3 || (isset($data1->QualityAssurance_Person) && Auth::user()->id != $data1->QualityAssurance_Person)) readonly @endif
+                                                    <textarea class="summernote QualityAssurance_feedback" @if ($data->stage == 3 || (isset($data1->QualityAssurance_person) && Auth::user()->name != $data1->QualityAssurance_person)) readonly @endif
                                                         name="QualityAssurance_feedback" id="summernote-18" @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->QualityAssurance_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -1684,7 +1815,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('QualityAssurance_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('QualityAssurance_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -1731,7 +1862,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 26,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -1742,10 +1873,10 @@
                                                 <div class="group-input">
                                                     <label for="Quality Assurance notification">Quality Assurance Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="QualityAssurance_Person" disabled id="QualityAssurance_Person">
+                                                    <select name="QualityAssurance_person" disabled id="QualityAssurance_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->QualityAssurance_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->QualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -1843,6 +1974,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Production_Table_Review!=='yes')
                                                 $('.productionTable').hide();
 
                                                 $('[name="Production_Table_Review"]').change(function() {
@@ -1855,6 +1987,7 @@
                                                         $('.productionTable span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -1882,7 +2015,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 51,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -1899,7 +2032,7 @@
                                                         class="Production_Table_Person" id="Production_Table_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Production_Table_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Production_Table_Person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -1913,7 +2046,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Production_Table_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_Table_Assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Production_Table_Person) && Auth::user()->id != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 productionTable">
@@ -1923,7 +2056,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Production_Table_Feedback" @if ($data->stage == 3 || (isset($data1->Production_Table_Person) && Auth::user()->id != $data1->Production_Table_Person)) readonly @endif
+                                                    <textarea class="summernote Production_Table_Feedback" @if ($data->stage == 3 || (isset($data1->Production_Table_Person) && Auth::user()->name != $data1->Production_Table_Person)) readonly @endif
                                                         name="Production_Table_Feedback" id="summernote-18" @if ($data1->Production_Table_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Production_Table_Feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -2032,7 +2165,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 51,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -2046,7 +2179,7 @@
                                                     <select name="Production_Table_Person" disabled id="Production_Table_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Production_Table_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Production_Table_Person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2160,6 +2293,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->ProductionLiquid_Review!=='yes')
                                                 $('.productionLiquid').hide();
 
                                                 $('[name="ProductionLiquid_Review"]').change(function() {
@@ -2172,6 +2306,7 @@
                                                         $('.productionLiquid span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -2200,7 +2335,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 52,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -2213,11 +2348,11 @@
                                                             style="display: {{ $data1->ProductionLiquid_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="ProductionLiquid_Person"
-                                                        class="ProductionLiquid_Person" id="ProductionLiquid_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="ProductionLiquid_person"
+                                                        class="ProductionLiquid_person" id="ProductionLiquid_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ProductionLiquid_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ProductionLiquid_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2232,7 +2367,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 4) required @endif class="summernote ProductionLiquid_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->ProductionLiquid_Person) && Auth::user()->id != $data1->ProductionLiquid_Person)) readonly @endif name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->ProductionLiquid_person) && Auth::user()->name != $data1->ProductionLiquid_person)) readonly @endif name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 productionLiquid">
@@ -2242,7 +2377,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote ProductionLiquid_feedback"  @if ($data->stage == 3 || (isset($data1->ProductionLiquid_Person) && Auth::user()->id != $data1->ProductionLiquid_Person)) readonly @endif
+                                                    <textarea class="summernote ProductionLiquid_feedback"  @if ($data->stage == 3 || (isset($data1->ProductionLiquid_person) && Auth::user()->name != $data1->ProductionLiquid_person)) readonly @endif
                                                         name="ProductionLiquid_feedback" id="summernote-18" @if ($data1->ProductionLiquid_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ProductionLiquid_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -2304,7 +2439,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('ProductionLiquid_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('ProductionLiquid_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -2362,10 +2497,10 @@
                                                 <div class="group-input">
                                                     <label for="Production Liquid notification">Production Liquid Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="ProductionLiquid_Person" disabled id="ProductionLiquid_Person">
+                                                    <select name="ProductionLiquid_person" disabled id="ProductionLiquid_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ProductionLiquid_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ProductionLiquid_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2465,6 +2600,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Production_Injection_Review!=='yes')
                                                 $('.productionInjection').hide();
 
                                                 $('[name="Production_Injection_Review"]').change(function() {
@@ -2477,6 +2613,7 @@
                                                         $('.productionInjection span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -2505,7 +2642,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 53,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -2522,7 +2659,7 @@
                                                         class="Production_Injection_Person" id="Production_Injection_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Production_Injection_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Production_Injection_Person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2537,7 +2674,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_Injection_Assessment"
-                                                        @if ($data->stage == 3 || (isset($data1->Production_Injection_Person) && Auth::user()->id != $data1->Production_Injection_Person)) readonly @endif name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
+                                                        @if ($data->stage == 3 || (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 productionInjection">
@@ -2547,7 +2684,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Production_Injection_Feedback" @if ($data->stage == 3 || (isset($data1->Production_Injection_Person) && Auth::user()->id != $data1->Production_Injection_Person)) readonly @endif
+                                                    <textarea class="summernote Production_Injection_Feedback" @if ($data->stage == 3 || (isset($data1->Production_Injection_Person) && Auth::user()->name != $data1->Production_Injection_Person)) readonly @endif
                                                         name="Production_Injection_Feedback" id="summernote-18" @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Production_Injection_Feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -2670,7 +2807,7 @@
                                                     <select name="Production_Injection_Person" disabled id="Production_Injection_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Production_Injection_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Production_Injection_Person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2784,6 +2921,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Store_Review!=='yes')
                                                 $('.store').hide();
 
                                                 $('[name="Store_Review"]').change(function() {
@@ -2796,6 +2934,7 @@
                                                         $('.store span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -2824,7 +2963,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 54,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -2837,11 +2976,11 @@
                                                             style="display: {{ $data1->Store_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="Store_Person"
-                                                        class="Store_Person" id="Store_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="Store_person"
+                                                        class="Store_person" id="Store_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Store_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Store_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -2856,7 +2995,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif class="summernote Store_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Store_Person) && Auth::user()->id != $data1->Store_Person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->name != $data1->Store_person)) readonly @endif name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 store">
@@ -2866,7 +3005,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Store_feedback" @if ($data->stage == 3 || (isset($data1->Store_Person) && Auth::user()->id != $data1->Store_Person)) readonly @endif
+                                                    <textarea class="summernote Store_feedback" @if ($data->stage == 3 || (isset($data1->Store_person) && Auth::user()->name != $data1->Store_person)) readonly @endif
                                                         name="Store_feedback" id="summernote-18" @if ($data1->Store_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Store_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -2928,7 +3067,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('Store_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('Store_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -2986,10 +3125,10 @@
                                                 <div class="group-input">
                                                     <label for="Store notification">Store Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="Store_Person" disabled id="Store_Person">
+                                                    <select name="Store_person" disabled id="Store_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Store_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Store_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3089,6 +3228,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Quality_review!=='yes')
                                                 $('.qualityControl').hide();
 
                                                 $('[name="Quality_review"]').change(function() {
@@ -3101,6 +3241,8 @@
                                                         $('.qualityControl span').hide();
                                                     }
                                                 });
+                                                @endif
+
                                             });
                                         </script>
                                         @php
@@ -3129,7 +3271,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 24,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -3146,7 +3288,7 @@
                                                         class="Quality_Control_Person" id="Quality_Control_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Quality_Control_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Quality_Control_Person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3161,7 +3303,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Quality_review == 'yes' && $data->stage == 4) required @endif class="summernote Quality_Control_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->id != $data1->Quality_Control_Person)) readonly @endif name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 qualityControl">
@@ -3171,7 +3313,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Quality_Control_feedback" @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->id != $data1->Quality_Control_Person)) readonly @endif
+                                                    <textarea class="summernote Quality_Control_feedback" @if ($data->stage == 3 || (isset($data1->Quality_Control_Person) && Auth::user()->name != $data1->Quality_Control_Person)) readonly @endif
                                                         name="Quality_Control_feedback" id="summernote-18" @if ($data1->Quality_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Quality_Control_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -3294,7 +3436,7 @@
                                                     <select name="Quality_Control_Person" disabled id="Quality_Control_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Quality_Control_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Quality_Control_Person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3391,6 +3533,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->ResearchDevelopment_Review!=='yes')
                                                 $('.researchDevelopment').hide();
 
                                                 $('[name="ResearchDevelopment_Review"]').change(function() {
@@ -3403,6 +3546,7 @@
                                                         $('.researchDevelopment span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -3431,7 +3575,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 55,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -3445,10 +3589,10 @@
                                                             class="text-danger">*</span>
                                                     </label>
                                                     <select @if ($data->stage == 4) disabled @endif name="ResearchDevelopmentStore_Person"
-                                                        class="ResearchDevelopment_Person" id="ResearchDevelopment_Person">
+                                                        class="ResearchDevelopment_person" id="ResearchDevelopment_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ResearchDevelopment_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ResearchDevelopment_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3463,7 +3607,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif class="summernote ResearchDevelopment_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->ResearchDevelopmentStore_Person) && Auth::user()->id != $data1->ResearchDevelopmentStore_Person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->ResearchDevelopmentStore_Person) && Auth::user()->name != $data1->ResearchDevelopmentStore_Person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 researchDevelopment">
@@ -3473,7 +3617,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote ResearchDevelopment_feedback" @if ($data->stage == 3 || (isset($data1->ResearchDevelopmentStore_Person) && Auth::user()->id != $data1->ResearchDevelopmentStore_Person)) readonly @endif
+                                                    <textarea class="summernote ResearchDevelopment_feedback" @if ($data->stage == 3 || (isset($data1->ResearchDevelopmentStore_Person) && Auth::user()->name != $data1->ResearchDevelopmentStore_Person)) readonly @endif
                                                         name="ResearchDevelopment_feedback" id="summernote-18" @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -3535,7 +3679,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('ResearchDevelopment_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('ResearchDevelopment_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -3593,10 +3737,10 @@
                                                 <div class="group-input">
                                                     <label for="Research Development notification">Research Development Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="ResearchDevelopment_Person" disabled id="ResearchDevelopment_Person">
+                                                    <select name="ResearchDevelopment_person" disabled id="ResearchDevelopment_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ResearchDevelopment_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ResearchDevelopment_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3695,6 +3839,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Engineering_review!=='yes')
                                                 $('.Engineering').hide();
 
                                                 $('[name="Engineering_review"]').change(function() {
@@ -3707,6 +3852,7 @@
                                                         $('.Engineering span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -3735,7 +3881,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 25,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -3748,11 +3894,11 @@
                                                             style="display: {{ $data1->Engineering_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="Engineering_Person"
-                                                        class="Engineering_Person" id="Engineering_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="Engineering_person"
+                                                        class="Engineering_person" id="Engineering_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Engineering_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Engineering_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -3767,7 +3913,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif class="summernote Engineering_assessment"
-                                                        @if ($data->stage == 3 || (isset($data1->Engineering_Person) && Auth::user()->id != $data1->Engineering_Person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                        @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 Engineering">
@@ -3777,7 +3923,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Engineering_feedback" @if ($data->stage == 3 || (isset($data1->Engineering_Person) && Auth::user()->id != $data1->Engineering_Person)) readonly @endif
+                                                    <textarea class="summernote Engineering_feedback" @if ($data->stage == 3 || (isset($data1->Engineering_person) && Auth::user()->name != $data1->Engineering_person)) readonly @endif
                                                         name="Engineering_feedback" id="summernote-18" @if ($data1->Engineering_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Engineering_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -3839,7 +3985,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('Engineering_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('Engineering_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -3897,10 +4043,10 @@
                                                 <div class="group-input">
                                                     <label for="Engineering notification">Engineering Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="Engineering_Person" disabled id="Engineering_Person">
+                                                    <select name="Engineering_person" disabled id="Engineering_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Engineering_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Engineering_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4000,6 +4146,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Human_Resource_review!=='yes')
                                                 $('.Human_Resource').hide();
 
                                                 $('[name="Human_Resource_review"]').change(function() {
@@ -4012,6 +4159,7 @@
                                                         $('.Human_Resource span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -4040,7 +4188,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 31,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -4053,11 +4201,11 @@
                                                             style="display: {{ $data1->Human_Resource_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="Human_Resource_Person"
-                                                        class="Human_Resource_Person" id="Human_Resource_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="Human_Resource_person"
+                                                        class="Human_Resource_person" id="Human_Resource_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Human_Resource_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Human_Resource_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4072,7 +4220,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif class="summernote Human_Resource_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Human_Resource_Person) && Auth::user()->id != $data1->Human_Resource_Person)) readonly @endif name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Human_Resource_person) && Auth::user()->name != $data1->Human_Resource_person)) readonly @endif name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 Human_Resource">
@@ -4082,7 +4230,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Human_Resource_feedback" @if ($data->stage == 3 || (isset($data1->Human_Resource_Person) && Auth::user()->id != $data1->Human_Resource_Person)) readonly @endif
+                                                    <textarea class="summernote Human_Resource_feedback" @if ($data->stage == 3 || (isset($data1->Human_Resource_person) && Auth::user()->name != $data1->Human_Resource_person)) readonly @endif
                                                         name="Human_Resource_feedback" id="summernote-18" @if ($data1->Human_Resource_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Human_Resource_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -4144,7 +4292,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('Human_Resource_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('Human_Resource_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -4202,10 +4350,10 @@
                                                 <div class="group-input">
                                                     <label for="Human Resource notification">Human Resource Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="Human_Resource_Person" disabled id="Human_Resource_Person">
+                                                    <select name="Human_Resource_person" disabled id="Human_Resource_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Human_Resource_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Human_Resource_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4303,6 +4451,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Microbiology_Review!=='yes')
                                                 $('.Microbiology').hide();
 
                                                 $('[name="Microbiology_Review"]').change(function() {
@@ -4315,6 +4464,7 @@
                                                         $('.Microbiology span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -4356,11 +4506,11 @@
                                                             style="display: {{ $data1->Microbiology_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="Microbiology_Person"
-                                                        class="Microbiology_Person" id="Microbiology_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="Microbiology_person"
+                                                        class="Microbiology_person" id="Microbiology_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Microbiology_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Microbiology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4375,7 +4525,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Microbiology_Review == 'yes' && $data->stage == 4) required @endif class="summernote Microbiology_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Microbiology_Person) && Auth::user()->id != $data1->Microbiology_Person)) readonly @endif name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Microbiology_person) && Auth::user()->name != $data1->Microbiology_person)) readonly @endif name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 Microbiology">
@@ -4385,7 +4535,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Microbiology_feedback" @if ($data->stage == 3 || (isset($data1->Microbiology_Person) && Auth::user()->id != $data1->Microbiology_Person)) readonly @endif
+                                                    <textarea class="summernote Microbiology_feedback" @if ($data->stage == 3 || (isset($data1->Microbiology_person) && Auth::user()->name != $data1->Microbiology_person)) readonly @endif
                                                         name="Microbiology_feedback" id="summernote-18" @if ($data1->Microbiology_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Microbiology_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -4447,7 +4597,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('Microbiology_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('Microbiology_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -4494,7 +4644,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 56,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -4505,10 +4655,10 @@
                                                 <div class="group-input">
                                                     <label for="Microbiology notification">Microbiology Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="Microbiology_Person" disabled id="Microbiology_Person">
+                                                    <select name="Microbiology_person" disabled id="Microbiology_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Microbiology_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Microbiology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4607,6 +4757,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->RegulatoryAffair_Review!=='yes')
                                                 $('.RegulatoryAffair').hide();
 
                                                 $('[name="RegulatoryAffair_Review"]').change(function() {
@@ -4619,6 +4770,7 @@
                                                         $('.RegulatoryAffair span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -4647,7 +4799,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 57,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -4660,11 +4812,11 @@
                                                             style="display: {{ $data1->RegulatoryAffair_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="RegulatoryAffair_Person"
-                                                        class="RegulatoryAffair_Person" id="RegulatoryAffair_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="RegulatoryAffair_person"
+                                                        class="RegulatoryAffair_person" id="RegulatoryAffair_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->RegulatoryAffair_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->RegulatoryAffair_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4679,7 +4831,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4) required @endif class="summernote RegulatoryAffair_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->RegulatoryAffair_Person) && Auth::user()->id != $data1->RegulatoryAffair_Person)) readonly @endif name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->RegulatoryAffair_person) && Auth::user()->name != $data1->RegulatoryAffair_person)) readonly @endif name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 RegulatoryAffair">
@@ -4689,7 +4841,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote RegulatoryAffair_feedback" @if ($data->stage == 3 || (isset($data1->RegulatoryAffair_Person) && Auth::user()->id != $data1->RegulatoryAffair_Person)) readonly @endif
+                                                    <textarea class="summernote RegulatoryAffair_feedback" @if ($data->stage == 3 || (isset($data1->RegulatoryAffair_person) && Auth::user()->name != $data1->RegulatoryAffair_person)) readonly @endif
                                                         name="RegulatoryAffair_feedback" id="summernote-18" @if ($data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -4751,7 +4903,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('RegulatoryAffair_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('RegulatoryAffair_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -4809,10 +4961,10 @@
                                                 <div class="group-input">
                                                     <label for="Regulatory Affair notification">Regulatory Affair Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="RegulatoryAffair_Person" disabled id="RegulatoryAffair_Person">
+                                                    <select name="RegulatoryAffair_person" disabled id="RegulatoryAffair_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->RegulatoryAffair_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->RegulatoryAffair_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4911,6 +5063,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->CorporateQualityAssurance_Review!=='yes')
                                                 $('.CQA').hide();
 
                                                 $('[name="CorporateQualityAssurance_Review"]').change(function() {
@@ -4923,6 +5076,8 @@
                                                         $('.CQA span').hide();
                                                     }
                                                 });
+
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -4951,7 +5106,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 58,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -4964,11 +5119,11 @@
                                                             style="display: {{ $data1->CorporateQualityAssurance_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="CorporateQualityAssurance_Person"
-                                                        class="CorporateQualityAssurance_Person" id="CorporateQualityAssurance_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="CorporateQualityAssurance_person"
+                                                        class="CorporateQualityAssurance_person" id="CorporateQualityAssurance_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->CorporateQualityAssurance_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->CorporateQualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -4983,7 +5138,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote CorporateQualityAssurance_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->CorporateQualityAssurance_Person) && Auth::user()->id != $data1->CorporateQualityAssurance_Person)) readonly @endif name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->CorporateQualityAssurance_person) && Auth::user()->name != $data1->CorporateQualityAssurance_person)) readonly @endif name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 CQA">
@@ -4993,7 +5148,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote CorporateQualityAssurance_feedback" @if ($data->stage == 3 || (isset($data1->CorporateQualityAssurance_Person) && Auth::user()->id != $data1->CorporateQualityAssurance_Person)) readonly @endif
+                                                    <textarea class="summernote CorporateQualityAssurance_feedback" @if ($data->stage == 3 || (isset($data1->CorporateQualityAssurance_person) && Auth::user()->name != $data1->CorporateQualityAssurance_person)) readonly @endif
                                                         name="CorporateQualityAssurance_feedback" id="summernote-18" @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -5055,7 +5210,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('CorporateQualityAssurance_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('CorporateQualityAssurance_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -5102,7 +5257,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 58,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -5113,10 +5268,10 @@
                                                 <div class="group-input">
                                                     <label for="Corporate Quality Assurance notification">Corporate Quality Assurance Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="CorporateQualityAssurance_Person" disabled id="CorporateQualityAssurance_Person">
+                                                    <select name="CorporateQualityAssurance_person" disabled id="CorporateQualityAssurance_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->CorporateQualityAssurance_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->CorporateQualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5215,6 +5370,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Environment_Health_review!=='yes')
                                                 $('.safety').hide();
 
                                                 $('[name="Environment_Health_review"]').change(function() {
@@ -5227,6 +5383,7 @@
                                                         $('.safety span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -5255,7 +5412,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 59,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -5272,7 +5429,7 @@
                                                         class="Environment_Health_Safety_person" id="Environment_Health_Safety_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Environment_Health_Safety_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Environment_Health_Safety_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5287,7 +5444,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif class="summernote Health_Safety_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Environment_Health_Safety_person) && Auth::user()->id != $data1->Environment_Health_Safety_person)) readonly @endif name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Environment_Health_Safety_person) && Auth::user()->name != $data1->Environment_Health_Safety_person)) readonly @endif name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 safety">
@@ -5297,7 +5454,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Health_Safety_feedback" @if ($data->stage == 3 || (isset($data1->Environment_Health_Safety_person) && Auth::user()->id != $data1->Environment_Health_Safety_person)) readonly @endif
+                                                    <textarea class="summernote Health_Safety_feedback" @if ($data->stage == 3 || (isset($data1->Environment_Health_Safety_person) && Auth::user()->name != $data1->Environment_Health_Safety_person)) readonly @endif
                                                         name="Health_Safety_feedback" id="summernote-18" @if ($data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Health_Safety_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -5406,7 +5563,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 59,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -5420,7 +5577,7 @@
                                                     <select name="Environment_Health_Safety_person" disabled id="Environment_Health_Safety_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Environment_Health_Safety_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Environment_Health_Safety_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5520,6 +5677,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->Information_Technology_review!=='yes')
                                                 $('.Information_Technology').hide();
 
                                                 $('[name="Information_Technology_review"]').change(function() {
@@ -5532,6 +5690,7 @@
                                                         $('.Information_Technology span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -5560,7 +5719,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 32,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -5577,7 +5736,7 @@
                                                         class="Information_Technology_person" id="Information_Technology_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Information_Technology_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Information_Technology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5592,7 +5751,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->Information_Technology_review == 'yes' && $data->stage == 4) required @endif class="summernote Information_Technology_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->Information_Technology_person) && Auth::user()->id != $data1->Information_Technology_person)) readonly @endif name="Information_Technology_assessment" id="summernote-17">{{ $data1->Information_Technology_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->Information_Technology_person) && Auth::user()->name != $data1->Information_Technology_person)) readonly @endif name="Information_Technology_assessment" id="summernote-17">{{ $data1->Information_Technology_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 Information_Technology">
@@ -5602,7 +5761,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote Information_Technology_feedback" @if ($data->stage == 3 || (isset($data1->Information_Technology_person) && Auth::user()->id != $data1->Information_Technology_person)) readonly @endif
+                                                    <textarea class="summernote Information_Technology_feedback" @if ($data->stage == 3 || (isset($data1->Information_Technology_person) && Auth::user()->name != $data1->Information_Technology_person)) readonly @endif
                                                         name="Information_Technology_feedback" id="summernote-18" @if ($data1->Information_Technology_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Information_Technology_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -5711,7 +5870,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 32,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -5725,7 +5884,7 @@
                                                     <select name="Information_Technology_person" disabled id="Information_Technology_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->Information_Technology_person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Information_Technology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5824,6 +5983,7 @@
                                         </div>
                                         <script>
                                             $(document).ready(function() {
+                                                @if($data1->ContractGiver_Review!=='yes')
                                                 $('.ContractGiver').hide();
 
                                                 $('[name="ContractGiver_Review"]').change(function() {
@@ -5836,6 +5996,7 @@
                                                         $('.ContractGiver span').hide();
                                                     }
                                                 });
+                                                @endif
                                             });
                                         </script>
                                         @php
@@ -5864,7 +6025,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 60,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -5877,11 +6038,11 @@
                                                             style="display: {{ $data1->ContractGiver_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="ContractGiver_Person"
-                                                        class="ContractGiver_Person" id="ContractGiver_Person">
+                                                    <select @if ($data->stage == 4) disabled @endif name="ContractGiver_person"
+                                                        class="ContractGiver_person" id="ContractGiver_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ContractGiver_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ContractGiver_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -5896,7 +6057,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif class="summernote ContractGiver_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->ContractGiver_Person) && Auth::user()->id != $data1->ContractGiver_Person)) readonly @endif name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
+                                                    @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 store">
@@ -5906,7 +6067,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 3 || (isset($data1->ContractGiver_Person) && Auth::user()->id != $data1->ContractGiver_Person)) readonly @endif
+                                                    <textarea class="summernote ContractGiver_feedback" @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif
                                                         name="ContractGiver_feedback" id="summernote-18" @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ContractGiver_feedback }}</textarea>
                                                 </div>
                                             </div>
@@ -5968,7 +6129,7 @@
                                                     var inputsToToggle = [];
 
                                                     // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('ContractGiver_Person');
+                                                    var facilityNameInputs = document.getElementsByClassName('ContractGiver_person');
                                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                                         inputsToToggle.push(facilityNameInputs[i]);
                                                     }
@@ -6015,7 +6176,7 @@
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 60,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -6026,10 +6187,10 @@
                                                 <div class="group-input">
                                                     <label for="Contract Giver notification">Contract Giver Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
-                                                    <select name="ContractGiver_Person" disabled id="ContractGiver_Person">
+                                                    <select name="ContractGiver_person" disabled id="ContractGiver_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}" @if ($user->id == $data1->ContractGiver_Person) selected @endif>
+                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ContractGiver_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -6128,6 +6289,7 @@
                                             </div>
                                             <script>
                                                 $(document).ready(function() {
+                                                 @if($data1->Other1_review!=='yes')
                                                     $('.other1_reviews').hide();
 
                                                     $('[name="Other1_review"]').change(function() {
@@ -6139,6 +6301,7 @@
                                                             $('.other1_reviews span').hide();
                                                         }
                                                     });
+                                                    @endif
                                                 });
                                             </script>
                                             <div class="col-lg-6">
@@ -6146,7 +6309,7 @@
                                                     <label for="Review Required1"> Other's 1 Review Required? </label>
                                                     <select name="Other1_review" @if ($data->stage == 4) disabled @endif id="Other1_review"
                                                         value="{{ $data1->Other1_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other1_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other1_review == 'no') selected @endif value="no">
@@ -6173,7 +6336,7 @@
                                                             style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other1_person" @if ($data->stage == 4) disabled @endif id="Other1_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6191,6 +6354,7 @@
                                                             class="text-danger">*</span></label>
                                                     <select name="Other1_Department_person" @if ($data->stage == 4) disabled @endif
                                                         id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
+                                                           <option value="">-- Select --</option>
                                                             <option value="CQA" @if ($data1->Other1_Department_person == 'CQA') selected @endif>Corporate Quality Assurance</option>
                                                             <option value="QA" @if ($data1->Other1_Department_person == 'QA') selected @endif>Quality Assurance</option>
                                                             <option value="QC" @if ($data1->Other1_Department_person == 'QC') selected @endif>Quality Control</option>
@@ -6320,6 +6484,7 @@
                                             </div>
                                             <script>
                                                 $(document).ready(function() {
+                                                    @if($data1->Other2_review!=='yes')
                                                     $('.Other2_reviews').hide();
 
                                                     $('[name="Other2_review"]').change(function() {
@@ -6331,6 +6496,7 @@
                                                             $('.Other2_reviews span').hide();
                                                         }
                                                     });
+                                                    @endif
                                                 });
                                             </script>
                                             <div class="col-lg-6">
@@ -6338,7 +6504,7 @@
                                                     <label for="review2"> Other's 2 Review Required ?</label>
                                                     <select name="Other2_review" @if ($data->stage == 4) disabled @endif id="Other2_review"
                                                         value="{{ $data1->Other2_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other2_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other2_review == 'no') selected @endif value="no">
@@ -6365,7 +6531,7 @@
                                                             style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other2_person" @if ($data->stage == 4) disabled @endif id="Other2_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6513,6 +6679,7 @@
                                             </div>
                                             <script>
                                                 $(document).ready(function() {
+                                                 @if($data1->Other3_review!=='yes')
                                                     $('.Other3_reviews').hide();
 
                                                     $('[name="Other3_review"]').change(function() {
@@ -6524,6 +6691,7 @@
                                                             $('.Other3_reviews span').hide();
                                                         }
                                                     });
+                                                    @endif
                                                 });
                                             </script>
                                             <div class="col-lg-6">
@@ -6531,7 +6699,7 @@
                                                     <label for="review3"> Other's 3 Review Required ?</label>
                                                     <select name="Other3_review" @if ($data->stage == 4) disabled @endif id="Other3_review"
                                                         value="{{ $data1->Other3_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other3_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other3_review == 'no') selected @endif value="no">
@@ -6560,7 +6728,7 @@
                                                             style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other3_person" @if ($data->stage == 4) disabled @endif id="Other3_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6707,6 +6875,7 @@
                                             </div>
                                             <script>
                                                 $(document).ready(function() {
+                                                    @if($data1->Other4_review!=='yes')
                                                     $('.Other4_reviews').hide();
 
                                                     $('[name="Other4_review"]').change(function() {
@@ -6718,6 +6887,7 @@
                                                             $('.Other4_reviews span').hide();
                                                         }
                                                     });
+                                                    @endif
                                                 });
                                             </script>
                                             <div class="col-lg-6">
@@ -6725,7 +6895,7 @@
                                                     <label for="review4">Other's 4 Review Required ?</label>
                                                     <select name="Other4_review" @if ($data->stage == 4) disabled @endif id="Other4_review"
                                                         value="{{ $data1->Other4_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other4_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other4_review == 'no') selected @endif value="no">
@@ -6753,7 +6923,7 @@
                                                             style="display: {{ $data1->Other4_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other4_person" @if ($data->stage == 4) disabled @endif id="Other4_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other4_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6903,6 +7073,7 @@
                                             </div>
                                             <script>
                                                 $(document).ready(function() {
+                                                   @if($data1->Other5_review!=='yes')
                                                     $('.Other5_reviews').hide();
 
                                                     $('[name="Other5_review"]').change(function() {
@@ -6914,6 +7085,7 @@
                                                             $('.Other5_reviews span').hide();
                                                         }
                                                     });
+                                                    @endif
                                                 });
                                             </script>
                                             <div class="col-lg-6">
@@ -6921,7 +7093,7 @@
                                                     <label for="review5">Other's 5 Review Required ?</label>
                                                     <select name="Other5_review" @if ($data->stage == 4) disabled @endif id="Other5_review"
                                                         value="{{ $data1->Other5_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other5_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other5_review == 'no') selected @endif value="no">
@@ -6949,7 +7121,7 @@
                                                             class="text-danger">*</span>
                                                     </label>
                                                     <select name="Other5_person" @if ($data->stage == 4) disabled @endif id="Other5_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7100,7 +7272,7 @@
                                                     <label for="Review Required1"> Other's 1 Review Required? </label>
                                                     <select disabled name="Other1_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_review" value="{{ $data1->Other1_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other1_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other1_review == 'no') selected @endif value="no">
@@ -7126,7 +7298,7 @@
                                                     <label for="Person1"> Other's 1 Person </label>
                                                     <select disabled name="Other1_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7142,7 +7314,7 @@
                                                     <select disabled
                                                         name="Other1_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other1_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other1_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other1_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7239,7 +7411,7 @@
                                                     <label for="review2"> Other's 2 Review Required ?</label>
                                                     <select disabled name="Other2_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_review" value="{{ $data1->Other2_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other2_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other2_review == 'no') selected @endif value="no">
@@ -7265,7 +7437,7 @@
                                                     <label for="Person2"> Other's 2 Person</label>
                                                     <select disabled name="Other2_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7280,7 +7452,7 @@
                                                     <select disabled
                                                         name="Other2_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other2_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other2_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other2_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7377,7 +7549,7 @@
                                                     <label for="review3"> Other's 3 Review Required ?</label>
                                                     <select disabled name="Other3_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_review" value="{{ $data1->Other3_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other3_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other3_review == 'no') selected @endif value="no">
@@ -7405,7 +7577,7 @@
                                                     <label for="Person3">Other's 3 Person</label>
                                                     <select disabled name="Other3_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7421,7 +7593,7 @@
                                                     <select disabled
                                                         name="Other3_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other3_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other3_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other3_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7515,7 +7687,7 @@
                                                     <label for="review4">Other's 4 Review Required ?</label>
                                                     <select disabled name="Other4_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_review" value="{{ $data1->Other4_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other4_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other4_review == 'no') selected @endif value="no">
@@ -7542,7 +7714,7 @@
                                                     <label for="Person4"> Other's 4 Person</label>
                                                     <select name="Other4_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other4_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7557,7 +7729,7 @@
                                                     <select disabled
                                                         name="Other4_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other4_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other4_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other4_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7655,7 +7827,7 @@
                                                     <label for="review5">Other's 5 Review Required ?</label>
                                                     <select disabled name="Other5_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_review" value="{{ $data1->Other5_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other5_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other5_review == 'no') selected @endif value="no">
@@ -7681,7 +7853,7 @@
                                                     <label for="Person5">Other's 5 Person</label>
                                                     <select disabled name="Other5_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7696,7 +7868,7 @@
                                                     <select disabled
                                                         name="Other5_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other5_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other5_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other5_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7815,6 +7987,14 @@
                                             <label for="qa-eval-comments">QA Evaluation Comments</label>
                                             <textarea name="qa_eval_comments">{{ $evaluation->qa_eval_comments }}</textarea>
                                         </div>
+
+                                        @if ($data1->Production_Injection_Attachment)
+                                            @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                    name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
                                         <div class="group-input">
                                             <label for="qa-eval-attach">QA Evaluation Attachments</label>
                                             <div class="file-attachment-field">
@@ -7827,7 +8007,7 @@
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
+                                                                <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
@@ -7865,6 +8045,14 @@
                                             <label for="feedback">Training Feedback</label>
                                             <textarea name="feedback">{{ $approcomments->feedback }}</textarea>
                                         </div>
+
+                                        @if ($data1->Production_Injection_Attachment)
+                                            @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                    name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
                                         <div class="group-input">
                                             <label for="tran-attach">Training Attachments</label>
                                             <div class="file-attachment-field">
@@ -7877,7 +8065,7 @@
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file"
+                                                                <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
@@ -7985,6 +8173,14 @@
                                     <label for="qa-closure-comments">QA Closure Comments</label>
                                     <textarea name="qa_closure_comments">{{ $closure->qa_closure_comments }}</textarea>
                                 </div>
+
+                                @if ($closure->tran_attach)
+                                    @foreach (json_decode($closure->tran_attach) as $file)
+                                        <input id="trainingAttachmentFile-{{ $loop->index }}" type="hidden"
+                                            name="existinTrainingFile[{{ $loop->index }}]"
+                                            value="{{ $file }}">
+                                    @endforeach
+                                @endif
                                 <div class="group-input">
                                     <label for="attach-list">List Of Attachments</label>
                                     <div class="file-attachment-field">
@@ -7997,7 +8193,7 @@
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
+                                                        <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
@@ -8020,7 +8216,7 @@
                                                         <div class="group-input">
                                                             <label for="effective-check">Effectivess Check Required?</label>
                                                             <select name="effective_check">
-                                                                <option value="0">-- Select --</option>
+                                                                <option value="">-- Select --</option>
                                                                 <option {{ $closure->effective_check == 'yes' ? 'selected' : '' }}
                                                                     value="yes">Yes</option>
                                                                 <option {{ $closure->effective_check == 'no' ? 'selected' : '' }}
@@ -8044,7 +8240,7 @@
                                                         <div class="group-input">
                                                             <label for="Effectiveness_checker">Effectiveness Checker</label>
                                                             <select name="Effectiveness_checker">
-                                                                <option value="0">Enter Your Selection Here</option>
+                                                                <option value="">Enter Your Selection Here</option>
                                                                 @foreach ($users as $datas)
     <option {{ $info->Effectiveness_checker == $datas->id ? 'selected' : '' }}
                                                                          value="{{ $datas->id }}">{{ $datas->name }}
@@ -8520,20 +8716,28 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="group-input">
-                            <label for="minor">
-                                <input type="radio" name="revision" id="minor" value="Extension">
-                                Extension
-                            </label>
                             @if($data->stage == 3)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="RCA">
                                     RCA
                                 </label>
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="Extension">
+                                    Extension
+                                </label>
                             @endif
-                            @if($data->stage == 6)
+                            @if($data->stage == 5)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Capa">
                                     Capa
+                                </label>
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="Extension">
+                                    Extension
+                                </label>                            
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="Action-Item">
+                                    Action Item
                                 </label>
                             @endif
                         </div>
@@ -8550,6 +8754,112 @@
             </div>
         </div>
     </div>
+
+
+    <!-- modal for stage 9 child-modal-stage_8 start-->
+
+    <div class="modal fade" id="child-modal-stage_8">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Child</h4>
+                </div>
+                <form action="{{ url('rcms/child', $cc_lid) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="group-input">
+                            @if($data->stage == 9)
+                            <div>
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="RCA">
+                                    RCA
+                                </label>
+                            </div>
+                            <div>   
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="Extension">
+                                    Extension
+                                </label> 
+                            </div>   
+
+
+                            @endif
+                            @if($data->stage == 9)
+                            <div>
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="Capa">
+                                    Capa
+                                </label>
+                                                        
+                            </div>  
+                            @endif
+                        </div>
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        <button type="submit">Continue</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- modal for stage 9 child-modal-stage_8 End-->
+    
+
+
+
+    <div class="modal fade" id="child_effective_ness">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Child</h4>
+                </div>
+                <form action="{{ url('rcms/child', $cc_lid) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="group-input">
+                            @if($data->stage == 13)
+                            <div>
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="Effective-Check">
+                                    Effectiveness Check
+                                </label>
+                            </div>
+                           
+
+                            @endif
+                            
+                        </div>
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        <button type="submit">Continue</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
 
 
     <!-- /************ Open State Modal ***********/ -->
@@ -8634,8 +8944,8 @@
     </div>
     <!-- /************ Initial QA Modal ***********/ -->
 
-    <!-- /************ CFT from QA Modal ***********/ -->
-    <div class="modal fade" id="send-cft-from-QA-modal">
+    <!-- /************ Sent to QA Head Approval Modal ***********/ -->
+    <div class="modal fade" id="qa-head-approval">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -8643,7 +8953,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('rcms/send-cft-from-QA', $cc_lid) }}" method="POST">
+                <form action="{{ url('rcms/send-qa-approval', $cc_lid) }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -8673,7 +8983,48 @@
             </div>
         </div>
     </div>
-    <!-- /************ CFT from QA Modal ***********/ -->
+    <!-- /************ Sent to QA Head Approval Modal ***********/ -->
+
+    <!-- /************ Sent to Post Implementation Modal ***********/ -->
+    <div class="modal fade" id="send-post-implementation">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <form action="{{ url('rcms/send-post-implementation', $cc_lid) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" class="form-control" name="comments">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /************ Sent to Post Implementation Modal ***********/ -->
 
 
     <!-- /************ HOD Modal ***********/ -->
@@ -9197,4 +9548,15 @@
             $('#rchars').text(textlen);
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.remove-file').click(function() {
+                const removeId = $(this).data('remove-id')
+                console.log('removeId', removeId);
+                $('#' + removeId).remove();
+            })
+        })
+    </script>
+
 @endsection

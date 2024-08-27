@@ -10,6 +10,8 @@ use App\Models\RiskAssesmentGrid;
 use App\Models\RootCauseAnalysis;
 use App\Models\RootCauseAnalysesGrid;
 use App\Models\RootCauseAnalysisHistory;
+use App\Models\Capa;
+use App\Models\OpenStage;
 use App\Models\User;
 use Helpers;
 use Illuminate\Support\Facades\Mail;
@@ -25,12 +27,12 @@ use Illuminate\Support\Facades\Hash;
 {
     public function rootcause()
     {
-        $record = ((RecordNumber::first()->value('counter')) + 1);
-        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view("frontend.forms.root-cause-analysis", compact('due_date', 'record'));
+        return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
     }
     public function root_store(Request $request)
     { 
@@ -289,7 +291,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Initiator Group';
         $history->previous = "Null";
         $history->current = $root->initiator_Group;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -328,7 +330,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Sevrity Level';
         $history->previous = "Null";
         $history->current =   $root->severity_level;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -348,7 +350,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Assign Id';
         $history->previous = "Null";
         $history->current = $root->assign_to;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -371,7 +373,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'QA Reviewer';
         $history->previous = "Null";
         $history->current = $root->qa_reviewer;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -389,7 +391,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Due Date';
         $history->previous = "Null";
         $history->current =  $root->due_date;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -407,7 +409,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Initiated Through';
         $history->previous = "Null";
         $history->current =  $root->initiated_through;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -425,7 +427,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Others';
         $history->previous = "Null";
         $history->current =  $root->initiated_if_other;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -443,7 +445,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Type';
         $history->previous = "Null";
         $history->current =  $root->Type;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -461,7 +463,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Priority-Level';
         $history->previous = "Null";
         $history->current =  $root->priority_level;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -481,7 +483,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Department';
         $history->previous = "Null";
         $history->current =   $root->department;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -501,7 +503,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Description';
         $history->previous = "Null";
         $history->current =  $root->description;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -520,7 +522,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Comments';
         $history->previous = "Null";
         $history->current =  $root->comments;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -542,7 +544,7 @@ use Illuminate\Support\Facades\Hash;
         $history->previous = "Null";
         $history->current =  empty($root->root_cause_initial_attachment) ? null:$root->root_cause_initial_attachment;
   
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -562,7 +564,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Related URL';
         $history->previous = "Null";
         $history->current =  $root->related_url;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -607,7 +609,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Root Cause Description';
         $history->previous = "Null";
         $history->current =  $root->root_cause_description;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -629,7 +631,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Investigation Summary';
         $history->previous = "Null";
         $history->current =  $root->investigation_summary;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -651,7 +653,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Final Comments';
         $history->previous = "Null";
         $history->current =  $root->cft_comments_new;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -673,7 +675,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Final Attachment';
         $history->previous = "Null";
         $history->current =  $root->cft_attchament_new;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -727,7 +729,7 @@ use Illuminate\Support\Facades\Hash;
 //             $history->activity_type = $value;
 //             $history->previous = $previousValue; // Store the previous value
 //             $history->current = $currentValue;
-//             $history->comment = "NA"; // Add comment if required
+//                   $history->comment = "Not Applicable"; // Add comment if required
 //             $history->user_id = Auth::user()->id;
 //             $history->user_name = Auth::user()->name;
 //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -768,7 +770,7 @@ use Illuminate\Support\Facades\Hash;
 //                 $history->activity_type = $value;
 //                 $history->previous = $previousValue; // Store the previous value
 //                 $history->current = $currentValue;
-//                 $history->comment = "NA"; // Add comment if required
+//                       $history->comment = "Not Applicable"; // Add comment if required
 //                 $history->user_id = Auth::user()->id;
 //                 $history->user_name = Auth::user()->name;
 //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -814,7 +816,7 @@ use Illuminate\Support\Facades\Hash;
 //                 $history->activity_type = $value;
 //                 $history->previous = $previousValue; // Store the previous value
 //                 $history->current = $currentValue;
-//                 $history->comment = "NA"; // Add comment if required
+//                       $history->comment = "Not Applicable"; // Add comment if required
 //                 $history->user_id = Auth::user()->id;
 //                 $history->user_name = Auth::user()->name;
 //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -859,7 +861,7 @@ use Illuminate\Support\Facades\Hash;
 //                 $history->activity_type = $value;
 //                 $history->previous = $previousValue; // Store the previous value
 //                 $history->current = $currentValue;
-//                 $history->comment = "NA"; // Add comment if required
+//                       $history->comment = "Not Applicable"; // Add comment if required
 //                 $history->user_id = Auth::user()->id;
 //                 $history->user_name = Auth::user()->name;
 //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -915,7 +917,7 @@ use Illuminate\Support\Facades\Hash;
 //                 $history->activity_type = $value;
 //                 $history->previous = $previousValue; // Store the previous value
 //                 $history->current = $currentValue;
-//                 $history->comment = "NA"; // Add comment if required
+//                       $history->comment = "Not Applicable"; // Add comment if required
 //                 $history->user_id = Auth::user()->id;
 //                 $history->user_name = Auth::user()->name;
 //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -934,7 +936,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Sample Types';
         // $history->previous = "Null";
         // $history->current = $root->Sample_Types;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -951,7 +953,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Investigators';
         // $history->previous = "Null";
         // $history->current = $root->investigators;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -967,7 +969,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Attachments';
         // $history->previous = "Null";
         // $history->current = empty($root->cft_attchament_new) ? null : $root->cft_attchament_new;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -983,7 +985,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Comments';
         // $history->previous = "Null";
         // $history->current = $root->comments;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -999,7 +1001,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Lab Inv Concl';
         // $history->previous = "Null";
         // $history->current = $root->lab_inv_concl;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1015,7 +1017,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'lab Inv Attach';
         // $history->previous = "Null";
         // $history->current = $root->lab_inv_attach;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1031,7 +1033,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Qc Head Comments';
         // $history->previous = "Null";
         // $history->current = $root->qc_head_comments;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1047,7 +1049,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Inv Attach';
         // $history->previous = "Null";
         // $history->current = $root->inv_attach;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1064,7 +1066,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Due Date';
         // $history->previous = "Null";
         // $history->current = $root->due_date;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1085,7 +1087,7 @@ use Illuminate\Support\Facades\Hash;
 
     public function root_update(Request $request, $id)
 
-
+    //  dd(root_update);
 
     {
        //       dd($request->all());
@@ -2623,20 +2625,80 @@ use Illuminate\Support\Facades\Hash;
             $root = RootCauseAnalysis::find($id);
             $lastDocument =  RootCauseAnalysis::find($id);
 
-            if ($root->stage == 1) {
+             if ($root->stage == 1) {
                 $root->stage = "2";
-                $root->status = "Investigation in Progress";
-                $root->submitted_by= Auth::user()->name;
-                $root->submitted_on= Carbon::now()->format('d-M-Y');
-                $root->comments = $request->comment;
+                $root->status = 'HOD Review';
+                $root->acknowledge_by = Auth::user()->name;
+                $root->acknowledge_on = Carbon::now()->format('d-M-Y');
+                $root->ack_comments = $request->comment;
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous ="";
-                $history->current = $root->submitted_by;
+                $history->activity_type = 'Acknowledge By ,Acknowledge On';
+                $history->previous ="Opened";
+                $history->current = $root->acknowledge_by;
                 $history->comment = $request->comment;
                 $history->action = 'Acknowledge';
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "HOD Review";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Update';
+                
+                $history->stage = 'HOD Review';
+              
+                $history->save();
+                $root->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+             if ($root->stage == 2) {
+                $root->stage = "3";
+                $root->status = 'Initial QA/CQA Review';
+                $root->HOD_Review_Complete_By = Auth::user()->name;
+                $root->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                $root->HOD_Review_Complete_Comment = $request->comment;
+
+                $history = new RootAuditTrial();
+                $history->root_id = $id;
+                $history->activity_type = 'HOD Review Complete By,HOD Review Complete On';
+                $history->previous ="HOD Review";
+                $history->current = $root->HOD_Review_Complete_By;
+                $history->comment = $request->comment;
+                $history->action = 'HOD Review Complete';
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Initial QA/CQA Review";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Update';
+                $history->stage = 'Initial QA/CQA Review';
+              
+                $history->save();
+                $root->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+
+
+            if ($root->stage == 3) {
+                $root->stage = "4";
+                $root->status = "Investigation in Progress";
+                $root->QQQA_Review_Complete_By= Auth::user()->name;
+                $root->QQQA_Review_Complete_On= Carbon::now()->format('d-M-Y');
+                $root->QAQQ_Review_Complete_comment = $request->comment;
+
+                $history = new RootAuditTrial();
+                $history->root_id = $id;
+                $history->activity_type = 'QA Review Complete By,QA Review Complete On';
+                $history->previous ="Initial QA/CQA Review";
+                $history->current = $root->QQQA_Review_Complete_By;
+                $history->comment = $request->comment;
+                $history->action = 'QA Review Complete';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -2671,28 +2733,28 @@ use Illuminate\Support\Facades\Hash;
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($root->stage == 2) {
-                $root->stage = "3";
-                $root->status = 'Pending QA Review';
+            if ($root->stage == 4) {
+                $root->stage = "5";
+                $root->status = 'HOD Final Review';
                 $root->submitted_by = Auth::user()->name;
                 $root->submitted_on = Carbon::now()->format('d-M-Y');
                 $root->qa_comments_new = $request->comment;
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous ="QA Review Complete";
+                $history->activity_type = 'Submited By,Submited On';
+                $history->previous ="Investigation in Progress";
                 $history->current = $root->submitted_by;
                 $history->comment = $request->comment;
-                $history->action = 'submit';
+                $history->action = 'Submit';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Pending QA Review";
+                $history->change_to =   "HOD Final Review";
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
-                $history->stage = 'Pending QA Review';
+                $history->stage = 'HOD Final Review';
               
                 $history->save();
                 $root->update();
@@ -2768,27 +2830,57 @@ use Illuminate\Support\Facades\Hash;
             //     toastr()->success('Document Sent');
             //     return back();
             // }
-            if ($root->stage == 3) {
+            if ($root->stage == 5) {
                 $root->stage = "6";
-                $root->status = "Close-Done";
-                $root->submitted_by = Auth::user()->name;
-                $root->submitted_on = Carbon::now()->format('d-M-Y');
-                $root->comment_3 = $request->comment;
+                $root->status = "Final QA/CQA Review";
+                $root->HOD_Final_Review_Complete_By = Auth::user()->name;
+                $root->HOD_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                $root->HOD_Final_Review_Complete_Comment = $request->comment;
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "QA Review Complete";
-                $history->current = $root->submitted_by;
-                $history->action = 'QA Review Complete';
+                $history->activity_type = 'HOD Final Review Complete By,HOD Final Review Complete On';
+                $history->previous = "HOD Final Review";
+                $history->current = $root->HOD_Final_Review_Complete_By;
+                $history->action = 'HOD Final Review Complete';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Close-Done";
+                $history->change_to =   "Final QA/CQA Review";
                 $history->change_from = $lastDocument->status;
-                $history->stage='QA Review Complete';
+                $history->stage='Final QA/CQA Review';
+                $history->action_name = 'Update';
+                $history->save();
+
+                $root->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+               if ($root->stage == 6) {
+                $root->stage = "7";
+                $root->status = "QAH/CQAH Final Review";
+                $root->Final_QA_Review_Complete_By = Auth::user()->name;
+                $root->Final_QA_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                $root->Final_QA_Review_Complete_Comment = $request->comment;
+             
+
+                $history = new RootAuditTrial();
+                $history->root_id = $id;
+                $history->activity_type = 'Final QA/CQA Review Complete By,Final QA/CQA Review Complete ON';
+                // $history->previous = $lastDocument;
+                $history->current = $root->Final_QA_Review_Complete_By;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->action = 'Final QA/CQA Review Complete';
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to =   "QAH/CQAH Final Review";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Update';
+
+                $history->stage='QAH/CQAH Final Review';
                 $history->save();
 
                 $root->update();
@@ -2796,31 +2888,31 @@ use Illuminate\Support\Facades\Hash;
                 return back();
             }
 
-            if ($root->stage == 5) {
-                $root->stage = "6";
-                $root->status = "Closed -Done";
+
+            if ($root->stage == 7) {
+                $root->stage = "8";
+                $root->status = "Closed - Done";
                 $root->evaluation_complete_by = Auth::user()->name;
                 $root->evaluation_complete_on = Carbon::now()->format('d-M-Y');
-             
-
+                $root->evalution_Closure_comment = $request->comment;
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'QAH/CQAH Closure By,QAH/CQAH Closure On';
                 $history->previous = $lastDocument->submitted_by;
                 $history->current = $root->evaluation_complete_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
-                $history->action = 'QA Review Complete';
+                $history->action = 'QAH/CQAH Closure';
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 // $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Close-Done";
+                $history->change_to =   "Closed - Done";
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
                // $history->stage = 'Completed';
               
                
-                $history->stage='Completed';
+                $history->stage='Closed - Done';
                 $history->save();
                 $root->update();
 
@@ -2850,7 +2942,7 @@ use Illuminate\Support\Facades\Hash;
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Activity Log';
+            $history->activity_type = 'Cancelled By,Cancelled On';
             // $history->previous = $lastDocument->cancelled_by;
             $history->previous = "";
             $history->current = $root->cancelled_by;
@@ -2906,22 +2998,126 @@ use Illuminate\Support\Facades\Hash;
            // $root = RootCauseAnalysis::find($id);
             $lastDocument =  RootCauseAnalysis::find($id);
 
-            if ($capa->stage == 3) {
-                $capa->stage = "2";
-                $capa->status = "Investigation in Progress";
+             if ($capa->stage == 2) {
+                $capa->stage = "1";
+                $capa->status = "Opened";
 
-                $capa->qA_review_complete_by = Auth::user()->name;
-                $capa->qA_review_complete_on = Carbon::now()->format('d-M-Y');
-                $capa->reject_1 = $request->comment;
+                $capa->More_Info_ack_by = Auth::user()->name;
+                $capa->More_Info_ack_on = Carbon::now()->format('d-M-Y');
+                $capa->More_Info_ack_comment = $request->comment;
 
-                $capa->cft_comments_new = $request->comment;
+                // $capa->cft_comments_new = $request->comment;
 
                     $history = new RootAuditTrial();    
                     $history->root_id = $id;
-                    $history->previous = "";
-                    $history->activity_type = 'Activity Log';
-                   // $history->previous = $lastDocument->qA_review_complete_by;
-                    $history->current = $capa->qA_review_complete_by;
+                    $history->previous = "HOD Review";
+                    $history->activity_type = 'More Info Required By, More Info Required On';
+                //    $history->previous = $lastDocument;
+                    $history->current = $capa->More_Info_ack_by;
+                    $history->comment = $request->comment;
+                    $history->action  = "More Information Required";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Opened";
+                    $history->change_from = $lastDocument->status;
+                    $history->action_name = 'Update';
+                    $history->stage='Opened';
+                    $history->save();
+
+
+
+                $capa->update();
+
+
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($capa->stage == 3) {
+                $capa->stage = "2";
+                $capa->status = "HOD Review";
+
+                $capa->More_Info_hrc_by = Auth::user()->name;
+                $capa->More_Info_hrc_on = Carbon::now()->format('d-M-Y');
+                $capa->More_Info_hrc_comment = $request->comment;
+
+                // $capa->cft_comments_new = $request->comment;
+
+                    $history = new RootAuditTrial();    
+                    $history->root_id = $id;
+                    $history->previous = "Initial QA/CQA Review";
+                    $history->activity_type = 'More Info Required By, More Info Required On';
+                   // $history->previous = $lastDocument->More_Info_hrc_by;
+                    $history->current = $capa->More_Info_hrc_by;
+                    $history->comment = $request->comment;
+                    $history->action  = "More Information Required";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "HOD Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->action_name = 'Update';
+                    $history->stage='HOD Review';
+                    $history->save();
+
+
+
+                $capa->update();
+
+
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($capa->stage == 4) {
+                $capa->stage = "3";
+                $capa->status = "Initial QA/CQA Review";
+
+                $capa->More_Info_qac_by = Auth::user()->name;
+                $capa->More_Info_qac_on = Carbon::now()->format('d-M-Y');
+                $capa->More_Info_qac_comment = $request->comment;
+
+                    $history = new RootAuditTrial();    
+                    $history->root_id = $id;
+                    $history->previous = "Investigation in Progress";
+                    $history->activity_type = 'More Info Required By, More Info Required On';
+                   // $history->previous = $lastDocument->More_Info_qac_by;
+                    $history->current = $capa->More_Info_qac_by;
+                    $history->comment = $request->comment;
+                    $history->action  = "More Information Required";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Initial QA/CQA Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->action_name = 'Update';
+                    $history->stage='Initial QA/CQA Review';
+                    $history->save();
+
+
+
+                $capa->update();
+
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($capa->stage == 5) {
+                $capa->stage = "4";
+                $capa->status = "Investigation in Progress";
+
+                $capa->More_Info_sub_by = Auth::user()->name;
+                $capa->More_Info_sub_on = Carbon::now()->format('d-M-Y');
+                $capa->More_Info_sub_comment = $request->comment;
+
+                    $history = new RootAuditTrial();    
+                    $history->root_id = $id;
+                    $history->previous = "HOD Final Review";
+                    $history->activity_type = 'More Info Required By, More Info Required On';
+                   // $history->previous = $lastDocument->More_Info_sub_by;
+                    $history->current = $capa->More_Info_sub_by;
                     $history->comment = $request->comment;
                     $history->action  = "More Information Required";
                     $history->user_id = Auth::user()->id;
@@ -2938,31 +3134,53 @@ use Illuminate\Support\Facades\Hash;
 
                 $capa->update();
 
-
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($capa->stage == 5) {
-                $capa->stage = "2";
-                $capa->status = "Investigation in Progress";
+                if ($capa->stage == 6) {
+                $capa->stage = "5";
+                $capa->status = "HOD Final Review";
+
+                $capa->More_Info_hfr_by = Auth::user()->name;
+                $capa->More_Info_hfr_on = Carbon::now()->format('d-M-Y');
+                $capa->More_Info_hfr_comment = $request->comment;
+
+                    $history = new RootAuditTrial();    
+                    $history->root_id = $id;
+                    $history->previous = "Final QA/CQA Review";
+                    $history->activity_type = 'More Info Required By, More Info Required On';
+                   // $history->previous = $lastDocument->More_Info_hfr_by;
+                    $history->current = $capa->More_Info_hfr_by;
+                    $history->comment = $request->comment;
+                    $history->action  = "More Information Required";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "HOD Final Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->action_name = 'Update';
+                    $history->stage='HOD Final Review';
+                    $history->save();
 
 
-                
+
                 $capa->update();
 
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($capa->stage == 4) {
-                $capa->stage = "2";
-                $capa->status = "Investigation in Progress";
+                if ($capa->stage == 7) {
+                $capa->stage = "6";
+                $capa->status = "Final QA/CQA Review";
 
                 $capa->qA_review_complete_by = Auth::user()->name;
                 $capa->qA_review_complete_on = Carbon::now()->format('d-M-Y');
+                $capa->qA_review_complete_comment = $request->comment;
                     $history = new RootAuditTrial();    
                     $history->root_id = $id;
-                    $history->previous = "";
-                    $history->activity_type = 'Activity Log';
+                    $history->previous = "QAH/CQAH Final Review";
+                    $history->activity_type = 'More Info Required By, More Info Required On';
                    // $history->previous = $lastDocument->qA_review_complete_by;
                     $history->current = $capa->qA_review_complete_by;
                     $history->comment = $request->comment;
@@ -2971,10 +3189,10 @@ use Illuminate\Support\Facades\Hash;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Investigation in Progress";
+                    $history->change_to =   "Final QA/CQA Review";
                     $history->change_from = $lastDocument->status;
                     $history->action_name = 'Update';
-                    $history->stage='Investigation in Progress';
+                    $history->stage='Final QA/CQA Review';
                     $history->save();
 
 
@@ -3037,6 +3255,59 @@ use Illuminate\Support\Facades\Hash;
             $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Root-cause' . $id . '.pdf');
         }
+    }
+    public function child_r_c_a(Request $request, $id)
+    {
+        $parent_id = $id;
+        $parent_initiator_id = RootCauseAnalysis::where('id', $id)->value('initiator_id');
+        $parent_type = "Action-Item";
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $parent_record = $record_number;
+        $currentDate = Carbon::now();
+        $parent_intiation_date = $currentDate;
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
+        $record=$record_number;
+        return view('frontend.action-item.action-item', compact('parent_intiation_date','parent_initiator_id','parent_record', 'record', 'due_date', 'parent_id', 'parent_type','old_record'));
+    }
+      public function RCAChildRoot(Request $request ,$id)
+    {
+        $cc = RootCauseAnalysis::find($id);
+               $cft = [];
+               $parent_id = $id;
+               $parent_type = "Capa";
+               $old_record = Capa::select('id', 'division_id', 'record')->get();
+               $record_number = ((RecordNumber::first()->value('counter')) + 1);
+               $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+               $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+               $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+               $currentDate = Carbon::now();
+               $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+               $parent_initiator_id = $id;
+
+
+               $formattedDate = $currentDate->addDays(30);
+               $due_date = $formattedDate->format('d-M-Y');
+               $oocOpen = OpenStage::find(1);
+               if (!empty($oocOpen->cft)) $cft = explode(',', $oocOpen->cft);
+
+
+               if ($request->revision == "capa-child") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                $record = $record_number;
+                $old_records = $old_record;
+                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+                }
+
+               if ($request->revision == "Action-Item") {
+                   $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                   return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+               }
+
+
+
     }
 
     public static function auditReport($id)

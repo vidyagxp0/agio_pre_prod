@@ -815,10 +815,9 @@
                                 </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Initiation Department <span
-                                                class="text-danger">*</span></label>
-                                        <select name="Initiator_Group" id="initiator_group">
-                                            <optio value="">Select Initiation Department</option>
+                                        <label for="initiator-group">Initiation Department <span   class="text-danger">*</span></label>
+                                        <select name="Initiator_Group" id="Initiator_group">
+                                                <option value="">Select Department</option>
                                                 <option value="CQA">Corporate Quality Assurance</option>
                                                 <option value="QA">Quality Assurance</option>
                                                 <option value="QC">Quality Control</option>
@@ -5059,55 +5058,31 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Initiator Group"><b>Name of the Department</b><span
-                                                class="text-danger">*</span></label>
+                                        <label for="initiator-group">Initiation Department<span class = "text-danger">*</span></label>
                                         <select name="department_capa" id="department_capa">
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('department_capa') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('department_capa') == 'QAB') selected @endif>
-                                                Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('department_capa') == 'CQC') selected @endif>
-                                                Central
-                                                Quality Control</option>
-                                            <option value="MANU" @if (old('department_capa') == 'MANU') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('department_capa') == 'PSG') selected @endif>
-                                                Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('department_capa') == 'CS') selected @endif>
-                                                Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('department_capa') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('department_capa') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('department_capa') == 'CL') selected @endif>
-                                                Central
-                                                Laboratory</option>
-
-                                            <option value="TT" @if (old('department_capa') == 'TT') selected @endif>
-                                                Tech
-                                                team</option>
-                                            <option value="QA" @if (old('department_capa') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('department_capa') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('department_capa') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('department_capa') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('department_capa') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('department_capa') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('department_capa') == 'BA') selected @endif>
-                                                Business Administration</option>
+                                            <option value="NA">Select Department</option>
+                                            <option value="CQA">Corporate Quality Assurance</option>
+                                            <option value="QA">Quality Assurance</option>
+                                            <option value="QC">Quality Control</option>
+                                            <option value="QM">Quality Control (Microbiology department)</option>
+                                            <option value="PG">Production General</option>
+                                            <option value="PL">Production Liquid Orals</option>
+                                            <option value="PT">Production Tablet and Powder</option>
+                                            <option value="PE">Production External (Ointment, Gels, Creams and Liquid)</option>
+                                            <option value="PC">Production Capsules</option>
+                                            <option value="PI">Production Injectable</option>
+                                            <option value="EN">Engineering</option>
+                                            <option value="HR">Human Resource</option>
+                                            <option value="ST">Store</option>
+                                            <option value="IT">Electronic Data Processing</option>
+                                            <option value="FD">Formulation  Development</option>
+                                            <option value="AL">Analytical research and Development Laboratory</option>
+                                            <option value="PD">Packaging Development</option>
+                                            <option value="PU">Purchase Department</option>
+                                            <option value="DC">Document Cell</option>
+                                            <option value="RA">Regulatory Affairs</option>
+                                            <option value="PV">Pharmacovigilance</option>
                                         </select>
-                                        @error('department_capa')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
                                     </div>
                                 </div>
                                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
@@ -6282,31 +6257,58 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="submit comment">Submit Comments :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
-                            <div class="sub-head">HOD Review Completed</div>
+                            </div> --}}
+                            <div class="sub-head">HOD Initial Review Completed</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="HOD Review Complete By">HOD Review Complete By :-</label>
+                                    <label for="HOD Review Complete By">HOD Initial Review Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="HOD Review Complete On">HOD Review Complete On :-</label>
+                                    <label for="HOD Initial Review Complete On">HOD Initial Review Complete On :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit by">cancelled By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="cancelled on">cancelled On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD Review Comments">HOD Review Comments :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
                             <div class="sub-head">QA Initial Review Completed</div>
@@ -6324,53 +6326,95 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
-                            <div class="sub-head">CFT Review Complete</div>
+                            </div> --}}
+                            <div class="sub-head">Pending Initiator Update Complete</div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="CFT Review Complete By">CFT Review Complete By :-</label>
+                                    <label for="CFT Review Complete By">Pending Initiator Update Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="CFT Review Complete On">CFT Review Complete On :-</label>
+                                    <label for="Pending Initiator Update Complete On">Pending Initiator Update Complete On :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="CFT Review Comments">CFT Review Comments :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
-                            <div class="sub-head">Initiator Update</div>
+                            </div> --}}
+                            <div class="sub-head">HOD Final Review Completed</div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
+                                    <label for="CFT Review Complete By">HOD Final Review Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="CFT Review Complete On">Initiator Update Complete On :-</label>
+                                    <label for="CFT Review Complete On">HOD Final Review Complete On :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="CFT Review Comments">Initiator Update Comments :-</label>
+                                    <label for="CFT Review Comments">HOD Final Review Comments :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div> --}}
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
                             <div class="sub-head"> QA Final Review Completed</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -6384,17 +6428,31 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="sub-head"> Approved</div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Approved By">Approved By :-</label>
+                                    <label for="Approved By"> Approved By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -6404,13 +6462,39 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Approved Comments">Approved Comments :-</label>
                                     <div class="static"></div>
                                 </div>
+                            </div> --}}
+                            <div class="sub-head">cancelled</div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit by">cancelled By :-</label>
+                                    <div class="static"></div>
+                                </div>
                             </div>
-
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="cancelled on">cancelled On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>

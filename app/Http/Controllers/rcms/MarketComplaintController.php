@@ -6,13 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\MarketComplaint;
 use App\Models\MarketComplaintGrids ;
 use App\Models\MarketComplaintAuditTrial;
+use App\Models\MarketComplaintCft;
+use App\Models\MarketComplaintcftResponce;
 use App\Models\Capa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 use App\Models\RecordNumber;
 use App\Models\RoleGroup;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\CC;
 use Illuminate\Support\Facades\App;
 use Helpers;
 
@@ -36,8 +42,6 @@ class MarketComplaintController extends Controller
 
     public function store(Request $request)
     {
-
-
 
         if (!$request->description_gi) {
             toastr()->info("Short Description is required");
@@ -118,7 +122,7 @@ class MarketComplaintController extends Controller
 
         //  dd($marketComplaint->record);
             $marketComplaint->form_type="Market Complaint";
-      
+
             // {{----.File attachemenet   }}
 
 
@@ -139,10 +143,10 @@ class MarketComplaintController extends Controller
                     foreach ($request->file('initial_attachment_gi') as $file) {
                         // Generate a unique name for the file
                         $name = $request->name . '_initial_attachment_gi_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        
+
                         // Move the file to the upload directory
                         $file->move(public_path('upload/'), $name);
-                        
+
                         // Add the file name to the array
                         $files[] = $name;
                     }
@@ -190,12 +194,461 @@ class MarketComplaintController extends Controller
             // dd($marketComplaint);
 
 
-
-
             $marketComplaint->save();
 
 
+        /* CFT Data Feilds Start */
 
+        $Cft = new MarketComplaintCft();
+        $Cft->mc_id = $marketComplaint->id;
+        $Cft->Production_Review = $request->Production_Review;
+        $Cft->Production_person = $request->Production_person;
+        $Cft->Production_assessment = $request->Production_assessment;
+        $Cft->Production_feedback = $request->Production_feedback;
+        $Cft->production_on = $request->production_on;
+        $Cft->production_by = $request->production_by;
+
+        $Cft->RA_Review = $request->RA_Review;
+        $Cft->RA_Comments = $request->RA_Comments;
+        $Cft->RA_person = $request->RA_person;
+        $Cft->RA_assessment = $request->RA_assessment;
+        $Cft->RA_feedback = $request->RA_feedback;
+        $Cft->RA_attachment = $request->RA_attachment;
+        $Cft->RA_by = $request->RA_by;
+        $Cft->RA_on = $request->RA_on;
+
+        $Cft->Production_Table_Review = $request->Production_Table_Review;
+        $Cft->Production_Table_Person = $request->Production_Table_Person;
+        $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+        $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
+        $Cft->Production_Table_Attachment = $request->Production_Table_Attachment;
+        $Cft->Production_Table_By = $request->Production_Table_By;
+        $Cft->Production_Table_On = $request->Production_Table_On;
+
+        $Cft->Production_Injection_Review = $request->Production_Injection_Review;
+        $Cft->Production_Injection_Person = $request->Production_Injection_Person;
+        $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
+
+        $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
+        $Cft->Production_Injection_Attachment = $request->Production_Injection_Attachment;
+        $Cft->Production_Injection_By = $request->Production_Injection_By;
+        $Cft->Production_Injection_On = $request->Production_Injection_On;
+
+        $Cft->Warehouse_review = $request->Warehouse_review;
+        $Cft->Warehouse_notification = $request->Warehouse_notification;
+        $Cft->Warehouse_assessment = $request->Warehouse_assessment;
+        $Cft->Warehouse_feedback = $request->Warehouse_feedback;
+        $Cft->Warehouse_by = $request->Warehouse_Review_Completed_By;
+        $Cft->Warehouse_on = $request->Warehouse_on;
+
+        $Cft->Quality_review = $request->Quality_review;
+        $Cft->Quality_Control_Person = $request->Quality_Control_Person;
+        $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
+        $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
+        $Cft->Quality_Control_by = $request->Quality_Control_by;
+        $Cft->Quality_Control_on = $request->Quality_Control_on;
+
+        $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
+        $Cft->QualityAssurance_person = $request->QualityAssurance_person;
+        $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
+        $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
+        $Cft->QualityAssurance_by = $request->QualityAssurance_by;
+        $Cft->QualityAssurance_on = $request->QualityAssurance_on;
+
+        $Cft->Engineering_review = $request->Engineering_review;
+        $Cft->Engineering_person = $request->Engineering_person;
+        $Cft->Engineering_assessment = $request->Engineering_assessment;
+        $Cft->Engineering_feedback = $request->Engineering_feedback;
+        $Cft->Engineering_by = $request->Engineering_by;
+        $Cft->Engineering_on = $request->Engineering_on;
+
+        $Cft->Analytical_Development_review = $request->Analytical_Development_review;
+        $Cft->Analytical_Development_person = $request->Analytical_Development_person;
+        $Cft->Analytical_Development_assessment = $request->Analytical_Development_assessment;
+        $Cft->Analytical_Development_feedback = $request->Analytical_Development_feedback;
+        $Cft->Analytical_Development_by = $request->Analytical_Development_by;
+        $Cft->Analytical_Development_on = $request->Analytical_Development_on;
+
+        $Cft->Kilo_Lab_review = $request->Kilo_Lab_review;
+        $Cft->Kilo_Lab_person = $request->Kilo_Lab_person;
+        $Cft->Kilo_Lab_assessment = $request->Kilo_Lab_assessment;
+        $Cft->Kilo_Lab_feedback = $request->Kilo_Lab_feedback;
+        $Cft->Kilo_Lab_attachment_by = $request->Kilo_Lab_attachment_by;
+        $Cft->Kilo_Lab_attachment_on = $request->Kilo_Lab_attachment_on;
+
+        $Cft->Technology_transfer_review = $request->Technology_transfer_review;
+        $Cft->Technology_transfer_person = $request->Technology_transfer_person;
+        $Cft->Technology_transfer_assessment = $request->Technology_transfer_assessment;
+        $Cft->Technology_transfer_feedback = $request->Technology_transfer_feedback;
+        $Cft->Technology_transfer_by = $request->Technology_transfer_by;
+        $Cft->Technology_transfer_on = $request->Technology_transfer_on;
+
+        $Cft->Environment_Health_review = $request->Environment_Health_review;
+        $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
+        $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
+        $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
+        $Cft->Environment_Health_Safety_by = $request->Environment_Health_Safety_by;
+        $Cft->Environment_Health_Safety_on = $request->Environment_Health_Safety_on;
+
+        $Cft->Human_Resource_review = $request->Human_Resource_review;
+        $Cft->Human_Resource_person = $request->Human_Resource_person;
+        $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
+        $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
+        $Cft->Human_Resource_by = $request->Human_Resource_by;
+        $Cft->Human_Resource_on = $request->Human_Resource_on;
+
+        $Cft->Information_Technology_review = $request->Information_Technology_review;
+        $Cft->Information_Technology_person = $request->Information_Technology_person;
+        $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
+        $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
+        $Cft->Information_Technology_by = $request->Information_Technology_by;
+        $Cft->Information_Technology_on = $request->Information_Technology_on;
+
+        $Cft->Project_management_review = $request->Project_management_review;
+        $Cft->Project_management_person = $request->Project_management_person;
+        $Cft->Project_management_assessment = $request->Project_management_assessment;
+        $Cft->Project_management_feedback = $request->Project_management_feedback;
+        $Cft->Project_management_by = $request->Project_management_by;
+        $Cft->Project_management_on = $request->Project_management_on;
+
+        $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
+        $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
+        $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
+        $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
+        $Cft->ProductionLiquid_by = $request->ProductionLiquid_by;
+        $Cft->ProductionLiquid_on = $request->ProductionLiquid_on;
+
+        $Cft->Project_management_review = $request->Project_management_review;
+        $Cft->Project_management_person = $request->Project_management_person;
+        $Cft->Project_management_assessment = $request->Project_management_assessment;
+        $Cft->Project_management_feedback = $request->Project_management_feedback;
+        $Cft->Project_management_by = $request->Project_management_by;
+        $Cft->Project_management_on = $request->Project_management_on;
+
+        $Cft->Store_Review = $request->Store_Review;
+        $Cft->Store_person = $request->Store_person;
+        $Cft->Store_assessment = $request->Store_assessment;
+        $Cft->Store_feedback = $request->Store_feedback;
+        $Cft->Store_by = $request->Store_by;
+        $Cft->Store_on = $request->Store_on;
+
+        $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review;
+        $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person;
+        $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
+        $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
+        $Cft->ResearchDevelopment_by = $request->ResearchDevelopment_by;
+        $Cft->ResearchDevelopment_on = $request->ResearchDevelopment_on;
+
+        $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
+        $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person;
+        $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
+        $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
+        $Cft->RegulatoryAffair_by = $request->RegulatoryAffair_by;
+        $Cft->RegulatoryAffair_on = $request->RegulatoryAffair_on;
+
+        $Cft->Microbiology_Review = $request->Microbiology_Review;
+        $Cft->Microbiology_person = $request->Microbiology_person;
+        $Cft->Microbiology_assessment = $request->Microbiology_assessment;
+        $Cft->Microbiology_feedback = $request->Microbiology_feedback;
+        $Cft->Microbiology_by = $request->Microbiology_by;
+        $Cft->Microbiology_on = $request->Microbiology_on;
+
+        $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
+        $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person;
+        $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
+        $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
+        $Cft->CorporateQualityAssurance_by = $request->CorporateQualityAssurance_by;
+        $Cft->CorporateQualityAssurance_on = $request->CorporateQualityAssurance_on;
+
+        $Cft->ContractGiver_Review = $request->ContractGiver_Review;
+        $Cft->ContractGiver_person = $request->ContractGiver_person;
+        $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
+        $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
+        $Cft->ContractGiver_by = $request->ContractGiver_by;
+        $Cft->ContractGiver_on = $request->ContractGiver_on;
+
+        // $Cft->Other1_review = $request->Other1_review;
+        // $Cft->Other1_person = $request->Other1_person;
+        // $Cft->Other1_Department_person = $request->Other1_Department_person;
+        // $Cft->Other1_assessment = $request->Other1_assessment;
+        // $Cft->Other1_feedback = $request->Other1_feedback;
+        // $Cft->Other1_by = $request->Other1_by;
+        // $Cft->Other1_on = $request->Other1_on;
+
+        // $Cft->Other2_review = $request->Other2_review;
+        // $Cft->Other2_person = $request->Other2_person;
+        // $Cft->Other2_Department_person = $request->Other2_Department_person;
+        // $Cft->Other2_Assessment = $request->Other2_Assessment;
+        // $Cft->Other2_feedback = $request->Other2_feedback;
+        // $Cft->Other2_by = $request->Other2_by;
+        // $Cft->Other2_on = $request->Other2_on;
+
+        // $Cft->Other3_review = $request->Other3_review;
+        // $Cft->Other3_person = $request->Other3_person;
+        // $Cft->Other3_Department_person = $request->Other3_Department_person;
+        // $Cft->Other3_Assessment = $request->Other3_Assessment;
+        // $Cft->Other3_feedback = $request->Other3_feedback;
+        // $Cft->Other3_by = $request->Other3_by;
+        // $Cft->Other3_on = $request->Other3_on;
+
+        // $Cft->Other4_review = $request->Other4_review;
+        // $Cft->Other4_person = $request->Other4_person;
+        // $Cft->Other4_Department_person = $request->Other4_Department_person;
+        // $Cft->Other4_Assessment = $request->Other4_Assessment;
+        // $Cft->Other4_feedback = $request->Other4_feedback;
+        // $Cft->Other4_by = $request->Other4_by;
+        // $Cft->Other4_on = $request->Other4_on;
+
+        // $Cft->Other5_review = $request->Other5_review;
+        // $Cft->Other5_person = $request->Other5_person;
+        // $Cft->Other5_Department_person = $request->Other5_Department_person;
+        // $Cft->Other5_Assessment = $request->Other5_Assessment;
+        // $Cft->Other5_feedback = $request->Other5_feedback;
+        // $Cft->Other5_by = $request->Other5_by;
+        // $Cft->Other5_on = $request->Other5_on;
+
+
+        if (!empty ($request->RA_attachment)) {
+            $files = [];
+            if ($request->hasfile('RA_attachment')) {
+                foreach ($request->file('RA_attachment') as $file) {
+                    $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->RA_attachment = json_encode($files);
+        }
+        if (!empty ($request->Quality_Assurance_attachment)) {
+            $files = [];
+            if ($request->hasfile('Quality_Assurance_attachment')) {
+                foreach ($request->file('Quality_Assurance_attachment') as $file) {
+                    $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Quality_Assurance_attachment = json_encode($files);
+        }
+        if (!empty ($request->Production_Table_Attachment)) {
+            $files = [];
+            if ($request->hasfile('Production_Table_Attachment')) {
+                foreach ($request->file('Production_Table_Attachment') as $file) {
+                    $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Production_Table_Attachment = json_encode($files);
+        }
+        if (!empty ($request->ProductionLiquid_attachment)) {
+            $files = [];
+            if ($request->hasfile('ProductionLiquid_attachment')) {
+                foreach ($request->file('ProductionLiquid_attachment') as $file) {
+                    $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->ProductionLiquid_attachment = json_encode($files);
+        }
+        if (!empty ($request->Production_Injection_Attachment)) {
+            $files = [];
+            if ($request->hasfile('Production_Injection_Attachment')) {
+                foreach ($request->file('Production_Injection_Attachment') as $file) {
+                    $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Production_Injection_Attachment = json_encode($files);
+        }
+        if (!empty ($request->Store_attachment)) {
+            $files = [];
+            if ($request->hasfile('Store_attachment')) {
+                foreach ($request->file('Store_attachment') as $file) {
+                    $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Store_attachment = json_encode($files);
+        }
+        if (!empty ($request->Quality_Control_attachment)) {
+            $files = [];
+            if ($request->hasfile('Quality_Control_attachment')) {
+                foreach ($request->file('Quality_Control_attachment') as $file) {
+                    $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Quality_Control_attachment = json_encode($files);
+        }
+        if (!empty ($request->ResearchDevelopment_attachment)) {
+            $files = [];
+            if ($request->hasfile('ResearchDevelopment_attachment')) {
+                foreach ($request->file('ResearchDevelopment_attachment') as $file) {
+                    $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->ResearchDevelopment_attachment = json_encode($files);
+        }
+        if (!empty ($request->Engineering_attachment)) {
+            $files = [];
+            if ($request->hasfile('Engineering_attachment')) {
+                foreach ($request->file('Engineering_attachment') as $file) {
+                    $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Engineering_attachment = json_encode($files);
+        }
+        if (!empty ($request->Human_Resource_attachment)) {
+            $files = [];
+            if ($request->hasfile('Human_Resource_attachment')) {
+                foreach ($request->file('Human_Resource_attachment') as $file) {
+                    $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Human_Resource_attachment = json_encode($files);
+        }
+        if (!empty ($request->Microbiology_attachment)) {
+            $files = [];
+            if ($request->hasfile('Microbiology_attachment')) {
+                foreach ($request->file('Microbiology_attachment') as $file) {
+                    $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Microbiology_attachment = json_encode($files);
+        }
+        if (!empty ($request->RegulatoryAffair_attachment)) {
+            $files = [];
+            if ($request->hasfile('RegulatoryAffair_attachment')) {
+                foreach ($request->file('RegulatoryAffair_attachment') as $file) {
+                    $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->RegulatoryAffair_attachment = json_encode($files);
+        }
+        if (!empty ($request->CorporateQualityAssurance_attachment)) {
+            $files = [];
+            if ($request->hasfile('CorporateQualityAssurance_attachment')) {
+                foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
+                    $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->CorporateQualityAssurance_attachment = json_encode($files);
+        }
+        if (!empty ($request->Environment_Health_Safety_attachment)) {
+            $files = [];
+            if ($request->hasfile('Environment_Health_Safety_attachment')) {
+                foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
+                    $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Environment_Health_Safety_attachment = json_encode($files);
+        }
+        if (!empty ($request->Information_Technology_attachment)) {
+            $files = [];
+            if ($request->hasfile('Information_Technology_attachment')) {
+                foreach ($request->file('Information_Technology_attachment') as $file) {
+                    $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Information_Technology_attachment = json_encode($files);
+        }
+        if (!empty ($request->ContractGiver_attachment)) {
+            $files = [];
+            if ($request->hasfile('ContractGiver_attachment')) {
+                foreach ($request->file('ContractGiver_attachment') as $file) {
+                    $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->ContractGiver_attachment = json_encode($files);
+        }
+
+
+        if (!empty ($request->Other1_attachment)) {
+            $files = [];
+            if ($request->hasfile('Other1_attachment')) {
+                foreach ($request->file('Other1_attachment') as $file) {
+                    $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Other1_attachment = json_encode($files);
+        }
+        if (!empty ($request->Other2_attachment)) {
+            $files = [];
+            if ($request->hasfile('Other2_attachment')) {
+                foreach ($request->file('Other2_attachment') as $file) {
+                    $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Other2_attachment = json_encode($files);
+        }
+        if (!empty ($request->Other3_attachment)) {
+            $files = [];
+            if ($request->hasfile('Other3_attachment')) {
+                foreach ($request->file('Other3_attachment') as $file) {
+                    $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $Cft->Other3_attachment = json_encode($files);
+        }
+        if (!empty ($request->Other4_attachment)) {
+            $files = [];
+            if ($request->hasfile('Other4_attachment')) {
+                foreach ($request->file('Other4_attachment') as $file) {
+                    $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $Cft->Other4_attachment = json_encode($files);
+        }
+        if (!empty ($request->Other5_attachment)) {
+            $files = [];
+            if ($request->hasfile('Other5_attachment')) {
+                foreach ($request->file('Other5_attachment') as $file) {
+                    $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Other5_attachment = json_encode($files);
+        }
+
+        $Cft->save();
 
             $record = RecordNumber::first();
             $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -203,7 +656,7 @@ class MarketComplaintController extends Controller
 
 
             // ----------------------------------autid show  fileds ----------------------------------------------------------
-          
+
 
             if (!empty($marketComplaint->description_gi)) {
                 $history = new MarketComplaintAuditTrial();
@@ -456,7 +909,6 @@ class MarketComplaintController extends Controller
                 $history->change_to = "Opened";
                 $history->change_from = "Initiation";
                 $history->action_name = "Create";
-
                 $history->save();
             }
             if (!empty($marketComplaint->review_of_equipment_break_down_and_maintainance_record_gi)) {
@@ -1108,6 +1560,8 @@ class MarketComplaintController extends Controller
     public function show($id)
 {
             $data = MarketComplaint::find($id);
+            $data1 = MarketComplaintCft::where('mc_id', $id)->first();
+
             $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifer','ProductDetails')->first();
             $traceability_gi = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Traceability')->first();
             $investing_team = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Investing_team')->first();
@@ -1126,7 +1580,7 @@ class MarketComplaintController extends Controller
 
             //  dd($proposalData );
                 return view('frontend.market_complaint.market_complaint_view',compact(
-                    'data','productsgi','traceability_gi','investing_team','brain_stroming_details','team_members','report_approval','product_materialDetails','proposalData'));
+                    'data','productsgi','traceability_gi','investing_team','brain_stroming_details','team_members','report_approval','product_materialDetails','proposalData','data1'));
 
 
 
@@ -1138,6 +1592,7 @@ class MarketComplaintController extends Controller
 
 public function update(Request $request,$id)
 {
+    $form_progress = null;
 
     // $marketComplaint = MarketComplaint::find($id);
     // if (!$request->description_gi) {
@@ -1228,10 +1683,10 @@ public function update(Request $request,$id)
         //     foreach ($request->file('initial_attachment_gi') as $file) {
         //         // Generate a unique name for the file
         //         $name = $request->name . 'initial_attachment_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
-                
+
         //         // Move the file to the upload directory
         //         $file->move(public_path('upload/'), $name);
-                
+
         //         // Add the file name to the array
         //         $files[] = $name;
         //     }
@@ -1240,7 +1695,525 @@ public function update(Request $request,$id)
         // $marketComplaint->initial_attachment_gi = json_encode($files);
 
 
-        
+
+
+        // cft update //
+
+        if($marketComplaint->stage == 2 || $marketComplaint->stage == 3 ){
+
+
+            if (!$form_progress) {
+                $form_progress = 'cft';
+            }
+
+            $Cft = marketComplaintCft::withoutTrashed()->where('mc_id', $id)->first();
+            if($Cft && $marketComplaint->stage == 3 ){
+                $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
+                $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
+
+                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->Production_Table_Review : $request->Production_Table_Review;
+                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person;
+
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
+
+                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
+                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
+
+                $Cft->Store_person = $request->Store_person == null ? $Cft->Store_person : $request->Store_person;
+                $Cft->Store_Review = $request->Store_Review == null ? $Cft->Store_Review : $request->Store_Review;
+
+                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person == null ? $Cft->ResearchDevelopment_person : $request->ResearchDevelopment_person;
+                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review == null ? $Cft->ResearchDevelopment_Review : $request->ResearchDevelopment_Review;
+
+                $Cft->Microbiology_person = $request->Microbiology_person == null ? $Cft->Microbiology_person : $request->Microbiology_person;
+                $Cft->Microbiology_Review = $request->Microbiology_Review == null ? $Cft->Microbiology_Review : $request->Microbiology_Review;
+
+                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person == null ? $Cft->RegulatoryAffair_person : $request->RegulatoryAffair_person;
+                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review == null ? $Cft->RegulatoryAffair_Review : $request->RegulatoryAffair_Review;
+
+                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person == null ? $Cft->CorporateQualityAssurance_person : $request->CorporateQualityAssurance_person;
+                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review == null ? $Cft->CorporateQualityAssurance_Review : $request->CorporateQualityAssurance_Review;
+
+                $Cft->ContractGiver_person = $request->ContractGiver_person == null ? $Cft->ContractGiver_person : $request->ContractGiver_person;
+                $Cft->ContractGiver_Review = $request->ContractGiver_Review == null ? $Cft->ContractGiver_Review : $request->ContractGiver_Review;
+
+                $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
+                $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
+
+                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
+                $Cft->QualityAssurance_person = $request->QualityAssurance_person == null ? $Cft->QualityAssurance_person : $request->QualityAssurance_person;
+
+                $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
+                $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
+
+                $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
+                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
+
+                $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
+                $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
+
+                $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
+                $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
+
+                $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
+                $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
+                $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
+
+                $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
+                $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
+                $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
+
+                $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
+                $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
+                $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
+
+                $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
+                $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
+                $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
+
+                $Cft->Other5_review = $request->Other5_review  == null ? $Cft->Other5_review : $request->Other5_review;
+                $Cft->Other5_person = $request->Other5_person  == null ? $Cft->Other5_person : $request->Other5_person;
+                $Cft->Other5_Department_person = $request->Other5_Department_person  == null ? $Cft->Other5_Department_person : $request->Other5_Department_person;
+
+            }
+            else{
+                $Cft->Warehouse_notification = $request->Warehouse_notification;
+                $Cft->Warehouse_review = $request->Warehouse_review;
+
+                $Cft->Production_Table_Review = $request->Production_Table_Review;
+                $Cft->Production_Table_Person = $request->Production_Table_Person;
+
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review;
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person;
+
+                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
+                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
+
+                $Cft->Store_person = $request->Store_person;
+                $Cft->Store_Review = $request->Store_Review;
+
+                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person;
+                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review;
+
+                $Cft->Microbiology_person = $request->Microbiology_person;
+                $Cft->Microbiology_Review = $request->Microbiology_Review;
+
+                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person;
+                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
+
+                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person;
+                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
+
+                $Cft->ContractGiver_person = $request->ContractGiver_person;
+                $Cft->ContractGiver_Review = $request->ContractGiver_Review;
+
+                $Cft->Quality_review = $request->Quality_review;
+                $Cft->Quality_Control_Person = $request->Quality_Control_Person;
+
+                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
+                $Cft->QualityAssurance_person = $request->QualityAssurance_person;
+
+                $Cft->Engineering_review = $request->Engineering_review;
+                $Cft->Engineering_person = $request->Engineering_person;
+
+                $Cft->Environment_Health_review = $request->Environment_Health_review;
+                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
+
+                $Cft->Human_Resource_review = $request->Human_Resource_review;
+                $Cft->Human_Resource_person = $request->Human_Resource_person;
+
+                $Cft->Project_management_review = $request->Project_management_review;
+                $Cft->Project_management_person = $request->Project_management_person;
+
+                $Cft->Information_Technology_review = $request->Information_Technology_review;
+                $Cft->Information_Technology_person = $request->Information_Technology_person;
+
+                $Cft->Other1_review = $request->Other1_review;
+                $Cft->Other1_person = $request->Other1_person;
+                $Cft->Other1_Department_person = $request->Other1_Department_person;
+
+                $Cft->Other2_review = $request->Other2_review;
+                $Cft->Other2_person = $request->Other2_person;
+                $Cft->Other2_Department_person = $request->Other2_Department_person;
+
+                $Cft->Other3_review = $request->Other3_review;
+                $Cft->Other3_person = $request->Other3_person;
+                $Cft->Other3_Department_person = $request->Other3_Department_person;
+
+                $Cft->Other4_review = $request->Other4_review;
+                $Cft->Other4_person = $request->Other4_person;
+                $Cft->Other4_Department_person = $request->Other4_Department_person;
+
+                $Cft->Other5_review = $request->Other5_review;
+                $Cft->Other5_person = $request->Other5_person;
+                $Cft->Other5_Department_person = $request->Other5_Department_person;
+            }
+            $Cft->Warehouse_feedback = $request->Warehouse_feedback;
+            $Cft->Warehouse_assessment = $request->Warehouse_assessment;
+            $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
+            $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+            // dd($Cft->Production_Table_Assessment = $request->Production_Table_Assessment);
+
+
+            $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
+
+            $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
+
+            // $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+            // $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
+
+            $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
+            $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
+
+            $Cft->Store_feedback = $request->Store_feedback;
+            $Cft->Store_assessment = $request->Store_assessment;
+
+            $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
+            $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
+
+            $Cft->Microbiology_feedback = $request->Microbiology_feedback;
+            $Cft->Microbiology_assessment = $request->Microbiology_assessment;
+
+            $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
+            $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
+
+            $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
+            $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
+
+            $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
+            $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
+
+            $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
+            $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
+
+            $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
+            $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
+
+            $Cft->Engineering_assessment = $request->Engineering_assessment;
+            $Cft->Engineering_feedback = $request->Engineering_feedback;
+
+            $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
+            $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
+
+            $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
+            $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
+
+            $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
+            $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
+
+            $Cft->Other1_assessment = $request->Other1_assessment;
+            $Cft->Other1_feedback = $request->Other1_feedback;
+
+            $Cft->Other2_Assessment = $request->Other2_Assessment;
+            $Cft->Other2_feedback = $request->Other2_feedback;
+
+            $Cft->Other3_Assessment = $request->Other3_Assessment;
+            $Cft->Other3_feedback = $request->Other3_feedback;
+
+            $Cft->Other4_Assessment = $request->Other4_Assessment;
+            $Cft->Other4_feedback = $request->Other4_feedback;
+
+            $Cft->Other5_Assessment = $request->Other5_Assessment;
+            $Cft->Other5_feedback = $request->Other5_feedback;
+
+
+            if (!empty ($request->RA_attachment)) {
+                $files = [];
+                if ($request->hasfile('RA_attachment')) {
+                    foreach ($request->file('RA_attachment') as $file) {
+                        $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->RA_attachment = json_encode($files);
+            }
+            if (!empty ($request->Quality_Assurance_attachment)) {
+                $files = [];
+                if ($request->hasfile('Quality_Assurance_attachment')) {
+                    foreach ($request->file('Quality_Assurance_attachment') as $file) {
+                        $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Quality_Assurance_attachment = json_encode($files);
+            }
+            if (!empty ($request->Production_Table_Attachment)) {
+                $files = [];
+                if ($request->hasfile('Production_Table_Attachment')) {
+                    foreach ($request->file('Production_Table_Attachment') as $file) {
+                        $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Production_Table_Attachment = json_encode($files);
+            }
+            if (!empty ($request->ProductionLiquid_attachment)) {
+                $files = [];
+                if ($request->hasfile('ProductionLiquid_attachment')) {
+                    foreach ($request->file('ProductionLiquid_attachment') as $file) {
+                        $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->ProductionLiquid_attachment = json_encode($files);
+            }
+            if (!empty ($request->Production_Injection_Attachment)) {
+                $files = [];
+                if ($request->hasfile('Production_Injection_Attachment')) {
+                    foreach ($request->file('Production_Injection_Attachment') as $file) {
+                        $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Production_Injection_Attachment = json_encode($files);
+            }
+            if (!empty ($request->Store_attachment)) {
+                $files = [];
+                if ($request->hasfile('Store_attachment')) {
+                    foreach ($request->file('Store_attachment') as $file) {
+                        $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Store_attachment = json_encode($files);
+            }
+            if (!empty ($request->Quality_Control_attachment)) {
+                $files = [];
+                if ($request->hasfile('Quality_Control_attachment')) {
+                    foreach ($request->file('Quality_Control_attachment') as $file) {
+                        $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Quality_Control_attachment = json_encode($files);
+            }
+            if (!empty ($request->ResearchDevelopment_attachment)) {
+                $files = [];
+                if ($request->hasfile('ResearchDevelopment_attachment')) {
+                    foreach ($request->file('ResearchDevelopment_attachment') as $file) {
+                        $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->ResearchDevelopment_attachment = json_encode($files);
+            }
+            if (!empty ($request->Engineering_attachment)) {
+                $files = [];
+                if ($request->hasfile('Engineering_attachment')) {
+                    foreach ($request->file('Engineering_attachment') as $file) {
+                        $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Engineering_attachment = json_encode($files);
+            }
+            if (!empty ($request->Human_Resource_attachment)) {
+                $files = [];
+                if ($request->hasfile('Human_Resource_attachment')) {
+                    foreach ($request->file('Human_Resource_attachment') as $file) {
+                        $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Human_Resource_attachment = json_encode($files);
+            }
+            if (!empty ($request->Microbiology_attachment)) {
+                $files = [];
+                if ($request->hasfile('Microbiology_attachment')) {
+                    foreach ($request->file('Microbiology_attachment') as $file) {
+                        $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Microbiology_attachment = json_encode($files);
+            }
+            if (!empty ($request->RegulatoryAffair_attachment)) {
+                $files = [];
+                if ($request->hasfile('RegulatoryAffair_attachment')) {
+                    foreach ($request->file('RegulatoryAffair_attachment') as $file) {
+                        $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->RegulatoryAffair_attachment = json_encode($files);
+            }
+            if (!empty ($request->CorporateQualityAssurance_attachment)) {
+                $files = [];
+                if ($request->hasfile('CorporateQualityAssurance_attachment')) {
+                    foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
+                        $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->CorporateQualityAssurance_attachment = json_encode($files);
+            }
+            if (!empty ($request->Environment_Health_Safety_attachment)) {
+                $files = [];
+                if ($request->hasfile('Environment_Health_Safety_attachment')) {
+                    foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
+                        $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Environment_Health_Safety_attachment = json_encode($files);
+            }
+            if (!empty ($request->Information_Technology_attachment)) {
+                $files = [];
+                if ($request->hasfile('Information_Technology_attachment')) {
+                    foreach ($request->file('Information_Technology_attachment') as $file) {
+                        $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Information_Technology_attachment = json_encode($files);
+            }
+            if (!empty ($request->ContractGiver_attachment)) {
+                $files = [];
+                if ($request->hasfile('ContractGiver_attachment')) {
+                    foreach ($request->file('ContractGiver_attachment') as $file) {
+                        $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->ContractGiver_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other1_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other1_attachment')) {
+                    foreach ($request->file('Other1_attachment') as $file) {
+                        $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other1_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other2_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other2_attachment')) {
+                    foreach ($request->file('Other2_attachment') as $file) {
+                        $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other2_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other3_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other3_attachment')) {
+                    foreach ($request->file('Other3_attachment') as $file) {
+                        $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other3_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other4_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other4_attachment')) {
+                    foreach ($request->file('Other4_attachment') as $file) {
+                        $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+
+                $Cft->Other4_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other5_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other5_attachment')) {
+                    foreach ($request->file('Other5_attachment') as $file) {
+                        $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other5_attachment = json_encode($files);
+            }
+
+
+            $Cft->save();
+                $IsCFTRequired = MarketComplaintcftResponce::withoutTrashed()->where(['is_required' => 1, 'mc_id' => $id])->latest()->first();
+                $cftUsers = DB::table('market_complaint_cfts')->where(['mc_id' => $id])->first();
+                // Define the column names
+                $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
+
+                // Initialize an array to store the values
+                $valuesArray = [];
+
+                foreach ($columns as $index => $column) {
+                    $value = $cftUsers->$column;
+                    // Check if the value is not null and not equal to 0
+                    if ($value != null && $value != 0) {
+                        $valuesArray[] = $value;
+                    }
+                }
+                // Remove duplicates from the array
+                $valuesArray = array_unique($valuesArray);
+
+                // Convert the array to a re-indexed array
+                $valuesArray = array_values($valuesArray);
+
+                foreach ($valuesArray as $u) {
+                        $email = Helpers::getInitiatorEmail($u);
+                        if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $marketComplaint],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("CFT Assgineed by " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                //log error
+                            }
+                    }
+                }
+
+
+            if (!empty ($request->Initial_attachment)) {
+                $files = [];
+
+                if ($marketComplaint->Initial_attachment) {
+                    $files = is_array(json_decode($marketComplaint->Initial_attachment)) ? $marketComplaint->Initial_attachment : [];
+                }
+
+                if ($request->hasfile('Initial_attachment')) {
+                    foreach ($request->file('Initial_attachment') as $file) {
+                        $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+
+
+                $marketComplaint->Initial_attachment = json_encode($files);
+            }
+        }
+
+
         // ===============================work code attachement ==========
         if ($request->hasFile('initial_attachment_gi')) {
             $files = [];
@@ -1251,9 +2224,9 @@ public function update(Request $request,$id)
             }
             $marketComplaint->initial_attachment_gi = json_encode($files);
         }
-    
+
         $marketComplaint->fill($request->except('initial_attachment_gi'));
-    
+
 
         if ($request->hasFile('initial_attachment_hodsr')) {
             $files = [];
@@ -1277,7 +2250,7 @@ public function update(Request $request,$id)
             $marketComplaint->initial_attachment_ca = json_encode($files);
         }
         $marketComplaint->fill($request->except('initial_attachment_ca'));
-    
+
 
         if ($request->hasFile('initial_attachment_c')) {
             $files = [];
@@ -1289,31 +2262,31 @@ public function update(Request $request,$id)
             $marketComplaint->initial_attachment_c = json_encode($files);
         }
         $marketComplaint->fill($request->except('initial_attachment_c'));
-    
+
 
         // $files = [];
         // if ($request->hasFile('initial_attachment_hodsr')) {
         //     foreach ($request->file('initial_attachment_hodsr') as $file) {
         //         $name = $request->name . 'initial_attachment_hodsr' . uniqid() . '.' . $file->getClientOriginalExtension();
-                
+
         //         $file->move(public_path('upload/'), $name);
-                
+
         //         // Add the file name to the array
         //         $files[] = $name;
         //     }
         // }
         // // Encode the file names array to JSON and assign it to the model
         // $marketComplaint->initial_attachment_hodsr = json_encode($files);
-       
+
         // $files = [];
         // if ($request->hasFile('initial_attachment_ca')) {
         //     foreach ($request->file('initial_attachment_ca') as $file) {
         //         // Generate a unique name for the file
         //         $name = $request->name . 'initial_attachment_ca' . uniqid() . '.' . $file->getClientOriginalExtension();
-                
+
         //         // Move the file to the upload directory
         //         $file->move(public_path('upload/'), $name);
-                
+
         //         // Add the file name to the array
         //         $files[] = $name;
         //     }
@@ -1321,16 +2294,16 @@ public function update(Request $request,$id)
         // // Encode the file names array to JSON and assign it to the model
         // $marketComplaint->initial_attachment_ca = json_encode($files);
 
-        
+
         // $files = [];
         // if ($request->hasFile('initial_attachment_c')) {
         //     foreach ($request->file('initial_attachment_c') as $file) {
         //         // Generate a unique name for the file
         //         $name = $request->name . 'initial_attachment_c' . uniqid() . '.' . $file->getClientOriginalExtension();
-                
+
         //         // Move the file to the upload directory
         //         $file->move(public_path('upload/'), $name);
-                
+
         //         // Add the file name to the array
         //         $files[] = $name;
         //     }
@@ -1339,8 +2312,8 @@ public function update(Request $request,$id)
         // $marketComplaint->initial_attachment_c = json_encode($files);
 
 
-       
-       
+
+
         // dd($marketComplaint);
 
 
@@ -1359,14 +2332,14 @@ public function update(Request $request,$id)
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-        
+
             // New condition added here
             if (is_null($lastmarketComplaint->initiator_group_code_gi) || $lastmarketComplaint->initiator_group_code_gi === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         } if ( $lastmarketComplaint->initiator_group != $marketComplaint->initiator_group ) {
             $history = new MarketComplaintAuditTrial();
@@ -1381,14 +2354,14 @@ public function update(Request $request,$id)
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-        
+
             // New condition added here
             if (is_null($lastmarketComplaint->initiator_group) || $lastmarketComplaint->initiator_group === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
 
@@ -1405,17 +2378,17 @@ public function update(Request $request,$id)
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-        
+
             // New condition added here
             if (is_null($lastmarketComplaint->review_of_past_history_of_product_gi) || $lastmarketComplaint->review_of_past_history_of_product_gi === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-        
+
             $history->save();
         }
-        
+
             if ( $lastmarketComplaint->review_of_equipment_break_down_and_maintainance_record_gi != $marketComplaint->review_of_equipment_break_down_and_maintainance_record_gi ) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -1623,7 +2596,7 @@ public function update(Request $request,$id)
             }
 
 
-       
+
             if ( $lastmarketComplaint->description_gi != $marketComplaint->description_gi) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
@@ -1660,17 +2633,17 @@ public function update(Request $request,$id)
             //     $history->origin_state = $lastmarketComplaint->status;
             //     $history->change_to = "Not Applicable";
             //     $history->change_from = $lastmarketComplaint->status;
-            
+
             //     // New condition added here
             //     if (is_null($lastmarketComplaint->initiator_group) || $lastmarketComplaint->initiator_group === '') {
             //         $history->action_name = "New";
             //     } else {
             //         $history->action_name = "Update";
             //     }
-            
+
             //     $history->save();
             // }
-            
+
             if ( $lastmarketComplaint->initiated_through_gi != $marketComplaint->initiated_through_gi ) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -1684,17 +2657,17 @@ public function update(Request $request,$id)
                 $history->origin_state = $lastmarketComplaint->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastmarketComplaint->status;
-            
+
                 // New condition added here
                 if (is_null($lastmarketComplaint->initiated_through_gi) || $lastmarketComplaint->initiated_through_gi === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
                 }
-            
+
                 $history->save();
             }
-            
+
             if ( $lastmarketComplaint->if_other_gi != $marketComplaint->if_other_gi ) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -1708,17 +2681,17 @@ public function update(Request $request,$id)
                 $history->origin_state = $lastmarketComplaint->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastmarketComplaint->status;
-            
+
                 // New condition added here
                 if (is_null($lastmarketComplaint->if_other_gi) || $lastmarketComplaint->if_other_gi === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
                 }
-            
+
                 $history->save();
             }
-            
+
             if ( $lastmarketComplaint->is_repeat_gi != $marketComplaint->is_repeat_gi ) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -1732,17 +2705,16 @@ public function update(Request $request,$id)
                 $history->origin_state = $lastmarketComplaint->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastmarketComplaint->status;
-            
+
                 // New condition added here
                 if (is_null($lastmarketComplaint->is_repeat_gi) || $lastmarketComplaint->is_repeat_gi === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
                 }
-            
+
                 $history->save();
             }
-            
 
 
             if ( $lastmarketComplaint->repeat_nature_gi != $marketComplaint->repeat_nature_gi ) {
@@ -1758,17 +2730,17 @@ public function update(Request $request,$id)
                 $history->origin_state = $lastmarketComplaint->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastmarketComplaint->status;
-            
+
                 // New condition added here
                 if (is_null($lastmarketComplaint->repeat_nature_gi) || $lastmarketComplaint->repeat_nature_gi === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
                 }
-            
+
                 $history->save();
             }
-            
+
             if ( $lastmarketComplaint->initial_attachment_gi != $marketComplaint->initial_attachment_gi ) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -1782,17 +2754,17 @@ public function update(Request $request,$id)
                 $history->origin_state = $lastmarketComplaint->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastmarketComplaint->status;
-            
+
                 // New condition added here
                 if (is_null($lastmarketComplaint->initial_attachment_gi) || $lastmarketComplaint->initial_attachment_gi === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
                 }
-            
+
                 $history->save();
             }
-            
+
             if ( $lastmarketComplaint->complainant_gi != $marketComplaint->complainant_gi ) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -1806,17 +2778,17 @@ public function update(Request $request,$id)
                 $history->origin_state = $lastmarketComplaint->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastmarketComplaint->status;
-            
+
                 // New condition added here
                 if (is_null($lastmarketComplaint->complainant_gi) || $lastmarketComplaint->complainant_gi === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
                 }
-            
+
                 $history->save();
             }
-            
+
             if ( $lastmarketComplaint->complaint_reported_on_gi != $marketComplaint->complaint_reported_on_gi ) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -1830,17 +2802,17 @@ public function update(Request $request,$id)
                 $history->origin_state = $lastmarketComplaint->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastmarketComplaint->status;
-            
+
                 // New condition added here
                 if (is_null($lastmarketComplaint->complaint_reported_on_gi) || $lastmarketComplaint->complaint_reported_on_gi === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
                 }
-            
+
                 $history->save();
             }
-            
+
             if ( $lastmarketComplaint->details_of_nature_market_complaint_gi != $marketComplaint->details_of_nature_market_complaint_gi) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -1854,17 +2826,17 @@ public function update(Request $request,$id)
                 $history->origin_state = $lastmarketComplaint->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastmarketComplaint->status;
-            
+
                 // New condition added here
                 if (is_null($lastmarketComplaint->details_of_nature_market_complaint_gi) || $lastmarketComplaint->details_of_nature_market_complaint_gi === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
                 }
-            
+
                 $history->save();
             }
-            
+
             if ( $lastmarketComplaint->categorization_of_complaint_gi != $marketComplaint->categorization_of_complaint_gi ) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -1878,17 +2850,17 @@ public function update(Request $request,$id)
                 $history->origin_state = $lastmarketComplaint->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastmarketComplaint->status;
-            
+
                 // New condition added here
                 if (is_null($lastmarketComplaint->categorization_of_complaint_gi) || $lastmarketComplaint->categorization_of_complaint_gi === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
                 }
-            
+
                 $history->save();
             }
-            
+
         // -------------------------------------------------------hod audit show filds ----------------------------------------------
 
         if ( $lastmarketComplaint->conclusion_hodsr != $marketComplaint->conclusion_hodsr ) {
@@ -1950,7 +2922,7 @@ public function update(Request $request,$id)
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
         if ( $lastmarketComplaint->impact_assessment_hodsr != $marketComplaint->impact_assessment_hodsr ) {
             $history = new MarketComplaintAuditTrial();
@@ -2094,7 +3066,7 @@ public function update(Request $request,$id)
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
 
@@ -2116,7 +3088,7 @@ public function update(Request $request,$id)
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
 
@@ -2375,13 +3347,7 @@ if ( $lastmarketComplaint->initial_attachment_c != $marketComplaint->initial_att
      $marketComplaint->update();
         // dd($marketComplaint);
         // {{-- --produts grid gi  --}}
-
-
-
-
             // {{ grid update }}
-
-
         // For "Product Details"
         $griddata = $marketComplaint->id;
 
@@ -2444,8 +3410,6 @@ if ( $lastmarketComplaint->initial_attachment_c != $marketComplaint->initial_att
         $marketrproducts->data = $request->Product_MaterialDetails ;
         // dd($marketrproducts->data);
         $marketrproducts->update();
-
-
             // {{  g}}
         $griddata = $marketComplaint->id;
 
@@ -2464,10 +3428,6 @@ if ( $lastmarketComplaint->initial_attachment_c != $marketComplaint->initial_att
         $marketrproducts->data = json_encode($investigationData); // Encode data to JSON
         $marketrproducts->update();
 
-
-
-
-
     toastr()->success('Record is updated Successfully');
     return redirect()->back();
     //  return redirect()->route('marketcomplaint.marketcomplaintupdate' ,['id'=> $marketComplaint->id])->with('success', 'Market Complaint updated successfully.');
@@ -2475,234 +3435,601 @@ if ( $lastmarketComplaint->initial_attachment_c != $marketComplaint->initial_att
 }
 
 
-
-
-
-
 public function marketComplaintStateChange(Request $request,$id)
+{
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $marketstat = MarketComplaint::find($id);
-            $lastDocument =  MarketComplaint::find($id);
-            $data = MarketComplaint::find($id);
+        try {
+            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+                $marketstat = MarketComplaint::find($id);
+                $updateCFT = MarketComplaintCft::where('mc_id', $id)->latest()->first();
+                $lastDocument = MarketComplaint::find($id);
+                $cftDetails = MarketComplaintcftResponce::withoutTrashed()->where(['status' => 'In-progress', 'mc_id' => $id])->distinct('cft_user_id')->count();
+
+                if ($marketstat->stage == 1) {
+                   $marketstat->stage = "2";
+                    $marketstat->status = "QA Head Review";
+                    $marketstat->submitted_by = Auth::user()->name;
+                    $marketstat->submitted_on = Carbon::now()->format('d-M-Y');
+                    $marketstat->submitted_comment = $request->comment;
+
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $id;
+                    $history->activity_type = 'Submitted By, Submitted On';
+                    if(is_null($lastDocument->submitted_by) || $lastDocument->submitted_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->submitted_by. ' ,' . $lastDocument->submitted_on;
+                    }
+                    $history->action='Submitted';
+                    $history->current = $marketstat->submitted_by. ',' . $marketstat->submitted_on;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "QA Head Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if(is_null($lastDocument->submitted_by) || $lastDocument->submitted_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
 
 
-           if( $marketstat->stage == 1){
-            $marketstat->stage = "2";
-            $marketstat->submitted_by = Auth::user()->name;
-            $marketstat->submitted_on = Carbon::now()->format('d-M-Y');
-            $marketstat->submitted_comment = $request->comment;
+                    $marketstat->update();
+                    toastr()->success('DocumetSet');
+                    return back();
+                }
+
+                if ($marketstat->stage == 2) {
+
+                    $marketstat->stage = "3";
+                    $marketstat->status = "Investigation CAPA And Root Cause Analysis";
+
+                    // Code for the CFT required
+                    $stage = new MarketComplaintcftResponce();
+                    $stage->mc_id = $id;
+                    $stage->mc_id = Auth::user()->id;
+                    $stage->status = "CFT Review";
+                    // $stage->cft_stage = ;
+                    $stage->comment = $request->comment;
+                    $stage->is_required = 1;
+                    $stage->save();
+
+                    $marketstat->complete_review_by = Auth::user()->name;
+                    $marketstat->complete_review_on = Carbon::now()->format('d-M-Y');
+                    // $marketstat->QA_Initial_Review_Comments = $request->comment;
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $id;
+                    $history->activity_type = 'Complete Review On, Complete Review On';
+                    if(is_null($lastDocument->complete_review_by) || $lastDocument->complete_review_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->complete_review_by. ' ,' . $lastDocument->complete_review_on;
+                    }
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action= 'Evaluation Complete';
+                    $history->current = $marketstat->QA_Initial_Review_Complete_By;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->change_to =   "Investigation CAPA And Root Cause Analysis";
+                    $history->change_from = $lastDocument->status;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = 'Completed';
+                    if(is_null($lastDocument->complete_review_by) || $lastDocument->complete_review_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                    // $list = Helpers::getQAUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $marketstat->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $marketstat],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    // }
+
+                    $marketstat->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
 
 
-            $marketstat->status = "Supervisor Review";
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->action = 'Submited';
-            $history->current = $marketstat->submitted_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Supervisor Review";
-            $history->change_from = $lastDocument->status;
-            $history->stage='Supervisor Review';
-            $history->save();
+                if ($marketstat->stage == 3) {
 
-            $marketstat->update();
+                    $marketstat->stage = "4";
+                    $marketstat->status = "CFT Review";
 
-            return redirect()->back();
-           }
-           if( $marketstat->stage == 2)
-           {
-            $marketstat->stage = "3";
-            $marketstat->complete_review_by = Auth::user()->name;
-            $marketstat->complete_review_on = Carbon::now()->format('d-M-Y');
-            $marketstat->complete_review_comment = $request->comment;
+                    // Code for the CFT required
+                    $stage = new MarketComplaintcftResponce();
+                    $stage->mc_id = $id;
+                    $stage->mc_id = Auth::user()->id;
+                    $stage->status = "In QA Review";
+                    // $stage->cft_stage = ;
+                    $stage->comment = $request->comment;
+                    $stage->is_required = 1;
+                    $stage->save();
 
+                    $marketstat->complete_review_by = Auth::user()->name;
+                    $marketstat->complete_review_on = Carbon::now()->format('d-M-Y');
+                    // $marketstat->QA_Initial_Review_Comments = $request->comment;
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $id;
+                    if(is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_On == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->CFT_Review_Complete_By. ' ,' . $lastDocument->CFT_Review_Complete_On;
+                    }
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action= 'CFT Review Complete';
+                    $history->current = $marketstat->CFT_Review_Complete_By;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->change_to =   "In QA Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = 'Completed';
+                    if(is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_On == '')
+                        {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
+                    $history->save();
+                    // $list = Helpers::getQAUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $marketstat->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $marketstat],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    // }
 
-            $marketstat->status ="Investigation and Root Cause Analysis";
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->action = 'Complete Review';
-            $history->current = $marketstat->complete_review_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Investigation and Root Cause Analysis";
-            $history->change_from = $lastDocument->status;
-            $history->stage='Investigation and Root Cause Analysis';
-            $history->save();
-
-
-
-            // dd($marketstat->stage);
-            $marketstat->update();
-            return redirect()->back();
-           }
-
-           if( $marketstat->stage == 3)
-           {
-            $marketstat->stage = "4";
-            $marketstat->investigation_completed_by = Auth::user()->name;
-            $marketstat->investigation_completed_on = Carbon::now()->format('d-M-Y');
-            $marketstat->investigation_completed_comment = $request->comment;
-            $marketstat->status ="CAPA Plan";
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->action = 'Investigation Completed';
-            $history->current = $marketstat->investigation_completed_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "CAPA Plan";
-            $history->change_from = $lastDocument->status;
-            $history->stage='CAPA Plan';
-            $history->save();
+                    $marketstat->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+                if ($marketstat->stage == 4) {
 
 
+                    $marketstat->stage = "5";
+                    $marketstat->status = "All Action Complete";
 
-            $marketstat->update();
-            return redirect()->back();
-           }
+                    // Code for the CFT required
+                    $stage = new MarketComplaintcftResponce();
+                    $stage->mc_id = $id;
+                    $stage->mc_id = Auth::user()->id;
+                    $stage->status = "In Approval";
+                    // $stage->cft_stage = ;
+                    $stage->comment = $request->comment;
+                    $stage->is_required = 1;
+                    $stage->save();
 
-           if( $marketstat->stage == 4)
-           {
-            $marketstat->stage = "5";
-            $marketstat->propose_plan_by = Auth::user()->name;
-            $marketstat->propose_plan_on = Carbon::now()->format('d-M-Y');
-            $marketstat->propose_plan_comment = $request->comment;
+                    $marketstat->complete_review_by = Auth::user()->name;
+                    $marketstat->complete_review_on = Carbon::now()->format('d-M-Y');
+                    // $marketstat->QA_Initial_Review_Comments = $request->comment;
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $id;
+                    if(is_null($lastDocument->propose_plan_by) || $lastDocument->propose_plan_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->propose_plan_by. ' ,' . $lastDocument->propose_plan_on;
+                    }
+                    $history->activity_type = 'Activity` Log';
+                    $history->previous = "";
+                    $history->action= 'QA Review Complete';
+                    $history->current = $marketstat->QA_Initial_Review_Complete_By;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->change_to =   "Pending Approval";
+                    $history->change_from = $lastDocument->status;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = 'Completed';
+                    if(is_null($lastDocument->complete_review_by) || $lastDocument->complete_review_on == '')
+                        {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
+                    $history->save();
+                    // $list = Helpers::getQAUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $marketstat->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $marketstat],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    // }
 
-            $marketstat->status ="Pending Approval";
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->action = 'Propose Plan';
-            $history->current = $marketstat->propose_plan_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Pending Approval";
-            $history->change_from = $lastDocument->status;
-            $history->stage='Pending Approval';
-            $history->save();
+                    $marketstat->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
 
+                if ($marketstat->stage == 5) {
 
+                    // if ($marketstat->form_progress === 'capa' && !empty($marketstat->QA_Feedbacks))
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for QA Head/Manager Designee Approval'
+                    //     ]);
 
-            $marketstat->update();
-            return redirect()->back();
-           }
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
+                    //     ]);
 
-           if( $marketstat->stage == 5)
-           {
-            $marketstat->stage = "6";
-            $marketstat->approve_plan_by = Auth::user()->name;
-            $marketstat->approve_plan_on = Carbon::now()->format('d-M-Y');
-            $marketstat->approve_plan_comment = $request->comment;
-
-
-            $marketstat->status ="Pending Actions Completion";
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->action = 'Approve Plan';
-            $history->current = $marketstat->approve_plan_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Pending Actions Completion";
-            $history->change_from = $lastDocument->status;
-            $history->stage='Pending Actions Completion';
-            $history->save();
-
-
-
-            $marketstat->update();
-            return redirect()->back();
-           }
-
-           if( $marketstat->stage == 6)
-           {
-            $marketstat->stage = "7";
-            $marketstat->all_capa_closed_by = Auth::user()->name;
-            $marketstat->all_capa_closed_on = Carbon::now()->format('d-M-Y');
-            $marketstat->all_capa_closed_comment = $request->comment;
-
-
-            $marketstat->status ="Pending Response Letter";
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->action = 'All CAPA Closed';
-            $history->current = $marketstat->all_capa_closed_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Pending Response Letter";
-            $history->change_from = $lastDocument->status;
-            $history->stage='ending Response Letter';
-            $history->save();
-
-
+                    //     return redirect()->back();
+                    // }
 
 
-            $marketstat->update();
-            return redirect()->back();
-           }
+                    $marketstat->stage = "6";
+                    $marketstat->status = "QA Head Approve";
+                    $marketstat->approve_plan_by = Auth::user()->name;
+                    $marketstat->closed_done_on = Carbon::now()->format('d-M-Y');
+                    // $marketstat->QA_Final_Review_Comments = $request->comment;
 
-           if( $marketstat->stage == 7)
-           {
-            $marketstat->stage = "8";
-            $marketstat->closed_done_by = Auth::user()->name;
-            $marketstat->closed_done_on = Carbon::now()->format('d-M-Y');
-            $marketstat->closed_done_comment = $request->comment;
-            $marketstat->status ="Closed Done";
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $id;
-            $history->activity_type = 'Activity Log';
-            $history->action = 'Send Letter';
-            $history->current = $marketstat->closed_done_by;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Closed - Done";
-            $history->change_from = $lastDocument->status;
-            $history->stage='Closed - Done';
-            $history->save();
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $id;
+                    if(is_null($lastDocument->approve_plan_by) || $lastDocument->complete_review_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->approve_plan_by. ' ,' . $lastDocument->closed_done_on;
+                    }
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->current = $marketstat->approve_plan_by;
+                    $history->comment = $request->comment;
+                    $history->action ='Pendig Approval';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "QA Head/Manager Designee Approval";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Approved';
+                    if(is_null($lastDocument->approve_plan_by) || $lastDocument->approve_plan_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->approve_plan_by. ' ,' . $lastDocument->approve_plan_on;
+                    }
+                    $history->save();
+
+                    $marketstat->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
 
 
-            $marketstat->update();
-            return redirect()->back();
-           }
+                if ($marketstat->stage == 6) {
+
+                    // if ($marketstat->form_progress === 'capa' && !empty($marketstat->QA_Feedbacks))
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for QA Head/Manager Designee Approval'
+                    //     ]);
+
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
+                    //     ]);
+
+                    //     return redirect()->back();
+                    // }
 
 
+                    $marketstat->stage = "7";
+                    $marketstat->status = "Pending Response Letter";
+                    $marketstat->approve_plan_by = Auth::user()->name;
+                    $marketstat->approve_plan_on = Carbon::now()->format('d-M-Y');
+                    // $marketstat->QA_Final_Review_Comments = $request->comment;
 
-        }else {
-            toastr()->error('E-signature Not match');
-            return back();
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $id;
+                    if(is_null($lastDocument->approve_plan_by) || $lastDocument->complete_review_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->approve_plan_by. ' ,' . $lastDocument->approve_plan_on;
+                    }
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->current = $marketstat->approve_plan_on;
+                    $history->comment = $request->comment;
+                    $history->action ='Pendig Approval';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "QA Head/Manager Designee Approval";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Approved';
+                    if(is_null($lastDocument->approve_plan_by) || $lastDocument->complete_review_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->approve_plan_by. ' ,' . $lastDocument->approve_plan_on;
+                    }
+                    $history->save();
+
+                    $marketstat->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+
+
+                if ($marketstat->stage == 7) {
+
+                    $marketstat->stage = "8";
+                    $marketstat->status = "Closed-Done";
+                    $marketstat->closed_done_by = Auth::user()->name;
+                    $marketstat->closed_done_on = Carbon::now()->format('d-M-Y');
+                    // $marketstat->Close_comment = $request->comment;
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $id;
+                    if(is_null($lastDocument->closed_done_by) || $lastDocument->complete_review_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->closed_done_by. ' ,' . $lastDocument->closed_done_on;
+                    }
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->action ='Close';
+                    $history->current = $marketstat->closed_done_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Closed-Done";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Completed';
+                    if(is_null($lastDocument->closed_done_by) || $lastDocument->complete_review_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->closed_done_by. ' ,' . $lastDocument->closed_done_on;
+                    }
+                    $history->save();
+
+                    $marketstat->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+            } else {
+                toastr()->error('E-signature Not match');
+                return back();
+            }
+
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage()
+            ], 500);
         }
+
     }
+
+
+}
 
     public function marketComplaintRejectState(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $marketstat = MarketComplaint::find($id);
             $lastDocument =  MarketComplaint::find($id);
+
+            if ($marketstat->stage == 8) {
+                $marketstat->stage = "7";
+                $marketstat->status = "Pending Response Letter";
+                $marketstat->reject_by = Auth::user()->name;
+                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
+                $marketstat->reject_comment = $request->comment;
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'Reject';
+                $history->previous = "";
+                $history->current = $marketstat->closed_done_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Pending Response Letter";
+                $history->change_from = "close - done";
+                $history->stage='Pending Response Letter';
+                $history->save();
+                $marketstat->update();
+
+                return back();
+            }
+
+            if ($marketstat->stage == 7) {
+                $marketstat->stage = "6";
+                $marketstat->status = "QA Head Approve";
+                $marketstat->reject_by = Auth::user()->name;
+                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
+                $marketstat->reject_comment = $request->comment;
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'Reject';
+                $history->previous = "";
+                $history->current = $marketstat->closed_done_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "QA Head Approve";
+                $history->change_from = "Pending Response Letter";
+                $history->stage='In QA Review';
+                $history->save();
+                $marketstat->update();
+
+                return back();
+            }
+
+            if ($marketstat->stage == 6) {
+                $marketstat->stage = "5";
+                $marketstat->status = "All Action Complete";
+                $marketstat->reject_by = Auth::user()->name;
+                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
+                $marketstat->reject_comment = $request->comment;
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'Reject';
+                $history->previous = "";
+                $history->current = $marketstat->closed_done_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "All Action Complete";
+                $history->change_from = "QA Head Approve";
+                $history->stage='In QA Review';
+                $history->save();
+                $marketstat->update();
+
+                return back();
+            }
+
+            if ($marketstat->stage == 5) {
+                $marketstat->stage = "3";
+                $marketstat->status = "Investigation CAPA And Root Cause Analysis";
+                $marketstat->reject_by = Auth::user()->name;
+                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
+                $marketstat->reject_comment = $request->comment;
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'Reject';
+                $history->previous = "";
+                $history->current = $marketstat->closed_done_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Investigation CAPA And Root Cause Analysis";
+                $history->change_from = "All Action Complete";
+                $history->stage='CFT Review';
+                $history->save();
+                $marketstat->update();
+
+                return back();
+            }
+
+            if ($marketstat->stage == 4) {
+                $marketstat->stage = "3";
+                $marketstat->status = "Investigation CAPA And Root Cause Analysis";
+                $marketstat->reject_by = Auth::user()->name;
+                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
+                $marketstat->reject_comment = $request->comment;
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'Reject';
+                $history->previous = "";
+                $history->current = $marketstat->closed_done_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Investigation CAPA And Root Cause Analysis";
+                $history->change_from = "CFT Review";
+                $history->stage='CFT Review';
+                $history->save();
+                $marketstat->update();
+
+                return back();
+            }
+
+            if ($marketstat->stage == 3) {
+                $marketstat->stage = "2";
+                $marketstat->status = "Investigation CAPA And Root Cause Analysis";
+                $marketstat->more_information_required_by = Auth::user()->name;
+                $marketstat->more_information_required_on = Carbon::now()->format('d-M-Y');
+                $marketstat->more_information_required_comment = $request->comment;
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->action = 'More Information Required';
+                $history->previous = "";
+                $history->current = $marketstat->closed_done_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "QA Head Review";
+                $history->change_from = "Investigation CAPA And Root Cause Analysis";
+                $history->stage='Opened';
+                $history->save();
+                $marketstat->update();
+
+                return back();
+            }
 
 
             if ($marketstat->stage == 2) {
@@ -2714,7 +4041,7 @@ public function marketComplaintStateChange(Request $request,$id)
                     $history = new MarketComplaintAuditTrial();
                     $history->market_id = $id;
                     $history->activity_type = 'Activity Log';
-                    $history->action = 'More Information Required';     
+                    $history->action = 'More Information Required';
                     $history->previous = "";
                     $history->current = $marketstat->closed_done_by;
                     $history->comment = $request->comment;
@@ -2723,7 +4050,7 @@ public function marketComplaintStateChange(Request $request,$id)
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
                     $history->change_to = "Opened";
-                    $history->change_from = "Supervisor Review";
+                    $history->change_from = "QA Head Review";
                     $history->stage='Opened';
                     $history->save();
 
@@ -2731,57 +4058,7 @@ public function marketComplaintStateChange(Request $request,$id)
 
                 return back();
             }
-            if ($marketstat->stage == 3) {
-                $marketstat->stage = "1";
-                $marketstat->status = "Opened";
-                $marketstat->more_information_required_by = Auth::user()->name;
-                $marketstat->more_information_required_on = Carbon::now()->format('d-M-Y');
-                $marketstat->more_information_required_comment = $request->comment;
-                $history = new MarketComplaintAuditTrial();
-                $history->market_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->action = 'More Information Required';     
-                $history->previous = "";
-                $history->current = $marketstat->closed_done_by;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to = "Opened";
-                $history->change_from = "Investigation and Root Cause Analysis";
-                $history->stage='Opened';
-                $history->save();
-                $marketstat->update();
 
-                return back();
-            }
-
-            if ($marketstat->stage == 5) {
-                $marketstat->stage = "4";
-                $marketstat->status = "CAPA Plan";
-                $marketstat->reject_by = Auth::user()->name;
-                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
-                $marketstat->reject_comment = $request->comment;
-                $history = new MarketComplaintAuditTrial();
-                $history->market_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->action = 'Reject';     
-                $history->previous = "";
-                $history->current = $marketstat->closed_done_by;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to = "CAPA Plan";
-                $history->change_from = "Pending Approval";
-                $history->stage='CAPA Plan';
-                $history->save();
-                $marketstat->update();
-
-                return back();
-            }
         }
 
         // Optionally, handle invalid credentials or other logic
@@ -2804,7 +4081,7 @@ public function marketComplaintStateChange(Request $request,$id)
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->action = 'Cancel';     
+                $history->action = 'Cancel';
                 $history->previous = "";
                 $history->current = $changeControl->closed_done_by;
                 $history->comment = $request->comment;
@@ -2821,7 +4098,6 @@ public function marketComplaintStateChange(Request $request,$id)
                 return back();
             }
 
-
             // $changeControl->stage = "2";
             // // $changeControl->status = "Closed - Cancelled";
             // $changeControl->cancelled_by = Auth::user()->name;
@@ -2836,18 +4112,16 @@ public function marketComplaintStateChange(Request $request,$id)
     }
 
 
-
-
 // =======================================================RCA and Action ======================================================
 
 public function MarketComplaintRca_actionChild(Request $request,$id)
 {
     // dd($request->revision);
-    
+
     $cc = MarketComplaint::find($id);
     $cft = [];
     $parent_id = $id;
-    $parent_type = "Capa";
+    $parent_type = "Market Complaint";
     $old_records = Capa::select('id', 'division_id', 'record')->get();
     $record = ((RecordNumber::first()->value('counter')) + 1);
     $record = str_pad($record, 4, '0', STR_PAD_LEFT);
@@ -2858,7 +4132,7 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
     $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
     $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
     $parent_initiator_id = $id;
-   
+
     if ($request->revision == "rca-child") {
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
         // $record_number = $record;
@@ -2871,27 +4145,35 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         return view('frontend.action-item.action-item', compact('record', 'due_date', 'parent_id','old_records', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
     }
-    
+
+    if ($request->revision == "capa-child") {
+        // return "test";
+        $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+        return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id','old_records', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+    }
+
+
+
 
 }
-
-
-
 
 // ================================================================Capa and Action==================================================
 
     public function MarketComplaintCapa_ActionChild(Request $request,$id)
     {
         // dd($request->revision);
-        
+
         $cc = MarketComplaint::find($id);
         $cft = [];
-        
-        $parent_type = "Capa";
+
+        $parent_type = "Market Complaint";
         $old_records = Capa::select('id', 'division_id', 'record')->get();
         // $record = ((RecordNumber::first()->value('counter')) + 1);
         $record =$cc->record;
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $record_number =$cc->record;
+        $record_number = str_pad($record, 4, '0', STR_PAD_LEFT);
         $parent_id = $record;
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -2900,30 +4182,124 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_initiator_id = $id;
-       
-        if ($request->revision == "capa-child") {
+
+        if  ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('record', 'due_date', 'parent_id','old_records', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
+            $record_number = $record;
+            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id','old_records', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
 
         }
-        if ($request->revision == "Action-Item") {
+        elseif  ($request->revision == "Action-Item") {
             // return "test";
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.action-item.action-item', compact('record', 'due_date', 'parent_id','old_records', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
         }
-        
+        elseif  ($request->revision == "rca") {
+            // return "test";
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            return view('frontend.forms.root-cause-analysis', compact('record_number','record', 'due_date', 'parent_id','old_records', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
+        }
+
+
+
+
+    }
+
+
+    public function child(Request $request, $id)
+    {
+
+        $cft = [];
+        $parent_id = $id;
+        $parent_type = "Audit_Program";
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        $parent_record = MarketComplaint::where('id', $id)->value('record');
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_division_id = MarketComplaint::where('id', $id)->value('division_id');
+        $parent_initiator_id = MarketComplaint::where('id', $id)->value('initiator_id');
+        $parent_intiation_date = MarketComplaint::where('id', $id)->value('intiation_date');
+        $parent_created_at = MarketComplaint::where('id', $id)->value('created_at');
+        $parent_short_description = MarketComplaint::where('id', $id)->value('short_description');
+        $hod = User::where('role', 4)->get();
+        if ($request->child_type == "extension") {
+            $parent_due_date = "";
+            $parent_id = $id;
+            $parent_name = $request->parent_name;
+            if ($request->due_date) {
+                $parent_due_date = $request->due_date;
+            }
+
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $Extensionchild = MarketComplaint::find($id);
+            $Extensionchild->Extensionchild = $record_number;
+            $Extensionchild->save();
+            return view('frontend.extension.extension_new', compact('parent_id','parent_type','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at'));
+        }
+        $old_record = MarketComplaint::select('id', 'division_id', 'record')->get();
+        // dd($request->child_type)
+        if ($request->child_type == "capa") {
+            $parent_name = "CAPA";
+            $Capachild = MarketComplaint::find($id);
+            $Capachild->Capachild = $record_number;
+            $record = $record_number;
+            $old_records = $old_record;
+            $Capachild->save();
+
+            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'record_number'));
+        } elseif ($request->child_type == "Action_Item")
+         {
+            $parent_name = "CAPA";
+            $actionchild = MarketComplaint::find($id);
+            $actionchild->actionchild = $record_number;
+            $parent_id = $id;
+            $actionchild->save();
+
+            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+
+        elseif ($request->child_type == "effectiveness_check")
+         {
+            $parent_name = "CAPA";
+            $effectivenesschild = MarketComplaint::find($id);
+            $effectivenesschild->effectivenesschild = $record_number;
+            $effectivenesschild->save();
+        return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        elseif ($request->child_type == "Change_control") {
+            $parent_name = "CAPA";
+            $Changecontrolchild = MarketComplaint::find($id);
+            $Changecontrolchild->Changecontrolchild = $record_number;
+            $preRiskAssessment = MarketComplaint::all();
+            $pre = CC::all();
+
+            $Changecontrolchild->save();
+
+            return view('frontend.change-control.new-change-control', compact('pre', 'preRiskAssessment', 'cft','hod','parent_short_description',  'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        // else {
+        //     $parent_name = "Root";
+        //     $Rootchild = RiskManagement::find($id);
+        //     $Rootchild->Rootchild = $record_number;
+        //     $Rootchild->save();
+        //     return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
+        // }
     }
 // {{-- ==================================Regulatory  Reporting  and Effectiveness  Check child=============================================== --}}
 
         public function MarketComplaintRegu_Effec_Child(Request $request,$id)
         {
             // dd($request->revision);
-            
+
             $cc = MarketComplaint::find($id);
             $cft = [];
-           
+
             $parent_type = "Capa";
             $old_records = Capa::select('id', 'division_id', 'record')->get();
             // $record = ((RecordNumber::first()->value('counter')) + 1);
@@ -2937,7 +4313,7 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
             $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
             $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
             $parent_initiator_id = $id;
-        
+
             if ($request->revision == "regulatory-child") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 return "<h2>This Page is Not Available</h2>";
@@ -2952,7 +4328,7 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
                 return view('frontend.forms.effectiveness-check', compact('record_number', 'due_date', 'parent_id','old_records', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
-            
+
 
         }
 
@@ -2963,9 +4339,6 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         $data = MarketComplaint::find($id);
         $prductgigrid =MarketComplaintGrids::where(['mc_id' => $id,'identifer' => 'ProductDetails'])->first();
         // $martab_grid =MarketComplaintGrids::where(['mc_id' => $id,'identifer'=> 'Sutability'])->first();
-
-
-
 
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
@@ -2995,19 +4368,14 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
 
     public function MarketAuditTrial($id)
     {
-
-
         $audit = MarketComplaintAuditTrial::where('market_id', $id)->orderByDESC('id')->paginate();
         $today = Carbon::now()->format('d-m-y');
         $document = MarketComplaint::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
 
-      
         return view('frontend.market_complaint.audit-trial',compact('audit', 'document', 'today'));
 
     }
-
-
 
 
     public function auditDetailsMarket($id)
@@ -3049,10 +4417,6 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
             return $pdf->stream('Market-AuditTrial' . $id . '.pdf');
         }
     }
-
-
-
-
 
 
 
@@ -3101,31 +4465,31 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         if($marketComplaint->stage == '8'){
         $history->market_id = $id;
         $history->activity_type = 'Activity Log';
-        $history->action = 'Reopen';     
-    
+        $history->action = 'Reopen';
+
         $history->change_from = "Close-Done";
         $history->change_to = "Opened";
         $history->save();
         }
         $marketComplaint->stage = 1;
-      
+
         // $history->action_name = "Reopen";
-//    call function update  so how can do this 
+//    call function update  so how can do this
         $marketComplaint->status = "Opened";
 
         $this->show($request, $id);
     // $history->change_to = "Opened";
-  
 
         $marketComplaint->save();
     return redirect()->route('marketcomplaint.marketcomplaint_view', $id);
     }
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
 
 

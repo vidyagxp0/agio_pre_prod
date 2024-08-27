@@ -182,6 +182,17 @@
 
 
                     <table>
+                    <div class="buttons-new">
+                            <a class="text-white" href="{{ url('rcms/oot_view/' . $document->id) }}">
+                                <button class="button_theme1">
+                                    Back
+                                </button>
+                            </a>
+
+                            <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">
+                                    Exit
+                            </a> </button>
+                        </div>
                         <div class="heading">
 
                             <div class="heading-new">

@@ -222,7 +222,7 @@
                                             <th>Name of Product</th>
                                             <th>B No./A.R. No.</th>
                                             <th>Remarks</th>
-                                            {{-- <th>Action</th> --}}
+                                            <th>Action</th> 
 
 
                                         </tr>
@@ -242,7 +242,7 @@
                                                </td>
                                             <td><input type="text" name="investrecord[0][batch_no]" value=""></td>
                                              <td><input type="text" name="investrecord[0][remarks]" value="" ></td>
-
+                                             <td><button class="removeRowBtn">Remove</button>
 
                                         </tr>
                                        {{-- @endforeach --}}
@@ -309,7 +309,7 @@
                         '<td><input type="text" name="investrecord['+ investdetails +'][name_of_product]" value=""></td/>' +
                         '<td><input type="text" name="investrecord['+ investdetails +'][batch_no]" value=""></td>' +
                         '<td><input type="text" name="investrecord['+ investdetails +'][remarks]" value=""></td>' +
-                        // '<td><button class="removeRowBtn">Remove</button></td>' +
+                        '<td><button class="removeRowBtn">Remove</button></td>' +
 
 
                         '</tr>';
@@ -331,6 +331,9 @@
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
             });
+            $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    });
         });
         </script>
 
@@ -452,14 +455,14 @@
                                     </div>
 
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input" id="Incident_name_analyst_no_gi">
                                         <label for="Incident_name_analyst_no">Name Of Reported By<span
                                                 class="text-danger d-none">*</span></label>
                                         <input type="text" name="Incident_name_analyst_no_gi">
                                     </div>
 
-                                </div>
+                                </div> -->
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="incident_date_incidence_gi">Date Of Incidence <span class="text-danger"></span></label>
@@ -485,13 +488,13 @@
                                         <label for="search">
                                             Reported By <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="section_sign_date_gi">
+                                        <select id="select-state" placeholder="Select..." name="analyst_sign_date_gi">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
-                                                <option value="{{ $data->name }}">{{ $data->name }}</option>
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('section_sign_date_gi')
+                                        @error('analyst_sign_date_gi')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -520,10 +523,10 @@
                                         <select id="select-state" placeholder="Select..." name="section_sign_date_gi">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
-                                                <option value="{{ $data->name }}">{{ $data->name }}</option>
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('analyst_sign_date_gi')
+                                        @error('section_sign_date_gi')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -1001,7 +1004,7 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        {{-- <span id="rchar">240</span> characters remaining --}}
+                                         <!-- <span id="rchar">240</span> characters remaining  -->
                                         <textarea id="duedoc" name="due_date_extension" type="text" maxlength="240"></textarea>
                                     </div>
                                 </div>
@@ -1046,7 +1049,7 @@
                                             <th>Name of Product</th>
                                             <th>B No./A.R. No.</th>
                                             <th>Remarks</th>
-                                            {{-- <th>Action</th> --}}
+                                            <th>Action</th>
 
 
                                         </tr>
@@ -1060,12 +1063,12 @@
                                             {{-- <td style="width: 6%"><input type="text" name="investigation[0][s_no]" value="">
                                                </td>
                                             --}}
-                                            <td>{{ $suitabilityNumber++ }}</td>
+                                            <td style="width: 6%">{{ $suitabilityNumber++ }}</td>
                                               <td><input type="text" name="investigation[0][name_of_product_ssfi]" value="">
                                                </td>
                                             <td><input type="text" name="investigation[0][batch_no_ssfi]" value=""></td>
                                              <td><input type="text" name="investigation[0][remarks_ssfi]" value="" ></td>
-
+                                             <td><button class="removeRowBtn">Remove</button></td>
 
                                         </tr>
                                        {{-- @endforeach --}}
@@ -1131,10 +1134,10 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="investigation[0][name_of_product]" value=""></td/>' +
-                        '<td><input type="text" name="investigation[0][batch_no]" value=""></td>' +
-                        '<td><input type="text" name="investigation[0][remarks]" value=""></td>' +
-                        // '<td><button class="removeRowBtn">Remove</button></td>' +
+                        '<td><input type="text" name="investigation['+ serialNumber +'][name_of_product_ssfi]" value=""></td/>' +
+                        '<td><input type="text" name="investigation['+ serialNumber +'][batch_no_ssfi]" value=""></td>' +
+                        '<td><input type="text" name="investigation['+ serialNumber +'][remarks_ssfi]" value=""></td>' +
+                        '<td><button class="removeRowBtn">Remove</button></td>' +
 
 
                         '</tr>';
@@ -1155,6 +1158,9 @@
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
             });
+            $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    });
         });
         </script>
 
@@ -1510,20 +1516,18 @@
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Verification 
+                                    QA Head/HOD Initial Review 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Verification Complete">Verification Complete
-                                            By</label>
+                                        <label for="Verification Complete">QA Head/HOD Initial Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Incident Review Completed On">Verification Complete
-                                            On</label>
+                                        <label for="Incident Review Completed On">QA Head/HOD Initial Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1536,18 +1540,18 @@
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Preliminary Investigation
+                                    QA Initial Review
                                 </div>
                                 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Investigation Completed By"> Preliminary Investigation Completed By</label>
+                                        <label for="Investigation Completed By">QA Initial Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Investigation Completed On"> Preliminary Investigation Completed On</label>
+                                        <label for="Investigation Completed On">QA Initial Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1560,18 +1564,18 @@
                                 
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Assignable Cause Identification
+                                    Pending Initiator Update
                                 </div>
                                 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Assignable Cause Identification Completed">Assignable Cause Identification Completed By</label>
+                                        <label for="Assignable Cause Identification Completed">Pending Initiator Update Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Assignable Cause Identification Completed">Assignable Cause Identification Completed On</label>
+                                        <label for="Assignable Cause Identification Completed">Pending Initiator Update Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1585,17 +1589,17 @@
 
 
                                <div class="col-12 sub-head" style="font-size: 16px">
-                                    No Assignable Cause Identification
+                                    QA Head/HOD Secondary Review
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="No Assignable Completed By">No Assignable Cause Identification  Completed By</label>
+                                        <label for="No Assignable Completed By">QA Head/HOD Secondary Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="No Assignable Completed On">No Assignable Cause Identification Completed On</label>
+                                        <label for="No Assignable Completed On">QA Head/HOD Secondary Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1608,17 +1612,17 @@
                                 </div>
                                
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Extended Inv
+                                    QA Secondary Review
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Extended Inv Completed By">Extended Inv Completed By</label>
+                                        <label for="Extended Inv Completed By">QA Secondry Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Extended Inv Completed On">Extended Inv Completed On</label>
+                                        <label for="Extended Inv Completed On">QA Secondry Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1632,17 +1636,36 @@
                                 
                                 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Solution Validation 
+                                    QAH Approval
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Solution Validation Completed By">Solution Validation Completed By</label>
+                                        <label for="Solution Validation Completed By">Root Cause Found By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input" >
-                                        <label for="Solution Validation Completed On">Solution Validation Completed On</label>
+                                        <label for="Solution Validation Completed On">Root Cause Found On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>                                
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Solution Validation Completed By">Root Cause Not Found By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input" >
+                                        <label for="Solution Validation Completed On">Root Cause Not Found On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>                                
@@ -1654,17 +1677,17 @@
                                 </div>
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    All Action Approved
+                                    QA Head/HOD Final Review
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="All Action Approved Completed By">All Action Approved Completed By</label>
+                                        <label for="All Action Approved Completed By">QA Head/HOD Final Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="All Action Approved Completed On">All Action Approved Completed On</label>
+                                        <label for="All Action Approved Completed On">QA Head/HOD Final Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1677,17 +1700,17 @@
                                
                                
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Assessment 
+                                    QA Final Review 
                                 </div>
                                  <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Assessment Completed By">Assessment Completed By</label>
+                                        <label for="Assessment Completed By">QA Final Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Assemssment Completed On">Assessment Completed On</label>
+                                        <label for="Assemssment Completed On">QA Final Review Complete On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1699,17 +1722,36 @@
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Closure
+                                    QAH Final Approval
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Closure Completed By">Closure Completed By</label>
+                                        <label for="Closure Completed By">Final Root Cause Found By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Closure Completed On">Closure Completed On</label>
+                                        <label for="Closure Completed On">Final Root Cause Found On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment" >Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div> 
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Closure Completed By">Final Root Cause Not Found By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Closure Completed On">Final Root Cause Not Found On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1727,13 +1769,13 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled By">Cancelled By</label>
+                                        <label for="Cancelled By">Cancel By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled On">Cancelled On</label>
+                                        <label for="Cancelled On">Cancel On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('qa_head')->nullable();
             $table->text('qa_comments')->nullable();
             $table->text('related_records')->nullable();
+            $table->text('risk_assessment_atch')->nullable();
             $table->timestamps();
         });
     }

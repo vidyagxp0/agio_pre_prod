@@ -12,6 +12,7 @@ use App\Models\Extension;
 use App\Models\InternalAudit;
 use App\Models\ManagementReview;
 use App\Models\OutOfCalibration;
+use App\Models\Resampling;
 use App\Models\RiskManagement;
 use App\Models\LabIncident;
 use App\Models\Auditee;
@@ -88,6 +89,7 @@ class DashboardController extends Controller
 
         $datas25 = NonConformance::orderByDesc('id')->get();
         $incident = Incident::orderByDesc('id')->get();
+        $resampling = Resampling::orderByDesc('id')->get();
         foreach ($datas as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -563,6 +565,27 @@ class DashboardController extends Controller
                 "date_close" => $data->updated_at,
             ]);
         }
+        foreach ($resampling as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->cc_id ? $data->cc_id : "-",
+                "record" => $data->record,
+                "type" => "Resampling",
+                "due_date" => $data->due_date,
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "division_id" => $data->division_id,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "date_open" => $data->created_at,
+                "date_close" => $data->updated_at,
+            ]);
+        }
         $table  = collect($table)->sortBy('record')->reverse()->toArray();
         $datag = $this->paginate($table);
         $uniqueProcessNames = QMSProcess::select('process_name')->distinct()->pluck('process_name');
@@ -990,13 +1013,20 @@ class DashboardController extends Controller
             $audit = "actionitemauditTrailPdf/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-        } elseif ($type == "Extension") {
+
+
+
+        } 
+        elseif ($type == "Extension") {
             $data = extension_new::find($id);
             $single = "singleReportNew/" .$data->id;
             $audit = "extensionAuditReport/" .$data->id;
             $division = QMSDivision::find($data->site_location_code);
             $division_name = $division->name;
-        } elseif ($type == "Observation") {
+        }
+        
+        
+        elseif ($type == "Observation") {
             $data = Observation::find($id);
             $single = "ObservationSingleReport/" .$data->id;
             $audit = "ObservationAuditTrialShow/" .$data->id;
@@ -1074,17 +1104,26 @@ class DashboardController extends Controller
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }
+        elseif ($type == "Resampling") {
+            $data = Resampling::find($id);
+            $single = "resamplingSingleReport/" . $data->id;
+            $audit = "resamplingAuditReport/" . $data->id;
+            $parent = "#";
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        }
 
 
         $type = $type == 'Capa' ? 'CAPA' : $type;
 
         $html = '';
         $html = '<div class="block">
-        <div class="record_no">
+        <div class="record">
             Record No. ' . str_pad($data->record, 4, '0', STR_PAD_LEFT) .
             '</div>
         <div class="division">
-        ' . $division_name . '/ ' . $type . '
+        ' . Helpers::getDivisionName($data->division_id) . '/ ' . $type . '
+
         </div>
         <div class="status">' .
             $data->status . '
