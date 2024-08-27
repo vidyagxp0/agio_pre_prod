@@ -8580,7 +8580,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
     //     return view('frontend.forms.deviation.deviation_audit', compact('audit', 'document', 'today'));
     // }
         {
-        $audit = DeviationAuditTrail::where('deviation_id', $id)->orderByDESC('id')->paginate(200);
+        $audit = DeviationAuditTrail::where('deviation_id', $id)->orderByDESC('id')->paginate(5);
         // dd($audit);
         $today = Carbon::now()->format('d-m-y');
         $document = Deviation::where('id', $id)->first();
@@ -8605,14 +8605,14 @@ public function audit_trail_filter(Request $request, $id)
         switch ($request->typedata) {
             case 'cft_review':
                 // Filter by specific CFT review actions
-                $cft_field = ['CFT Review Complete','Not Applicable',];
+                $cft_field = ['CFT Review Complete','Not Applicable'];
                 $query->whereIn('action', $cft_field);
                 break;
 
             case 'stage':
                 // Filter by activity log stage changes
                 $stage=[  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
-                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved',
+                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
                     'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
                     'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
                 $query->whereIn('action', $stage); // Ensure correct activity_type value
@@ -8621,10 +8621,20 @@ public function audit_trail_filter(Request $request, $id)
             case 'user_action':
                 // Filter by various user actions
                 $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
-                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved',
+                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
                     'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
                     'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
                 $query->whereIn('action', $user_action);
+                break;
+                 case 'notification':
+                // Filter by various user actions
+                $notification = [];
+                $query->whereIn('action', $notification);
+                break;
+                 case 'business':
+                // Filter by various user actions
+                $business = [];
+                $query->whereIn('action', $business);
                 break;
 
             default:
@@ -8698,7 +8708,7 @@ public function audit_trail_filter(Request $request, $id)
 
     public function DeviationAuditTrialPdf($id)
     {
-        $audit = DeviationAuditTrail::where('deviation_id', $id)->orderByDesc('id')->paginate(5);
+        $audit = DeviationAuditTrail::where('deviation_id', $id)->orderByDesc('id')->paginate(500);
         $today = Carbon::now()->format('d-m-y');
         $document = Deviation::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
