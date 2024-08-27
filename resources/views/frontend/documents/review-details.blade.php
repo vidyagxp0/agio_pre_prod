@@ -87,7 +87,7 @@
                                 </div> --}}
                                 <div>
                                     <div class="head">Document Type</div>
-                                    <div>{{ $document->document_type_id }}</div>
+                                    <div>{{ Helpers::getDocumentTypes()[$document->document_type_id] }}</div>   
                                 </div>
                                 <div>
                                     <div class="head">Working Status</div>
@@ -856,14 +856,14 @@
                             which is legally binding equivalent of a hand written signature.
                         </div>
                         <div class="group-input">
-                            <label for="username">Username</label>
+                            <label for="username">Username<span class="text-danger">*</span></label>
                             <input type="text" value="{{ old('username') }}" name="username" required>
                             @if ($errors->has('username'))
                                 <p class="text-danger">User name not matched</p>
                             @endif
                         </div>
                         <div class="group-input">
-                            <label for="password">Password</label>
+                            <label for="password">Password<span class="text-danger">*</span></label>
                             <input type="password" value="{{ old('password') }}" name="password" required>
                             @if ($errors->has('username'))
                                 <p class="text-danger">E-signature not matched</p>
@@ -939,14 +939,14 @@
                             </select>
                         </div> --}}
                         <div class="group-input">
-                            <label for="username">Username</label>
+                            <label for="username">Username<span class="text-danger">*</span></label>
                             <input type="text" value="{{ old('username') }}" name="username" required>
                             @if ($errors->has('username'))
                                 <p class="text-danger">User name not matched</p>
                             @endif
                         </div>
                         <div class="group-input">
-                            <label for="password">Password</label>
+                            <label for="password">Password<span class="text-danger">*</span></label>
                             <input type="password" value="{{ old('password') }}" name="password" required>
                             @if ($errors->has('username'))
                                 <p class="text-danger">E-signature not matched</p>
@@ -1001,14 +1001,14 @@
                             which is legally binding equivalent of a hand written signature.
                         </div>
                         <div class="group-input">
-                            <label for="username">Username</label>
+                            <label for="username">Username<span class="text-danger">*</span></label>
                             <input type="text" value="{{ old('username') }}" name="username" class="form-control" required>
                             @if ($errors->has('username'))
                                 <p class="text-danger">User name not matched</p>
                             @endif
                         </div>
                         <div class="group-input">
-                            <label for="password">Password</label>
+                            <label for="password">Password<span class="text-danger">*</span></label>
                             <input type="password" value="{{ old('password') }}" name="password" class="form-control" required>
                             @if ($errors->has('username'))
                                 <p class="text-danger">E-signature not matched</p>

@@ -51,8 +51,11 @@
                                                         000{{$temp->id}}
                                                     </a>
                                                 </td>
-                                                <td class="division">
+                                                {{-- <td class="division">
                                                     {{ $temp->document_type_name }}
+                                                </td> --}}
+                                                <td class="division">
+                                                    {{ Helpers::getDocumentTypes()[$temp->document_type_id] }}
                                                 </td>
 
                                                 <td class="short-desc">

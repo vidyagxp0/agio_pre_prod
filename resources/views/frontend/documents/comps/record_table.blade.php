@@ -45,8 +45,9 @@
                     </a>
                 </td>
                 <td class="division">
-                    {{ $doc->document_type_id }}
+                    {{ Helpers::getDocumentTypes()[$doc->document_type_id] }}
                 </td>
+
                 <td class="division">
                     {{ Helpers::getDivisionName($doc->division_id) }}
                 </td>

@@ -658,9 +658,9 @@
     </div>
     @endif
     </div>
-    <div class="col-md-6">
-        <div class="group-input">
-            <label for="doc-type">Document Type</label>
+        <div class="col-md-6">
+            <div class="group-input">
+                <label for="doc-type">Document Type</label>
             <select name="document_type_id" id="doc-type" {{Helpers::isRevised($document->stage)}}>
                 <option value="">Enter your Selection</option>
                 @foreach (Helpers::getDocumentTypes() as $code => $type)
