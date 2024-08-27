@@ -1216,7 +1216,7 @@ class ResamplingController extends Controller
                 $changeControl->qa_varification_on = Carbon::now()->format('d-M-Y');
                 $changeControl->qa_varification_comment = $request->comment;
                 $history = new ResamplingAudittrail;
-                $history->action = "Acknowledgement Complete";
+                $history->action = "Acknowledge Complete";
 
                         $history->resampling_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -1227,7 +1227,7 @@ class ResamplingController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status;
-                        $history->stage = "Acknowledgement Complete";
+                        $history->stage = "Acknowledge Complete";
                         $history->save();
                 $changeControl->update();
                 // $history = new CCStageHistory();
@@ -1473,7 +1473,7 @@ public function resamplingmoreinfo(Request $request, $id)
         }
         if ($changeControl->stage == 4) {
             $changeControl->stage = "3";
-            $changeControl->status = "work Completion";
+            $changeControl->status = "Acknowledge";
             $changeControl->more_work_completion_by = (string)Auth::user()->name;
             $changeControl->more_work_completion_on = Carbon::now()->format('d-M-Y');
             $changeControl->more_work_completion_comment =$request->comment;
@@ -1487,7 +1487,7 @@ public function resamplingmoreinfo(Request $request, $id)
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->stage = "work Completion";
+            $history->stage = "Acknowledge";
             $history->save();
             $changeControl->update();
             // $history = new CCStageHistory();
