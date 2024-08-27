@@ -115,10 +115,94 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
                                 Approved
                              </button>
-                                @if($count == 2)
+                             @if(Helpers::getChildData($extensionNew->parent_id, 'LabIncident') == 2)
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                         Send for CQA
                                     </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Deviation') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOC') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOT') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Management Review') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'CAPA') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Action Item') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Resampling') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Observation') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'RCA') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Risk Assesment') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Management Review') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'External Audit') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Internal Audit') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Audit Program') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'CC') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'New Documnet') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Effectiveness Check') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOS Micro') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOS Chemical') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Market Complaint') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Failure Investigation') == 2)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>   
                                 @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Reject

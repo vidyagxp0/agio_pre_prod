@@ -58,9 +58,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             QC Head/HOD Initial Review Complete
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
+                            @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -74,10 +76,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
-
+                            @endif
                         @elseif($data->stage == 4 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
 
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
@@ -100,10 +103,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
-                            
+                            @endif
                         @elseif($data->stage == 6 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             QA Secondry Review Complete
@@ -111,10 +115,11 @@
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Information Required
                         </button>
+                        @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                             Child
                         </button>
-                        
+                        @endif
                         @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#root-modal">
                                 Aprroved
@@ -122,9 +127,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
+                            @endif
                          @elseif($data->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Pending Approval
@@ -135,10 +142,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Head/HOD Final Review Complete
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
-
+                            @endif
                             @elseif($data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Final Review Complete
@@ -146,10 +154,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
-
+                            @endif
                             @elseif($data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Final Root Cause Found
@@ -157,10 +166,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#back-modal">
                                 Final Root Cause Not Found
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
-
+                            @endif
 
 
                             <!-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -2799,11 +2809,13 @@
                                 CAPA
                             </label>
                         </div>
+                        @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                         <div class="group-input">
                             <label for="root-item">
                                 <input type="radio" name="revision" id="root-item" value="Extension">
                                 Extension
                             </label>
+                        @endif
                         </div>
                         
                         <div class="modal-footer">

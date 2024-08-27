@@ -1111,14 +1111,14 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Plan Proposed By</label>
+                                    <label for="Plan Proposed By">Propose Plan By</label>
                                     <input type="hidden" name="plan_proposed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Plan Proposed On">Plan Proposed On</label>
+                                    <label for="Plan Proposed On">Propose Plan On</label>
                                     <input type="hidden" name="plan_proposed_on">
                                     <div class="static"></div>
                                 </div>

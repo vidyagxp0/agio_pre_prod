@@ -184,6 +184,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('observationupdate/{id}', [ObservationController::class, 'observationupdate'])->name('observationupdate');
             Route::post('observation_send_stage/{id}', [ObservationController::class, 'observation_send_stage'])->name('observation_change_stage');
             Route::post('RejectStateChange/{id}', [ObservationController::class, 'RejectStateChange'])->name('RejectStateChangeObservation');
+            Route::post('observation_cancel-model/{id}', [ObservationController::class, 'ObservationCancel'])->name('observation_cancel-model');
+
             Route::post('observation_child/{id}', [ObservationController::class, 'observation_child'])->name('observation_child');
             Route::post('observation_capanot_stage/{id}', [ObservationController::class, 'CapanotStage'])->name('observation_capanot_stage');
             Route::get('Observation_AuditTrial_Show/{id}', [ObservationController::class, 'ObservationAuditTrialShow'])->name('ShowObservationAuditTrial');
