@@ -6250,6 +6250,45 @@ class DeviationController extends Controller
                     $deviation->update();
                     return back();
                 }
+                 if ($deviation->stage == 5) {
+                  
+
+                  
+
+                    $deviation->stage = "4";
+                    $deviation->status = "CFT Review";
+                    $deviation->qa_more_info_required_by = Auth::user()->name;
+                    $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                    // $deviation->pending_Cancel_comment = $request->comment;
+
+                    $history = new DeviationAuditTrail();
+                    $history->deviation_id = $id;
+                    $history->activity_type = 'More Information Required By, More Information Required On';
+                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->qa_more_info_required_by. ' ,' . $lastDocument->qa_more_info_required_on;
+                    }
+                    $history->action='More Information Required';
+                    $history->current = $deviation->qa_more_info_required_by. ',' . $deviation->qa_more_info_required_on;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "CFT Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                    $deviation->update();
+                    return back();
+                }
 
                   if ($deviation->stage == 6) {
                   
@@ -7901,23 +7940,23 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                 if ($deviation->stage == 5) {
 
-                    if ($deviation->form_progress === 'capa' && !empty($deviation->QA_Feedbacks))
-                    {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for QA/CQA Head/Manager Designee Approval'
-                        ]);
+                    // if ($deviation->form_progress === 'capa' && !empty($deviation->QA_Feedbacks))
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for QA/CQA Head/Manager Designee Approval'
+                    //     ]);
 
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'Investigation and CAPA / QA/CQA Final review Tab is yet to be filled!'
-                        ]);
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'Investigation and CAPA / QA/CQA Final review Tab is yet to be filled!'
+                    //     ]);
 
-                        return redirect()->back();
-                    }
+                    //     return redirect()->back();
+                    // }
 
 
                     $deviation->stage = "6";
