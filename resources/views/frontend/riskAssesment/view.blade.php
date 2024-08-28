@@ -3158,7 +3158,7 @@
                 </div>
                 <div class="col-md-12 mb-3 p_erson">
                     <div class="group-input">
-                        <label for="Production feedback">Production Feedback <span
+                        <label for="Production feedback">Production Table Feedback <span
                                 id="asteriskProduction2"
                                 style="display: {{ $data1->Production_Table_Feedback == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
                                 class="text-danger">*</span></label>
@@ -5566,112 +5566,7 @@
                         name="QualityAssurance_on" value="{{ $data1->QualityAssurance_on }}">
                 </div>
             </div>
-            <div class="sub-head">
-                Engineering
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Customer notification">Engineering Review Required ?</label>
-                    <select disabled name="Engineering_review" id="Engineering_review">
-                        <option value="">-- Select --</option>
-                        <option @if ($data1->Engineering_review == 'yes') selected @endif value="yes">
-                            Yes</option>
-                        <option @if ($data1->Engineering_review == 'no') selected @endif value="no">
-                            No</option>
-                        <option @if ($data1->Engineering_review == 'na') selected @endif value="na">
-                            NA</option>
-                    </select>
 
-                </div>
-            </div>
-            @php
-                $userRoles = DB::table('user_roles')
-                    ->where(['q_m_s_roles_id' => 25, 'q_m_s_divisions_id' => $data->division_id])
-                    ->get();
-                $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-            @endphp
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Customer notification">Engineering Person</label>
-                    <select disabled name="Engineering_person" id="Engineering_person">
-                        <option value="">-- Select --</option>
-                        @foreach ($users as $user)
-                            <option {{ $data1->Engineering_person == $user->name ? 'selected' : '' }}
-                                value="{{ $user->name }}">{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-12 mb-3">
-                <div class="group-input">
-                    <label for="Impact Assessment4">Impact Assessment (By Engineering)</label>
-                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                            not require completion</small></div>
-                    <textarea class="tiny"
-                        name="Engineering_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                        id="summernote-25">{{ $data1->Engineering_assessment }}</textarea>
-                </div>
-            </div>
-            <div class="col-md-12 mb-3">
-                <div class="group-input">
-                    <label for="Engineering Feedback">Engineering Feedback</label>
-                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                            not require completion</small></div>
-                    <textarea class="tiny" name="Engineering_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                        id="summernote-26">{{ $data1->Engineering_feedback }}</textarea>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="Audit Attachments">Engineering Attachments</label>
-                    <div><small class="text-primary">Please Attach all relevant or supporting
-                            documents</small></div>
-                    <div class="file-attachment-field">
-                        <div disabled class="file-attachment-list" id="Engineering_attachment">
-                            @if ($data1->Engineering_attachment)
-                                @foreach (json_decode($data1->Engineering_attachment) as $file)
-                                    <h6 type="button" class="file-container text-dark"
-                                        style="background-color: rgb(243, 242, 240);">
-                                        <b>{{ $file }}</b>
-                                        <a href="{{ asset('upload/' . $file) }}"
-                                            target="_blank"><i class="fa fa-eye text-primary"
-                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                        <a type="button" class="remove-file"
-                                            data-file-name="{{ $file }}"><i
-                                                class="fa-solid fa-circle-xmark"
-                                                style="color:red; font-size:20px;"></i></a>
-                                    </h6>
-                                @endforeach
-                            @endif
-                        </div>
-                        <div class="add-btn">
-                            <div>Add</div>
-                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                type="file" id="myfile" name="Engineering_attachment[]"
-                                oninput="addMultipleFiles(this, 'Engineering_attachment')" multiple>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-3">
-                <div class="group-input">
-                    <label for="Engineering Review Completed By">Engineering Review Completed
-                        By</label>
-                    <input disabled type="text" value="{{ $data1->Engineering_by }}"
-                        name="Engineering_by" id="Engineering_by">
-
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Engineering Review Completed On">Engineering Review Completed
-                        On</label>
-                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                    <input disabled type="date" id="Engineering_on" name="Engineering_on"
-                        value="{{ $data1->Engineering_on }}">
-                </div>
-            </div>
             <div class="sub-head">
                 Analytical Development Laboratory
             </div>

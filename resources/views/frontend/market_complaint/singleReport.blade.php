@@ -471,13 +471,120 @@
                         </td>
                     </tr>
 
-{{--
-                    <tr>
+                    {{--  <tr>
                         <th class="w-20">Initial Attachment</th>
                         <td class="w-80">{{ $data->Initial_Attachment ? '<a href="'.asset('upload/document/'.$data->Initial_Attachment).'">'.$data->Initial_Attachment.'</a>' : 'Not Applicable' }}</td>
                     </tr> --}}
                 </table>
             </div>
+
+            <div class="block">
+                <div class="block-head">
+                    CFT Review
+                </div>
+                <div class="block-head">Production (Table/Capsule/Powder)</div>
+                <table>
+                    <tr>
+                        <th class="w-20">Production Review Required</th>
+                        <td class="w-30">@if($data1->Production_Review) {{  $data1->Production_Table_Review }}@else Not Applicable @endif</td>
+                        {{-- <td class="w-30"> <div> @if ($data1->Production_Review)  {{ $data1->Production_Review }} @else Not Applicable  @endif </div>  </td> --}}
+                        <th class="w-20">Production Person</th>
+                        <td class="w-30">@if($data1->Production_Table_Person){{ $data1->Production_Table_Person}}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Production Assesment</th>
+                        <td class="w-30">@if($data1->Production_Table_Assessment){{ $data1->Production_Table_Assessment  }}@else Not Applicable @endif</td>
+                        <th class="w-20">Production Feedback</th>
+                        <td class="w-30">@if($data1->Production_Table_Feedback){{  $data1->Production_Table_Feedback }}@else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Production by</th>
+                        <td class="w-30">@if($data1->Production_Table_By){{ $data1->Production_Table_By }}@else Not Applicable @endif</td>
+                        <th class="w-20">Production on</th>
+                        <td class="w-30">@if($data1->Production_Table_On){{ $data1->Production_Table_On}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            Production Attechment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data1->Production_Table_Attachment)
+                                @foreach(json_decode($data1->Production_Table_Attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </table>
+
+
+                <div class="block-head">Production Injection</div>
+                <table>
+                    <tr>
+                        <th class="w-20">Production Injection Review</th>
+                        <td class="w-30">@if($data1->Production_Injection_Review) {{  $data1->Production_Injection_Review }}@else Not Applicable @endif</td>
+                        {{-- <td class="w-30"> <div> @if ($data1->Production_Review)  {{ $data1->Production_Review }} @else Not Applicable  @endif </div>  </td> --}}
+                        <th class="w-20">Production Injection Person</th>
+                        <td class="w-30">@if($data1->Production_Injection_Person){{ $data1->Production_Injection_Person}}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Production Injection Assesment</th>
+                        <td class="w-30">@if($data1->Production_Injection_Assessment){{ $data1->Production_Injection_Assessment  }}@else Not Applicable @endif</td>
+                        <th class="w-20">Production Injection Feedback</th>
+                        <td class="w-30">@if($data1->Production_Injection_Feedback){{  $data1->Production_Injection_Feedback }}@else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Production by</th>
+                        <td class="w-30">@if($data1->Production_Table_By){{ $data1->Production_Table_By }}@else Not Applicable @endif</td>
+                        <th class="w-20">Production on</th>
+                        <td class="w-30">@if($data1->Production_Table_On){{ $data1->Production_Table_On}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            Production Attechment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data1->Production_Table_Attachment)
+                                @foreach(json_decode($data1->Production_Table_Attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </table>
+
+            </div>
+
             <div class="block">
                 <div class="block-head">
                     Complaint Acknowledgement
