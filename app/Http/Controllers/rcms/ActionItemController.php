@@ -307,12 +307,12 @@ class ActionItemController extends Controller
         }
         
           
-        if (!empty($openState->dept)) {
+        if (!empty($openState->departments)) {
             $history = new ActionItemHistory();
             $history->cc_id =  $openState->id;
             $history->activity_type = 'Responsible Department';
             $history->previous = "Null";
-            $history->current =  $openState->dept;
+            $history->current = Helpers::getFullDepartmentName($openState->departments);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -323,7 +323,7 @@ class ActionItemController extends Controller
             $history->action_name = "Create";
             $history->save();
             }
-        
+       
         if (!empty($openState->initiatorGroup)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
@@ -552,23 +552,23 @@ class ActionItemController extends Controller
             $history->save();
         }
 
-        if (!empty($openState->departments)) {
-            $history = new ActionItemHistory();
-            $history->cc_id =   $openState->id;
-            $history->activity_type = 'Departments';
-            $history->previous = "Null";
-            $history->current =  $openState->departments;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $openState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = "Create";
+        // if (!empty($openState->departments)) {
+        //     $history = new ActionItemHistory();
+        //     $history->cc_id =   $openState->id;
+        //     $history->activity_type = 'Departments';
+        //     $history->previous = "Null";
+        //     $history->current =  Helpers::getFullDepartmentName($openState->departments);
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $openState->status;
+        //     $history->change_to = "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = "Create";
    
-            $history->save();
-        }
+        //     $history->save();
+        // }
    
    
    
@@ -709,12 +709,12 @@ class ActionItemController extends Controller
             $history->save();
         }
 
-        if ($lastopenState->dept != $openState->dept || !empty($request->dept_comment)) {
+        if ($lastopenState->departments != $openState->departments || !empty($request->dept_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Responsible Department';
             $history->previous = $lastopenState->dept;
-            $history->current = $openState->dept;
+            $history->current = Helpers::getFullDepartmentName($request->departments);
             $history->comment = $request->dept_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -730,6 +730,7 @@ class ActionItemController extends Controller
    
             $history->save();
         }  
+        // dd($openState->departments);
 
         //  if ($lastopenState->dept != $openState->dept || !empty($request->dept_comment)) {
         //     $history = new ActionItemHistory;
@@ -779,7 +780,7 @@ class ActionItemController extends Controller
             $history->cc_id = $id;
             $history->activity_type = 'Responsible Department';
             $history->previous = $lastopenState->departments;
-            $history->current = $openState->departments;
+            $history->current = Helpers::getFullDepartmentName($openState->departments);
             $history->comment = $request->departments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

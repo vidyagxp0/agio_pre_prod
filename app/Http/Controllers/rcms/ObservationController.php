@@ -91,21 +91,23 @@ class ObservationController extends Controller
         $data->comments = $request->comments;
         $data->impact = $request->impact;
         $data->impact_analysis = $request->impact_analysis;
+        $data->severity_rate = $request->severity_rate;
 
-        $severity = [
-            '1' => 'Negligible',
-            '2' => 'Moderate',
-            '3' => 'Major',
-            '4' => 'Fatal',
-        ];
-        if (isset($data->severity_rate) && array_key_exists($data->severity_rate, $severity)) {
-            $data->severity_rate = $severity[$data->severity_rate];
-        } else {
-            $data->severity_rate = '';
-        }
-        if ($request->has('severity_rate') && array_key_exists($request->severity_rate, $severity)) {
-            $data->severity_rate = $severity[$request->severity_rate];
-        }
+
+        // $severity = [
+        //     '1' => 'Negligible',
+        //     '2' => 'Moderate',
+        //     '3' => 'Major',
+        //     '4' => 'Fatal',
+        // ];
+        // if (isset($data->severity_rate) && array_key_exists($data->severity_rate, $severity)) {
+        //     $data->severity_rate = $severity[$data->severity_rate];
+        // } else {
+        //     $data->severity_rate = '';
+        // }
+        // if ($request->has('severity_rate') && array_key_exists($request->severity_rate, $severity)) {
+        //     $data->severity_rate = $severity[$request->severity_rate];
+        // }
 
 
         // $data->occurrence = $request->occurrence;
@@ -2192,7 +2194,7 @@ if(!empty($request->attach_files2)){
         if ($request->revision == "Action-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $record = $record_number;
-            return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.forms.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
         }
         if ($request->revision == "RCA") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');

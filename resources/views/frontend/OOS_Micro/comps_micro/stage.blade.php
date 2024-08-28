@@ -25,14 +25,15 @@
             @if ($micro_data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Submit</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
-            @elseif($micro_data->stage == 2 && (in_array([4,14], $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal"> HOD Primary Review Complete </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
-            @elseif($micro_data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">Child</button>
+            @elseif($micro_data->stage == 3 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">Cancel</button>
 
-            @elseif($micro_data->stage == 4 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 4 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">CQA/QA Head Primary Review Complete</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
@@ -41,74 +42,81 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Phase IA Investigation</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-            @elseif($micro_data->stage == 6 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 6 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IA HOD Review Complete </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-            @elseif($micro_data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 7 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IA QA Review Complete</button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IA CQA/QA Review Complete</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-            @elseif($micro_data->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Found</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Not Found</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-            @elseif($micro_data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 9 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB Investigation</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-            @elseif($micro_data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 10 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB HOD Review Complete</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-            @elseif($micro_data->stage == 11 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 11 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB CQA/QA Review Complete</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-            @elseif($micro_data->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 12 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">P-IB Assignable Cause Found</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-I B Assignable Cause Not Found</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-            @elseif($micro_data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 13 && (in_array(22, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause"> Phase II A Investigation </button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-            @elseif($micro_data->stage == 14 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 14 && (in_array(61, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A HOD Review Complete</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-            @elseif($micro_data->stage == 15 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 15 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A CQA/QA Review Complete</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-            @elseif($micro_data->stage == 16 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 16 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II A Assignable Cause Found</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II A Assignable Cause Not Found</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-            @elseif($micro_data->stage == 17 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 17 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Investigation</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-            @elseif($micro_data->stage == 18 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 18 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B HOD Review Complete</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-            @elseif($micro_data->stage == 19 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 19 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B QCQA/QA Review Complete</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B CQA/QA Review</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-            @elseif($micro_data->stage == 20 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 20 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II B Assignable Cause Found</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II B Assignable Cause Not Found</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-            @elseif($micro_data->stage == 21 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($micro_data->stage == 21 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button> --}}
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-III Investigation Applicable/Not Applicable</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button>
+            @elseif($micro_data->stage == 22 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                
+                
+            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/action-items-create') }}"> Action Item
+            </a> </button>
+            <button class="button_theme1"> <a class="text-white" href="{{ url('root-cause-analysis') }}"> Root Cause Analysis
+            </a> </button>
             @endif
             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit</a> </button>
 
@@ -135,11 +143,11 @@
                 which is legally binding equivalent of a hand written signature.
             </div>
             <div class="group-input">
-                <label for="username">Username <span> *</span></label>
+                <label for="username">Username <span class="text-danger"> *</span></label>
                 <input type="text" name="username" required>
             </div>
             <div class="group-input">
-                <label for="password">Password <span> *</span></label>
+                <label for="password">Password <span class="text-danger"> *</span></label>
                 <input type="password" name="password" required>
             </div>
             <div class="group-input">
@@ -176,15 +184,15 @@
                 which is legally binding equivalent of a hand written signature.
             </div>
             <div class="group-input">
-                <label for="username">Username <span> *</span></label>
+                <label for="username">Username <span class="text-danger">*</span></label>
                 <input type="text" name="username" required>
             </div>
             <div class="group-input">
-                <label for="password">Password <span> *</span></label>
+                <label for="password">Password <span class="text-danger">*</span></label>
                 <input type="password" name="password" required>
             </div>
             <div class="group-input">
-                <label for="comment">Comment <span> *</span></label>
+                <label for="comment">Comment <span class="text-danger">*</span></label>
                 <input type="comment" name="comment" required>
             </div>
             </div>
@@ -217,11 +225,11 @@
                 which is legally binding equivalent of a hand written signature.
             </div>
             <div class="group-input">
-                <label for="username">Username <span> *</span></label>
+                <label for="username">Username <span class="text-danger"> *</span></label>
                 <input type="text" name="username" required>
             </div>
             <div class="group-input">
-                <label for="password">Password <span> *</span></label>
+                <label for="password">Password <span class="text-danger"> *</span></label>
                 <input type="password" name="password" required>
             </div>
             <div class="group-input">
@@ -258,15 +266,15 @@
                         which is legally binding equivalent of a hand written signature.
                     </div>
                     <div class="group-input">
-                        <label for="username">Username <span> *</span></label>
+                        <label for="username">Username <span class="text-danger"> *</span></label>
                         <input type="text" name="username" required>
                     </div>
                     <div class="group-input">
-                        <label for="password">Password <span> *</span></label>
+                        <label for="password">Password <span class="text-danger"> *</span></label>
                         <input type="password" name="password" required>
                     </div>
                     <div class="group-input">
-                        <label for="comment">Comment <span> *</span></label>
+                        <label for="comment">Comment <span class="text-danger"> *</span></label>
                         <input type="comment" name="comment">
                     </div>
                 </div>
@@ -294,6 +302,9 @@
                         <label style="display: flex; align-items: baseline;" for="major">
                         <input style="width: 10px;" type="radio" name="child_type" value="Action_Item">Action Item </label>
                     </div>
+                    <label style="display: flex; align-items: baseline;" for="major">
+                        <input style="width: 10px;" type="radio" name="child_type" value="Extension">Extension
+                </label>
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
@@ -304,6 +315,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="child-modal-rootcause-analysis-Action-item">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -357,8 +369,11 @@
                             <input style="width: 10px;" type="radio" name="child_type" value="Rootcause_Analysis">RCA
                         </label>
                         <label style="display: flex; align-items: baseline;" for="major">
-                                <input style="width: 10px;" type="radio" name="child_type" value="Rootcause_Analysis">Resampling
+                                <input style="width: 10px;" type="radio" name="child_type" value="Resampling">Resampling
                         </label>    
+                        <label style="display: flex; align-items: baseline;" for="major">
+                            <input style="width: 10px;" type="radio" name="child_type" value="Extension">Extension
+                    </label> 
                     </div>
                 </div>
                 <!-- Modal footer -->
@@ -367,6 +382,35 @@
                     <button type="submit">Continue</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="child-modal2">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('oos_micro.child', $micro_data->id) }}" method="POST">
+                    @csrf
+                    
+                    <div class="group-input">
+                        {{-- <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Extension">
+                            Extension
+                        </label> --}}
+                        <label style="display: flex; align-items: baseline;" for="major">
+                            <input style="width: 10px;" type="radio" name="child_type" value="Extension">Extension
+                    </label> 
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

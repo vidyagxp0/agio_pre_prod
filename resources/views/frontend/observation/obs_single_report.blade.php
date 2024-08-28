@@ -253,8 +253,8 @@
                         <td>Not Applicable</td>
                     @endif
 
-                    <th class="w-20">Date Due</th>
-                    <td class="w-80">{{ $data->due_date }}</td>
+                    <th class="w-20"> Due Date</th>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->due_date)}}</td>
 
                 </tr>
                 <tr>
@@ -466,15 +466,22 @@
                     ];
                 @endphp
 
-                <th class="w-20">Severity Rate
-                </th>
-                <td class="w-80">
-                    @if ($data->severity_rate)
-                        {{ $severity[$data->severity_rate] ?? '' }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
+                    <th class="w-20">Severity Rate</th>
+                    <td class="w-80">
+                        @if ($data->severity_rate)
+                            @if ($data->severity_rate == 1)
+                                Negligible
+                            @elseif($data->severity_rate == 2)
+                                Moderate
+                            @elseif($data->severity_rate == 3)
+                                Major
+                            @else
+                                Fatal
+                            @endif
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
 
                 @php
                     $Occurance = [

@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                    <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                    <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -176,7 +176,7 @@
                     <strong>Internal Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/IA{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/IA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -192,17 +192,17 @@
                     General Information
                 </div>
                 <table>
+                    <tr>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">@if($data->record){{ Helpers::divisionNameForQMS($data->division_id) }}/IA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                    </tr>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
                         <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Record Number</th>
-                        <td class="w-30">@if($data->record){{ $data->record }} @else Not Applicable @endif</td>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -566,60 +566,99 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Audit Schedule By</th>
+                        <th class="w-20">Schedule Audit By</th>
                         <td class="w-30">{{ $data->audit_schedule_by }}</td>
-                        <th class="w-20">Audit Schedule On</th>
+                        <th class="w-20">Schedule Audit On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_schedule_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->sheduled_audit_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_1_by }}</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_1_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->cancel_1_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Acknowledement by</th>
+                        <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
+                        <th class="w-20">Acknowledement On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->acknowledge_commnet }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Info Required by</th>
+                        <td class="w-30">{{ $data->more_info_2_by }}</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->more_info_2_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->more_info_2_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_2_by }}</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_2_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->cancel_2_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Issue Report By</th>
+                        <td class="w-30">{{ $data->audit_mgr_more_info_reqd_by }}</td>
+                        <th class="w-20">Issue Report On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->issue_report_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Info Required By
+                        </th>
+                        <td class="w-30">{{ $data->more_info_3_by }}</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->more_info_3_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->more_info_3_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancelled By</th>
                         <td class="w-30">{{ $data->cancelled_by }}</td>
                         <th class="w-20">Cancelled On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->cancel_3_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Audit preparation completed by</th>
-                        <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
-                        <th class="w-20">Audit preparation completed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Audit preparation completed by</th>
-                        <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
-                        <th class="w-20">Audit preparation completed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">More Information Required By</th>
-                        <td class="w-30">{{ $data->audit_mgr_more_info_reqd_by }}</td>
-                        <th class="w-20">More Information Required On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Audit Observation Submitted By</th>
+                        <th class="w-20">CAPA Plan Proposed By</th>
                         <td class="w-30">{{ $data->audit_observation_submitted_by }}</td>
-                        <th class="w-20">Supervisor Reviewed On(QA)</th>
+                        <th class="w-20">
+                            CAPA Plan Proposed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_observation_submitted_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->capa_plan_comment }}</td>
+                    
                     </tr>
                     <tr>
-                        <th class="w-20">Audit Lead More Info Reqd By
-                        </th>
-                        <td class="w-30">{{ $data->audit_lead_more_info_reqd_by }}</td>
-                        <th class="w-20">More Information Req. On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_lead_more_info_reqd_on) }}</td>
+                        <th class="w-20">No CAPAs Required By</th>
+                        <td class="w-30">{{ $data->no_capa_plan_by }}</td>
+                        <th class="w-20">
+                            No CAPAs Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->no_capa_plan_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->no_capa_plan_required_comment }}</td>
+                    
                     </tr>
                     <tr>
-                        <th class="w-20">Audit Response Completed By</th>
-                        <td class="w-30">{{ $data->audit_response_completed_by }}</td>
-                        <th class="w-20">QA Review Completed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_response_completed_on) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Response Feedback Verified By</th>
+                        <th class="w-20">Response Reviewed By</th>
                         <td class="w-30">{{ $data->response_feedback_verified_by }}</td>
                         <th class="w-20">
-                            Response Feedback Verified On</th>
+                            Response Reviewed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->response_feedback_verified_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->response_reviewd_comment }}</td>
+                    
                     </tr>
 
 

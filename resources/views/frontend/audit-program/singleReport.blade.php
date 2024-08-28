@@ -195,7 +195,7 @@
                     <strong>Audit Program No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($data->division_id) }}/AP/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -211,6 +211,14 @@
                     General Information
                 </div>
                 <table>
+
+                <tr>
+                    <th>Record No.</th>
+                    <td>{{ Helpers::divisionNameForQMS($data->division_id) }}/AP/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}</td>
+                    <th>Site/Location Code</th>
+                    <td>{{ Helpers::divisionNameForQMS($data->division_id) }}</td>
+                </tr>
+
                     <tr> {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
@@ -218,14 +226,6 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">
-                            @if ($data->division_code)
-                                {{ $data->division_code }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
                         <th class="w-20">Initiator Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
@@ -500,14 +500,14 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Rejected By</th>
+                        <th class="w-20">More Information Required By</th>
                         <td class="w-30">{{ $data->rejected_by }}</td>
-                        <th class="w-20">Rejected On</th>
+                        <th class="w-20">More Information Required On</th>
                         <td class="w-30">{{ $data->rejected_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">
-                            Rejected Comment</th>
+                            More Information Required Comment</th>
                         <td class="w-30">{{ $data->reject_comment }}</td>
                     </tr>
 

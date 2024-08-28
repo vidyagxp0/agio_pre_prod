@@ -13107,14 +13107,14 @@ $checklistqualitycontrol = [
                                             <div class="group-input">
                                                 <label for="Response Feedback Verified By">Response Reviewed
                                                     By</label>
-                                                <div class="static">{{ $data->audit_lead_more_info_reqd_by }}</div>
+                                                <div class="static">{{ $data->response_feedback_verified_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Response Reviewed On">Response Reviewed
                                                     On</label>
-                                                <div class="static">{{ $data->audit_lead_more_info_reqd_on }}</div>
+                                                <div class="static">{{ $data->response_feedback_verified_on }}</div>
                                             </div>
                                         </div>
 

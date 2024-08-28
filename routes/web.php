@@ -564,7 +564,7 @@ Route::get('errataaudittrail/{id}', [ErrataController::class, 'AuditTrial'])->na
 Route::get('errataAuditInner/{id}', [ErrataController::class, 'auditDetailsErrata'])->name('errataauditdetails');
 Route::post('/errata/cancel/{id}', [ErrataController::class, 'erratacancelstage'])->name('errata.cancel');
 Route::get('errata_new', [ErrataController::class, 'index'])->name('errata_new');
-
+Route::get('/errata/{id}',[Erratacontroller::class,'audit_trail_filter'])->name('api.ERRATA.filter');
 // ----------------------Stages----------------------------------------
 
 // extensionchild========================

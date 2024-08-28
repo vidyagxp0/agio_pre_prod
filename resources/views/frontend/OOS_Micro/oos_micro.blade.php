@@ -432,14 +432,26 @@ $users = DB::table('users')
                                         value="{{ Auth::user()->name }}">
                             </div>
                         </div>
-                        <div class="col-md-6 ">
+                        {{-- <div class="col-md-6 ">
                             <div class="group-input ">
                                 <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
                                 <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                 <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
                             </div>
+                        </div> --}}
+                        @php
+                        // Calculate the due date (30 days from the initiation date)
+                        $initiationDate = date('Y-m-d'); // Current date as initiation date
+                        $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                    @endphp
+                        <div class="col-md-6 ">
+                            <div class="group-input ">
+                                <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
+                                <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                            </div>
                         </div>
-                        <div class="col-lg-6 new-date-data-field">
+                        {{-- <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Due Date"> Due Date </label>
                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
@@ -450,13 +462,50 @@ $users = DB::table('users')
                                 oninput="handleDateInput(this, 'due_date')"  value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}"/>
                                 </div>
                             </div>
+                        </div> --}}
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Due Date">Due Date</label>
+                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                <div class="calenderauditee">
+                                    <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
+                                    <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'due_date')" />
+                                </div>
+                            </div>
                         </div>
+                        <script>
+                            // Format the due date to DD-MM-YYYY
+                            // Your input date
+                            var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+
+                            // Create a Date object
+                            var date = new Date(dueDate);
+
+                            // Array of month names
+                            var monthNames = [
+                                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                            ];
+
+                            // Extracting day, month, and year from the date
+                            var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                            var monthIndex = date.getMonth();
+                            var year = date.getFullYear();
+
+                            // Formatting the date in "dd-MMM-yyyy" format
+                            var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+
+                            // Set the formatted due date value to the input field
+                            document.getElementById('due_date').value = dueDateFormatted;
+                        </script>
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Short Description">Short Description
                                     <span class="text-danger">*</span></label>
                                     <span id="rchars">255</span>characters remaining
-                                <textarea id="docname"  name="description_gi" maxlength="255" required></textarea>
+                                    <input type="text" name="description_gi" id="docname" class="mic-input" maxlength="255" required>
+                                {{-- <textarea id="docname"  name="description_gi" maxlength="255" required></textarea> --}}
                             </div>
                             @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
@@ -8735,273 +8784,501 @@ $users = DB::table('users')
                     <div class="sub-head">
                         Activity Log
                     </div>
-                    <div class="row">
-
-                        <div class="col-lg-6">
+                                      <div class="row">
+                        <div class="col-12 sub-head">  Initiator </div>
+                        <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Audit Agenda">Preliminary Lab Inves. Done By</label>
+                                <label for="Audit Agenda">Submited by</label>
                                 <div class="static"></div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Audit Agenda">Preliminary Lab Inves. Done On</label>
+                                <label for="Audit Agenda">Submited on</label>
                                 <div class="Date"></div>
                             </div>
                         </div>
-
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Team">Pre. Lab Inv. Conclusion By</label>
-                                <div class="static"></div>
-
-                            </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Comment</label>
+                            <div class="Date"></div>
+                           </div>
                         </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Team">Pre. Lab Inv. Conclusion On</label>
-                                <div class="Date"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-6">
-                            <div class="group-input">
-                                <label for="Audit Comments"> Pre.Lab Invest. Review By </label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments">Pre.Lab Invest. Review On</label>
-                                <div class="Date"></div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments">Phase II Invest. Proposed By</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments">Phase II Invest. Proposed On</label>
-                                <div class="Date"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Response Completed By"> Phase II QC Review Done By</label>
-                                <div class=" static"></div>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Response Completed On">Phase II QC Review Done On</label>
-                                <div class="date"></div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments">Additional Test Proposed By</label>
-                                <div class=" static"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments">Additional Test Proposed On</label>
-                                <div class="date"></div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments">OOS Conclusion Complete By</label>
-                                <div class=" static"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments">OOS Conclusion Complete On</label>
-                                <div class="date"></div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments">CQ Review Done By</label>
-                                <div class=" static"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments">CQ Review Done On</label>
-                                <div class="date"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments">Disposition Decision Done by</label>
-                                <div class=" static"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments">Disposition Decision Done On</label>
-                                <div class="date"></div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Reopen Addendum Complete By
-
-                                </label>
-                                <div class=" static"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Reopen Addendum Complete on
-
-                                </label>
-                                <div class="date"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Addendum Approval Completed By
-
-                                </label>
-                                <div class=" static"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Reopen Addendum Complete on
-
-                                </label>
-                                <div class="date"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Addendum Execution Done By
-
-                                </label>
-                                <div class=" static"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Addendum Execution Done On
-
-                                </label>
-                                <div class="date"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Addendum Review Done By
-
-                                </label>
-                                <div class=" static"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Addendum Review Done On
-
-                                </label>
-                                <div class="date"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Verification Review Done By
-                                </label>
-                                <div class=" static"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Verification Review Done On
-
-                                </label>
-                                <div class="date"></div>
-                            </div>
-                        </div>
-                        <!-- ====================================================================== -->
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="submitted by">Submitted By :</label>
-                                <div class="static"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="submitted on">Submitted On :</label>
-                                <div class="Date"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="cancelled by">Cancelled By :</label>
                                 <div class="static"></div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="cancelled on">Cancelled On :</label>
                                 <div class="Date"></div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                    <div>
+                    <div class="row">
+                        <div class="col-12 sub-head">HOD/Designee</div>
+                     <!-- Request More Info -->
+                        <!--  Initial Phase I Investigation  Done By -->
+                        <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="More information required By">More information required By :</label>
+                                <label for="Audit Team">HOD Primary Review Complete By</label>
                                 <div class="static"></div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="More information required On">More information required On :</label>
+                                <label for="Audit Team">HOD Primary Review Complete On</label>
                                 <div class="Date"></div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">HOD Primary Review Complete Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                    <div>
+                    <div class="row">
+                        <div class="col-12 sub-head">QC Head/Designee </div>
+                        <!-- Request More Info -->
+                        <!-- Assignable Cause Found -->
+                        <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="completed by">Completed By :</label>
+                                <label for="Audit Comments">CQA/QA Head Primary Review Complete By</label>
                                 <div class="static"></div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="completed on">Completed On :</label>
+                                <label for="Audit Attachments">CQA/QA Head Primary Review Complete On</label>
                                 <div class="Date"></div>
                             </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">CQA/QA Head Primary Review Complete Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                        <!-- Request More Info -->
+                        <!-- Assignable Cause Not Found -->
+                        <div class="col-12 sub-head">Initiator</div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IA Investigation By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IA Investigation On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Phase IA Investigation Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                    <div>
+                    <div class="row">
+                        <div class="col-12 sub-head">HOD/Designee</div>
+                         <!-- Request More Info -->
+                        <!-- Correction Completed -->
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IA HOD Review Complete By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IA HOD Review Complete On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Phase IA HOD Review Complete Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                        <!-- Request More Info -->
+                        <!-- Proposed Hypothesis Experiment -->
+                        <div class="col-12 sub-head">QA/CQA</div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Response Completed By"> Phase IA QA/CQA Review Complete By</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Response Completed On">Phase IA QA/CQA Review Complete On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Phase IA QA/CQA Review Complete Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                        <!-- Obvious Error Found -->
+                        <div class="col-12 sub-head">CQA/QA Head/Designee</div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Assignable Cause Not Found By</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Assignable Cause Not Found On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Assignable Cause Not Found Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                        <!-- No Assignable Cause Found -->
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Assignable Cause Found By</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Assignable Cause Found On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Assignable Cause Found Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                    <div>
+                    <div class="row">
+                        <div class="col-12 sub-head"> Initiator </div>
+                        <!-- Request More Info -->
+                        <!-- Repeat Analysis Completed -->
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IB Investigation By</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IB Investigation On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Phase IB Investigation Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                        <!-- Request More Info -->
+                        <!-- Full Scale Investigation -->
+                        <div class="col-12 sub-head">HOD/Designee</div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IB HOD Review Complete by</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IB HOD Review Complete On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Phase IB HOD Review Complete Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                    <div>
+                    <div class="row">
+                        <div class="col-12 sub-head"> QA/CQA</div>
+                        <!-- Request More Info -->
+                        <!-- Assignable Cause Found (Manufacturing Defect) -->
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Reference Recores">Phase IB QA/CQA Review Complete By</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Reference Recores">Phase IB QA/CQA Review Complete On </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Phase IB QA/CQA Review Complete Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                        <!-- No Assignable Cause Found (No Manufacturing Defect) -->
+                        <div class="col-12 sub-head">CQA/QA Head/Designee</div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Reference Recores">P-I B Assignable Cause Not Found By</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Reference Recores">P-I B Assignable Cause Not Found On </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">P-I B Assignable Cause Not Found Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                         <!-- Request More Info -->
+                         <!-- Phase II Correction Completed  -->
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Reference Recores">P-I B Assignable Cause Found By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Reference Recores">P-I B Assignable Cause Found On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">P-I B Assignable Cause Found Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                    
+                         <!--  Phase II A Correction Inconclusive -->
+                         <div class="col-12 sub-head">Production</div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Reference Recores">Phase II A Investigation By</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Reference Recores">Phase II A Investigation On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Phase II A Investigation Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                   
+                        <!-- Request More Info -->
+                         <!-- Retesting/resampling -->
+                         <div class="col-12 sub-head">Production Head</div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Reference Recores">Phase II A HOD Review Complete By </label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Reference Recores">Phase II A HOD Review Complete On </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Phase II A HOD Review Complete Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                    
+                        <!-- Phase II B Correction Inconclusive -->
+                        <div class="col-12 sub-head">QA/CQA</div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Reference Recores">Phase II A QA/CQA Review Complete By </label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Reference Recores">Phase II A QA/CQA Review Complete On </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Phase II A QA/CQA Review Complete Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                    <div>
+                    <div class="row">
+                       <div class="col-12 sub-head"> CQA/QA Head/Designee</div>
+                        <!-- Final Approval -->
+                        <!-- Request More Info -->
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="submitted by">P-II A Assignable Cause Not Found By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="submitted on">P-II A Assignable Cause Not Found On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">P-II A Assignable Cause Not Found Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                        <!-- Request More Info -->
+                        <!-- Approval Completed -->
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="completed by"> P-II A Assignable Cause Found By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="completed on"> P-II A Assignable Cause Found On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">P-II A Assignable Cause Found Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                        <div class="col-12 sub-head">Initiator</div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="completed by"> Phase II B Investigation By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="completed on"> Phase II B Investigation On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Phase II B Investigation Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                        <div class="col-12 sub-head">HOD/Designee</div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="completed by"> Phase II B HOD Review Complete By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="completed on"> Phase II B HOD Review Complete On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Phase II B HOD Review Complete Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                        <div class="col-12 sub-head">QA/CQA</div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="completed by">Phase II B QA/CQA Review Complete By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="completed on"> Phase II B QA/CQA Review Complete On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">Phase II B QA/CQA Review Complete Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                        <div class="col-12 sub-head">CQA/QA Head /Designee</div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="completed by">P-II B Assignable Cause Not Found By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="completed on">P-II B Assignable Cause Not Found On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">P-II B Assignable Cause Not Found Comment</label>
+                            <div class="Date"></div>
+                           </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="completed by">P-II B Assignable Cause Found By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="completed on">P-II B Assignable Cause Found On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                           <div class="group-input">
+                            <label for="Submitted on">P-II B Assignable Cause Found Comment</label>
+                            <div class="Date"></div>
+                           </div>
                         </div>
                     </div>
                     <div class="button-block">

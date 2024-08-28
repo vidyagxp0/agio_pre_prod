@@ -278,22 +278,76 @@
             <div class="block-head">Activity Log</div>
             <table>
                 <tr>
-                    <th class="w-20">Initiated By</th>
+                    <th class="w-20">Submit By</th>
                     <td class="w-30">{{ $data->submit_by }}</td>
-                    <th class="w-20">Initiated On</th>
+                    <th class="w-20">Submit On</th>
                     <td class="w-30">{{ $data->submit_on }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $data->submit_comment }}</td>
                 </tr>
                 <tr>
-                    <th class="w-20">Reviewed By</th>
+                    <th class="w-20">Cancel By</th>
+                    <td class="w-30">{{ $data->reject_by }}</td>
+                    <th class="w-20">Cancel On</th>
+                    <td class="w-30">{{ $data->reject_on }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $data->reject_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">More Information Required  By</th>
+                    <td class="w-30">{{ $data->more_info_review_by }}</td>
+                    <th class="w-20">More Information Required  On</th>
+                    <td class="w-30">{{ $data->more_info_review_on }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $data->more_info_review_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Review By</th>
                     <td class="w-30">{{ $data->submit_by_review }}</td>
-                    <th class="w-20">Reviewed On</th>
+                    <th class="w-20">Review On</th>
                     <td class="w-30">{{ $data->submit_on_review }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $data->submit_comment_review }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Reject By</th>
+                    <td class="w-30">{{ $data->submit_by_inapproved }}</td>
+                    <th class="w-20">Reject On</th>
+                    <td class="w-30">{{ $data->submit_on_approved }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $data->submit_commen_inapproved }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">More Information Required By</th>
+                    <td class="w-30">{{ $data->more_info_inapproved_by }}</td>
+                    <th class="w-20">More Information Required On</th>
+                    <td class="w-30">{{ $data->more_info_inapproved_on }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $data->more_info_inapproved_comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Send for CQA By</th>
+                    <td class="w-30">{{ $data->send_cqa_by }}</td>
+                    <th class="w-20">Send for CQA On</th>
+                    <td class="w-30">{{ $data->send_cqa_on }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $data->send_cqa_comment }}</td>
                 </tr>
                 <tr>
                     <th class="w-20">Approved By</th>
                     <td class="w-30">{{ $data->submit_by_approved }}</td>
                     <th class="w-20">Approved On</th>
                     <td class="w-30">{{ $data->submit_on_approved }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $data->submit_comment_approved }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">CQA Approval Complete By</th>
+                    <td class="w-30">{{ $data->cqa_approval_by }}</td>
+                    <th class="w-20">CQA Approval Complete On</th>
+                    <td class="w-30">{{ $data->cqa_approval_on }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $data->cqa_approval_comment }}</td>
                 </tr>
                
             </table>

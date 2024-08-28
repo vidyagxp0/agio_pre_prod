@@ -61,7 +61,9 @@
                                             {{-- <span id="record_number_suffix"></span> --}}
                                       
                                             {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
-                                        <input disabled type="text" name="record_number"
+                                            <input type="hidden" id="record" name="record_number"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('y') }}/{{ $record_number}}">
+                                        <input disabled type="text"
                                         value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('y') }}/{{ $record_number }}">
                                     {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
