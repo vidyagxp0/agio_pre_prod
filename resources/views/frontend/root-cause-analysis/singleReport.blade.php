@@ -1078,7 +1078,7 @@
                             <td class="w-80"> @if($data->acknowledge_comment) {{ $data->acknowledge_comment }} @else Not Applicable @endif</td>
                     </tr>
                     
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20"> More Info Required By
                         </th>
                         <td class="w-30">{{ $data->More_Info_hrc_by }}</td>
@@ -1088,7 +1088,7 @@
                         <th class="w-20">
                             Comment</th>
                         <td class="w-30">{{ $data->More_Info_hrc_comment }}</td>
-                    </tr>
+                    </tr> --}}
 
                     <tr>
                         <th class="w-20">QA/CQA Review Complete By</th>
@@ -1099,7 +1099,7 @@
                         <td class="w-80"> @if($data->QAQQ_Review_Complete_comment) {{ $data->QAQQ_Review_Complete_comment }} @else Not Applicable @endif</td>
                         
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">More information Required By</th>
                         <td class="w-30"> @if($data->More_Info_qac_by) {{ $data->More_Info_qac_by }} @else Not Applicable @endif</td>
                         <th class="w-20">More information Required On</th>
@@ -1107,13 +1107,13 @@
                         <th class="w-20">More information Required Comment</th>
                       <td class="w-80"> @if($data->More_Info_qac_comment) {{ $data->More_Info_qac_comment }} @else Not Applicable @endif</td>
                        
-                    </tr>
+                    </tr> --}}
                     {{-- <tr>
                         <th class="w-20">Sumitted Comment</th>
                         <td class="w-80"> @if($data->submitted_comment) {{ $data->submitted_comment }} @else Not Applicable @endif</td>
                     </tr> --}}
-                      <th class="w-20">More information Required Comment</th>
-                      <td class="w-80"> @if($data->More_Info_qac_comment) {{ $data->More_Info_qac_comment }} @else Not Applicable @endif</td>
+                      {{-- <th class="w-20">More information Required Comment</th>
+                      <td class="w-80"> @if($data->More_Info_qac_comment) {{ $data->More_Info_qac_comment }} @else Not Applicable @endif</td> --}}
                      
                         <th class="w-20">HOD Review Complete By</th>
                         <td class="w-30"> @if($data->HOD_Review_Complete_By) {{ $data->HOD_Review_Complete_By }} @else Not Applicable @endif</td>
@@ -1125,7 +1125,7 @@
                         <td class="w-80"> @if($data->qA_review_complete_comment) {{ $data->qA_review_complete_comment }} @else Not Applicable @endif</td> --}}
                     </tr> 
                      
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20"> More Info Required By
                         </th>
                         <td class="w-30">{{ $data->More_Info_hrc_by }}</td>
@@ -1136,7 +1136,7 @@
                             Comment</th>
                         <td class="w-30">{{ $data->More_Info_hrc_comment }}</td>
                     </tr>
-                
+                 --}}
                     <tr>
                         <th class="w-20">Submited By</th>
                         <td class="w-30"> @if($data->submitted_by) {{ $data->submitted_by }} @else Not Applicable @endif</td>
@@ -1148,7 +1148,7 @@
                         
                     </tr> 
                     
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20"> More Info Required By
                         </th>
                         <td class="w-30">{{ $data->More_Info_sub_by }}</td>
@@ -1158,7 +1158,7 @@
                         <th class="w-20">
                             Comment</th>
                         <td class="w-30">{{ $data->More_Info_sub_comment }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">HOD Final Review Completed By</th>
                         <td class="w-30">{{ $data->hod_final_review_completed_by }}</td>
@@ -1168,7 +1168,7 @@
                             Comment</th>
                         <td class="w-30">{{ $data->HOD_Final_Review_Complete_Comment }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">More Info Required By
                         </th>
                         <td class="w-30">{{ $data->More_Info_hfr_by }}</td>
@@ -1178,7 +1178,7 @@
                         <th class="w-20">
                             Comment</th>
                         <td class="w-30">{{ $data->More_Info_hfr_comment }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20"> FinalQA/CQA Review Complete By</th>
                         <td class="w-30"> @if($data->Final_QA_Review_Complete_By) {{ $data->Final_QA_Review_Complete_By }} @else Not Applicable @endif</td>
@@ -1188,7 +1188,7 @@
                         <td class="w-80"> @if($data->evalution_Closure_comment) {{ $data->Final_QA_Review_Complete_Comment }} @else Not Applicable @endif</td>
                         
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">More information Required By</th>
                         <td class="w-30"> @if($data->qA_review_complete_by) {{ $data->qA_review_complete_by }} @else Not Applicable @endif</td>
                         <th class="w-20">More information Required On</th>
@@ -1196,7 +1196,7 @@
                         <th class="w-20">More information Required Comment</th>
                       <td class="w-80"> @if($data->qA_review_complete_comment) {{ $data->qA_review_complete_comment }} @else Not Applicable @endif</td>
                        
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">QAH/CQAH Closure By</th>
                         <td class="w-30"> @if($data->evaluation_complete_by) {{ $data->evaluation_complete_by }} @else Not Applicable @endif</td>

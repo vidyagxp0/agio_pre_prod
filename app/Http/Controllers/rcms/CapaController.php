@@ -2287,7 +2287,7 @@ class CapaController extends Controller
                 $capa->comment = $request->comment;
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'Propose Plan By,Propose Plan On';
                     $history->action = 'Propose Plan';     
                     $history->previous = "";
                     $history->current = $capa->plan_proposed_by;
@@ -2333,7 +2333,7 @@ class CapaController extends Controller
                 $capa->hod_comment = $request->comment;
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'HOD Review Complete By,HOD Review Complete On';
                 $history->action = 'HOD Review Complete';     
                 $history->previous = "";
                 $history->current = $capa->plan_approved_by;
@@ -2377,7 +2377,7 @@ class CapaController extends Controller
                 $capa->qa_comment = $request->comment;
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'QA/CQA Review Complete By,QA/CQA Review Complete On';
                     $history->action = 'QA/CQA Review Complete';     
                     $history->previous = "";
                     $history->current = $capa->completed_by;
@@ -2404,7 +2404,7 @@ class CapaController extends Controller
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'Approved By,Approved On';
                         $history->action = 'Approved';
                         $history->previous = "";
                         $history->current = $capa->approved_by;
@@ -2431,7 +2431,7 @@ class CapaController extends Controller
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'Completed By,Completed On';
                         $history->action = 'Complete';
                         $history->previous = "";
                         $history->current = $capa->approved_by;
@@ -2458,7 +2458,7 @@ class CapaController extends Controller
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'HOD Final Review Complete By,HOD Final Review Complete On';
                         $history->action = 'HOD Final Review Complete';
                         $history->previous = "";
                         $history->current = $capa->approved_by;
@@ -2485,7 +2485,7 @@ class CapaController extends Controller
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'QA/CQA Closure Review Complete By,QA/CQA Closure Review Complete On';
                         $history->action = 'QA/CQA Closure Review Complete';
                         $history->previous = "";
                         $history->current = $capa->approved_by;
@@ -2512,7 +2512,7 @@ class CapaController extends Controller
                 $capa->qah_comment = $request->comment;
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'QA/CQA Approval  Complete By,QA/CQA Approval  Complete On';
                         $history->action = 'QA/CQA Approval  Complete';
                         $history->previous = "";
                         $history->current = $capa->completed_by;
@@ -2551,7 +2551,7 @@ class CapaController extends Controller
             $capa->cancel_comment = $request->comment;
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'Cancel By,Cancel On';
                     $history->action = 'Cancel';
                     $history->previous ="";
                     $history->current = $capa->cancelled_by;
@@ -2615,7 +2615,7 @@ class CapaController extends Controller
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'More Info Required By ,More Info Required On';
                         $history->action = ' More Info Required';
                         $history->previous ="";
                         $history->current = $capa->qa_more_info_required_by1;
@@ -2652,7 +2652,7 @@ class CapaController extends Controller
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'More Info Required By ,More Info Required On';
                     $history->action = ' More Info Required';
                     $history->previous ="";
                     $history->current = $capa->qa_more_info_required_by;
@@ -2704,7 +2704,7 @@ class CapaController extends Controller
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'More Info Required By ,More Info Required On';
                     $history->action = 'More Info Required';
                     $history->previous = "";
                     $history->current = $capa->rejected_by;
@@ -2739,7 +2739,7 @@ class CapaController extends Controller
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'More Info Required By ,More Info Required On';
                     $history->action = 'More Info Required';
                     $history->previous ="";
                     $history->current = $capa->qa_more_info_required_by;
@@ -2776,7 +2776,7 @@ class CapaController extends Controller
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'More Info Required By ,More Info Required On';
                     $history->action = 'More Info Required';
                     $history->previous ="";
                     $history->current = $capa->qa_more_info_required_by;
@@ -2812,7 +2812,7 @@ class CapaController extends Controller
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'More Info Required By ,More Info Required On';
                     $history->action = 'More Info Required';
                     $history->previous ="";
                     $history->current = $capa->qa_more_info_required_by;
@@ -2848,7 +2848,7 @@ class CapaController extends Controller
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'More Info Required By ,More Info Required On';
                     $history->action = 'More Info Required';
                     $history->previous ="";
                     $history->current = $capa->qa_more_info_required_by;
@@ -3046,19 +3046,7 @@ class CapaController extends Controller
             $record_number = $record;
             return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
-        if ($request->child_type == "extension") {
-            $parent_due_date = "";
-            $parent_id = $id;
-            $parent_name = $request->parent_name;
-            if ($request->due_date) {
-                $parent_due_date = $request->due_date;
-            }
 
-            $record = ((RecordNumber::first()->value('counter')) + 1);
-            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
-            $record_number = $record;
-            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
-        }
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         if ($request->child_type == "Action_Item") {
             $parent_name = "CAPA";
@@ -3073,6 +3061,20 @@ class CapaController extends Controller
             // $record_number = $record;
             return view('frontend.forms.root-cause-analysis', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
     
+        }
+        if ($request->child_type == "extension") {
+            $parent_name = "CAPA";
+            $parent_due_date = "";
+            $parent_id = $id;
+            $parent_name = $request->$parent_name;
+            if ($request->due_date) {
+                $parent_due_date = $request->due_date;
+            }
+
+            $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number = $record;
+            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date','parent_type'));
         }
     }
 

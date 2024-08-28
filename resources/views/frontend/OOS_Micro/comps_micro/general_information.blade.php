@@ -4,7 +4,7 @@
         <div class="col-lg-6">
             <div class="group-input">
                 <label for="Initiator Group">Type </label>
-                <select id="dynamicSelectType" name="type" {{Helpers::isOOSMicro($micro_data->stage)}}>
+                <select disabled id="dynamicSelectType" name="type" {{Helpers::isOOSMicro($micro_data->stage)}}>
                     <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
                     <option value="{{ route('oos.index') }}">OOS Chemical</option>
                     <option value="{{ route('oot.index')  }}">OOT</option>
@@ -38,6 +38,10 @@
                     <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
                 </div>
             </div>
+            @php
+            $initiationDate = date('Y-m-d');
+            $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
+        @endphp
             <div class="col-md-6 ">
                 <div class="group-input ">
                     <label for="due-date"> Date Of Initiation <span class="text-danger"></span></label>
@@ -45,10 +49,7 @@
                     <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                 </div>
             </div>
-            @php
-            $initiationDate = date('Y-m-d');
-            $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
-        @endphp
+           
 
         <div class="col-md-6 new-date-data-field">
             <div class="group-input input-date">

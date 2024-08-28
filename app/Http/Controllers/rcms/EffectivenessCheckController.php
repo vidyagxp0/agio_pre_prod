@@ -72,6 +72,7 @@ class EffectivenessCheckController extends Controller
         $openState->intiation_date = $request->intiation_date;
         $openState->initiator_id = Auth::user()->id;
         // $openState->parent_record = CC::where('id', $request->cc_id)->value('id');
+        $openState->record_number = $request->record_number;
         
         $openState->parent_record = $request->parent_record;
         $openState->parent_type = $request->parent_type;

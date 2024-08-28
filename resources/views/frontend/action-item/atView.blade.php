@@ -380,68 +380,68 @@
                                             <label for="Responsible Department">Responsible Department</label>
                                             <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="departments">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option {{ $data->departments == '1' ? 'selected' : '' }} value="1">
+                                                <option {{ $data->departments == '1' ? 'selected' : '' }} value="Quality Assurance-CQA">
                                                     Quality
                                                     Assurance-CQA</option>
-                                                <option {{ $data->departments == '2' ? 'selected' : '' }} value="2">
+                                                <option {{ $data->departments == '2' ? 'selected' : '' }} value="Research and development">
                                                     Research
                                                     and development</option>
-                                                <option {{ $data->departments == '3' ? 'selected' : '' }}value="3">
+                                                <option {{ $data->departments == '3' ? 'selected' : '' }}value="Regulatory Science">
                                                     Regulatory
                                                     Science</option>
-                                                <option {{ $data->departments == '4' ? 'selected' : '' }} value="4">
+                                                <option {{ $data->departments == '4' ? 'selected' : '' }} value="Supply Chain Management">
                                                     Supply
                                                     Chain Management</option>
-                                                <option {{ $data->departments == '5' ? 'selected' : '' }} value="5">
+                                                <option {{ $data->departments == '5' ? 'selected' : '' }} value=" Finance">
                                                     Finance
                                                 </option>
-                                                <option {{ $data->departments == '6' ? 'selected' : '' }} value="6">
+                                                <option {{ $data->departments == '6' ? 'selected' : '' }} value="QA-Digital">
                                                     QA-Digital</option>
-                                                <option {{ $data->departments == '7' ? 'selected' : '' }} value="7">
+                                                <option {{ $data->departments == '7' ? 'selected' : '' }} value="Central Engineering">
                                                     Central
                                                     Engineering</option>
-                                                <option {{ $data->departments == '8' ? 'selected' : '' }} value="8">
+                                                <option {{ $data->departments == '8' ? 'selected' : '' }} value="Projects">
                                                     Projects
                                                 </option>
-                                                <option {{ $data->departments == '9' ? 'selected' : '' }} value="9">
+                                                <option {{ $data->departments == '9' ? 'selected' : '' }} value=" Marketing">
                                                     Marketing</option>
-                                                <option {{ $data->departments == '10' ? 'selected' : '' }} value="10">
+                                                <option {{ $data->departments == '10' ? 'selected' : '' }} value="QCAT">
                                                     QCAT
                                                 </option>
-                                                <option {{ $data->departments == '11' ? 'selected' : '' }} value="11">
+                                                <option {{ $data->departments == '11' ? 'selected' : '' }} value="Marketing">
                                                     Marketing</option>
-                                                <option {{ $data->departments == '12' ? 'selected' : '' }} value="12">
+                                                <option {{ $data->departments == '12' ? 'selected' : '' }} value="GMP Pilot Plant">
                                                     GMP
                                                     Pilot Plant</option>
-                                                <option {{ $data->departments == '13' ? 'selected' : '' }} value="13">
+                                                <option {{ $data->departments == '13' ? 'selected' : '' }} value="Manufacturing Sciences and Technology">
                                                     Manufacturing Sciences and Technology</option>
-                                                <option {{ $data->departments == '14' ? 'selected' : '' }} value="14">
+                                                <option {{ $data->departments == '14' ? 'selected' : '' }} value="Environment, Health and Safety">
                                                     Environment, Health and Safety</option>
-                                                <option {{ $data->departments == '15' ? 'selected' : '' }} value="15">
+                                                <option {{ $data->departments == '15' ? 'selected' : '' }} value="Business Relationship Management">
                                                     Business Relationship Management</option>
-                                                <option {{ $data->departments == '16' ? 'selected' : '' }} value="16">
+                                                <option {{ $data->departments == '16' ? 'selected' : '' }} value="National Regulatory Affairs">
                                                     National Regulatory Affairs</option>
-                                                <option {{ $data->departments == '17' ? 'selected' : '' }} value="17">
+                                                <option {{ $data->departments == '17' ? 'selected' : '' }} value="HR">
                                                     HR
                                                 </option>
-                                                <option {{ $data->departments == '18' ? 'selected' : '' }} value="18">
+                                                <option {{ $data->departments == '18' ? 'selected' : '' }} value=" Admin">
                                                     Admin
                                                 </option>
-                                                <option {{ $data->departments == '19' ? 'selected' : '' }} value="19">
+                                                <option {{ $data->departments == '19' ? 'selected' : '' }} value="Information Technology">
                                                     Information Technology</option>
-                                                <option {{ $data->departments == '20' ? 'selected' : '' }} value="20">
+                                                <option {{ $data->departments == '20' ? 'selected' : '' }} value="Program Management QA Analytical (Q13)">
                                                     Program
                                                     Management QA Analytical (Q13)</option>
-                                                <option {{ $data->departments == '21' ? 'selected' : '' }} value="21">
+                                                <option {{ $data->departments == '21' ? 'selected' : '' }} value="QAAnalytical (Q8)">
                                                     QA
                                                     Analytical (Q8)</option>
-                                                <option {{ $data->departments == '22' ? 'selected' : '' }} value="22">
+                                                <option {{ $data->departments == '22' ? 'selected' : '' }} value=" QA Packaging Development">
                                                     QA
                                                     Packaging Development</option>
-                                                <option {{ $data->departments == '23' ? 'selected' : '' }} value="23">
+                                                <option {{ $data->departments == '23' ? 'selected' : '' }} value="QA Engineering">
                                                     QA
                                                     Engineering</option>
-                                                <option {{ $data->departments == '24' ? 'selected' : '' }} value="24">
+                                                <option {{ $data->departments == '24' ? 'selected' : '' }} value="DS Quality Assurance">
                                                     DS
                                                     Quality Assurance</option>
                                                 <option {{ $data->departments == '25' ? 'selected' : '' }} value="25">

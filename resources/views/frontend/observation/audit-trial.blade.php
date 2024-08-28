@@ -171,14 +171,14 @@
             <body>
 
                 <header>
-                    <table>
+                    {{-- <table>
                         <tr>
                             <div class="logo">
                                 <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt=""
                                     class="w-100">
                             </div>
                         </tr>
-                    </table>
+                    </table> --}}
 
                     @php
                     $userRoles = DB::table('user_roles')

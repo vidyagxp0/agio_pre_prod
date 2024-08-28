@@ -1078,9 +1078,9 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                {{-- <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd By">More Info Req.
+                                        <label for="Audit Mgr.more Info Reqd By">More Info Req.wff
                                             By</label>
                                         <div class="static"></div>
                                     </div>
@@ -1091,15 +1091,15 @@
                                             On</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
-                                <div class="col-lg-4">
+                                {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_ack_comment">Comments</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -1119,7 +1119,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_hrc_by">More Info Req.
                                             By</label>
@@ -1140,7 +1140,7 @@
                                         <label for="More_Info_hrc_comment">Comments</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="QQQA_Review_Complete_By">QA/CQA Review  Complete By</label>
@@ -1159,7 +1159,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_qac_by">More Info Req.
                                             By</label>
@@ -1180,8 +1180,8 @@
                                         <label for="More_Info_qac_comment">Comments</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
+                                </div>--}}
+                                <div class="col-lg-4"> 
                                     <div class="group-input">
                                         <label for="submitted_by">Submited By</label>
                                         <div class="static"></div>
@@ -1199,7 +1199,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_sub_by">More Info Req.
                                             By</label>
@@ -1220,7 +1220,7 @@
                                         <label for="More_Info_sub_comment">Comments</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -1240,7 +1240,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_hfr_by">More Info Req.
                                             By</label>
@@ -1261,8 +1261,8 @@
                                         <label for="More_Info_hfr_comment">Comments</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
+                                </div>--}}
+                                <div class="col-lg-4"> 
                                     <div class="group-input">
                                         <label for="Final_QA_Review_Complete_By">Final QA/CQA Review  Complete By</label>
                                         <div class="static"></div>
@@ -1281,7 +1281,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4">
+                                {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="qA_review_complete_by">More Info Req.
                                             By</label>
@@ -1302,8 +1302,8 @@
                                         <label for="qA_review_complete_comment">Comments</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
+                                </div>--}}
+                                <div class="col-lg-4"> 
                                     <div class="group-input">
                                         <label for="evaluation_complete_by">QAH/CQAH Closure By</label>
                                         <div class="static"></div>
