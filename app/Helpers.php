@@ -81,7 +81,7 @@ class Helpers
     }}
 
     public static function isRiskAssessment($data)
-    {   
+    {
         if($data == 0 || $data  >= 7){
             return 'disabled';
         }else{
@@ -320,7 +320,7 @@ class Helpers
             case 'lab_incident':
                 $parent_record = LabIncident::find($id);
                 break;
-            
+
             default:
                 # code...
                 break;
@@ -450,10 +450,10 @@ class Helpers
                 break;
             case 'RA':
                 $full_department_name = "Regulatory Affairs";
-                break; 
+                break;
             case 'PV':
                 $full_department_name = "Pharmacovigilance";
-                break;         
+                break;
 
             default:
                 break;
@@ -488,7 +488,7 @@ class Helpers
             'RA' => 'Regulatory Affairs',
             'PV' => 'Pharmacovigilance',
         ];
-        
+
         return $departments;
     }
 
@@ -510,7 +510,7 @@ class Helpers
             'VMP' => 'Validation Master Plan',
             'QM' => 'Quality Manual',
         ];
-        
+
         return $document_types;
     }
 
@@ -803,17 +803,17 @@ class Helpers
 
     // SONALI SHARMA
     public static function isOOSChemical($data)
-    {   
+    {
         if($data == 0 || $data  >= 15){
             return 'disabled';
         }else{
             return  '';
         }
-         
+
     }
 
     public static function isOOSMicro($micro_data)
-    {   
+    {
         if($micro_data == 0 || $micro_data  >= 14){
             return 'disabled';
         }else{
@@ -826,7 +826,7 @@ class Helpers
         try {
             $format = $format ? $format : 'd-M-Y';
             $dateInstance = $date ? Carbon::parse($date) : Carbon::now();
-            
+
             if ($addDays) {
                 $dateInstance->addDays($addDays);
             } else {
@@ -854,7 +854,7 @@ class Helpers
 
     public static function getChemicalGridData($date)
     {
-        
+
     }
 
     public function getChecklistData(){
@@ -878,9 +878,9 @@ class Helpers
             '17' => 'Checklist - Formulation Research and Development',
             '18' => 'Checklist - LL / P2P',
         ];
-        
+
         return $checklists;
-        
+
     }
 
     public static function getInitiatorGroupData($shortName)
@@ -1144,7 +1144,7 @@ class Helpers
         ->where('parent_id', $id)
         ->count();
        }
-       
+
         return $count;
     }
 

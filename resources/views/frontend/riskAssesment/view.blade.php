@@ -189,9 +189,12 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                            <a href="#cancel-modal">  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            {{-- <a href="#cancel-modal">  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button> </a>
+                            </button> </a> --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
+                            </button>
                         @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -348,7 +351,7 @@
                                             <div class="group-input">
                                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                                 <input disabled type="text" name="record_number"
-                                                    value=" {{ Helpers::getDivisionName($data->division_id) }}/RA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                    value=" {{ Helpers::getDivisionName($data->division_id) }}/RA/{{ date('Y') }}/{{ $data->record }}">
                                                 {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                             </div>
                                         </div>

@@ -221,7 +221,7 @@ class MarketComplaintController extends Controller
         $Cft->Production_Table_Person = $request->Production_Table_Person;
         $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
         $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
-        $Cft->Production_Table_Attachment = $request->Production_Table_Attachment;
+
         $Cft->Production_Table_By = $request->Production_Table_By;
         $Cft->Production_Table_On = $request->Production_Table_On;
 
@@ -441,6 +441,7 @@ class MarketComplaintController extends Controller
             }
             $Cft->Production_Table_Attachment = json_encode($files);
         }
+
         if (!empty ($request->ProductionLiquid_attachment)) {
             $files = [];
             if ($request->hasfile('ProductionLiquid_attachment')) {
@@ -1668,9 +1669,6 @@ public function update(Request $request,$id)
     $marketComplaint->closure_comment_c = $request->closure_comment_c;
     // $marketComplaint->initial_attachment_c = $request->initial_attachment_c;
 
-
-
-
     $marketComplaint->form_type="Market Complaint";
     //    dd($marketComplaint);
 
@@ -1693,8 +1691,6 @@ public function update(Request $request,$id)
         // }
         // // Encode the file names array to JSON and assign it to the model
         // $marketComplaint->initial_attachment_gi = json_encode($files);
-
-
 
 
         // cft update //
@@ -1951,6 +1947,8 @@ public function update(Request $request,$id)
                 }
                 $Cft->Production_Table_Attachment = json_encode($files);
             }
+
+
             if (!empty ($request->ProductionLiquid_attachment)) {
                 $files = [];
                 if ($request->hasfile('ProductionLiquid_attachment')) {
@@ -2150,6 +2148,7 @@ public function update(Request $request,$id)
                 }
                 $Cft->Other5_attachment = json_encode($files);
             }
+
 
 
             $Cft->save();
@@ -4072,7 +4071,7 @@ public function marketComplaintStateChange(Request $request,$id)
             $changeControl = MarketComplaint::find($id);
             $lastDocument =  MarketComplaint::find($id);
 
-            if ($changeControl->stage == 2) {
+            // if ($changeControl->stage == 0) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
@@ -4096,7 +4095,7 @@ public function marketComplaintStateChange(Request $request,$id)
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
-            }
+            // }
 
             // $changeControl->stage = "2";
             // // $changeControl->status = "Closed - Cancelled";

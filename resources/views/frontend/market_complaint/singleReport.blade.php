@@ -139,7 +139,7 @@
 
     .inner-block .block-head {
         font-weight: bold;
-        font-size: 1.1rem; 
+        font-size: 1.1rem;
         padding-bottom: 5px;
         border-bottom: 2px solid #4274da;
         margin-bottom: 10px;
@@ -215,7 +215,7 @@
                         <td class="w-80">{{ $data->originator }}</td>
                         <th class="w-20">Date Initiation</th>
                         <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
-                        
+
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -241,7 +241,7 @@
                             ];
                         @endphp
                         <td class="w-80">{{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
- 
+
                         <th class="w-20">Initiator Group Code</th>
                         {{-- <td class="w-80">{{ $data->initiator_group ?? 'Not Applicable' }}</td> --}}
                         <td class="w-80">{{ $data->initiator_group_code_gi ?? 'Not Applicable' }}</td>
@@ -258,8 +258,8 @@
                     <tr>
                             <th class="w-20">Due Date</th>
                             <td class="w-80">{{  Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
-                        
-                   
+
+
                         <th class="w-20">Repeat Nature</th>
                         <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td>
                     </tr>
@@ -278,14 +278,14 @@
                     <tr>
                         <th class="w-20">Is Repeat</th>
                         <td class="w-80">{{ $data->is_repeat_gi ?? 'Not Applicable' }}</td>
-                    
+
                         <th class="w-20">Complaint</th>
                         <td class="w-80">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
-                       
+
                     </tr>
                 </table>
-                
-                
+
+
                 <table>
                     <tr>
                         <th class="w-20">Details Of Nature Market Complaint</th>
@@ -302,18 +302,18 @@
 
                     </tr>
                 </table>
-               
+
                 <table>
-                    <tr>   
+                    <tr>
                     <th class="w-20">Review Of Complaint Sample</th>
                         <td class="w-80">{!! $data->review_of_complaint_sample_gi ?? 'Not Applicable' !!}</td>
                     </tr>
-               
+
                     <tr>
                         <th class="w-20">Review Of Batch Manufacturing Record (BMR)</th>
                         <td class="w-80">{!! $data->review_of_batch_manufacturing_record_BMR_gi ?? 'Not Applicable' !!}</td>
                     </tr>
-                    <tr>  
+                    <tr>
                         <th class="w-20">Review Of Raw Materials Used In Batch Manufacturing</th>
                         <td class="w-80">{!! $data->review_of_raw_materials_used_in_batch_manufacturing_gi ?? 'Not Applicable' !!}</td>
                     </tr>
@@ -347,7 +347,7 @@
                     </tr>
                 </table>
                 <table>
-                   
+
                     <tr>
                         <th class="w-20">Initial Attachment</th>
                         <td class="w-80">
@@ -381,12 +381,12 @@
                         <tbody>
                             @if($prductgigrid && $prductgigrid->data)
                                   @foreach ($prductgigrid->data as  $item)
-                                  
-                                  
-                                 
+
+
+
                                         <tr>
                                 {{-- <td style="width: 6%">{{ $item['serial'] }}</td> --}}
-{{--                                
+{{--
                                   <td>{{ $item['info_product_name'] }}</td>
                                   <td>{{ $item['info_batch_no'] }}</td>
                                   <td>{{ $item['info_mfg_date'] }}</td>
@@ -395,7 +395,7 @@
                                   <td>{{ $item['info_pack_size'] }}</td>
                                   <td> {{ $item['info_dispatch_quantity'] }}</td>
                                   <td>{{ $item['info_remarks'] }}</td>
-                                 
+
 
                             </tr>
                             @endforeach
@@ -412,7 +412,7 @@
                     </table>
 
 
-                   </tr> --}} 
+                   </tr> --}}
 
                 </table>
             </div>
@@ -471,7 +471,7 @@
                         </td>
                     </tr>
 
-{{-- 
+{{--
                     <tr>
                         <th class="w-20">Initial Attachment</th>
                         <td class="w-80">{{ $data->Initial_Attachment ? '<a href="'.asset('upload/document/'.$data->Initial_Attachment).'">'.$data->Initial_Attachment.'</a>' : 'Not Applicable' }}</td>

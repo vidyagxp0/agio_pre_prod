@@ -6629,7 +6629,7 @@ class RiskManagementController extends Controller
             $changeControl = RiskManagement::find($id);
             $lastDocument =  RiskManagement::find($id);
 
-            if ($changeControl->stage == 2) {
+            // if ($changeControl->stage == 0) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
@@ -6653,7 +6653,7 @@ class RiskManagementController extends Controller
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
-            }
+            // }
 
             // $changeControl->stage = "2";
             // // $changeControl->status = "Closed - Cancelled";

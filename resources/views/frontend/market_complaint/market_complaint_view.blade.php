@@ -409,7 +409,7 @@ Approval </div>
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
                                     <input disabled type="text" name="record" id="record"
-                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}/MC/{{ date('y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}/MC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                 </div>
                             </div>
 
@@ -1993,7 +1993,6 @@ Approval </div>
                                 <textarea @if ($data1->Production_Table_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_Table_Assessment"
                                     @if ($data->stage == 3 || Auth::user()->id != $data1->Production_Table_Person) readonly @endif name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
 
-
                             </div>
                         </div>
                         <div class="col-md-12 mb-3 p_erson">
@@ -2360,10 +2359,11 @@ Approval </div>
                                         does not require completion</small></div>
                                 <textarea @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_Injection_Assessment"
                                     @if (
-                                        $data->stage == 3 ||
-                                            (isset($data1->Production_Injection_Person) && Auth::user()->id != $data1->Production_Injection_Person)) readonly @endif name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
+                                        $data->stage == 3 || Auth::user()->id != $data1->Production_Injection_Person) readonly @endif name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                             </div>
                         </div>
+
+
                         <div class="col-md-12 mb-3 productionInjection">
                             <div class="group-input">
                                 <label for="Production Injection feedback">Production Injection Feedback <span
@@ -2440,7 +2440,7 @@ Approval </div>
                                 var inputsToToggle = [];
 
                                 // Add elements with class 'facility-name' to inputsToToggle
-                                var facilityNameInputs = document.getElementsByClassName('Production_Injection_Person');
+                                var facilityNameInputs = document.getElementsByClassName('Production_Injection_Assessment');
                                 for (var i = 0; i < facilityNameInputs.length; i++) {
                                     inputsToToggle.push(facilityNameInputs[i]);
                                 }
