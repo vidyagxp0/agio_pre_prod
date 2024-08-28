@@ -96,7 +96,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('extension-audit-trial/{id}', [ExtensionController::class, 'extensionAuditTrial']);
             Route::get('extension-audit-trial-details/{id}', [ExtensionController::class, 'extensionAuditTrialDetails']);
             Route::get('extensionSingleReport/{id}', [ExtensionController::class, 'singleReport'])->name('extensionSingleReport');
-            Route::get('extensionAuditReport/{id}', [ExtensionController::class, 'auditReport'])->name('extensionAuditReport');
+            Route::get('extensionAuditReport/{id}', [ExtensionNewController::class, 'auditReport'])->name('extensionAuditReport');
 
 
             Route::post('send-At/{id}', [ActionItemController::class, 'stageChange']);

@@ -442,9 +442,11 @@
                                         <label for="RLS Record Number">
                                             <b>Record Number</b>
                                         </label>
-                                        <input disabled type="text" name="record_number"
+                                        <input disabled type="hidden" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/IA/{{ date('Y') }}/{{ $record_number }}">
-                                    </div>
+                                            <input disabled type="text"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/IA/{{ date('Y') }}/{{ $record_number }}">
+                                        </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
