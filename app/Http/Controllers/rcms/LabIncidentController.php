@@ -75,6 +75,7 @@ class LabIncidentController extends Controller
         $data = new LabIncident();
         $data->Form_Type = "lab-incident";
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
+        $data->record_number = $request->record_number;
         $data->initiator_id = Auth::user()->id;
         $data->division_id = $request->division_id;
         $data->short_desc = $request->short_desc;

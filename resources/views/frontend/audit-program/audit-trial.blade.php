@@ -183,7 +183,7 @@
 
                     <table>
                         <div class="buttons-new">
-                            <a class="text-white" href="{{ url('/rcms/ShowAuditProgram/' . $document->id) }}">
+                            <a class="text-white" href="{{ url('/rcms/AuditProgramShow/' . $document->id) }}">
                                 <button class="button_theme1">
                                     Back
                                 </button>
