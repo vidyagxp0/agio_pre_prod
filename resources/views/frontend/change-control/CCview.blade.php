@@ -8472,7 +8472,7 @@ Designee Approval</div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="CFT Review Comments"> RA Review Comments :-</label>
+                                <label for="CFT Review Comments"> RA Approval Comments :-</label>
                                 <div class="">{{ $data->RA_review_completed_comment }}</div>
                             </div>
                         </div>
