@@ -8781,7 +8781,7 @@ $users = DB::table('users')
                     <div class="sub-head">
                         Activity Log
                     </div>
-                                      <div class="row">
+                        <div class="row">
                         <div class="col-12 sub-head">  Initiator </div>
                         <div class="col-lg-4">
                             <div class="group-input">
