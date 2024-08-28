@@ -1550,9 +1550,9 @@ class OOTController extends Controller
             
             if ($changestage->stage == 2) {
                 $changestage->stage = "3";
-                // $changestage->Request_For_Cancellation_By = Auth::user()->name;
-                // $changestage->Request_For_Cancellation_On = Carbon::now()->format('d-M-Y');
-                // $changestage->Request_For_Cancellation_Comment = $request->comments;
+                $changestage->Request_For_Cancellation_By = Auth::user()->name;
+                $changestage->Request_For_Cancellation_On = Carbon::now()->format('d-M-Y');
+                $changestage->Request_For_Cancellation_Comment = $request->comments;
                 $changestage->status = "QA Head Approval";
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
@@ -1597,13 +1597,12 @@ class OOTController extends Controller
     
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
-                $history->activity_type = '';
+                $history->activity_type = 'CQA/QA Head Primary Review Complete By    ,     CQA/QA Head Primary Review Complete  On';
                 if (is_null($lastDocument->ppli_submited_by) || $lastDocument->ppli_submited_by === '') {
                     $history->previous = "Null";
                 } else {
                     $history->previous = $lastDocument->ppli_submited_by . ' , ' . $lastDocument->ppli_submited_on;
                 }
-                $history->activity_type = 'CQA/QA Head Primary Review Complete By    ,     CQA/QA Head Primary Review Complete  On';
                 $history->current = $changestage->ppli_submited_by . ' , ' . $changestage->ppli_submited_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -1672,7 +1671,7 @@ class OOTController extends Controller
                 $changestage->Final_Approval_By = Auth::user()->name;
                 $changestage->Final_Approval_on = Carbon::now()->format('d-M-Y');
                 $changestage->final_capa_comments = $request->comments;
-                $changestage->status = "Phase IA QA Review";
+                $changestage->status = "Phase IA QA/CQA Review";
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
                 $history->activity_type = 'Phase IA HOD Review Complete By   ,  Phase IA HOD Review Complete On';
@@ -1689,7 +1688,7 @@ class OOTController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Phase IA QA Review";
+                $history->change_to = "Phase IA QA/CQA Review";
                 $history->change_from = $lastDocument->status;
                 $history->action = 'Phase IA HOD Review Complete';
                 if (is_null($lastDocument->Final_Approval_By) || $lastDocument->Final_Approval_By === '') {
@@ -1713,7 +1712,7 @@ class OOTController extends Controller
                 $changestage->status = "P-IA CQAH/QAH Review";
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
-                $history->activity_type = 'Phase IA QA Review Complete By   ,    Phase IA QA Review Complete On';
+                $history->activity_type = 'Phase IA QA/CQA Review Complete By   ,    Phase IA QA/CQA Review Complete On';
                 // $history->previous = $lastDocument->cause_i_completed_by;
                 if (is_null($lastDocument->cause_i_completed_by) || $lastDocument->cause_i_completed_by === '') {
                     $history->previous = "Null";
@@ -1730,13 +1729,13 @@ class OOTController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "P-IA CQAH/QAH Review";
                 $history->change_from = $lastDocument->status;
-                $history->action = 'Phase IA QA Review Complete';
+                $history->action = 'Phase IA QA/CQA Review';
                 if (is_null($lastDocument->cause_i_completed_by) || $lastDocument->cause_i_completed_by === '') {
                     $history->action_name = 'New';
                 } else {
                     $history->action_name = 'Update';
                 }
-                $history->stage='Phase IA QA Review Complete';
+                $history->stage='Phase IA QA/CQA Review';
                 $history->save();
     
                 // $this->saveAuditTrail($id, $lastDocument, $changestage, 'Phase IA QA Review Complete', 'P-IA CQAH/QAH Review');
@@ -1789,13 +1788,13 @@ class OOTController extends Controller
                 $changestage->status = "Phase IB HOD Primary Review";
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
-                $history->activity_type = 'Activity Log';
-                if (is_null($lastDocument->correction_data_completed_by) || $lastDocument->correction_data_completed_by === '') {
+                $history->activity_type = 'Phase IB Investigation By    ,     Phase IB Investigation On';
+                if (is_null($lastDocument->correction_ooT_completed_by) || $lastDocument->correction_ooT_completed_by === '') {
                     $history->previous = "Null";
                 } else {
-                    $history->previous = $lastDocument->correction_data_completed_by . ' , ' . $lastDocument->correction_data_completed_on;
+                    $history->previous = $lastDocument->correction_ooT_completed_by . ' , ' . $lastDocument->correction_ooT_completed_on;
                 }
-                $history->current = $changestage->correction_data_completed_by . ' , ' . $changestage->correction_data_completed_on;
+                $history->current = $changestage->correction_ooT_completed_by . ' , ' . $changestage->correction_ooT_completed_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1804,7 +1803,7 @@ class OOTController extends Controller
                 $history->change_to = "Phase IB HOD Primary Review";
                 $history->change_from = $lastDocument->status;
                 $history->action = 'Phase IB Investigation';
-                if (is_null($lastDocument->correction_data_completed_by) || $lastDocument->correction_data_completed_by === '') {
+                if (is_null($lastDocument->correction_ooT_completed_by) || $lastDocument->correction_ooT_completed_by === '') {
                     $history->action_name = 'New';
                 } else {
                     $history->action_name = 'Update';
@@ -1822,7 +1821,7 @@ class OOTController extends Controller
                 $changestage->Phase_IB_HOD_Review_Completed_BY = Auth::user()->name;
                 $changestage->Phase_IB_HOD_Review_Completed_ON = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_IB_HOD_Review_Completed_Comment = $request->comments;
-                $changestage->status = "Phase IB QA Review";
+                $changestage->status = "Phase IB QA/CQA Review";
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
                 $history->activity_type = 'Phase IB HOD Review Complete By   ,    Phase IB HOD Review Complete On';
@@ -1839,7 +1838,7 @@ class OOTController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Phase IB QA Review";
+                $history->change_to = "Phase IB QA/CQA Review";
                 $history->change_from = $lastDocument->status;
                 $history->action = 'Phase IB HOD Review Complete';
                 if (is_null($lastDocument->Phase_IB_HOD_Review_Completed_BY) || $lastDocument->Phase_IB_HOD_Review_Completed_BY === '') {
@@ -1851,7 +1850,7 @@ class OOTController extends Controller
                 $history->save();
                 // $this->saveAuditTrail($id, $lastDocument, $changestage, 'Phase IB HOD Review Complete ', 'Phase IB QA Review');
                 $changestage->update();
-                toastr()->success('Phase IB QA Review');
+                toastr()->success('Phase IB QA/CQA Review');
                 return back();
             }
     
@@ -1863,7 +1862,7 @@ class OOTController extends Controller
                 $changestage->status = "P-IB CQAH/QAH Review";
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
-                $history->activity_type = 'Phase IA HOD Review Complete By   , Phase IA HOD Review Complete On';
+                $history->activity_type = 'Phase IB QA/CQA Review Complete By   , Phase IB QA/CQA Review Complete On';
                 if (is_null($lastDocument->Phase_IB_QA_Review_Complete_12_by) || $lastDocument->Phase_IB_QA_Review_Complete_12_by === '') {
                     $history->previous = "Null";
                 } else {
@@ -1878,13 +1877,13 @@ class OOTController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "P-IB CQAH/QAH Review";
                 $history->change_from = $lastDocument->status;
-                $history->action = 'Phase IA HOD Review Complete';
+                $history->action = 'Phase IB QA/CQA Review Complete';
                 if (is_null($lastDocument->Phase_IB_QA_Review_Complete_12_by) || $lastDocument->Phase_IB_QA_Review_Complete_12_by === '') {
                     $history->action_name = 'New';
                 } else {
                     $history->action_name = 'Update';
                 }
-                $history->stage='Phase IA HOD Review Complete';
+                $history->stage='Phase IB QA/CQA Review Complete';
                 $history->save();
                 // $this->saveAuditTrail($id, $lastDocument, $changestage, 'Phase IB QA Review Complete', 'P-IB CQAH/QAH Review');
                 $changestage->update();
@@ -1968,7 +1967,7 @@ class OOTController extends Controller
                 $changestage->Phase_II_A_HOD_Review_Complete_by = Auth::user()->name;
                 $changestage->Phase_II_A_HOD_Review_Complete_on = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_II_A_HOD_Review_Complete_comment = $request->comments;
-                $changestage->status = "Phase II A QA Review";
+                $changestage->status = "Phase II A QA/CQA Review";
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
                 $history->activity_type = 'Phase II A HOD Review Complete By    ,   Phase II A HOD Review Complete On';
@@ -1983,7 +1982,7 @@ class OOTController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Phase II A QA Review";
+                $history->change_to = "Phase II A QA/CQA Review";
                 $history->change_from = $lastDocument->status;
                 $history->action = 'Phase II A HOD Review Complete';
                 if (is_null($lastDocument->Phase_II_A_HOD_Review_Complete_by) || $lastDocument->Phase_II_A_HOD_Review_Complete_by === '') {
@@ -1995,7 +1994,7 @@ class OOTController extends Controller
                 $history->save();
                 // $this->saveAuditTrail($id, $lastDocument, $changestage, 'Phase II A HOD Review Complete', 'Phase II A QA Review');
                 $changestage->update();
-                toastr()->success('Phase II A QA Review');
+                toastr()->success('Phase II A QA/CQA Review');
                 return back();
             }
     
@@ -2007,7 +2006,7 @@ class OOTController extends Controller
                 $changestage->status = "P-II A QAH/CQAH Review";
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
-                $history->activity_type = 'Phase II A QA Review Complete By   ,    Phase II A QA Review Complete  On';
+                $history->activity_type = 'Phase II A QA/CQA Review Complete By   ,    Phase II A QA/CQA Review Complete  On';
                 if (is_null($lastDocument->Phase_II_A_QA_Review_Complete_by) || $lastDocument->Phase_II_A_QA_Review_Complete_by === '') {
                     $history->previous = "Null";
                 } else {
@@ -2021,13 +2020,13 @@ class OOTController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "P-II A QAH/CQAH Review";
                 $history->change_from = $lastDocument->status;
-                $history->action = 'Phase II A QA Review Complete';
+                $history->action = 'Phase II A QA/CQA Review';
                 if (is_null($lastDocument->Phase_II_A_QA_Review_Complete_by) || $lastDocument->Phase_II_A_QA_Review_Complete_by === '') {
                     $history->action_name = 'New';
                 } else {
                     $history->action_name = 'Update';
                 }
-                $history->stage='Phase II A QA Review Complete';
+                $history->stage='Phase II A QA/CQA Review';
                 $history->save();
                 // $this->saveAuditTrail($id, $lastDocument, $changestage, 'Phase II A QA Review Complete', 'P-II A QAH/CQAH Review');
                 $changestage->update();
@@ -2111,7 +2110,7 @@ class OOTController extends Controller
                 $changestage->Phase_II_B_HOD_Review_Complete_by = Auth::user()->name;
                 $changestage->Phase_II_B_HOD_Review_Complete_on = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_II_B_HOD_Review_Complete_comment = $request->comments;
-                $changestage->status = "Phase II B QA Review  ";
+                $changestage->status = "Phase II B QA/CQA Review";
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
                 $history->activity_type = 'Phase II B HOD Review Complete By  ,   Phase II B HOD Review Complete On';
@@ -2126,7 +2125,7 @@ class OOTController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Phase II B QA Review";
+                $history->change_to = "Phase II B QA/CQA Review";
                 $history->change_from = $lastDocument->status;
                 $history->action = 'Phase II B HOD Review Complete';
                 $history->stage='Phase II B HOD Review Complete';
@@ -2139,7 +2138,7 @@ class OOTController extends Controller
                 $history->save();
                 // $this->saveAuditTrail($id, $lastDocument, $changestage, 'Phase II B HOD Review Complete ', 'Phase II B QA Review  ');
                 $changestage->update();
-                toastr()->success('Phase II B QA Review  ');
+                toastr()->success('Phase II B QA/CQA Review');
                 return back();
             }
             if ($changestage->stage == 23) {
@@ -2150,9 +2149,13 @@ class OOTController extends Controller
                 $changestage->status = "P-II B QAH/CQAH Review";
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->Phase_II_B_QA_ReviewComplete_by;
-                $history->current = $changestage->Phase_II_B_QA_ReviewComplete_by;
+                $history->activity_type = 'Phase II B QA/CQA Review Complete By      ,    Phase II B QA/CQA Review Complete On';
+                if (is_null($lastDocument->Phase_II_B_QA_ReviewComplete_by) || $lastDocument->Phase_II_B_QA_ReviewComplete_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->Phase_II_B_QA_ReviewComplete_by . ' , ' . $lastDocument->Phase_II_B_QA_ReviewComplete_on;
+                } 
+                $history->current = $changestage->Phase_II_B_QA_ReviewComplete_by . ' , ' . $changestage->Phase_II_B_QA_ReviewComplete_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2160,8 +2163,13 @@ class OOTController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "P-II B QAH/CQAH Review";
                 $history->change_from = $lastDocument->status;
-                $history->action_name = 'Phase II B QA Review Complete';
-                $history->stage='Phase II B QA Review Complete';
+                $history->action = 'Phase II B QA/CQA Review Complete';
+                $history->stage='Phase II B QA/CQA Review Complete';
+                if (is_null($lastDocument->Phase_II_B_QA_ReviewComplete_by) || $lastDocument->Phase_II_B_QA_ReviewComplete_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                 // $this->saveAuditTrail($id, $lastDocument, $changestage, 'Phase II B QA Review Complete', 'P-II B QAH/CQAH Review');
                 $changestage->update();
@@ -2176,9 +2184,13 @@ class OOTController extends Controller
                 $changestage->status = "Closed - Done";
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
-                $history->activity_type = 'P-II B Assignable Cause Found By ,   P-II B Assignable Cause Found On';
-                $history->previous = $lastDocument->P_II_B_Assignable_Cause_Found_by;
-                $history->current = $changestage->P_II_B_Assignable_Cause_Found_by;
+                $history->activity_type = 'P-II B Assignable Cause Not Found By ,   P-II B Assignable Cause Not Found On';
+                if (is_null($lastDocument->P_II_B_Assignable_Cause_Found_by) || $lastDocument->P_II_B_Assignable_Cause_Found_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->P_II_B_Assignable_Cause_Found_by . ' , ' . $lastDocument->P_II_B_Assignable_Cause_Found_on;
+                }
+                $history->current = $changestage->P_II_B_Assignable_Cause_Found_by . ' , ' . $changestage->P_II_B_Assignable_Cause_Found_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2186,9 +2198,13 @@ class OOTController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Closed - Done";
                 $history->change_from = $lastDocument->status;
-                $history->action_name = 'P-II B Assignable Cause Found';
-                $history->action = 'P-II B Assignable Cause Found';
-                $history->stage='P-II B Assignable Cause Found';
+                if (is_null($lastDocument->P_II_B_Assignable_Cause_Found_by) || $lastDocument->P_II_B_Assignable_Cause_Found_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'P-II B Assignable Cause Not Found';
+                $history->stage='P-II B Assignable Cause Not Found';
                 $history->save();
                 $changestage->update();
                 toastr()->success('Closed - Done');
@@ -2203,8 +2219,12 @@ class OOTController extends Controller
                 $history = new OotAuditTrial();
                 $history->ootcs_id = $id;
                 $history->activity_type = 'P-III Investigation Applicable/Not Applicable By ,  P-III Investigation Applicable/Not Applicable On';
-                $history->previous = $lastDocument->P_II_B_Assignable_Cause_Found_by;
-                $history->current = $changestage->P_II_B_Assignable_Cause_Found_by;
+                if (is_null($lastDocument->P_II_B_Assignable_Cause_Found_by) || $lastDocument->P_II_B_Assignable_Cause_Found_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->P_II_B_Assignable_Cause_Found_by . ' , ' . $lastDocument->P_II_B_Assignable_Cause_Found_on;
+                }
+                $history->current = $changestage->P_II_B_Assignable_Cause_Found_by . ' , ' . $changestage->P_II_B_Assignable_Cause_Found_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2212,7 +2232,11 @@ class OOTController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Closed - Done";
                 $history->change_from = $lastDocument->status;
-                $history->action_name = 'P-III Investigation Applicable/Not Applicable';
+                if (is_null($lastDocument->P_II_B_Assignable_Cause_Found_by) || $lastDocument->P_II_B_Assignable_Cause_Found_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->action = 'P-III Investigation Applicable/Not Applicable';
                 $history->stage='P-III Investigation Applicable/Not Applicable';
                 $history->save();
@@ -2246,8 +2270,32 @@ class OOTController extends Controller
                 $data->new_stage_reject_HOD_by = Auth::user()->name;
                 $data->new_stage_reject_HOD_on  = Carbon::now()->format('d-M-Y');
                 $data->new_stage_reject_HOD_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_reject_HOD_by) || $lastDocument->new_stage_reject_HOD_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_reject_HOD_by . ' , ' . $lastDocument->new_stage_reject_HOD_on;
+                }
+                $history->current = $changestage->new_stage_reject_HOD_by . ' , ' . $changestage->new_stage_reject_HOD_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Open";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_reject_HOD_by) || $lastDocument->new_stage_reject_HOD_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Open');
                 return back();
             }
     
@@ -2257,8 +2305,32 @@ class OOTController extends Controller
                 $data->new_stage_reject_HOD_by = Auth::user()->name;
                 $data->new_stage_reject_HOD_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_reject_HOD_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_reject_HOD_by) || $lastDocument->new_stage_reject_HOD_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_reject_HOD_by . ' , ' . $lastDocument->new_stage_reject_HOD_on;
+                }
+                $history->current = $changestage->new_stage_reject_HOD_by . ' , ' . $changestage->new_stage_reject_HOD_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "HOD Primary Review";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_reject_HOD_by) || $lastDocument->new_stage_reject_HOD_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('HOD Primary Review');
                 return back();
             }
             if ($data->stage == 5) {
@@ -2267,8 +2339,32 @@ class OOTController extends Controller
                 $data->new_stage_reject_CQA_by = Auth::user()->name;
                 $data->new_stage_reject__CQA_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_reject_CQA_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_reject_CQA_by) || $lastDocument->new_stage_reject_CQA_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_reject_CQA_by . ' , ' . $lastDocument->new_stage_reject__CQA_on;
+                }
+                $history->current = $changestage->new_stage_reject_CQA_by . ' , ' . $changestage->new_stage_reject__CQA_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "CQA/QA Head Primary Review";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_reject_CQA_by) || $lastDocument->new_stage_reject_CQA_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('CQA/QA Head Primary Review');
                 return back();
             }
             if ($data->stage == 7) {
@@ -2277,8 +2373,32 @@ class OOTController extends Controller
                 $data->new_stage_reject_UnderPhaseIA_by = Auth::user()->name;
                 $data->new_stage_reject_UnderPhaseIA_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_reject_UnderPhaseIA_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_reject_UnderPhaseIA_by) || $lastDocument->new_stage_reject_UnderPhaseIA_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_reject_UnderPhaseIA_by . ' , ' . $lastDocument->new_stage_reject_UnderPhaseIA_on;
+                }
+                $history->current = $changestage->new_stage_reject_UnderPhaseIA_by . ' , ' . $changestage->new_stage_reject_UnderPhaseIA_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Under Phase-IA Investigation";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_reject_UnderPhaseIA_by) || $lastDocument->new_stage_reject_UnderPhaseIA_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Under Phase-IA Investigation');
                 return back();
             }
             if ($data->stage == 8) {
@@ -2287,18 +2407,66 @@ class OOTController extends Controller
                 $data->new_stage_reject_Phase_IA_HOD_Primary_Review_by = Auth::user()->name;
                 $data->new_stage_reject_Phase_IA_HOD_Primary_Review_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_reject_Phase_IA_HOD_Primary_Review_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_reject_Phase_IA_HOD_Primary_Review_by) || $lastDocument->new_stage_reject_Phase_IA_HOD_Primary_Review_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_reject_Phase_IA_HOD_Primary_Review_by . ' , ' . $lastDocument->new_stage_reject_Phase_IA_HOD_Primary_Review_on;
+                }
+                $history->current = $changestage->new_stage_reject_Phase_IA_HOD_Primary_Review_by . ' , ' . $changestage->new_stage_reject_Phase_IA_HOD_Primary_Review_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Phase IA HOD Primary Review";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_reject_Phase_IA_HOD_Primary_Review_by) || $lastDocument->new_stage_reject_Phase_IA_HOD_Primary_Review_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Phase IA HOD Primary Review');
                 return back();
             }
             if ($data->stage == 9) {
                 $data->stage = "8";
-                $data->status = "Phase IA QA Review ";
-                // $data->more_infor_nine_reject_by = Auth::user()->name;
-                // $data->more_infor_nine_reject_on = Carbon::now()->format('d-M-Y');
-                // $data->more_infor_nine_reject_comment = $request->comment;
+                $data->status = "Phase IA QA/CQA Review ";
+                $data->more_infor_nine_reject_by = Auth::user()->name;
+                $data->more_infor_nine_reject_on = Carbon::now()->format('d-M-Y');
+                $data->more_infor_nine_reject_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->more_infor_nine_reject_by) || $lastDocument->more_infor_nine_reject_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->more_infor_nine_reject_by . ' , ' . $lastDocument->more_infor_nine_reject_on;
+                }
+                $history->current = $changestage->more_infor_nine_reject_by . ' , ' . $changestage->more_infor_nine_reject_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Phase IA QA/CQA Review";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->more_infor_nine_reject_by) || $lastDocument->more_infor_nine_reject_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Phase IA QA/CQA Review');
                 return back();
             }
             if ($data->stage == 10) {
@@ -2307,8 +2475,32 @@ class OOTController extends Controller
                 $data->new_stage_rejectUnder_Stage_II_B_Investigation_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Stage_II_B_Investigation_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_rejectUnder_Stage_II_B_Investigation_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_rejectUnder_Stage_II_B_Investigation_by) || $lastDocument->new_stage_rejectUnder_Stage_II_B_Investigation_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_rejectUnder_Stage_II_B_Investigation_by . ' , ' . $lastDocument->new_stage_rejectUnder_Stage_II_B_Investigation_on;
+                }
+                $history->current = $changestage->new_stage_rejectUnder_Stage_II_B_Investigation_by . ' , ' . $changestage->new_stage_rejectUnder_Stage_II_B_Investigation_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Under Stage II B Investigation";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_rejectUnder_Stage_II_B_Investigation_by) || $lastDocument->new_stage_rejectUnder_Stage_II_B_Investigation_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Under Stage II B Investigation');
                 return back();
             }
             if ($data->stage == 11) {
@@ -2317,8 +2509,32 @@ class OOTController extends Controller
                 $data->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by = Auth::user()->name;
                 $data->new_stage_rejectP_IA_CQAH_QAH_Reviewation_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_rejectP_IA_CQAH_QAH_Review_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by) || $lastDocument->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by . ' , ' . $lastDocument->new_stage_rejectP_IA_CQAH_QAH_Reviewation_on;
+                }
+                $history->current = $changestage->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by . ' , ' . $changestage->new_stage_rejectP_IA_CQAH_QAH_Reviewation_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "P-IA CQAH/QAH Review";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by) || $lastDocument->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('P-IA CQAH/QAH Review');
                 return back();
             }
             if ($data->stage == 12) {
@@ -2327,8 +2543,32 @@ class OOTController extends Controller
                 $data->new_stage_rejectUnder_Phase_IB_Investigation_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Phase_IB_Investigation_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_rejectUnder_Phase_IB_Investigation_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_rejectUnder_Phase_IB_Investigation_by) || $lastDocument->new_stage_rejectUnder_Phase_IB_Investigation_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_rejectUnder_Phase_IB_Investigation_by . ' , ' . $lastDocument->new_stage_rejectUnder_Phase_IB_Investigation_on;
+                }
+                $history->current = $changestage->new_stage_rejectUnder_Phase_IB_Investigation_by . ' , ' . $changestage->new_stage_rejectUnder_Phase_IB_Investigation_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Under Phase-IB Investigation";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_rejectUnder_Phase_IB_Investigation_by) || $lastDocument->new_stage_rejectUnder_Phase_IB_Investigation_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Under Phase-IB Investigation');
                 return back();
             }
             if ($data->stage == 13) {
@@ -2337,38 +2577,101 @@ class OOTController extends Controller
                 $data->new_stage_rejectPhase_IB_HOD_Primary_Review_by = Auth::user()->name;
                 $data->new_stage_rejectPhase_IB_HOD_Primary_Review_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_rejectPhase_IB_HOD_Primary_Reviewcomment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_rejectPhase_IB_HOD_Primary_Review_by) || $lastDocument->new_stage_rejectPhase_IB_HOD_Primary_Review_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_rejectPhase_IB_HOD_Primary_Review_by . ' , ' . $lastDocument->new_stage_rejectPhase_IB_HOD_Primary_Review_on;
+                }
+                $history->current = $changestage->new_stage_rejectPhase_IB_HOD_Primary_Review_by . ' , ' . $changestage->new_stage_rejectPhase_IB_HOD_Primary_Review_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Phase IB HOD Primary Review";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_rejectPhase_IB_HOD_Primary_Review_by) || $lastDocument->new_stage_rejectPhase_IB_HOD_Primary_Review_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Phase IB HOD Primary Review');
                 return back();
             }
             if ($data->stage == 14) {
                 $data->stage = "13";
-                $data->status = "Phase IB QA Review";
-                // $data->fourteen_stage_return_by = Auth::user()->name;
-                // $data->fourteen_stage_return_on = Carbon::now()->format('d-M-Y');
-                // $data->fourteen_stage_return_comment = $request->comment;
+                $data->status = "Phase IB QA/CQA Review";
+                $data->fourteen_stage_return_by = Auth::user()->name;
+                $data->fourteen_stage_return_on = Carbon::now()->format('d-M-Y');
+                $data->fourteen_stage_return_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->fourteen_stage_return_by) || $lastDocument->fourteen_stage_return_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->fourteen_stage_return_by . ' , ' . $lastDocument->fourteen_stage_return_on;
+                }
+                $history->current = $changestage->fourteen_stage_return_by . ' , ' . $changestage->fourteen_stage_return_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Phase IB QA/CQA Review";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->fourteen_stage_return_by) || $lastDocument->fourteen_stage_return_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Phase IB QA/CQA Review');
                 return back();
             }
-            if ($data->stage == 15) {
-                $data->stage = "13";
-                $data->status = "Phase IB QA Review";
-                $data->new_stage_rejectPhase_IB_QA_Review_by = Auth::user()->name;
-                $data->new_stage_rejectPhase_IB_QA_Review_on = Carbon::now()->format('d-M-Y');
-                $data->new_stage_rejectPhase_IB_QA_Review_comment = $request->comment;
-                $data->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
+            
             if ($data->stage == 16) {
                 $data->stage = "14";
                 $data->status = "P-IA CQAH/QAH Review";
                 $data->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by = Auth::user()->name;
                 $data->new_stage_rejectP_IA_CQAH_QAH_Reviewation_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_rejectP_IA_CQAH_QAH_Review_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by) || $lastDocument->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by . ' , ' . $lastDocument->new_stage_rejectP_IA_CQAH_QAH_Reviewation_on;
+                }
+                $history->current = $changestage->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by . ' , ' . $changestage->new_stage_rejectP_IA_CQAH_QAH_Reviewation_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "P-IA CQAH/QAH Review";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by) || $lastDocument->new_stage_rejectP_IA_CQAH_QAH_Reviewation_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('P-IA CQAH/QAH Review');
                 return back();
             }
             if ($data->stage == 17) {
@@ -2377,8 +2680,32 @@ class OOTController extends Controller
                 $data->new_stage_rejectUnder_Phase_II_A_Investigation_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Phase_II_A_Investigation_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_rejectUnder_Phase_II_A_Investigation_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_rejectUnder_Phase_II_A_Investigation_by) || $lastDocument->new_stage_rejectUnder_Phase_II_A_Investigation_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_rejectUnder_Phase_II_A_Investigation_by . ' , ' . $lastDocument->new_stage_rejectUnder_Phase_II_A_Investigation_on;
+                }
+                $history->current = $changestage->new_stage_rejectUnder_Phase_II_A_Investigation_by . ' , ' . $changestage->new_stage_rejectUnder_Phase_II_A_Investigation_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Under Phase-II A Investigation";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_rejectUnder_Phase_II_A_Investigation_by) || $lastDocument->new_stage_rejectUnder_Phase_II_A_Investigation_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Under Phase-II A Investigation');
                 return back();
             }
             if ($data->stage == 18) {
@@ -2387,19 +2714,67 @@ class OOTController extends Controller
                 $data->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_by) || $lastDocument->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_by . ' , ' . $lastDocument->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_on;
+                }
+                $history->current = $changestage->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_by . ' , ' . $changestage->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Phase II A HOD Primary Review";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_by) || $lastDocument->new_stage_rejectUnder_Phase_II_A_HOD17Investigation_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Phase II A HOD Primary Review');
                 return back();
             }
     
             if ($data->stage == 19) {
                 $data->stage = "18";
-                $data->status = "Phase IA QA Review";
+                $data->status = "Phase II A QA/CQA Review";
                 $data->new_stage_rejectUnder_Phase_IA_HOD18Investigation_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Phase_IA_HOD18Investigation_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_rejectUnder_Phase_IA_HOD18Investigation_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_rejectUnder_Phase_IA_HOD18Investigation_by) || $lastDocument->new_stage_rejectUnder_Phase_IA_HOD18Investigation_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_rejectUnder_Phase_IA_HOD18Investigation_by . ' , ' . $lastDocument->new_stage_rejectUnder_Phase_IA_HOD18Investigation_on  ;
+                }
+                $history->current = $changestage->new_stage_rejectUnder_Phase_IA_HOD18Investigation_by . ' , ' . $changestage->new_stage_rejectUnder_Phase_IA_HOD18Investigation_on ;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Phase II A QA/CQA Review";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_rejectUnder_Phase_IA_HOD18Investigation_by) || $lastDocument->new_stage_rejectUnder_Phase_IA_HOD18Investigation_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Phase II A QA/CQA Review');
                 return back();
             }
             if ($data->stage == 21) {
@@ -2408,8 +2783,32 @@ class OOTController extends Controller
                 $data->new_stage_reject_P_II_A_QAH_CQAH_Review_by = Auth::user()->name;
                 $data->new_stage_reject_P_II_A_QAH_CQAH_Review_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_reject_P_II_A_QAH_CQAH_Review_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_reject_P_II_A_QAH_CQAH_Review_by) || $lastDocument->new_stage_reject_P_II_A_QAH_CQAH_Review_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_reject_P_II_A_QAH_CQAH_Review_by . ' , ' . $lastDocument->new_stage_reject_P_II_A_QAH_CQAH_Review_on;
+                }
+                $history->current = $changestage->new_stage_reject_P_II_A_QAH_CQAH_Review_by . ' , ' . $changestage->new_stage_reject_P_II_A_QAH_CQAH_Review_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "P-II A QAH/CQAH Review";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_reject_P_II_A_QAH_CQAH_Review_by) || $lastDocument->new_stage_reject_P_II_A_QAH_CQAH_Review_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('P-II A QAH/CQAH Review');
                 return back();
             }
     
@@ -2419,8 +2818,32 @@ class OOTController extends Controller
                 $data->new_stage_rejectUnder_Phase_II_B_Investigation_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Phase_II_B_Investigation_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_rejectUnder_Phase_II_B_Investigation_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_rejectUnder_Phase_II_B_Investigation_by) || $lastDocument->new_stage_rejectUnder_Phase_II_B_Investigation_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_rejectUnder_Phase_II_B_Investigation_by . ' , ' . $lastDocument->new_stage_rejectUnder_Phase_II_B_Investigation_on;
+                }
+                $history->current = $changestage->new_stage_rejectUnder_Phase_II_B_Investigation_by . ' , ' . $changestage->new_stage_rejectUnder_Phase_II_B_Investigation_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Under Phase-II B Investigation";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_rejectUnder_Phase_II_B_Investigation_by) || $lastDocument->new_stage_rejectUnder_Phase_II_B_Investigation_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Under Phase-II B Investigation');
                 return back();
             }
     
@@ -2430,18 +2853,66 @@ class OOTController extends Controller
                 $data->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_by = Auth::user()->name;
                 $data->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_by) || $lastDocument->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_by . ' , ' . $lastDocument->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_on;
+                }
+                $history->current = $changestage->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_by . ' , ' . $changestage->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Phase II B HOD Primary Review";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_by) || $lastDocument->new_stage_rejectUnder_Phase_II_B_HOD_Primary_Review_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Phase II B HOD Primary Review');
                 return back();
             }
             if ($data->stage == 24) {
                 $data->stage = "23";
-                $data->status = "Phase II B QA Review ";
+                $data->status = "Phase II B QA/CQA Review ";
                 $data->new_stage_reject_by = Auth::user()->name;
                 $data->new_stage_reject_on = Carbon::now()->format('d-M-Y');
                 $data->new_stage_reject_comment = $request->comment;
+                $history = new OotAuditTrial();
+                $history->ootcs_id = $id;
+                $history->activity_type = 'Require More Information By ,  Require More Information On';
+                if (is_null($lastDocument->new_stage_reject_by) || $lastDocument->new_stage_reject_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->new_stage_reject_by . ' , ' . $lastDocument->new_stage_reject_on;
+                }
+                $history->current = $changestage->new_stage_reject_by . ' , ' . $changestage->new_stage_reject_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Phase II B QA/CQA Review";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->new_stage_reject_by) || $lastDocument->new_stage_reject_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'Require More Information';
+                $history->stage='Require More Information';
+                $history->save();
                 $data->update();
-                toastr()->success('Document Sent');
+                toastr()->success('Phase II B QA/CQA Review');
                 return back();
             }
 
@@ -2725,10 +3196,13 @@ public function stageChange(Request $request, $id){
                             $changestage->status = "Closed - Done";
                             $history = new OotAuditTrial();
                             $history->ootcs_id = $id;
-                            $history->activity_type = 'P-III Investigation 
-Applicable/Not Applicable By ,   P-II B Assignable Cause Not Found On';
-                            $history->previous = $lastDocument->P_II_B_Assignable_Cause_Found_by;
-                            $history->current = $changestage->P_II_B_Assignable_Cause_Found_by;
+                            $history->activity_type = 'P-II B Assignable Cause Found By ,   P-II B Assignable Cause Found On';
+                            if (is_null($lastDocument->P_II_B_Assignable_Cause_Found_by) || $lastDocument->P_II_B_Assignable_Cause_Found_by === '') {
+                                $history->previous = "Null";
+                            } else {
+                                $history->previous = $lastDocument->P_II_B_Assignable_Cause_Found_by . ' , ' . $lastDocument->P_II_B_Assignable_Cause_Found_on;
+                            }
+                            $history->current = $changestage->P_II_B_Assignable_Cause_Found_by . ' , ' . $changestage->P_II_B_Assignable_Cause_Found_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2736,8 +3210,12 @@ Applicable/Not Applicable By ,   P-II B Assignable Cause Not Found On';
                             $history->origin_state = $lastDocument->status;
                             $history->change_to = "Closed - Done";
                             $history->change_from = $lastDocument->status;
-                            $history->action_name = 'P-II B Assignable Cause Found';
                             $history->action = 'P-II B Assignable Cause Found';
+                            if (is_null($lastDocument->P_II_B_Assignable_Cause_Found_by) || $lastDocument->P_II_B_Assignable_Cause_Found_by === '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
                             $history->stage='P-II B Assignable Cause Found';
                             $history->save();
                             $changestage->update();
@@ -2746,15 +3224,19 @@ Applicable/Not Applicable By ,   P-II B Assignable Cause Not Found On';
                         }
                         if ($changestage->stage == 25) {
                             $changestage->stage = "26";
-                            $changestage->P_II_B_Assignable_Cause_Found_by = Auth::user()->name;
-                            $changestage->P_II_B_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
-                            $changestage->P_II_B_Assignable_Cause_Found_comment = $request->comments;
+                            $changestage->piii_last_by = Auth::user()->name;
+                            $changestage->piii_last_on = Carbon::now()->format('d-M-Y');
+                            $changestage->piii_last_comment = $request->comments;
                             $changestage->status = "Closed - Done";
                             $history = new OotAuditTrial();
                             $history->ootcs_id = $id;
                             $history->activity_type = 'P-III Investigation Applicable/Not Applicable By ,   P-III Investigation Applicable/Not Applicable On';
-                            $history->previous = $lastDocument->P_II_B_Assignable_Cause_Found_by;
-                            $history->current = $changestage->P_II_B_Assignable_Cause_Found_by;
+                            if (is_null($lastDocument->piii_last_by) || $lastDocument->piii_last_by === '') {
+                                $history->previous = "Null";
+                            } else {
+                                $history->previous = $lastDocument->piii_last_by . ' , ' . $lastDocument->piii_last_on;
+                            }
+                            $history->current = $changestage->piii_last_by . ' , ' . $changestage->piii_last_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2762,7 +3244,11 @@ Applicable/Not Applicable By ,   P-II B Assignable Cause Not Found On';
                             $history->origin_state = $lastDocument->status;
                             $history->change_to = "Closed - Done";
                             $history->change_from = $lastDocument->status;
-                            $history->action_name = 'P-III Investigation Applicable/Not Applicable';
+                            if (is_null($lastDocument->piii_last_by) || $lastDocument->piii_last_by === '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
                             $history->action = 'P-III Investigation Applicable/Not Applicable';
                             $history->stage='P-III Investigation Applicable/Not Applicable';
                             $history->save();
