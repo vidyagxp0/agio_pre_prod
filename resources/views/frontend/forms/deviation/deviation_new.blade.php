@@ -3597,7 +3597,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 1 Review Required ?</label>
                                         <select name="Other1_review" id="Other1_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -3724,7 +3724,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 2 Review Required ?</label>
                                         <select name="Other2_review" id="Other2_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -3853,7 +3853,7 @@
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 3 Review Required ?</label>
                                         <select name="Other3_review" id="Other3_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -3982,7 +3982,7 @@
                                     <div class="group-input">
                                         <label for="review4"> Other's 4 Review Required ?</label>
                                         <select name="Other4_review" id="Other4_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>
@@ -4112,7 +4112,7 @@
                                     <div class="group-input">
                                         <label for="review5"> Other's 5 Review Required ?</label>
                                         <select name="Other5_review" id="Other5_review" disabled>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                             <option value="na">NA</option>

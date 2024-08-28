@@ -432,14 +432,26 @@ $users = DB::table('users')
                                         value="{{ Auth::user()->name }}">
                             </div>
                         </div>
-                        <div class="col-md-6 ">
+                        {{-- <div class="col-md-6 ">
                             <div class="group-input ">
                                 <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
                                 <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                 <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
                             </div>
+                        </div> --}}
+                        @php
+                        // Calculate the due date (30 days from the initiation date)
+                        $initiationDate = date('Y-m-d'); // Current date as initiation date
+                        $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                    @endphp
+                        <div class="col-md-6 ">
+                            <div class="group-input ">
+                                <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
+                                <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                            </div>
                         </div>
-                        <div class="col-lg-6 new-date-data-field">
+                        {{-- <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Due Date"> Due Date </label>
                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
@@ -450,7 +462,43 @@ $users = DB::table('users')
                                 oninput="handleDateInput(this, 'due_date')"  value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}"/>
                                 </div>
                             </div>
+                        </div> --}}
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Due Date">Due Date</label>
+                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                <div class="calenderauditee">
+                                    <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
+                                    <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'due_date')" />
+                                </div>
+                            </div>
                         </div>
+                        <script>
+                            // Format the due date to DD-MM-YYYY
+                            // Your input date
+                            var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+
+                            // Create a Date object
+                            var date = new Date(dueDate);
+
+                            // Array of month names
+                            var monthNames = [
+                                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                            ];
+
+                            // Extracting day, month, and year from the date
+                            var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                            var monthIndex = date.getMonth();
+                            var year = date.getFullYear();
+
+                            // Formatting the date in "dd-MMM-yyyy" format
+                            var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+
+                            // Set the formatted due date value to the input field
+                            document.getElementById('due_date').value = dueDateFormatted;
+                        </script>
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Short Description">Short Description
@@ -8776,7 +8824,7 @@ $users = DB::table('users')
                         </div>
                     <div>
                     <div class="row">
-                    <div class="col-12 sub-head">  Lab Supervisor </div>
+                        <div class="col-12 sub-head">HOD/Designee</div>
                      <!-- Request More Info -->
                         <!--  Initial Phase I Investigation  Done By -->
                         <div class="col-lg-4">
@@ -8822,6 +8870,7 @@ $users = DB::table('users')
                         </div>
                         <!-- Request More Info -->
                         <!-- Assignable Cause Not Found -->
+                        <div class="col-12 sub-head">Initiator</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase IA Investigation By</label>
@@ -8842,7 +8891,7 @@ $users = DB::table('users')
                         </div>
                     <div>
                     <div class="row">
-                        <div class="col-12 sub-head"> Lab Supervisor </div>
+                        <div class="col-12 sub-head">HOD/Designee</div>
                          <!-- Request More Info -->
                         <!-- Correction Completed -->
                         <div class="col-lg-4">
@@ -8865,25 +8914,27 @@ $users = DB::table('users')
                         </div>
                         <!-- Request More Info -->
                         <!-- Proposed Hypothesis Experiment -->
+                        <div class="col-12 sub-head">QA/CQA</div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Audit Response Completed By"> Phase IA QA Review Complete By</label>
+                                <label for="Audit Response Completed By"> Phase IA QA/CQA Review Complete By</label>
                                 <div class=" static"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Audit Response Completed On">Phase IA QA Review Complete On</label>
+                                <label for="Audit Response Completed On">Phase IA QA/CQA Review Complete On</label>
                                 <div class="date"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                            <div class="group-input">
-                            <label for="Submitted on">Phase IA QA Review Complete Comment</label>
+                            <label for="Submitted on">Phase IA QA/CQA Review Complete Comment</label>
                             <div class="Date"></div>
                            </div>
                         </div>
                         <!-- Obvious Error Found -->
+                        <div class="col-12 sub-head">CQA/QA Head/Designee</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Audit Attachments">Assignable Cause Not Found By</label>
@@ -8923,7 +8974,7 @@ $users = DB::table('users')
                         </div>
                     <div>
                     <div class="row">
-                        <div class="col-12 sub-head"> QA </div>
+                        <div class="col-12 sub-head"> Initiator </div>
                         <!-- Request More Info -->
                         <!-- Repeat Analysis Completed -->
                         <div class="col-lg-4">
@@ -8946,6 +8997,7 @@ $users = DB::table('users')
                         </div>
                         <!-- Request More Info -->
                         <!-- Full Scale Investigation -->
+                        <div class="col-12 sub-head">HOD/Designee</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase IB HOD Review Complete by</label>
@@ -8966,28 +9018,29 @@ $users = DB::table('users')
                         </div>
                     <div>
                     <div class="row">
-                        <div class="col-12 sub-head"> Lab Supervisor </div>
+                        <div class="col-12 sub-head"> QA/CQA</div>
                         <!-- Request More Info -->
                         <!-- Assignable Cause Found (Manufacturing Defect) -->
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Reference Recores">Phase IB QA Review Complete By</label>
+                                <label for="Reference Recores">Phase IB QA/CQA Review Complete By</label>
                                 <div class=" static"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Reference Recores">Phase IB QA Review Complete On </label>
+                                <label for="Reference Recores">Phase IB QA/CQA Review Complete On </label>
                                 <div class="date"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                            <div class="group-input">
-                            <label for="Submitted on">Phase IB QA Review Complete Comment</label>
+                            <label for="Submitted on">Phase IB QA/CQA Review Complete Comment</label>
                             <div class="Date"></div>
                            </div>
                         </div>
                         <!-- No Assignable Cause Found (No Manufacturing Defect) -->
+                        <div class="col-12 sub-head">CQA/QA Head/Designee</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Reference Recores">P-I B Assignable Cause Not Found By</label>
@@ -9028,6 +9081,7 @@ $users = DB::table('users')
                         </div>
                     
                          <!--  Phase II A Correction Inconclusive -->
+                         <div class="col-12 sub-head">Production</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Reference Recores">Phase II A Investigation By</label>
@@ -9049,6 +9103,7 @@ $users = DB::table('users')
                    
                         <!-- Request More Info -->
                          <!-- Retesting/resampling -->
+                         <div class="col-12 sub-head">Production Head</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Reference Recores">Phase II A HOD Review Complete By </label>
@@ -9069,27 +9124,28 @@ $users = DB::table('users')
                         </div>
                     
                         <!-- Phase II B Correction Inconclusive -->
+                        <div class="col-12 sub-head">QA/CQA</div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Reference Recores">Phase II A QA Review Complete By </label>
+                                <label for="Reference Recores">Phase II A QA/CQA Review Complete By </label>
                                 <div class=" static"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Reference Recores">Phase II A QA Review Complete On </label>
+                                <label for="Reference Recores">Phase II A QA/CQA Review Complete On </label>
                                 <div class="date"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                            <div class="group-input">
-                            <label for="Submitted on">Phase II A QA Review Complete Comment</label>
+                            <label for="Submitted on">Phase II A QA/CQA Review Complete Comment</label>
                             <div class="Date"></div>
                            </div>
                         </div>
                     <div>
                     <div class="row">
-                       <div class="col-12 sub-head"> Head QA/Designee </div>
+                       <div class="col-12 sub-head"> CQA/QA Head/Designee</div>
                         <!-- Final Approval -->
                         <!-- Request More Info -->
                         <div class="col-lg-4">
@@ -9130,6 +9186,7 @@ $users = DB::table('users')
                             <div class="Date"></div>
                            </div>
                         </div>
+                        <div class="col-12 sub-head">Initiator</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="completed by"> Phase II B Investigation By</label>
@@ -9148,6 +9205,7 @@ $users = DB::table('users')
                             <div class="Date"></div>
                            </div>
                         </div>
+                        <div class="col-12 sub-head">HOD/Designee</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="completed by"> Phase II B HOD Review Complete By</label>
@@ -9166,24 +9224,26 @@ $users = DB::table('users')
                             <div class="Date"></div>
                            </div>
                         </div>
+                        <div class="col-12 sub-head">QA/CQA</div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="completed by">Phase II B QA Review Complete By</label>
+                                <label for="completed by">Phase II B QA/CQA Review Complete By</label>
                                 <div class="static"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="completed on"> Phase II B QA Review Complete On</label>
+                                <label for="completed on"> Phase II B QA/CQA Review Complete On</label>
                                 <div class="Date"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                            <div class="group-input">
-                            <label for="Submitted on">Phase II B QA Review Complete Comment</label>
+                            <label for="Submitted on">Phase II B QA/CQA Review Complete Comment</label>
                             <div class="Date"></div>
                            </div>
                         </div>
+                        <div class="col-12 sub-head">CQA/QA Head /Designee</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="completed by">P-II B Assignable Cause Not Found By</label>

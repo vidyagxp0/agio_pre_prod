@@ -14,22 +14,21 @@
 
         <td>
             <div>
-                <strong>Data Field Name :</strong><a
-                    href="#">{{ $dataDemo->activity_type ?: 'Not Applicable' }}</a>
+                <strong>Data Field Name :</strong><a>{{ $dataDemo->activity_type ?: 'Not Applicable' }}</a>
             </div>
             <div style="margin-top: 5px;">
                 @if ($dataDemo->activity_type == 'Activity Log')
-                    <strong>Change From :</strong>{{ $dataDemo->change_from ?: 'Not Applicable' }}
+                    <strong>Change From :</strong>{{ $dataDemo->change_from ?: 'Null' }}
                 @else
-                    <strong>Change From :</strong>{{ $dataDemo->previous ?: 'Not Applicable' }}
+                    <strong>Change From :</strong>{{ $dataDemo->previous ?: 'Null' }}
                 @endif
             </div>
             <br>
             <div>
                 @if ($dataDemo->activity_type == 'Activity Log')
-                    <strong>Change To :</strong>{{ $dataDemo->change_to ?: 'Not Applicable' }}
+                    <strong>Change To :</strong>{{ $dataDemo->change_to ?: 'Null' }}
                 @else
-                    <strong>Change To :</strong>{{ $dataDemo->current ?: 'Not Applicable' }}
+                    <strong>Change To :</strong>{{ $dataDemo->current ?: 'Null' }}
                 @endif
             </div>
             <div style="margin-top: 5px;">
@@ -49,8 +48,9 @@
             </div>
             <div style="margin-top: 5px;">
                 <strong>Performed On :</strong>
-                {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y') : 'Not Applicable' }}
+                {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
             </div>
+
             <div style="margin-top: 5px;">
                 <strong>Comments :</strong>{{ $dataDemo->comment ?: 'Not Applicable' }}
             </div>

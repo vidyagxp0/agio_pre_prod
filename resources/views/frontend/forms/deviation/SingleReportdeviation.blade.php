@@ -291,7 +291,13 @@
                     </tr>
                     <tr>
                         <th class="w-20"> Delay Justification</th>
-                        <td class="w-30"></td>
+                        <td class="w-30">
+                            @if ($data->Delay_Justification)
+                                {{ $data->Delay_Justification }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                         <th class="w-20">Deviation Observed by</th>
                         @php
                             $facilityIds = explode(',', $data->Facility);
