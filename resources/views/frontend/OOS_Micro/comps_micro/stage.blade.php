@@ -143,11 +143,11 @@
                 which is legally binding equivalent of a hand written signature.
             </div>
             <div class="group-input">
-                <label for="username">Username <span> *</span></label>
+                <label for="username">Username <span class="text-danger"> *</span></label>
                 <input type="text" name="username" required>
             </div>
             <div class="group-input">
-                <label for="password">Password <span> *</span></label>
+                <label for="password">Password <span class="text-danger"> *</span></label>
                 <input type="password" name="password" required>
             </div>
             <div class="group-input">
@@ -184,15 +184,15 @@
                 which is legally binding equivalent of a hand written signature.
             </div>
             <div class="group-input">
-                <label for="username">Username <span> *</span></label>
+                <label for="username">Username <span class="text-danger">*</span></label>
                 <input type="text" name="username" required>
             </div>
             <div class="group-input">
-                <label for="password">Password <span> *</span></label>
+                <label for="password">Password <span class="text-danger">*</span></label>
                 <input type="password" name="password" required>
             </div>
             <div class="group-input">
-                <label for="comment">Comment <span> *</span></label>
+                <label for="comment">Comment <span class="text-danger">*</span></label>
                 <input type="comment" name="comment" required>
             </div>
             </div>
@@ -225,11 +225,11 @@
                 which is legally binding equivalent of a hand written signature.
             </div>
             <div class="group-input">
-                <label for="username">Username <span> *</span></label>
+                <label for="username">Username <span class="text-danger"> *</span></label>
                 <input type="text" name="username" required>
             </div>
             <div class="group-input">
-                <label for="password">Password <span> *</span></label>
+                <label for="password">Password <span class="text-danger"> *</span></label>
                 <input type="password" name="password" required>
             </div>
             <div class="group-input">
@@ -266,15 +266,15 @@
                         which is legally binding equivalent of a hand written signature.
                     </div>
                     <div class="group-input">
-                        <label for="username">Username <span> *</span></label>
+                        <label for="username">Username <span class="text-danger"> *</span></label>
                         <input type="text" name="username" required>
                     </div>
                     <div class="group-input">
-                        <label for="password">Password <span> *</span></label>
+                        <label for="password">Password <span class="text-danger"> *</span></label>
                         <input type="password" name="password" required>
                     </div>
                     <div class="group-input">
-                        <label for="comment">Comment <span> *</span></label>
+                        <label for="comment">Comment <span class="text-danger"> *</span></label>
                         <input type="comment" name="comment">
                     </div>
                 </div>
