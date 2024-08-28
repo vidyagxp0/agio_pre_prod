@@ -514,87 +514,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="audit-program-grid">
-                                            Audit Program<button type="button" name="ann"
-                                                id="audit_program">+</button>
-                                        </label>
-                                        <table class="table table-bordered" id="audit_program_body">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 5%">Row #</th>
-                                                    <th>Auditees</th>
-                                                    <th>Date Start</th>
-                                                    <th>Date End</th>
-                                                    <th>Lead Investigator</th>
-                                                    <th>Comment</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><input disabled type="text" name="serial_number[]"
-                                                            value="1">
-                                                    </td>
-                                                    <td> <select id="select-state" placeholder="Select..."
-                                                            name="Auditees[]">
-                                                            <option value="">Select a value</option>
-                                                            @foreach ($users as $data)
-                                                                <option value="{{ $data->id }}">{{ $data->name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select></td>
 
-                                                    <td>
-                                                        <div class="group-input new-date-data-field mb-0">
-                                                            <div class="input-date ">
-                                                                <div class="calenderauditee">
-                                                                    <input type="text" id="start_date" readonly
-                                                                        placeholder="DD-MMM-YYYY" />
-                                                                    <input type="date" id="start_date_checkdate"
-                                                                        name="start_date[]"
-                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                        class="hide-input"
-                                                                        oninput="handleDateInput(this, 'start_date');checkDate('c','end_date_checkdate')" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-
-                                                    <td>
-                                                        <div class="group-input new-date-data-field mb-0">
-                                                            <div class="input-date ">
-                                                                <div class="calenderauditee">
-                                                                    <input type="text" id="end_date" readonly
-                                                                        placeholder="DD-MMM-YYYY" />
-                                                                    <input type="date" id="end_date_checkdate"
-                                                                        name="end_date[]"
-                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                        class="hide-input"
-                                                                        oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td> <select id="select-state" placeholder="Select..."
-                                                            name="lead_investigator[]">
-                                                            <option value="">Select a value</option>
-                                                            @foreach ($users as $data)
-                                                                <option value="{{ $data->id }}">{{ $data->name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select></td>
-
-                                                    <td><input type="text" id="comment" name="comment[]">
-                                                    </td>
-                                                    <td> <button type="button" class="removeBtncd">remove</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div> --}}
                                 <div class="group-input">
                                     <label for="audit-agenda-grid">
                                         Audit program
@@ -779,7 +699,6 @@
                                         <label for="attachments">Attached Files</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
-                                        {{-- <input type="file" name="attachments[]" multiple /> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="attachments"></div>
                                             <div class="add-btn">
@@ -802,12 +721,6 @@
                                         <input type="text" name="url_description" id="url_description" />
                                     </div>
                                 </div>
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="suggested_audit">Suggested Audits</label>
-                                        <input type="text" name="suggested_audits" />
-                                    </div>
-                                </div> --}}
                                 <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
@@ -861,66 +774,6 @@
                                                     <td><input disabled type="text" name="serial[]" value="1">
                                                     </td>
                                                     <td>
-                                                        {{-- <select id="" placeholder="Select..."
-                                                        name="Self_Inspection_circular[0][departments]">
-                                                        <option value="">Select a department</option>
-                                                        <option value="Corporate Quality Assurance">Corporate Quality
-                                                            Assurance
-                                                        </option>
-                                                        <option value="Quality Assurance">Quality Assurance</option>
-                                                        <option value="Quality Control">Quality Control
-                                                        </option>
-                                                        <option value="Quality Control (Microbiology department)'">Quality
-                                                            Control (Microbiology department)'
-                                                        </option>
-                                                        <option value="Production General">Production General
-                                                        </option>
-                                                        <option value="Production Liquid Orals">Production Liquid Orals
-                                                        </option>
-                                                        <option value="Production Tablet and Powder">
-                                                            Production Tablet and Powder
-                                                        </option>
-                                                        <option
-                                                            value="Production External (Ointment, Gels, Creams and Liquid)">
-                                                            Production External (Ointment, Gels, Creams and Liquid)
-                                                        </option>
-                                                        <option value="Quality Assurance">Quality Assurance
-                                                        </option>
-                                                        <option value="Analytical Development Laboratory">Analytical
-                                                            Development Laboratory
-                                                        </option>
-                                                        <option value="Process Development Laboratory / Kilo lab">Process
-                                                            Development Laboratory / Kilo lab
-                                                        </option>
-                                                        <option value="Production Capsules">Production Capsules
-                                                        </option>
-                                                        <option value="Production Injectable">Production Injectable
-                                                        </option>
-                                                        <option value="Engineering">Engineering
-                                                        </option>
-                                                        <option value="Human Resource">Human Resource
-                                                        </option>
-                                                        <option value="Store">Store
-                                                        </option>
-                                                        <option value="Electronic Data Processing">Electronic Data
-                                                            Processing
-                                                        </option>
-                                                        <option value="Formulation Development">Formulation Development
-                                                        </option>
-                                                        <option value="Analytical research and Development Laboratory">
-                                                            Analytical research and Development Laboratory
-                                                        </option>
-                                                        <option value="Packaging Development">Packaging Development
-                                                        </option>
-                                                        <option value="Purchase Department">Purchase Department
-                                                        </option>
-                                                        <option value="Document Cell">Document Cell
-                                                        </option>
-                                                        <option value="Regulatory Affairs">Regulatory Affairs
-                                                        </option>
-                                                        <option value="Pharmacovigilance">Pharmacovigilance
-                                                        </option>
-                                                    </select> --}}
                                                         <select name="Self_Inspection_circular[0][departments]"
                                                             id="departments"
                                                             {{ isset($data->stage) && ($data->stage == 0 || $data->stage == 8) ? 'disabled' : '' }}>
@@ -986,13 +839,14 @@
                                 <div class="button-block">
                                     <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                    <button type="button" id="ChangeNextButton" onclick="nextStep()" class="nextButton">Next</button>
                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                             class="text-white">
                                             Exit </a> </button>
                                 </div>
                             </div>
                         </div>
+                    </div>
                         <div id="CCForm3" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
@@ -1097,7 +951,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
             </form>
         </div>
     </div>

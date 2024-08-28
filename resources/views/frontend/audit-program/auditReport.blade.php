@@ -168,7 +168,7 @@
                     <strong> Audit Program No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($doc->division_id) }}/ AI
+                    {{ Helpers::getDivisionName($doc->division_id) }}/ AP
                     /{{ Helpers::year($doc->created_at) }}/
                     {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
