@@ -104,9 +104,9 @@
                                 <div>
                                     <div class="head">Last Modified On</div>
                                     @if ($document->last_modify)
-                                        <div>{{ $document->last_modify->created_at }}</div>
+                                        <div>{{ \Carbon\Carbon::parse($document->last_modify->created_at)->format('d-M-Y h:i A') }}</div>
                                     @else
-                                        <div>{{ $document->created_at }}</div>
+                                        <div>{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y h:i A') }}</div>
                                     @endif
                                 </div>
                             </div>

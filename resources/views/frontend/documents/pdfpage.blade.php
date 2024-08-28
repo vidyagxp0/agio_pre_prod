@@ -460,8 +460,8 @@
                     </td>
 
                     <td class="logo w-20">
-                        <img src="{{ asset('user/images/agio.jpg') }}" style="max-height: 55px; max-width: 40px;">
-                        <!-- <img src="http://127.0.0.1:8000/user/images/agio.jpg" style="max-height: 55px; max-width: 40px;"> -->
+                        <!-- <img src="{{ asset('user/images/agio.jpg') }}" style="max-height: 55px; max-width: 40px;"> -->
+                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png" style="max-height: 55px; max-width: 40px;">
 
                     </td>
                 </tr>

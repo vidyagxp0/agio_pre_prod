@@ -62,13 +62,13 @@
                                                     {{$temp->short_description}}
                                                 </td>
                                                 <td class="create-date">
-                                                    {{$temp->created_at}}
+                                                    {{\Carbon\Carbon::parse($temp->created_at)->format('d-M-Y h:i A')}}
                                                 </td>
                                                 <td class="assign-name">
                                                     {{$temp->originator_name}}
                                                 </td>
                                                 <td class="modify-date">
-                                                    {{$temp->updated_at}}
+                                                    {{\Carbon\Carbon::parse($temp->updated_at)->format('d-M-Y h:i A')}}
                                                 </td>
                                                 <td class="status">
                                                     {{ Helpers::getDocStatusByStage($temp->stage, $temp->training_required) }}
