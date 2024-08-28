@@ -46,6 +46,7 @@ class InternalauditController extends Controller
        $internalAudit = new InternalAudit();
         $internalAudit->form_type = "Internal-audit";
         $internalAudit->record = ((RecordNumber::first()->value('counter')) + 1);
+        $internalAudit->record_number = $request->record_number;
         $internalAudit->initiator_id = Auth::user()->id;
         $internalAudit->division_id = $request->division_id;
         $internalAudit->external_agencies = $request->external_agencies;
