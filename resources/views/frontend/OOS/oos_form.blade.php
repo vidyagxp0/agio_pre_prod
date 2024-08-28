@@ -434,7 +434,7 @@ $users = DB::table('users')
                                     <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                             </div>
                         </div>
-
+                      
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator">Initiator <span class="text-danger"></span></label>
@@ -443,7 +443,11 @@ $users = DB::table('users')
                                         value="{{ Auth::user()->name }}">
                             </div>
                         </div>
-
+                        @php
+                        // Calculate the due date (30 days from the initiation date)
+                        $initiationDate = date('Y-m-d'); // Current date as initiation date
+                        $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                    @endphp
                         <div class="col-md-6 ">
                             <div class="group-input ">
                                 <label for="intiation-date"> Date Of Initiation<span class="text-danger"></span></label>
@@ -457,13 +461,38 @@ $users = DB::table('users')
                                 <label for="Due Date"> Due Date </label>
                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                 <div class="calenderauditee">
-                                <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ $due_date }}" />
-                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                class="hide-input"
-                                oninput="handleDateInput(this, 'due_date')"  value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}"/>
+                                <input type="text" name="due_date"  id="due_date"  readonly placeholder="DD-MMM-YYYY"/>
+                                <input disabled type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                oninput="handleDateInput(this, 'due_date')" />
                                 </div>
                             </div>
                         </div>
+                        
+                        <script>
+                            // Format the due date to DD-MM-YYYY
+                            // Your input date
+                            var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+
+                            // Create a Date object
+                            var date = new Date(dueDate);
+
+                            // Array of month names
+                            var monthNames = [
+                                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                            ];
+
+                            // Extracting day, month, and year from the date
+                            var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                            var monthIndex = date.getMonth();
+                            var year = date.getFullYear();
+
+                            // Formatting the date in "dd-MMM-yyyy" format
+                            var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+
+                            // Set the formatted due date value to the input field
+                            document.getElementById('due_date').value = dueDateFormatted;
+                        </script>
                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description"> Severity Level</label>
@@ -544,7 +573,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Source Document Type</label>
                                 <select name="source_document_type_gi">
-                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="0">Enter Your Selection Here</option>
                                     <option value="OOT">OOT</option>
                                     <option value="Lab Incident">Lab Incident</option>
                                     <option value="Deviation">Deviation</option>

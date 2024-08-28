@@ -409,10 +409,8 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Record Number"> Record Number </label>
-                                <input type="hidden" name="record"
-                            value="{{ $record_number }}">
-                                <input disabled type="text" name="record"
-                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
+                                <input type="hidden" name="record_number" id="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
+                                <input disabled type="text" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
                         </div>
                         </div>
                         <div class="col-lg-6">
@@ -428,8 +426,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Initiator">Initiator <span class="text-danger"></span></label>
                                 <input type="hidden" name="initiator_id" value="{{ Auth::user()->id }}">
-                                <input disabled type="text" name="initiator"
-                                        value="{{ Auth::user()->name }}">
+                                <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
                             </div>
                         </div>
                         {{-- <div class="col-md-6 ">
@@ -468,8 +465,8 @@ $users = DB::table('users')
                                 <label for="Due Date">Due Date</label>
                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                 <div class="calenderauditee">
-                                    <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                    <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                    <input type="text" name="due_date" id="due_date" readonly placeholder="DD-MM-YYYY" />
+                                    <input disabled type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
                                         oninput="handleDateInput(this, 'due_date')" />
                                 </div>
                             </div>
@@ -634,7 +631,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Source Document Type</label>
                                 <select name="source_document_type_gi">
-                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="0">Enter Your Selection Here</option>
                                     <option value="oot">OOT</option>
                                     <option value="lab-incident">Lab Incident</option>
                                     <option value="deviation">Deviation</option>
