@@ -3273,6 +3273,7 @@ public function ootCancel(Request $request, $id)
     if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
         $data = Ootc::find($id);
         $lastDocument = Ootc::find($id);
+        $changestage = Ootc::find($id);
         $data->stage = "0";
         $data->status = "Closed-Cancelled";
         $data->cancelled_by = Auth::user()->name;
@@ -3320,6 +3321,195 @@ public function ootCancel(Request $request, $id)
 
         toastr()->success('Document Sent');
         return back();
+
+
+        $data->stage = "10";
+        $data->status = "Closed-Done";
+        $data->approved_data_completed_by = Auth::user()->name;
+        $data->approved_data_completed_on = Carbon::now()->format('d-M-Y');
+        $history = new OotAuditTrial();
+        $history->ootcs_id = $id;
+        $history->activity_type = 'Assignable Cause Found Complete By     ,    Assignable Cause Found Complete On';
+        if (is_null($lastDocument->approved_data_completed_by) || $lastDocument->approved_data_completed_by === '') {
+            $history->previous = "Null";
+        } else {
+            $history->previous = $lastDocument->approved_data_completed_by . ' , ' . $lastDocument->approved_data_completed_on;
+        }
+        $history->current = $changestage->approved_data_completed_by . ' , ' . $changestage->approved_data_completed_on;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to = "Closed-Done";
+        $history->change_from = $lastDocument->status;
+        $history->action = 'Assignable Cause Found';
+        if (is_null($lastDocument->approved_data_completed_by) || $lastDocument->approved_data_completed_by === '') {
+            $history->action_name = 'New';
+        } else {
+            $history->action_name = 'Update';
+        }
+        $history->stage='Assignable Cause Found';
+        $history->save();
+        $data->update();
+        // $history = new OotAuditTrial();
+        // $history->activity_type = "OOT";
+        // $history->ootcs_id = $id;
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->stage = $data->stage;
+        // $history->status = $data->status;
+        // $history->save();
+
+        // $list = Helpers::getInitiatorUserList();
+        // foreach ($list as $u) {
+        //     if($u->q_m_s_divisions_id == $capa->division_id){
+        //       $email = Helpers::getInitiatorEmail($u->user_id);
+        //       if ($email !== null) {
+
+        //         Mail::send(
+        //             'mail.view-mail',
+        //             ['data' => $capa],
+        //             function ($message) use ($email) {
+        //                 $message->to($email)
+        //                     ->subject("Cancelled By ".Auth::user()->name);
+        //             }
+        //          );
+        //       }
+        //     }
+        // }
+
+        toastr()->success('Document Sent');
+        return back();
+
+
+
+        $data->stage = "15";
+        $data->status = "Closed-Done";
+        $data->P_IB_Assignable_Cause_Found_by = Auth::user()->name;
+        $data->P_IB_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
+        $history = new OotAuditTrial();
+        $history->ootcs_id = $id;
+        $history->activity_type = 'P-IB Assignable Cause Found By  ,  P-IB Assignable Cause Found On';
+        if (is_null($lastDocument->P_IB_Assignable_Cause_Found_by) || $lastDocument->P_IB_Assignable_Cause_Found_by === '') {
+            $history->previous = "Null";
+        } else {
+            $history->previous = $lastDocument->P_IB_Assignable_Cause_Found_by . ' , ' . $lastDocument->Phase_IB_QA_Review_Complete_12_on;
+        }
+        $history->current = $changestage->P_IB_Assignable_Cause_Found_by . ' , ' . $changestage->P_IB_Assignable_Cause_Found_on;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to = "Closed Done";
+        $history->change_from = $lastDocument->status;
+        $history->action = 'P-IB Assignable Cause Found';
+        if (is_null($lastDocument->P_IB_Assignable_Cause_Found_by) || $lastDocument->P_IB_Assignable_Cause_Found_by === '') {
+            $history->action_name = 'New';
+        } else {
+            $history->action_name = 'Update';
+        }
+        $history->stage='P-IB Assignable Cause Found';
+        $history->save();
+        $data->update();
+        // $history = new OotAuditTrial();
+        // $history->activity_type = "OOT";
+        // $history->ootcs_id = $id;
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->stage = $data->stage;
+        // $history->status = $data->status;
+        // $history->save();
+
+        // $list = Helpers::getInitiatorUserList();
+        // foreach ($list as $u) {
+        //     if($u->q_m_s_divisions_id == $capa->division_id){
+        //       $email = Helpers::getInitiatorEmail($u->user_id);
+        //       if ($email !== null) {
+
+        //         Mail::send(
+        //             'mail.view-mail',
+        //             ['data' => $capa],
+        //             function ($message) use ($email) {
+        //                 $message->to($email)
+        //                     ->subject("Cancelled By ".Auth::user()->name);
+        //             }
+        //          );
+        //       }
+        //     }
+        // }
+
+        toastr()->success('Document Sent');
+        return back();
+
+        $data->stage = "20";
+        $data->status = "Closed-Done";
+        $data->P_II_A_Assignable_Cause_Found_by = Auth::user()->name;
+        $data->Phase_II_A_QA_Review_Complete_on = Carbon::now()->format('d-M-Y');
+        $history = new OotAuditTrial();
+        $history->ootcs_id = $id;
+        $history->activity_type = 'P-II A Assignable Cause Found By  ,   P-II A Assignable Cause Found  On';
+        if (is_null($lastDocument->P_II_A_Assignable_Cause_Found_by) || $lastDocument->P_II_A_Assignable_Cause_Found_by === '') {
+            $history->previous = "Null";
+        } else {
+            $history->previous = $lastDocument->P_II_A_Assignable_Cause_Found_by . ' , ' . $lastDocument->Phase_II_A_QA_Review_Complete_on;
+        }
+        $history->current = $changestage->P_II_A_Assignable_Cause_Found_by . ' , ' . $changestage->Phase_II_A_QA_Review_Complete_on;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to = "Closed Done";
+        $history->change_from = $lastDocument->status;
+        $history->action = 'P-II A Assignable Cause Found';
+        $history->stage='P-II A Assignable Cause Found';
+        if (is_null($lastDocument->Phase_II_A_QA_Review_Complete_by) || $lastDocument->Phase_II_A_QA_Review_Complete_by === '') {
+            $history->action_name = 'New';
+        } else {
+            $history->action_name = 'Update';
+        }
+        $history->save();
+        $data->update();
+        // $history = new OotAuditTrial();
+        // $history->activity_type = "OOT";
+        // $history->ootcs_id = $id;
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->stage = $data->stage;
+        // $history->status = $data->status;
+        // $history->save();
+
+        // $list = Helpers::getInitiatorUserList();
+        // foreach ($list as $u) {
+        //     if($u->q_m_s_divisions_id == $capa->division_id){
+        //       $email = Helpers::getInitiatorEmail($u->user_id);
+        //       if ($email !== null) {
+
+        //         Mail::send(
+        //             'mail.view-mail',
+        //             ['data' => $capa],
+        //             function ($message) use ($email) {
+        //                 $message->to($email)
+        //                     ->subject("Cancelled By ".Auth::user()->name);
+        //             }
+        //          );
+        //       }
+        //     }
+        // }
+
+        toastr()->success('Document Sent');
+        return back();
+
+
+        
+
+
+
+
+
+
     } else {
         toastr()->error('E-signature Not match');
         return back();
