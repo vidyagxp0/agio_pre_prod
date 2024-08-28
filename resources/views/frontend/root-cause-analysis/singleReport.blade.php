@@ -214,7 +214,7 @@
                     <tr>
                       
                         <th class="w-20">Due Date</th>
-                        <td class="w-30"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->due_date){{ Helpers::getdateFormat($data->due_date) }}  @else Not Applicable @endif</td>
                         <th class="w-20">Assigned To</th>
                          <td class="w-80">
                             @if ($data->assign_to)
@@ -243,6 +243,13 @@
                         <td class="w-30">@if($data->severity_level){{ $data->severity_level }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiated Through</th>
                         <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
+                       
+                    </tr>
+                    <tr>{{-- <th class="w-20">Additional Investigators</th> <td class="w-30">@if($data->investigators){{ $data->investigators }}@else Not Applicable @endif</td> --}}
+                        <th class="w-20">Department Head</th>
+                        <td class="w-30">@if($data->assign_to){{ $data->assign_to }} @else Not Applicable @endif</td>
+                        <th class="w-20">QA Reviewer</th>
+                        <td class="w-80">@if($data->qa_reviewer){{ $data->qa_reviewer }}@else Not Applicable @endif</td>
                        
                     </tr>
                 </table>
