@@ -92,22 +92,22 @@ class ObservationController extends Controller
         $data->impact = $request->impact;
         $data->impact_analysis = $request->impact_analysis;
         $data->severity_rate = $request->severity_rate;
+        // dd($request->severity_rate);
 
-
-        // $severity = [
-        //     '1' => 'Negligible',
-        //     '2' => 'Moderate',
-        //     '3' => 'Major',
-        //     '4' => 'Fatal',
-        // ];
-        // if (isset($data->severity_rate) && array_key_exists($data->severity_rate, $severity)) {
-        //     $data->severity_rate = $severity[$data->severity_rate];
-        // } else {
-        //     $data->severity_rate = '';
-        // }
-        // if ($request->has('severity_rate') && array_key_exists($request->severity_rate, $severity)) {
-        //     $data->severity_rate = $severity[$request->severity_rate];
-        // }
+        $severity = [
+            '1' => 'Negligible',
+            '2' => 'Moderate',
+            '3' => 'Major',
+            '4' => 'Fatal',
+        ];
+        if (isset($data->severity_rate) && array_key_exists($data->severity_rate, $severity)) {
+            $data->severity_rate = $severity[$data->severity_rate];
+        } else {
+            $data->severity_rate = '';
+        }
+        if ($request->has('severity_rate') && array_key_exists($request->severity_rate, $severity)) {
+            $data->severity_rate = $severity[$request->severity_rate];
+        }
 
 
         // $data->occurrence = $request->occurrence;
@@ -687,7 +687,7 @@ if(!empty($request->attach_files2)){
         $history->Observation_id = $data->id;
         $history->activity_type = 'Actual Start Date ';
         $history->previous = "Null";
-        $history->current = $data->actual_start_date;
+        $history->current = Helpers::getdateFormat($data->actual_start_date);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -703,7 +703,7 @@ if(!empty($request->attach_files2)){
         $history->Observation_id = $data->id;
         $history->activity_type = 'Actual End Date ';
         $history->previous = "Null";
-        $history->current = $data->actual_end_date;
+        $history->current = Helpers::getdateFormat($data->actual_end_date);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1429,7 +1429,7 @@ if(!empty($request->attach_files2)){
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Assign To2';
+            $history->activity_type = 'Assign To';
             $history->previous = $lastDocument->assign_to2;
             $history->current = $data->assign_to2;
             $history->comment = $request->assign_to2_comment;
@@ -1620,7 +1620,7 @@ if(!empty($request->attach_files2)){
             $history->Observation_id = $id;
             $history->activity_type = 'Actual Start Date ';
             $history->previous = $lastDocument->actual_start_date;
-            $history->current = $data->actual_start_date;
+            $history->current = Helpers::getdateFormat($data->actual_start_date);
             $history->comment = $request->actual_start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1640,8 +1640,8 @@ if(!empty($request->attach_files2)){
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Actual End Date ';
-            $history->previous = $lastDocument->actual_end_date;
-            $history->current = $data->actual_end_date;
+            $history->previous =  Helpers::getdateFormat($lastDocument->actual_end_date);
+            $history->current = Helpers::getdateFormat($data->actual_end_date);
             $history->comment = $request->actual_end_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

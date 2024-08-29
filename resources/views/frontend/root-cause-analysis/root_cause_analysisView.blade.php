@@ -292,7 +292,7 @@
                                             <div class="group-input">
                                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                                 <input disabled type="text" name="record_number"
-                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">                                        </div>
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}"></div>
                                         </div>
 
                                         <div class="col-lg-6">
@@ -496,7 +496,7 @@
                                                 <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                         reason in "Due Date Extension Justification" data field.</small></div>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
+                                                    <input disabled type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
                                                         value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') : '' }}" />
                                                     <input type="date" name="due_date"
                                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
@@ -754,7 +754,7 @@
 
 
                                         <div class="col-12">
-                                            <div class="sub-head">Investigatiom details</div>
+                                            <div class="sub-head">Investigation details</div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
