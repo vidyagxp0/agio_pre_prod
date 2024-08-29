@@ -210,7 +210,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-30">@if($data->record){{  str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->record) {{ Helpers::divisionNameForQMS($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_id){{  Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                     </tr>
