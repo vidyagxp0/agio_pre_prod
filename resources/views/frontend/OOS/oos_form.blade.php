@@ -443,11 +443,11 @@ $users = DB::table('users')
                                         value="{{ Auth::user()->name }}">
                             </div>
                         </div>
-                        @php
+                        {{-- @php
                         // Calculate the due date (30 days from the initiation date)
                         $initiationDate = date('Y-m-d'); // Current date as initiation date
                         $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
-                    @endphp
+                    @endphp --}}
                         <div class="col-md-6 ">
                             <div class="group-input ">
                                 <label for="intiation-date"> Date Of Initiation<span class="text-danger"></span></label>
@@ -468,7 +468,7 @@ $users = DB::table('users')
                             </div>
                         </div>
                         
-                        <script>
+                        {{-- <script>
                             // Format the due date to DD-MM-YYYY
                             // Your input date
                             var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
@@ -492,7 +492,7 @@ $users = DB::table('users')
 
                             // Set the formatted due date value to the input field
                             document.getElementById('due_date').value = dueDateFormatted;
-                        </script>
+                        </script> --}}
                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description"> Severity Level</label>

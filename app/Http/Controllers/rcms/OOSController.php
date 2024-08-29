@@ -58,22 +58,22 @@ class OOSController extends Controller
     { 
         // dd($request->all());
         $res = Helpers::getDefaultResponse();
-        // try {
+        try {
             
-        //     $oos_record = OOSService::create_oss($request);
+            $oos_record = OOSService::create_oss($request);
 
-        //     if ($oos_record['status'] == 'error')
-        //     {
-        //         throw new Error($oos_record['message']);
-        //     } 
+            if ($oos_record['status'] == 'error')
+            {
+                throw new Error($oos_record['message']);
+            } 
 
-        // } catch (\Exception $e) {
-        //     $res['status'] = 'error';
-        //     $res['message'] = $e->getMessage();
-        //     info('Error in OOSController@store', [
-        //         'message' => $e->getMessage()
-        //     ]);
-        // }
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+            info('Error in OOSController@store', [
+                'message' => $e->getMessage()
+            ]);
+        }
 
         return redirect()->route('qms.dashboard');
     }
@@ -115,22 +115,22 @@ class OOSController extends Controller
         // }
         $res = Helpers::getDefaultResponse();
 
-        // try {
+        try {
             
-        //     $oos_record = OOSService::update_oss($request,$id);
+            $oos_record = OOSService::update_oss($request,$id);
 
-        //     if ($oos_record['status'] == 'error')
-        //     {
-        //         throw new Error($oos_record['message']);
-        //     } 
+            if ($oos_record['status'] == 'error')
+            {
+                throw new Error($oos_record['message']);
+            } 
 
-        // } catch (\Exception $e) {
-        //     $res['status'] = 'error';
-        //     $res['message'] = $e->getMessage();
-        //     info('Error in OOSController@store', [
-        //         'message' => $e->getMessage()
-        //     ]);
-        // }
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+            info('Error in OOSController@store', [
+                'message' => $e->getMessage()
+            ]);
+        }
         toastr()->success('Record is Update Successfully');
         return back();
         // return redirect()->route('qms.dashboard');
@@ -1726,6 +1726,128 @@ class OOSController extends Controller
         }
     }
 
+    public function Done_stage(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $data = OOS::find($id);
+            $changestage = OOS::find($id);
+            $lastDocument = OOS::find($id);
+            $data->stage = "23";
+            $data->status = "Closed-Done";
+            $data->Assignable_Cause_Found_By = Auth::user()->name;
+            $data->Assignable_Cause_Found_On = Carbon::now()->format('d-M-Y');
+            $data->Assignable_Cause_Found_Comment = $request->comment;
+
+            $history = new OosAuditTrial();
+            $history->oos_id = $id;
+            $history->activity_type = 'Assignable Cause Found By    ,   Assignable Cause Found On';
+            if (is_null($lastDocument->Assignable_Cause_Found_By) || $lastDocument->Assignable_Cause_Found_By === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->Assignable_Cause_Found_By . ' , ' . $lastDocument->Assignable_Cause_Found_On;
+            }
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->action = 'Assignable Cause Found';
+            $history->change_from = $lastDocument->status;
+            $history->change_to =   "Closed - Done";
+            $history->current = $changestage->Assignable_Cause_Found_By . ' , ' . $changestage->Assignable_Cause_Found_On;
+            if (is_null($lastDocument->Assignable_Cause_Found_By) || $lastDocument->Assignable_Cause_Found_By === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+            $data->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+    }
+
+    public function Done_One_stage(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $data = OOS::find($id);
+            $changestage = OOS::find($id);
+            $lastDocument = OOS::find($id);
+            $data->stage = "24";
+            $data->status = "Closed-Done";
+            $data->P_I_B_Assignable_Cause_Found_By = Auth::user()->name;
+            $data->P_I_B_Assignable_Cause_Found_On = Carbon::now()->format('d-M-Y');
+            $data->P_I_B_Assignable_Cause_Found_Comment = $request->comment;
+
+            $history = new OosAuditTrial();
+            $history->oos_id = $id;
+            $history->activity_type = 'P-IB Assignable Cause Found By    ,   P-IB Assignable Cause Found On';
+            if (is_null($lastDocument->P_I_B_Assignable_Cause_Found_By) || $lastDocument->P_I_B_Assignable_Cause_Found_By === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->P_I_B_Assignable_Cause_Found_By . ' , ' . $lastDocument->P_I_B_Assignable_Cause_Found_On;
+            }
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->action = 'P-IB Assignable Cause Found';
+            $history->change_from = $lastDocument->status;
+            $history->change_to =   "Closed - Done";
+            $history->current = $changestage->P_I_B_Assignable_Cause_Found_By . ' , ' . $changestage->P_I_B_Assignable_Cause_Found_On;
+            if (is_null($lastDocument->P_I_B_Assignable_Cause_Found_By) || $lastDocument->P_I_B_Assignable_Cause_Found_By === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+            $data->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+    }
+
+    public function Done_Two_stage(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $data = OOS::find($id);
+            $changestage = OOS::find($id);
+            $lastDocument = OOS::find($id);
+            $data->stage = "25";
+            $data->status = "Closed-Done";
+            $data->P_II_A_Assignable_Cause_Found_By = Auth::user()->name;
+            $data->P_II_A_Assignable_Cause_Found_On = Carbon::now()->format('d-M-Y');
+            $data->P_II_A_Assignable_Cause_Found_Comment = $request->comment;
+
+            $history = new OosAuditTrial();
+            $history->oos_id = $id;
+            $history->activity_type = 'P-II A Assignable Cause Found By    ,   P-II A Assignable Cause Found On';
+            if (is_null($lastDocument->P_II_A_Assignable_Cause_Found_By) || $lastDocument->P_II_A_Assignable_Cause_Found_By === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->P_II_A_Assignable_Cause_Found_By . ' , ' . $lastDocument->P_II_A_Assignable_Cause_Found_On;
+            }
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->action = 'P-II A Assignable Cause Found';
+            $history->change_from = $lastDocument->status;
+            $history->change_to =   "Closed - Done";
+            $history->current = $changestage->P_II_A_Assignable_Cause_Found_By . ' , ' . $changestage->P_II_A_Assignable_Cause_Found_On;
+            if (is_null($lastDocument->P_II_A_Assignable_Cause_Found_By) || $lastDocument->P_II_A_Assignable_Cause_Found_By === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+            $data->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+    }
     public function child(Request $request, $id)
     {
         $cft = [];

@@ -41,10 +41,10 @@
                     <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
                 </div>
             </div>
-            @php
+            {{-- @php
             $initiationDate = date('Y-m-d');
             $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
-        @endphp
+        @endphp --}}
             <div class="col-md-6 ">
                 <div class="group-input ">
                     <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </div> --}}
-            <script>
+            {{-- <script>
                 // Format the due date to DD-MM-YYYY
                 // Your input date
                 var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
@@ -102,7 +102,7 @@
     
                 // Set the formatted due date value to the input field
                 document.getElementById('due_date').value = dueDateFormatted;
-            </script>
+            </script> --}}
 
             <div class="col-lg-12">
                 <div class="group-input">

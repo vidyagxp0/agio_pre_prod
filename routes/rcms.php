@@ -353,7 +353,10 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::post('sendstage/{id}',[OOSController::class,'send_stage'])->name('send_stage');
                 Route::post('requestmoreinfo_back_stage/{id}',[OOSController::class,'requestmoreinfo_back_stage'])->name('requestmoreinfo_back_stage');
                 Route::post('assignable_send_stage/{id}',[OOSController::class,'assignable_send_stage'])->name('assignable_send_stage');
-                Route::post('cancel_stage/{id}', [OOSController::class, 'cancel_stage'])->name('cancel_stage');;
+                Route::post('cancel_stage/{id}', [OOSController::class, 'cancel_stage'])->name('cancel_stage');
+                Route::post('Done_stage/{id}', [OOSController::class, 'Done_stage'])->name('Done_stage');
+                Route::post('Done_One_stage/{id}', [OOSController::class, 'Done_One_stage'])->name('Done_One_stage');
+                Route::post('Done_Two_stage/{id}', [OOSController::class, 'Done_Two_stage'])->name('Done_Two_stage');
                 Route::post('thirdStage/{id}', [OOSController::class, 'stageChange'])->name('thirdStage');
                 Route::post('reject_stage/{id}', [OOSController::class, 'reject_stage'])->name('reject_stage');
                 Route::get('capa', [CapaController::class, 'capa'])->name('capa');
@@ -379,6 +382,9 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::post('child/{id}', [OOSMicroController::class, 'child'])->name('child');
                 Route::post('assignable_send_stage/{id}',[OOSMicroController::class,'assignable_send_stage'])->name('assignable_send_stage');
                 Route::post('cancel_stage/{id}', [OOSMicroController::class, 'cancel_stage'])->name('cancel_stage');;
+                Route::post('Done_stage/{id}', [OOSMicroController::class, 'Done_stage'])->name('Done_stage');
+                Route::post('Done_One_stage/{id}', [OOSMicroController::class, 'Done_One_stage'])->name('Done_One_stage');
+                Route::post('Done_Two_stage/{id}', [OOSMicroController::class, 'Done_Two_stage'])->name('Done_Two_stage');
                 Route::post('thirdStage/{id}', [OOSMicroController::class, 'stageChange'])->name('thirdStage');
                 Route::post('reject_stage/{id}', [OOSMicroController::class, 'reject_stage'])->name('reject_stage');
                 Route::get('AuditTrial/{id}', [OOSMicroController::class, 'AuditTrial'])->name('audit_trial');
