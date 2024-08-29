@@ -292,14 +292,16 @@
                             </button>
 
                         @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->name, $valuesArray)))
-                        <!-- @if (!$cftCompleteUser) -->
                         <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Information Required
                         </button></a>
 
-                            <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                CFT  Review Complete
-                            </button></a>
+                        <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            CFT  Review Complete
+                        </button></a>
+                        <!-- @if (!$cftCompleteUser) -->
+
+
                             <!-- @endif -->
 
 
@@ -1034,12 +1036,37 @@
                                                         <td>{{ $productsdetails++ }}</td>
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_product_name]" value="{{ array_key_exists('info_product_name', $detail) ? $detail['info_product_name'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_batch_no]" value="{{ array_key_exists('info_batch_no', $detail) ? $detail['info_batch_no'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
-                                                        <td>
-                                                            <input type="text" name="serial_number_gi[{{ $index }}][info_mfg_date]" value="{{ array_key_exists('info_mfg_date', $detail) ? $detail['info_mfg_date'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} placeholder="DD-MMM-YYYY">
+                                                        {{-- <td>
+                                                            <input type="date" name="serial_number_gi[{{ $index }}][info_mfg_date]" value="{{ array_key_exists('info_mfg_date', $detail) ? $detail['info_mfg_date'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} placeholder="DD-MMM-YYYY">
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="serial_number_gi[{{ $index }}][info_expiry_date]" value="{{ array_key_exists('info_expiry_date', $detail) ? $detail['info_expiry_date'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} placeholder="DD-MMM-YYYY">
-                                                        </td>
+                                                            <input type="date" name="serial_number_gi[{{ $index }}][info_expiry_date]" value="{{ array_key_exists('info_expiry_date', $detail) ? $detail['info_expiry_date'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} placeholder="DD-MMM-YYYY">
+                                                        </td> --}}
+
+                                                        <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                        <div class="calenderauditee">
+                                                             <input id="date_0_date_tm" type="text" name="serial_number_gi[{{ $index }}][info_mfg_date]" placeholder="DD-MMM-YYYY" />
+                                                             <input type="date" name="serial_number_gi[{{ $index }}][info_mfg_date]"  value="{{  array_key_exists('info_mfg_date',$detail) ?   \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="date_0_date_tm"
+                                                             class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_date_tm')" />
+                                                        </div>
+                                                            </div>
+                                                        </div>
+                                                      </td>
+
+                                                      <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                        <div class="calenderauditee">
+                                                             <input id="date_0_date" type="text" name="serial_number_gi[{{ $index }}][info_expiry_date]" placeholder="DD-MMM-YYYY" />
+                                                             <input type="date" name="serial_number_gi[{{ $index }}][info_expiry_date]" value="{{  array_key_exists('info_mfg_date',$detail) ?   \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="date_0_date"
+                                                             class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_date')" />
+                                                        </div>
+                                                            </div>
+                                                        </div>
+                                                      </td>
+
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_batch_size]" value="{{ array_key_exists('info_batch_size', $detail) ? $detail['info_batch_size'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_pack_size]" value="{{ array_key_exists('info_pack_size', $detail) ? $detail['info_pack_size'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_dispatch_quantity]" value="{{ array_key_exists('info_dispatch_quantity', $detail) ? $detail['info_dispatch_quantity'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
@@ -1070,8 +1097,10 @@
                                                 '<td>' + (serialNumber + 1) + '</td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_product_name]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_no]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" placeholder="DD-MMM-YYYY"></td>' +
+                                                // '<td><input type="date" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY"></td>' +
+                                                '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ indexDetail +'_date_tm" type="text" name="Team_Members[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' + indexDetail + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="" id="date_'+ indexDetail +'_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'_date_tm\')" /> </div> </div></td>' +
+                                                // '<td><input type="date" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" placeholder="DD-MMM-YYYY"></td>' +
+                                                '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ indexDetail +'_date_tm" type="text" name="Team_Members[' + indexDetail + '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' + indexDetail + '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="" id="date_'+ indexDetail +'_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'_date_tm\')" /> </div> </div></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_size]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_pack_size]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_dispatch_quantity]"></td>' +
@@ -1678,12 +1707,8 @@
                                                                     id="date_{{ $index }}_date_tm"
                                                                     type="text" name="Team_Members[{{ $index }}][date_tm]"
                                                                      placeholder="DD-MMM-YYYY"
-                                                                      value="{{  !empty($tem_meb['date_tm']) ?   \Carbon\Carbon::parse($tem_meb['date_tm'])->format('d-M-Y') : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                                                       />
-                                                                    <input type="date"
-                                                                    name="Team_Members[{{ $index }}][date_tm]"
-
-                                                                    value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('Y-m-d') : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                                                      value="{{  !empty($tem_meb['date_tm']) ?   \Carbon\Carbon::parse($tem_meb['date_tm'])->format('d-M-Y') : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}/>
+                                                                    <input type="date" name="Team_Members[{{ $index }}][date_tm]" value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('Y-m-d') : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                                                     id="date_{{ $index }}_date_tm"
                                                                     class="hide-input show_date"
                                                                      style="position: absolute; top: 0; left: 0; opacity: 0;"
@@ -9403,22 +9428,22 @@
 
                 <div class="col-lg-4">
                     <div class="group-input">
-                        <label for="Initiator Group">More Information Required By: </label>
-                        <div class="static">{{ $data->more_information_required_by}}</div>
+                        <label for="Initiator Group">QA/CQA Head Review  by : </label>
+                        <div class="static">{{ $data->complete_review_by}}</div>
 
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="group-input">
-                        <label for="Initiator Group">More Information Required On: </label>
-                        <div class="date">{{ $data->more_information_required_on}}</div>
+                        <label for="Initiator Group">QA/ CQA Head Review On: </label>
+                        <div class="date">{{ $data->complete_review_on}}</div>
 
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="group-input">
                         <label for="Comment">Comment</label>
-                        <div class="static">{{ $data->more_information_required_comment }}</div>
+                        <div class="static">{{ $data->complete_review_Comments }}</div>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -9446,39 +9471,39 @@
 
                 <div class="col-lg-4">
                     <div class="group-input">
-                        <label for="Initiator Group">Complete Review By : </label>
-                        <div class="static">{{ $data->complete_review_by }}</div>
+                        <label for="Initiator Group">Send CFT By : </label>
+                        <div class="static">{{ $data->send_cft_by }}</div>
 
                     </div>
                 </div>
 
                 <div class="col-lg-4 new-date-data-field">
                     <div class="group-input input-date">
-                        <label for="OOC Logged On">Complete Review On :</label>
-                        <div class="date">{{ $data->complete_review_on }}</div>
+                        <label for="OOC Logged On">Send CFT On :</label>
+                        <div class="date">{{ $data->send_cft_on }}</div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="group-input">
                         <label for="Comment">Comment</label>
-                        <div class="static">{{ $data->complete_review_comment }}</div>
+                        <div class="static">{{ $data->send_cft_comment }}</div>
                     </div>
                 </div>
 
 
                 <div class="col-lg-4">
                     <div class="group-input">
-                        <label for="Initiator Group">Investigation Completed By :</label>
-                        <div class="static">{{ $data->investigation_completed_by }}</div>
+                        <label for="Initiator Group">Quality Control Completed By :</label>
+                        <div class="static">{{ $data->Quality_Control_by }}</div>
 
                     </div>
                 </div>
 
                 <div class="col-lg-4 new-date-data-field">
                     <div class="group-input input-date">
-                        <label for="OOC Logged On">Investigation Completed On : </label>
+                        <label for="OOC Logged On">Quality Control Completed On : </label>
 
-                        <div class="date">{{ $data->investigation_completed_on }}</div>
+                        <div class="date">{{ $data->Quality_Control_on }}</div>
 
 
 
@@ -9487,30 +9512,30 @@
                 <div class="col-lg-4">
                     <div class="group-input">
                         <label for="Comment">Comment</label>
-                        <div class="static">{{ $data->investigation_completed_comment }}</div>
+                        <div class="static">{{ $data->quality_control_comment }}</div>
                     </div>
                 </div>
 
 
                 <div class="col-lg-4">
                     <div class="group-input">
-                        <label for="Initiator Group">Propose Plan By : </label>
-                        <div class="static">{{ $data->propose_plan_by }}</div>
+                        <label for="Initiator Group">QA CQA Verify Complete By : </label>
+                        <div class="static">{{ $data->qa_cqa_verif_comp_by }}</div>
 
                     </div>
                 </div>
 
                 <div class="col-lg-4 new-date-data-field">
                     <div class="group-input input-date">
-                        <label for="OOC Logged On">Propose Plan On : </label>
+                        <label for="OOC Logged On">QA CQA Verify Complete On : </label>
 
-                        <div class="date">{{ $data->propose_plan_on }}</div>
+                        <div class="date">{{ $data->qa_cqa_verif_comp_on }}</div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="group-input">
                         <label for="Comment">Comment</label>
-                        <div class="static">{{ $data->propose_plan_comment }}</div>
+                        <div class="static">{{ $data->QA_cqa_verif_Comments }}</div>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -9559,44 +9584,44 @@
 
                 <div class="col-lg-4">
                     <div class="group-input">
-                        <label for="Initiator Group">All CAPA Closed By : </label>
-                        <div class="static">{{ $data->all_capa_closed_by }}</div>
+                        <label for="Initiator Group">Send Letter By : </label>
+                        <div class="static">{{ $data->send_letter_by }}</div>
 
                     </div>
                 </div>
 
                 <div class="col-lg-4 new-date-data-field">
                     <div class="group-input input-date">
-                        <label for="OOC Logged On">All CAPA Closed On : </label>
-                        <div class="date">{{ $data->all_capa_closed_on }}</div>
+                        <label for="OOC Logged On">Send Letter On : </label>
+                        <div class="date">{{ $data->send_letter_on }}</div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="group-input">
                         <label for="Comment">Comment</label>
-                        <div class="static">{{ $data->all_capa_closed_comment }}</div>
+                        <div class="static">{{ $data->send_letter_comment }}</div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                {{-- <div class="col-lg-4">
                     <div class="group-input">
                         <label for="Initiator Group">Closure Done By : </label>
                         <div class="static">{{ $data->closed_done_by }}</div>
 
                     </div>
-                </div>
+                </div> --}}
 
-                <div class="col-lg-4 new-date-data-field">
+                {{-- <div class="col-lg-4 new-date-data-field">
                     <div class="group-input input-date">
                         <label for="OOC Logged On">Closure Done On : </label>
                         <div class="date">{{ $data->closed_done_on }}</div>
                     </div>
-                </div>
-                <div class="col-lg-4">
+                </div> --}}
+                {{-- <div class="col-lg-4">
                     <div class="group-input">
                         <label for="Comment">Comment</label>
                         <div class="static">{{ $data->closed_done_comment }}</div>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
 

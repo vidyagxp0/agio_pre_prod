@@ -951,6 +951,23 @@ class RiskManagementController extends Controller
         //     }
         // }
 
+        if (!empty($data->initiator_id)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = Helpers::getInitiatorName($data->initiator_id);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
         if (!empty($data->short_description)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
@@ -968,25 +985,6 @@ class RiskManagementController extends Controller
 
             $history->save();
         }
-
-        if (!empty($data->record)) {
-            $history = new RiskAuditTrail();
-            $history->risk_id = $data->id;
-            $history->activity_type = 'Record';
-            $history->previous = "Null";
-            $history->current = $data->record;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-
-            $history->save();
-        }
-
 
         if (!empty($data->division_code)) {
             $history = new RiskAuditTrail();
@@ -1006,23 +1004,7 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if (!empty($data->initiator_name)) {
-            $history = new RiskAuditTrail();
-            $history->risk_id = $data->id;
-            $history->activity_type = 'Initiator Name';
-            $history->previous = "Null";
-            $history->current = $data->initiator_name;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
 
-            $history->save();
-        }
 
         if (!empty($data->intiation_date)) {
             $history = new RiskAuditTrail();
@@ -6417,11 +6399,12 @@ class RiskManagementController extends Controller
         $audit = RiskAuditTrail::where('risk_id', $id)->orderByDesc('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = RiskManagement::where('id', $id)->first();
-        $document->initiator = User::where('id', $document->initiator_id)->value('name');
+        $document->originator = User::where('id', $document->initiator_id)->value('name');
+        $users = User::all();
 
 
         //dd($audit);
-        return view("frontend.riskAssesment.new_audit_trail", compact('audit', 'document', 'today'));
+        return view("frontend.riskAssesment.new_audit_trail", compact('audit', 'document', 'today','users'));
     }
 
 
