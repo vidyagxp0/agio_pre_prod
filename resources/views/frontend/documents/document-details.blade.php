@@ -1112,7 +1112,7 @@
                     </div>
                     <div class="group-input">
                         <label for="comment">Comment</label>
-                        <input type="comment" name="comment" required>
+                        <input type="comment" name="comment">
                     </div>
                 </div>
 
@@ -1134,6 +1134,7 @@
             <div class="modal-header">
                 <h4 class="modal-title" style="font-weight: 900">Document Revision</h4>
             </div>
+            
             @if($document->revised === 'Yes')
 
             <form method="POST" action="{{ url('revision',$document->revised_doc) }}">

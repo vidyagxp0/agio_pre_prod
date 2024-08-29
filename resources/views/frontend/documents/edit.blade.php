@@ -224,7 +224,8 @@
                 <div class="group-input">
                     <label for="sop_type">SOP Type</label>
 
-                    <select name="sop_type" id="sop_type" required onchange="updateSopTypeShort()">
+                    <select name="sop_type" id="sop_type" required onchange="updateSopTypeShort()"
+                    @if ($document->stage == 11 || $document->status == 'Obsolete') disabled @endif>
                         <option value="" disabled {{ $document->sop_type == '' ? 'selected' : '' }}>Enter your selection</option>
                         <option value="SOP (Standard Operating procedure)" {{ $document->sop_type == 'SOP (Standard Operating procedure)' ? 'selected' : '' }}>SOP (Standard Operating procedure)</option>
                         <option value="EOP (Equipment Operating procedure)" {{ $document->sop_type == 'EOP (Equipment Operating procedure)' ? 'selected' : '' }}>EOP (Equipment Operating procedure)</option>
@@ -250,6 +251,7 @@
                                         color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
                     @endif
                     @endforeach --}}
+
                 </div>
                 @if (Auth::user()->role != 3 && $document->stage < 8) Add Comment <div class="comment">
                     <div>

@@ -493,10 +493,13 @@
                         @endif --}}
 
                         @if($data->revised === 'Yes')
+                        
+                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
 
-                        {{ Helpers::getSopTypeShortName($data->document_id) }}
+                   
+                       {{--     {{ Helpers::getSopTypeShortName($data->document_id) }}
                         /@if($data->sop_type_short){{ $temp }} /@endif{{ $data->year }}
-                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
+                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}} --}}
 
                         @else
                         {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
@@ -546,14 +549,14 @@
                         ->value('typecode');
                         @endphp
                         @if($data->revised === 'Yes')
-                        {{ Helpers::getDivisionName($data->division_id) }}
+                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
+                        {{-- {{ Helpers::getDivisionName($data->division_id) }}
                         /@if($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
-                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
+                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}} --}}
 
                         @else
                         {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
                         @endif
-                        <!-- <td class="w-42">Printed On : {{ \Carbon\Carbon::parse($time)->format('d-M-Y') }}</td> -->
 
                     <td class="w-42">Printed On: {{ \Carbon\Carbon::parse($time)->format('d-M-Y h:i A') }}</td>
                     <td class="text-right w-20"></td>
