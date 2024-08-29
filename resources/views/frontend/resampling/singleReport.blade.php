@@ -385,48 +385,61 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Submitted By
-                        </th>
-                        <td class="w-30">{{ $data->submitted_by }}</td>
-                        <th class="w-20">
-                        Submitted On</th>
-                        <td class="w-30">{{ $data->submitted_on }}</td>
+                        <th class="w-20">Submitted By</th>
+                        <td class="w-30">{{ $data->acknowledgement_by }}</td>
+                        <th class="w-20">Submitted On</th>
+                        <td class="w-30">{{ $data->acknowledgement_on }}</td>
+                    </tr>
+                   <tr>
+                    <th class="w-20"> Submitted comment</th>
+                    <td class="w-80">{{ $data->acknowledgement_comment }}</td>
+             
+                   </tr>
+                   
+                    <tr>
+                        <th class="w-20">Approved By </th>
+                        <td class="w-30">{{ $data->work_completion_by }}</td>
+                        <th class="w-20"> Approved On</th>
+                        <td class="w-30">{{ $data->work_completion_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Cancelled By
-                        </th>
+                        <th class="w-20"> Approved Comment</th>
+                        <td class="w-80">{{ $data->work_completion_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Acknowledge Complete By </th>
+                        <td class="w-30">{{ $data->qa_varification_by }}</td>
+                        <th class="w-20"> Acknowledge Complete On</th>
+                        <td class="w-30">{{ $data->qa_varification_on }}</td>
+                    </tr>
+                   <tr>
+                    <th class="w-20">  Acknowledge Complete Comment</th>
+                    <td class="w-80">{{ $data->qa_varification_comment }}</td>
+                   </tr>
+             
+                    <tr>
+                        <th class="w-20">Verification Completed By </th>
+                        <td class="w-30">{{ $data->work_completion_by }}</td>
+                        <th class="w-20"> Verification Completed On</th>
+                        <td class="w-30">{{ $data->work_completion_on }}</td>
+                    </tr>
+                   <tr>
+                    <th class="w-20"> Verification Completed On</th>
+                    <td class="w-80">{{ $data->completed_comment }}</td>
+             
+                   </tr>
+                    <tr>
+                        <th class="w-20">Cancelled By </th>
                         <td class="w-30">{{ $data->cancelled_by }}</td>
                         <th class="w-20">
                         Cancelled On</th>
                         <td class="w-30">{{ $data->cancelled_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">More information required By
-                        </th>
-                        <td class="w-30">{{ $data->more_information_required_by }}</td>
-                        <th class="w-20">
-                        More information required On</th>
-                        <td class="w-30">{{ $data->more_information_required_on }}</td>
+                        <th class="w-20">  Cancelled Comment</th>
+                         <td class="w-80">{{ $data->cancelled_on }}</td>
+                       
                     </tr>
-                    <tr>
-                        <th class="w-20">Acknowledge By
-                        </th>
-                        <td class="w-30">{{ $data->work_completion_by }}</td>
-                        <th class="w-20">
-                        Acknowledge On</th>
-                        <td class="w-30">{{ $data->work_completion_on }}</td>
-                    </tr>
-                   
-
-                    <tr>
-                        <th class="w-20">Completed By
-                        </th>
-                        <td class="w-30">{{ $data->completed_by }}</td>
-                        <th class="w-20">
-                        Completed On</th>
-                        <td class="w-30">{{ $data->completed_on }}</td>
-                    </tr>
-                   
                 </table>
             </div>
         </div>

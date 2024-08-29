@@ -68,7 +68,7 @@ class Helpers
 
     public static function getdateFormat1($date)
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y');
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y H:i:s');
     }
 
     public static function isRevised($data)
@@ -1165,6 +1165,23 @@ class Helpers
         ])->first();
 
         return $roleExists ? true : false;
+    }
+
+
+    public static function getHODDropdown() {
+        $hodUserList = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->where('user_roles.q_m_s_roles_id', '4')
+            ->select('users.id', 'users.name')
+            ->distinct()
+            ->get();
+
+        $dropdown = [];
+        foreach ($hodUserList as $hodUser) {
+            $dropdown[] = ['id' => $hodUser->id, 'name' => $hodUser->name];
+        }
+
+        return $dropdown;
     }
 
 }
