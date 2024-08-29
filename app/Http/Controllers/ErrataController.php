@@ -514,6 +514,7 @@ class ErrataController extends Controller
                 //             }
                 //         }
                 //     }
+                
 
                 $ErrataControl->update();
                 toastr()->success('Document Sent');

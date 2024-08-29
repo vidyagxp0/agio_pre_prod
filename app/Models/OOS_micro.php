@@ -22,6 +22,7 @@ class OOS_micro extends Model
     }
 
     protected $fillable = [
+        'record_number',
         'record',
         'form_type',
         'division_id',

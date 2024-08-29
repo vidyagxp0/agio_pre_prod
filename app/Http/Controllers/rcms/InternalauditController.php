@@ -2720,6 +2720,31 @@ $Checklist_Capsule->save();
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+
+        if($lastDocument->External_Auditing_Agency != $request->External_Auditing_Agency){
+            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+            ->where('activity_type', 'External Auditing Agency')
+            ->exists();
+            $history = new InternalAuditTrial;
+            $history->InternalAudit_id = $lastDocument->id;
+            $history->activity_type = 'External Auditing Agency';
+            if($lastDocument->External_Auditing_Agency == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->External_Auditing_Agency;
+            }
+            $history->current = $request->External_Auditing_Agency;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+
         if($lastDocument->Relevant_Guideline != $request->Relevant_Guideline){
             $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
             ->where('activity_type', 'Relevant Guidelines / Industry Standards')
