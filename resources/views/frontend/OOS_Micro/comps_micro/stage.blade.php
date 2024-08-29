@@ -141,7 +141,7 @@
             <h4 class="modal-title">E-Signature</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('oos_micro.send_stage', $micro_data->id) }}" method="POST">
+            <form id="sendstage" action="{{ route('oos_micro.send_stage', $micro_data->id) }}" method="POST">
             @csrf
             <!-- Modal body -->
             <div class="modal-body">
@@ -165,13 +165,21 @@
             </div>
             </div>
             <div class="modal-footer">
-            <button type="submit">Submit</button>
+            <button type="submit" class="on-submit-disable-button">Submit</button>
             <button type="button" data-bs-dismiss="modal">Close</button>
             </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        
+        $('#sendstage').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    })
+</script>
 <!-- request-more-info-modal  -->
 <div class="modal fade" id="request-more-info-modal">
     <div class="modal-dialog modal-dialog-centered">
@@ -182,7 +190,7 @@
             <h4 class="modal-title">E-Signature</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('oos_micro.requestmoreinfo_back_stage', $micro_data->id) }}" method="POST">
+            <form id="requestmoreinfo" action="{{ route('oos_micro.requestmoreinfo_back_stage', $micro_data->id) }}" method="POST">
             @csrf
             <!-- Modal body -->
             <div class="modal-body">
@@ -206,13 +214,22 @@
             </div>
             </div>
             <div class="modal-footer">
-            <button type="submit">Submit</button>
+            <button type="submit" class="on-submit-disable-button">Submit</button>
             <button type="button" data-bs-dismiss="modal">Close</button>
             </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        
+        $('#requestmoreinfo').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    })
+</script>
+
 <!-- Assignable Cause Found -->
 <div class="modal fade" id="signature-modal-AssignableCause">
     <div class="modal-dialog modal-dialog-centered">
@@ -223,7 +240,7 @@
             <h4 class="modal-title">E-Signature</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('oos_micro.assignable_send_stage', $micro_data->id) }}" method="POST">
+            <form id="assignable" action="{{ route('oos_micro.assignable_send_stage', $micro_data->id) }}" method="POST">
             @csrf
             <!-- Modal body -->
             <div class="modal-body">
@@ -248,13 +265,21 @@
             </div>
 
             <div class="modal-footer">
-            <button type="submit">Submit</button>
+            <button type="submit" class="on-submit-disable-button">Submit</button>
             <button type="button" data-bs-dismiss="modal">Close</button>
             </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        
+        $('#assignable').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    })
+</script>
 
 <div class="modal fade" id="cancel-modal">
     <div class="modal-dialog modal-dialog-centered">
@@ -265,7 +290,7 @@
                 <h4 class="modal-title">E-Signature</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('oos_micro.cancel_stage', $micro_data->id) }}" method="POST">
+            <form id="formcancel" action="{{ route('oos_micro.cancel_stage', $micro_data->id) }}" method="POST">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -288,13 +313,21 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit">Submit</button>
+                    <button type="submit" class="on-submit-disable-button">Submit</button>
                     <button type="button" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        
+        $('#formcancel').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    })
+</script>
 
 <div class="modal fade" id="Done-modal">
     <div class="modal-dialog modal-dialog-centered">
@@ -305,7 +338,7 @@
                 <h4 class="modal-title">E-Signature</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('oos_micro.Done_stage', $micro_data->id) }}" method="POST">
+            <form id="Donestage" action="{{ route('oos_micro.Done_stage', $micro_data->id) }}" method="POST">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -328,13 +361,21 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit">Submit</button>
+                    <button type="submit" class="on-submit-disable-button">Submit</button>
                     <button type="button" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        
+        $('#Donestage').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    })
+</script>
 <div class="modal fade" id="Done-modal1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -344,7 +385,7 @@
                 <h4 class="modal-title">E-Signature</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('oos_micro.Done_One_stage', $micro_data->id) }}" method="POST">
+            <form id="Donestage1" action="{{ route('oos_micro.Done_One_stage', $micro_data->id) }}" method="POST">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -367,13 +408,21 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit">Submit</button>
+                    <button type="submit" class="on-submit-disable-button">Submit</button>
                     <button type="button" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        
+        $('#Donestage1').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    })
+</script>
 <div class="modal fade" id="Done-modal2">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -383,7 +432,7 @@
                 <h4 class="modal-title">E-Signature</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('oos_micro.Done_Two_stage', $micro_data->id) }}" method="POST">
+            <form id="Donestage2" action="{{ route('oos_micro.Done_Two_stage', $micro_data->id) }}" method="POST">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -406,13 +455,21 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit">Submit</button>
+                    <button type="submit" class="on-submit-disable-button">Submit</button>
                     <button type="button" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        
+        $('#Donestage2').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    })
+</script>
 <!-- child-modal-rootcause-analysis -->
 <div class="modal fade" id="child-modal-rootcause-analysis">
     <div class="modal-dialog modal-dialog-centered">

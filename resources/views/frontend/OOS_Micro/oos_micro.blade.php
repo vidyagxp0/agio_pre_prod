@@ -389,7 +389,7 @@ $users = DB::table('users')
             </div>
 
             <!-- General Information -->
-            <form action="{{ route('oos_micro.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="Mainform" action="{{ route('oos_micro.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
             <div id="CCForm1" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -1082,7 +1082,7 @@ $users = DB::table('users')
                         </div>
                         <!-- close grid -->
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                     Exit </a> </button>
@@ -1314,7 +1314,7 @@ $users = DB::table('users')
                 </div>
 
                 <div class="button-block">
-                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                    <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                     <button type="button" id="ChangeNextButton" class="nextButton"
                         onclick="nextStep()">Next</button>
@@ -1452,7 +1452,7 @@ $users = DB::table('users')
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" id="ChangeNextButton" class="nextButton"
                                 onclick="nextStep()">Next</button>
@@ -1578,7 +1578,7 @@ $users = DB::table('users')
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" id="ChangeNextButton" class="nextButton"
                                 onclick="nextStep()">Next</button>
@@ -1780,7 +1780,7 @@ $users = DB::table('users')
                         </div>
 
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" id="ChangeNextButton" class="nextButton"
                                 onclick="nextStep()">Next</button>
@@ -1922,7 +1922,7 @@ $users = DB::table('users')
                         </div>
 
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" id="ChangeNextButton" class="nextButton"
                                 onclick="nextStep()">Next</button>
@@ -2013,7 +2013,7 @@ $users = DB::table('users')
                         </div>
 
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" id="ChangeNextButton" class="nextButton"
                                 onclick="nextStep()">Next</button>
@@ -2191,7 +2191,7 @@ $users = DB::table('users')
                         </div>
 
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" id="ChangeNextButton" class="nextButton"
                                 onclick="nextStep()">Next</button>
@@ -2371,7 +2371,7 @@ $users = DB::table('users')
                         </div>
 
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" id="ChangeNextButton" class="nextButton"
                                 onclick="nextStep()">Next</button>
@@ -2447,7 +2447,7 @@ $users = DB::table('users')
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" id="ChangeNextButton" class="nextButton"
                                 onclick="nextStep()">Next</button>
@@ -2665,7 +2665,7 @@ $users = DB::table('users')
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" id="ChangeNextButton" class="nextButton"
                                 onclick="nextStep()">Next</button>
@@ -3373,7 +3373,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" id="ChangeNextButton" class="nextButton"
                             onclick="nextStep()">Next</button>
@@ -4185,7 +4185,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" id="ChangeNextButton" class="nextButton"
                             onclick="nextStep()">Next</button>
@@ -5372,7 +5372,7 @@ $users = DB::table('users')
                                 </div>
                                </div>
                                 <div class="button-block">
-                                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                    <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" id="ChangeNextButton" class="nextButton"
                                         onclick="nextStep()">Next</button>
@@ -6499,7 +6499,7 @@ $users = DB::table('users')
                     </div>
                 </div>
                 <div class="button-block">
-                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                    <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                     <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -7759,7 +7759,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -8561,7 +8561,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" id="ChangeNextButton" class="nextButton"
                         onclick="nextStep()">Next</button>
@@ -8757,7 +8757,7 @@ $users = DB::table('users')
                        
                 </div>
                 <div class="button-block">
-                    <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;" class="saveButton">Save</button>
+                    <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;" class="saveButton on-submit-disable-button">Save</button>
                     <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                         <button type="button"  class="backButton">Back</button>
                     </a>
@@ -9279,7 +9279,7 @@ $users = DB::table('users')
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                 Exit </a> </button>
@@ -9289,6 +9289,14 @@ $users = DB::table('users')
       </form>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        
+        $('#Mainform').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    })
+</script>
 <script>
         VirtualSelect.init({
             ele: '#reference_record, #notify_to, #manufacturing_invst, #manufacturing_multi_select'
