@@ -21,7 +21,7 @@
             $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
             @endphp
-             <button class="button_theme1"> <a class="text-white" href="{{ route('oos_micro.audit_trial', $data->id) }}"> Audit Trail </a> </button>
+             <button class="button_theme1"> <a class="text-white" href="{{ route('oos.audit_trial', $data->id) }}"> Audit Trail </a> </button>
              @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Submit</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
