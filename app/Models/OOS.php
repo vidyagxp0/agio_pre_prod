@@ -14,6 +14,7 @@ class OOS extends Model
           'id',
           'initiator_id',
           'division_id',
+          'record',
           'record_number',
           'intiation_date',
           'initiator',
