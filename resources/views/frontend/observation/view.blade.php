@@ -1109,7 +1109,7 @@
                                                     <input type="text" id="actual_start_date" readonly
                                                         placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_start_date) }}" />
                                                     <input type="date"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         value="{{ $data->actual_start_date }}"
                                                         id="actual_start_date_checkdate"
                                                          {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
