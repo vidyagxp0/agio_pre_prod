@@ -6277,7 +6277,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submit on">More Information
                                         Required By :-</label>
@@ -6290,7 +6290,7 @@
                                         Required On :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submit by">cancelled By :-</label>
@@ -6326,7 +6326,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submit on">More Information
                                         Required By :-</label>
@@ -6339,7 +6339,7 @@
                                         Required On :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             {{-- <div class="col-lg-12">
                                 <div class="group-input">
@@ -6361,7 +6361,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submit on">More Information
                                         Required By :-</label>
@@ -6374,7 +6374,7 @@
                                         Required On :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                             {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="CFT Review Comments">CFT Review Comments :-</label>
@@ -6401,7 +6401,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submit on">More Information
                                         Required By :-</label>
@@ -6414,7 +6414,7 @@
                                         Required On :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="sub-head"> QA Final Review Completed</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -6428,7 +6428,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submit on">More Information
                                         Required By :-</label>
@@ -6441,7 +6441,7 @@
                                         Required On :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                             {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
@@ -6462,7 +6462,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submit on">More Information
                                         Required By :-</label>
@@ -6475,7 +6475,7 @@
                                         Required On :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                             {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Approved Comments">Approved Comments :-</label>

@@ -1328,6 +1328,7 @@
                                             <div class="col-lg-6 new-time-data-field">
                                                 <div
                                                     class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
+                                                    clsss="group-input input-time">
                                                     <label for="incident_time">Delay Justification <span
                                                             class="text-danger">*</span></label>
                                                     <textarea id="Delay_Justification" name="Delay_Justification">{{ $data->Delay_Justification }}</textarea>
@@ -12280,7 +12281,7 @@
                                 <div class="">{{ $data->HOD_Initial_Review_Comments }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        {{-- <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="submit on">More Information
                                     Required By :-</label>
@@ -12300,7 +12301,7 @@
                                     Required Comments-</label>
                                 <div class="static">{{ $data->more_info_req_cmt }}</div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="submit by">cancelled By :-</label>
@@ -12340,7 +12341,7 @@
                                 <div class="">{{ $data->QA_Initial_Review_Comments }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        {{-- <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="submit on">More Information
                                     Required By :-</label>
@@ -12360,7 +12361,7 @@
                                     Required Comments-</label>
                                 <div class="static">{{ $data->Qa_more_info_req_cmt }}</div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="sub-head">Pending Initiator Update Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
@@ -12380,7 +12381,7 @@
                                 <div class="">{{ $data->Pending_Review_Comments }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        {{-- <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="submit on">More Information
                                     Required By :-</label>
@@ -12400,7 +12401,7 @@
                                     Required Comments-</label>
                                 <div class="static">{{ $data->Pending_more_info_req_cmt }}</div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="sub-head"> HOD Final Review Completed</div>
                         <div class="col-lg-3">
@@ -12421,7 +12422,7 @@
                                 <div class="">{{ $data->Hod_Final_Review_Comments }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        {{-- <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="submit on">More Information
                                     Required By :-</label>
@@ -12441,7 +12442,7 @@
                                     Required Comments-</label>
                                 <div class="static">{{ $data->Hod_more_info_req_cmt}}</div>
                             </div>
-                        </div>
+                        </div> --}}
                   <div class="sub-head"> QA Final Review Completed</div>
                         <div class="col-lg-3">
                             <div class="group-input">
@@ -12461,7 +12462,7 @@
                                 <div class="">{{ $data->Qa_Final_Review_Comments}}</div>
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        {{-- <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="submit on">More Information
                                     Required By :-</label>
@@ -12481,7 +12482,7 @@
                                     Required Comments-</label>
                                 <div class="static">{{ $data->Qa_final_more_info_req_cmt }}</div>
                             </div>
-                        </div>
+                        </div> --}}
                         
 
                         <div class="sub-head">Approved</div>
@@ -12503,7 +12504,7 @@
                                 <div class="">{{ $data->QA_head_approved_comment }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        {{-- <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="submit on">More Information
                                     Required By :-</label>
@@ -12523,7 +12524,7 @@
                                     Required Comments-</label>
                                 <div class="static">{{ $data->approved_more_info_req_cmt }}</div>
                             </div>
-                        </div>
+                        </div> --}}
 
                        
                         
@@ -12626,7 +12627,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="submit on">Cancelled Comments-</label>
+                                <label for="submit on">Cancelled Comments</label>
                                 <div class="static">{{ $data->Cancelled_cmt }}</div>
                             </div>
                         </div>
