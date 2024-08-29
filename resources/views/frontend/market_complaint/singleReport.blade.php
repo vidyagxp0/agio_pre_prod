@@ -532,7 +532,6 @@
                     </div>
                 </table>
 
-
                 <div class="block-head">Production Injection</div>
                 <table>
                     <tr>
@@ -550,10 +549,10 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Production by</th>
-                        <td class="w-30">@if($data1->Production_Table_By){{ $data1->Production_Table_By }}@else Not Applicable @endif</td>
-                        <th class="w-20">Production on</th>
-                        <td class="w-30">@if($data1->Production_Table_On){{ $data1->Production_Table_On}}@else Not Applicable @endif</td>
+                        <th class="w-20">Production Injection by</th>
+                        <td class="w-30">@if($data1->Production_Injection_By){{ $data1->Production_Injection_By }}@else Not Applicable @endif</td>
+                        <th class="w-20">Production Injection  on</th>
+                        <td class="w-30">@if($data1->Production_Injection_On){{ $data1->Production_Injection_On}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
                 <table>
@@ -566,8 +565,8 @@
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Batch No</th>
                             </tr>
-                            @if($data1->Production_Table_Attachment)
-                                @foreach(json_decode($data1->Production_Table_Attachment) as $key => $file)
+                            @if($data1->Production_Injection_Attachment)
+                                @foreach(json_decode($data1->Production_Injection_Attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
