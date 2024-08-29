@@ -2287,7 +2287,7 @@ class CapaController extends Controller
                 $capa->comment = $request->comment;
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'Propose Plan By,Propose Plan On';
                     $history->action = 'Propose Plan';     
                     $history->previous = "";
                     $history->current = $capa->plan_proposed_by;
@@ -2301,6 +2301,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'HOD Review';
                     $history->action_name = 'Update';
+                    if (is_null($lastDocument->plan_proposed_by) || $lastDocument->plan_proposed_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->plan_proposed_by . ' , ' . $lastDocument->plan_proposed_on;
+                    }
+                    $history->current = $capa->plan_proposed_by . ' , ' . $capa->plan_proposed_on;
+                    if (is_null($lastDocument->plan_proposed_by) || $lastDocument->plan_proposed_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
 
                 //     $list = Helpers::getHodUserList();
@@ -2333,7 +2344,7 @@ class CapaController extends Controller
                 $capa->hod_comment = $request->comment;
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'HOD Review Complete By,HOD Review Complete On';
                 $history->action = 'HOD Review Complete';     
                 $history->previous = "";
                 $history->current = $capa->plan_approved_by;
@@ -2346,6 +2357,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                 $history->stage = 'QA/CQA Review';
                 $history->action_name = 'Update';
+                if (is_null($lastDocument->hod_review_completed_by) || $lastDocument->hod_review_completed_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->hod_review_completed_by . ' , ' . $lastDocument->hod_review_completed_on;
+                }
+                $history->current = $capa->hod_review_completed_by . ' , ' . $capa->hod_review_completed_on;
+                if (is_null($lastDocument->hod_review_completed_by) || $lastDocument->hod_review_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
 
                 // $list = Helpers::getQAUserList();
@@ -2377,7 +2399,7 @@ class CapaController extends Controller
                 $capa->qa_comment = $request->comment;
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'QA/CQA Review Complete By,QA/CQA Review Complete On';
                     $history->action = 'QA/CQA Review Complete';     
                     $history->previous = "";
                     $history->current = $capa->completed_by;
@@ -2390,6 +2412,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'QA/CQA Approval';
                     $history->action_name = 'Update';
+                    if (is_null($lastDocument->qa_review_completed_by) || $lastDocument->qa_review_completed_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->qa_review_completed_by . ' , ' . $lastDocument->qa_review_completed_on;
+                    }
+                    $history->current = $capa->qa_review_completed_by . ' , ' . $capa->qa_review_completed_on;
+                    if (is_null($lastDocument->qa_review_completed_by) || $lastDocument->qa_review_completed_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2404,7 +2437,7 @@ class CapaController extends Controller
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'Approved By,Approved On';
                         $history->action = 'Approved';
                         $history->previous = "";
                         $history->current = $capa->approved_by;
@@ -2417,6 +2450,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                         $history->stage = 'CAPA In progress';
                         $history->action_name = 'Update';
+                        if (is_null($lastDocument->approved_by) || $lastDocument->approved_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->approved_by . ' , ' . $lastDocument->approved_on;
+                        }
+                        $history->current = $capa->approved_by . ' , ' . $capa->acknowledge_on;
+                        if (is_null($lastDocument->approved_by) || $lastDocument->approved_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2431,7 +2475,7 @@ class CapaController extends Controller
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'Completed By,Completed On';
                         $history->action = 'Complete';
                         $history->previous = "";
                         $history->current = $capa->approved_by;
@@ -2444,6 +2488,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                         $history->stage = 'HOD Final Review';
                         $history->action_name = 'Update';
+                        if (is_null($lastDocument->completed_by) || $lastDocument->completed_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->completed_by . ' , ' . $lastDocument->completed_on;
+                        }
+                        $history->current = $capa->completed_by . ' , ' . $capa->completed_on;
+                        if (is_null($lastDocument->completed_by) || $lastDocument->completed_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2458,7 +2513,7 @@ class CapaController extends Controller
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'HOD Final Review Complete By,HOD Final Review Complete On';
                         $history->action = 'HOD Final Review Complete';
                         $history->previous = "";
                         $history->current = $capa->approved_by;
@@ -2471,6 +2526,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                         $history->stage = 'QA/CQA Closure Review';
                         $history->action_name = 'Update';
+                        if (is_null($lastDocument->hod_final_review_completed_by) || $lastDocument->hod_final_review_completed_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->hod_final_review_completed_by . ' , ' . $lastDocument->hod_final_review_completed_on;
+                        }
+                        $history->current = $capa->hod_final_review_completed_by . ' , ' . $capa->hod_final_review_completed_on;
+                        if (is_null($lastDocument->hod_final_review_completed_by) || $lastDocument->acknowledge_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2485,7 +2551,7 @@ class CapaController extends Controller
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'QA/CQA Closure Review Complete By,QA/CQA Closure Review Complete On';
                         $history->action = 'QA/CQA Closure Review Complete';
                         $history->previous = "";
                         $history->current = $capa->approved_by;
@@ -2498,6 +2564,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                         $history->stage = 'QA/CQA Approval ';
                         $history->action_name = 'Update';
+                        if (is_null($lastDocument->qa_closure_review_completed_by) || $lastDocument->qa_closure_review_completed_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->qa_closure_review_completed_by . ' , ' . $lastDocument->qa_closure_review_completed_on;
+                        }
+                        $history->current = $capa->qa_closure_review_completed_by . ' , ' . $capa->qa_closure_review_completed_on;
+                        if (is_null($lastDocument->qa_closure_review_completed_by) || $lastDocument->qa_closure_review_completed_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2512,7 +2589,7 @@ class CapaController extends Controller
                 $capa->qah_comment = $request->comment;
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'QA/CQA Approval  Complete By,QA/CQA Approval  Complete On';
                         $history->action = 'QA/CQA Approval  Complete';
                         $history->previous = "";
                         $history->current = $capa->completed_by;
@@ -2525,6 +2602,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                         $history->stage = 'Closed - Done';
                         $history->action_name = 'Update';
+                        if (is_null($lastDocument->qah_approval_completed_by) || $lastDocument->qah_approval_completed_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->qah_approval_completed_by . ' , ' . $lastDocument->qah_approval_completed_on;
+                        }
+                        $history->current = $capa->qah_approval_completed_by . ' , ' . $capa->qah_approval_completed_on;
+                        if (is_null($lastDocument->qah_approval_completed_by) || $lastDocument->qah_approval_completed_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2551,7 +2639,7 @@ class CapaController extends Controller
             $capa->cancel_comment = $request->comment;
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'Cancel By,Cancel On';
                     $history->action = 'Cancel';
                     $history->previous ="";
                     $history->current = $capa->cancelled_by;
@@ -2563,6 +2651,17 @@ class CapaController extends Controller
                     $history->change_to = "Closed-Cancelled";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Cancelled';
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                    }
+                    $history->current = $capa->cancelled_by . ' , ' . $capa->cancelled_on;
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
             $capa->update();
             $history = new CapaHistory();
@@ -2615,7 +2714,7 @@ class CapaController extends Controller
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'More Info Required By ,More Info Required On';
                         $history->action = ' More Info Required';
                         $history->previous ="";
                         $history->current = $capa->qa_more_info_required_by1;
@@ -2628,6 +2727,17 @@ class CapaController extends Controller
                         $history->change_from = $lastDocument->status;
                         $history->stage = 'Opened';
                         $history->action_name = 'Update';
+                        if (is_null($lastDocument->more_info_required_by) || $lastDocument->more_info_required_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->more_info_required_by . ' , ' . $lastDocument->more_info_required_on;
+                        }
+                        $history->current = $capa->more_info_required_by . ' , ' . $capa->more_info_required_on;
+                        if (is_null($lastDocument->more_info_required_by) || $lastDocument->more_info_required_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                 $capa->update();
                 $history = new CapaHistory();
@@ -2652,7 +2762,7 @@ class CapaController extends Controller
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'More Info Required By ,More Info Required On';
                     $history->action = ' More Info Required';
                     $history->previous ="";
                     $history->current = $capa->qa_more_info_required_by;
@@ -2665,6 +2775,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Pending CAPA Plan';
                     $history->action_name = 'Update';
+                    if (is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->qa_more_info_required_by . ' , ' . $lastDocument->qa_more_info_required_on;
+                    }
+                    $history->current = $capa->qa_more_info_required_by . ' , ' . $capa->qa_more_info_required_on;
+                    if (is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
             $capa->update();
             $history = new CapaHistory();
@@ -2704,7 +2825,7 @@ class CapaController extends Controller
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'More Info Required By ,More Info Required On';
                     $history->action = 'More Info Required';
                     $history->previous = "";
                     $history->current = $capa->rejected_by;
@@ -2717,6 +2838,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Rejected';
                     $history->action_name = 'Update';
+                    if (is_null($lastDocument->app_more_info_required_by) || $lastDocument->app_more_info_required_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->app_more_info_required_by . ' , ' . $lastDocument->app_more_info_required_on;
+                    }
+                    $history->current = $capa->app_more_info_required_by . ' , ' . $capa->app_more_info_required_on;
+                    if (is_null($lastDocument->app_more_info_required_by) || $lastDocument->app_more_info_required_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
         $capa->update();
         $history = new CapaHistory();
@@ -2739,7 +2871,7 @@ class CapaController extends Controller
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'More Info Required By ,More Info Required On';
                     $history->action = 'More Info Required';
                     $history->previous ="";
                     $history->current = $capa->qa_more_info_required_by;
@@ -2752,6 +2884,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'QA/CQA Approval';
                     $history->action_name = 'Update';
+                    if (is_null($lastDocument->com_more_info_required_by) || $lastDocument->com_more_info_required_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->com_more_info_required_by . ' , ' . $lastDocument->com_more_info_required_on;
+                    }
+                    $history->current = $capa->com_more_info_required_by . ' , ' . $capa->com_more_info_required_on;
+                    if (is_null($lastDocument->com_more_info_required_by) || $lastDocument->com_more_info_required_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
             $capa->update();
             $history = new CapaHistory();
@@ -2776,7 +2919,7 @@ class CapaController extends Controller
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'More Info Required By ,More Info Required On';
                     $history->action = 'More Info Required';
                     $history->previous ="";
                     $history->current = $capa->qa_more_info_required_by;
@@ -2789,6 +2932,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'CAPA In progress';
                     $history->action_name = 'Update';
+                    if (is_null($lastDocument->hod_more_info_required_by) || $lastDocument->hod_more_info_required_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->hod_more_info_required_by . ' , ' . $lastDocument->hod_more_info_required_on;
+                    }
+                    $history->current = $capa->hod_more_info_required_by . ' , ' . $capa->hod_more_info_required_on;
+                    if (is_null($lastDocument->hod_more_info_required_by) || $lastDocument->hod_more_info_required_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
             $capa->update();
             $history = new CapaHistory();
@@ -2812,7 +2966,7 @@ class CapaController extends Controller
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'More Info Required By ,More Info Required On';
                     $history->action = 'More Info Required';
                     $history->previous ="";
                     $history->current = $capa->qa_more_info_required_by;
@@ -2825,6 +2979,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'HOD Final Review';
                     $history->action_name = 'Update';
+                    if (is_null($lastDocument->closure_more_info_required_by) || $lastDocument->closure_more_info_required_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->closure_more_info_required_by . ' , ' . $lastDocument->closure_qa_more_info_required_on;
+                    }
+                    $history->current = $capa->closure_more_info_required_by . ' , ' . $capa->closure_qa_more_info_required_on;
+                    if (is_null($lastDocument->closure_more_info_required_by) || $lastDocument->closure_more_info_required_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                      $capa->update();
                     $history = new CapaHistory();
@@ -2848,7 +3013,7 @@ class CapaController extends Controller
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'More Info Required By ,More Info Required On';
                     $history->action = 'More Info Required';
                     $history->previous ="";
                     $history->current = $capa->qa_more_info_required_by;
@@ -2861,6 +3026,17 @@ class CapaController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'QA/CQA Closure Review';
                     $history->action_name = 'Update';
+                    if (is_null($lastDocument->qah_more_info_required_by) || $lastDocument->qah_more_info_required_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->qah_more_info_required_by . ' , ' . $lastDocument->qah_more_info_required_on;
+                    }
+                    $history->current = $capa->qah_more_info_required_by . ' , ' . $capa->qah_more_info_required_on;
+                    if (is_null($lastDocument->qah_more_info_required_by) || $lastDocument->qah_more_info_required_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                      $capa->update();
                     $history = new CapaHistory();
@@ -2917,6 +3093,7 @@ class CapaController extends Controller
                     $history->origin_state = $lastDocument->status;
                     $history->change_to = "Opened";
                     $history->change_from = "Pending CAPA Plan";
+                    
                 $history->save();
                 $capa->update();
                 // $list = Helpers::getInitiatorUserList();
@@ -2973,6 +3150,7 @@ class CapaController extends Controller
                     $history->change_from = "CAPA In Progress";
                     $history->stage = 'CAPA In Progress';
                     $history->action_name = 'Update';
+                   
                 $history->save();
                 $capa->update();
                 $history = new CapaHistory();
@@ -3046,19 +3224,7 @@ class CapaController extends Controller
             $record_number = $record;
             return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
-        if ($request->child_type == "extension") {
-            $parent_due_date = "";
-            $parent_id = $id;
-            $parent_name = $request->parent_name;
-            if ($request->due_date) {
-                $parent_due_date = $request->due_date;
-            }
 
-            $record = ((RecordNumber::first()->value('counter')) + 1);
-            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
-            $record_number = $record;
-            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
-        }
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         if ($request->child_type == "Action_Item") {
             $parent_name = "CAPA";
@@ -3073,6 +3239,20 @@ class CapaController extends Controller
             // $record_number = $record;
             return view('frontend.forms.root-cause-analysis', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
     
+        }
+        if ($request->child_type == "extension") {
+            $parent_name = "CAPA";
+            $parent_due_date = "";
+            $parent_id = $id;
+            $parent_name = $request->$parent_name;
+            if ($request->due_date) {
+                $parent_due_date = $request->due_date;
+            }
+
+            $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number = $record;
+            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date','parent_type'));
         }
     }
 

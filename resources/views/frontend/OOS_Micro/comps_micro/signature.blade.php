@@ -42,7 +42,7 @@
                         </div>
                     <div>
                     <div class="row">
-                    <div class="col-12 sub-head">  Lab Supervisor </div>
+                    <div class="col-12 sub-head">HOD/Designee</div>
                      <!-- Request More Info -->
                         <!--  Initial Phase I Investigation  Done By -->
                         <div class="col-lg-4">
@@ -70,24 +70,25 @@
                         <!-- Assignable Cause Found -->
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Audit Comments">CQA/QA Head Primary Review Complete By</label>
+                                <label for="Audit Comments">QA/CQA Head Primary Review Complete By</label>
                                 <div class="static">{{ $micro_data->CQA_Head_Primary_Review_Complete_By }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Audit Attachments">CQA/QA Head Primary Review Complete On</label>
+                                <label for="Audit Attachments">QA/CQA Head Primary Review Complete On</label>
                                 <div class="Date">{{ $micro_data->CQA_Head_Primary_Review_Complete_On }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                            <div class="group-input">
-                            <label for="Submitted on">CQA/QA Head Primary Review Complete Comment</label>
+                            <label for="Submitted on">QA/CQA Head Primary Review Complete Comment</label>
                             <div class="Date">{{ $micro_data->CQA_Head_Primary_Review_Complete_Comment }}</div>
                            </div>
                         </div>
                         <!-- Request More Info -->
                         <!-- Assignable Cause Not Found -->
+                        <div class="col-12 sub-head">Initiator</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase IA Investigation By</label>
@@ -108,7 +109,7 @@
                         </div>
                     <div>
                     <div class="row">
-                        <div class="col-12 sub-head"> Lab Supervisor </div>
+                        <div class="col-12 sub-head">HOD/Designee</div>
                          <!-- Request More Info -->
                         <!-- Correction Completed -->
                         <div class="col-lg-4">
@@ -131,25 +132,27 @@
                         </div>
                         <!-- Request More Info -->
                         <!-- Proposed Hypothesis Experiment -->
+                        <div class="col-12 sub-head">QA/CQA</div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Audit Response Completed By"> Phase IA QA Review Complete By</label>
+                                <label for="Audit Response Completed By"> Phase IA QA/CQA Review Complete By</label>
                                 <div class=" static">{{ $micro_data->Phase_IA_QA_Review_Complete_By }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Audit Response Completed On">Phase IA QA Review Complete On</label>
+                                <label for="Audit Response Completed On">Phase IA QA/CQA Review Complete On</label>
                                 <div class="date">{{ $micro_data->Phase_IA_QA_Review_Complete_On }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                            <div class="group-input">
-                            <label for="Submitted on">Phase IA QA Review Complete Comment</label>
+                            <label for="Submitted on">Phase IA QA/CQA Review Complete Comment</label>
                             <div class="Date">{{ $micro_data->Phase_IA_QA_Review_Complete_Comment }}</div>
                            </div>
                         </div>
                         <!-- Obvious Error Found -->
+                        <div class="col-12 sub-head">CQA/QA Head/Designee</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Audit Attachments">Assignable Cause Not Found By</label>
@@ -189,7 +192,7 @@
                         </div>
                     <div>
                     <div class="row">
-                        <div class="col-12 sub-head"> QA </div>
+                        <div class="col-12 sub-head">Initiator</div>
                         <!-- Request More Info -->
                         <!-- Repeat Analysis Completed -->
                         <div class="col-lg-4">
@@ -212,6 +215,7 @@
                         </div>
                         <!-- Request More Info -->
                         <!-- Full Scale Investigation -->
+                        <div class="col-12 sub-head">HOD/Designee</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase IB HOD Review Complete by</label>
@@ -232,28 +236,29 @@
                         </div>
                     <div>
                     <div class="row">
-                        <div class="col-12 sub-head"> Lab Supervisor </div>
+                        <div class="col-12 sub-head">QA/CQA</div>
                         <!-- Request More Info -->
                         <!-- Assignable Cause Found (Manufacturing Defect) -->
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Reference Recores">Phase IB QA Review Complete By</label>
+                                <label for="Reference Recores">Phase IB QA/CQA Review Complete By</label>
                                 <div class=" static">{{ $micro_data->Phase_IB_QA_Review_Complete_By }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Reference Recores">Phase IB QA Review Complete On </label>
+                                <label for="Reference Recores">Phase IB QA/CQA Review Complete On </label>
                                 <div class="date">{{ $micro_data->Phase_IB_QA_Review_Complete_On }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                            <div class="group-input">
-                            <label for="Submitted on">Phase IB QA Review Complete Comment</label>
+                            <label for="Submitted on">Phase IB QA/CQA Review Complete Comment</label>
                             <div class="Date">{{ $micro_data->Phase_IB_QA_Review_Complete_Comment }}</div>
                            </div>
                         </div>
                         <!-- No Assignable Cause Found (No Manufacturing Defect) -->
+                        <div class="col-12 sub-head">CQA/QA Head/Designee</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Reference Recores">P-I B Assignable Cause Not Found By</label>
@@ -274,6 +279,7 @@
                         </div>
                          <!-- Request More Info -->
                          <!-- Phase II Correction Completed  -->
+                        
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Reference Recores">P-I B Assignable Cause Found By</label>
@@ -294,6 +300,7 @@
                         </div>
                     
                          <!--  Phase II A Correction Inconclusive -->
+                         <div class="col-12 sub-head">Production</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Reference Recores">Phase II A Investigation By</label>
@@ -315,6 +322,7 @@
                    
                         <!-- Request More Info -->
                          <!-- Retesting/resampling -->
+                         <div class="col-12 sub-head">Production Head</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Reference Recores">Phase II A HOD Review Complete By </label>
@@ -335,27 +343,28 @@
                         </div>
                     
                         <!-- Phase II B Correction Inconclusive -->
+                        <div class="col-12 sub-head">QA/CQA</div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Reference Recores">Phase II A QA Review Complete By </label>
+                                <label for="Reference Recores">Phase II A QA/CQA Review Complete By </label>
                                 <div class=" static">{{ $micro_data->Phase_II_A_QA_Review_Complete_By }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Reference Recores">Phase II A QA Review Complete On </label>
+                                <label for="Reference Recores">Phase II A QA/CQA Review Complete On </label>
                                 <div class="date">{{ $micro_data->Phase_II_A_QA_Review_Complete_On }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                            <div class="group-input">
-                            <label for="Submitted on">Phase II A QA Review Complete Comment</label>
+                            <label for="Submitted on">Phase II A QA/CQA Review Complete Comment</label>
                             <div class="Date">{{ $micro_data->Phase_II_A_QA_Review_Complete_Comment }}</div>
                            </div>
                         </div>
                     <div>
                     <div class="row">
-                       <div class="col-12 sub-head"> Head QA/Designee </div>
+                        <div class="col-12 sub-head">CQA/QA Head/Designee</div>
                         <!-- Final Approval -->
                         <!-- Request More Info -->
                         <div class="col-lg-4">
@@ -396,6 +405,7 @@
                             <div class="Date">{{ $micro_data->P_II_A_Assignable_Cause_Found_Comment }}</div>
                            </div>
                         </div>
+                        <div class="col-12 sub-head">Initiator</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="completed by"> Phase II B Investigation By</label>
@@ -414,6 +424,7 @@
                             <div class="Date">{{ $micro_data->Phase_II_B_Investigation_Comment }}</div>
                            </div>
                         </div>
+                        <div class="col-12 sub-head">HOD/Designee</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="completed by"> Phase II B HOD Review Complete By</label>
@@ -432,24 +443,26 @@
                             <div class="Date">{{ $micro_data->Phase_II_B_HOD_Review_Complete_Comment }}</div>
                            </div>
                         </div>
+                        <div class="col-12 sub-head">QA/CQA</div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="completed by">Phase II B QA Review Complete By</label>
+                                <label for="completed by">Phase II B QA/CQA Review Complete By</label>
                                 <div class="static">{{ $micro_data->Phase_II_B_QA_Review_Complete_By }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="completed on"> Phase II B QA Review Complete On</label>
+                                <label for="completed on"> Phase II B QA/CQA Review Complete On</label>
                                 <div class="Date">{{ $micro_data->Phase_II_B_QA_Review_Complete_On }}</div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                            <div class="group-input">
-                            <label for="Submitted on">Phase II B QA Review Complete Comment</label>
+                            <label for="Submitted on">Phase II B QA/CQA Review Complete Comment</label>
                             <div class="Date">{{ $micro_data->Phase_II_B_QA_Review_Complete_Comment }}</div>
                            </div>
                         </div>
+                        <div class="col-12 sub-head">CQA/QA Head /Designee</div>
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="completed by">P-II B Assignable Cause Not Found By</label>

@@ -6453,6 +6453,7 @@ class RiskManagementController extends Controller
     public static function singleReport($id)
     {
         $data = RiskManagement::find($id);
+        $data1 =  RiskManagmentCft::where('risk_id', $id)->first();
         // dd($data);
         if (!empty($data)) {
             $users = User::all();
@@ -6467,7 +6468,7 @@ class RiskManagementController extends Controller
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data', 'riskgrdfishbone', 'riskgrdwhy_chart', 'riskgrdwhat_who_where', 'failure_mode', 'action_plan', 'users', 'mitigation'))
+            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','data1', 'riskgrdfishbone', 'riskgrdwhy_chart', 'riskgrdwhat_who_where', 'failure_mode', 'action_plan', 'users', 'mitigation'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -6532,10 +6533,6 @@ class RiskManagementController extends Controller
     //     return view('frontend.action-item.action-item', compact('parent_id', 'parent_type', 'record', 'currentDate', 'formattedDate', 'due_date', 'parent_record', 'parent_record', 'parent_division_id', 'parent_initiator_id', 'parent_intiation_date', 'parent_short_description', 'old_record'));
 
     //     $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
-
-
-
-
 
     // }
 
@@ -6629,7 +6626,7 @@ class RiskManagementController extends Controller
             $changeControl = RiskManagement::find($id);
             $lastDocument =  RiskManagement::find($id);
 
-            if ($changeControl->stage == 2) {
+            // if ($changeControl->stage == 0) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
@@ -6653,7 +6650,7 @@ class RiskManagementController extends Controller
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
-            }
+            // }
 
             // $changeControl->stage = "2";
             // // $changeControl->status = "Closed - Cancelled";

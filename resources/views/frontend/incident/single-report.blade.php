@@ -345,6 +345,25 @@
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <th class="w-20"> Department Head</th>
+                        <td class="w-30">
+                            @if ($data->department_head)
+                                {{ $data->department_head }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20"> QA Reviewer</th>
+                        <td class="w-30">
+                            @if ($data->qa_reviewer)
+                                {{ $data->qa_reviewer }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                    </tr>
                 </table>
                 <table>
                     <tr>
@@ -643,6 +662,26 @@
                 QA Initial Review
             </div>
             <table>
+                <tr>
+                    <th class="w-20">QRM Required ?</th>
+                    <td class="w-80">
+                        @if ($data->qrm_required)
+                            {{ $data->qrm_required }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th class="w-20">Investigation Required? *                    </th>
+                    <td class="w-80">
+                        @if ($data->Investigation_required)
+                            {{ $data->Investigation_required }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+                </tr>
                 <tr>
                     <th class="w-20">Initial Incident category</th>
                     <td class="w-80">
@@ -2627,8 +2666,7 @@
                     <div class="block">
                         <div class="head">
                             <div class="block-head">
-                                Investigation
-                            </div>
+                                Incident Extension                            </div>
                             <table>
                                 <tr>
                                     <th class="w-20">Proposed Due Date
@@ -2705,19 +2743,7 @@
                                 </tr>
                             </table> --}}
                             <table>
-                                <tr>
-                                    <th class="w-20"> Justification For Revised category
-                                    </th>
-                                    <td class="w-80">
-                                        <div>
-                                            @if ($data->Investigation_Of_Review)
-                                                {{ strip_tags($data->Investigation_Of_Review) }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
+
 
                                 <tr>
                                     <th class="w-20">Investigation Approach</th>
@@ -3416,7 +3442,7 @@
 
                     <!-- **************************QRM TAB START******************************* -->
 
-                    <div class="block">
+                    {{-- <div class="block">
                         <div class="head">
                             <div class="block-head">
                                 QRM
@@ -3652,7 +3678,7 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- **************************QRM TAB ENDS******************************** -->
 
@@ -3878,16 +3904,7 @@
                                 </tr>
 
                                 <tr>
-                                    {{-- <th class="w-20">CAPA Description</th>
-                                    <td class="w-30">
-                                        <div>
-                                            @if ($data->CAPA_Description)
-                                                {{ $data->CAPA_Description }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </div>
-                                    </td> --}}
+
                                     <th class="w-20">Post Categorization Of Incident</th>
                                     <td class="w-30">
                                         <div>
@@ -4022,7 +4039,32 @@
                             QAH/Designee Approval
                         </div>
                         <table>
+                            <tr>
 
+                                <th class="w-20">Post Categorization Of Incident</th>
+                                <td class="w-30">
+                                    <div>
+                                        @if ($data->Post_Categorization)
+                                            {{ $data->Post_Categorization }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="w-20"> Justification For Revised category
+                                </th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->Investigation_Of_Review)
+                                            {{ strip_tags($data->Investigation_Of_Review) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
                             <tr>
                                 <th class="w-20">Closure Comments</th>
                                 <td class="w-30">
@@ -4083,6 +4125,8 @@
                         <td class="w-30">{{ $data->submit_by }}</td>
                         <th class="w-20">Submit On </th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->submit_on) }}</td>
+                        <th class="w-20">Submit Comments</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->submit_comment) }}</td>
                     </tr>
                  
                     <tr>
@@ -4090,84 +4134,102 @@
                         <td class="w-30">{{ $data->HOD_Initial_Review_Complete_By }}</td>
                         <th class="w-20">HOD Initial Review completed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->HOD_Initial_Review_Complete_On) }}</td>
+                        <th class="w-20">HOD Initial Review Comments</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->HOD_Initial_Review_Comments) }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">More Information Required By</th>
                         <td class="w-30">{{ $data->more_info_req_by }}</td>
                         <th class="w-20">More Information Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->more_info_req_on) }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Cancelled By</th>
                         <td class="w-30">{{ $data->Hod_Cancelled_by}}</td>
                         <th class="w-20">Cancelled On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->Hod_Cancelled_on) }}</td>
+                        <th class="w-20">Cancelled Comments</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Hod_Cancelled_cmt) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">QA Initial Review Complete By</th>
                         <td class="w-30">{{ $data->QA_Initial_Review_Complete_By }}</td>
                         <th class="w-20">QA Initial Review Complete On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->QA_Initial_Review_Complete_On) }}</td>
+                        <th class="w-20">QA Initial Review Comments</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->QA_Initial_Review_Comments) }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">More Information Required By</th>
                         <td class="w-30">{{ $data->Qa_more_info_req_by }}</td>
                         <th class="w-20">More Information Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->Qa_more_info_req_on) }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Pending Initiator Update Complete By</th>
                         <td class="w-30">{{ $data->Pending_Review_Complete_By }}</td>
                         <th class="w-20">Pending Initiator Update CompleteOn</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->Pending_Review_Complete_On) }}</td>
+                        <th class="w-20">Pending Initiator Update Comments</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Pending_Review_Comments) }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">More Information Required By</th>
                         <td class="w-30">{{ $data->Pending_more_info_req_by }}</td>
                         <th class="w-20">More Information Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->Pending_more_info_req_on) }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">HOD Final Review Completed By</th>
                         <td class="w-30">{{ $data->Hod_Final_Review_Complete_By }}</td>
                         <th class="w-20">HOD Final Review Completed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->Hod_Final_Review_Complete_On) }}</td>
+                        <th class="w-20">HOD Final Review Completed Comments</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Hod_Final_Review_Comments) }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">More Information Required By</th>
                         <td class="w-30">{{ $data->Hod_more_info_req_by }}</td>
                         <th class="w-20">More Information Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->Hod_more_info_req_on) }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20"> QA Final Review Complete By</th>
                         <td class="w-30">{{ $data->Qa_Final_Review_Complete_By }}</td>
                         <th class="w-20"> QA Final Review Complete On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->Qa_Final_Review_Complete_On) }}</td>
+                        <th class="w-20">QA Final Review Complete Comments</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Qa_Final_Review_Comments) }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">More Information Required By</th>
                         <td class="w-30">{{ $data->Qa_final_more_info_req_by }}</td>
                         <th class="w-20">More Information Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->Qa_final_more_info_req_on) }}</td>
-                    </tr>
+                        <th class="w-20">Cancelled Comments</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Cancelled_cmt) }}</td>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Approved By</th>
                         <td class="w-30">{{ $data->QA_head_approved_by }}</td>
                         <th class="w-20">Approved On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->QA_head_approved_on) }}</td>
+                        <th class="w-20">Approved Comments</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->QA_head_approved_comment) }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">More Information Required By</th>
                         <td class="w-30">{{ $data->approved_more_info_req_by }}</td>
                         <th class="w-20">More Information Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->approved_more_info_req_on) }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Cancelled By</th>
                         <td class="w-30">{{ $data->Cancelled_by}}</td>
                         <th class="w-20">Cancelled On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->Cancelled_on) }}</td>
+                        <th class="w-20">Cancelled Comments</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->Cancelled_cmt) }}</td>
                     </tr>
 
                 </table>

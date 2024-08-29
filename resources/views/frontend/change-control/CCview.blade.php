@@ -2,6 +2,7 @@
 @section('rcms_container')
     @php
         $users = DB::table('users')->select('id', 'name')->get();
+       
     @endphp
 
     <style>
@@ -168,7 +169,7 @@
                             </button>
                         @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                RA Review Required
+                                RA Approval Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#opened-state-modal">
                                 Send to Initiator
@@ -468,7 +469,6 @@ Designee Approval</div>
                                                 </div>
                                             </div> -->
 
-                                            
                                             <div class="col-md-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -479,41 +479,47 @@ Designee Approval</div>
                                                                 min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
                                                                 oninput="handleDateInput(this, 'due_date')" />
                                                         @else
-                                                            <input type="text" placeholder="Due Date" readonly>
+                                                            <input type="text" id="due_date" readonly placeholder="Due Date not available">
                                                         @endif
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            
                                             <script>
-                                                // Format the due date to DD-MM-YYYY
-                                                // Your input date
-                                                var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
-
-                                                // Create a Date object
-                                                var date = new Date(dueDate);
-
-                                                // Array of month names
-                                                var monthNames = [
-                                                    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                                                ];
-
-                                                // Extracting day, month, and year from the date
-                                                var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                                                var monthIndex = date.getMonth();
-                                                var year = date.getFullYear();
-
-                                                // Formatting the date in "dd-MMM-yyyy" format
-                                                var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
-
-                                                // Set the formatted due date value to the input field
-                                                document.getElementById('due_date').value = dueDateFormatted;
+                                                // Your input date variable
+                                                var dueDate = "{{ $data->due_date }}"; // Assuming $data->due_date is the variable you're passing
+                                            
+                                                // Check if the due date is not null or empty
+                                                if (dueDate) {
+                                                    // Create a Date object
+                                                    var date = new Date(dueDate);
+                                            
+                                                    // Array of month names
+                                                    var monthNames = [
+                                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                                    ];
+                                            
+                                                    // Extracting day, month, and year from the date
+                                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                                                    var monthIndex = date.getMonth();
+                                                    var year = date.getFullYear();
+                                            
+                                                    // Formatting the date in "dd-MMM-yyyy" format
+                                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+                                            
+                                                    // Set the formatted due date value to the input field
+                                                    document.getElementById('due_date').value = dueDateFormatted;
+                                                } else {
+                                                    // If dueDate is null or empty, display a message instead
+                                                    document.getElementById('due_date').value = 'Due Date not available';
+                                                }
                                             </script>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiation Department</label>
                                                     <select name="Initiator_Group" id="initiator_group">
+                                                        <option value="">-- Select --</option>
                                                         <option value="CQA"
                                                             @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
                                                         <option value="QA"
@@ -8284,9 +8290,7 @@ Designee Approval</div>
 
             <div id="CCForm10" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">
-                        Electronic Signatures
-                    </div>
+                   
                     <div class="row">
                         <div class="sub-head">Submission</div>
                         <div class="col-lg-3">
@@ -8308,27 +8312,27 @@ Designee Approval</div>
                             </div>
                         </div>
 
-                        <div class="sub-head">HOD Review Completed</div>
+                        <div class="sub-head">HOD Assessment Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="HOD Review Complete By">HOD Review Complete By :-</label>
+                                <label for="HOD Review Complete By">HOD Assessment Complete By :-</label>
                                 <div class="static">{{ $data->hod_review_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="HOD Review Complete On">HOD Review Complete On :-</label>
+                                <label for="HOD Review Complete On">HOD Assessment Complete On :-</label>
                                 <div class="static">{{ $data->hod_review_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style=" ">
-                                <label for="HOD Review Comments">HOD Review Comments :-</label>
+                                <label for="HOD Review Comments">HOD Assessment Complete By :-</label>
                                 <div class="">{{ $data->hod_review_comment }}</div>
                             </div>
                         </div>
 
-                        <div class="sub-head">Sent to Initiator (From HOD)</div>
+                        {{--  <div class="sub-head">Sent to Initiator (From HOD)</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="HOD Review Complete By">Initiator Complete By :-</label>
@@ -8346,30 +8350,30 @@ Designee Approval</div>
                                 <label for="HOD Review Comments">Initiator Comments :-</label>
                                 <div class="">{{ $data->hod_to_initiator_comment }}</div>
                             </div>
-                        </div>
+                        </div>  --}}
 
 
-                        <div class="sub-head">QA Initial Review Completed</div>
+                        <div class="sub-head">QA/CQA Initial Assessment Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Initial Review Complete By">QA Initial Review Complete By :-</label>
+                                <label for="QA Initial Review Complete By">QA/CQA Initial Assessment Complete By :-</label>
                                 <div class="static">{{ $data->QA_initial_review_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Initial Review Complete On">QA Initial Review Complete On :-</label>
+                                <label for="QA Initial Review Complete On">QA/CQA Initial Assessment Complete On :-</label>
                                 <div class="static">{{ $data->QA_initial_review_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                                <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
+                                <label for="QA Initial Review Comments">QA/CQA Initial Review Comments:-</label>
                                 <div class="">{{ $data->QA_initial_review_comment }}</div>
                             </div>
                         </div>
 
-                        <div class="sub-head">Sent to HOD (From QA Initial)</div>
+                        {{--  <div class="sub-head">Sent to HOD (From QA Initial)</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="HOD Review Complete By">HOD Complete By :-</label>
@@ -8387,50 +8391,30 @@ Designee Approval</div>
                                 <label for="HOD Review Comments">HOD Comments :-</label>
                                 <div class="">{{ $data->QA_initialTo_HOD_comment }}</div>
                             </div>
-                        </div>
-
-                        <div class="sub-head">Pending RA Review Complete</div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="CFT Review Complete By">Pending RA Review Complete By :-</label>
-                                <div class="static">{{ $data->pending_RA_review_by }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="CFT Review Complete On">Pending RA Review Complete On :-</label>
-                                <div class="static">{{ $data->pending_RA_review_on }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="CFT Review Comments">Pending RA Review Comments :-</label>
-                                <div class="">{{ $data->pending_RA_review_comment }}</div>
-                            </div>
-                        </div>
+                        </div>  --}}
 
                         <div class="sub-head">CFT Review Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="CFT Review Complete By">CFT Review Complete By :-</label>
-                                <div class="static">{{ $data->cft_review_by }}</div>
+                                <div class="static">{{ $data->pending_RA_review_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="CFT Review Complete On">CFT Review Complete On :-</label>
-                                <div class="static">{{ $data->cft_review_on }}</div>
+                                <div class="static">{{ $data->pending_RA_review_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                 <label for="CFT Review Comments">CFT Review Comments :-</label>
-                                <div class="">{{ $data->cft_review_comment }}</div>
+                                <div class="">{{ $data->pending_RA_review_comment }}</div>
                             </div>
                         </div>
 
 
-                        <div class="sub-head">Sent to QA Initial (From CFT)</div>
+                        {{--  <div class="sub-head">Sent to QA Initial (From CFT)</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="HOD Review Complete By">QA Initial Complete By :-</label>
@@ -8448,68 +8432,200 @@ Designee Approval</div>
                                 <label for="HOD Review Comments">QA Initial Comments :-</label>
                                 <div class="">{{ $data->cft_to_qaInitial_comment }}</div>
                             </div>
+                        </div>  --}}
+
+                        <div class="sub-head">RA Approval Required</div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CFT Review Complete By">RA Approval Required By :-</label>
+                                <div class="static">{{ $data->RA_review_required_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CFT Review Complete On">RA Approval Required On :-</label>
+                                <div class="static">{{ $data->RA_review_required_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <label for="CFT Review Comments">RA Approval Required Comments :-</label>
+                                <div class="">{{ $data->RA_review_required_comment }}</div>
+                            </div>
                         </div>
 
 
-                        <div class="sub-head"> QA Final Review Completed</div>
+
+
+                        <div class="sub-head">RA Approval Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
+                                <label for="CFT Review Complete By">RA Approval Complete By :-</label>
+                                <div class="static">{{ $data->RA_review_completed_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CFT Review Complete On">RA Approval Complete On :-</label>
+                                <div class="static">{{ $data->RA_review_completed_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <label for="CFT Review Comments"> RA Approval Comments :-</label>
+                                <div class="">{{ $data->RA_review_completed_comment }}</div>
+                            </div>
+                        </div>
+
+                   
+
+                        <div class="sub-head"> QA/CQA Final Review Completed</div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="QA Final Review Complete By"> QA/CQA Final Review Complete By :-</label>
                                 <div class="static">{{ $data->QA_final_review_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete On"> QA Final Review Complete On :-</label>
+                                <label for="QA Final Review Complete On"> QA/CQAFinal Review Complete On :-</label>
                                 <div class="static">{{ $data->QA_final_review_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
+                                <label for="QA Final Review Comments"> QA/CQA Final Review Comments :-</label>
                                 <div class="">{{ $data->QA_final_review_comment }}</div>
                             </div>
                         </div>
 
-                        <div class="sub-head">QA Head/Manager Designee Pre-Approval</div>
+
+
+                        <div class="sub-head"> Approved </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete By">QA Head/Manager Designee Pre-Approval Complete By :-</label>
-                                <div class="static">{{ $data->QA_preapproved_by }}</div>
+                                <label for="QA Final Review Complete By">  Approved  By :-</label>
+                                <div class="static">{{ $data->approved_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete On">QA Head/Manager Designee Pre-Approval Complete On :-</label>
-                                <div class="static">{{ $data->QA_preapproved_on }}</div>
+                                <label for="QA Final Review Complete On">  Approved  On :-</label>
+                                <div class="static">{{ $data->approved_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments">QA Head/Manager Designee Pre-Approval Comments :-</label>
-                                <div class="">{{ $data->QA_preapproved_comment }}</div>
+                                <label for="QA Final Review Comments"> Approved Comments :-</label>
+                                <div class="">{{ $data->approved_comment }}</div>
                             </div>
                         </div>
 
-                        <div class="sub-head">QA Head/Manager Designee Approval</div>
+
+                        @php
+                        $commnetData = DB::table('change_control_comments')->where('cc_id', $data->id)->first();
+                    @endphp
+                    
+                    <div class="sub-head">Initiator Updated Completed</div>
+                    
+                    <div class="col-lg-3">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete By">Initiator Updated Completed By :-</label>
+                            <div class="static">
+                                {{ isset($commnetData->initiator_update_complete_by) ? $commnetData->initiator_update_complete_by : '' }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete On">Initiator Updated Completed On :-</label>
+                            <div class="static">
+                                {{ isset($commnetData->initiator_update_complete_on) ? $commnetData->initiator_update_complete_on : '' }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="group-input" style="width:1620px; height:100px; padding:5px;">
+                            <label for="QA Final Review Comments">Initiator Updated Completed Comments :-</label>
+                            <div class="">
+                                {{ isset($commnetData->initiator_update_complete_comment) ? $commnetData->initiator_update_complete_comment : '' }}
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+                        <div class="sub-head">HOD Final Review Complete
+                        </div>
+                   <div class="col-lg-3">
+                       <div class="group-input">
+                           <label for="QA Final Review Complete By">  HOD Final Review Complete  By :-</label>
+                           <div class="static">{{ $data->closure_approved_by }}</div>
+                       </div>
+                   </div>
+                   <div class="col-lg-3">
+                       <div class="group-input">
+                           <label for="QA Final Review Complete On">  HOD Final Review Complete  On :-</label>
+                           <div class="static">{{ $data->closure_approved_on }}</div>
+                       </div>
+                   </div>
+                   <div class="col-lg-6">
+                       <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                           <label for="QA Final Review Comments"> HOD Final Review Complete Comments :-</label>
+                           <div class="">{{ $data->closure_approved_comment }}</div>
+                       </div>
+                   </div>
+
+
+                        <div class="sub-head">Send For Final QA/CQA Head Approval
+                            </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete By">QA Head/Manager Designee Approval Complete By :-</label>
-                                <div class="static">{{ $data->QA_head_approval_by }}</div>
+                                <label for="QA Final Review Complete By">Send For Final QA/CQA Head Approval By :-</label>
+                                <div class="static">{{ isset($commnetData->send_for_final_qa_head_approval) ? $commnetData->send_for_final_qa_head_approval: '' }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete On">QA Head/Manager Designee Approval Complete On :-</label>
-                                <div class="static">{{ $data->QA_head_approval_on }}</div>
+                                <label for="QA Final Review Complete On">Send For Final QA/CQA Head Approval On :-</label>
+                                <div class="static">{{isset($commnetData->send_for_final_qa_head_approval_on) ?$commnetData->send_for_final_qa_head_approval_on :''}}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments">QA Head/Manager Designee Approval Comments :-</label>
-                                <div class="">{{ $data->QA_head_approval_comment }}</div>
+                                <label for="QA Final Review Comments">Send For Final QA/CQA Head Approval Comments :-</label>
+                                <div class="">{{ isset($commnetData->send_for_final_qa_head_approval_comment) ? $commnetData->send_for_final_qa_head_approval_comment :'' }}</div>
                             </div>
                         </div>
+
+
+                        <div class="sub-head">Closure Approved
+
+                        </div>
+                    <div class="col-lg-3">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete By">Closure Approved By :-</label>
+                            <div class="static">
+                                {{ isset($commnetData->closure_approved_by) ? $commnetData->closure_approved_by : '' }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete On">Closure Approved On :-</label>
+                            <div class="static">{{  isset($commnetData->closure_approved_on) ? $commnetData->closure_approved_on : ''}}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="QA Final Review Comments">Closure Approved Comments :-</label>
+                            <div class="">{{ isset($commnetData->closure_approved_comment) ?$commnetData->closure_approved_comment :'' }}</div>
+                        </div>
+                    </div>
+
+                        
                     </div>
                     <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>

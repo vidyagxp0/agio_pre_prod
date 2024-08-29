@@ -1227,6 +1227,7 @@ class DeviationController extends Controller
         // $formattedDate = $currentDate->addDays(30);
         // $due_date = $formattedDate->format('Y-m-d');
         $data = Deviation::find($id);
+        
         $userData = User::all();
         $data1 = DeviationCft::where('deviation_id', $id)->latest()->first();
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
@@ -6249,6 +6250,45 @@ class DeviationController extends Controller
                     $deviation->update();
                     return back();
                 }
+                 if ($deviation->stage == 5) {
+                  
+
+                  
+
+                    $deviation->stage = "4";
+                    $deviation->status = "CFT Review";
+                    $deviation->qa_more_info_required_by = Auth::user()->name;
+                    $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                    // $deviation->pending_Cancel_comment = $request->comment;
+
+                    $history = new DeviationAuditTrail();
+                    $history->deviation_id = $id;
+                    $history->activity_type = 'More Information Required By, More Information Required On';
+                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == ''){
+                        $history->previous = "";
+                    }else{
+                        $history->previous = $lastDocument->qa_more_info_required_by. ' ,' . $lastDocument->qa_more_info_required_on;
+                    }
+                    $history->action='More Information Required';
+                    $history->current = $deviation->qa_more_info_required_by. ',' . $deviation->qa_more_info_required_on;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "CFT Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Plan Proposed';
+                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
+                    {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                    $deviation->update();
+                    return back();
+                }
 
                   if ($deviation->stage == 6) {
                   
@@ -7215,7 +7255,7 @@ class DeviationController extends Controller
         $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
     }
 
-    $history->action = 'Not Applicable';
+    $history->action = 'CFT Review Complete';
     
     // Make sure you're using the updated $updateCFT object here
     $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
@@ -7249,7 +7289,7 @@ class DeviationController extends Controller
                     }else{
                         $history->previous = $lastDocument->QualityAssurance_by. ' ,' . $lastDocument->QualityAssurance_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->QualityAssurance_by. ',' . $updateCFT->QualityAssurance_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7278,7 +7318,7 @@ class DeviationController extends Controller
                     }else{
                         $history->previous = $lastDocument->Engineering_by. ' ,' . $lastDocument->Engineering_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->Engineering_by. ',' . $updateCFT->Engineering_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7307,7 +7347,7 @@ class DeviationController extends Controller
                     }else{
                         $history->previous = $lastDocument->Environment_Health_Safety_by. ' ,' . $lastDocument->Environment_Health_Safety_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->Environment_Health_Safety_by. ',' . $updateCFT->Environment_Health_Safety_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7336,7 +7376,7 @@ class DeviationController extends Controller
                     }else{
                         $history->previous = $lastDocument->Human_Resource_by. ' ,' . $lastDocument->Human_Resource_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->Human_Resource_by. ',' . $updateCFT->Human_Resource_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7365,7 +7405,7 @@ class DeviationController extends Controller
                     }else{
                         $history->previous = $lastDocument->Information_Technology_by. ' ,' . $lastDocument->Information_Technology_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->Information_Technology_by. ',' . $updateCFT->Information_Technology_on;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -7393,7 +7433,7 @@ class DeviationController extends Controller
                     }else{
                         $history->previous = $lastDocument->Other1_by. ' ,' . $lastDocument->Other1_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->Other1_by. ',' . $updateCFT->Other1_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7422,7 +7462,7 @@ class DeviationController extends Controller
                     }else{
                         $history->previous = $lastDocument->Other2_by. ' ,' . $lastDocument->Other2_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->Other2_by. ',' . $updateCFT->Other2_on;
                             $history->current = $updateCFT->Other2_by;
                             $history->comment = $request->comment;
@@ -7452,7 +7492,7 @@ class DeviationController extends Controller
                     }else{
                         $history->previous = $lastDocument->Other3_by. ' ,' . $lastDocument->Other3_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->Other3_by. ',' . $updateCFT->Other3_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7481,7 +7521,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }else{
                         $history->previous = $lastDocument->Other4_by. ' ,' . $lastDocument->Other4_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->Other4_by. ',' . $updateCFT->Other4_on;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -7509,7 +7549,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }else{
                         $history->previous = $lastDocument->Other5_by. ' ,' . $lastDocument->Other5_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->Other5_by. ',' . $updateCFT->Other5_on;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -7557,7 +7597,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }else{
                         $history->previous = $lastDocument->Production_Table_By. ' ,' . $lastDocument->Production_Table_On;
                     }
-                   $history->action='Not Applicable';
+                   $history->action='CFT Review Complete';
                     $history->current = $updateCFT->Production_Table_By. ',' . $updateCFT->Production_Table_On;
                             $history->user_id = Auth::user()->name;
                             $history->user_name = Auth::user()->name;
@@ -7585,7 +7625,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }else{
                         $history->previous = $lastDocument->ProductionLiquid_by. ' ,' . $lastDocument->ProductionLiquid_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->ProductionLiquid_by. ',' . $updateCFT->ProductionLiquid_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7614,7 +7654,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }else{
                         $history->previous = $lastDocument->Production_Injection_By. ' ,' . $lastDocument->Production_Injection_On;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->Production_Injection_By. ',' . $updateCFT->Production_Injection_On;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7643,7 +7683,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }else{
                         $history->previous = $lastDocument->Store_by. ' ,' . $lastDocument->Store_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->Store_by. ',' . $updateCFT->Store_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7672,7 +7712,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }else{
                         $history->previous = $lastDocument->ResearchDevelopment_by. ' ,' . $lastDocument->ResearchDevelopment_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->ResearchDevelopment_by. ',' . $updateCFT->ResearchDevelopment_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7701,7 +7741,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }else{
                         $history->previous = $lastDocument->Microbiology_by. ' ,' . $lastDocument->Microbiology_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->Microbiology_by. ',' . $updateCFT->Microbiology_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7730,7 +7770,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }else{
                         $history->previous = $lastDocument->RegulatoryAffair_by. ' ,' . $lastDocument->RegulatoryAffair_on;
                     }
-                   $history->action='Not Applicable';
+                   $history->action='CFT Review Complete';
                     $history->current = $updateCFT->RegulatoryAffair_by. ',' . $updateCFT->RegulatoryAffair_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7760,7 +7800,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }else{
                         $history->previous = $lastDocument->CorporateQualityAssurance_by. ' ,' . $lastDocument->CorporateQualityAssurance_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->CorporateQualityAssurance_by. ',' . $updateCFT->CorporateQualityAssurance_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7789,7 +7829,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }else{
                         $history->previous = $lastDocument->ContractGiver_by. ' ,' . $lastDocument->ContractGiver_on;
                     }
-                    $history->action='Not Applicable';
+                    $history->action='CFT Review Complete';
                     $history->current = $updateCFT->ContractGiver_by. ',' . $updateCFT->ContractGiver_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->name;
@@ -7900,23 +7940,23 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                 if ($deviation->stage == 5) {
 
-                    if ($deviation->form_progress === 'capa' && !empty($deviation->QA_Feedbacks))
-                    {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for QA/CQA Head/Manager Designee Approval'
-                        ]);
+                    // if ($deviation->form_progress === 'capa' && !empty($deviation->QA_Feedbacks))
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for QA/CQA Head/Manager Designee Approval'
+                    //     ]);
 
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'Investigation and CAPA / QA/CQA Final review Tab is yet to be filled!'
-                        ]);
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'Investigation and CAPA / QA/CQA Final review Tab is yet to be filled!'
+                    //     ]);
 
-                        return redirect()->back();
-                    }
+                    //     return redirect()->back();
+                    // }
 
 
                     $deviation->stage = "6";
@@ -8580,7 +8620,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
     //     return view('frontend.forms.deviation.deviation_audit', compact('audit', 'document', 'today'));
     // }
         {
-        $audit = DeviationAuditTrail::where('deviation_id', $id)->orderByDESC('id')->paginate(200);
+        $audit = DeviationAuditTrail::where('deviation_id', $id)->orderByDESC('id')->paginate(5);
         // dd($audit);
         $today = Carbon::now()->format('d-m-y');
         $document = Deviation::where('id', $id)->first();
@@ -8605,14 +8645,14 @@ public function audit_trail_filter(Request $request, $id)
         switch ($request->typedata) {
             case 'cft_review':
                 // Filter by specific CFT review actions
-                $cft_field = ['CFT Review Complete','Not Applicable',];
+                $cft_field = ['CFT Review Complete','Not Applicable'];
                 $query->whereIn('action', $cft_field);
                 break;
 
             case 'stage':
                 // Filter by activity log stage changes
                 $stage=[  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
-                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved',
+                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
                     'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
                     'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
                 $query->whereIn('action', $stage); // Ensure correct activity_type value
@@ -8621,10 +8661,20 @@ public function audit_trail_filter(Request $request, $id)
             case 'user_action':
                 // Filter by various user actions
                 $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
-                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved',
+                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
                     'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
                     'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
                 $query->whereIn('action', $user_action);
+                break;
+                 case 'notification':
+                // Filter by various user actions
+                $notification = [];
+                $query->whereIn('action', $notification);
+                break;
+                 case 'business':
+                // Filter by various user actions
+                $business = [];
+                $query->whereIn('action', $business);
                 break;
 
             default:
@@ -8664,7 +8714,7 @@ public function audit_trail_filter(Request $request, $id)
     {
         $doc = Deviation::find($id);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-        $data = DeviationAuditTrail::where('deviation_id', $doc->id)->orderByDesc('id')->get();
+        $data = DeviationAuditTrail::where('deviation_id', $doc->id);
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
         $pdf = PDF::loadview('frontend.forms.deviation.deviation_audit_trail_pdf', compact('data', 'doc'))
@@ -8698,7 +8748,7 @@ public function audit_trail_filter(Request $request, $id)
 
     public function DeviationAuditTrialPdf($id)
     {
-        $audit = DeviationAuditTrail::where('deviation_id', $id)->orderByDesc('id')->paginate(5);
+        $audit = DeviationAuditTrail::where('deviation_id', $id)->orderByDesc('id')->paginate(500);
         $today = Carbon::now()->format('d-m-y');
         $document = Deviation::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');

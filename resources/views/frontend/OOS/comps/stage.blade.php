@@ -21,7 +21,7 @@
             $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
             @endphp
-             <button class="button_theme1"> <a class="text-white" href="{{ route('oos_micro.audit_trial', $data->id) }}"> Audit Trail </a> </button>
+             <button class="button_theme1"> <a class="text-white" href="{{ route('oos.audit_trial', $data->id) }}"> Audit Trail </a> </button>
              @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Submit</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
@@ -51,9 +51,12 @@
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal">Assignable Cause Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Not Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
+
+             @elseif($data->stage == 23 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+
              @elseif($data->stage == 9 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB Investigation</button>
@@ -68,9 +71,12 @@
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 12 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">P-IB Assignable Cause Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal1">P-IB Assignable Cause Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-I B Assignable Cause Not Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
+
+             @elseif($data->stage == 24 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+
              @elseif($data->stage == 13 && (in_array(22, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause"> Phase II A Investigation </button>
@@ -85,9 +91,12 @@
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 16 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II A Assignable Cause Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal2">P-II A Assignable Cause Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-II A Assignable Cause Not Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
+
+             @elseif($data->stage == 25 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+
              @elseif($data->stage == 17 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Investigation</button>
@@ -285,6 +294,123 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="Done-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('oos.Done_stage', $data->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and a outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger"> *</span></label>
+                        <input type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger"> *</span></label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="comment">Comment</label>
+                        <input type="comment" name="comment">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit">Submit</button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Done-modal1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('oos.Done_One_stage', $data->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and a outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger"> *</span></label>
+                        <input type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger"> *</span></label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="comment">Comment</label>
+                        <input type="comment" name="comment">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit">Submit</button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Done-modal2">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('oos.Done_Two_stage', $data->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and a outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger"> *</span></label>
+                        <input type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger"> *</span></label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="comment">Comment</label>
+                        <input type="comment" name="comment">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit">Submit</button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!-- child-modal-rootcause-analysis -->
 <div class="modal fade" id="child-modal-rootcause-analysis">
     <div class="modal-dialog modal-dialog-centered">
@@ -445,10 +571,32 @@
 </div>
 <!-- Current Status -->
 <div class="status" id="statusBlock">
-    <div class="head">Current Status</div>
-            @if ($data->stage == 0)
-                <div class="progress-bars">
-                    <div class="bg-danger">Closed-Cancelled</div>
+                <div class="head p-1">Current Status</div>
+                @if ($data->stage == 0)
+                <div style="padding: 10px;" class="progress-bars">
+                    <div style=" display: flex; justify-content: center; padding: 6px;"  class="bg-danger">Closed-Cancelled</div>
+                </div>
+                <style>
+                    /* .progress-bars{
+                        padding: 10px ;
+                    } */
+                /* .bg-danger{
+                    display: flex;
+                    justify-content: center;
+                    padding: 6px !important;
+                }  */
+                </style>
+                @elseif ($data->stage == 23)
+                <div style="padding: 10px;" class="progress-bars">
+                    <div style=" display: flex; justify-content: center; padding: 6px;"  class="bg-danger">Closed-Done</div>
+                </div>
+                @elseif ($data->stage == 24)
+                <div style="padding: 10px;" class="progress-bars">
+                    <div style=" display: flex; justify-content: center; padding: 6px;" class="bg-danger">Closed-Done</div>
+                </div>
+                @elseif ($data->stage == 25)
+                <div style="padding: 10px;" class="progress-bars">
+                    <div style=" display: flex; justify-content: center; padding: 6px;"  class="bg-danger">Closed-Done</div>
                 </div>
             @else
             <div class="progress-bars d-flex">

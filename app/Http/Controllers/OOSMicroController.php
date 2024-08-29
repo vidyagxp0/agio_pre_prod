@@ -31,18 +31,18 @@ class OOSMicroController extends Controller
         $cft = [];
         $old_records = OOS_micro::select('id', 'division_id', 'record')->get();
         
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record, 4, '0', STR_PAD_LEFT);
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
         
-        if ($division) {
-            $last_oos = OOS_micro::where('division_id', $division->id)->latest()->first();
-                if ($last_oos) {
-                    $record_number = $last_oos->record ? str_pad($last_oos->record + 1, 4, '0', STR_PAD_LEFT) : '0001';
-                } else {
-                    $record_number = '0001';
-                }
-        }
+        // if ($division) {
+        //     $last_oos = OOS_micro::where('division_id', $division->id)->latest()->first();
+        //         if ($last_oos) {
+        //             $record_number = $last_oos->record ? str_pad($last_oos->record + 1, 4, '0', STR_PAD_LEFT) : '0001';
+        //         } else {
+        //             $record_number = '0001';
+        //         }
+        // }
 
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -53,7 +53,7 @@ class OOSMicroController extends Controller
 
      public function store(Request $request){
         $micro = $request->all();
-        
+
         $file_input_names = [
             'initial_attachment_gi',
             'file_attachments_pli',
@@ -86,6 +86,8 @@ class OOSMicroController extends Controller
 
         // ==================== close file attechment ================
         $micro['form_type'] = "OOS Microbiology";
+        $micro['record_number'] = "$request->record_number";
+        $micro['due_date'] = $request->due_date;
         $micro['status'] = "Opened";
         $micro['stage'] = 1;
         $micro['division_id'] = $request->division_id;
@@ -160,11 +162,58 @@ class OOSMicroController extends Controller
         }
 
         //=========== Audit Trail -- For Store  =========================//
-        
+        if (!empty($OOSmicro->initiator)) {
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = $OOSmicro->initiator;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty($OOSmicro->initiation_date)) {
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->activity_type = 'Initiation Date';
+            $history->previous = "Null";
+            $history->current = $OOSmicro->initiation_date;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty($OOSmicro->Record)) {
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = $OOSmicro->Record;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
         if (!empty($request->description_gi)) {
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
-            $history->activity_type = 'Description';
+            $history->activity_type = 'Short Description';
             $history->previous = "Null";
             $history->current = $request->description_gi;
             $history->comment = "NA";
@@ -681,7 +730,7 @@ class OOSMicroController extends Controller
 
             $micro_data = OOS_micro::find($id);
             $old_records = OOS_micro::select('id', 'division_id', 'record')->get();
-            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = ((RecordNumber::first()->value('counter')) );
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             // =========grid data========
             $info_product_materials = $micro_data->grids()->where('identifier', 'info_product_material')->first();
@@ -748,6 +797,7 @@ class OOSMicroController extends Controller
 
      $general_information = [
         'description_gi' => 'Short Description',
+        // 'record_number' => 'Record Number',
         'initiation_date' => 'Initiation Date',
         'due_date' => 'Due Date',
         'severity_level_gi' => 'Severity Level',
@@ -1262,6 +1312,7 @@ if($lastDocument->$key != $request->$key){
                                 //$history->action = 'Submit';
                                 $history->change_from = $lastDocument->status;
                                 $history->change_to =   "HOD Primary Review";
+                                $history->current = $changestage->Submite_by . ' , ' . $changestage->Submite_on;
                                 if (is_null($lastDocument->Submite_by) || $lastDocument->Submite_by === '') {
                                     $history->action_name = 'New';
                                 } else {
@@ -1281,7 +1332,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->HOD_Primary_Review_Complete_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'HOD Primary Review Complete By    ,   HOD Primary Review Complete On';
                     if (is_null($lastDocument->HOD_Primary_Review_Complete_By) || $lastDocument->HOD_Primary_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1292,9 +1343,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Initial Phase I Investigation';
+                    $history->action = 'HOD Primary Review Complete';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "CQA/QA Head Primary Review";
+                    $history->current = $changestage->HOD_Primary_Review_Complete_By . ' , ' . $changestage->HOD_Primary_Review_Complete_On;
                     if (is_null($lastDocument->HOD_Primary_Review_Complete_By) || $lastDocument->HOD_Primary_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1338,7 +1390,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Phase_IA_HOD_Review_Complete_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'Phase IA HOD Review Complete By    ,   Phase IA HOD Review Complete On';
                     if (is_null($lastDocument->Phase_IA_HOD_Review_Complete_By) || $lastDocument->Phase_IA_HOD_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1349,9 +1401,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Proposed Hypothesis Experiment';
+                    $history->action = 'Phase IA HOD Review Complete';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase IA QA Review ";
+                    $history->current = $changestage->Phase_IA_HOD_Review_Complete_By . ' , ' . $changestage->Phase_IA_HOD_Review_Complete_On;
                     if (is_null($lastDocument->Phase_IA_HOD_Review_Complete_By) || $lastDocument->Phase_IA_HOD_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1370,7 +1423,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Phase_IA_QA_Review_Complete_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'Phase IA QA Review Complete By    ,   Phase IA QA Review Complete On';
                     if (is_null($lastDocument->Phase_IA_QA_Review_Complete_By) || $lastDocument->Phase_IA_QA_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1381,9 +1434,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'No Assignable Cause Found';
+                    $history->action = 'Phase IA QA Review Complete';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "P-IA CQAH/QAH Review";
+                    $history->current = $changestage->Phase_IA_QA_Review_Complete_By . ' , ' . $changestage->Phase_IA_QA_Review_Complete_On;
                     if (is_null($lastDocument->Phase_IA_QA_Review_Complete_By) || $lastDocument->Phase_IA_QA_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1393,7 +1447,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
-            }
+            }            
             if ($changestage->stage == 9) {
                 $changestage->stage = "10";
                 $changestage->status = "Phase IB HOD Primary Review";
@@ -1402,7 +1456,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Phase_IB_Investigation_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'Phase IB Investigation By    ,   Phase IB Investigation On';
                     if (is_null($lastDocument->Phase_IB_Investigation_By) || $lastDocument->Phase_IB_Investigation_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1413,9 +1467,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Full Scale Investigation';
+                    $history->action = 'Phase IB Investigation';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase IB HOD Primary Review";
+                    $history->current = $changestage->Phase_IB_Investigation_By . ' , ' . $changestage->Phase_IB_Investigation_On;
                     if (is_null($lastDocument->Phase_IB_Investigation_By) || $lastDocument->Phase_IB_Investigation_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1434,7 +1489,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Phase_IB_HOD_Review_Complete_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'Phase IB HOD Review Complete By    ,   Phase IB HOD Review Complete On';
                     if (is_null($lastDocument->Phase_IB_HOD_Review_Complete_By) || $lastDocument->Phase_IB_HOD_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1445,9 +1500,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'No Assignable Cause Found (No Manufacturing Defect)';
+                    $history->action = 'Phase IB HOD Review Complete';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase IB QA Review";
+                    $history->current = $changestage->Phase_IB_HOD_Review_Complete_By . ' , ' . $changestage->Phase_IB_HOD_Review_Complete_On;
                     if (is_null($lastDocument->Phase_IB_HOD_Review_Complete_By) || $lastDocument->Phase_IB_HOD_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1466,7 +1522,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Phase_IB_QA_Review_Complete_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'Phase IB QA Review Complete By    ,   Phase IB QA Review Complete On';
                     if (is_null($lastDocument->Phase_IB_QA_Review_Complete_By) || $lastDocument->Phase_IB_QA_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1477,9 +1533,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'Phase IB QA Review Complete';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "P-IB CQAH/QAH Review";
+                    $history->current = $changestage->Phase_IB_QA_Review_Complete_By . ' , ' . $changestage->Phase_IB_QA_Review_Complete_On;
                     if (is_null($lastDocument->Phase_IB_QA_Review_Complete_By) || $lastDocument->Phase_IB_QA_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1522,7 +1579,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->P_I_B_Assignable_Cause_Not_Found_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'P I B Assignable Cause Not Found By    ,   P I B Assignable Cause Not Found On';
                     if (is_null($lastDocument->P_I_B_Assignable_Cause_Not_Found_By) || $lastDocument->P_I_B_Assignable_Cause_Not_Found_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1533,9 +1590,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Under Phase-II A Investigation';
+                    $history->action = 'P I B Assignable Cause Not Found';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Under Phase-II A Investigation";
+                    $history->current = $changestage->P_I_B_Assignable_Cause_Not_Found_By . ' , ' . $changestage->P_I_B_Assignable_Cause_Not_Found_On;
                     if (is_null($lastDocument->P_I_B_Assignable_Cause_Not_Found_By) || $lastDocument->P_I_B_Assignable_Cause_Not_Found_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1549,13 +1607,13 @@ if($lastDocument->$key != $request->$key){
             
             if($changestage->stage == 14) {
                 $changestage->stage = "15";
-                $changestage->status = "Phase II A QA Review";
+                $changestage->status = "Phase II A CQA/QA Review";
                 $changestage->Phase_II_A_HOD_Review_Complete_By= Auth::user()->name;
                 $changestage->Phase_II_A_HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_II_A_HOD_Review_Complete_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'Phase II A HOD ReviewComplete By    ,   Phase II A HOD ReviewComplete On';
                     if (is_null($lastDocument->Phase_II_A_HOD_Review_Complete_By) || $lastDocument->Phase_II_A_HOD_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1566,9 +1624,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Approval Completed';
+                    $history->action = 'Phase II A HOD Review Complete';
                     $history->change_from = $lastDocument->status;
-                    $history->change_to =   "Phase II A QA Review";
+                    $history->change_to =   "Phase II A CQA/QA Review";
+                    $history->current = $changestage->Phase_II_A_HOD_Review_Complete_By . ' , ' . $changestage->Phase_II_A_HOD_Review_Complete_On;
                     if (is_null($lastDocument->Phase_II_A_HOD_Review_Complete_By) || $lastDocument->Phase_II_A_HOD_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1588,7 +1647,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Phase_II_A_QA_Review_Complete_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'Phase II A CQA/QA Review Complete By    ,   Phase II A CQA/QA Review Complete On';
                     if (is_null($lastDocument->Phase_II_A_QA_Review_Complete_By) || $lastDocument->Phase_II_A_QA_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1599,9 +1658,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'P-II A QAH/CQAH Review';
+                    $history->action = 'Phase II A CQA/QA Review Complete';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "P-II A QAH/CQAH Review";
+                    $history->current = $changestage->Phase_II_A_QA_Review_Complete_By . ' , ' . $changestage->Phase_II_A_QA_Review_Complete_On;
                     if (is_null($lastDocument->Phase_II_A_QA_Review_Complete_By) || $lastDocument->Phase_II_A_QA_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1615,13 +1675,13 @@ if($lastDocument->$key != $request->$key){
 
             if ($changestage->stage == 16) {
                 $changestage->stage = "17";
-                $changestage->status = "P-II A QAH/CQAH Review";
+                $changestage->status = "Under Phase-II B Investigation";
                 $changestage->P_II_A_Assignable_Cause_Not_Found_By= Auth::user()->name;
                 $changestage->P_II_A_Assignable_Cause_Not_Found_On = Carbon::now()->format('d-M-Y');
                 $changestage->P_II_A_Assignable_Cause_Not_Found_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'P II A Assignable Cause Not Found By    ,   P II A Assignable Cause Not Found On';
                     if (is_null($lastDocument->P_II_A_Assignable_Cause_Not_Found_By) || $lastDocument->P_II_A_Assignable_Cause_Not_Found_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1632,9 +1692,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'P-II A QAH/CQAH Review';
+                    $history->action = 'P II A Assignable Cause Not Found';
                     $history->change_from = $lastDocument->status;
-                    $history->change_to =   "P-II A QAH/CQAH Review";
+                    $history->change_to =   "Under Phase-II B Investigation";
+                    $history->current = $changestage->P_II_A_Assignable_Cause_Not_Found_By . ' , ' . $changestage->P_II_A_Assignable_Cause_Not_Found_On;
                     if (is_null($lastDocument->P_II_A_Assignable_Cause_Not_Found_By) || $lastDocument->P_II_A_Assignable_Cause_Not_Found_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1648,13 +1709,13 @@ if($lastDocument->$key != $request->$key){
 
             if ($changestage->stage == 17) {
                 $changestage->stage = "18";
-                $changestage->status = "P-II A QAH/CQAH Review";
+                $changestage->status = "Phase II B HOD Primary Review";
                 $changestage->Phase_II_B_Investigation_By= Auth::user()->name;
                 $changestage->Phase_II_B_Investigation_On = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_II_B_Investigation_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'Phase II B Investigation By    ,   Phase II B Investigation On';
                     if (is_null($lastDocument->Phase_II_B_Investigation_By) || $lastDocument->Phase_II_B_Investigation_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1665,9 +1726,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'P-II A QAH/CQAH Review';
+                     $history->action = 'Phase II B Investigation';
                     $history->change_from = $lastDocument->status;
-                    $history->change_to =   "P-II A QAH/CQAH Review";
+                    $history->change_to =   "Phase II B HOD Primary Review";
+                    $history->current = $changestage->Phase_II_B_Investigation_By . ' , ' . $changestage->Phase_II_B_Investigation_On;
                     if (is_null($lastDocument->Phase_II_B_Investigation_By) || $lastDocument->Phase_II_B_Investigation_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1681,13 +1743,13 @@ if($lastDocument->$key != $request->$key){
 
             if ($changestage->stage == 18) {
                 $changestage->stage = "19";
-                $changestage->status = "P-II A QAH/CQAH Review";
+                $changestage->status = "Phase II B QA/CQA Review";
                 $changestage->Phase_II_B_HOD_Review_Complete_By= Auth::user()->name;
                 $changestage->Phase_II_B_HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_II_B_HOD_Review_Complete_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'Phase II B HOD Review Complete By    ,   Phase II B HOD Review Complete On';
                     if (is_null($lastDocument->Phase_II_B_HOD_Review_Complete_By) || $lastDocument->Phase_II_B_HOD_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1698,9 +1760,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'P-II A QAH/CQAH Review';
+                    $history->action = 'Phase II B HOD Review Complete';
                     $history->change_from = $lastDocument->status;
-                    $history->change_to =   "P-II A QAH/CQAH Review";
+                    $history->change_to =   "Phase II B QA/CQA Review";
+                    $history->current = $changestage->Phase_II_B_HOD_Review_Complete_By . ' , ' . $changestage->Phase_II_B_HOD_Review_Complete_On;
                     if (is_null($lastDocument->Phase_II_B_HOD_Review_Complete_By) || $lastDocument->Phase_II_B_HOD_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1714,13 +1777,13 @@ if($lastDocument->$key != $request->$key){
 
             if ($changestage->stage == 19) {
                 $changestage->stage = "20";
-                $changestage->status = "P-II A QAH/CQAH Review";
+                $changestage->status = "P-II B QAH/CQAH Review";
                 $changestage->Phase_II_B_QA_Review_Complete_By= Auth::user()->name;
                 $changestage->Phase_II_B_QA_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_II_B_QA_Review_Complete_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'Phase II B QA Review Complete By    ,   Phase II B QA Review Complete On';
                     if (is_null($lastDocument->Phase_II_B_QA_Review_Complete_By) || $lastDocument->Phase_II_B_QA_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1731,9 +1794,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'P-II A QAH/CQAH Review';
+                    $history->action = 'Phase II B QA Review Complete';
                     $history->change_from = $lastDocument->status;
-                    $history->change_to =   "P-II A QAH/CQAH Review";
+                    $history->change_to =   "P-II B QAH/CQAH Review";
+                    $history->current = $changestage->Phase_II_B_QA_Review_Complete_By . ' , ' . $changestage->Phase_II_B_QA_Review_Complete_On;
                     if (is_null($lastDocument->Phase_II_B_QA_Review_Complete_By) || $lastDocument->Phase_II_B_QA_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1747,13 +1811,13 @@ if($lastDocument->$key != $request->$key){
 
             if ($changestage->stage == 20) {
                 $changestage->stage = "21";
-                $changestage->status = "P-II A QAH/CQAH Review";
+                $changestage->status = "Closed - Done";
                 $changestage->P_II_B_Assignable_Cause_Not_Found_By= Auth::user()->name;
                 $changestage->P_II_B_Assignable_Cause_Not_Found_On = Carbon::now()->format('d-M-Y');
                 $changestage->P_II_B_Assignable_Cause_Not_Found_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'P II B Assignable Cause Not Found By    ,   P II B Assignable Cause Not Found On';
                     if (is_null($lastDocument->P_II_B_Assignable_Cause_Not_Found_By) || $lastDocument->P_II_B_Assignable_Cause_Not_Found_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1764,9 +1828,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'P-II A QAH/CQAH Review';
+                    $history->action = 'P II B Assignable Cause Not Found';
                     $history->change_from = $lastDocument->status;
-                    $history->change_to =   "P-II A QAH/CQAH Review";
+                    $history->change_to =   " Closed - Done";
+                    $history->current = $changestage->P_II_B_Assignable_Cause_Not_Found_By . ' , ' . $changestage->P_II_B_Assignable_Cause_Not_Found_On;
                     if (is_null($lastDocument->P_II_B_Assignable_Cause_Not_Found_By) || $lastDocument->P_II_B_Assignable_Cause_Not_Found_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1785,7 +1850,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->P_III_Investigation_Applicable_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'Submitted By    ,   Submitted On';
+                    $history->activity_type = 'Closed - Done By    ,   Closed - Done On';
                     if (is_null($lastDocument->P_III_Investigation_Applicable_By) || $lastDocument->P_III_Investigation_Applicable_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1796,9 +1861,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'P-II A QAH/CQAH Review';
+                    $history->action = 'P III Investigation Applicable';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Closed - Done";
+                    $history->current = $changestage->P_III_Investigation_Applicable_By . ' , ' . $changestage->P_III_Investigation_Applicable_On;
                     if (is_null($lastDocument->P_III_Investigation_Applicable_By) || $lastDocument->P_III_Investigation_Applicable_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1840,9 +1906,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Request More Info';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Opened";
+                    $history->current = $changestage->more_info_requiered1_By . ' , ' . $changestage->more_info_requiered1_On;
                     if (is_null($lastDocument->more_info_requiered1_By) || $lastDocument->more_info_requiered1_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1872,9 +1939,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                   //$history->action = 'Request More Info';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "HOD Primary Review";
+                    $history->current = $changestage->more_info_requiered2_By . ' , ' . $changestage->more_info_requiered2_On;
                     if (is_null($lastDocument->more_info_requiered2_By) || $lastDocument->more_info_requiered2_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1893,7 +1961,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Request_More_Info3_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    $history->activity_type = 'Request More Info By    ,  Request More Info On';
                     if (is_null($lastDocument->Request_More_Info3_By) || $lastDocument->Request_More_Info3_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1904,9 +1972,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                   // $history->action = 'Request More Info';
+                    $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "CQA/QA Head Primary Review";
+                    $history->current = $changestage->Request_More_Info3_By . ' , ' . $changestage->Request_More_Info3_On;
                     if (is_null($lastDocument->Request_More_Info3_By) || $lastDocument->Request_More_Info3_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1936,9 +2005,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Request More Info';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Under Phase-IA Investigation";
+                    $history->current = $changestage->more_info_requiered4_By . ' , ' . $changestage->more_info_requiered4_On;
                     if (is_null($lastDocument->more_info_requiered4_By) || $lastDocument->more_info_requiered4_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1969,9 +2039,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //s$history->action = 'Request More Info';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase IA HOD Primary Review";
+                    $history->current = $changestage->more_info_requiered5_By . ' , ' . $changestage->more_info_requiered5_On;
                     if (is_null($lastDocument->more_info_requiered5_By) || $lastDocument->more_info_requiered5_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1990,7 +2061,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Request_More_Info6_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    $history->activity_type = 'Request More Info By    ,  Request More Info On';
                     if (is_null($lastDocument->Request_More_Info6_By) || $lastDocument->Request_More_Info6_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -2001,9 +2072,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase IA QA Review";
+                    $history->current = $changestage->Request_More_Info6_By . ' , ' . $changestage->Request_More_Info6_On;
                     if (is_null($lastDocument->Request_More_Info6_By) || $lastDocument->Request_More_Info6_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2033,9 +2105,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Request More Info';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "P-IA CQAH/QAH Review";
+                    $history->current = $changestage->more_info_requiered7_By . ' , ' . $changestage->more_info_requiered7_On;
                     if (is_null($lastDocument->more_info_requiered7_By) || $lastDocument->more_info_requiered7_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2065,9 +2138,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Under Phase-IB Investigation";
+                    $history->current = $changestage->more_info_requiered8_By . ' , ' . $changestage->more_info_requiered8_On;
                     if (is_null($lastDocument->more_info_requiered8_By) || $lastDocument->more_info_requiered8_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2097,9 +2171,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase IB HOD Primary Review";
+                    $history->current = $changestage->more_info_requiered9_By . ' , ' . $changestage->more_info_requiered9_On;
                     if (is_null($lastDocument->more_info_requiered9_By) || $lastDocument->more_info_requiered9_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2118,7 +2193,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Request_More_Info10_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    $history->activity_type = 'Request More Info By    ,  Request More Info On';
                     if (is_null($lastDocument->Request_More_Info10_By) || $lastDocument->Request_More_Info10_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -2129,9 +2204,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Request More Info';
+                    $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase IB QA Review";
+                    $history->current = $changestage->Request_More_Info10_By . ' , ' . $changestage->Request_More_Info10_On;
                     if (is_null($lastDocument->Request_More_Info10_By) || $lastDocument->Request_More_Info10_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2161,9 +2237,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "P-IB CQAH/QAH Review";
+                    $history->current = $changestage->more_info_requiered11_By . ' , ' . $changestage->more_info_requiered11_On;
                     if (is_null($lastDocument->more_info_requiered11_By) || $lastDocument->more_info_requiered11_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2193,9 +2270,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Under Phase-II A Investigation";
+                    $history->current = $changestage->more_info_requiered12_By . ' , ' . $changestage->more_info_requiered12_On;
                     if (is_null($lastDocument->more_info_requiered12_By) || $lastDocument->more_info_requiered12_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2225,9 +2303,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase II A HOD Primary Review";
+                    $history->current = $changestage->more_info_requiered13_By . ' , ' . $changestage->more_info_requiered13_On;
                     if (is_null($lastDocument->more_info_requiered13_By) || $lastDocument->more_info_requiered13_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2246,7 +2325,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->more_info_requiered14_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    $history->activity_type = 'Request More Info By    ,  Request More Info On';
                     if (is_null($lastDocument->more_info_requiered14_By) || $lastDocument->more_info_requiered14_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -2257,9 +2336,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase II A QA Review";
+                    $history->current = $changestage->more_info_requiered14_By . ' , ' . $changestage->more_info_requiered14_On;
                     if (is_null($lastDocument->more_info_requiered14_By) || $lastDocument->more_info_requiered14_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2289,9 +2369,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "P-II A QAH/CQAH Review";
+                    $history->current = $changestage->Request_More_Info15_By . ' , ' . $changestage->Request_More_Info15_On;
                     if (is_null($lastDocument->Request_More_Info15_By) || $lastDocument->Request_More_Info15_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2321,9 +2402,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Under Phase-II B Investigation";
+                    $history->current = $changestage->more_info_requiered16_By . ' , ' . $changestage->more_info_requiered16_On;
                     if (is_null($lastDocument->more_info_requiered16_By) || $lastDocument->more_info_requiered16_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2353,9 +2435,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase II B HOD Primary Review";
+                    $history->current = $changestage->more_info_requiered17_By . ' , ' . $changestage->more_info_requiered17_On;
                     if (is_null($lastDocument->more_info_requiered17_By) || $lastDocument->more_info_requiered17_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2385,9 +2468,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase II B QA Review";
+                    $history->current = $changestage->more_info_requiered18_By . ' , ' . $changestage->more_info_requiered18_On;
                     if (is_null($lastDocument->more_info_requiered18_By) || $lastDocument->more_info_requiered18_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2406,7 +2490,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Request_More_Info19_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                     $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                     $history->activity_type = 'Request More Info By    ,  Request More Info On';
                     if (is_null($lastDocument->Request_More_Info19_By) || $lastDocument->Request_More_Info19_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -2417,9 +2501,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "P-II B QAH/CQAH Review";
+                    $history->current = $changestage->Request_More_Info19_By . ' , ' . $changestage->Request_More_Info19_On;
                     if (is_null($lastDocument->Request_More_Info19_By) || $lastDocument->Request_More_Info19_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2449,7 +2534,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Opened_to_QA_Head_Approval_Comment = $request->comment;
                             $history = new OOSmicroAuditTrail();
                             $history->oos_micro_id = $id;
-                              $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                              $history->activity_type = 'QA Head Approval By    ,  QA Head Approval On';
                             if (is_null($lastDocument->Opened_to_QA_Head_Approval_By) || $lastDocument->Opened_to_QA_Head_Approval_By === '') {
                                 $history->previous = "Null";
                             } else {
@@ -2460,9 +2545,10 @@ if($lastDocument->$key != $request->$key){
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            //$history->action = 'Assignable Cause Found';
+                            $history->action = 'QA Head Approval';
                             $history->change_from = $lastDocument->status;
                             $history->change_to =   "QA Head Approval";
+                            $history->current = $changestage->Opened_to_QA_Head_Approval_By . ' , ' . $changestage->Opened_to_QA_Head_Approval_On;
                             if (is_null($lastDocument->Opened_to_QA_Head_Approval_By) || $lastDocument->Opened_to_QA_Head_Approval_By === '') {
                                 $history->action_name = 'New';
                             } else {
@@ -2481,7 +2567,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->QA_Head_Approval_Comment = $request->comment;
                             $history = new OOSmicroAuditTrail();
                             $history->oos_micro_id = $id;
-                              $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                              $history->activity_type = 'QA Head Approval By    ,  QA Head Approval On';
                     if (is_null($lastDocument->QA_Head_Approval_By) || $lastDocument->QA_Head_Approval_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -2492,9 +2578,10 @@ if($lastDocument->$key != $request->$key){
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            //$history->action = 'Assignable Cause Found';
+                            $history->action = 'QA Head Approval';
                             $history->change_from = $lastDocument->status;
                             $history->change_to =   "QA Head Approval";
+                            $history->current = $changestage->QA_Head_Approval_By . ' , ' . $changestage->QA_Head_Approval_On;
                             if (is_null($lastDocument->QA_Head_Approval_By) || $lastDocument->QA_Head_Approval_By === '') {
                                 $history->action_name = 'New';
                             } else {
@@ -2513,7 +2600,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->CQA_Head_Primary_Review_Complete_Comment = $request->comment;
                             $history = new OOSmicroAuditTrail();
                             $history->oos_micro_id = $id;
-                              $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                              $history->activity_type = 'CQA Head Primary Review Complete By    ,  CQA Head Primary Review Complete On';
                     if (is_null($lastDocument->CQA_Head_Primary_Review_Complete_By) || $lastDocument->CQA_Head_Primary_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -2524,9 +2611,10 @@ if($lastDocument->$key != $request->$key){
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            //$history->action = 'Assignable Cause Found';
+                            $history->action = 'CQA Head Primary Review Complete';
                             $history->change_from = $lastDocument->status;
                             $history->change_to =   "Under Phase-IA Investigation";
+                            $history->current = $changestage->CQA_Head_Primary_Review_Complete_By . ' , ' . $changestage->CQA_Head_Primary_Review_Complete_On;
                             if (is_null($lastDocument->CQA_Head_Primary_Review_Complete_By) || $lastDocument->CQA_Head_Primary_Review_Complete_By === '') {
                                 $history->action_name = 'New';
                             } else {
@@ -2545,9 +2633,9 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Phase_IA_Investigation_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                      $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                      $history->activity_type = 'Phase IA Investigation By    , Phase IA Investigation On';
                     if (is_null($lastDocument->Phase_IA_Investigation_By) || $lastDocument->Phase_IA_Investigation_By === '') {
-                        $history->previous = "Null";
+                        $history->previous = "";
                     } else {
                         $history->previous = $lastDocument->Phase_IA_Investigation_By . ' , ' . $lastDocument->Phase_IA_Investiigation_On;
                     }
@@ -2556,9 +2644,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Correction Completed';
+                    $history->action = 'Phase IA Investigation';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase IA HOD Primary Review";
+                    $history->current = $changestage->Phase_IA_Investigation_By . ' , ' . $changestage->Phase_IA_Investiigation_On;
                     if (is_null($lastDocument->Phase_IA_Investigation_By) || $lastDocument->Phase_IA_Investigation_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2569,30 +2658,7 @@ if($lastDocument->$key != $request->$key){
                 toastr()->success('Document Sent');
                 return back();
             }
-            // if ($changestage->stage == 6) {
-            //     $changestage->stage = "7";
-            //     $changestage->status = "P-IA CQAH/QAH Review";
-            //     $changestage->completed_by_under_repeat_analysis= Auth::user()->name;
-            //     $changestage->completed_on_under_repeat_analysis = Carbon::now()->format('d-M-Y');
-            //     $changestage->comment_under_repeat_analysis = $request->comment;
-            //         $history = new OOSmicroAuditTrail();
-            //         $history->oos_micro_id = $id;
-            //           $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                   
-            //         $history->comment = $request->comment;
-            //         $history->user_id = Auth::user()->id;
-            //         $history->user_name = Auth::user()->name;
-            //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //         $history->origin_state = $lastDocument->status;
-            //         //$history->action = 'Obvious Error Found';
-            //         $history->change_from = $lastDocument->status;
-            //         $history->change_to =   "P-IA CQAH/QAH Review";
-            //         $history->action_name = 'Update';
-            //         $history->save();
-            //     $changestage->update();
-            //     toastr()->success('Document Sent');
-            //     return back();
-            // }
+           
             if ($changestage->stage == 8) {
                 $changestage->stage = "9";
                 $changestage->status = "Under Phase-IB Investigation";
@@ -2601,7 +2667,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Assignable_Cause_Not_Found_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                      $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                      $history->activity_type = 'Assignable Cause Not Found By    ,  Assignable Cause Not Found On';
                     if (is_null($lastDocument->Assignable_Cause_Not_Found_By) || $lastDocument->Assignable_Cause_Not_Found_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -2612,9 +2678,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Repeat Analysis COmpleted';
+                    $history->action = 'Assignable Cause Not Found';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Under Phase-IB Investigation";
+                    $history->current = $changestage->Assignable_Cause_Not_Found_By . ' , ' . $changestage->Assignable_Cause_Not_Found_On;
                     if (is_null($lastDocument->Assignable_Cause_Not_Found_By) || $lastDocument->Assignable_Cause_Not_Found_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2625,77 +2692,7 @@ if($lastDocument->$key != $request->$key){
                 toastr()->success('Document Sent');
                 return back();
             }
-            // if ($changestage->stage == 9) {
-            //     $changestage->stage = "10";
-            //     $changestage->status = "Under PhaseIIA Correction";
-            //     $changestage->completed_by_under_phaseIIA_correction= Auth::user()->name;
-            //     $changestage->completed_on_under_phaseIIA_correction = Carbon::now()->format('d-M-Y');
-            //     $changestage->comment_under_phaseIIA_correction = $request->comment;
-            //         $history = new OOSmicroAuditTrail();
-            //         $history->oos_micro_id = $id;
-            //           $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                  
-            //         $history->comment = $request->comment;
-            //         $history->user_id = Auth::user()->id;
-            //         $history->user_name = Auth::user()->name;
-            //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //         $history->origin_state = $lastDocument->status;
-            //         $history->action = 'Assignable Cause Found (Manufacturing Defect)';
-            //         $history->change_from = $lastDocument->status;
-            //         $history->change_to =   "Under PhaseIIA Correction";
-            //         $history->action_name = 'Update';
-            //         $history->save();
-            //     $changestage->update();
-            //     toastr()->success('Document Sent');
-            //     return back();
-            // }
-            // if ($changestage->stage == 10) {
-            //     $changestage->stage = "12";
-            //     $changestage->status = "Under Batch Disposition";
-            //     $changestage->completed_by_under_batch_disposition= Auth::user()->name;
-            //     $changestage->completed_on_under_batch_disposition = Carbon::now()->format('d-M-Y');
-            //     $changestage->comment_under_batch_disposition = $request->comment;
-            //         $history = new OOSmicroAuditTrail();
-            //         $history->oos_micro_id = $id;
-            //    
-            //         $history->comment = $request->comment;
-            //         $history->user_id = Auth::user()->id;
-            //         $history->user_name = Auth::user()->name;
-            //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //         $history->origin_state = $lastDocument->status;
-            //         $history->action = 'Correction Complete';
-            //         $history->change_from = $lastDocument->status;
-            //         $history->change_to =   "Under Batch Disposition";
-            //         $history->action_name = 'Update';
-            //         $history->save();
-            //     $changestage->update();
-            //     toastr()->success('Document Sent');
-            //     return back();
-            // }
-            // if ($changestage->stage == 11) {
-            //     $changestage->stage = "12";
-            //     $changestage->status = "Under Batch Disposition";
-            //     $changestage->completed_by_under_batch_disposition= Auth::user()->name;
-            //     $changestage->completed_on_under_batch_disposition = Carbon::now()->format('d-M-Y');
-            //     $changestage->comment_under_batch_disposition = $request->comment;
-            //         $history = new OOSmicroAuditTrail();
-            //         $history->oos_micro_id = $id;
-            //           $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                   
-            //         $history->comment = $request->comment;
-            //         $history->user_id = Auth::user()->id;
-            //         $history->user_name = Auth::user()->name;
-            //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //         $history->origin_state = $lastDocument->status;
-            //         $history->action = 'Correction Complete';
-            //         $history->change_from = $lastDocument->status;
-            //         $history->change_to =   "Pending Correction";
-            //         $history->action_name = 'Update';
-            //         $history->save();
-            //     $changestage->update();
-            //     toastr()->success('Document Sent');
-            //     return back();
-            // }
+            
             if ($changestage->stage == 13) {
                 $changestage->stage = "14";
                 $changestage->status = "Phase II A HOD Primary Review";
@@ -2704,7 +2701,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->Phase_II_A_Investigation_Comment = $request->comment;
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                      $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                      $history->activity_type = 'Phase II A Investigation By    ,  Phase II A Investigation On';
                     if (is_null($lastDocument->Phase_II_A_Investigation_By) || $lastDocument->Phase_II_A_Investigation_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -2715,9 +2712,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    //$history->action = 'Final Approval';
+                    $history->action = 'Phase II A Investigation';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase II A HOD Primary Review";
+                    $history->current = $changestage->Phase_II_A_Investigation_By . ' , ' . $changestage->Phase_II_A_Investigation_On;
                     if (is_null($lastDocument->Phase_II_A_Investigation_By) || $lastDocument->Phase_II_A_Investigation_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2746,7 +2744,7 @@ if($lastDocument->$key != $request->$key){
 
                     $history = new OOSmicroAuditTrail();
                     $history->oos_micro_id = $id;
-                      $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                      $history->activity_type = 'Cancel By    ,  Cancel On';
                     if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                         $history->previous = "Null";
                     } else {
@@ -2758,9 +2756,10 @@ if($lastDocument->$key != $request->$key){
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state =  $data->status;
-                    //$history->action = 'Correction Complete';
+                    $history->action = 'Cancel';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Closed-Cancelled";
+                    $history->current = $data->cancelled_by . ' , ' . $data->cancelled_on;
                     if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                         $history->action_name = 'New';
                     } else {
@@ -2770,11 +2769,137 @@ if($lastDocument->$key != $request->$key){
             $data->update();
             toastr()->success('Document Sent');
             return back();
-        } else {
+
+            } else {          
             toastr()->error('E-signature Not match');
             return back();
         }
     }
+
+    public function Done_stage(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $data = OOS_MICRO::find($id);
+            $changestage = OOS_MICRO::find($id);
+            $lastDocument = OOS_MICRO::find($id);
+            $data->stage = "23";
+            $data->status = "Closed-Done";
+            $data->Assignable_Cause_Found_By = Auth::user()->name;
+            $data->Assignable_Cause_Found_On = Carbon::now()->format('d-M-Y');
+            $data->Assignable_Cause_Found_Comment = $request->comment;
+
+            $history = new OOSmicroAuditTrail();
+            $history->oos_micro_id = $id;
+            $history->activity_type = 'Assignable Cause Found By    ,   Assignable Cause Found On';
+            if (is_null($lastDocument->Assignable_Cause_Found_By) || $lastDocument->Assignable_Cause_Found_By === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->Assignable_Cause_Found_By . ' , ' . $lastDocument->Assignable_Cause_Found_On;
+            }
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->action = 'Assignable Cause Found';
+            $history->change_from = $lastDocument->status;
+            $history->change_to =   "Closed - Done";
+            $history->current = $changestage->Assignable_Cause_Found_By . ' , ' . $changestage->Assignable_Cause_Found_On;
+            if (is_null($lastDocument->Assignable_Cause_Found_By) || $lastDocument->Assignable_Cause_Found_By === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+            $data->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+    }
+
+    public function Done_One_stage(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $data = OOS_MICRO::find($id);
+            $changestage = OOS_MICRO::find($id);
+            $lastDocument = OOS_MICRO::find($id);
+            $data->stage = "24";
+            $data->status = "Closed-Done";
+            $data->P_I_B_Assignable_Cause_Found_By = Auth::user()->name;
+            $data->P_I_B_Assignable_Cause_Found_On = Carbon::now()->format('d-M-Y');
+            $data->P_I_B_Assignable_Cause_Found_Comment = $request->comment;
+
+            $history = new OOSmicroAuditTrail();
+            $history->oos_micro_id = $id;
+            $history->activity_type = 'P-IB Assignable Cause Found By    ,   P-IB Assignable Cause Found On';
+            if (is_null($lastDocument->P_I_B_Assignable_Cause_Found_By) || $lastDocument->P_I_B_Assignable_Cause_Found_By === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->P_I_B_Assignable_Cause_Found_By . ' , ' . $lastDocument->P_I_B_Assignable_Cause_Found_On;
+            }
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->action = 'P-IB Assignable Cause Found';
+            $history->change_from = $lastDocument->status;
+            $history->change_to =   "Closed - Done";
+            $history->current = $changestage->P_I_B_Assignable_Cause_Found_By . ' , ' . $changestage->P_I_B_Assignable_Cause_Found_On;
+            if (is_null($lastDocument->P_I_B_Assignable_Cause_Found_By) || $lastDocument->P_I_B_Assignable_Cause_Found_By === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+            $data->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+    }
+
+    public function Done_Two_stage(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $data = OOS_MICRO::find($id);
+            $changestage = OOS_MICRO::find($id);
+            $lastDocument = OOS_MICRO::find($id);
+            $data->stage = "25";
+            $data->status = "Closed-Done";
+            $data->P_II_A_Assignable_Cause_Found_By = Auth::user()->name;
+            $data->P_II_A_Assignable_Cause_Found_On = Carbon::now()->format('d-M-Y');
+            $data->P_II_A_Assignable_Cause_Found_Comment = $request->comment;
+
+            $history = new OOSmicroAuditTrail();
+            $history->oos_micro_id = $id;
+            $history->activity_type = 'P-II A Assignable Cause Found By    ,   P-II A Assignable Cause Found On';
+            if (is_null($lastDocument->P_II_A_Assignable_Cause_Found_By) || $lastDocument->P_II_A_Assignable_Cause_Found_By === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->P_II_A_Assignable_Cause_Found_By . ' , ' . $lastDocument->P_II_A_Assignable_Cause_Found_On;
+            }
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->action = 'P-II A Assignable Cause Found';
+            $history->change_from = $lastDocument->status;
+            $history->change_to =   "Closed - Done";
+            $history->current = $changestage->P_II_A_Assignable_Cause_Found_By . ' , ' . $changestage->P_II_A_Assignable_Cause_Found_On;
+            if (is_null($lastDocument->P_II_A_Assignable_Cause_Found_By) || $lastDocument->P_II_A_Assignable_Cause_Found_By === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+            $data->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+    }
+
+   
     public function child(Request $request, $id)
     {
         $cft = [];

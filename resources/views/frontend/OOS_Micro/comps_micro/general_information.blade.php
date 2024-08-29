@@ -4,7 +4,7 @@
         <div class="col-lg-6">
             <div class="group-input">
                 <label for="Initiator Group">Type </label>
-                <select id="dynamicSelectType" name="type" {{Helpers::isOOSMicro($micro_data->stage)}}>
+                <select disabled id="dynamicSelectType" name="type" {{Helpers::isOOSMicro($micro_data->stage)}}>
                     <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
                     <option value="{{ route('oos.index') }}">OOS Chemical</option>
                     <option value="{{ route('oot.index')  }}">OOT</option>
@@ -20,10 +20,9 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator"> Record Number </label>
-                    <input type="hidden" name="record" value="{{ $record_number }}">
-                        <input disabled type="text" name="record"
-                        value="{{ Helpers::getDivisionName($micro_data->division_id) }}/OOS Micro/{{ Helpers::year($micro_data->created_at) }}/{{ $micro_data->record ? str_pad($micro_data->record, 4, "0", STR_PAD_LEFT ) : '1' }}">
-                </div>
+                    <input type="hidden"  id="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
+                    <input disabled type="text" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
+            </div>
             </div>
             <div class="col-lg-6">
                <div class="group-input">
@@ -38,6 +37,10 @@
                     <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
                 </div>
             </div>
+            @php
+            $initiationDate = date('Y-m-d');
+            $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
+        @endphp
             <div class="col-md-6 ">
                 <div class="group-input ">
                     <label for="due-date"> Date Of Initiation <span class="text-danger"></span></label>
@@ -45,10 +48,7 @@
                     <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                 </div>
             </div>
-            @php
-            $initiationDate = date('Y-m-d');
-            $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
-        @endphp
+           
 
         <div class="col-md-6 new-date-data-field">
             <div class="group-input input-date">
@@ -186,7 +186,7 @@
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Source Document Type</label>
                     <select name="source_document_type_gi" {{Helpers::isOOSMicro($micro_data->stage)}}>
-                        <option>Enter Your Selection Here</option>
+                        <option value="0">Enter Your Selection Here</option>
                         <option value="oot" @if ($micro_data->source_document_type_gi == 'oot') selected @endif>OOT</option>
                         <option value="lab-incident" @if ($micro_data->source_document_type_gi == 'lab-incident') selected @endif>Lab Incident</option>
                         <option value="deviation" @if ($micro_data->source_document_type_gi == 'deviation') selected @endif>Deviation</option>

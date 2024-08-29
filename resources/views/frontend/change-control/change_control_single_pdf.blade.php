@@ -534,7 +534,7 @@ Not Applicable
                     </div>
                     <table>
                         <tr>
-                            <th class="w-20">Due Date Days</th>
+                            <th class="w-20">Due Days</th>
                             <td class="w-30">{{ $data->due_days }}</td>
 
 
