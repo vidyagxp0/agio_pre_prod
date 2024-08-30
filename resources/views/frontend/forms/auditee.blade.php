@@ -1106,7 +1106,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="More Information Required By">More Information Required
                                             By</label>
@@ -1119,7 +1119,7 @@
                                             On</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Approval Complete By By">Approval Complete By By</label>

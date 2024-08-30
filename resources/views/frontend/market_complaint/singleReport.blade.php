@@ -139,7 +139,7 @@
 
     .inner-block .block-head {
         font-weight: bold;
-        font-size: 1.1rem; 
+        font-size: 1.1rem;
         padding-bottom: 5px;
         border-bottom: 2px solid #4274da;
         margin-bottom: 10px;
@@ -215,7 +215,7 @@
                         <td class="w-80">{{ $data->originator }}</td>
                         <th class="w-20">Date Initiation</th>
                         <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
-                        
+
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -241,7 +241,7 @@
                             ];
                         @endphp
                         <td class="w-80">{{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
- 
+
                         <th class="w-20">Initiator Group Code</th>
                         {{-- <td class="w-80">{{ $data->initiator_group ?? 'Not Applicable' }}</td> --}}
                         <td class="w-80">{{ $data->initiator_group_code_gi ?? 'Not Applicable' }}</td>
@@ -258,8 +258,8 @@
                     <tr>
                             <th class="w-20">Due Date</th>
                             <td class="w-80">{{  Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
-                        
-                   
+
+
                         <th class="w-20">Repeat Nature</th>
                         <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td>
                     </tr>
@@ -278,14 +278,14 @@
                     <tr>
                         <th class="w-20">Is Repeat</th>
                         <td class="w-80">{{ $data->is_repeat_gi ?? 'Not Applicable' }}</td>
-                    
+
                         <th class="w-20">Complaint</th>
                         <td class="w-80">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
-                       
+
                     </tr>
                 </table>
-                
-                
+
+
                 <table>
                     <tr>
                         <th class="w-20">Details Of Nature Market Complaint</th>
@@ -302,18 +302,18 @@
 
                     </tr>
                 </table>
-               
+
                 <table>
-                    <tr>   
+                    <tr>
                     <th class="w-20">Review Of Complaint Sample</th>
                         <td class="w-80">{!! $data->review_of_complaint_sample_gi ?? 'Not Applicable' !!}</td>
                     </tr>
-               
+
                     <tr>
                         <th class="w-20">Review Of Batch Manufacturing Record (BMR)</th>
                         <td class="w-80">{!! $data->review_of_batch_manufacturing_record_BMR_gi ?? 'Not Applicable' !!}</td>
                     </tr>
-                    <tr>  
+                    <tr>
                         <th class="w-20">Review Of Raw Materials Used In Batch Manufacturing</th>
                         <td class="w-80">{!! $data->review_of_raw_materials_used_in_batch_manufacturing_gi ?? 'Not Applicable' !!}</td>
                     </tr>
@@ -347,7 +347,7 @@
                     </tr>
                 </table>
                 <table>
-                   
+
                     <tr>
                         <th class="w-20">Initial Attachment</th>
                         <td class="w-80">
@@ -381,12 +381,12 @@
                         <tbody>
                             @if($prductgigrid && $prductgigrid->data)
                                   @foreach ($prductgigrid->data as  $item)
-                                  
-                                  
-                                 
+
+
+
                                         <tr>
                                 {{-- <td style="width: 6%">{{ $item['serial'] }}</td> --}}
-{{--                                
+{{--
                                   <td>{{ $item['info_product_name'] }}</td>
                                   <td>{{ $item['info_batch_no'] }}</td>
                                   <td>{{ $item['info_mfg_date'] }}</td>
@@ -395,7 +395,7 @@
                                   <td>{{ $item['info_pack_size'] }}</td>
                                   <td> {{ $item['info_dispatch_quantity'] }}</td>
                                   <td>{{ $item['info_remarks'] }}</td>
-                                 
+
 
                             </tr>
                             @endforeach
@@ -412,7 +412,7 @@
                     </table>
 
 
-                   </tr> --}} 
+                   </tr> --}}
 
                 </table>
             </div>
@@ -471,13 +471,119 @@
                         </td>
                     </tr>
 
-{{-- 
-                    <tr>
+                    {{--  <tr>
                         <th class="w-20">Initial Attachment</th>
                         <td class="w-80">{{ $data->Initial_Attachment ? '<a href="'.asset('upload/document/'.$data->Initial_Attachment).'">'.$data->Initial_Attachment.'</a>' : 'Not Applicable' }}</td>
                     </tr> --}}
                 </table>
             </div>
+
+            <div class="block">
+                <div class="block-head">
+                    CFT Review
+                </div>
+                <div class="block-head">Production (Table/Capsule/Powder)</div>
+                <table>
+                    <tr>
+                        <th class="w-20">Production Review Required</th>
+                        <td class="w-30">@if($data1->Production_Review) {{  $data1->Production_Table_Review }}@else Not Applicable @endif</td>
+                        {{-- <td class="w-30"> <div> @if ($data1->Production_Review)  {{ $data1->Production_Review }} @else Not Applicable  @endif </div>  </td> --}}
+                        <th class="w-20">Production Person</th>
+                        <td class="w-30">@if($data1->Production_Table_Person){{ $data1->Production_Table_Person}}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Production Assesment</th>
+                        <td class="w-30">@if($data1->Production_Table_Assessment){{ $data1->Production_Table_Assessment  }}@else Not Applicable @endif</td>
+                        <th class="w-20">Production Feedback</th>
+                        <td class="w-30">@if($data1->Production_Table_Feedback){{  $data1->Production_Table_Feedback }}@else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Production by</th>
+                        <td class="w-30">@if($data1->Production_Table_By){{ $data1->Production_Table_By }}@else Not Applicable @endif</td>
+                        <th class="w-20">Production on</th>
+                        <td class="w-30">@if($data1->Production_Table_On){{ $data1->Production_Table_On}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            Production Attechment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data1->Production_Table_Attachment)
+                                @foreach(json_decode($data1->Production_Table_Attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </table>
+
+                <div class="block-head">Production Injection</div>
+                <table>
+                    <tr>
+                        <th class="w-20">Production Injection Review</th>
+                        <td class="w-30">@if($data1->Production_Injection_Review) {{  $data1->Production_Injection_Review }}@else Not Applicable @endif</td>
+                        {{-- <td class="w-30"> <div> @if ($data1->Production_Review)  {{ $data1->Production_Review }} @else Not Applicable  @endif </div>  </td> --}}
+                        <th class="w-20">Production Injection Person</th>
+                        <td class="w-30">@if($data1->Production_Injection_Person){{ $data1->Production_Injection_Person}}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Production Injection Assesment</th>
+                        <td class="w-30">@if($data1->Production_Injection_Assessment){{ $data1->Production_Injection_Assessment  }}@else Not Applicable @endif</td>
+                        <th class="w-20">Production Injection Feedback</th>
+                        <td class="w-30">@if($data1->Production_Injection_Feedback){{  $data1->Production_Injection_Feedback }}@else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Production Injection by</th>
+                        <td class="w-30">@if($data1->Production_Injection_By){{ $data1->Production_Injection_By }}@else Not Applicable @endif</td>
+                        <th class="w-20">Production Injection  on</th>
+                        <td class="w-30">@if($data1->Production_Injection_On){{ $data1->Production_Injection_On}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
+                <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            Production Attechment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data1->Production_Injection_Attachment)
+                                @foreach(json_decode($data1->Production_Injection_Attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </table>
+
+            </div>
+
             <div class="block">
                 <div class="block-head">
                     Complaint Acknowledgement

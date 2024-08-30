@@ -196,11 +196,11 @@
                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                         @endif
                         <div class="buttons-new">
-                            @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
+                            {{-- @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
                                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                     Review
-                                </button> 
-                            @endif
+                                </button>   
+                            @endif --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                 Review
                             </button> 
@@ -328,7 +328,7 @@
                                 Audit Trail
                             </div>
                         
-                            <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
+                            <div> <strong>Record ID:</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :

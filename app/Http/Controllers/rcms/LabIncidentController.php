@@ -75,6 +75,7 @@ class LabIncidentController extends Controller
         $data = new LabIncident();
         $data->Form_Type = "lab-incident";
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
+        $data->record_number = $request->record_number;
         $data->initiator_id = Auth::user()->id;
         $data->division_id = $request->division_id;
         $data->short_desc = $request->short_desc;
@@ -2549,6 +2550,50 @@ class LabIncidentController extends Controller
            
         }
 
+        if ($lastDocument->qa_hear_remark_c != $data->qa_hear_remark_c ) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QA Head Remark';
+            $history->previous = Helpers::getInitiatorName($lastDocument->qa_hear_remark_c);
+            $history->current = Helpers::getInitiatorName($data->qa_hear_remark_c);
+            $history->comment = $request->qc_head_closure_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->qa_hear_remark_c) || $lastDocument->qa_hear_remark_c === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+           
+        }
+
+        if ($lastDocument->closure_attachment_c != $data->closure_attachment_c ) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Closure Attachment';
+            $history->previous = Helpers::getInitiatorName($lastDocument->closure_attachment_c);
+            $history->current = Helpers::getInitiatorName($data->closure_attachment_c);
+            $history->comment = $request->qc_head_closure_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->closure_attachment_c) || $lastDocument->closure_attachment_c === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+           
+        }
+
         if ($lastDocument->other_incidence != $data->other_incidence ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -2730,7 +2775,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
         if ($lastDocument->analyst_sign_date_gi != $data['analyst_sign_date_gi']||$lastDocument->analyst_sign_date_gi != $data['analyst_sign_date_gi']){
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data['id'];
-            $history->activity_type = 'Analyst Name';
+            $history->activity_type = 'Reported By';
             $history->previous = $previousAnalystName ? $previousAnalystName->name : 'Unknown';
             $history->current = $currentAnalystName ? $currentAnalystName->name : 'Unknown';
             $history->comment = $request->analyst_sign_date_gi_comment;
@@ -2741,6 +2786,31 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->analyst_sign_date_gi) || $lastDocument->analyst_sign_date_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+           
+        }        
+        
+        $previousSectionName = User::find($lastDocument->section_sign_date_gi);
+        $currentSectionName = User::find($data['section_sign_date_gi']);
+
+        if ($lastDocument->section_sign_date_gi != $data['section_sign_date_gi']||$lastDocument->section_sign_date_gi != $data['section_sign_date_gi']){
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data['id'];
+            $history->activity_type = 'Section Head Name';
+            $history->previous = $previousSectionName ? $previousSectionName->name : 'Unknown';
+            $history->current = $currentSectionName ? $currentSectionName->name : 'Unknown';
+            $history->comment = $request->section_sign_date_gi_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->section_sign_date_gi) || $lastDocument->section_sign_date_gi === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -3239,6 +3309,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Incident_Details) || $lastDocument->Incident_Details === '') {
                 $history->action_name = "New";
@@ -3260,8 +3331,32 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Document_Details) || $lastDocument->Document_Details === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
+            $history->save();
+        }
+
+        if ($lastDocument->attachments_ia != $data->attachments_ia ) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Attachments';
+            $history->previous = $lastDocument->attachments_ia;
+            $history->current = $data->attachments_ia;
+            $history->comment = $request->attachments_ia_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->attachments_ia) || $lastDocument->attachments_ia === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -3282,6 +3377,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Instrument_Details) || $lastDocument->Instrument_Details === '') {
                 $history->action_name = "New";
@@ -3303,6 +3399,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Involved_Personnel) || $lastDocument->Involved_Personnel === '') {
                 $history->action_name = "New";
@@ -3324,6 +3421,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Product_Details) || $lastDocument->Product_Details === '') {
                 $history->action_name = "New";
@@ -3345,6 +3443,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Supervisor_Review_Comments) || $lastDocument->Supervisor_Review_Comments === '') {
                 $history->action_name = "New";
@@ -3366,6 +3465,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Cancelation_Remarks) || $lastDocument->Cancelation_Remarks === '') {
                 $history->action_name = "New";
@@ -3387,6 +3487,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Investigation_Details) || $lastDocument->Investigation_Details === '') {
                 $history->action_name = "New";
@@ -3408,6 +3509,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Action_Taken) || $lastDocument->Action_Taken === '') {
                 $history->action_name = "New";
@@ -3429,6 +3531,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Root_Cause) || $lastDocument->Root_Cause === '') {
                 $history->action_name = "New";
@@ -3451,6 +3554,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Preventive_Action) || $lastDocument->Preventive_Action === '') {
                 $history->action_name = "New";
@@ -3473,6 +3577,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Corrective_Preventive_Action) || $lastDocument->Corrective_Preventive_Action === '') {
                 $history->action_name = "New";
@@ -3495,6 +3600,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->QA_Review_Comments) || $lastDocument->QA_Review_Comments === '') {
                 $history->action_name = "New";
@@ -3504,6 +3610,30 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
            
             $history->save();
         }
+
+        if ($lastDocument->QA_Head_Attachment != $data->QA_Head_Attachment) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'QA Review Attachment';
+            $history->previous = $lastDocument->QA_Head_Attachment;
+            $history->current = $data->QA_Head_Attachment;
+            $history->comment = $request->QA_Review_Comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->QA_Head_Attachment) || $lastDocument->QA_Head_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
+            $history->save();
+        }
+
         if ($lastDocument->QA_Head != $data->QA_Head ) {
 
             $history = new LabIncidentAuditTrial();
@@ -3516,6 +3646,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->QA_Head) || $lastDocument->QA_Head === '') {
                 $history->action_name = "New";
@@ -3537,6 +3668,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Effectiveness_Check) || $lastDocument->Effectiveness_Check === '') {
                 $history->action_name = "New";
@@ -3557,6 +3689,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Incident_Type) || $lastDocument->Incident_Type === '') {
                 $history->action_name = "New";
@@ -3578,6 +3711,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Conclusion) || $lastDocument->Conclusion === '') {
                 $history->action_name = "New";
@@ -3599,6 +3733,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Initial_Attachment) || $lastDocument->Initial_Attachment === '') {
                 $history->action_name = "New";
@@ -3620,6 +3755,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Attachments) || $lastDocument->Attachments === '') {
                 $history->action_name = "New";
@@ -3641,6 +3777,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Inv_Attachment) || $lastDocument->Inv_Attachment === '') {
                 $history->action_name = "New";
@@ -3662,6 +3799,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->CAPA_Attachment) || $lastDocument->CAPA_Attachment === '') {
                 $history->action_name = "New";
@@ -3683,6 +3821,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->QA_Head_Attachment) || $lastDocument->QA_Head_Attachment === '') {
                 $history->action_name = "New";
@@ -3704,6 +3843,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->effect_check_date) || $lastDocument->effect_check_date === '') {
                 $history->action_name = "New";
@@ -3725,6 +3865,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->occurance_date) || $lastDocument->occurance_date === '') {
                 $history->action_name = "New";
@@ -3748,16 +3889,60 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Inv_Attachment) || $lastDocument->Inv_Attachment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-           
+
+        }
+        
+        if ($lastDocument->immediate_action_ia != $data->immediate_action_ia) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Immediate Action';
+            $history->previous = $lastDocument->immediate_action_ia;
+            $history->current = $data->immediate_action_ia;
+            $history->comment = $request->Inv_Attachment_comment ?? "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->immediate_action_ia) || $lastDocument->immediate_action_ia === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+       
+        $history->origin_state = $lastDocument->status;
+        $history->save();
+    }
+
+            if ($lastDocument->details_investigation_ia != $data->details_investigation_ia) {
+                $history = new LabIncidentAuditTrial();
+                $history->LabIncident_id = $id;
+                $history->activity_type = 'Detail Investigation / Probable Root Cause';
+                $history->previous = $lastDocument->details_investigation_ia;
+                $history->current = $data->details_investigation_ia;
+                $history->comment = $request->Inv_Attachment_comment ?? "NA";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocument->status;
+                if (is_null($lastDocument->details_investigation_ia) || $lastDocument->details_investigation_ia === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+        
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
 
         if ($lastDocument->Investigation_Details != $data->Investigation_Details) {
             $history = new LabIncidentAuditTrial();
@@ -3769,6 +3954,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Investigation_Details) || $lastDocument->Investigation_Details === '') {
                 $history->action_name = "New";
@@ -3790,6 +3976,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Action_Taken) || $lastDocument->Action_Taken === '') {
                 $history->action_name = "New";
@@ -3811,6 +3998,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Root_Cause) || $lastDocument->Root_Cause === '') {
                 $history->action_name = "New";
@@ -3832,6 +4020,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->capa_capa) || $lastDocument->capa_capa === '') {
                 $history->action_name = "New";
@@ -3853,6 +4042,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Currective_Action) || $lastDocument->Currective_Action === '') {
                 $history->action_name = "New";
@@ -3877,6 +4067,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->CAPA_Attachment) || $lastDocument->CAPA_Attachment === '') {
                 $history->action_name = "New";
@@ -3898,6 +4089,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->QA_Review_Comments) || $lastDocument->QA_Review_Comments === '') {
                 $history->action_name = "New";
@@ -3919,6 +4111,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->QA_Head_Attachment) || $lastDocument->QA_Head_Attachment === '') {
                 $history->action_name = "New";
@@ -3940,6 +4133,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->QA_Head) || $lastDocument->QA_Head === '') {
                 $history->action_name = "New";
@@ -3963,6 +4157,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Conclusion) || $lastDocument->Conclusion === '') {
                 $history->action_name = "New";
@@ -3977,13 +4172,14 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
         if ($lastDocument->due_date_extension != $data->due_date_extension) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Due Date Extension';
+            $history->activity_type = 'Due Date Extension Justification';
             $history->previous = $lastDocument->due_date_extension;
             $history->current = $data->due_date_extension;
             $history->comment = $request->due_date_extension_comment ?? "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->due_date_extension) || $lastDocument->due_date_extension === '') {
                 $history->action_name = "New";
@@ -4005,6 +4201,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->involved_ssfi) || $lastDocument->involved_ssfi === '') {
                 $history->action_name = "New";
@@ -4026,6 +4223,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->stage_stage_ssfi) || $lastDocument->stage_stage_ssfi === '') {
                 $history->action_name = "New";
@@ -4047,6 +4245,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Incident_stability_cond_ssfi) || $lastDocument->Incident_stability_cond_ssfi === '') {
                 $history->action_name = "New";
@@ -4068,6 +4267,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Incident_interval_ssfi) || $lastDocument->Incident_interval_ssfi === '') {
                 $history->action_name = "New";
@@ -4089,6 +4289,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->test_ssfi) || $lastDocument->test_ssfi === '') {
                 $history->action_name = "New";
@@ -4110,6 +4311,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Incident_date_analysis_ssfi) || $lastDocument->Incident_date_analysis_ssfi === '') {
                 $history->action_name = "New";
@@ -4131,6 +4333,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->initial_attachment_hodsr) || $lastDocument->initial_attachment_hodsr === '') {
                 $history->action_name = "New";
@@ -4152,6 +4355,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Incident_stp_ssfi) || $lastDocument->Incident_stp_ssfi === '') {
                 $history->action_name = "New";
@@ -4173,6 +4377,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->Incident_date_incidence_ssfi) || $lastDocument->Incident_date_incidence_ssfi === '') {
                 $history->action_name = "New";
@@ -4363,6 +4568,70 @@ if ($lastDocument->investigation_summary_ia != $data->investigation_summary_ia) 
     $history->save();
 }
 
+if ($lastDocument->type_incidence_ia != $data->type_incidence_ia) {
+    $history = new LabIncidentAuditTrial();
+    $history->LabIncident_id = $id;
+    $history->activity_type = 'Type Of Incidence';
+    $history->previous = $lastDocument->type_incidence_ia;
+    $history->current = $data->type_incidence_ia;
+    $history->comment = $request->type_incidence_ia_comment ?? "NA";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocument->status;
+     if (is_null($lastDocument->type_incidence_ia) || $lastDocument->type_incidence_ia === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
+    $history->origin_state = $lastDocument->status;
+    $history->save();
+}
+if ($lastDocument->investigator_qc != $data->investigator_qc) {
+    $history = new LabIncidentAuditTrial();
+    $history->LabIncident_id = $id;
+    $history->activity_type = 'Investigator(QC)';
+    $history->previous = $lastDocument->investigator_qc;
+    $history->current = $data->investigator_qc;
+    $history->comment = $request->investigator_qc_comment ?? "NA";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocument->status;
+     if (is_null($lastDocument->investigator_qc) || $lastDocument->investigator_qc === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
+    $history->origin_state = $lastDocument->status;
+    $history->save();
+}
+if ($lastDocument->qc_review_to != $data->qc_review_to) {
+    $history = new LabIncidentAuditTrial();
+    $history->LabIncident_id = $id;
+    $history->activity_type = 'QC Review';
+    $history->previous = $lastDocument->qc_review_to;
+    $history->current = $data->qc_review_to;
+    $history->comment = $request->qc_review_to_comment ?? "NA";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocument->status;
+     if (is_null($lastDocument->qc_review_to) || $lastDocument->qc_review_to === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
+    $history->origin_state = $lastDocument->status;
+    $history->save();
+}
+
 // Audit trail for 'capa_number_im'
 if ($lastDocument->capa_number_im != $data->capa_number_im) {
     $history = new LabIncidentAuditTrial();
@@ -4459,7 +4728,7 @@ if ($lastDocument->repeat_analysis_plan_ia != $data->repeat_analysis_plan_ia) {
 if ($lastDocument->proposed_correctivei_ia != $data->proposed_correctivei_ia) {
     $history = new LabIncidentAuditTrial();
     $history->LabIncident_id = $id;
-    $history->activity_type = 'Proposed Corrective';
+    $history->activity_type = 'Proposed Corrective Action/Corrective Action Taken';
     $history->previous = $lastDocument->proposed_correctivei_ia;
     $history->current = $data->proposed_correctivei_ia;
     $history->comment = $request->proposed_correctivei_ia_comment ?? "NA";

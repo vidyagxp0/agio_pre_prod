@@ -3091,20 +3091,41 @@ if ($incident->Initial_attachment) {
 
 
             if ($incident->stage == 2) {
-
+              
                 $incident->stage = "1";
                 $incident->status = "Opened";
                 $incident->more_info_req_by = Auth::user()->name;
                 $incident->more_info_req_on = Carbon::now()->format('d-M-Y');
                 $incident->more_info_req_cmt = $request->comment;
-                $incident->update();
-                $history = new IncidentHistory();
-                $history->type = "Incident";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $incident->stage;
-                $history->status = "Opened";
+                
+                $history = new IncidentAuditTrail();
+
+                
+                $history->incident_id = $id;
+                   $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->action  = "More Information Required";
+                    $history->current ="Not Applicable";
+                    $history->action_name ="Not Applicable";
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Opened";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'HOD Initial Review';
+                    // if (is_null($lastDocument->more_info_req_by) || $lastDocument->more_info_req_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_req_by . ' , ' . $lastDocument->more_info_req_on;
+                    // }
+                    // $history->current = $incident->more_info_req_by . ' , ' . $incident->more_info_req_on;
+                    // if (is_null($lastDocument->more_info_req_by) || $lastDocument->more_info_req_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -3126,30 +3147,52 @@ if ($incident->Initial_attachment) {
                 //     }
                 // }
                 $history->save();
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $incident->stage;
+                $history->status = "More Info Required";
 
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($incident->stage == 3) {
                 $incident->stage = "2";
-                $incident->status = "HOD Review";
+                $incident->status = "HOD Initial Review";
                 $incident->form_progress = 'hod';
                 $incident->Qa_more_info_req_by = Auth::user()->name;
                 $incident->Qa_more_info_req_on = Carbon::now()->format('d-M-Y');
                 $incident->Qa_more_info_req_cmt = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->action='More Information Required';
-                $history->current = $incident->Qa_more_info_req_by;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->action  = "More Information Required";
+                $history->current ="Not Applicable";
+                $history->action_name ="Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
+                $history->change_to =   "HOD Initial Review";
+                $history->change_from = $lastDocument->status;
                 $history->stage = 'More Info Required';
-                $history->save();
+                // if (is_null($lastDocument->Qa_more_info_req_by) || $lastDocument->Qa_more_info_req_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->Qa_more_info_req_by . ' , ' . $lastDocument->Qa_more_info_req_on;
+                // }
+                // $history->current = $incident->Qa_more_info_req_by . ' , ' . $incident->Qa_more_info_req_on;
+                // if (is_null($lastDocument->Qa_more_info_req_by) || $lastDocument->Qa_more_info_req_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                 $history->save();
                 $incident->update();
                 $history = new IncidentHistory();
                 $history->type = "Incident";
@@ -3211,16 +3254,19 @@ if ($incident->Initial_attachment) {
                 $incident->Pending_more_info_req_cmt = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->action='More Information Required';
-                $history->current = $incident->Pending_more_info_req_by;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->action  = "More Information Required";
+                $history->current ="Not Applicable";
+                $history->action_name ="Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
+                $history->change_to =   "QA Initial Review";
+                $history->change_from = $lastDocument->status;
                 $history->save();
                 $incident->update();
                 $history = new IncidentHistory();
@@ -3263,16 +3309,18 @@ if ($incident->Initial_attachment) {
                 $incident->Hod_more_info_req_cmt = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->action='More Information Required';
-                $history->current = $incident->Hod_more_info_req_by;
-                $history->comment = $request->comment;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->action  = "More Information Required";
+                $history->current ="Not Applicable";
+                $history->action_name ="Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
+                $history->change_to =   "Pending Initiator Update";
+                $history->change_from = $lastDocument->status;
                 $history->save();
                 $incident->update();
                 $history = new IncidentHistory();
@@ -3311,7 +3359,7 @@ if ($incident->Initial_attachment) {
             }
             if ($incident->stage == 6) {
                 $incident->stage = "5";
-                $incident->status = "QA Final Review";
+                $incident->status = "HOD Final Review";
                 $incident->form_progress = 'capa';
 
                 $incident->Qa_final_more_info_req_by = Auth::user()->name;
@@ -3319,16 +3367,19 @@ if ($incident->Initial_attachment) {
                 $incident->Qa_final_more_info_req_cmt = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->action='More Information Required';
-                $history->current = $incident->Qa_final_more_info_req_by;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->action  = "More Information Required";
+                $history->current ="Not Applicable";
+                $history->action_name ="Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
+                $history->change_to =   "HOD Final Review";
+                $history->change_from = $lastDocument->status;
                 // dd();
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
@@ -3373,16 +3424,19 @@ if ($incident->Initial_attachment) {
                  $incident->approved_more_info_req_cmt = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->action='More Information Required';
-                $history->current = $incident->approved_more_info_req_by;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->action  = "More Information Required";
+                $history->current ="Not Applicable";
+                $history->action_name ="Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
+                $history->change_to =   "QA Final Review";
+                $history->change_from = $lastDocument->status;
                 // dd();
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
@@ -3439,7 +3493,8 @@ if ($incident->Initial_attachment) {
             $incident->Hod_Cancelled_on = Carbon::now()->format('d-M-Y');
             $history = new IncidentAuditTrail();
             $history->incident_id = $id;
-            $history->activity_type = 'Activity Log';
+            $history->activity_type = 'Cancelled By,Cancelled On';
+            $history->action='Cancel';
             $history->previous = "";
             $history->current = $incident->Hod_Cancelled_by;
             $history->current = $incident->cancelled_by;
@@ -3448,7 +3503,20 @@ if ($incident->Initial_attachment) {
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $incident->status;
+            $history->change_to =   "Closed-Cancelled";
+            $history->change_from = $lastDocument->status;
             $history->stage = 'Cancelled';
+            if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                $history->previous = "";
+            } else {
+                $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+            }
+            $history->current = $incident->cancelled_by . ' , ' . $incident->cancelled_on;
+            if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
             $incident->update();
             $history = new IncidentHistory();
@@ -3858,7 +3926,7 @@ if ($incident->Initial_attachment) {
 
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'Submit By, Submit On';
                     $history->previous = "";
                     $history->action='Submit';
                     $history->current = $incident->submit_by;
@@ -3870,6 +3938,17 @@ if ($incident->Initial_attachment) {
                     $history->change_to =   "HOD Initial Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'HOD Initial Review';
+                    if (is_null($lastDocument->submit_by) || $lastDocument->submit_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->submit_by . ' , ' . $lastDocument->submit_on;
+                    }
+                    $history->current = $incident->submit_by . ' , ' . $incident->submit_on;
+                    if (is_null($lastDocument->submit_by) || $lastDocument->submit_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
 
 
@@ -3943,7 +4022,7 @@ if ($incident->Initial_attachment) {
                     $incident->HOD_Initial_Review_Comments = $request->comment;
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'HOD Initial Review Complete By,HOD Initial Review Complete On';
                     $history->previous = "";
                     $history->current = $incident->HOD_Initial_Review_Complete_By;
                     $history->comment = $request->comment;
@@ -3955,6 +4034,18 @@ if ($incident->Initial_attachment) {
                     $history->change_to =   "QA Initial Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'HOD Review Complete';
+                    if (is_null($lastDocument->HOD_Initial_Review_Complete_By) || $lastDocument->HOD_Initial_Review_Complete_By === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->HOD_Initial_Review_Complete_By . ' , ' . $lastDocument->HOD_Initial_Review_Complete_On;
+                    }
+                    $history->current = $incident->HOD_Initial_Review_Complete_By . ' , ' . $incident->HOD_Initial_Review_Complete_On;
+                    if (is_null($lastDocument->HOD_Initial_Review_Complete_By) || $lastDocument->HOD_Initial_Review_Complete_By === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                   
 
                     $history->save();
                     // dd($history->action);
@@ -4019,7 +4110,7 @@ if ($incident->Initial_attachment) {
                     $incident->QA_Initial_Review_Comments = $request->comment;
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'QA Initial Review Complete By, QA Initial Review Complete On';
                     $history->previous = "";
                     $history->action= 'QA Initial Review Complete';
                     $history->current = $incident->QA_Initial_Review_Complete_By;
@@ -4031,6 +4122,17 @@ if ($incident->Initial_attachment) {
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
                     $history->stage = 'Pending Initiator Update';
+                    if (is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_By === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->QA_Initial_Review_Complete_By . ' , ' . $lastDocument->QA_Initial_Review_Complete_On;
+                    }
+                    $history->current = $incident->QA_Initial_Review_Complete_By . ' , ' . $incident->QA_Initial_Review_Complete_On;
+                    if (is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->HOD_Initial_Review_Complete_By === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
@@ -4268,7 +4370,7 @@ if ($incident->Initial_attachment) {
 
                         $history = new IncidentAuditTrail();
                         $history->incident_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'Pending Initiator Update Complete By,Pending Initiator Update Complete On';
                         $history->previous = "";
                         $history->action='Pending Initiator Update Complete';
                         $history->current = $incident->Pending_Review_Complete_By;
@@ -4280,6 +4382,17 @@ if ($incident->Initial_attachment) {
                         $history->change_to =   "HOD Final Review";
                         $history->change_from = $lastDocument->status;
                         $history->stage = 'HOD Final Review';
+                        if (is_null($lastDocument->Pending_Review_Complete_By) || $lastDocument->Pending_Review_Complete_By === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->Pending_Review_Complete_By . ' , ' . $lastDocument->Pending_Review_Complete_On;
+                        }
+                        $history->current = $incident->Pending_Review_Complete_By . ' , ' . $incident->Pending_Review_Complete_On;
+                        if (is_null($lastDocument->Pending_Review_Complete_By) || $lastDocument->HOD_Initial_Review_Complete_By === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                         // $list = Helpers::getQAUserList();
                         // foreach ($list as $u) {
@@ -4336,7 +4449,7 @@ if ($incident->Initial_attachment) {
 
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'HOD Final Review Complete By,HOD Final Review Complete On';
                     $history->previous = "";
                     $history->current = $incident->Hod_Final_Review_Complete_By;
                     $history->comment = $request->comment;
@@ -4348,6 +4461,17 @@ if ($incident->Initial_attachment) {
                     $history->change_to =   "QA Final Review";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Approved';
+                    if (is_null($lastDocument->Hod_Final_Review_Complete_By) || $lastDocument->Hod_Final_Review_Complete_By === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->Hod_Final_Review_Complete_By . ' , ' . $lastDocument->Hod_Final_Review_Complete_On;
+                    }
+                    $history->current = $incident->Hod_Final_Review_Complete_By . ' , ' . $incident->Hod_Final_Review_Complete_On;
+                    if (is_null($lastDocument->Hod_Final_Review_Complete_By) || $lastDocument->HOD_Initial_Review_Complete_By === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
@@ -4427,7 +4551,7 @@ if ($incident->Initial_attachment) {
 
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'QA Final Review Complete By,QA Final Review Complete On';
                     $history->previous = "";
                     $history->action ='QA Final Review Complete';
                     $history->current = $incident->Qa_Final_Review_Complete_By;
@@ -4439,6 +4563,17 @@ if ($incident->Initial_attachment) {
                     $history->change_to =   "QAH Approval";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'QAH Approval';
+                    if (is_null($lastDocument->Qa_Final_Review_Complete_By) || $lastDocument->Qa_Final_Review_Complete_By === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->Qa_Final_Review_Complete_By . ' , ' . $lastDocument->Qa_Final_Review_Complete_On;
+                    }
+                    $history->current = $incident->Qa_Final_Review_Complete_By . ' , ' . $incident->Qa_Final_Review_Complete_On;
+                    if (is_null($lastDocument->Qa_Final_Review_Complete_By) || $lastDocument->HOD_Initial_Review_Complete_By === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
@@ -4611,7 +4746,7 @@ if ($incident->Initial_attachment) {
 
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'Approved By, Approved On';
                     $history->previous = "";
                     $history->action ='Approved';
                     $history->current = $incident->QA_head_approved_by;
@@ -4623,6 +4758,17 @@ if ($incident->Initial_attachment) {
                     $history->change_to =   "Closed-Done";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Closed-Done';
+                    if (is_null($lastDocument->QA_head_approved_by) || $lastDocument->QA_head_approved_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->QA_head_approved_by . ' , ' . $lastDocument->QA_head_approved_on;
+                    }
+                    $history->current = $incident->QA_head_approved_by . ' , ' . $incident->QA_head_approved_on;
+                    if (is_null($lastDocument->QA_head_approved_by) || $lastDocument->HOD_Initial_Review_Complete_By === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
@@ -4775,14 +4921,14 @@ if ($incident->Initial_attachment) {
             }
             if ($incident->stage == 3) {
                 $incident->stage = "2";
-                $incident->status = "HOD Review";
+                $incident->status = "HOD Initial ";
                 $incident->qa_more_info_required_by = Auth::user()->name;
                 $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->action='More Information Required';
+                $history->action='More Info Required By';
                 $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -4790,6 +4936,9 @@ if ($incident->Initial_attachment) {
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
+                $history->change_to =   "HOD Initial Review";
+                $history->change_from = $lastDocument->status;
+                
                 $history->save();
                 $incident->update();
                 $history = new IncidentHistory();
@@ -4799,6 +4948,7 @@ if ($incident->Initial_attachment) {
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $incident->stage;
                 $history->status = $incident->status;
+    
                 $history->save();
                 // $list = Helpers::getHodUserList();
                 // foreach ($list as $u) {
@@ -4936,9 +5086,9 @@ if ($incident->Initial_attachment) {
     public function incidentAuditTrailPdf($id)
     {
         $doc = Incident::find($id);
-        $audit = IncidentAuditTrail::where('incident_id', $id)->orderByDesc('id')->paginate(5);
+        $audit = IncidentAuditTrail::where('incident_id', $id)->paginate();
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-        $data = IncidentAuditTrail::where('incident_id', $doc->id)->orderByDesc('id')->get();
+        $data = IncidentAuditTrail::where('incident_id', $doc->id)->get();
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
         $pdf = PDF::loadview('frontend.incident.audit-trail-pdf', compact('data', 'doc','audit'))
