@@ -31,8 +31,8 @@ class OOSMicroController extends Controller
         $cft = [];
         $old_records = OOS_micro::select('id', 'division_id', 'record')->get();
         
-        $record = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
         
         // if ($division) {

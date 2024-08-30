@@ -3102,10 +3102,11 @@ if ($incident->Initial_attachment) {
 
                 
                 $history->incident_id = $id;
-                $history->activity_type = 'More Info Required By, More Info Required On';
-                    $history->previous = "";
+                   $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
                     $history->action  = "More Information Required";
-                    $history->current = $incident->more_info_req_by;
+                    $history->current ="Not Applicable";
+                    $history->action_name ="Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3114,17 +3115,17 @@ if ($incident->Initial_attachment) {
                     $history->change_to =   "Opened";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'HOD Initial Review';
-                    if (is_null($lastDocument->more_info_req_by) || $lastDocument->more_info_req_by === '') {
-                        $history->previous = "";
-                    } else {
-                        $history->previous = $lastDocument->more_info_req_by . ' , ' . $lastDocument->more_info_req_on;
-                    }
-                    $history->current = $incident->more_info_req_by . ' , ' . $incident->more_info_req_on;
-                    if (is_null($lastDocument->more_info_req_by) || $lastDocument->more_info_req_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // if (is_null($lastDocument->more_info_req_by) || $lastDocument->more_info_req_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_req_by . ' , ' . $lastDocument->more_info_req_on;
+                    // }
+                    // $history->current = $incident->more_info_req_by . ' , ' . $incident->more_info_req_on;
+                    // if (is_null($lastDocument->more_info_req_by) || $lastDocument->more_info_req_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -3167,10 +3168,11 @@ if ($incident->Initial_attachment) {
                 $incident->Qa_more_info_req_cmt = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
-                $history->activity_type = 'More Info Required By, More Info Required On';
-                $history->previous = "";
-                $history->action='More Information Required';
-                $history->current = $incident->Qa_more_info_req_by;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->action  = "More Information Required";
+                $history->current ="Not Applicable";
+                $history->action_name ="Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3179,18 +3181,18 @@ if ($incident->Initial_attachment) {
                 $history->change_to =   "HOD Initial Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'More Info Required';
-                if (is_null($lastDocument->Qa_more_info_req_by) || $lastDocument->Qa_more_info_req_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->Qa_more_info_req_by . ' , ' . $lastDocument->Qa_more_info_req_on;
-                }
-                $history->current = $incident->Qa_more_info_req_by . ' , ' . $incident->Qa_more_info_req_on;
-                if (is_null($lastDocument->Qa_more_info_req_by) || $lastDocument->Qa_more_info_req_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                $history->save();
+                // if (is_null($lastDocument->Qa_more_info_req_by) || $lastDocument->Qa_more_info_req_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->Qa_more_info_req_by . ' , ' . $lastDocument->Qa_more_info_req_on;
+                // }
+                // $history->current = $incident->Qa_more_info_req_by . ' , ' . $incident->Qa_more_info_req_on;
+                // if (is_null($lastDocument->Qa_more_info_req_by) || $lastDocument->Qa_more_info_req_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                 $history->save();
                 $incident->update();
                 $history = new IncidentHistory();
                 $history->type = "Incident";
@@ -3252,10 +3254,11 @@ if ($incident->Initial_attachment) {
                 $incident->Pending_more_info_req_cmt = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
-                $history->activity_type = 'More Info Required By, More Info Required On';
-                $history->previous = "";
-                $history->action='More Information Required';
-                $history->current = $incident->Pending_more_info_req_by;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->action  = "More Information Required";
+                $history->current ="Not Applicable";
+                $history->action_name ="Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3264,17 +3267,6 @@ if ($incident->Initial_attachment) {
                 $history->stage = 'More Info Required';
                 $history->change_to =   "QA Initial Review";
                 $history->change_from = $lastDocument->status;
-                if (is_null($lastDocument->Pending_more_info_req_by) || $lastDocument->Pending_more_info_req_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->Pending_more_info_req_by . ' , ' . $lastDocument->Pending_more_info_req_on;
-                }
-                $history->current = $incident->Pending_more_info_req_by . ' , ' . $incident->Pending_more_info_req_on;
-                if (is_null($lastDocument->Pending_more_info_req_by) || $lastDocument->Pending_more_info_req_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
                 $history->save();
                 $incident->update();
                 $history = new IncidentHistory();
@@ -3317,11 +3309,11 @@ if ($incident->Initial_attachment) {
                 $incident->Hod_more_info_req_cmt = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
-                $history->activity_type = 'More Info Required By, More Info Required On';
-                $history->previous = "";
-                $history->action='More Information Required';
-                $history->current = $incident->Hod_more_info_req_by;
-                $history->comment = $request->comment;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->action  = "More Information Required";
+                $history->current ="Not Applicable";
+                $history->action_name ="Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3329,17 +3321,6 @@ if ($incident->Initial_attachment) {
                 $history->stage = 'More Info Required';
                 $history->change_to =   "Pending Initiator Update";
                 $history->change_from = $lastDocument->status;
-                if (is_null($lastDocument->Hod_more_info_req_by) || $lastDocument->Hod_more_info_req_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->Hod_more_info_req_by . ' , ' . $lastDocument->Hod_more_info_req_on;
-                }
-                $history->current = $incident->Hod_more_info_req_by . ' , ' . $incident->Hod_more_info_req_on;
-                if (is_null($lastDocument->Hod_more_info_req_by) || $lastDocument->Hod_more_info_req_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
                 $history->save();
                 $incident->update();
                 $history = new IncidentHistory();
@@ -3386,10 +3367,11 @@ if ($incident->Initial_attachment) {
                 $incident->Qa_final_more_info_req_cmt = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
-                $history->activity_type = 'More Info Required By, More Info Required On';
-                $history->previous = "";
-                $history->action='More Information Required';
-                $history->current = $incident->Qa_final_more_info_req_by;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->action  = "More Information Required";
+                $history->current ="Not Applicable";
+                $history->action_name ="Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3398,17 +3380,6 @@ if ($incident->Initial_attachment) {
                 $history->stage = 'More Info Required';
                 $history->change_to =   "HOD Final Review";
                 $history->change_from = $lastDocument->status;
-                if (is_null($lastDocument->Qa_final_more_info_req_by) || $lastDocument->Qa_final_more_info_req_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->Qa_final_more_info_req_by . ' , ' . $lastDocument->Qa_final_more_info_req_on;
-                }
-                $history->current = $incident->Qa_final_more_info_req_by . ' , ' . $incident->Qa_final_more_info_req_on;
-                if (is_null($lastDocument->Qa_final_more_info_req_by) || $lastDocument->Qa_final_more_info_req_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
                 // dd();
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
@@ -3453,10 +3424,11 @@ if ($incident->Initial_attachment) {
                  $incident->approved_more_info_req_cmt = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
-                $history->activity_type = 'More Info Required By, More Info Required On';
-                $history->previous = "";
-                $history->action='More Information Required';
-                $history->current = $incident->approved_more_info_req_by;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->action  = "More Information Required";
+                $history->current ="Not Applicable";
+                $history->action_name ="Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3465,17 +3437,6 @@ if ($incident->Initial_attachment) {
                 $history->stage = 'More Info Required';
                 $history->change_to =   "QA Final Review";
                 $history->change_from = $lastDocument->status;
-                if (is_null($lastDocument->approved_more_info_req_by) || $lastDocument->approved_more_info_req_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->approved_more_info_req_by . ' , ' . $lastDocument->approved_more_info_req_on;
-                }
-                $history->current = $incident->approved_more_info_req_by . ' , ' . $incident->approved_more_info_req_on;
-                if (is_null($lastDocument->approved_more_info_req_by) || $lastDocument->approved_more_info_req_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
                 // dd();
                 // foreach ($list as $u) {
                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
