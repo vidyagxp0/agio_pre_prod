@@ -297,7 +297,7 @@
                                             <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                             <div class="calenderauditee">
                                                 <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}" />
-                                                <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
+                                                <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -344,10 +344,9 @@
                                     </div> --}}
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Short Description">Short Description<span
-                                                    class="text-danger">*</span></label><span id="rchars">255</span>
-                                            characters remaining
-                                            <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                            <label for="Short Description">Short Description<span class="text-danger">*</span></label><span id="rchars">255</span>  characters remaining
+                                            {{-- <input id="docname" type="text" name="short_description" maxlength="255" required> --}}
+                                            <input name="short_description" id="short_description"></input>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -542,16 +541,16 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="CAPA Attachments">Initial Attachment</label>
+                                            <label for="CAPA Attachments">Risk Assesment Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
                                             <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="capa_attachment"></div>
+                                                <div class="file-attachment-list" id="risk_attachment"></div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input type="file" id="myfile" name="risk_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'capa_attachment')" multiple>
+                                                        oninput="addMultipleFiles(this, 'risk_attachment')" multiple>
                                                 </div>
                                             </div>
                                         </div>
@@ -3839,7 +3838,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submitted By..">Submitted By..</label>
+                                            <label for="Submitted By..">Submitted By</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
@@ -3875,13 +3874,63 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Risk Analysis Completed By">Risk Analysis Completed By</label>
+                                            <label for="Risk Analysis Completed By">More Information Required(Risk Analysis & Work Group Assignment) By</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Risk Analysis Completed On">Risk Analysis Completed On</label>
+                                            <label for="Risk Analysis Completed On">More Information Required(Risk Analysis & Work Group Assignment) On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Risk Analysis Completed On">CFT Review Complete By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Risk Analysis Completed On">CFT Review Complete On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Risk Analysis Completed On">Risk Processing & Action Plan (Request more info) By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Risk Analysis Completed On">Risk Processing & Action Plan (Request More Info) On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Risk Analysis Completed On">QA Initial Review Complete By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Risk Analysis Completed On">QA Initial Review Cancle On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Risk Analysis Completed On">In  Approve By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Risk Analysis Completed On">In  Approve On</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>

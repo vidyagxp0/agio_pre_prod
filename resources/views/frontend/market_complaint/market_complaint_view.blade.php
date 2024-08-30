@@ -1043,7 +1043,7 @@
                                                             <input type="date" name="serial_number_gi[{{ $index }}][info_expiry_date]" value="{{ array_key_exists('info_expiry_date', $detail) ? $detail['info_expiry_date'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} placeholder="DD-MMM-YYYY">
                                                         </td> --}}
 
-                                                        <td>
+                                                        {{-- <td>
                                                         <div class="new-date-data-field">
                                                             <div class="group-input input-date">
                                                         <div class="calenderauditee">
@@ -1053,9 +1053,37 @@
                                                         </div>
                                                             </div>
                                                         </div>
-                                                      </td>
+                                                      </td> --}}
 
                                                       <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <div class="calenderauditee">
+                                                                    <!-- Display the date in a non-editable format -->
+                                                                    <span id="display_date_0_date_tm">
+                                                                        {{ array_key_exists('info_mfg_date',$detail) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : 'DD-MMM-YYYY' }}
+                                                                    </span>
+
+                                                                    <!-- Hidden date input field -->
+                                                                    <input type="hidden" name="serial_number_gi[{{ $index }}][info_mfg_date]"
+                                                                           value="{{ array_key_exists('info_mfg_date',$detail) ? $detail['info_mfg_date'] : ''}}"
+                                                                           id="date_0_date_tm" />
+
+                                                                    <!-- Optional: Hidden date input field to allow user input via calendar, but not visible -->
+                                                                    <input type="date" name="serial_number_gi[{{ $index }}][info_mfg_date]"
+                                                                           value="{{ array_key_exists('info_mfg_date',$detail) ? $detail['info_mfg_date'] : ''}}"
+                                                                           {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                                                           min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                           class="hide-input show_date"
+                                                                           style="display:none;"
+                                                                           oninput="handleDateInput(this, 'date_0_date_tm')" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+
+                                                      {{-- <td>
                                                         <div class="new-date-data-field">
                                                             <div class="group-input input-date">
                                                         <div class="calenderauditee">
@@ -1065,7 +1093,33 @@
                                                         </div>
                                                             </div>
                                                         </div>
-                                                      </td>
+                                                      </td> --}}
+
+                                                      <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <div class="calenderauditee">
+                                                                    <!-- Visible text input to display the formatted date -->
+                                                                    <input id="date_0_date_display" type="text"
+                                                                           name="serial_number_gi[{{ $index }}][info_expiry_date]"
+                                                                           placeholder="DD-MMM-YYYY"
+                                                                           value="{{ array_key_exists('info_expiry_date', $detail) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('d-M-Y') : '' }}"
+                                                                           readonly />
+
+                                                                    <!-- Hidden date input field for actual date handling -->
+                                                                    <input type="date"
+                                                                           name="serial_number_gi[{{ $index }}][info_expiry_date]"
+                                                                           value="{{ array_key_exists('info_expiry_date', $detail) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('Y-m-d') : '' }}"
+                                                                           {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                                                           id="date_0_date"
+                                                                           class="hide-input show_date"
+                                                                           style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                           oninput="handleDateInput(this, 'date_0_date_display')" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
 
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_batch_size]" value="{{ array_key_exists('info_batch_size', $detail) ? $detail['info_batch_size'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_pack_size]" value="{{ array_key_exists('info_pack_size', $detail) ? $detail['info_pack_size'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
@@ -1121,6 +1175,45 @@
                                         $(this).closest('tr').remove();
                                     });
                                 });
+                            </script>
+
+                            <script>
+                                function handleDateInput(inputElement, hiddenInputId) {
+                                        const hiddenInput = document.getElementById(hiddenInputId);
+                                        const displayElement = document.getElementById(`display_${hiddenInputId}`);
+
+                                        hiddenInput.value = inputElement.value;
+
+                                        // Update the displayed date
+                                        if (inputElement.value) {
+                                            const date = new Date(inputElement.value);
+                                            const formattedDate = date.toLocaleDateString('en-GB', {
+                                                day: '2-digit',
+                                                month: 'short',
+                                                year: 'numeric'
+                                            }).toUpperCase();
+                                            displayElement.textContent = formattedDate;
+                                        }
+                                    }
+                            </script>
+
+                            <script>
+                                function handleDateInput(dateInput, displayInputId) {
+                                        const displayInput = document.getElementById(displayInputId);
+
+                                        if (dateInput.value) {
+                                            const date = new Date(dateInput.value);
+                                            const formattedDate = date.toLocaleDateString('en-GB', {
+                                                day: '2-digit',
+                                                month: 'short',
+                                                year: 'numeric'
+                                            }).toUpperCase();
+                                            displayInput.value = formattedDate;
+                                        } else {
+                                            displayInput.value = '';
+                                        }
+                                    }
+
                             </script>
 
                             <div class="col-12">

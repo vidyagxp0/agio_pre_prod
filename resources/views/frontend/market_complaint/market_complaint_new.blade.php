@@ -206,12 +206,6 @@
                                     </div>
                                 </div>
 
-
-
-
-
-
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
@@ -278,9 +272,9 @@
                                         <label for="due-date">Due Date </label>{{-- <span class="text-danger">*</span> --}}
                                         <div class="calenderauditee">
                                             <!-- Display the formatted date in a readonly input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="" class="form-control"    />
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}" class="form-control"    />
                                             <!-- Hidden input date format ke sath -->
-                                            <input type="date" id="due_date_input" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control hide-input" onchange="updateDueDateDisplay()"  />
+                                            <input type="date" id="due_date_input" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control hide-input" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" onchange="updateDueDateDisplay()"  />
                                         </div>
                                     </div>
                                 </div>
