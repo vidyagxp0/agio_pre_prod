@@ -31,8 +31,8 @@ class OOSMicroController extends Controller
         $cft = [];
         $old_records = OOS_micro::select('id', 'division_id', 'record')->get();
         
-        $record = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
         
         // if ($division) {
@@ -1447,7 +1447,7 @@ if($lastDocument->$key != $request->$key){
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
-            }
+            }            
             if ($changestage->stage == 9) {
                 $changestage->stage = "10";
                 $changestage->status = "Phase IB HOD Primary Review";
@@ -2769,11 +2769,137 @@ if($lastDocument->$key != $request->$key){
             $data->update();
             toastr()->success('Document Sent');
             return back();
-        } else {
+
+            } else {          
             toastr()->error('E-signature Not match');
             return back();
         }
     }
+
+    public function Done_stage(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $data = OOS_MICRO::find($id);
+            $changestage = OOS_MICRO::find($id);
+            $lastDocument = OOS_MICRO::find($id);
+            $data->stage = "23";
+            $data->status = "Closed-Done";
+            $data->Assignable_Cause_Found_By = Auth::user()->name;
+            $data->Assignable_Cause_Found_On = Carbon::now()->format('d-M-Y');
+            $data->Assignable_Cause_Found_Comment = $request->comment;
+
+            $history = new OOSmicroAuditTrail();
+            $history->oos_micro_id = $id;
+            $history->activity_type = 'Assignable Cause Found By    ,   Assignable Cause Found On';
+            if (is_null($lastDocument->Assignable_Cause_Found_By) || $lastDocument->Assignable_Cause_Found_By === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->Assignable_Cause_Found_By . ' , ' . $lastDocument->Assignable_Cause_Found_On;
+            }
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->action = 'Assignable Cause Found';
+            $history->change_from = $lastDocument->status;
+            $history->change_to =   "Closed - Done";
+            $history->current = $changestage->Assignable_Cause_Found_By . ' , ' . $changestage->Assignable_Cause_Found_On;
+            if (is_null($lastDocument->Assignable_Cause_Found_By) || $lastDocument->Assignable_Cause_Found_By === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+            $data->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+    }
+
+    public function Done_One_stage(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $data = OOS_MICRO::find($id);
+            $changestage = OOS_MICRO::find($id);
+            $lastDocument = OOS_MICRO::find($id);
+            $data->stage = "24";
+            $data->status = "Closed-Done";
+            $data->P_I_B_Assignable_Cause_Found_By = Auth::user()->name;
+            $data->P_I_B_Assignable_Cause_Found_On = Carbon::now()->format('d-M-Y');
+            $data->P_I_B_Assignable_Cause_Found_Comment = $request->comment;
+
+            $history = new OOSmicroAuditTrail();
+            $history->oos_micro_id = $id;
+            $history->activity_type = 'P-IB Assignable Cause Found By    ,   P-IB Assignable Cause Found On';
+            if (is_null($lastDocument->P_I_B_Assignable_Cause_Found_By) || $lastDocument->P_I_B_Assignable_Cause_Found_By === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->P_I_B_Assignable_Cause_Found_By . ' , ' . $lastDocument->P_I_B_Assignable_Cause_Found_On;
+            }
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->action = 'P-IB Assignable Cause Found';
+            $history->change_from = $lastDocument->status;
+            $history->change_to =   "Closed - Done";
+            $history->current = $changestage->P_I_B_Assignable_Cause_Found_By . ' , ' . $changestage->P_I_B_Assignable_Cause_Found_On;
+            if (is_null($lastDocument->P_I_B_Assignable_Cause_Found_By) || $lastDocument->P_I_B_Assignable_Cause_Found_By === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+            $data->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+    }
+
+    public function Done_Two_stage(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $data = OOS_MICRO::find($id);
+            $changestage = OOS_MICRO::find($id);
+            $lastDocument = OOS_MICRO::find($id);
+            $data->stage = "25";
+            $data->status = "Closed-Done";
+            $data->P_II_A_Assignable_Cause_Found_By = Auth::user()->name;
+            $data->P_II_A_Assignable_Cause_Found_On = Carbon::now()->format('d-M-Y');
+            $data->P_II_A_Assignable_Cause_Found_Comment = $request->comment;
+
+            $history = new OOSmicroAuditTrail();
+            $history->oos_micro_id = $id;
+            $history->activity_type = 'P-II A Assignable Cause Found By    ,   P-II A Assignable Cause Found On';
+            if (is_null($lastDocument->P_II_A_Assignable_Cause_Found_By) || $lastDocument->P_II_A_Assignable_Cause_Found_By === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->P_II_A_Assignable_Cause_Found_By . ' , ' . $lastDocument->P_II_A_Assignable_Cause_Found_On;
+            }
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->action = 'P-II A Assignable Cause Found';
+            $history->change_from = $lastDocument->status;
+            $history->change_to =   "Closed - Done";
+            $history->current = $changestage->P_II_A_Assignable_Cause_Found_By . ' , ' . $changestage->P_II_A_Assignable_Cause_Found_On;
+            if (is_null($lastDocument->P_II_A_Assignable_Cause_Found_By) || $lastDocument->P_II_A_Assignable_Cause_Found_By === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+            $data->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+    }
+
+   
     public function child(Request $request, $id)
     {
         $cft = [];

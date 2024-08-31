@@ -22,8 +22,10 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator"> Record Number </label>
-                     <input disabled type="text" name="record_number"
-                      value="{{ Helpers::getDivisionName($data->division_id) }}/OOS Chemical/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}">
+                     {{-- <input disabled type="text" name="record_number"
+                      value="{{ Helpers::getDivisionName($data->division_id) }}/OOS Chemical/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}"> --}}
+                      <input disabled type="text" id="record" name="record"
+                      value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Chemical/{{ date('Y') }}/{{ $record_number }}">
                 </div>
             </div>
             <div class="col-lg-6">
@@ -41,10 +43,10 @@
                     <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
                 </div>
             </div>
-            @php
+            {{-- @php
             $initiationDate = date('Y-m-d');
             $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
-        @endphp
+        @endphp --}}
             <div class="col-md-6 ">
                 <div class="group-input ">
                     <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
@@ -78,7 +80,7 @@
                     </div>
                 </div>
             </div> --}}
-            <script>
+            {{-- <script>
                 // Format the due date to DD-MM-YYYY
                 // Your input date
                 var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
@@ -102,7 +104,7 @@
     
                 // Set the formatted due date value to the input field
                 document.getElementById('due_date').value = dueDateFormatted;
-            </script>
+            </script> --}}
 
             <div class="col-lg-12">
                 <div class="group-input">

@@ -508,15 +508,12 @@
                                         </div> --}}
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Short Description">Short Description<span
-                                                        class="text-danger">*</span></label><span
-                                                    id="rchars">255</span>
-                                                characters remaining
+                                                <label for="Short Description">Short Description<span class="text-danger">*</span></label><span  id="rchars">255</span> characters remaining
+                                                 {{-- <textarea name="short_description"  type="text" maxlength="255" required  {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea> --}}
 
-                                                <textarea name="short_description" id="docname" type="text" maxlength="255" required
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                            </div>
-                                            {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
+                                               <input type="text" name="short_description" id="short_description" value="{{$data->short_description}}">
+                                                </div>
+                                            <p id="docnameError" style="color:red">**Short Description is required</p>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
@@ -812,7 +809,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="File Attachments"> Risk Attachments</label>
+                                                <label for="File Attachments"> Risk Assesment Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
@@ -2846,14 +2843,13 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Evaluated By">More Information Required(Risk Analysis & Work Group     Assignment) By</label>
+                                            <label for="Evaluated By">More Information Required(Risk Analysis & Work Group Assignment) By</label>
                                             <div class="static">{{ $data->cancelled_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Evaluated On">More Information Required(Risk Analysis & Work Group
-                                                Assignment) On</label>
+                                            <label for="Evaluated On">More Information Required(Risk Analysis & Work Group Assignment) On</label>
                                             <div class="static">{{ $data->cancelled_on }}</div>
                                         </div>
                                     </div>
@@ -2871,14 +2867,13 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved By">CFT Review Complete   By</label>
+                                            <label for="Plan Approved By">CFT Review Complete By</label>
                                             <div class="static">{{ $data->CFT_Review_Complete_By }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved On"> CFT Review Complete
-                                                On</label>
+                                            <label for="Plan Approved On">CFT Review Complete On</label>
                                             <div class="static">{{ $data->CFT_Review_Complete_On }}</div>
                                         </div>
                                     </div>
@@ -2891,15 +2886,13 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved By">Risk Processing & Action Plan (Request more
-                                                info) By</label>
+                                            <label for="Plan Approved By">Risk Processing & Action Plan (Request more info) By</label>
                                             <div class="static">{{ $data->cancelled_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved On"> Risk Processing & Action Plan (Request More
-                                                Info) On</label>
+                                            <label for="Plan Approved On">Risk Processing & Action Plan (Request More Info) On</label>
                                             <div class="static">{{ $data->cancelled_on }}</div>
                                         </div>
                                     </div>
@@ -2936,15 +2929,13 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved By">QA Initial Review Cancle
-                                                By</label>
+                                            <label for="Plan Approved By">QA Initial Review Cancle By</label>
                                             <div class="static">{{ $data->cancelled_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Plan Approved On">QA Initial Review Cancle
-                                                On</label>
+                                            <label for="Plan Approved On">QA Initial Review Cancle On</label>
                                             <div class="static">{{ $data->cancelled_on }}</div>
                                         </div>
                                     </div>

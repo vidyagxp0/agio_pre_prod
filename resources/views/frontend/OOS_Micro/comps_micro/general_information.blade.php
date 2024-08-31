@@ -20,8 +20,10 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator"> Record Number </label>
-                    <input type="hidden"  id="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
-                    <input disabled type="text" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
+                    {{-- <input type="hidden"  id="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
+                    <input disabled type="text" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}"> --}}
+                    <input disabled type="text" id="record" name="record"
+                    value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
             </div>
             </div>
             <div class="col-lg-6">

@@ -418,56 +418,139 @@
                                 Electronic Signatures
                             </div>
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Submitted By</label>
-                                        <div class="static"></div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="submitted by">Submitted By</label>
+                                            <div class="static"></div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted on">Submitted On</label>
-                                        <div class="Date"></div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="submitted on">Submitted On</label>
+                                            <div class="Date"></div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="cancelled by">Cancelled By</label>
-                                        <div class="static"></div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="submitted on">Submitted Comment</label>
+                                            <div class="static"></div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="cancelled on">Cancelled On</label>
-                                        <div class="Date"></div>
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="cancelled by">Cancelled By</label>
+                                            <div class="static"></div> 
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="More information required By">More information required By</label>
-                                        <div class="static"></div> 
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="cancelled on">Cancelled On</label>
+                                            <div class="Date"></div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="More information required On">More information required On</label>
-                                         <div class="Date"></div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="submitted on">Cancelled Comment</label>
+                                            <div class="static"></div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="completed by">Completed By</label>
-                                        <div class="static"></div> 
+                                    
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="cancelled by">Acknowledge By</label>
+                                            <div class="static"></div> 
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="completed on">Completed On</label>
-                                         <div class="Date"></div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="cancelled on">Acknowledge On</label>
+                                            <div class="Date"></div>
+                                        </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="submitted on">Acknowledge Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="cancelled by">Work Completion By</label>
+                                            <div class="static"></div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="cancelled on">Work Completion On</label>
+                                            <div class="Date"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="submitted on">Work Completion Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="cancelled by">QA/CQA Verification By</label>
+                                            <div class="static"></div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="cancelled on">QA/CQA Verification On</label>
+                                            <div class="Date"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="submitted on">QA/CQA Verification Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="More information required By">More information required By</label>
+                                            <div class="static"></div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="More information required On">More information required On</label>
+                                            <div class="Date"></div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="submitted on">Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="completed by">Completed By</label>
+                                            <div class="static"></div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="completed on">Completed On</label>
+                                            <div class="Date"></div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="submitted on">Comment</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div> -->
+                                   
                                 </div>
-                              
-                            </div>
                             <div class="button-block">
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit" class="saveButton">Save</button>

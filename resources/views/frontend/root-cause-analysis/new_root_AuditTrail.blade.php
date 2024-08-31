@@ -196,11 +196,11 @@
                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                         @endif
                         <div class="buttons-new">
-                            @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
+                            {{-- @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
                                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                     Review
-                                </button> 
-                            @endif
+                                </button>   
+                            @endif --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                 Review
                             </button> 
@@ -388,7 +388,7 @@
                                     @if($dataDemo->activity_type == "Activity Log")
                                         <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
                                     @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'NULL' }}
                                     @endif
                                 </div>
                                 <br>

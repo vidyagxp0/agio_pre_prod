@@ -198,11 +198,11 @@
                         <th class="w-20">Initiator</th>
                         <td class="w-80">{{ $data->originator }}</td>
                         <th class="w-20">Date of Initiation</th>
-                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-80">{{ Helpers::getdateFormat($data->intiation_date) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-80">@if($data->record){{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/CAPA/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} </td>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-80">@if($data->division_id){{ Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                     </tr>

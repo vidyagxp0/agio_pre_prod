@@ -1133,9 +1133,22 @@ class ResamplingController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status;
-                        $history->stage = "Submit";
+                       
                         $history->change_to = "Head QA/CQA Approval";
                         $history->change_from = $lastopenState->status;
+                        $history->stage = '2';
+                        $history->activity_type = 'Submit By, Submit On';
+                        if (is_null($lastopenState->acknowledgement_by) || $lastopenState->acknowledgement_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastopenState->acknowledgement_by . ' , ' . $lastopenState->acknowledgement_on;
+                        }
+                        $history->current = $changeControl->acknowledgement_by . ' , ' . $changeControl->acknowledgement_on;
+                        if (is_null($lastopenState->acknowledgement_by) || $lastopenState->acknowledgement_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                 $changeControl->update();
                 // $history = new CCStageHistory();
@@ -1177,7 +1190,7 @@ class ResamplingController extends Controller
                 $changeControl->status = 'Acknowledge';
                 $changeControl->work_completion_by = Auth::user()->name;
                 $changeControl->work_completion_on = Carbon::now()->format('d-M-Y');
-                $changeControl->acknowledgement_comment = $request->comment;
+                $changeControl->work_completion_comment = $request->comment;
                 $history = new ResamplingAudittrail;
                 $history->action = "Approved";
 
@@ -1192,6 +1205,19 @@ class ResamplingController extends Controller
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status;
                         $history->stage = "Approved";
+                        $history->stage = '3';
+                        $history->activity_type = 'Approved By, Approved On';
+                        if (is_null($lastopenState->work_completion_by) || $lastopenState->work_completion_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastopenState->work_completion_by . ' , ' . $lastopenState->work_completion_on;
+                        }
+                        $history->current = $changeControl->work_completion_by . ' , ' . $changeControl->work_completion_on;
+                        if (is_null($lastopenState->work_completion_by) || $lastopenState->work_completion_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                 $changeControl->update();
                 // $history = new CCStageHistory();
@@ -1228,6 +1254,19 @@ class ResamplingController extends Controller
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status;
                         $history->stage = "Acknowledge Complete";
+                        $history->stage = '4';
+                        $history->activity_type = 'Acknowledge Complete By, Acknowledge Complete On';
+                        if (is_null($lastopenState->qa_varification_by) || $lastopenState->qa_varification_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastopenState->qa_varification_by . ' , ' . $lastopenState->qa_varification_on;
+                        }
+                        $history->current = $changeControl->qa_varification_by . ' , ' . $changeControl->qa_varification_on;
+                        if (is_null($lastopenState->qa_varification_by) || $lastopenState->qa_varification_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                 $changeControl->update();
                 // $history = new CCStageHistory();
@@ -1263,7 +1302,20 @@ class ResamplingController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastopenState->status;
-                $history->stage = "Varification Complete";
+              
+                $history->stage = '3';
+                $history->activity_type = 'Varification Complete By, Varification Complete On';
+                if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastopenState->completed_by . ' , ' . $lastopenState->completed_on;
+                }
+                $history->current = $changeControl->completed_by . ' , ' . $changeControl->completed_on;
+                if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                 $changeControl->update();
                 // $history = new CCStageHistory();
@@ -1556,32 +1608,44 @@ public static function singleReport($id)
         return $pdf->stream('ActionItem' . $id . '.pdf');
     }
 }
-public static function auditReport($id)
+
+
+public function auditReport($id)
 {
     $doc = Resampling::find($id);
-    if (!empty($doc)) {
-        $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-        $data = ResamplingAudittrail::where('resampling_id', $id)->get();
-        $pdf = App::make('dompdf.wrapper');
-        $time = Carbon::now();
-        $pdf = PDF::loadview('frontend.resampling.auditReport', compact('data', 'doc'))
-            ->setOptions([
-                'defaultFont' => 'sans-serif',
-                'isHtml5ParserEnabled' => true,
-                'isRemoteEnabled' => true,
-                'isPhpEnabled' => true,
-            ]);
-        $pdf->setPaper('A4');
-        $pdf->render();
-        $canvas = $pdf->getDomPDF()->getCanvas();
-        $height = $canvas->get_height();
-        $width = $canvas->get_width();
-        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-        $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
-        return $pdf->stream('ActionItem-Audit' . $id . '.pdf');
-    }
-}
+    $audit = ResamplingAudittrail::where('resampling_id', $id)->paginate(500);
+    $doc->originator = User::where('id', $doc->initiator_id)->value('name');
+    $data = ResamplingAudittrail::where('resampling_id', $doc->id)->orderByDesc('id')->get();
+    $pdf = App::make('dompdf.wrapper');
+    $time = Carbon::now();
+    $pdf = PDF::loadview('frontend.resampling.auditReport', compact('data','audit' ,'doc'))
+        ->setOptions([
+            'defaultFont' => 'sans-serif',
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+            'isPhpEnabled' => true,
+        ]);
+    $pdf->setPaper('A4');
+    $pdf->render();
+    $canvas = $pdf->getDomPDF()->getCanvas();
+    $height = $canvas->get_height();
+    $width = $canvas->get_width();
 
+    $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+
+    $canvas->page_text(
+        $width / 3,
+        $height / 2,
+        $doc->status,
+        null,
+        60,
+        [0, 0, 0],
+        2,
+        6,
+        -20
+    );
+    return $pdf->stream('SOP' . $id . '.pdf');
+}
 public function auditTrailPdf($id)
     {
         $doc = Resampling::find($id);

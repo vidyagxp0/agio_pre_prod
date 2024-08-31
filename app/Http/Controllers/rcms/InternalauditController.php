@@ -9,6 +9,7 @@ use App\Models\InternalAudit;
 use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule, IA_checklist__formulation_research, IA_checklist_analytical_research, IA_checklist_dispensing, IA_checklist_engineering, IA_checklist_hr, IA_checklist_manufacturing_filling, IA_checklist_production_injection, IA_checklist_stores, IA_dispencing_manufacturing, IA_liquid_ointment, IA_ointment_paking, IA_quality_control, InternalAuditChecklistGrid};
 use App\Models\{IA_checklist_capsule_paking};
 use App\Models\RoleGroup;
+use App\Models\AuditReviewersDetails;
 use App\Models\InternalAuditGrid;
 use App\Models\InternalAuditStageHistory;
 use App\Models\InternalAuditObservationGrid;
@@ -2238,11 +2239,11 @@ $Checklist_Capsule->save();
             $history->InternalAudit_id = $lastDocument->id;
             $history->activity_type = 'Assigned to';
             if($lastDocument->assign_to == null){
-                $history->previous = "NULL";
+                $history->previous = "Null";
             } else{
-                $history->previous = $lastDocument->assign_to;
+                $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);
             }
-            $history->current = $request->assign_to;
+            $history->current = Helpers::getInitiatorName($request->assign_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3735,6 +3736,76 @@ if ($areIniAttachmentsSame2 != true) {
             return back();
         }
     }
+
+    public function noCapastate(Request $request, $id){
+
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changeControl = InternalAudit::find($id);
+            $lastDocument = InternalAudit::find($id);
+
+
+        if ($changeControl->stage == 4) {
+            $changeControl->stage = "5";
+            $changeControl->status = "Response Verification";    
+            $changeControl->no_capa_plan_by = Auth::user()->name;
+            $changeControl->no_capa_plan_on = Carbon::now()->format('d-M-Y');
+            $changeControl->no_capa_plan_required_comment = $request->comment;
+                        $history = new InternalAuditTrial();
+                        $history->InternalAudit_id = $id;
+                        $history->activity_type = 'No CAPAs Required By, No CAPAs Required On';
+                        if (is_null($lastDocument->no_capa_plan_by) || $lastDocument->no_capa_plan_by === '') {
+                            $history->previous = "Null";
+                        } else {
+                            $history->previous = $lastDocument->no_capa_plan_by . ' , ' . $lastDocument->no_capa_plan_on;
+                        }
+                        $history->current = $changeControl->no_capa_plan_by . ' , ' . $changeControl->no_capa_plan_on;
+                        $history->action='No CAPAs Required';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_to = "Response Verification";
+                        $history->change_from = $lastDocument->status;
+                        $history->stage = "Response Verification";
+                        if (is_null($lastDocument->no_capa_plan_by) || $lastDocument->no_capa_plan_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
+                        $history->save();
+                    //     $list = Helpers::getAuditManagerUserList();
+                    //     foreach ($list as $u) {
+                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    //             $email = Helpers::getInitiatorEmail($u->user_id);
+                    //              if ($email !== null) {
+
+                    //               Mail::send(
+                    //                   'mail.view-mail',
+                    //                    ['data' => $changeControl],
+                    //                 function ($message) use ($email) {
+                    //                     $message->to($email)
+                    //                         ->subject("Document is Rejected ".Auth::user()->name);
+                    //                 }
+                    //               );`
+                    //             }
+                    //      }
+                    //   }
+
+            $changeControl->update();
+            $history = new InternalAuditStageHistory();
+            $history->type = "Internal Audit";
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->stage_id = $changeControl->stage;
+            $history->status = $changeControl->status;
+            $history->save();
+            toastr()->success('Document Sent');
+            return back();
+        }
+    }
+}
     public function RejectStateChange(Request $request, $id)
     {
 
@@ -3762,66 +3833,7 @@ if ($areIniAttachmentsSame2 != true) {
             //     return back();
             // }
             
-            if ($changeControl->stage == 4) {
-                $changeControl->stage = "5";
-                $changeControl->status = "Response Verification";    
-                $changeControl->no_capa_plan_by = Auth::user()->name;
-                $changeControl->no_capa_plan_on = Carbon::now()->format('d-M-Y');
-                $changeControl->no_capa_plan_required_comment = $request->comment;
-                            $history = new InternalAuditTrial();
-                            $history->InternalAudit_id = $id;
-                            $history->activity_type = 'No CAPAs Required By, No CAPAs Required On';
-                            if (is_null($lastDocument->no_capa_plan_by) || $lastDocument->no_capa_plan_by === '') {
-                                $history->previous = "Null";
-                            } else {
-                                $history->previous = $lastDocument->no_capa_plan_by . ' , ' . $lastDocument->no_capa_plan_on;
-                            }
-                            $history->current = $changeControl->no_capa_plan_by . ' , ' . $changeControl->no_capa_plan_on;
-                            $history->action='No CAPAs Required';
-                            $history->comment = $request->comment;
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = $lastDocument->status;
-                            $history->change_to = "Response Verification";
-                            $history->change_from = $lastDocument->status;
-                            $history->stage = "Response Verification";
-                            if (is_null($lastDocument->no_capa_plan_by) || $lastDocument->no_capa_plan_by === '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
-                            $history->save();
-                        //     $list = Helpers::getAuditManagerUserList();
-                        //     foreach ($list as $u) {
-                        //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        //             $email = Helpers::getInitiatorEmail($u->user_id);
-                        //              if ($email !== null) {
-
-                        //               Mail::send(
-                        //                   'mail.view-mail',
-                        //                    ['data' => $changeControl],
-                        //                 function ($message) use ($email) {
-                        //                     $message->to($email)
-                        //                         ->subject("Document is Rejected ".Auth::user()->name);
-                        //                 }
-                        //               );`
-                        //             }
-                        //      }
-                        //   }
-
-                $changeControl->update();
-                $history = new InternalAuditStageHistory();
-                $history->type = "Internal Audit";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
+        
 
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
@@ -3833,13 +3845,14 @@ if ($areIniAttachmentsSame2 != true) {
                 $changeControl->more_info_2_comment = $request->comment;
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
-                            $history->activity_type = 'More Info Required By, More Info Required On';
-                            if (is_null($lastDocument->more_info_2_by) || $lastDocument->more_info_2_by === '') {
-                              $history->previous = "Null";
-                            } else {
-                                $history->previous = $lastDocument->more_info_2_by . ' , ' . $lastDocument->more_info_2_on;
-                            }
-                            $history->current = $changeControl->more_info_2_by . ' , ' . $changeControl->more_info_2_on;
+                            $history->activity_type = 'Not Applicable';
+                            // if (is_null($lastDocument->more_info_2_by) || $lastDocument->more_info_2_by === '') {
+                            //   $history->previous = "Not Applicable";
+                            // } else {
+                            //     $history->previous = 'Not Applicable';
+                            // }
+                            $history->previous = 'Not Applicable';
+                            $history->current = 'Not Applicable';
                             $history->action='More Info Required';
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
@@ -3849,11 +3862,12 @@ if ($areIniAttachmentsSame2 != true) {
                             $history->change_to = "Opened";
                             $history->change_from = $lastDocument->status;
                             $history->stage = "Opened";
-                            if (is_null($lastDocument->more_info_2_by) || $lastDocument->more_info_2_by === '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            // if (is_null($lastDocument->more_info_2_by) || $lastDocument->more_info_2_by === '') {
+                            //     $history->action_name = 'New';
+                            // } else {
+                            //     $history->action_name = 'Update';
+                            // }
+                            $history->action_name = 'Not Applicable';
                             $history->save();
                         //     $list = Helpers::getAuditManagerUserList();
                         //     foreach ($list as $u) {
@@ -3910,13 +3924,14 @@ if ($areIniAttachmentsSame2 != true) {
                 $changeControl->more_info_3_comment = $request->comment;
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
-                            $history->activity_type = 'More Info Required By, More Info Required On';
-                            if (is_null($lastDocument->more_info_3_by) || $lastDocument->more_info_3_by === '') {
-                              $history->previous = "Null";
-                            } else {
-                                $history->previous = $lastDocument->more_info_3_by . ' , ' . $lastDocument->more_info_3_on;
-                            }
-                            $history->current = $changeControl->more_info_3_by . ' , ' . $changeControl->more_info_3_on;
+                            $history->activity_type = 'Not Applicable';
+                            // if (is_null($lastDocument->more_info_3_by) || $lastDocument->more_info_3_by === '') {
+                            //   $history->previous = "Not Applicable";
+                            // } else {
+                            //     $history->previous = $lastDocument->more_info_3_by . ' , ' . $lastDocument->more_info_3_on;
+                            // }
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
                             $history->action='More Info Required';
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
@@ -3926,11 +3941,12 @@ if ($areIniAttachmentsSame2 != true) {
                             $history->change_to = "Opened";
                             $history->change_from = $lastDocument->status;
                             $history->stage = "Opened";
-                            if (is_null($lastDocument->more_info_3_by) || $lastDocument->more_info_3_by === '') {
-                                $history->action_name = 'New';
-                            } else {
-                                $history->action_name = 'Update';
-                            }
+                            // if (is_null($lastDocument->more_info_3_by) || $lastDocument->more_info_3_by === '') {
+                            //     $history->action_name = 'New';
+                            // } else {
+                            //     $history->action_name = 'Update';
+                            // }
+                            $history->action_name = 'Not Applicable';
                             $history->save();
                         //     $list = Helpers::getAuditManagerUserList();
                         //     foreach ($list as $u) {
@@ -4208,12 +4224,26 @@ if ($areIniAttachmentsSame2 != true) {
         }
     }
 
+
+    public function internalAuditReview(Request $request, $id){
+            $history = new AuditReviewersDetails;
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->type = $request->type;
+            $history->reviewer_comment = $request->reviewer_comment;
+            $history->reviewer_comment_by = Auth::user()->name;
+            $history->reviewer_comment_on = Carbon::now()->toDateString();
+            $history->save();
+        return redirect()->back();
+    }
+
+
     public static function auditReport($id)
     {
         $doc = InternalAudit::find($id);
         if (!empty($doc)) {
-            $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-            $data = InternalAuditTrial::where('InternalAudit_id', $id)->get();
+            $doc->originator = User::where('id', $doc->initiator_id)->value('name');    
+            $data = InternalAuditTrial::where('InternalAudit_id', $id)->orderByDesc('id')->get();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.internalAudit.auditReport', compact('data', 'doc'))

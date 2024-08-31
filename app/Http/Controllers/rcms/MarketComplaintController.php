@@ -670,6 +670,57 @@ class MarketComplaintController extends Controller
 
             // ----------------------------------autid show  fileds ----------------------------------------------------------
 
+            if (!empty($marketComplaint->division_code)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'division Code';
+                $history->previous = "Null";
+                $history->current = $marketComplaint->division_code;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+                $history->save();
+            }
+
+            if (!empty($marketComplaint->initiator_id)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Initiator';
+                $history->previous = "Null";
+                $history->current =  Helpers::getInitiatorName($marketComplaint->initiator_id);
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+                $history->save();
+            }
+
+
+            if (!empty($marketComplaint->record)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Record';
+                $history->previous = "Null";
+                $history->current = Helpers::getDivisionName($marketComplaint->division_id). '/MC/'. Helpers::year($marketComplaint->created). '/'.str_pad($marketComplaint->record, 4, '0', STR_PAD_LEFT);
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+                $history->save();
+            }
 
             if (!empty($marketComplaint->description_gi)) {
                 $history = new MarketComplaintAuditTrial();
@@ -687,6 +738,43 @@ class MarketComplaintController extends Controller
                 $history->action_name = "Create";
                 $history->save();
             }
+
+            if (!empty($marketComplaint->intiation_date)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Intiation Date';
+                $history->previous = "Null";
+                $history->current = $marketComplaint->intiation_date;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+                $history->save();
+            }
+
+            if (!empty($marketComplaint->due_date_gi)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Due Date';
+                $history->previous = "Null";
+                $history->current = $marketComplaint->due_date_gi;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+                $history->save();
+            }
+
+
+
             if (!empty($marketComplaint->initiator_group)) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -3383,7 +3471,7 @@ if ( $lastmarketComplaint->initial_attachment_c != $marketComplaint->initial_att
         $product->mc_id = $griddata;
         $product->identifer = 'ProductDetails';
         $product->data = $request->serial_number_gi;
-        // dd( $product->data);
+        //  dd( $product->data);
 
         $product->update();
 
@@ -3811,41 +3899,42 @@ public function marketComplaintStateChange(Request $request,$id)
                     foreach ($columns as $index => $column) {
                         $value = $cftUsers->$column;
                        if ($index == 0 && $cftUsers->$column == Auth::user()->name) {
-    $updateCFT->Quality_Control_by = Auth::user()->name;
-    $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
+                            $updateCFT->Quality_Control_by = Auth::user()->name;
+                            $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
+                            $updateCFT->quality_control_comment = $request->comment;
 
-    $history = new MarketComplaintAuditTrial();
-    $history->market_id = $id;
-    $history->activity_type = 'Quality Control Completed By, Quality Control Completed On';
+                            $history = new MarketComplaintAuditTrial();
+                            $history->market_id = $id;
+                            $history->activity_type = 'Quality Control Completed By, Quality Control Completed On';
 
-    if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
-        $history->previous = "";
-    } else {
-        $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
-    }
+                            if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+                                $history->previous = "";
+                            } else {
+                                $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
+                            }
 
-    $history->action = 'CFT Review Complete';
+                            $history->action = 'CFT Review Complete';
 
-    // Make sure you're using the updated $updateCFT object here
-    $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
+                            // Make sure you're using the updated $updateCFT object here
+                            $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
 
-    $history->comment = $request->comment;
-    $history->user_id = Auth::user()->name;
-    $history->user_name = Auth::user()->name;
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocument->status;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocument->status;
-    $history->stage = 'CFT Review';
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'CFT Review';
 
-    if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
-        $history->action_name = 'New';
-    } else {
-        $history->action_name = 'Update';
-    }
+                            if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
 
-    $history->save();
-}
+                            $history->save();
+                        }
 
                         if($index == 1 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->QualityAssurance_by = Auth::user()->name;
