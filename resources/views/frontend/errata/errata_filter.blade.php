@@ -14,14 +14,15 @@
 
         <td>
             <div>
-                <strong>Data Field Name :</strong><a
-                    href="#">{{ $dataDemo->activity_type ?: 'Not Applicable' }}</a>
+                <strong>Data Field Name :</strong>{{ $dataDemo->activity_type ?: 'Not Applicable' }}
             </div>
             <div style="margin-top: 5px;">
                 @if ($dataDemo->activity_type == 'Activity Log')
-                    <strong>Change From :</strong>{{ $dataDemo->change_from ?: 'Not Applicable' }}
+                    <strong>Change From
+                        :</strong>{{ $dataDemo->change_from ?: 'Null' }}
                 @else
-                    <strong>Change From :</strong>{{ $dataDemo->previous ?: 'Not Applicable' }}
+                    <strong>Change From
+                        :</strong>{{ $dataDemo->previous ?: 'Null' }}
                 @endif
             </div>
             <br>
