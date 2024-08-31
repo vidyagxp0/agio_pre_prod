@@ -377,9 +377,11 @@
                                 <div class="">QA/CQA Final Review</div>
                             @endif
                             @if ($data->stage >= 6)
-                                <div class="active">Pending RA Review</div>
+                                <div class="active">Pending RA 
+                                    Approval</div>
                             @else
-                                <div class="">Pending RA Review</div>
+                                <div class="">Pending RA 
+                                    Approval</div>
                             @endif
                             @if ($data->stage >= 7)
                                 <div class="active">QA/CQA Head/Manager
@@ -513,11 +515,6 @@ Designee Approval</div>
                                                 </div>
                                             </div>
 
-                                            @php
-                                                // Calculate the due date (30 days from the initiation date)
-                                                $initiationDate = date('Y-m-d'); // Current date as initiation date
-                                                $dueDate = date('Y-m-d', strtotime($initiationDate . ' + ' . $data->due_days . ' days')); // Due date
-                                            @endphp
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="date_initiation">Date of Initiation</label>
@@ -544,6 +541,8 @@ Designee Approval</div>
                                                     </select>
                                                 </div>
                                             </div>
+
+
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Microbiology">CFT Reviewer</label>
@@ -555,26 +554,70 @@ Designee Approval</div>
                                                 </div>
                                             </div> -->
 
-                                            <div class="col-md-6 new-date-data-field">
+                                            
+                                            
+
+
+                                            <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
-                                                    <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                                    <label for="Due Date"> Due Date</label>
+                                                    <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                            reason in "Due Date Extension Justification" data field.</small></div>
                                                     <div class="calenderauditee">
                                                         @if($data->due_date != null)
-                                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                                            <input type="date" name="due_date" readonly
-                                                                min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                                oninput="handleDateInput(this, 'due_date')" />
+                                                            <input type="text" id="due_date" name="due_date" placeholder="DD-MM-YYYY" value="{{ $data->due_date }}" />
                                                         @else
-                                                            <input type="text" id="due_date" readonly placeholder="Due Date not available">
+                                                            <input type="text" id="due_date" name="due_date" placeholder="Due Date not available">
                                                         @endif
                                                     </div>
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            $( "#due_date" ).datepicker({
+                                                                dateFormat: "dd-M-yy", 
+                                                            });
+                                                        })
+                                                    </script>
+            
                                                 </div>
                                             </div>
+                                            
                                             
                                             <script>
                                                 // Your input date variable
                                                 var dueDate = "{{ $data->due_date }}"; // Assuming $data->due_date is the variable you're passing
+        
+                                                // Your input date variable
+                                                var dueDate = "{{ $data->due_date }}"; // Assuming $data->due_date is the variable you're passing
                                             
+                                            
+                                                // Check if the due date is not null or empty
+                                                if (dueDate) {
+                                                    // Create a Date object
+                                                    var date = new Date(dueDate);
+                                            
+                                                    // Array of month names
+                                                    var monthNames = [
+                                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                                    ];
+                                            
+                                                    // Extracting day, month, and year from the date
+                                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                                                    var monthIndex = date.getMonth();
+                                                    var year = date.getFullYear();
+                                            
+                                                    // Formatting the date in "dd-MMM-yyyy" format
+                                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+                                            
+                                                    // Set the formatted due date value to the input field
+                                                    document.getElementById('due_date').value = dueDateFormatted;
+                                                } else {
+                                                    // If dueDate is null or empty, display a message instead
+                                                    document.getElementById('due_date').value = 'Due Date not available';
+                                                }
+                                            </script>
+                                            <script>
+                                           
                                                 // Check if the due date is not null or empty
                                                 if (dueDate) {
                                                     // Create a Date object
@@ -673,7 +716,7 @@ Designee Approval</div>
                                                 </div>
                                             </div>
 
-                                            <script>
+                                            {{--  <script>
                                                 $(document).ready(function() {
                                                     function toggleRiskAssessmentButton() {
                                                         var riskAssessmentRequired = $('#risk_assessment_required').val();
@@ -690,6 +733,33 @@ Designee Approval</div>
                                                         toggleRiskAssessmentButton();
                                                     });
                                                 });
+                                            </script>  --}}
+
+                                            <script>
+                                                $(document).ready(function() {
+                                                    function toggleRiskAssessmentAndJustification() {
+                                                        var riskAssessmentRequired = $('#risk_assessment_required').val();
+                                                        
+                                                        // Toggle Risk Assessment Button
+                                                        if (riskAssessmentRequired === 'yes') {
+                                                            $('#riskAssessmentButton').show();
+                                                            $('#justification_div').hide(); // Hide justification when "Yes" is selected
+                                                        } else if (riskAssessmentRequired === 'no') {
+                                                            $('#riskAssessmentButton').hide();
+                                                            $('#justification_div').show(); // Show justification when "No" is selected
+                                                        } else {
+                                                            $('#riskAssessmentButton').hide();
+                                                            $('#justification_div').hide(); // Hide everything if nothing is selected
+                                                        }
+                                                    }
+                                                    
+                                                    toggleRiskAssessmentAndJustification(); // Initial call to set the correct state
+                                                    
+                                                    // Call the function on dropdown change
+                                                    $('#risk_assessment_required').change(function() {
+                                                        toggleRiskAssessmentAndJustification();
+                                                    });
+                                                });
                                             </script>
 
                                             <div class="col-lg-6">
@@ -701,6 +771,16 @@ Designee Approval</div>
                                                         <option @if ($data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
                                                     </select>
                                                     <!-- @error('capa_required')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror -->
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-lg-6" id="justification_div" style="display:none;">
+                                                <div class="group-input">
+                                                    <label for="Justification">Justification</label>
+                                                    <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required.">{{ $data->risk_identification ?? '' }}</textarea>
+                                                    <!-- @error('justification')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror -->
                                                 </div>
@@ -753,6 +833,58 @@ Designee Approval</div>
 
                                             </div>
                                             
+
+                                            
+                                             <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="change_related_to">Change Related To</label>
+                                                    <select name="severity" id="change_related_to">
+                                                        <option value="">-- Select --</option>
+                                                        <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
+                                                        <option value="facility" {{ old('severity', $data->severity ?? '') == 'facility' ? 'selected' : '' }}>Facility</option>
+                                                        <option value="utility" {{ old('severity', $data->severity ?? '') == 'utility' ? 'selected' : '' }}>Utility</option>
+                                                        <option value="equipment" {{ old('severity', $data->severity ?? '') == 'equipment' ? 'selected' : '' }}>Equipment</option>
+                                                        <option value="document" {{ old('severity', $data->severity ?? '') == 'document' ? 'selected' : '' }}>Document</option>
+                                                        <option value="other" {{ old('severity', $data->severity ?? '') == 'other' ? 'selected' : '' }}>Other</option>
+                                                    </select>
+                                                    <!-- @error('severity')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror -->
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Textbox for 'Other' option -->
+                                            <div class="col-lg-6" id="other_specify_div" style="display:none;">
+                                                <div class="group-input">
+                                                    <label for="other_specify">Please specify</label>
+                                                    <input type="text" name="Occurance" id="other_specify" value="{{ $data->Occurance ?? '' }}" placeholder="Specify if Other is selected">
+                                                    <!-- @error('other_specify')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror -->
+                                                </div>
+                                            </div>
+                                            
+                                            <script>
+                                                $(document).ready(function() {
+                                                    function toggleOtherSpecifyField() {
+                                                        var changeRelatedTo = $('#change_related_to').val();
+                                                        if (changeRelatedTo === 'other') {
+                                                            $('#other_specify_div').show();
+                                                        } else {
+                                                            $('#other_specify_div').hide();
+                                                        }
+                                                    }
+                                            
+                                                    toggleOtherSpecifyField(); // Initial check
+                                            
+                                                    // Update field visibility on dropdown change
+                                                    $('#change_related_to').change(function() {
+                                                        toggleOtherSpecifyField();
+                                                    });
+                                                });
+                                            </script>
+                                            
+
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator Group">Initiated Through</label>
@@ -947,85 +1079,10 @@ Designee Approval</div>
                                             </div>
                                         </div>
 
-                                        <div class="row">
+                                        
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="risk-identification">Risk Identification</label>
-                                                    <textarea name="risk_identification">{{ $data->risk_identification }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="severity">Severity</label>
-                                                    <select name="severity" id="analysisR"
-                                                        onchange='calculateRiskAnalysis(this)' {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                        <option value="">-- Select --</option>
-                                                        <option {{ $data->severity == '1' ? 'selected' : '' }}
-                                                            value="1">Negligible</option>
-                                                        <option {{ $data->severity == '2' ? 'selected' : '' }}
-                                                            value="2">Minor</option>
-                                                        <option {{ $data->severity == '3' ? 'selected' : '' }}
-                                                            value="3">Moderate</option>
-                                                        <option {{ $data->severity == '4' ? 'selected' : '' }}
-                                                            value="4">Major</option>
-                                                        <option {{ $data->severity == '5' ? 'selected' : '' }}
-                                                            value="5">Fatel</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Occurance">Occurance</label>
-                                                    <select name="Occurance" id="analysisP"
-                                                        onchange='calculateRiskAnalysis(this)'  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                        <option value="">-- Select --</option>
-                                                        <option {{ $data->Occurance == '5' ? 'selected' : '' }}
-                                                            value="5">Extremely Unlikely</option>
-                                                        <option {{ $data->Occurance == '4' ? 'selected' : '' }}
-                                                            value="4">Rare</option>
-                                                        <option {{ $data->Occurance == '3' ? 'selected' : '' }}
-                                                            value="3">Unlikely</option>
-                                                        <option {{ $data->Occurance == '2' ? 'selected' : '' }}
-                                                            value="2">Likely</option>
-                                                        <option {{ $data->Occurance == '1' ? 'selected' : '' }}
-                                                            value="1">Very Likely</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Detection">Detection</label>
-                                                    <select name="Detection" id="analysisN"
-                                                        onchange='calculateRiskAnalysis(this)'  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                        <option value="">-- Select --</option>
-                                                        <option {{ $data->Detection == '4' ? 'selected' : '' }}
-                                                            value="4">Impossible</option>
-                                                        <option {{ $data->Detection == '3' ? 'selected' : '' }}
-                                                            value="3">Rare</option>
-                                                        <option {{ $data->Detection == '2' ? 'selected' : '' }}
-                                                            value="2">Unlikely</option>
-                                                        <option {{ $data->Detection == '1' ? 'selected' : '' }}
-                                                            value="1">Likely</option>
-                                                        {{-- <option  {{   $data ->Detection=='Very-Likely'? 'selected' : ''}} value="Very-Likely">Very Likely</option> --}}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="RPN">RPN</label>
-                                                    <input type="text" name="RPN"   {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} id="analysisRPN"
-                                                        value="{{ $data->RPN }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="risk-evaluation">Risk Evaluation</label>
-                                                    <textarea name="risk_evaluation"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->risk_evaluation }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="migration-action">Mitigation Action</label>
+                                                    <label for="migration-action">comments</label>
                                                     <textarea name="migration_action"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->migration_action }}</textarea>
                                                 </div>
                                             </div>
@@ -1612,7 +1669,7 @@ Designee Approval</div>
                                                     <!-- <div><small class="text-primary">Please select related information</small></div> -->
                                                     <input type="date"id="QualityAssurance_on"
                                                         name="QualityAssurance_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->QualityAssurance_on }}">
+                                                        value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}">
                                                 </div>
                                             </div>
                                             <script>
@@ -1769,7 +1826,7 @@ Designee Approval</div>
                                                         On</label>
                                                     <!-- <div><small class="text-primary">Please select related information</small></div> -->
                                                     <input readonly type="date" id="QualityAssurance_on" name="QualityAssurance_on"
-                                                        value="{{ $data1->QualityAssurance_on }}">
+                                                        value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}">
                                                 </div>
                                             </div>  
                                         @endif
@@ -1915,7 +1972,7 @@ Designee Approval</div>
                                                     <!-- <div><small class="text-primary">Please select related information</small></div> -->
                                                     <input type="date"id="Production_Table_On"
                                                         name="Production_Table_On"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->Production_Table_On }}">
+                                                        value="{{ Helpers::getdateFormat($data1->Production_Table_On) }}">
                                                 </div>
                                             </div>
                                             <script>
@@ -2088,7 +2145,7 @@ Designee Approval</div>
                                                         On</label>
                                                     <!-- <div><small class="text-primary">Please select related information</small></div> -->
                                                     <input readonly type="date"id="Production_Table_On" name="Production_Table_On"
-                                                        value="{{ $data1->Production_Table_On }}">
+                                                        value="{{ Helpers::getdateFormat($data1->Production_Table_On) }}">
                                                 </div>
                                             </div>
                                         @endif
@@ -5007,7 +5064,7 @@ Designee Approval</div>
                                                     <!-- <div><small class="text-primary">Please select related information</small></div> -->
                                                     <input type="date"id="CorporateQualityAssurance_on"
                                                         name="CorporateQualityAssurance_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->CorporateQualityAssurance_on }}">
+                                                        value="{{ Helpers::getdateFormat($data1->CorporateQualityAssurance_on) }}">
                                                 </div>
                                             </div>
                                             <script>
@@ -5164,7 +5221,7 @@ Designee Approval</div>
                                                         On</label>
                                                     <!-- <div><small class="text-primary">Please select related information</small></div> -->
                                                     <input readonly type="date" id="CorporateQualityAssurance_on" name="CorporateQualityAssurance_on"
-                                                        value="{{ $data1->CorporateQualityAssurance_on }}">
+                                                        value="{{ Helpers::getdateFormat($data1->CorporateQualityAssurance_on) }}">
                                                 </div>
                                             </div>
                                         @endif 
@@ -9630,6 +9687,25 @@ Designee Approval</div>
                 $('#' + removeId).remove();
             })
         })
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() { //DISABLED PAST DATES IN APPOINTMENT DATE
+            var dateToday = new Date();
+            var month = dateToday.getMonth() + 1;
+            var day = dateToday.getDate();
+            var year = dateToday.getFullYear();
+
+            if (month < 10)
+                month = '0' + month.toString();
+            if (day < 10)
+                day = '0' + day.toString();
+
+            var maxDate = year + '-' + month + '-' + day;
+
+            $('#dueDate').attr('min', maxDate);
+        });
     </script>
 
 @endsection
