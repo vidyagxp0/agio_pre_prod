@@ -17,6 +17,10 @@
         .hide-input {
             display: none !important;
         }
+
+        .remove-file{
+            cursor: pointer;
+        }
     </style>
     <style>
         header .header_rcms_bottom {
@@ -452,9 +456,11 @@ Designee Approval</div>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm7')" style="display: none" id="riskAssessmentButton">Risk Assessment</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm13')" style="display: {{ $data->hod_person == Auth::user()->id ? 'inline' : 'none' }}">HOD Review</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Review</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Initial Review</button>
                             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">RA Comment</button> -->
                             <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CFT</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA Final Review</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm15')">RA</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button>
                             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Impact Assessment</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Comments</button> -->
@@ -1322,20 +1328,20 @@ Designee Approval</div>
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-6">
+                                            <!-- <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="due_days"> Due Days </label>
                                                     <input type="number" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }} name="due_days" id="due_days" value="{{ $data->due_days }}" >
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="severity-level">Severity Level</label>
-                                                    <span class="text-primary">Severity levels in a QMS record gauge issue
+                                                    <label for="severity-level">Classification of Change</label>
+                                                    <!-- <span class="text-primary">Severity levels in a QMS record gauge issue
                                                         seriousness, guiding priority for corrective actions. Ranging from
                                                         low to high, they ensure quality standards and mitigate critical
-                                                        risks.</span>
+                                                        risks.</span> -->
                                                     <select name="severity_level1" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data->severity_level1 == 'minor') selected @endif
@@ -1350,7 +1356,7 @@ Designee Approval</div>
 
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="qa_comments">QA Review Comments</label>
+                                                    <label for="qa_comments">QA Initial Review Comments</label>
                                                     <textarea name="qa_review_comments" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $review->qa_comments }}</textarea>
                                                 </div>
                                             </div>
@@ -1429,9 +1435,9 @@ Designee Approval</div>
                                     <div class="inner-block-content">
                                         <div class="row">
 
-                                            <div class="sub-head">
+                                            <!-- <div class="sub-head">
                                                 RA Review
-                                            </div>
+                                            </div> -->
                                             @php
                                                 $data1 = DB::table('cc_cfts')
                                                     ->where('cc_id', $data->id)
@@ -1458,294 +1464,6 @@ Designee Approval</div>
                                                     });
                                                 </script>
                                         
-
-                                        @if ($data->stage == 3 || $data->stage == 4)
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="RA Review"> RA Review Required ? <span class="text-danger">*</span></label>
-                                                    <select name="RA_Review" id="RA_Review">
-                                                        <option value="">-- Select --</option>
-                                                        <option @if ($data1->RA_Review == 'yes') selected @endif value='yes'>
-                                                            Yes</option>
-                                                        <option @if ($data1->RA_Review == 'no') selected @endif value='no'>
-                                                            No</option>
-                                                        <option @if ($data1->RA_Review == 'na') selected @endif value='na'>
-                                                            NA</option>
-                                                    </select>
-
-                                                </div>
-                                            </div>
-                                            
-                                            @php
-                                                $userRoles = DB::table('user_roles')
-                                                    ->where([
-                                                        'q_m_s_roles_id' => 50,
-                                                        'q_m_s_divisions_id' => $data->division_id,
-                                                    ])
-                                                    ->get();
-                                                $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                                $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                            @endphp
-                                            <div class="col-lg-6 ra_review">
-                                                <div class="group-input">
-                                                    <label for="RA notification">RA Person <span id="asteriskRA"
-                                                            style="display: {{ $data1->RA_Review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span>
-                                                    </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="RA_person" class="RA_person"
-                                                        id="RA_person">
-                                                        <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->RA_person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 mb-3 ra_review">
-                                                <div class="group-input">
-                                                    <label for="RA assessment">Impact Assessment (By RA) <span id="asteriskRA1"
-                                                            style="display: {{ $data1->RA_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                            class="text-danger">*</span></label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                            does not require completion</small></div>
-                                                    <textarea @if ($data1->RA_Review == 'yes' && $data->stage == 4) required @endif class="summernote RA_assessment"
-                                                    @if ($data->stage == 3 || (isset($data1->RA_person) && Auth::user()->name != $data1->RA_person)) readonly @endif name="RA_assessment" id="summernote-17">{{ $data1->RA_assessment }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 mb-3 ra_review">
-                                                <div class="group-input">
-                                                    <label for="RA feedback">RA Feedback <span id="asteriskRA2"
-                                                            style="display: {{ $data1->RA_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                            class="text-danger">*</span></label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                            does not require completion</small></div>
-                                                    <textarea class="summernote RA_feedback" @if ($data->stage == 3 || (isset($data1->RA_person) && Auth::user()->name != $data1->RA_person)) readonly @endif name="RA_feedback"
-                                                        id="summernote-18" @if ($data1->RA_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->RA_feedback }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 ra_review">
-                                                <div class="group-input">
-                                                    <label for="RA attachment">RA Attachments</label>
-                                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                                            documents</small></div>
-                                                    <div class="file-attachment-field">
-                                                        <div disabled class="file-attachment-list" id="RA_attachment">
-                                                            @if ($data1->RA_attachment)
-                                                                @foreach (json_decode($data1->RA_attachment) as $file)
-                                                                    <h6 type="button" class="file-container text-dark"
-                                                                        style="background-color: rgb(243, 242, 240);">
-                                                                        <b>{{ $file }}</b>
-                                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                                class="fa fa-eye text-primary"
-                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                    </h6>
-                                                                @endforeach
-                                                            @endif
-                                                        </div>
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file"
-                                                                id="myfile"
-                                                                name="RA_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                                oninput="addMultipleFiles(this, 'RA_attachment')" multiple>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 mb-3 ra_review">
-                                                <div class="group-input">
-                                                    <label for="RA Review Completed By">RA Review Completed
-                                                        By</label>
-                                                    <input readonly type="text" value="{{ $data1->RA_by }}"
-                                                        name="RA_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }} id="RA_by">
-
-
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 ra_review">
-                                                <div class="group-input ">
-                                                    <label for="RA Review Completed On">RA Review Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="RA_on"
-                                                        name="RA_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->RA_on }}">
-                                                </div>
-                                            </div>
-                                            <script>
-                                                document.addEventListener('DOMContentLoaded', function() {
-                                                    var selectField = document.getElementById('RA_Review');
-                                                    var inputsToToggle = [];
-
-                                                    // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('RA_person');
-                                                    for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                        inputsToToggle.push(facilityNameInputs[i]);
-                                                    }
-                                                    // var facilityNameInputs = document.getElementsByClassName('RA_assessment');
-                                                    // for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                    //     inputsToToggle.push(facilityNameInputs[i]);
-                                                    // }
-                                                    // var facilityNameInputs = document.getElementsByClassName('RA_feedback');
-                                                    // for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                    //     inputsToToggle.push(facilityNameInputs[i]);
-                                                    // }
-
-                                                    selectField.addEventListener('change', function() {
-                                                        var isRequired = this.value === 'yes';
-                                                        console.log(this.value, isRequired, 'value');
-
-                                                        inputsToToggle.forEach(function(input) {
-                                                            input.required = isRequired;
-                                                            console.log(input.required, isRequired, 'input req');
-                                                        });
-
-                                                        // Show or hide the asterisk icon based on the selected value
-                                                        var asteriskIcon = document.getElementById('asteriskRA');
-                                                        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                    });
-                                                });
-                                            </script>
-                                        @else
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="RA Review">RA Review Required ?</label>
-                                                    <select name="RA_Review" id="RA_Review" disabled>
-                                                        <option value="">-- Select --</option>
-                                                        <option @if ($data1->RA_Review == 'yes') selected @endif value='yes'>
-                                                            Yes</option>
-                                                        <option @if ($data1->RA_Review == 'no') selected @endif value='no'>
-                                                            No</option>
-                                                        <option @if ($data1->RA_Review == 'na') selected @endif value='na'>
-                                                            NA</option>
-                                                    </select>
-
-                                                </div>
-                                            </div>
-                                            @php
-                                                $userRoles = DB::table('user_roles')
-                                                    ->where([
-                                                        'q_m_s_roles_id' => 50,
-                                                        'q_m_s_divisions_id' => $data->division_id,
-                                                    ])
-                                                    ->get();
-                                                $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                                $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                            @endphp
-                                            <div class="col-lg-6 ra_review">
-                                                <div class="group-input">
-                                                    <label for="RA notification">RA Person <span id="asteriskInvi11" style="display: none"
-                                                            class="text-danger">*</span></label>
-                                                    <select name="RA_person" disabled id="RA_person">
-                                                        <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->RA_person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            @if ($data->stage == 4)
-                                                <div class="col-md-12 mb-3 ra_review">
-                                                    <div class="group-input">
-                                                        <label for="RA assessment">Impact Assessment (By RA)
-                                                            <!-- <span
-                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                            class="text-danger">*</span> -->
-                                                        </label>
-                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                                does not require completion</small></div>
-                                                        <textarea class="tiny" name="RA_assessment" id="summernote-17">{{ $data1->RA_assessment }}</textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 mb-3 ra_review">
-                                                    <div class="group-input">
-                                                        <label for="RA feedback">RA Feedback
-                                                            <!-- <span
-                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                            class="text-danger">*</span> -->
-                                                        </label>
-                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                                does not require completion</small></div>
-                                                        <textarea class="tiny" name="RA_feedback" id="summernote-18">{{ $data1->RA_feedback }}</textarea>
-                                                    </div>
-                                                </div>
-                                            @else
-                                                <div class="col-md-12 mb-3 ra_review">
-                                                    <div class="group-input">
-                                                        <label for="RA assessment">Impact Assessment (By RA)
-                                                            <!-- <span
-                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                            class="text-danger">*</span> -->
-                                                        </label>
-                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                                does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="RA_assessment" id="summernote-17">{{ $data1->RA_assessment }}</textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 mb-3 ra_review">
-                                                    <div class="group-input">
-                                                        <label for="RA feedback">RA Feedback
-                                                            <!-- <span
-                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                            class="text-danger">*</span> -->
-                                                        </label>
-                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                                does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="RA_feedback" id="summernote-18">{{ $data1->RA_feedback }}</textarea>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            <div class="col-12 ra_review">
-                                                <div class="group-input">
-                                                    <label for="RA attachment">RA Attachments</label>
-                                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                                            documents</small></div>
-                                                    <div class="file-attachment-field">
-                                                        <div disabled class="file-attachment-list" id="RA_attachment">
-                                                            @if ($data1->RA_attachment)
-                                                                @foreach (json_decode($data1->RA_attachment) as $file)
-                                                                    <h6 type="button" class="file-container text-dark"
-                                                                        style="background-color: rgb(243, 242, 240);">
-                                                                        <b>{{ $file }}</b>
-                                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                                class="fa fa-eye text-primary"
-                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                    </h6>
-                                                                @endforeach
-                                                            @endif
-                                                        </div>
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input disabled {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file"
-                                                                id="myfile" name="RA_attachment[]" oninput="addMultipleFiles(this, 'RA_attachment')"
-                                                                multiple>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 mb-3 ra_review">
-                                                <div class="group-input">
-                                                    <label for="RA Review Completed By">RA Review Completed
-                                                        By</label>
-                                                    <input readonly type="text" value="{{ $data1->RA_by }}" name="RA_by" id="RA_by">
-
-
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 ra_review">
-                                                <div class="group-input">
-                                                    <label for="RA Review Completed On">RA Review Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input readonly type="date"id="RA_on" name="RA_on" value="{{ $data1->RA_on }}">
-                                                </div>
-                                            </div>
-                                        @endif
 
 
 
@@ -8066,6 +7784,156 @@ Designee Approval</div>
                                 </div>
                                 </div>                                
 
+                                <div id="CCForm14" class="inner-block cctabcontent">
+                                    <div class="inner-block-content">
+                                        <div class="row">
+                                        <div class="sub-head">
+                                            QA Final Review
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="RA notification">RA Person 
+                                                    @if($data->stage==5) <span class="text-danger">*</span>@endif
+                                                    </label>
+                                                    <select name="RA_data_person" class="RA_data_person"
+                                                        id="RA_data_person">
+                                                        <option value="">-- Select --</option>
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->name }}" @if ($user->name == $cc_cfts->RA_data_person) selected @endif>
+                                                                {{ $user->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="RA notification">QA/CQA Head Approval Person
+                                                    @if($data->stage==5) <span class="text-danger">*</span>@endif
+                                                    <select name="QA_CQA_person" class="RA_person"
+                                                        id="RA_person">
+                                                        <option value="">-- Select --</option>
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->name }}" @if ($user->name == $cc_cfts->QA_CQA_person) selected @endif>
+                                                                {{ $user->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        <div class="group-input">
+                                            <label for="qa-eval-comments">QA Final Review Comments</label>
+                                            <textarea name="qa_final_comments" >{{ $cc_cfts->qa_final_comments }}</textarea>
+                                        </div>
+
+                                        @if ($data1->qa_final_attach)
+                                            @foreach (json_decode($data1->qa_final_attach) as $file)
+                                                <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                    name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
+                                        <div class="group-input">
+                                            <label for="qa-eval-attach">QA Final Review Attachments</label>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="qa_final_attach">
+                                                    @if ($cc_cfts->qa_final_attach)
+                                                        @foreach (json_decode($cc_cfts->qa_final_attach) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="qa_final_attach[]"
+                                                        oninput="addMultipleFiles(this, 'qa_final_attach')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="button-block">
+                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div> 
+                                </div> 
+
+                                <div id="CCForm15" class="inner-block cctabcontent">
+                                    <div class="inner-block-content">
+                                        <div class="sub-head">
+                                            RA
+                                        </div>
+                                        <div class="col-md-12">
+                                                    <div class="group-input">
+                                                        <label for="RA feedback">RA Comment</label>
+                                                    @if($data->stage==6) <span class="text-danger">*</span>@endif
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                                does not require completion</small></div>
+                                                        <textarea class="tiny" name="RA_feedback" id="summernote-18">{{ $data1->RA_feedback }}</textarea>
+                                                    </div>
+                                                </div>
+
+                                        <div class="col-12">
+                                                <div class="group-input">
+                                                    <label for="RA attachment">RA Attachments</label>
+                                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                                            documents</small></div>
+                                                    <div class="file-attachment-field">
+                                                        <div disabled class="file-attachment-list" id="RA_attachment">
+                                                            @if ($data1->RA_attachment)
+                                                                @foreach (json_decode($data1->RA_attachment) as $file)
+                                                                    <h6 type="button" class="file-container text-dark"
+                                                                        style="background-color: rgb(243, 242, 240);">
+                                                                        <b>{{ $file }}</b>
+                                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                                class="fa fa-eye text-primary"
+                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                    </h6>
+                                                                @endforeach
+                                                            @endif
+                                                        </div>
+                                                        <div class="add-btn">
+                                                            <div>Add</div>
+                                                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file"
+                                                                id="myfile"
+                                                                name="RA_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                                oninput="addMultipleFiles(this, 'RA_attachment')" multiple>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="button-block">
+                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>    
+
                                 <div id="CCForm4" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="sub-head">
@@ -8076,8 +7944,8 @@ Designee Approval</div>
                                             <textarea name="qa_eval_comments" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $evaluation->qa_eval_comments }}</textarea>
                                         </div>
 
-                                        @if ($data1->Production_Injection_Attachment)
-                                            @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                        @if ($data1->qa_final_attach)
+                                            @foreach (json_decode($data1->qa_final_attach) as $file)
                                                 <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
                                                     name="existinProductionInjectionFile[{{ $loop->index }}]"
                                                     value="{{ $file }}">

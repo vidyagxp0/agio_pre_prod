@@ -28,6 +28,11 @@
         .calenderauditee input::-webkit-calendar-picker-indicator {
             width: 100%;
         }
+
+        .remove-file{
+            cursor: pointer;
+        }
+                     
     </style>
 
     <script>
@@ -129,6 +134,8 @@
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Assessment</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA Final Review</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm15')">RA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Additional Information</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Comments</button> --}}
@@ -3116,6 +3123,119 @@
 
                         </div>
                     </div>
+                    <div id="CCForm14" class="inner-block cctabcontent">
+                                    <div class="inner-block-content">
+                                        <div class="row">
+                                        <div class="sub-head">
+                                            QA Final Review
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="RA notification">RA Person 
+                                                        <!-- <span class="text-danger">*</span> -->
+                                                    </label>
+                                                    <select name="RA_data_person" class="RA_data_person"
+                                                        id="RA_data_person">
+                                                        <option value="">-- Select --</option>
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->name }}" @if ($user->name) selected @endif>
+                                                                {{ $user->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="RA notification">QA/CQA Head Approval Person
+                                                    <select name="QA_CQA_person" class="RA_person"
+                                                        id="RA_person">
+                                                        <option value="">-- Select --</option>
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->name }}" @if ($user->name) selected @endif>
+                                                                {{ $user->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        <div class="group-input">
+                                            <label for="qa-eval-comments">QA Final Review Comments</label>
+                                            <textarea name="qa_final_comments" ></textarea>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="qa-eval-attach">QA Final Review Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="qa_final_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="qa_final_attach[]" disabled
+                                                oninput="addMultipleFiles(this, 'qa_final_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                        <div class="button-block">
+                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div> 
+                                </div> 
+
+                                <div id="CCForm15" class="inner-block cctabcontent">
+                                    <div class="inner-block-content">
+                                        <div class="sub-head">
+                                            RA
+                                        </div>
+                                        <div class="col-md-12">
+                                                    <div class="group-input">
+                                                        <label for="RA feedback">RA Comment</label>
+                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                                does not require completion</small></div>
+                                                        <textarea class="tiny" name="RA_feedback" id="summernote-18"></textarea>
+                                                    </div>
+                                                </div>
+
+                                      
+                                            <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="qa-eval-attach">RA Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small>
+                                                </div>
+                                                <div class="file-attachment-field">
+                                                    <div class="file-attachment-list" id="RA_attachment"></div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input type="file" id="myfile" name="RA_attachment[]" disabled
+                                                            oninput="addMultipleFiles(this, 'RA_attachment')" multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                            </div>
+
+                                        </div>
+                                        <div class="button-block">
+                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>    
 
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
