@@ -5514,7 +5514,7 @@ section#pdf-page .watermark {
 
 
 #child-modal .group-input label:nth-child(1) {
-    font-weight: bold;
+    font-weight: normal;
     margin-bottom: 10px;
     display: block;
 }

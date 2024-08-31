@@ -95,7 +95,7 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                 More Info Required
                 </button>
-  
+
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                     Child
                 </button>
@@ -119,28 +119,28 @@
                
                 
             @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-           
-            
+
+
             <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 Phase IA Investigation
             </button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
-                </button> 
+                </button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                 Child
-            </button>   
+            </button>
             @elseif($data->stage == 7 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                
+
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                  Phase IA HOD Review Complete
-                </button> 
+                </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
-                </button> 
+                </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
-                </button> 
+                </button>
                 {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button> --}}
@@ -155,9 +155,9 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button>
-                
+
              @elseif($data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                
+
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Assignable Cause Found
                 </button>
@@ -170,34 +170,34 @@
 
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
-                </button> 
-                
+                </button>
+
 
                 @elseif($data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                
-               
+
+
                 @elseif($data->stage == 11 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Phase IB Investigation
                 </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
-                </button>           
+                </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                     Child
                 </button>
-               
+
                 @elseif($data->stage == 12 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Phase IB HOD Review Complete
                 </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
-                </button>           
+                </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button>
-               
+
                 @elseif($data->stage == 13 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Phase IB QA/CQA Review Complete
@@ -208,7 +208,7 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button>
-               
+
                 @elseif($data->stage == 14 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     P-IB Assignable Cause Found
@@ -224,7 +224,7 @@
                 </button>
 
                 @elseif($data->stage == 15 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                
+
                 @elseif($data->stage == 16 && (in_array(22, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Phase II A Investigation
@@ -322,13 +322,13 @@
                     Child
                 </button>
                 @elseif($data->stage == 25 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                
+
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 P-III Investigation Applicable/Not Applicable
                 </button>
                 @elseif($data->stage == 26 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                
-                
+
+
                 <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/action-items-create') }}"> Action Item
                 </a> </button>
                 <button class="button_theme1"> <a class="text-white" href="{{ url('root-cause-analysis') }}"> Root Cause Analysis
@@ -994,35 +994,13 @@
                                                             <input type="text" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][a_r_number]"value="{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : '' }}">
                                                         </td>
-                                                        {{-- <td>
+                                                        <td>
                                                             <input type="month" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][m_f_g_date]" value="{{ isset($gridData['m_f_g_date']) ?  $gridData['m_f_g_date'] : '' }}">
                                                         </td>
 
                                                         <td>
                                                             <input type="month" class="numberDetail"  name="product_materiel[{{ $loop->index }}][expiry_date]"   value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}"  class="hide-input" oninput="handleMonthInput(this, 'expiry_date')">
-                                                        </td> --}}
-
-                                                        <td>
-                                                            <div class="col-lg-6 new-date-data-field">
-                                                                <div class="group-input input-date">
-                                                                    <div class="calenderauditee">
-                                                                        <input type="text" id="m_f_g_date{{ $loop->index }}" readonly placeholder="MM-YYYY" name="product_materiel[{{ $loop->index }}][m_f_g_date]"   value="{{ Helpers::getmonthFormat($gridData['m_f_g_date'] ?? '') }}"  />
-                                                                        <input  type="month" name="product_materiel[{{ $loop->index }}][m_f_g_date]"   value="{{ isset($gridData['m_f_g_date']) ? $gridData['m_f_g_date'] : '' }}" class="hide-input" oninput="handleMonthInput(this, 'm_f_g_date{{ $loop->index }}')">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="col-lg-6 new-date-data-field">
-                                                                <div class="group-input input-date">
-                                                                    <div class="calenderauditee">
-                                                                        <input type="text" id="expiry_date{{ $loop->index }}" value="{{ Helpers::getmonthFormat($gridData['expiry_date'] ?? '') }}" readonly placeholder="MM-YYYY" />
-                                                                        <input  type="month" name="product_materiel[{{ $loop->index }}][expiry_date]"
-                                                                        value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}" class="hide-input" oninput="handleMonthInput(this, 'expiry_date{{ $loop->index }}')">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </td>
 
                                                         <td>
@@ -3239,7 +3217,7 @@
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">HOD Primary Review Completed On</label>
                                 <div class="static">{{$data->pls_submited_on}}</div>
-                                
+
                             </div>
                         </div>
                         <div class="col-lg-4 new-date-data-field">
@@ -3319,7 +3297,7 @@
 
 
                         <div class="sub-head col-lg-12">
-                        Phase IA HOD Primary Review 
+                        Phase IA HOD Primary Review
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
@@ -3717,7 +3695,7 @@
                         P-II A Assignable Cause Found
                         </div>
                       <div class="col-lg-4">
-                        
+
                             <div class="group-input">
                                 <label for="Initiator Group">P-II A Assignable Cause Found By : </label>
                                 <div class="static">{{$data->P_II_A_Assignable_Cause_Found_by}}</div>
@@ -3876,7 +3854,7 @@
                             </div>
                         </div>
 
-                                
+
                         <div class="sub-head col-lg-12">
                         P-II B Assignable Cause Found
                         </div>
@@ -5866,7 +5844,7 @@
             </div>
         </div>
     </div>
-    
+
 <div class="modal fade" id="child-modal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -5913,7 +5891,7 @@
 
                 <div class="modal-footer">
                           <button type="submit">Submit</button>
-                         <button type="button" data-bs-dismiss="modal">Close</button>                         
+                         <button type="button" data-bs-dismiss="modal">Close</button>
                </div>
             </form>
 
@@ -5944,7 +5922,7 @@
                             Extension
                         </label>
                     </div>
-                    
+
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -5965,14 +5943,14 @@
             <div class="modal-body">
                 <form action="{{ route('OOTChildExtensionOOT', $data->id) }}" method="POST">
                     @csrf
-                    
+
                     <div class="group-input">
                         <label for="root-item">
                             <input type="radio" name="revision" id="root-item" value="Extension">
                             Extension
                         </label>
                     </div>
-                    
+
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
