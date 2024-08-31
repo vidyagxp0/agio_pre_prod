@@ -164,8 +164,7 @@ class CCController extends Controller
         $openState->Bd_Person = $request->Bd_Person;
 
         $openState->cft_comments = $request->cft_comments;
-        $openState->cft_comments = $request->cft_comments;
-        // $openState->cft_attchament = json_encode($request->cft_attchament);
+        // $openState->cft_comments = $request->cft_comments;
         $openState->qa_commentss = $request->qa_commentss;
         $openState->designee_comments = $request->designee_comments;
         $openState->Warehouse_comments = $request->Warehouse_comments;
@@ -192,6 +191,32 @@ class CCController extends Controller
         $openState->Effectiveness_checker = $request->Effectiveness_checker;
         $openState->effective_check_plan = $request->effective_check_plan;
         $openState->due_date_extension = $request->due_date_extension;
+
+
+        // new fields
+        if (!empty ($request->initial_update_attach)) {
+            $files = [];
+            if ($request->hasfile('initial_update_attach')) {
+                foreach ($request->file('initial_update_attach') as $file) {
+                    $name = $request->name . 'initial_update_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $openState->initial_update_attach = json_encode($files);
+        } 
+
+        if (!empty ($request->hod_assessment_attach)) {
+            $files = [];
+            if ($request->hasfile('hod_assessment_attach')) {
+                foreach ($request->file('hod_assessment_attach') as $file) {
+                    $name = $request->name . 'hod_assessment_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $openState->hod_assessment_attach = json_encode($files);
+        }
 
 
         if (!empty($request->in_attachment)) {
@@ -394,8 +419,8 @@ class CCController extends Controller
         $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
         $Cft->ContractGiver_by = $request->ContractGiver_by;
         $Cft->ContractGiver_on = $request->ContractGiver_on;
-
-        // $Cft->Other1_review = $request->Other1_review;
+        
+        $Cft->hod_assessment_comments = $request->hod_assessment_comments;
         // $Cft->Other1_person = $request->Other1_person;
         // $Cft->Other1_Department_person = $request->Other1_Department_person;
         // $Cft->Other1_assessment = $request->Other1_assessment;
@@ -490,7 +515,10 @@ class CCController extends Controller
                 }
             }
             $Cft->Production_Injection_Attachment = json_encode($files);
-        }            
+        }    
+        
+
+
         if (!empty ($request->Store_attachment)) {
             $files = [];
             if ($request->hasfile('Store_attachment')) {
@@ -2404,8 +2432,14 @@ class CCController extends Controller
 
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
+        $cc_cfts = CcCft::find($id);
         $lastCft = CcCft::where('cc_id', $openState->id)->first();
 
+        $cc_cfts->hod_assessment_comments = $request->hod_assessment_comments;
+        $cc_cfts->intial_update_comments = $request->intial_update_comments;
+        $cc_cfts->qa_cqa_comments = $request->qa_cqa_comments;
+        $cc_cfts->implementation_verification_comments = $request->implementation_verification_comments;
+        $cc_cfts->update();
         // $impactassement   =  table_cc_impactassement::where('cc_id', $id)->find($id);
 
         // $impactassement->cc_id = $openState->id;
@@ -2426,7 +2460,55 @@ class CCController extends Controller
         // $openState->type_chnage = $request->type_chnage;
         // $openState->Division_Code = $request->div_code;
         // $openState->related_records = $request->related_records;
-        
+    
+
+        if (!empty($request->hod_assessment_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_assessment_attachment')) {
+                foreach ($request->file('hod_assessment_attachment') as $file) {
+
+
+                    $name = "CC" . '-hod_assessment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $cc_cfts->hod_assessment_attachment = json_encode($files);
+        }
+        $cc_cfts->save();
+
+
+        if (!empty($request->qa_cqa_attach)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_attach')) {
+                foreach ($request->file('qa_cqa_attach') as $file) {
+
+
+                    $name = "CC" . '-qa_cqa_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $cc_cfts->qa_cqa_attach = json_encode($files);
+        }
+        $cc_cfts->save();
+
+
+        if (!empty($request->intial_update_attach)) {
+            $files = [];
+            if ($request->hasfile('intial_update_attach')) {
+                foreach ($request->file('intial_update_attach') as $file) {
+
+
+                    $name = "CC" . '-intial_update_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $cc_cfts->intial_update_attach = json_encode($files);
+        }
+        $cc_cfts->save();
+
         // $openState->initiator_id = Auth::user()->id;
         $openState->Initiator_Group = $request->Initiator_Group;
         $openState->initiator_group_code = $request->initiator_group_code;
@@ -2758,6 +2840,8 @@ class CCController extends Controller
                 $Cft->Other5_review = $request->Other5_review;
                 $Cft->Other5_person = $request->Other5_person;
                 $Cft->Other5_Department_person = $request->Other5_Department_person;
+
+
             }
             $Cft->RA_assessment = $request->RA_assessment;
             $Cft->RA_feedback = $request->RA_feedback;
@@ -2821,6 +2905,7 @@ class CCController extends Controller
 
             $Cft->Other5_Assessment = $request->Other5_Assessment;
             $Cft->Other5_feedback = $request->Other5_feedback;
+            $Cft->hod_assessment_comments = $request->hod_assessment_comments;
 
 
             if (!empty ($request->RA_attachment)) {
