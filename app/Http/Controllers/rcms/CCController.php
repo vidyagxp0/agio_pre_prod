@@ -2434,12 +2434,30 @@ class CCController extends Controller
         $openState = CC::find($id);
         $cc_cfts = CcCft::find($id);
         $lastCft = CcCft::where('cc_id', $openState->id)->first();
+        $Cft = CcCft::where('cc_id', $id)->first();
 
         $cc_cfts->hod_assessment_comments = $request->hod_assessment_comments;
         $cc_cfts->intial_update_comments = $request->intial_update_comments;
         $cc_cfts->qa_cqa_comments = $request->qa_cqa_comments;
         $cc_cfts->implementation_verification_comments = $request->implementation_verification_comments;
+       
+        $Cft->RA_data_person = $request->RA_data_person;
+        $Cft->QA_CQA_person = $request->QA_CQA_person;
+        $Cft->qa_final_comments = $request->qa_final_comments;
+        // $Cft->qa_final_attach = $request->qa_final_attach;
         $cc_cfts->update();
+        if (!empty ($request->qa_final_attach)) {
+            $files = [];
+            if ($request->hasfile('qa_final_attach')) {
+                foreach ($request->file('qa_final_attach') as $file) {
+                    $name = $request->name . 'qa_final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->qa_final_attach = json_encode($files);
+        }
+$Cft->update();
         // $impactassement   =  table_cc_impactassement::where('cc_id', $id)->find($id);
 
         // $impactassement->cc_id = $openState->id;
@@ -2515,13 +2533,12 @@ class CCController extends Controller
         $openState->risk_assessment_required = $request->risk_assessment_required;
         $openState->short_description = $request->short_description;
         $openState->assign_to = $request->assign_to;
+        $openState->due_date = $request->due_date;
 
         if($openState->stage == 3){
             $initiationDate = Carbon::createFromFormat('Y-m-d', $lastDocument->intiation_date);
             $daysToAdd = $request->due_days;
             $dueDate = $initiationDate->addDays($daysToAdd);
-            $formattedDate = $dueDate->format('j M Y');
-            $openState->due_date = $formattedDate;
             $openState->record_number = $request->record_number;
         }
 
@@ -2700,9 +2717,10 @@ class CCController extends Controller
         $lastDocCft = CcCft::where('cc_id', $id)->first();
         if ($openState->stage == 3 || $openState->stage == 4 ){
             $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
+           
+
             if($Cft && $openState->stage == 4 ){                
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
-                $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
 
                 $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
                 $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
@@ -3179,7 +3197,9 @@ class CCController extends Controller
                 }
                 $Cft->Other5_attachment = json_encode($files);
             }
+            
             $areOther5AttachSame = $lastDocCft->Other5_attachment == $Cft->Other5_attachment;
+     
 
             $Cft->save();
         }
@@ -9467,6 +9487,24 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 return back();
             }
             if ($changeControl->stage == 5) {
+                if (is_null($changeControl->RA_person) || is_null($changeControl->RA_person) || is_null($changeControl->RA_person))
+                    {
+                        // dd('emnter');
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'General Information Tab is yet to be filled'
+                        ]);
+
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Document Sent'
+                        ]);
+                    }
                 $changeControl->stage = "6";
                 $changeControl->status = "Pending RA Approval";
                 $changeControl->RA_review_required_by = Auth::user()->name;

@@ -109,7 +109,9 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="RLS Record Number"><b>Record Number</b></label>
-                                <input disabled type="text" name="record_number"
+                                <input type="hidden" name="record"
+                                value="{{ $record_number }}">
+                                 <input disabled type="text" name="record_number"
                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}/Ext/{{ date('y') }}/{{ $record_number }}">
                                 {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                             </div>
@@ -175,14 +177,12 @@
                                         <option value="">-- Select --</option>
                                      
 
-                                        @if (!empty($reviewers))
+                                        @if (!empty(Helpers::getHODDropdown()))
                                         
-                                            @foreach ($reviewers as $lan)
-                                                @if(Helpers::checkUserRolesreviewer($lan))
-                                                    <option value="{{ $lan->id }}">
-                                                        {{ $lan->name }}
+                                            @foreach (Helpers::getHODDropdown() as $lan)
+                                                    <option value="{{ $lan['id'] }}">
+                                                        {{ $lan['name'] }}
                                                     </option>
-                                                @endif
                                             @endforeach
                                         @endif
 
@@ -221,6 +221,26 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    function updateProposedDueDateMin() {
+                                        var currentDueDateInput = document.querySelector('input[name="current_due_date"]');
+                                        var proposedDueDateInput = document.querySelector('input[name="proposed_due_date"]');
+                                        
+                                        if (currentDueDateInput && proposedDueDateInput) {
+                                            var currentDueDateValue = currentDueDateInput.value;
+                                            if (currentDueDateValue) {
+                                                proposedDueDateInput.setAttribute('min', currentDueDateValue);
+                                            } else {
+                                                proposedDueDateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+                                            }
+                                        }
+                                    }
+                                    updateProposedDueDateMin();
+                                    document.querySelector('input[name="current_due_date"]').addEventListener('change', updateProposedDueDateMin);
+                                });
+                            </script>
                            
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">

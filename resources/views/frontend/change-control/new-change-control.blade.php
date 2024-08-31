@@ -28,6 +28,11 @@
         .calenderauditee input::-webkit-calendar-picker-indicator {
             width: 100%;
         }
+
+        .remove-file{
+            cursor: pointer;
+        }
+                     
     </style>
 
     <script>
@@ -131,6 +136,8 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm16')">QA/CQA Designee Approval</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA Final Review</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm15')">RA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Initial Update</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final Review</button>
@@ -166,12 +173,6 @@
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                     </div>
                                 </div>
-
-                                @php
-                                    // Calculate the due date (30 days from the initiation date)
-                                    $initiationDate = date('Y-m-d'); // Current date as initiation date
-                                    $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
-                                @endphp
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -234,43 +235,22 @@
                                     </div>
                                 </div> -->
 
-                                <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date ">
-                                        <label for="due-date">Due Date<span class="text-danger"></span></label>
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Due Date"> Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                reason in "Due Date Extension Justification" data field.</small>
-                                        </div>
+                                                reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
-                                            <input type="text" readonly placeholder="DD-MM-YYYY" />
+                                            <input disabled type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                         </div>
+                                       
+
                                     </div>
                                 </div>
 
-                                <script>
-                                    // Format the due date to DD-MM-YYYY
-                                    // Your input date
-                                    var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
-
-                                    // Create a Date object
-                                    var date = new Date(dueDate);
-
-                                    // Array of month names
-                                    var monthNames = [
-                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                                    ];
-
-                                    // Extracting day, month, and year from the date
-                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                                    var monthIndex = date.getMonth();
-                                    var year = date.getFullYear();
-
-                                    // Formatting the date in "dd-MMM-yyyy" format
-                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
-
-                                    // Set the formatted due date value to the input field
-                                    document.getElementById('due_date').value = dueDateFormatted;
-                                </script>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -324,34 +304,56 @@
                                     </div>
                                 </div>  --}}
 
-                                            <script>
-                                                $(document).ready(function() {
-                                                    $('#risk_assessment_required').change(
-                                                        function() {
-                                                            var riskAssessmentRequired = $('#risk_assessment_required').val();
-                                                            if (riskAssessmentRequired === 'yes') {
-                                                                $('#riskAssessmentButton').show(); // Show the investigation button
-                                                            } else {
-                                                                $('#riskAssessmentButton').hide(); // Hide the investigation button
-                                                            }
-                                                        }
-                                                    );
-                                                });
-                                            </script>
+                                <script>
+                                    $(document).ready(function() {
+                                        function toggleRiskAssessmentAndJustification() {
+                                            var riskAssessmentRequired = $('#risk_assessment_required').val();
+                                            
+                                            // Toggle Risk Assessment Button
+                                            if (riskAssessmentRequired === 'yes') {
+                                                $('#riskAssessmentButton').show();
+                                                $('#justification_div').hide(); // Hide justification when "Yes" is selected
+                                            } else if (riskAssessmentRequired === 'no') {
+                                                $('#riskAssessmentButton').hide();
+                                                $('#justification_div').show(); // Show justification when "No" is selected
+                                            } else {
+                                                $('#riskAssessmentButton').hide();
+                                                $('#justification_div').hide(); // Hide everything if nothing is selected
+                                            }
+                                        }
+                                        
+                                        toggleRiskAssessmentAndJustification(); // Initial call to set the correct state
+                                        
+                                        // Call the function on dropdown change
+                                        $('#risk_assessment_required').change(function() {
+                                            toggleRiskAssessmentAndJustification();
+                                        });
+                                    });
+                                </script>
 
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Risk Assessment Required">Risk Assessment Required? </label>
-                                                    <select name="risk_assessment_required" id="risk_assessment_required">
-                                                        <option value="">-- Select --</option>
-                                                        <option @if (isset($data) && $data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
-                                                        <option @if (isset($data) && $data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
-                                                    </select>
-                                                    <!-- @error('capa_required')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror -->
-                                                </div>
-                                            </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Risk Assessment Required">Risk Assessment Required? </label>
+                                        <select name="risk_assessment_required" id="risk_assessment_required">
+                                            <option value="">-- Select --</option>
+                                            <option @if ($data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
+                                            <option @if ($data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
+                                        </select>
+                                        <!-- @error('capa_required')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror -->
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6" id="justification_div" style="display:none;">
+                                    <div class="group-input">
+                                        <label for="Justification">Justification</label>
+                                        <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required."></textarea>
+                                        <!-- @error('justification')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror -->
+                                    </div>
+                                </div>
 
                                             @php
                                             $division = DB::table('q_m_s_divisions')
@@ -393,6 +395,58 @@
                                             required>
                                     </div>
                                 </div>
+
+
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="change_related_to">Change Related To</label>
+                                        <select name="severity" id="change_related_to">
+                                            <option value="">-- Select --</option>
+                                            <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
+                                            <option value="facility" {{ old('severity', $data->severity ?? '') == 'facility' ? 'selected' : '' }}>Facility</option>
+                                            <option value="utility" {{ old('severity', $data->severity ?? '') == 'utility' ? 'selected' : '' }}>Utility</option>
+                                            <option value="equipment" {{ old('severity', $data->severity ?? '') == 'equipment' ? 'selected' : '' }}>Equipment</option>
+                                            <option value="document" {{ old('severity', $data->severity ?? '') == 'document' ? 'selected' : '' }}>Document</option>
+                                            <option value="other" {{ old('severity', $data->severity ?? '') == 'other' ? 'selected' : '' }}>Other</option>
+                                        </select>
+                                        <!-- @error('severity')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror -->
+                                    </div>
+                                </div>
+                                
+                                <!-- Textbox for 'Other' option -->
+                                <div class="col-lg-6" id="other_specify_div" style="display:none;">
+                                    <div class="group-input">
+                                        <label for="other_specify">Please specify</label>
+                                        <input type="text" name="Occurance" id="other_specify" value="{{ $data->Occurance ?? '' }}" placeholder="Specify if Other is selected">
+                                        <!-- @error('other_specify')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror -->
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                    $(document).ready(function() {
+                                        function toggleOtherSpecifyField() {
+                                            var changeRelatedTo = $('#change_related_to').val();
+                                            if (changeRelatedTo === 'other') {
+                                                $('#other_specify_div').show();
+                                            } else {
+                                                $('#other_specify_div').hide();
+                                            }
+                                        }
+                                
+                                        toggleOtherSpecifyField(); // Initial check
+                                
+                                        // Update field visibility on dropdown change
+                                        $('#change_related_to').change(function() {
+                                            toggleOtherSpecifyField();
+                                        });
+                                    });
+                                </script>
+
 
                                 <!-- <div class="col-12">
                                     <div class="group-input">
@@ -548,70 +602,9 @@
                                 </div>
                             </div>
 
-                            <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="risk-identification">Risk Identification</label>
-                                        <textarea name="risk_identification" disabled></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Severity Rate">Severity Rate</label>
-                                        <select name="severity" id="analysisR" onchange='calculateRiskAnalysis(this)' disabled>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="1">Negligible</option>
-                                            <option value="2">Moderate</option>
-                                            <option value="3">Major</option>
-                                            <option value="4">Fatal</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Occurrence">Occurrence</label>
-                                        <select name="Occurance" id="analysisP" onchange='calculateRiskAnalysis(this)' disabled>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="5">Extremely Unlikely</option>
-                                            <option value="4">Rare</option>
-                                            <option value="3">Unlikely</option>
-                                            <option value="2">Likely</option>
-                                            <option value="1">Very Likely</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Detection">Detection</label>
-                                        <select name="Detection" id="analysisN" onchange='calculateRiskAnalysis(this)' disabled>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="5">Impossible</option>
-                                            <option value="4">Rare</option>
-                                            <option value="3">Unlikely</option>
-                                            <option value="2">Likely</option>
-                                            <option value="1">Very Likely</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="RPN">RPN</label>
-                                        <div><small class="text-primary">Auto - Calculated</small></div>
-                                        <input type="text" name="RPN" id="analysisRPN" disabled>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="risk-evaluation">Risk Evaluation</label>
-                                        <textarea name="risk_evaluation" disabled></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="migration-action">Mitigation Action</label>
+                                        <label for="migration-action">comments</label>
                                         <textarea name="migration_action" disabled></textarea>
                                     </div>
                                 </div>
@@ -3119,6 +3112,119 @@
 
                         </div>
                     </div>
+                    <div id="CCForm14" class="inner-block cctabcontent">
+                                    <div class="inner-block-content">
+                                        <div class="row">
+                                        <div class="sub-head">
+                                            QA Final Review
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="RA notification">RA Person 
+                                                        <!-- <span class="text-danger">*</span> -->
+                                                    </label>
+                                                    <select name="RA_data_person" class="RA_data_person"
+                                                        id="RA_data_person">
+                                                        <option value="">-- Select --</option>
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->name }}" @if ($user->name) selected @endif>
+                                                                {{ $user->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="RA notification">QA/CQA Head Approval Person
+                                                    <select name="QA_CQA_person" class="RA_person"
+                                                        id="RA_person">
+                                                        <option value="">-- Select --</option>
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->name }}" @if ($user->name) selected @endif>
+                                                                {{ $user->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        <div class="group-input">
+                                            <label for="qa-eval-comments">QA Final Review Comments</label>
+                                            <textarea name="qa_final_comments" ></textarea>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="qa-eval-attach">QA Final Review Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="qa_final_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="qa_final_attach[]" disabled
+                                                oninput="addMultipleFiles(this, 'qa_final_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                        <div class="button-block">
+                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div> 
+                                </div> 
+
+                                <div id="CCForm15" class="inner-block cctabcontent">
+                                    <div class="inner-block-content">
+                                        <div class="sub-head">
+                                            RA
+                                        </div>
+                                        <div class="col-md-12">
+                                                    <div class="group-input">
+                                                        <label for="RA feedback">RA Comment</label>
+                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                                does not require completion</small></div>
+                                                        <textarea class="tiny" name="RA_feedback" id="summernote-18"></textarea>
+                                                    </div>
+                                                </div>
+
+                                      
+                                            <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="qa-eval-attach">RA Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small>
+                                                </div>
+                                                <div class="file-attachment-field">
+                                                    <div class="file-attachment-list" id="RA_attachment"></div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input type="file" id="myfile" name="RA_attachment[]" disabled
+                                                            oninput="addMultipleFiles(this, 'RA_attachment')" multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                            </div>
+
+                                        </div>
+                                        <div class="button-block">
+                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>    
 
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -3687,6 +3793,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3966,7 +4073,7 @@
 
 
 
-    </div>
+    </div
     </form>
 
     </div>
