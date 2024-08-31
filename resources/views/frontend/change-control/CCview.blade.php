@@ -1058,6 +1058,7 @@ Designee Approval</div>
                                         </div>
                                     </div>
                                 </div>
+                                
 
                                 <div id="CCForm7" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -8543,8 +8544,6 @@ Designee Approval</div>
                                         Justification</label>
                                     <textarea name="due_date_extension" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}> {{ $due_date_extension }}</textarea>
                                 </div>
-                            </div>
-                    </div>
                     <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8555,7 +8554,7 @@ Designee Approval</div>
                     </div>
                 </div>
             </div>
-
+                                        </div>
             @php
                 $product = DB::table('products')->get();
                 $material = DB::table('materials')->get();
