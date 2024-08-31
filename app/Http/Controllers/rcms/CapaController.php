@@ -327,7 +327,7 @@ class CapaController extends Controller
         if (!empty($capa->division_code)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = $capa->division_code;
             $history->comment = "Not Applicable";
@@ -341,12 +341,12 @@ class CapaController extends Controller
             $history->save();
         }
 
-        if (!empty($capa->intiation_date)) {
+        if (!empty($capa->record)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'Date of Initiation';
+            $history->activity_type = 'Record Number';
             $history->previous = "Null";
-            $history->current = $capa->intiation_date;
+            $history->current =Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . Helpers::year($capa->created_at) . "/" . str_pad($capa->record, 4, '0', STR_PAD_LEFT);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -357,6 +357,23 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
+        if (!empty($capa->intiation_date)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Date of Initiation';
+            $history->previous = "Null";
+            $history->current =Helpers::getdateFormat($capa->intiation_date);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
 
         if (!empty($capa->general_initiator_group)) {
             $history = new CapaAuditTrial();
@@ -677,19 +694,19 @@ class CapaController extends Controller
             $history->save();
 
         }
-        // if (!empty($capa->capa_attachment)) {
-        //     $history = new CapaAuditTrial();
-        //     $history->capa_id = $capa->id;
-        //     $history->activity_type = 'CAPA Attachment';
-        //     $history->previous = "Null";
-        //     $history->current = $capa->capa_attachment;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $capa->status;
-        //     $history->save();
-        // }
+        if (!empty($capa->capa_attachment)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'CAPA Attachment';
+            $history->previous = "Null";
+            $history->current = $capa->capa_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->save();
+        }
 
         if (!empty($capa->capa_qa_comments)) {
             $history = new CapaAuditTrial();
@@ -1317,7 +1334,7 @@ class CapaController extends Controller
         if ($lastDocument->division_code != $capa->division_code || !empty($request->division_code_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Site/Location Code';
             $history->previous = $lastDocument->division_code;
             $history->current = $capa->division_code;
             $history->comment = $request->division_code_comment;
