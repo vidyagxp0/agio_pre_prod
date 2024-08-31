@@ -248,24 +248,6 @@ $users = DB::table('users')->get();
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
                                         <select name="Initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
-                                            <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
-                                            <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
-                                            <option value="CQC" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
-                                            <option value="PSG" @if(old('Initiator_Group') =="PSG") selected @endif>Plasma Sourcing Group</option>
-                                            <option value="CS"  @if(old('Initiator_Group') == "CS") selected @endif>Central Stores</option>
-                                            <option value="ITG" @if(old('Initiator_Group') =="ITG") selected @endif>Information Technology Group</option>
-                                            <option value="MM"  @if(old('Initiator_Group') == "MM") selected @endif>Molecular Medicine</option>
-                                            <option value="CL"  @if(old('Initiator_Group') == "CL") selected @endif>Central Laboratory</option>
-
-                                            <option value="TT"  @if(old('Initiator_Group') == "TT") selected @endif>Tech team</option>
-                                            <option value="QA"  @if(old('Initiator_Group') == "QA") selected @endif> Quality Assurance</option>
-                                            <option value="QM"  @if(old('Initiator_Group') == "QM") selected @endif>Quality Management</option>
-                                            <option value="IA"  @if(old('Initiator_Group') == "IA") selected @endif>IT Administration</option>
-                                            <option value="ACC"  @if(old('Initiator_Group') == "ACC") selected @endif>Accounting</option>
-                                            <option value="LOG"  @if(old('Initiator_Group') == "LOG") selected @endif>Logistics</option>
-                                            <option value="SM"  @if(old('Initiator_Group') == "SM") selected @endif>Senior Management</option>
-                                            <option value="BA"  @if(old('Initiator_Group') == "BA") selected @endif>Business Administration</option>
                                         </select>
                                     </div>
                                 </div>
@@ -374,8 +356,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="If Other">If Other</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="initiated_if_other" id="summernote-1">
-                                    </textarea>
+                                    <textarea class="summernote" name="initiated_if_other" id="summernote-1"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -632,8 +613,7 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="HOD Remarks">HOD Remarks</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="HOD_Remarks" id="summernote-1">
-                                    </textarea>
+                                    <textarea class="summernote" name="HOD_Remarks" id="summernote-1"></textarea>
                                 </div>
                             </div>
 
@@ -660,8 +640,7 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Immediate Action">Immediate Action</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Immediate_Action_ooc" id="summernote-1">
-                                    </textarea>
+                                    <textarea class="summernote" name="Immediate_Action_ooc" id="summernote-1"></textarea>
                                 </div>
                             </div>
 
@@ -669,8 +648,7 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Preliminary Investigation">Preliminary Investigation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Preliminary_Investigation_ooc" id="summernote-1">
-                                    </textarea>
+                                    <textarea class="summernote" name="Preliminary_Investigation_ooc" id="summernote-1"></textarea>
                                 </div>
                             </div>
 
@@ -900,8 +878,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Protocol Based Study/Hypothesis Study">Protocol Based Study/Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="protocol_based_study_hypthesis_study_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="protocol_based_study_hypthesis_study_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -911,8 +888,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Justification for Protocol study/ Hypothesis Study">Justification for Protocol study/ Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="justification_for_protocol_study_hypothesis_study_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="justification_for_protocol_study_hypothesis_study_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -921,8 +897,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Plan of Protocol Study/ Hypothesis Study">Plan of Protocol Study/ Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="plan_of_protocol_study_hypothesis_study" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="plan_of_protocol_study_hypothesis_study" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -931,8 +906,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Conclusion of Protocol based Study/Hypothesis Study">Conclusion of Protocol based Study/Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="conclusion_of_protocol_based_study_hypothesis_study_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="conclusion_of_protocol_based_study_hypothesis_study_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
                     </div>
@@ -955,8 +929,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Analyst Remarks">Analyst Remarks</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -965,8 +938,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Calibration Results">Calibration Results</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="calibration_results_stage_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="calibration_results_stage_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -988,8 +960,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Review of Calibration Results of Analyst">Review of Calibration Results of Analyst</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="review_of_calibration_results_of_analyst_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="review_of_calibration_results_of_analyst_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1015,8 +986,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Results Criteria">Results Criteria</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="results_criteria_stage_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="results_criteria_stage_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1044,8 +1014,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Additinal Remarks (if any)">Additinal Remarks (if any)</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="additional_remarks_stage_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="additional_remarks_stage_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1151,16 +1120,14 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Impact Assessment at Stage II">Impact Assessment at Stage II</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_throug_stageii_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_throug_stageii_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Details of Impact Evaluation">Details of Impact Evaluation</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_stageii_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_stageii_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1183,8 +1150,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Cause for failure">Cause for failure</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_stageii_cause_failure_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_stageii_cause_failure_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1225,8 +1191,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Corrective Action">Corrective Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capas_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_capas_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1234,8 +1199,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Preventive Action">Preventive Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capa_prevent_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_capa_prevent_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1243,8 +1207,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capa_corrective_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_capa_corrective_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1275,8 +1238,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="CAPA Post Implementation Comments">CAPA Post Implementation Comments</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capa_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_capa_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1390,8 +1352,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="HOD Remarks">HOD Remarks</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_hodreview_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_hodreview_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1417,8 +1378,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Root Cause Analysis">Root Cause Analysis</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_rootcause_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_rootcause_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1426,8 +1386,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Impact Assessment">Impact Assessment</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_impact_closure_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_impact_closure_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 

@@ -482,6 +482,8 @@ Route::post('OOCChildAction/{id}', [OOCController::class, 'OOCChildAction'])->na
 Route::get('OOCAuditTrial/{id}', [OOCController::class, 'OOCAuditTrial'])->name('audittrialooc');
 Route::get('auditDetailsooc/{id}', [OOCController::class, 'auditDetailsooc'])->name('OOCauditDetails');
 Route::get('/rcms/ooc_Audit_Report/{id}', [OOCController::class, 'auditReportooc'])->name('ooc_Audit_Report');
+Route::post('OOCAuditReview/{id}', [OOCController::class, 'OOCAuditReview'])->name('OOCAuditReview');
+
 
 
 

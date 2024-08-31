@@ -1179,8 +1179,8 @@ $users = DB::table('users')->get();
                                     <label for="Initiator Group"><b>Initiator Group</b></label>
                                     <select name="Initiator_Group" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}
                                          id="initiator_group">
-                                        <option value="Corporate Quality Assurance"
-                                            @if ($ooc->Initiator_Group== 'CQA') selected @endif>Corporate
+                                        <option value="CQA"
+                                            @if ($ooc->Initiator_Group== 'Corporate Quality Assurance') selected @endif>Corporate
                                             Quality Assurance</option>
                                         <option value="QAB"
                                             @if ($ooc->Initiator_Group== 'QAB') selected @endif>Quality

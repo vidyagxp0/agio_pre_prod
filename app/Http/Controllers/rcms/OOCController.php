@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use App\Models\User;
+use App\Models\AuditReviewersDetails;
 use App\Models\OutOfCalibration;
 use App\Models\OOCAuditTrail;
 use App\Models\RoleGroup;
@@ -58,7 +59,6 @@ class OOCController extends Controller
         $data->ooc_due_date= $request->ooc_due_date;
         $data->Delay_Justification_for_Reporting= $request->Delay_Justification_for_Reporting;
         $data->HOD_Remarks = $request->HOD_Remarks;
-        // $data->attachments_hod_ooc = $request->attachments_hod_ooc;
         $data->Immediate_Action_ooc = $request->Immediate_Action_ooc;
         $data->Preliminary_Investigation_ooc = $request->Preliminary_Investigation_ooc;
         $data->qa_comments_ooc = $request->qa_comments_ooc;
@@ -3375,6 +3375,19 @@ public function OOCAuditTrial($id){
 
 
 }
+
+public function OOCAuditReview(Request $request, $id){
+    $history = new AuditReviewersDetails;
+    $history->doc_id = $id;
+    $history->user_id = Auth::user()->id;
+    $history->type = $request->type;
+    $history->reviewer_comment = $request->reviewer_comment;
+    $history->reviewer_comment_by = Auth::user()->name;
+    $history->reviewer_comment_on = Carbon::now()->toDateString();
+    $history->save();
+return redirect()->back();
+}
+
     public function OOCStateCancel(Request $request , $id){
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $ooc = OutOfCalibration::find($id);
@@ -3641,11 +3654,13 @@ public function OOCAuditTrial($id){
         $doc = OutOfCalibration::find($id);
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
+            $audit = OOCAuditTrail::where('ooc_id', $id)->paginate(500);
+
             $data = OOCAuditTrail::where('ooc_id', $id)->get();
            
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.OOC.auditReport', compact('data', 'doc'))
+            $pdf = PDF::loadview('frontend.OOC.auditReport', compact('data', 'doc','audit'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -3674,12 +3689,14 @@ public function OOCAuditTrial($id){
         $data = OutOfCalibration::find($id);
         $oocgrid = OOC_Grid::where('ooc_id',$id)->first();
         $oocevolution = OOC_Grid::where(['ooc_id'=>$id, 'identifier'=>'OOC Evaluation'])->first();
+        $assignedTo = OutOfCalibration::with('assignedUser')->get();
+
         if (!empty($data)) {
 
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.OOC.ooc_singleReport', compact('data','oocgrid','oocevolution','ooc'))
+            $pdf = PDF::loadview('frontend.OOC.ooc_singleReport', compact('data','oocgrid','oocevolution','ooc','assignedTo'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
