@@ -41,7 +41,6 @@ class RiskManagementController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
 
-
         return view("frontend.forms.risk-management", compact('due_date', 'record_number', 'old_record'));
     }
 
@@ -955,7 +954,7 @@ class RiskManagementController extends Controller
         if (!empty($data->initiator_id)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Initiator';
+            $history->activity_type = 'Initiator Name';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($data->initiator_id);
             $history->comment = "Not Applicable";
@@ -972,7 +971,7 @@ class RiskManagementController extends Controller
         if (!empty($data->record)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Record';
+            $history->activity_type = 'Record Number';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($data->division_id). '/RA/'. Helpers::year($data->created). '/'.str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $history->comment = "Not Applicable";
@@ -5218,7 +5217,7 @@ class RiskManagementController extends Controller
                     $incident->cft_comments = $request->comment;
                     $history = new RiskAuditTrail();
                     $history->risk_id = $id;
-                    $history->activity_type = 'evaluated_by, evaluated_on ';
+                    $history->activity_type = 'Evaluated by, Evaluated On ';
 
                     if (is_null($lastDocument->evaluated_by) || $lastDocument->evaluated_on == '') {
                         $history->previous = "";
@@ -6239,19 +6238,18 @@ class RiskManagementController extends Controller
                 $changeControl->stage = "5";
                 $changeControl->status = "In Approval";
 
-                $changeControl->in_approve_by = Auth::user()->name;
-                $changeControl->in_approve_on = Carbon::now()->format('d-M-Y');
+                $changeControl->in_approve_by = "Not Applicable";
+                $changeControl->in_approve_on = "Not Applicable";
                 $changeControl->in_approve_Comments = $request->comment;
-
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'In Approval By , In Approval On';
-                if(is_null($lastDocument->in_approve_by) || $lastDocument->in_approve_on == ''){
-                    $history->previous = "";
-                }else{
-                    $history->previous = $lastDocument->in_approve_by. ' ,' . $lastDocument->in_approve_on;
-                }
-                // $history->activity_type = 'Activity Log';
+                // if(is_null($lastDocument->in_approve_by) || $lastDocument->in_approve_on == ''){
+                //     $history->previous = "";
+                // }else{
+                //     $history->previous = $lastDocument->in_approve_by. ' ,' . $lastDocument->in_approve_on;
+                // }
+                $history->activity_type = 'Not Applicable';
                 $history->previous = "";
                 $history->current = $changeControl->in_approve_by;
                 $history->comment = $request->comment;
@@ -6261,8 +6259,8 @@ class RiskManagementController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "In Approval";
-                $history->change_from = $lastDocument->status;
-                $history->action_name = "Update";
+                $history->change_from = "Closed - Done";
+                $history->action_name = "More Information Required";
                 $history->stage = 'Cancelled';
                 if(is_null($lastDocument->in_approve_by) || $lastDocument->in_approve_on == '')
                     {
@@ -6279,29 +6277,29 @@ class RiskManagementController extends Controller
                 $changeControl->stage = "4";
                 $changeControl->status = "In QA/CQA Review";
 
-                $changeControl->in_approve_by = Auth::user()->name;
-                $changeControl->in_approve_on = Carbon::now()->format('d-M-Y');
+                $changeControl->in_approve_by = "Not Applicable";
+                $changeControl->in_approve_on = "Not Applicable";
                 $changeControl->QA_Initial_Review_Comments  = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
-                if(is_null($lastDocument->in_approve_by) || $lastDocument->in_approve_on == ''){
-                    $history->previous = "";
-                }else{
-                    $history->previous = $lastDocument->in_approve_by. ' ,' . $lastDocument->in_approve_on;
-                }
-                // $history->activity_type = 'Activity Log';
+                // if(is_null($lastDocument->in_approve_by) || $lastDocument->in_approve_on == ''){
+                //     $history->previous = "";
+                // }else{
+                //     $history->previous = $lastDocument->in_approve_by. ' ,' . $lastDocument->in_approve_on;
+                // }
+                 $history->activity_type = 'Not Applicable';
                 $history->previous = "";
                 $history->current = $changeControl->in_approve_by;
                 $history->comment = $request->comment;
-                $history->action  = " Reject Action Plan ";
+                $history->action  = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "In QA/CQA Review";
-                $history->change_from = $lastDocument->status;
-                $history->action_name = "Update";
+                $history->change_from = "In Approval";
+                $history->action_name = "More Information Required";
                 $history->stage = 'Cancelled';
                 if(is_null($lastDocument->in_approve_by) || $lastDocument->in_approve_on == ''){
                     $history->previous = "";
@@ -6317,35 +6315,35 @@ class RiskManagementController extends Controller
                 $changeControl->stage = "3";
                 $changeControl->status = "CFT Review";
 
-                $changeControl->QA_Initial_Review_Complete_By = Auth::user()->name;
-                $changeControl->QA_Initial_Review_Complete_On	 = Carbon::now()->format('d-M-Y');
+                $changeControl->QA_Initial_Review_Complete_By = "Not Applicable";
+                $changeControl->QA_Initial_Review_Complete_On   ="Not Applicable";
                 $changeControl->QA_Initial_Review_Comments = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
-                if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On	 == ''){
-                    $history->previous = "";
-                }else{
-                    $history->previous = $lastDocument->QA_Initial_Review_Complete_By. ' ,' . $lastDocument->QA_Initial_Review_Complete_On	;
-                }
-                // $history->activity_type = 'Activity Log';
+                // if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On	 == ''){
+                //     $history->previous = "";
+                // }else{
+                //     $history->previous = $lastDocument->QA_Initial_Review_Complete_By. ' ,' . $lastDocument->QA_Initial_Review_Complete_On	;
+                // }
+                $history->activity_type = 'Not Applicable';
                 $history->previous = "";
                 $history->current = $changeControl->QA_Initial_Review_Complete_By;
                 $history->comment = $request->comment;
-                $history->action  = "Reject Action Plan";
+                $history->action  = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "CFT Review";
-                $history->change_from = $lastDocument->status;
-                $history->action_name = "Update";
+                $history->change_to =   "CFT review";
+                $history->change_from = "In QA/CQA Review";
+                $history->action_name = "More Information Required";
                 $history->stage = 'Cancelled';
-                if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On	 == ''){
-                    $history->previous = "";
-                }else{
-                    $history->previous = $lastDocument->QA_Initial_Review_Complete_By. ' ,' . $lastDocument->QA_Initial_Review_Complete_On	;
-                }
+                // if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On	 == ''){
+                //     $history->previous = "";
+                // }else{
+                //     $history->previous = $lastDocument->QA_Initial_Review_Complete_By. ' ,' . $lastDocument->QA_Initial_Review_Complete_On	;
+                // }
                 $history->save();
 
                 $changeControl->update();
@@ -6356,38 +6354,36 @@ class RiskManagementController extends Controller
                 $changeControl->stage = "2";
                 $changeControl->status = "Risk Analysis & Work Group Assignment";
 
-                $changeControl->CFT_Review_Complete_By = Auth::user()->name;
-                $changeControl->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                $changeControl->CFT_Review_Complete_By = "Not Applicable";
+                $changeControl->CFT_Review_Complete_On = "Not Applicable";
                 $changeControl->CFT_Review_Comments = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
-                if(is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_On == ''){
-                    $history->previous = "";
-                }else{
-                    $history->previous = $lastDocument->CFT_Review_Complete_By. ' ,' . $lastDocument->CFT_Review_Complete_On;
-                }
-                // $history->activity_type = 'Activity Log';
+                // if(is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_On == ''){
+                //     $history->previous = "";
+                // }else{
+                //     $history->previous = $lastDocument->CFT_Review_Complete_By. ' ,' . $lastDocument->CFT_Review_Complete_On;
+                // }
+                $history->activity_type = 'Not Applicable';
                 $history->previous = "";
                 $history->current = $changeControl->CFT_Review_Complete_By;
                 $history->comment = $request->comment;
-                $history->action  = "More Information Required";
+                $history->action  = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "Risk Analysis & Work Group Assignment";
-                $history->change_from = $lastDocument->status;
-                $history->action_name = "Update";
+                $history->change_from = "CFT review";
+                $history->action_name = "More Information Required";
                 $history->stage = 'Cancelled';
-                if(is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_On == ''){
-                    $history->previous = "";
-                }else{
-                    $history->previous = $lastDocument->CFT_Review_Complete_By. ' ,' . $lastDocument->CFT_Review_Complete_On;
-                }
+                // if(is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_On == ''){
+                //     $history->previous = "";
+                // }else{
+                //     $history->previous = $lastDocument->CFT_Review_Complete_By. ' ,' . $lastDocument->CFT_Review_Complete_On;
+                // }
                 $history->save();
-
-
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -6396,35 +6392,35 @@ class RiskManagementController extends Controller
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
 
-                $changeControl->risk_analysis_completed_by = Auth::user()->name;
-                $changeControl->risk_analysis_completed_on = Carbon::now()->format('d-M-Y');
+                $changeControl->risk_analysis_completed_by = 'Not Applicable';
+                $changeControl->risk_analysis_completed_on = 'Not Applicable';
                 // $changeControl->more_actions_needed_1 = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
-                if(is_null($lastDocument->risk_analysis_completed_by) || $lastDocument->risk_analysis_completed_on == ''){
-                    $history->previous = "";
-                }else{
-                    $history->previous = $lastDocument->risk_analysis_completed_by. ' ,' . $lastDocument->risk_analysis_completed_on;
-                }
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
+                // if(is_null($lastDocument->risk_analysis_completed_by) || $lastDocument->risk_analysis_completed_on == ''){
+                //     $history->previous = "";
+                // }else{
+                //     $history->previous = $lastDocument->risk_analysis_completed_by. ' ,' . $lastDocument->risk_analysis_completed_on;
+                // }
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
                 $history->current = $changeControl->risk_analysis_completed_by;
                 $history->comment = $request->comment;
-                $history->action  = "More Information Required";
+                $history->action  = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "Opened";
-                $history->change_from = $lastDocument->status;
-                $history->action_name = "Update";
+                $history->change_from = "Risk Analysis & Work Group Assignment";
+                $history->action_name = "More Information Required";
                 $history->stage = 'Cancelled';
-                if(is_null($lastDocument->risk_analysis_completed_by) || $lastDocument->risk_analysis_completed_on == ''){
-                    $history->previous = "";
-                }else{
-                    $history->previous = $lastDocument->risk_analysis_completed_by. ' ,' . $lastDocument->risk_analysis_completed_on;
-                }
+                // if(is_null($lastDocument->risk_analysis_completed_by) || $lastDocument->risk_analysis_completed_on == ''){
+                //     $history->previous = "";
+                // }else{
+                //     $history->previous = $lastDocument->risk_analysis_completed_by. ' ,' . $lastDocument->risk_analysis_completed_on;
+                // }
                 $history->save();
 
                 $changeControl->cancelled_by = Auth::user()->name;
@@ -6438,11 +6434,9 @@ class RiskManagementController extends Controller
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
                 $changeControl->cancel_comment = $request->comment;
-
-
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Not Applicable';
                 $history->current = $changeControl->cancelled_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -6456,11 +6450,6 @@ class RiskManagementController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-
-
-
-
-
 
         } else {
             toastr()->error('E-signature Not match');
