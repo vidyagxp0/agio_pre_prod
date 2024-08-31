@@ -5541,7 +5541,7 @@
 
 
 
-        </div>
+    
         @php
             $product = DB::table('products')->get();
             $material = DB::table('materials')->get();
