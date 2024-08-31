@@ -184,6 +184,12 @@
 
                     <table>
                         <div class="buttons-new">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
+                                Review
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
+                                View
+                            </button>
                             <a class="text-white" href="{{ url('/manageshow/' . $document->id) }}">
                                 <button class="button_theme1">
                                     Back
@@ -196,6 +202,12 @@
                         </div>
                         {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button> --}}
+
+
+
+
+
+                            
                         <div class="heading">
                             <div style="margin-bottom: 5px; font-weight: bold;">
                                 Site Division/Project :
