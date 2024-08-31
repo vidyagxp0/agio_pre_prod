@@ -2433,13 +2433,12 @@ class CCController extends Controller
         $openState->risk_assessment_required = $request->risk_assessment_required;
         $openState->short_description = $request->short_description;
         $openState->assign_to = $request->assign_to;
+        $openState->due_date = $request->due_date;
 
         if($openState->stage == 3){
             $initiationDate = Carbon::createFromFormat('Y-m-d', $lastDocument->intiation_date);
             $daysToAdd = $request->due_days;
             $dueDate = $initiationDate->addDays($daysToAdd);
-            $formattedDate = $dueDate->format('j M Y');
-            $openState->due_date = $formattedDate;
             $openState->record_number = $request->record_number;
         }
 
