@@ -1103,43 +1103,38 @@ class ActionItemController extends Controller
             if ($changeControl->stage == 1) {
                 $changeControl->stage = '2';
                 $changeControl->status = 'Acknowledge';
-                $changeControl->acknowledgement_by = Auth::user()->name;
-                $changeControl->acknowledgement_on = Carbon::now()->format('d-M-Y');
-                $changeControl->acknowledgement_comment = $request->comment;
+                $changeControl->submitted_by = Auth::user()->name;
+                $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
+                $changeControl->submitted_comment = $request->comment;
                 
-                      $history = new ActionItemHistory;
-                        $history->cc_id = $id;
-                        $history->activity_type = 'Activity Log';
-                        $history->action = "Submit";
-                        $history->previous = $lastopenState->completed_by;
-                        $history->current = $changeControl->completed_by;
-                        $history->comment = $request->comment;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastopenState->status;
-                      
-                        $history->change_to = "Acknowledge";
-                        $history->change_from = $lastopenState->status;
-                        $history->action_name = 'Not Applicable';
-                        $history->stage = '2';
-                        $history->activity_type = 'Submit By, Submit On';
-                        if (is_null($lastopenState->acknowledgement_by) || $lastopenState->acknowledgement_by === '') {
-                            $history->previous = "";
-                        } else {
-                            $history->previous = $lastopenState->acknowledgement_by . ' , ' . $lastopenState->acknowledgement_on;
-                        }
-                        $history->current = $changeControl->acknowledgement_by . ' , ' . $changeControl->acknowledgement_on;
-                        if (is_null($lastopenState->acknowledgement_by) || $lastopenState->acknowledgement_by === '') {
-                            $history->action_name = 'New';
-                        } else {
-                            $history->action_name = 'Update';
-                        }
-                        $history->save();
-                $changeControl->update();
-                // $history = new CCStageHistory();
                 $history = new ActionItemHistory;
+                $history->cc_id = $id;
+                $history->action = "Submit";
+                $history->comment = "";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastopenState->status;                    
+                $history->change_to = "Acknowledge";
+                $history->change_from = $lastopenState->status;
+                $history->action_name = 'Not Applicable';
+                $history->stage = '2';
+                $history->activity_type = 'Submit By, Submit On';
+                if (is_null($lastopenState->submitted_by) || $lastopenState->submitted_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastopenState->submitted_by . ' , ' . $lastopenState->submitted_on;
+                }
+                $history->current = $changeControl->submitted_by . ' , ' . $changeControl->submitted_on;
+                if (is_null($lastopenState->submitted_by) || $lastopenState->submitted_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+                $changeControl->update();
 
+                // $history = new ActionItemHistory;
                 // $history->type = "Action-Item";
                 // $history->doc_id = $id;
                 // $history->user_id = Auth::user()->id;
@@ -1174,16 +1169,13 @@ class ActionItemController extends Controller
             if ($changeControl->stage == 2) {
                 $changeControl->stage = '3';
                 $changeControl->status = 'Work Completion';
-                $changeControl->work_completion_by = Auth::user()->name;
-                $changeControl->work_completion_on = Carbon::now()->format('d-M-Y');
-                // $changeControl->acknowledgement_comment = $request->comment;
+                $changeControl->acknowledgement_by = Auth::user()->name;
+                $changeControl->acknowledgement_on = Carbon::now()->format('d-M-Y');
+                $changeControl->acknowledgement_comment = $request->comment;
 
                 $history = new ActionItemHistory;                     
                 $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->action = " Acknowledge Complete";
-                $history->previous = $lastopenState->completed_by;
-                $history->current = $changeControl->completed_by;
+                $history->action = "Acknowledge Complete";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1191,25 +1183,22 @@ class ActionItemController extends Controller
                 $history->origin_state = $lastopenState->status;
                 $history->action_name = 'Not Applicable';
                 $history->stage = '3';
-                $history->activity_type = ' Acknowledge Complete By,  Acknowledge Complete On';
-                if (is_null($lastopenState->work_completion_by) || $lastopenState->work_completion_by === '') {
+                $history->activity_type = 'Acknowledge Complete By,  Acknowledge Complete On';
+                if (is_null($lastopenState->acknowledgement_by) || $lastopenState->acknowledgement_by === '') {
                     $history->previous = "";
                 } else {
-                    $history->previous = $lastopenState->work_completion_by . ' , ' . $lastopenState->work_completion_on;
+                    $history->previous = $lastopenState->acknowledgement_by . ' , ' . $lastopenState->acknowledgement_on;
                 }
-                $history->current = $changeControl->work_completion_by . ' , ' . $changeControl->work_completion_on;
-                if (is_null($lastopenState->work_completion_by) || $lastopenState->work_completion_by === '') {
+                $history->current = $changeControl->acknowledgement_by . ' , ' . $changeControl->acknowledgement_on;
+                if (is_null($lastopenState->acknowledgement_by) || $lastopenState->acknowledgement_by === '') {
                     $history->action_name = 'New';
                 } else {
                     $history->action_name = 'Update';
                 }
-                $history->save();
-                $changeControl->update();
-                
                 $history->change_to = "Work Completion";
                 $history->change_from = $lastopenState->status;
                 $history->save();
-            //   
+                $changeControl->update();
                 toastr()->success('Document Sent');
 
                 return back();
@@ -1217,17 +1206,14 @@ class ActionItemController extends Controller
             if ($changeControl->stage == 3) {
                 $changeControl->stage = '4';
                 $changeControl->status = 'QA/CQA Verification';
-                $changeControl->qa_varification_by = Auth::user()->name;
-                $changeControl->qa_varification_on = Carbon::now()->format('d-M-Y');
-                $changeControl->qa_varification_comment = $request->comment;
+                $changeControl->work_completion_by = Auth::user()->name;
+                $changeControl->work_completion_on = Carbon::now()->format('d-M-Y');
+                $changeControl->work_completion_comment = $request->comment;
 
                 $history = new ActionItemHistory;
                 $history->action = "Complete";
                 $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = $lastopenState->completed_by;
-                $history->current = $changeControl->completed_by;
-                $history->comment = $request->comment;
+                $history->comment = "";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1259,16 +1245,13 @@ class ActionItemController extends Controller
             if ($changeControl->stage == 4) {
                 $changeControl->stage = '5';
                 $changeControl->status = 'Closed - Done';
-                $changeControl->completed_by = Auth::user()->name;
-                $changeControl->completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->completed_comment = $request->comment;
+                $changeControl->qa_varification_by = Auth::user()->name;
+                $changeControl->qa_varification_on = Carbon::now()->format('d-M-Y');
+                $changeControl->qa_varification_comment = $request->comment;
 
                 $history = new ActionItemHistory;
                 $history->action = "Verification Complete";
                 $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = $lastopenState->completed_by;
-                $history->current = $changeControl->completed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1289,21 +1272,13 @@ class ActionItemController extends Controller
                 } else {
                     $history->action_name = 'Update';
                 }
-                $history->save();
-                $changeControl->update();
-                // $history = new CCStageHistory();
-                // $history->type = "Action-Item";
-                // $history->doc_id = $id;
-                // $history->user_id = Auth::user()->id;
-                // $history->user_name = Auth::user()->name;
-                // $history->stage_id = $changeControl->stage;
-                // $history->status = $lastopenState->status;
                 $history->change_to = "Closed - Done";
                 $history->change_from = $lastopenState->status;
                 $history->save();
-            //   
+                $changeControl->update();
+                
+                $history->save();
                 toastr()->success('Document Sent');
-
                 return back();
             }
             

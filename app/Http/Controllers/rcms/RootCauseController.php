@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\Hash;
         $due_date = $formattedDate->format('Y-m-d');
         return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
     }
+
     public function root_store(Request $request)
     { 
 
@@ -280,18 +281,77 @@ use Illuminate\Support\Facades\Hash;
         // -------------------------------------------------------
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
+        
         $record->update();
+
         
 
   
-    if(!empty($request->initiator_Group))
+        if(!empty($root->record))
     {
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Initiator Department';
+        $history->activity_type = 'Record Number';
         $history->previous = "Null";
-        $history->current = $root->initiator_Group;
-        $history->comment = "Not Applicable";
+        $history->current = Helpers::getDivisionName(session()->get('division')) . "/RCA/" . Helpers::year($root->created_at) . "/" . str_pad($root->record, 4, '0', STR_PAD_LEFT);
+        $history->comment = "Null";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
+
+    if(!empty($request->intiation_date))
+    {
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Date of Initiation';
+        $history->previous = "Null";
+        $history->current =  Helpers::getdateFormat($request->intiation_date);
+        $history->comment = "Null";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
+    if(!empty($request->originator_id))
+    {
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Initiator';
+        $history->previous = "Null";
+        $history->current =$request->originator_id;
+        $history->comment = "Null";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
+    if(!empty($request->division_code))
+    {
+      
+
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Site/Location Code';
+        $history->previous = "Null";
+        $history->current = $root->division_code;
+        $history->comment = "Null";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -322,12 +382,48 @@ use Illuminate\Support\Facades\Hash;
      
         $history->save();
     }
+    if(!empty($request->due_date))
+    {
+      $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Due Date';
+        $history->previous = "Null";
+        $history->current =  Helpers::getdateFormat( $root->due_date);
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
+    if(!empty($request->initiator_Group))
+    {
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Initiator Department';
+        $history->previous = "Null";
+        $history->current = $root->initiator_Group;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
     if(!empty($request->severity_level))
     {
       
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Sevrity Level';
+        $history->activity_type = 'Severity Level';
         $history->previous = "Null";
         $history->current =   $root->severity_level;
         $history->comment = "Not Applicable";
@@ -347,9 +443,9 @@ use Illuminate\Support\Facades\Hash;
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Assign Id';
+        $history->activity_type = 'Department Head ';
         $history->previous = "Null";
-        $history->current = $root->assign_to;
+        $history->current =Helpers::getInitiatorName ($root->assign_to);
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -372,7 +468,7 @@ use Illuminate\Support\Facades\Hash;
         
         $history->activity_type = 'QA Reviewer';
         $history->previous = "Null";
-        $history->current = $root->qa_reviewer;
+        $history->current =  Helpers::getInitiatorName($root->qa_reviewer);
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -384,24 +480,7 @@ use Illuminate\Support\Facades\Hash;
      
         $history->save();
     }
-    if(!empty($request->due_date))
-    {
-      $history = new RootAuditTrial();
-        $history->root_id = $root->id;
-        $history->activity_type = 'Due Date';
-        $history->previous = "Null";
-        $history->current =  $root->due_date;
-        $history->comment = "Not Applicable";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $root->status;
-        $history->change_to =   "Opened";
-       $history->change_from = "Initiation";
-        $history->action_name = 'Create';
-     
-        $history->save();
-    }
+    
      if(!empty($request->initiated_through))
     {
         $history = new RootAuditTrial();
@@ -1404,9 +1483,9 @@ use Illuminate\Support\Facades\Hash;
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Assign Id';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $root->assign_to;
+            $history->activity_type = 'Department Head';
+            $history->previous = Helpers::getInitiatorName ($root->assign_to);
+            $history->current = Helpers::getInitiatorName ($root->assign_to);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1431,8 +1510,8 @@ use Illuminate\Support\Facades\Hash;
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'QA Reviewer';
-            $history->previous = $lastDocument->qa_reviewer;
-            $history->current = $root->qa_reviewer;
+            $history->previous = Helpers::getInitiatorName($lastDocument->qa_reviewer);
+            $history->current = Helpers::getInitiatorName($root->qa_reviewer);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1456,7 +1535,7 @@ use Illuminate\Support\Facades\Hash;
             // return 'history';
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Sevrity Level';
+            $history->activity_type = 'Severity Level';
             $history->previous =  $lastDocument->severity_level;
             $history->current = $root->severity_level;
             $history->comment = $request->comment;

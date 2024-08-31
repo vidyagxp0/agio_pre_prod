@@ -6251,9 +6251,7 @@ class DeviationController extends Controller
                     return back();
                 }
                  if ($deviation->stage == 5) {
-                  
-
-                  
+                
 
                     $deviation->stage = "4";
                     $deviation->status = "CFT Review";

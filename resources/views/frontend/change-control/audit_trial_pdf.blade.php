@@ -153,7 +153,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Change Control Audit Trial Report
+                    Change Control Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">

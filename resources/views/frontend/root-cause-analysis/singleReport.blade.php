@@ -201,7 +201,8 @@
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                         <th class="w-20">Record Number</th>
-                        <td class="w-80">@if($data->record) {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ Helpers::divisionNameForQMS($data->division_id) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                        
                         
                     </tr>
                     <tr>
@@ -248,9 +249,9 @@
                     </tr>
                     <tr>{{-- <th class="w-20">Additional Investigators</th> <td class="w-30">@if($data->investigators){{ $data->investigators }}@else Not Applicable @endif</td> --}}
                         <th class="w-20">Department Head</th>
-                        <td class="w-30">@if($data->assign_to){{ $data->assign_to }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }}@else Not Applicable @endif</td>
                         <th class="w-20">QA Reviewer</th>
-                        <td class="w-80">@if($data->qa_reviewer){{ $data->qa_reviewer }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->qa_reviewer){{ Helpers::getInitiatorName($data->qa_reviewer) }}@else Not Applicable @endif</td>
                        
                     </tr>
                 </table>
@@ -933,7 +934,7 @@
                         <th class="w-20">Investigation Team</th>
                         <td class="w-80">
                             @if ($data->investigation_team)
-                                {{ $data->investigation_team }}
+                            {{ Helpers::getInitiatorName($data->investigation_team) }}
                             @else
                                 Not Applicable
                             @endif

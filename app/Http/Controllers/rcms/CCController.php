@@ -3304,280 +3304,379 @@ class CCController extends Controller
             $Cft->Other5_feedback = $request->Other5_feedback;
 
 
-            if (!empty ($request->RA_attachment)) {
+            if (!empty($request->RA_attachment)) {
                 $files = [];
                 if ($request->hasfile('RA_attachment')) {
                     foreach ($request->file('RA_attachment') as $file) {
-                        $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_RA_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name); // Use public_path() to ensure the correct path
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            // Log the error or handle it as needed
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->RA_attachment = json_encode($files);
             }
-            $areRaAttachSame = $lastDocCft->RA_attachment == $Cft->RA_attachment;
+            
+            // Ensure $lastDocCft->RA_attachment is not null before comparison
+            $areRaAttachSame = ($lastDocCft->RA_attachment ?? '') == ($Cft->RA_attachment ?? '');
 
-            if (!empty ($request->Quality_Assurance_attachment)) {
+           
+            if (!empty($request->Quality_Assurance_attachment)) {
                 $files = [];
                 if ($request->hasfile('Quality_Assurance_attachment')) {
                     foreach ($request->file('Quality_Assurance_attachment') as $file) {
-                        $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Quality_Assurance_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name); // Ensure the correct path using public_path
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Quality_Assurance_attachment = json_encode($files);
             }
-            $areQAAttachSame = $lastDocCft->Quality_Assurance_attachment == $Cft->Quality_Assurance_attachment;
-
-            if (!empty ($request->Production_Table_Attachment)) {
+            $areQAAttachSame = ($lastDocCft->Quality_Assurance_attachment ?? '') == ($Cft->Quality_Assurance_attachment ?? '');
+            
+            if (!empty($request->Production_Table_Attachment)) {
                 $files = [];
                 if ($request->hasfile('Production_Table_Attachment')) {
                     foreach ($request->file('Production_Table_Attachment') as $file) {
-                        $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Production_Table_Attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name); // Ensure the correct path using public_path
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Production_Table_Attachment = json_encode($files);
             }
-            $arePTAttachSame = $lastDocCft->Production_Table_Attachment == $Cft->Production_Table_Attachment;
-
-            if (!empty ($request->ProductionLiquid_attachment)) {
+            $arePTAttachSame = ($lastDocCft->Production_Table_Attachment ?? '') == ($Cft->Production_Table_Attachment ?? '');
+            
+            if (!empty($request->ProductionLiquid_attachment)) {
                 $files = [];
                 if ($request->hasfile('ProductionLiquid_attachment')) {
                     foreach ($request->file('ProductionLiquid_attachment') as $file) {
-                        $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_ProductionLiquid_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name); // Ensure the correct path using public_path
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->ProductionLiquid_attachment = json_encode($files);
             }
-            $arePlAttachSame = $lastDocCft->ProductionLiquid_attachment == $Cft->ProductionLiquid_attachment;
-
-            if (!empty ($request->Production_Injection_Attachment)) {
+            $arePlAttachSame = ($lastDocCft->ProductionLiquid_attachment ?? '') == ($Cft->ProductionLiquid_attachment ?? '');
+            
+            if (!empty($request->Production_Injection_Attachment)) {
                 $files = [];
                 if ($request->hasfile('Production_Injection_Attachment')) {
                     foreach ($request->file('Production_Injection_Attachment') as $file) {
-                        $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Production_Injection_Attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name); // Ensure the correct path using public_path
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Production_Injection_Attachment = json_encode($files);
-            }  
-            $arePiAttachSame = $lastDocCft->Production_Injection_Attachment == $Cft->Production_Injection_Attachment;
+            }
+            $arePiAttachSame = ($lastDocCft->Production_Injection_Attachment ?? '') == ($Cft->Production_Injection_Attachment ?? '');
+            
 
-            if (!empty ($request->Store_attachment)) {
+
+
+
+
+
+
+
+
+            if (!empty($request->Store_attachment)) {
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
                     foreach ($request->file('Store_attachment') as $file) {
-                        $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Store_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name);
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Store_attachment = json_encode($files);
             }
-            $areStoreAttachSame = $lastDocCft->Store_attachment == $Cft->Store_attachment;
-
-            if (!empty ($request->Quality_Control_attachment)) {
+            $areStoreAttachSame = ($lastDocCft->Store_attachment ?? '') == ($Cft->Store_attachment ?? '');
+            
+            if (!empty($request->Quality_Control_attachment)) {
                 $files = [];
                 if ($request->hasfile('Quality_Control_attachment')) {
                     foreach ($request->file('Quality_Control_attachment') as $file) {
-                        $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Quality_Control_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name);
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Quality_Control_attachment = json_encode($files);
             }
-            $areQcAttachSame = $lastDocCft->Quality_Control_attachment == $Cft->Quality_Control_attachment;
-
-            if (!empty ($request->ResearchDevelopment_attachment)) {
+            $areQcAttachSame = ($lastDocCft->Quality_Control_attachment ?? '') == ($Cft->Quality_Control_attachment ?? '');
+            
+            if (!empty($request->ResearchDevelopment_attachment)) {
                 $files = [];
                 if ($request->hasfile('ResearchDevelopment_attachment')) {
                     foreach ($request->file('ResearchDevelopment_attachment') as $file) {
-                        $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_ResearchDevelopment_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name);
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->ResearchDevelopment_attachment = json_encode($files);
             }
-            $areRdAttachSame = $lastDocCft->ResearchDevelopment_attachment == $Cft->ResearchDevelopment_attachment;
-
-            if (!empty ($request->Engineering_attachment)) {
+            $areRdAttachSame = ($lastDocCft->ResearchDevelopment_attachment ?? '') == ($Cft->ResearchDevelopment_attachment ?? '');
+            
+            if (!empty($request->Engineering_attachment)) {
                 $files = [];
                 if ($request->hasfile('Engineering_attachment')) {
                     foreach ($request->file('Engineering_attachment') as $file) {
-                        $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Engineering_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name);
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Engineering_attachment = json_encode($files);
             }
-            $areEngAttachSame = $lastDocCft->Engineering_attachment == $Cft->Engineering_attachment;
-
-            if (!empty ($request->Human_Resource_attachment)) {
+            $areEngAttachSame = ($lastDocCft->Engineering_attachment ?? '') == ($Cft->Engineering_attachment ?? '');
+            
+            if (!empty($request->Human_Resource_attachment)) {
                 $files = [];
                 if ($request->hasfile('Human_Resource_attachment')) {
                     foreach ($request->file('Human_Resource_attachment') as $file) {
-                        $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Human_Resource_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name);
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Human_Resource_attachment = json_encode($files);
             }
-            $areHrAttachSame = $lastDocCft->Human_Resource_attachment == $Cft->Human_Resource_attachment;
-
-            if (!empty ($request->Microbiology_attachment)) {
+            $areHrAttachSame = ($lastDocCft->Human_Resource_attachment ?? '') == ($Cft->Human_Resource_attachment ?? '');
+            
+            if (!empty($request->Microbiology_attachment)) {
                 $files = [];
                 if ($request->hasfile('Microbiology_attachment')) {
                     foreach ($request->file('Microbiology_attachment') as $file) {
-                        $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Microbiology_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name);
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Microbiology_attachment = json_encode($files);
             }
-            $areMicroAttachSame = $lastDocCft->Microbiology_attachment == $Cft->Microbiology_attachment;
-
-            if (!empty ($request->RegulatoryAffair_attachment)) {
+            $areMicroAttachSame = ($lastDocCft->Microbiology_attachment ?? '') == ($Cft->Microbiology_attachment ?? '');
+            
+            if (!empty($request->RegulatoryAffair_attachment)) {
                 $files = [];
                 if ($request->hasfile('RegulatoryAffair_attachment')) {
                     foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                        $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_RegulatoryAffair_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name);
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->RegulatoryAffair_attachment = json_encode($files);
             }
-            $areRegAffairAttachSame = $lastDocCft->RegulatoryAffair_attachment == $Cft->RegulatoryAffair_attachment;
-
-            if (!empty ($request->CorporateQualityAssurance_attachment)) {
+            $areRegAffairAttachSame = ($lastDocCft->RegulatoryAffair_attachment ?? '') == ($Cft->RegulatoryAffair_attachment ?? '');
+            
+            if (!empty($request->CorporateQualityAssurance_attachment)) {
                 $files = [];
                 if ($request->hasfile('CorporateQualityAssurance_attachment')) {
                     foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                        $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_CorporateQualityAssurance_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name);
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->CorporateQualityAssurance_attachment = json_encode($files);
             }
-            $areCQAAttachSame = $lastDocCft->CorporateQualityAssurance_attachment == $Cft->CorporateQualityAssurance_attachment;
-
-            if (!empty ($request->Environment_Health_Safety_attachment)) {
+            $areCQAAttachSame = ($lastDocCft->CorporateQualityAssurance_attachment ?? '') == ($Cft->CorporateQualityAssurance_attachment ?? '');
+            
+            if (!empty($request->Environment_Health_Safety_attachment)) {
                 $files = [];
                 if ($request->hasfile('Environment_Health_Safety_attachment')) {
                     foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                        $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Environment_Health_Safety_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name);
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Environment_Health_Safety_attachment = json_encode($files);
-            }            
-            $areSafetyAttachSame = $lastDocCft->Environment_Health_Safety_attachment == $Cft->Environment_Health_Safety_attachment;
+            }
+            $areSafetyAttachSame = ($lastDocCft->Environment_Health_Safety_attachment ?? '') == ($Cft->Environment_Health_Safety_attachment ?? '');
             
-            if (!empty ($request->Information_Technology_attachment)) {
+            if (!empty($request->Information_Technology_attachment)) {
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
                     foreach ($request->file('Information_Technology_attachment') as $file) {
-                        $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Information_Technology_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name);
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Information_Technology_attachment = json_encode($files);
             }
-            $areItAttachSame = $lastDocCft->Information_Technology_attachment == $Cft->Information_Technology_attachment;
-
-            if (!empty ($request->ContractGiver_attachment)) {
+            $areItAttachSame = ($lastDocCft->Information_Technology_attachment ?? '') == ($Cft->Information_Technology_attachment ?? '');
+            
+            if (!empty($request->ContractGiver_attachment)) {
                 $files = [];
                 if ($request->hasfile('ContractGiver_attachment')) {
                     foreach ($request->file('ContractGiver_attachment') as $file) {
-                        $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_ContractGiver_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name);
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->ContractGiver_attachment = json_encode($files);
             }
-            $areContractGiverAttachSame = $lastDocCft->ContractGiver_attachment == $Cft->ContractGiver_attachment;
-
-            if (!empty ($request->Other1_attachment)) {
+            $areContractGiverAttachSame = ($lastDocCft->ContractGiver_attachment ?? '') == ($Cft->ContractGiver_attachment ?? '');
+            
+            if (!empty($request->Other1_attachment)) {
                 $files = [];
                 if ($request->hasfile('Other1_attachment')) {
                     foreach ($request->file('Other1_attachment') as $file) {
-                        $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Other1_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name);
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Other1_attachment = json_encode($files);
             }
-            $areOther1AttachSame = $lastDocCft->Other1_attachment == $Cft->Other1_attachment;
-
-            if (!empty ($request->Other2_attachment)) {
+            $areOther1AttachSame = ($lastDocCft->Other1_attachment ?? '') == ($Cft->Other1_attachment ?? '');
+            
+            if (!empty($request->Other2_attachment)) {
                 $files = [];
                 if ($request->hasfile('Other2_attachment')) {
                     foreach ($request->file('Other2_attachment') as $file) {
-                        $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Other2_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name);
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Other2_attachment = json_encode($files);
             }
-            $areOther2AttachSame = $lastDocCft->Other2_attachment == $Cft->Other2_attachment;
+            $areOther2AttachSame = ($lastDocCft->Other2_attachment ?? '') == ($Cft->Other2_attachment ?? '');
+            
 
-            if (!empty ($request->Other3_attachment)) {
+
+
+            if (!empty($request->Other3_attachment)) {
                 $files = [];
                 if ($request->hasfile('Other3_attachment')) {
                     foreach ($request->file('Other3_attachment') as $file) {
-                        $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Other3_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name); // Use public_path() to ensure the correct path
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Other3_attachment = json_encode($files);
             }
-            $areOther3AttachSame = $lastDocCft->Other3_attachment == $Cft->Other3_attachment;
-
-            if (!empty ($request->Other4_attachment)) {
+            $areOther3AttachSame = ($lastDocCft->Other3_attachment ?? '') == ($Cft->Other3_attachment ?? '');
+            
+            if (!empty($request->Other4_attachment)) {
                 $files = [];
                 if ($request->hasfile('Other4_attachment')) {
                     foreach ($request->file('Other4_attachment') as $file) {
-                        $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Other4_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name); // Use public_path() to ensure the correct path
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
-
                 $Cft->Other4_attachment = json_encode($files);
             }
-            $areOther4AttachSame = $lastDocCft->Other4_attachment == $Cft->Other4_attachment;
-
-            if (!empty ($request->Other5_attachment)) {
+            $areOther4AttachSame = ($lastDocCft->Other4_attachment ?? '') == ($Cft->Other4_attachment ?? '');
+            
+            if (!empty($request->Other5_attachment)) {
                 $files = [];
                 if ($request->hasfile('Other5_attachment')) {
                     foreach ($request->file('Other5_attachment') as $file) {
-                        $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        try {
+                            $name = $request->name . '_Other5_attachment_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload'), $name); // Use public_path() to ensure the correct path
+                            $files[] = $name;
+                        } catch (\Exception $e) {
+                            return back()->withErrors(['file_error' => 'The file "' . $file->getClientOriginalName() . '" was not uploaded due to an error: ' . $e->getMessage()]);
+                        }
                     }
                 }
                 $Cft->Other5_attachment = json_encode($files);
             }
-            $areOther5AttachSame = $lastDocCft->Other5_attachment == $Cft->Other5_attachment;
-
+            $areOther5AttachSame = ($lastDocCft->Other5_attachment ?? '') == ($Cft->Other5_attachment ?? '');
+            
 
         $Cft->save();
         }
@@ -4072,6 +4171,56 @@ class CCController extends Controller
 
 
         $Cft->save();
+
+
+
+
+        $IsCFTRequired = ChangeControlCftResponse::withoutTrashed()->where(['is_required' => 1, 'cc_id' => $id])->latest()->first();
+        $cftUsers = DB::table('cc_cfts')->where(['cc_id' => $id])->first();
+        // Define the column names
+
+
+        $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
+               
+     
+           // Initialize an array to store the values
+                $valuesArray = [];
+
+                foreach ($columns as $index => $column) {
+                    $value = $cftUsers->$column;
+                    // Check if the value is not null and not equal to 0
+                    if ($value != null && $value != 0) {
+                        $valuesArray[] = $value;
+                    }
+                }
+                // Remove duplicates from the array
+                $valuesArray = array_unique($valuesArray);
+
+                // Convert the array to a re-indexed array
+                $valuesArray = array_values($valuesArray);
+
+                foreach ($valuesArray as $u) {
+                        $email = Helpers::getInitiatorEmail($u);
+                        if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $openState],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("CFT Assgineed by " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                //log error
+                            }
+                    }
+                }
+
+
+
+
+
         }
 
         $areRaAttachSame = $lastDocCft->RA_attachment == json_encode($request->RA_attachment);
@@ -8538,6 +8687,20 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
                 $changeControl->status = "CFT Assessment";
+
+                    // Code for the CFT required
+                    $stage = new ChangeControlCftResponse();
+                    $stage->cc_id = $id;
+                    $stage->cft_user_id = Auth::user()->id;
+                    $stage->status = "CFT Required";
+                  
+                    $stage->comment = $request->comment;
+                    $stage->is_required = 1;
+                    $stage->save();
+
+
+
+
                 $changeControl->QA_initial_review_by = Auth::user()->name;
                 $changeControl->QA_initial_review_on = Carbon::now()->format('d-M-Y');
                 $changeControl->QA_initial_review_comment = $request->comments;
@@ -8621,8 +8784,14 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $cftUsers = DB::table('cc_cfts')->where(['cc_id' => $id])->first();
                 // Define the column names
 
+
+                // $columns = ['RA_person', 'QualityAssurance_person','Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','Quality_Control_Person','ResearchDevelopment_person', 'Engineering_person', 'Human_Resource_person','Microbiology_person','RegulatoryAffair_person', 'CorporateQualityAssurance_person','Environment_Health_Safety_person', 'Information_Technology_person', 'ContractGiver_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person',];
+             
+             
                 //  dd($cftUsers);
                 $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
+               
+               
                 // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
 
                 // Initialize an array to store the values
@@ -9086,6 +9255,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 }
                 if ($IsCFTRequired) {
                 if (count(array_unique($valuesArray)) == ($cftDetails + 1)) {
+
                 $stage = new ChangeControlCftResponse();
                 $stage->cc_id = $id;
                 $stage->cft_user_id = Auth::user()->id;
@@ -9110,7 +9280,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
 
                 $checkCFTCount = ChangeControlCftResponse::withoutTrashed()->where(['status' => 'Completed', 'cc_id' => $id])->count();
-                // dd(count(array_unique($valuesArray)), $checkCFTCount);
+            // dd(count(array_unique($valuesArray)), $checkCFTCount);
 
 
 
@@ -9132,7 +9302,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
 
 
-
+             if (!$IsCFTRequired || $checkCFTCount) {
 
 
 
@@ -9168,6 +9338,9 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
+
+
+            }
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
                 //         if($u->q_m_s_divisions_id == $changeControl->division_id){

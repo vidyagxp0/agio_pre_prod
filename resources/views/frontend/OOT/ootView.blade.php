@@ -85,7 +85,7 @@
                 Request For Cancellation
                 </button>
                 
-            @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($data->stage == 2 && (in_array([4,14], $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
                 HOD Primary Review Complete
                 </button>
@@ -95,15 +95,15 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                 More Info Required
                 </button>
-  
+
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                     Child
                 </button>
-                @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                @elseif($data->stage == 3 && (in_array(42, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                     Cancel
                 </button>
-            @elseif($data->stage == 4 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            @elseif($data->stage == 4 && (in_array(42, $userRoleIds) || in_array(18, $userRoleIds)))
             
             <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 CQA/QA Head Primary Review Complete
@@ -114,36 +114,38 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button>
+
+                
                
                 
             @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-           
-            
+
+
             <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 Phase IA Investigation
             </button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
-                </button> 
+                </button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                 Child
-            </button>   
+            </button>
             @elseif($data->stage == 7 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                
+
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                  Phase IA HOD Review Complete
-                </button> 
+                </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
-                </button> 
+                </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
-                </button> 
+                </button>
                 {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button> --}}
             
-            @elseif($data->stage == 8 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+            @elseif($data->stage == 8 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Phase IA QA/CQA Review Complete
                 </button>
@@ -153,9 +155,9 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button>
-                
+
              @elseif($data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                
+
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Assignable Cause Found
                 </button>
@@ -168,34 +170,34 @@
 
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
-                </button> 
-                
+                </button>
+
 
                 @elseif($data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                
-               
+
+
                 @elseif($data->stage == 11 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Phase IB Investigation
                 </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
-                </button>           
+                </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                     Child
                 </button>
-               
+
                 @elseif($data->stage == 12 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Phase IB HOD Review Complete
                 </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
-                </button>           
+                </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button>
-               
+
                 @elseif($data->stage == 13 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Phase IB QA/CQA Review Complete
@@ -206,7 +208,7 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button>
-               
+
                 @elseif($data->stage == 14 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     P-IB Assignable Cause Found
@@ -222,7 +224,7 @@
                 </button>
 
                 @elseif($data->stage == 15 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                
+
                 @elseif($data->stage == 16 && (in_array(22, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Phase II A Investigation
@@ -245,7 +247,7 @@
                     Child
                 </button>
 
-                @elseif($data->stage == 18 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                @elseif($data->stage == 18 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Phase II A QA/CQA Review Complete
                 </button>
@@ -270,10 +272,10 @@
                     Child
                 </button>
 
-                @elseif($data->stage == 20 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                @elseif($data->stage == 20 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 
 
-                @elseif($data->stage == 21 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                @elseif($data->stage == 21 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 Phase II B Investigation
                 </button>
@@ -284,7 +286,7 @@
                     Child
                 </button>
 
-                @elseif($data->stage == 22 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                @elseif($data->stage == 22 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 Phase II B HOD Review Complete
                 </button>
@@ -320,13 +322,13 @@
                     Child
                 </button>
                 @elseif($data->stage == 25 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                
+
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 P-III Investigation Applicable/Not Applicable
                 </button>
                 @elseif($data->stage == 26 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                
-                
+
+
                 <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/action-items-create') }}"> Action Item
                 </a> </button>
                 <button class="button_theme1"> <a class="text-white" href="{{ url('root-cause-analysis') }}"> Root Cause Analysis
@@ -345,161 +347,171 @@
         <div class="progress-bars">
             <div class="bg-danger">Closed-Cancelled</div>
         </div>
+    @elseif ($data->stage == 10)
+    <div class="progress-bars">
+
+        <div class="bg-danger">Closed Done</div>
+        </div>
+
+        @elseif($data->stage == 15)
+    <div class="progress-bars">
+
+        <div class="bg-danger">Closed Done</div>
+        </div>
+
+        @elseif ($data->stage == 20)
+    <div class="progress-bars">
+
+        <div class="bg-danger">Closed Done</div>
+    
+        </div>
     @else
         <div class="progress-bars d-flex">
-            @if ($data->stage >= 1)
-                <div class="active">Opened</div>
-            @else
-                <div class="">Opened</div>
-            @endif
+    @if ($data->stage >= 1)
+        <div class="active">Opened</div>
+    @else
+        <div class="">Opened</div>
+    @endif
 
-            @if ($data->stage >= 2)
-                <div class="active" style="width: 8%">HOD Primary Review</div>
-            @else
-                <div class="">HOD Primary Review</div>
-            @endif
-            @if ($data->stage < 4)
-                @if ($data->stage >= 3)
-                    <div class="active">QA Head Approval</div>
-                @else
-                    <div class="">QA Head Approval</div>
-                @endif
-            @endif
+    @if ($data->stage >= 2)
+        <div class="active" style="width: 8%">HOD Primary Review</div>
+    @else
+        <div class="">HOD Primary Review</div>
+    @endif
 
-            @if ($data->stage >= 4)
-                <div class="active">CQA/QA Head Primary Review</div>
-            @else
-                <div class="">CQA/QA Head Primary Review</div>
-            @endif
+    @if ($data->stage < 4)
+        @if ($data->stage >= 3)
+            <div class="active">QA Head Approval</div>
+        @else
+            <div class="">QA Head Approval</div>
+        @endif
+    @endif
 
-            @if ($data->stage >= 5)
-                <div class="active">Under Phase-IA Investigation</div>
-            @else
-                <div class="">Under Phase-IA Investigation</div>
-            @endif
+    @if ($data->stage >= 4)
+        <div class="active">CQA/QA Head Primary Review</div>
+    @else
+        <div class="">CQA/QA Head Primary Review</div>
+    @endif
 
-            @if ($data->stage >= 7)
-                <div class="active">Phase IA HOD Primary Review</div>
-            @else
-                <div class="">Phase IA HOD Primary Review</div>
-            @endif
+    @if ($data->stage >= 5)
+        <div class="active">Under Phase-IA Investigation</div>
+    @else
+        <div class="">Under Phase-IA Investigation</div>
+    @endif
 
-            @if ($data->stage >= 8)
-                <div class="active">Phase IA QA/CQA Review</div>
-            @else
-                <div class="">Phase IA QA/CQA Review</div>
-            @endif
+    @if ($data->stage >= 7)
+        <div class="active">Phase IA HOD Primary Review</div>
+    @else
+        <div class="">Phase IA HOD Primary Review</div>
+    @endif
 
-            @if ($data->stage >= 9)
-                <div class="active">P-IA CQAH/QAH Review</div>
-            @else
-                <div class="">P-IA CQAH/QAH Review</div>
-            @endif
+    @if ($data->stage >= 8)
+        <div class="active">Phase IA QA/CQA Review</div>
+    @else
+        <div class="">Phase IA QA/CQA Review</div>
+    @endif
 
-            @if ($data->stage < 11)
-                @if ($data->stage >= 10)
-                    <div class="bg-danger">Closed Done</div>
-                @else
-                    <div class="">Closed Done</div>
-                @endif
-            @endif
+    @if ($data->stage >= 9)
+        <div class="active">P-IA CQAH/QAH Review</div>
+    @else
+        <div class="">P-IA CQAH/QAH Review</div>
+    @endif
 
-            @if ($data->stage >= 11)
-                <div class="active">Under Phase-IB Investigation</div>
-            @else
-                <div class="">Under Phase-IB Investigation</div>
-            @endif
+    <!-- Closed Done for Stage 10 -->
+    <!-- @if ($data->stage == 10)
+        <div class="bg-danger">Closed Done</div>
+    @endif -->
 
-            @if ($data->stage >= 12)
-                <div class="active">Phase IB HOD Primary Review</div>
-            @else
-                <div class="">Phase IB HOD Primary Review</div>
-            @endif
+    @if ($data->stage >= 11)
+        <div class="active">Under Phase-IB Investigation</div>
+    @else
+        <div class="">Under Phase-IB Investigation</div>
+    @endif
 
-            @if ($data->stage >= 13)
-                <div class="active">Phase IB QA/CQA Review</div>
-            @else
-                <div class="">Phase IB QA/CQA Review</div>
-            @endif
-            
-            @if ($data->stage >= 14)
-                <div class="active">P-IB CQAH/QAH Review</div>
-            @else
-                <div class="">P-IB CQAH/QAH Review</div>
-            @endif
-            
-            @if ($data->stage < 16)
-                @if ($data->stage >= 15)
-                    <div class="bg-danger">Closed Done</div>
-                @else
-                    <div class="">Closed Done</div>
-                @endif
-            @endif
+    @if ($data->stage >= 12)
+        <div class="active">Phase IB HOD Primary Review</div>
+    @else
+        <div class="">Phase IB HOD Primary Review</div>
+    @endif
 
-            @if ($data->stage >= 16)
-                <div class="active">Under Phase-II A Investigation</div>
-            @else
-                <div class="">Under Phase-II A Investigation</div>
-            @endif
+    @if ($data->stage >= 13)
+        <div class="active">Phase IB QA/CQA Review</div>
+    @else
+        <div class="">Phase IB QA/CQA Review</div>
+    @endif
 
-            @if ($data->stage >= 17)
-                <div class="active">Phase II A HOD Primary Review</div>
-            @else
-                <div class="">Phase II A HOD Primary Review</div>
-            @endif
+    @if ($data->stage >= 14)
+        <div class="active">P-IB CQAH/QAH Review</div>
+    @else
+        <div class="">P-IB CQAH/QAH Review</div>
+    @endif
 
-            @if ($data->stage >= 18)
-                <div class="active">Phase II A QA/CQA Review</div>
-            @else
-                <div class="">Phase II A QA/CQA Review</div>
-            @endif
+    <!-- Closed Done for Stage 15 -->
+    <!-- @if ($data->stage == 15)
+        <div class="bg-danger">Closed Done</div>
+    @endif -->
 
-            @if ($data->stage >= 19)
-                <div class="active">P-II A QAH/CQAH Review</div>
-            @else
-                <div class="">P-II A QAH/CQAH Review</div>
-            @endif
+    @if ($data->stage >= 16)
+        <div class="active">Under Phase-II A Investigation</div>
+    @else
+        <div class="">Under Phase-II A Investigation</div>
+    @endif
 
-            @if ($data->stage < 21)
-                @if ($data->stage >= 20)
-                    <div class="bg-danger">Closed Done</div>
-                @else
-                    <div class="">Closed Done</div>
-                @endif
-            @endif
+    @if ($data->stage >= 17)
+        <div class="active">Phase II A HOD Primary Review</div>
+    @else
+        <div class="">Phase II A HOD Primary Review</div>
+    @endif
 
-            @if ($data->stage >= 21)
-                <div class="active">Under Phase-II B Investigation</div>
-            @else
-                <div class="">Under Phase-II B Investigation</div>
-            @endif
+    @if ($data->stage >= 18)
+        <div class="active">Phase II A QA/CQA Review</div>
+    @else
+        <div class="">Phase II A QA/CQA Review</div>
+    @endif
 
-            @if ($data->stage >= 22)
-                <div class="active">Phase II B HOD Primary Review</div>
-            @else
-                <div class="">Phase II B HOD Primary Review</div>
-            @endif
+    @if ($data->stage >= 19)
+        <div class="active">P-II A QAH/CQAH Review</div>
+    @else
+        <div class="">P-II A QAH/CQAH Review</div>
+    @endif
 
-            @if ($data->stage >= 23)
-                <div class="active">Phase II B QA/CQA Review</div>
-            @else
-                <div class="">Phase II B QA/CQA Review</div>
-            @endif
+    <!-- Closed Done for Stage 20 -->
+    <!-- @if ($data->stage == 20)
+        <div class="bg-danger">Closed Done</div>
+    @endif -->
 
-            @if ($data->stage >= 24)
-                <div class="active">P-II B QAH/CQAH Review</div>
-            @else
-                <div class="">P-II B QAH/CQAH Review</div>
-            @endif
+    @if ($data->stage >= 21)
+        <div class="active">Under Phase-II B Investigation</div>
+    @else
+        <div class="">Under Phase-II B Investigation</div>
+    @endif
 
-            @if ($data->stage >= 25)
+    @if ($data->stage >= 22)
+        <div class="active">Phase II B HOD Primary Review</div>
+    @else
+        <div class="">Phase II B HOD Primary Review</div>
+    @endif
+
+    @if ($data->stage >= 23)
+        <div class="active">Phase II B QA/CQA Review</div>
+    @else
+        <div class="">Phase II B QA/CQA Review</div>
+    @endif
+
+    @if ($data->stage >= 24)
+        <div class="active">P-II B QAH/CQAH Review</div>
+    @else
+        <div class="">P-II B QAH/CQAH Review</div>
+    @endif
+
+    <!-- Closed - Done for Stage 25 -->
+    @if ($data->stage >= 25)
                 <div class="bg-danger">Closed - Done</div>
             @else
                 <div class="">Closed - Done</div>
             @endif
+</div>
 
-            
-        </div>
     @endif
 </div>
                 {{-- @endif --}}
@@ -982,35 +994,13 @@
                                                             <input type="text" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][a_r_number]"value="{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : '' }}">
                                                         </td>
-                                                        {{-- <td>
+                                                        <td>
                                                             <input type="month" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][m_f_g_date]" value="{{ isset($gridData['m_f_g_date']) ?  $gridData['m_f_g_date'] : '' }}">
                                                         </td>
 
                                                         <td>
                                                             <input type="month" class="numberDetail"  name="product_materiel[{{ $loop->index }}][expiry_date]"   value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}"  class="hide-input" oninput="handleMonthInput(this, 'expiry_date')">
-                                                        </td> --}}
-
-                                                        <td>
-                                                            <div class="col-lg-6 new-date-data-field">
-                                                                <div class="group-input input-date">
-                                                                    <div class="calenderauditee">
-                                                                        <input type="text" id="m_f_g_date{{ $loop->index }}" readonly placeholder="MM-YYYY" name="product_materiel[{{ $loop->index }}][m_f_g_date]"   value="{{ Helpers::getmonthFormat($gridData['m_f_g_date'] ?? '') }}"  />
-                                                                        <input  type="month" name="product_materiel[{{ $loop->index }}][m_f_g_date]"   value="{{ isset($gridData['m_f_g_date']) ? $gridData['m_f_g_date'] : '' }}" class="hide-input" oninput="handleMonthInput(this, 'm_f_g_date{{ $loop->index }}')">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="col-lg-6 new-date-data-field">
-                                                                <div class="group-input input-date">
-                                                                    <div class="calenderauditee">
-                                                                        <input type="text" id="expiry_date{{ $loop->index }}" value="{{ Helpers::getmonthFormat($gridData['expiry_date'] ?? '') }}" readonly placeholder="MM-YYYY" />
-                                                                        <input  type="month" name="product_materiel[{{ $loop->index }}][expiry_date]"
-                                                                        value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}" class="hide-input" oninput="handleMonthInput(this, 'expiry_date{{ $loop->index }}')">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </td>
 
                                                         <td>
@@ -3227,7 +3217,7 @@
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">HOD Primary Review Completed On</label>
                                 <div class="static">{{$data->pls_submited_on}}</div>
-                                
+
                             </div>
                         </div>
                         <div class="col-lg-4 new-date-data-field">
@@ -3307,7 +3297,7 @@
 
 
                         <div class="sub-head col-lg-12">
-                        Phase IA HOD Primary Review 
+                        Phase IA HOD Primary Review
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
@@ -3705,7 +3695,7 @@
                         P-II A Assignable Cause Found
                         </div>
                       <div class="col-lg-4">
-                        
+
                             <div class="group-input">
                                 <label for="Initiator Group">P-II A Assignable Cause Found By : </label>
                                 <div class="static">{{$data->P_II_A_Assignable_Cause_Found_by}}</div>
@@ -3864,7 +3854,7 @@
                             </div>
                         </div>
 
-                                
+
                         <div class="sub-head col-lg-12">
                         P-II B Assignable Cause Found
                         </div>
@@ -5854,7 +5844,7 @@
             </div>
         </div>
     </div>
-    
+
 <div class="modal fade" id="child-modal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -5901,7 +5891,7 @@
 
                 <div class="modal-footer">
                           <button type="submit">Submit</button>
-                         <button type="button" data-bs-dismiss="modal">Close</button>                         
+                         <button type="button" data-bs-dismiss="modal">Close</button>
                </div>
             </form>
 
@@ -5932,7 +5922,7 @@
                             Extension
                         </label>
                     </div>
-                    
+
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -5953,14 +5943,14 @@
             <div class="modal-body">
                 <form action="{{ route('OOTChildExtensionOOT', $data->id) }}" method="POST">
                     @csrf
-                    
+
                     <div class="group-input">
                         <label for="root-item">
                             <input type="radio" name="revision" id="root-item" value="Extension">
                             Extension
                         </label>
                     </div>
-                    
+
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
