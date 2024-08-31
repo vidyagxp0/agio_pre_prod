@@ -463,7 +463,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Division Code"><b>Division Code </b></label>
-                                    <input disabled type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                    <input disabled type="text" name="division_code" value="{{ Helpers::getDivisionName($data->division_id) }}">
                                     <input type="hidden" name="division_id" value="{{ $data->division_id }}">
 
                                 </div>
@@ -1118,8 +1118,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </td>
-
+                                                     </td>
 
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_batch_size]" value="{{ array_key_exists('info_batch_size', $detail) ? $detail['info_batch_size'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_pack_size]" value="{{ array_key_exists('info_pack_size', $detail) ? $detail['info_pack_size'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>

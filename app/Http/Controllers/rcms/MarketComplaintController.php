@@ -8,6 +8,7 @@ use App\Models\MarketComplaintGrids ;
 use App\Models\MarketComplaintAuditTrial;
 use App\Models\MarketComplaintCft;
 use App\Models\MarketComplaintcftResponce;
+use App\Models\AuditReviewersDetails;
 use App\Models\Capa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -708,7 +709,7 @@ class MarketComplaintController extends Controller
             if (!empty($marketComplaint->record)) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
-                $history->activity_type = 'Record';
+                $history->activity_type = 'Record Number';
                 $history->previous = "Null";
                 $history->current = Helpers::getDivisionName($marketComplaint->division_id). '/MC/'. Helpers::year($marketComplaint->created). '/'.str_pad($marketComplaint->record, 4, '0', STR_PAD_LEFT);
                 $history->comment = "Not Applicable";
@@ -725,7 +726,7 @@ class MarketComplaintController extends Controller
             if (!empty($marketComplaint->description_gi)) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
-                $history->activity_type = 'Description';
+                $history->activity_type = 'Short Description Description';
                 $history->previous = "Null";
                 $history->current = $marketComplaint->description_gi;
                 $history->comment = "Not Applicable";
@@ -4788,8 +4789,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $marketstat->reject_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->action = 'Reject';
+                $history->activity_type = 'Not Applicable';
+                $history->action = 'Not Applicable';
                 $history->previous = "";
                 $history->current = $marketstat->closed_done_by;
                 $history->comment = $request->comment;
@@ -4797,8 +4798,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Pending Response Letter";
-                $history->change_from = "close - done";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "Not Applicable";
                 $history->stage='Pending Response Letter';
                 $history->save();
                 $marketstat->update();
@@ -4814,8 +4815,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $marketstat->reject_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->action = 'Reject';
+                $history->activity_type = 'Not Applicable';
+                $history->action = 'Not Applicable';
                 $history->previous = "";
                 $history->current = $marketstat->closed_done_by;
                 $history->comment = $request->comment;
@@ -4823,8 +4824,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "QA Head Approve";
-                $history->change_from = "Pending Response Letter";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "Not Applicable";
                 $history->stage='In QA Review';
                 $history->save();
                 $marketstat->update();
@@ -4840,8 +4841,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $marketstat->reject_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->action = 'Reject';
+                $history->activity_type = 'Not Applicable';
+                $history->action = 'Not Applicable';
                 $history->previous = "";
                 $history->current = $marketstat->closed_done_by;
                 $history->comment = $request->comment;
@@ -4849,8 +4850,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "All Action Complete";
-                $history->change_from = "QA Head Approve";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "Not Applicable";
                 $history->stage='In QA Review';
                 $history->save();
                 $marketstat->update();
@@ -4866,8 +4867,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $marketstat->reject_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->action = 'Reject';
+                $history->activity_type = 'Not Applicable';
+                $history->action = 'Not Applicable';
                 $history->previous = "";
                 $history->current = $marketstat->closed_done_by;
                 $history->comment = $request->comment;
@@ -4875,8 +4876,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Investigation CAPA And Root Cause Analysis";
-                $history->change_from = "All Action Complete";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "Not Applicable";
                 $history->stage='CFT Review';
                 $history->save();
                 $marketstat->update();
@@ -4892,8 +4893,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $marketstat->reject_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->action = 'Reject';
+                $history->activity_type = 'Not Applicable';
+                $history->action = 'Not Applicable';
                 $history->previous = "";
                 $history->current = $marketstat->closed_done_by;
                 $history->comment = $request->comment;
@@ -4901,8 +4902,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Investigation CAPA And Root Cause Analysis";
-                $history->change_from = "CFT Review";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "Not Applicable";
                 $history->stage='CFT Review';
                 $history->save();
                 $marketstat->update();
@@ -4918,8 +4919,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $marketstat->more_information_required_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->action = 'More Information Required';
+                $history->activity_type = 'Not Applicable';
+                $history->action = 'Not Applicable';
                 $history->previous = "";
                 $history->current = $marketstat->closed_done_by;
                 $history->comment = $request->comment;
@@ -4927,8 +4928,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "QA Head Review";
-                $history->change_from = "Investigation CAPA And Root Cause Analysis";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "Not Applicable";
                 $history->stage='Opened';
                 $history->save();
                 $marketstat->update();
@@ -4945,8 +4946,8 @@ public function marketComplaintStateChange(Request $request,$id)
                 $marketstat->more_information_required_comment = $request->comment;
                     $history = new MarketComplaintAuditTrial();
                     $history->market_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->action = 'More Information Required';
+                    $history->activity_type = 'Not Applicable';
+                    $history->action = 'Not Applicable';
                     $history->previous = "";
                     $history->current = $marketstat->closed_done_by;
                     $history->comment = $request->comment;
@@ -4954,8 +4955,8 @@ public function marketComplaintStateChange(Request $request,$id)
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Opened";
-                    $history->change_from = "QA Head Review";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "Not Applicable";
                     $history->stage='Opened';
                     $history->save();
 
@@ -5389,6 +5390,20 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
 
         $marketComplaint->save();
     return redirect()->route('marketcomplaint.marketcomplaint_view', $id);
+    }
+
+    public function store_audit_review(Request $request, $id)
+    {
+            $history = new AuditReviewersDetails;
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->type = $request->type;
+            $history->reviewer_comment = $request->reviewer_comment;
+            $history->reviewer_comment_by = Auth::user()->name;
+            $history->reviewer_comment_on = Carbon::now()->toDateString();
+            $history->save();
+
+        return redirect()->back();
     }
 }
 
