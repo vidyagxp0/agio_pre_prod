@@ -421,12 +421,20 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="capa_attachment"></div>
+                                        {{-- <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="closure_attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="capa_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'capa_attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                                            </div>
+                                        </div> --}}
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="closure_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="hodfile" name="capa_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
                                             </div>
                                         </div>
                                     </div>
