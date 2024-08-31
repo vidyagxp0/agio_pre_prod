@@ -420,15 +420,7 @@
                                         <label for="CAPA Attachments">CAPA Attachment </label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
-                                        {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
-                                        {{-- <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="closure_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="capa_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
-                                            </div>
-                                        </div> --}}
+                                        
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="closure_attachment"></div>
                                             <div class="add-btn">
@@ -795,13 +787,13 @@
                     <label for="Closure Attachments">HOD Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
-                    {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                   
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="closure_attachment"></div>
+                        <div class="file-attachment-list" id="hod_attachment"></div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input type="file" id="hodfile" name="hod_attachment[]"
-                                oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                            <input type="file" id="hoddfile" name="hod_attachment[]"
+                                oninput="addMultipleFiles(this, 'hod_attachment')" >
                         </div>
                     </div>
                 </div>
@@ -1040,11 +1032,11 @@
                                                 documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="closure_attachment"></div>
+                                            <div class="file-attachment-list" id="closurer_attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="closure_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                                                <input type="file" id="myFile" name="closure_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'closurer_attachment')" multiple>
                                             </div>
                                         </div>
                                     </div>
