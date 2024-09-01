@@ -3590,24 +3590,7 @@ class MarketComplaintController extends Controller
 
                                         if ($marketstat->stage == 2) {
 
-                                            if ($marketstat->form_progress !== 'general-open')
-                                            {
-                                                // dd('emnter');
-                                                Session::flash('swal', [
-                                                    'type' => 'warning',
-                                                    'title' => 'Mandatory Fields!',
-                                                    'message' => 'General Information Tab is yet to be filled'
-                                                ]);
 
-                                                return redirect()->back();
-                                            } else {
-
-                                                Session::flash('swal', [
-                                                    'type' => 'success',
-                                                    'title' => 'Success',
-                                                    'message' => 'Sent for QA/CQA Head review state'
-                                                ]);
-                                            }
 
                                             $marketstat->stage = "3";
                                             $marketstat->status = "Investigation CAPA And Root Cause Analysis";
