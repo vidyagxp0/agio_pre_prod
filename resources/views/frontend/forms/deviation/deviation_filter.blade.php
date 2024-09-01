@@ -18,9 +18,11 @@
             </div>
             <div style="margin-top: 5px;">
                 @if ($dataDemo->activity_type == 'Activity Log')
-                    <strong>Change From :</strong>{{ $dataDemo->change_from ?: 'Null' }}
+                    <strong>Change From
+                        :</strong>{{ $dataDemo->change_from ?: 'Null' }}
                 @else
-                    <strong>Change From :</strong>{{ $dataDemo->previous ?: 'Null' }}
+                    <strong>Change From
+                        :</strong>{{ $dataDemo->previous ?: 'Null' }}
                 @endif
             </div>
             <br>
