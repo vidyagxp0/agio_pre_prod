@@ -1457,12 +1457,15 @@ Designee Approval</div>
 
                                             </div> -->
 
+                                            {{--  <input type="text" id="test1" name="test1" class="form-control" >  --}}
+                                            {{--  <input type="text" id="test2" name="test2" class="form-control" >  --}}
+
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Microbiology-Person">CFT Reviewer Person</label>
-                                                    <select multiple name="cft_reviewer[]"
+                                                    <select multiple name="reviewer_person_value[]"
                                                         placeholder="Select CFT Reviewers" data-search="false"
-                                                        data-silent-initial-value-set="true" id="cft_reviewer"  {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                        data-silent-initial-value-set="true" id="reviewer_person_value"  {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <!-- <option value="">-- Select --</option> -->
                                                         @foreach ($cft as $data1)
                                                             @if (Helpers::checkUserRolesMicrobiology_Person($data1))
@@ -1478,6 +1481,22 @@ Designee Approval</div>
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            {{--  <div class="col-12">
+                                                <div class="group-input">
+                                                    <label for="cft_reviewer">Related Records</label>
+                                                    <select{{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}
+                                                        multiple id="cft_reviewer" name="cft_reviewer[]"
+                                                        placeholder="Select Reference Records" data-search="false"
+                                                        data-silent-initial-value-set="true">
+                                                        @foreach ($pre as $prix)
+                                                            <option value="{{ $prix->id }}" {{ in_array($prix->id, $previousRelated) ? 'selected' : '' }}>
+                                                                {{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>  --}}
 
                                             <!-- <div class="col-lg-6">
                                                 <div class="group-input">
@@ -8278,20 +8297,20 @@ Designee Approval</div>
                                             <label for="qa-eval-attach">HOD Final Review Attachments</label>
                                             <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="hod_final_review_attach">
-    @if (!empty($cc_cfts->hod_final_review_attach))
-        @foreach (json_decode($cc_cfts->hod_final_review_attach) as $file)
-            <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                <b>{{ $file }}</b>
-                <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
-                </a>
-                <a class="remove-file" data-remove-id="hodAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}">
-                    <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
-                </a>
-            </h6>
-        @endforeach
-    @endif
-</div>
+                                                    @if (!empty($cc_cfts->hod_final_review_attach))
+                                                        @foreach (json_decode($cc_cfts->hod_final_review_attach) as $file)
+                                                            <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                </a>
+                                                                <a class="remove-file" data-remove-id="hodAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}">
+                                                                    <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                </a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -9721,7 +9740,7 @@ Designee Approval</div>
 
     <script>
         VirtualSelect.init({
-            ele: '#related_records, #cft_reviewer, #risk_assessment_related_record, #concerned_department_review'
+            ele: '#related_records, #reviewer_person_value, #risk_assessment_related_record, #concerned_department_review'
         });
 
         function openCity(evt, cityName) {

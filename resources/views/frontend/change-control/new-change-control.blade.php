@@ -146,7 +146,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Change Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Activity Log</button>
             </div>
-            <for action="{{ route('CC.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('CC.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- Tab content -->
                 <div id="step-form">
@@ -626,7 +626,7 @@
 
                                         </div>
                                     </div>
-                            </div>
+                            <!-- </div> -->
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -637,44 +637,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div id="CCForm3" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="sub-head">
-                                HOD Assessment
-                            </div>
-                            <div class="group-input">
-                                <label for="qa-eval-comments">HOD Assessment Comments</label>
-                                <textarea name="hod_assessment_comments" readonly></textarea>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="qa-eval-attach">HOD Assessment Attachments</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="hod_assessment_comments"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="hod_assessment_comments[]" disabled
-                                                oninput="addMultipleFiles(this, 'hod_assessment_comments')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                    Exit </a> </button>
-
-                        </div>
-                        </div>
-                </div>
-
-
 
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -874,58 +836,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div id="CCForm16" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="sub-head">
-                            QA/CQA Head/Manager Designee Approval
-                            </div>
-                            <div class="group-input">
-                                <label for="qa-eval-comments">QA/CQA Head/Manager Designee Approval Comments</label>
-                                <textarea name="hod_assessment_comments" readonly></textarea>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="qa-eval-attach">QA/CQA Head/Manager Designee Approval Attachments</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="hod_assessment_comments"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="hod_assessment_comments[]" disabled
-                                                oninput="addMultipleFiles(this, 'hod_assessment_comments')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <!-- </div> -->
-                        <!-- <div class="sub-head">
-                            Training Information
-                        </div>
-                        <div class="group-input">
-                            <label for="nature-change">Training Required</label>
-                            <select name="training_required">
-                                <option value="0">-- Select --</option>
-                                <option value="no">No</option>
-                                <option value="yes">Yes</option>
-                            </select>
-                        </div>
-                        <div class="group-input">
-                            <label for="train-comments">Training Comments</label>
-                            <textarea name="train_comments"></textarea>
-                        </div> -->
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                    Exit </a> </button>
-
-                        </div>
-                    </div>
-    </div>
 
                     <div id="CCForm12" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -3203,8 +3113,8 @@
                         </div>
                     </div>
                     <div id="CCForm14" class="inner-block cctabcontent">
-                            <div class="inner-block-content">
-                                <div class="row">
+                                    <div class="inner-block-content">
+                                        <div class="row">
                                         <div class="sub-head">
                                             QA Final Review
                                         </div>
@@ -3223,7 +3133,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                        </div>
+                                            </div>
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
@@ -3244,18 +3154,19 @@
                                             <textarea name="qa_final_comments" readonly></textarea>
                                         </div>
 
-                                    <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="qa-eval-attach">QA Final Review Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small>
-                                            </div>
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="qa_final_attach"></div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input type="file" id="myfile" name="qa_final_attach[]" disabled
-                                                        oninput="addMultipleFiles(this, 'qa_final_attach')" multiple>
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="qa-eval-attach">QA Final Review Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small>
+                                                </div>
+                                                <div class="file-attachment-field">
+                                                    <div class="file-attachment-list" id="qa_final_attach"></div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input type="file" id="myfile" name="qa_final_attach[]" disabled
+                                                            oninput="addMultipleFiles(this, 'qa_final_attach')" multiple>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -3270,11 +3181,10 @@
                                         </div>
                                     </div>
                                 </div> 
-                        </div>
-                               
+                                <!-- </div>  -->
 
-                        <div id="CCForm15" class="inner-block cctabcontent">
-                            <div class="inner-block-content">
+                                <div id="CCForm15" class="inner-block cctabcontent">
+                                    <div class="inner-block-content">
                                         <div class="sub-head">
                                             RA
                                         </div>
@@ -3285,7 +3195,7 @@
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="RA_feedback" id="summernote-18" readonly></textarea>
                                                     </div>
-                                        </div>
+                                                </div>
 
                                       
                                         <div class="col-lg-12">
@@ -3305,6 +3215,7 @@
                                             </div>
                                         </div>
 
+                                        <!-- </div> -->
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
                                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3314,7 +3225,7 @@
                                             </button>
                                         </div>
                                     </div>
-                            </div>    
+                                </div>    
 
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -3342,6 +3253,21 @@
                                 </div>
                             </div>
                         <!-- </div> -->
+                        <!-- <div class="sub-head">
+                            Training Information
+                        </div>
+                        <div class="group-input">
+                            <label for="nature-change">Training Required</label>
+                            <select name="training_required">
+                                <option value="0">-- Select --</option>
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </div>
+                        <div class="group-input">
+                            <label for="train-comments">Training Comments</label>
+                            <textarea name="train_comments"></textarea>
+                        </div> -->
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3351,86 +3277,7 @@
 
                         </div>
                     </div>
-                </div>
-
-                <div id="CCForm7" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="sub-head">
-                                Initial Update
-                            </div>
-                            <div class="group-input">
-                                <label for="qa-eval-comments">Initial Update Comments</label>
-                                <textarea name="hod_assessment_comments" readonly></textarea>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="qa-eval-attach">Initial Update Attachments</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="hod_assessment_comments"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="hod_assessment_comments[]" disabled
-                                                oninput="addMultipleFiles(this, 'hod_assessment_comments')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <!-- </div> -->
-
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                    Exit </a> </button>
-
-                        </div>
                     </div>
-
-
-
-        </div>
-
-
-        <div id="CCForm6" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="sub-head">
-                                HOD Final Review
-                            </div>
-                            <div class="group-input">
-                                <label for="qa-eval-comments">HOD Final Review Comments</label>
-                                <textarea name="hod_assessment_comments" readonly></textarea>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="qa-eval-attach">HOD Final Review Attachments</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="hod_assessment_comments"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="hod_assessment_comments[]" disabled
-                                                oninput="addMultipleFiles(this, 'hod_assessment_comments')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <!-- </div> -->
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                    Exit </a> </button>
-
-                        </div>
-                    </div>
-</div>
 
                     <div id="CCForm9" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -3487,6 +3334,49 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- <div class="col-12 sub-head">
+                                    Effectiveness Check Details
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="effective-check">Effectivess Check Required?</label>
+                                            <select name="effective_check">
+                                                <option value="0">-- Select --</option>
+                                                <option value="yes">Yes</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="effective-check-date">Effectiveness Check Creation Date</label>
+                                            <div class="calenderauditee">
+                                            <input type="text"  id="effective_check_date"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="effective_check_date" value=""
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'effective_check_date')"/>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Effectiveness_checker">Effectiveness Checker</label>
+                                            <select name="Effectiveness_checker">
+                                                <option value="">Enter Your Selection Here</option>
+                                                @foreach ($users as $data)
+                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="effective_check_plan">Effectiveness Check Plan</label>
+                                            <textarea name="effective_check_plan"></textarea>
+                                        </div>
+                                    </div> --}}
                             <div class="col-12 sub-head">
                                 Extension Justification
                             </div>
@@ -3508,9 +3398,502 @@
 
                         </div>
                     </div>
-            </div>
+                </div>
+</div>
 
-        
+                    <div id="CCForm3" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="sub-head">
+                                HOD Assessment
+                            </div>
+                            <div class="group-input">
+                                <label for="qa-eval-comments">HOD Assessment Comments</label>
+                                <textarea name="hod_assessment_comments" readonly></textarea>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="qa-eval-attach">HOD Assessment Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="hod_assessment_comments"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="hod_assessment_comments[]" disabled
+                                                oninput="addMultipleFiles(this, 'hod_assessment_comments')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+                        <!-- <div class="sub-head">
+                            Training Information
+                        </div>
+                        <div class="group-input">
+                            <label for="nature-change">Training Required</label>
+                            <select name="training_required">
+                                <option value="0">-- Select --</option>
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </div>
+                        <div class="group-input">
+                            <label for="train-comments">Training Comments</label>
+                            <textarea name="train_comments"></textarea>
+                        </div> -->
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+                <div id="CCForm16" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="sub-head">
+                            QA/CQA Head/Manager Designee Approval
+                            </div>
+                            <div class="group-input">
+                                <label for="qa-eval-comments">QA/CQA Head/Manager Designee Approval Comments</label>
+                                <textarea name="hod_assessment_comments" readonly></textarea>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="qa-eval-attach">QA/CQA Head/Manager Designee Approval Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="hod_assessment_comments"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="hod_assessment_comments[]" disabled
+                                                oninput="addMultipleFiles(this, 'hod_assessment_comments')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+                        <!-- <div class="sub-head">
+                            Training Information
+                        </div>
+                        <div class="group-input">
+                            <label for="nature-change">Training Required</label>
+                            <select name="training_required">
+                                <option value="0">-- Select --</option>
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </div>
+                        <div class="group-input">
+                            <label for="train-comments">Training Comments</label>
+                            <textarea name="train_comments"></textarea>
+                        </div> -->
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm6" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="sub-head">
+                                HOD Final Review
+                            </div>
+                            <div class="group-input">
+                                <label for="qa-eval-comments">HOD Final Review Comments</label>
+                                <textarea name="hod_assessment_comments" readonly></textarea>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="qa-eval-attach">HOD Final Review Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="hod_assessment_comments"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="hod_assessment_comments[]" disabled
+                                                oninput="addMultipleFiles(this, 'hod_assessment_comments')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+                        <!-- <div class="sub-head">
+                            Training Information
+                        </div>
+                        <div class="group-input">
+                            <label for="nature-change">Training Required</label>
+                            <select name="training_required">
+                                <option value="0">-- Select --</option>
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </div>
+                        <div class="group-input">
+                            <label for="train-comments">Training Comments</label>
+                            <textarea name="train_comments"></textarea>
+                        </div> -->
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
+                    </div>
+                    </div>
+
+                    <!-- <div id="CCForm6" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="sub-head">
+                                CFT Information
+                            </div>
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Microbiology">CFT Reviewer</label>
+                                        <select name="Microbiology">
+                                            <option value="0" selected>-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Microbiology-Person">CFT Reviewer Person</label>
+                                        <select multiple name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
+                                            data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($cft as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="sub-head">
+                                Concerned Information
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="group_review">Is Concerned Group Review Required?</label>
+                                        <select name="goup_review">
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Production">Production</label>
+                                        <select name="Production">
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Production-Person">Production Person</label>
+                                        <select name="Production_Person">
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Quality-Approver">Quality Approver</label>
+                                        <select name="Quality_Approver">
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Quality-Approver-Person">Quality Approver Person</label>
+                                        <select name="Quality_Approver_Person">
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="bd_domestic">Others</label>
+                                        <select name="bd_domestic">
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="bd_domestic-Person">Others Person</label>
+                                        <select name="Bd_Person">
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="additional attachments">Additional Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="additional_attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="additional_attachments[]"
+                                                    oninput="addMultipleFiles(this, 'additional_attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                        Exit </a> </button>
+
+                            </div>
+                        </div>
+                    </div> -->
+
+                <!-- <div id="" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="sub-head">
+                            Feedback
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="comments">Comments</label>
+                                    <textarea name="cft_comments"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="comments">Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="cft_attchament"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="cft_attchament[]"
+                                                oninput="addMultipleFiles(this, 'cft_attchament')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="sub-head">
+                                Concerned Feedback
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="comments">QA Comments</label>
+                                    <textarea name="qa_commentss"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="comments">QA Head Designee Comments</label>
+                                    <textarea name="designee_comments"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="comments">Warehouse Comments</label>
+                                    <textarea name="Warehouse_comments"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="comments">Engineering Comments</label>
+                                    <textarea name="Engineering_comments"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="comments">Instrumentation Comments</label>
+                                    <textarea name="Instrumentation_comments"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="comments">Validation Comments</label>
+                                    <textarea name="Validation_comments"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="comments">Others Comments</label>
+                                    <textarea name="Others_comments"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="comments">Comments</label>
+                                    <textarea name="Group_comments"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="group-attachments">Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="group_attachments"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="group_attachments[]"
+                                                oninput="addMultipleFiles(this, 'group_attachments')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
+                    </div>
+                </div> -->
+
+                <div id="CCForm7" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="sub-head">
+                                Initial Update
+                            </div>
+                            <div class="group-input">
+                                <label for="qa-eval-comments">Initial Update Comments</label>
+                                <textarea name="hod_assessment_comments" readonly></textarea>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="qa-eval-attach">Initial Update Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="hod_assessment_comments"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="hod_assessment_comments[]" disabled
+                                                oninput="addMultipleFiles(this, 'hod_assessment_comments')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
+                    </div>
+
+
+
+        </div>
+
+
+        <div id="CCForm7" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="sub-head">
+                                Initial Update
+                            </div>
+                            <div class="group-input">
+                                <label for="qa-eval-comments">Initial Update Comments</label>
+                                <textarea name="hod_assessment_comments" readonly></textarea>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="qa-eval-attach">Initial Update Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="hod_assessment_comments"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="hod_assessment_comments[]" disabled
+                                                oninput="addMultipleFiles(this, 'hod_assessment_comments')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
+                    </div>
+
+
+
+        </div>
+
+
+
 
 
 
@@ -3694,6 +4077,7 @@
 
 
 
+    </div
     </form>
 
     </div>

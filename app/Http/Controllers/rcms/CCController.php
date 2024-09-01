@@ -2364,9 +2364,8 @@ class CCController extends Controller
 
     public function show($id)
     {
-
         $data = CC::find($id);
-        $cftReviewerIds = explode(',', $data->cft_reviewer);
+        $cftReviewerIds = explode(',', $data->reviewer_person_value);
         $cc_lid = $data->id;
         $data->originator = User::where('id', $data->initiator_id)->value('name');
         $division = CC::where('c_c_s.id', $id)->leftjoin('q_m_s_divisions', 'q_m_s_divisions.id', 'c_c_s.division_id')->first(['name']);
@@ -2428,8 +2427,7 @@ class CCController extends Controller
 
     public function update(Request $request, $id)
     {
-
-
+        // dd($request->all());
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
         $cc_cfts = CcCft::find($id);
@@ -2440,11 +2438,24 @@ class CCController extends Controller
         $cc_cfts->intial_update_comments = $request->intial_update_comments;
         $cc_cfts->qa_cqa_comments = $request->qa_cqa_comments;
         $cc_cfts->implementation_verification_comments = $request->implementation_verification_comments;
+        $cc_cfts->hod_final_review_comment = $request->hod_final_review_comment;
        
         $Cft->RA_data_person = $request->RA_data_person;
         $Cft->QA_CQA_person = $request->QA_CQA_person;
         $Cft->qa_final_comments = $request->qa_final_comments;
         // $Cft->qa_final_attach = $request->qa_final_attach;
+
+        if (!empty ($request->hod_final_review_attach)) {
+            $files = [];
+            if ($request->hasfile('hod_final_review_attach')) {
+                foreach ($request->file('hod_final_review_attach') as $file) {
+                    $name = $request->name . 'hod_final_review_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->hod_final_review_attach = json_encode($files);
+        }
         $cc_cfts->update();
         if (!empty ($request->qa_final_attach)) {
             $files = [];
@@ -2534,6 +2545,16 @@ $Cft->update();
         $openState->short_description = $request->short_description;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
+        //dd($request->related_records)
+        if ($request->related_records) {
+            $openState->related_records = implode(',', $request->related_records);
+        }
+        $openState->Microbiology = $request->Microbiology;
+        if (is_array($request->reviewer_person_value)) {
+            $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        } else {
+            $openState->reviewer_person_value = $request->reviewer_person_value; // or handle it as you need
+        }
 
         if($openState->stage == 3){
             $initiationDate = Carbon::createFromFormat('Y-m-d', $lastDocument->intiation_date);
@@ -2558,9 +2579,8 @@ $Cft->update();
         $openState->supervisor_comment = $request->supervisor_comment;
         $openState->qa_comments = $request->qa_comments;
 
-        if ($request->related_records) {
-            $openState->related_records = implode(',', $request->related_records);
-        }
+       
+
         // $openState->related_records = implode(',', $request->related_records);
       //  $openState->qa_head = $request->qa_head;
 
@@ -2571,9 +2591,13 @@ $Cft->update();
         // $openState->train_comments = $request->train_comments;
 
         $openState->Microbiology = $request->Microbiology;
-        // $openState->cft_reviewer = implode(',', $request->cft_reviewer);
-        $reviewers = is_array($request->cft_reviewer) ? $request->cft_reviewer : explode(',', $request->cft_reviewer);
-        $openState->cft_reviewer = implode(',', $reviewers);
+        if (is_array($request->reviewer_person_value)) {
+            $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        } else {
+            $openState->reviewer_person_value = $request->reviewer_person_value; // or handle it as you need
+        }
+       // $reviewers = is_array($request->reviewer_person_value) ? $request->reviewer_person_value : explode(',', $request->reviewer_person_value);
+        //$openState->reviewer_person_value = implode(',', $reviewers);
 
 
         $openState->goup_review = $request->goup_review;
@@ -3207,7 +3231,9 @@ $Cft->update();
             $Cft->save();
         }
 
-
+        $Cft1 = CcCft::withoutTrashed()->where('cc_id', $id)->first();
+        $Cft1->RA_feedback = $request->RA_feedback;
+        $Cft1->save();
         if ($openState->stage == 3 || $openState->stage == 4 ){
             $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
             if($Cft && $openState->stage == 4 ){                
@@ -9490,13 +9516,12 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 return back();
             }
             if ($changeControl->stage == 5) {
-                if (is_null($changeControl->RA_person) || is_null($changeControl->RA_person) || is_null($changeControl->RA_person))
+                if (is_null($updateCFT->RA_data_person) || is_null($updateCFT->QA_CQA_person))
                     {
-                        // dd('emnter');
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
-                            'message' => 'General Information Tab is yet to be filled'
+                            'message' => 'QA Final Review Tab is yet to be filled'
                         ]);
 
                         return redirect()->back();
