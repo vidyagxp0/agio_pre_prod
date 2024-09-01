@@ -49,6 +49,10 @@ class OOCController extends Controller
         $data->description_ooc = $request->description_ooc;
         $data->assign_to = $request->assign_to;
         $data->due_date = $request->due_date;
+        $data->record_number = $request->record_number;
+        $data->division_code = $request->division_code;
+
+        // dd($data->record_number);
         $data->Initiator_Group= $request->Initiator_Group;
         $data->intiation_date = $request->intiation_date;
         $data->initiator_group_code= $request->initiator_group_code;
