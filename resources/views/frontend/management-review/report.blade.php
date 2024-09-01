@@ -299,11 +299,12 @@
                     <tr>
                         <th class="w-20">Due Date</th>
                         <td class="w-30">
-                            @if ($managementReview->due_date)
+                            {{-- @if ($managementReview->due_date)
                                 {{ $managementReview->due_date }}
                             @else
                                 Not Applicable
-                            @endif
+                            @endif --}}
+                            {{  Helpers::getdateFormat($managementReview->due_date) ?? 'Not Applicable' }}
                         </td>
                         <th class="w-20">Type</th>
                         <td class="w-30">
@@ -321,19 +322,22 @@
 
                         <th class="w-30"> Schedule Start Date</th>
                         <td class="w-20">
-                            @if ($managementReview->start_date)
+                            {{-- @if ($managementReview->start_date)
                                 {{ $managementReview->start_date }}
                             @else
                                 Not Applicable
-                            @endif
+                            @endif --}}
+                            {{  Helpers::getdateFormat($managementReview->start_date) ?? 'Not Applicable' }}
                         </td>
                         <th class="w-30"> Schedule End Date</th>
                         <td class="w-20">
-                            @if ($managementReview->end_date)
+                            {{-- @if ($managementReview->end_date)
                                 {{ $managementReview->end_date }}
                             @else
                                 Not Applicable
-                            @endif
+                            @endif --}}
+                            {{  Helpers::getdateFormat($managementReview->end_date) ?? 'Not Applicable' }}
+
                         </td>
 
                     </tr>
