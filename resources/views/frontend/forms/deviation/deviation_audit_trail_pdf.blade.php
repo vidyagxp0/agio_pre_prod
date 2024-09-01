@@ -153,7 +153,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Deviation Audit Trial Report
+                    Deviation Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -215,7 +215,7 @@
                         @endphp --}}
 
                 <tbody>
-                    @foreach ($data  as $index => $dataDemo)
+                    @foreach ($data as $index => $dataDemo)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>

@@ -2813,7 +2813,7 @@
                                        
                                             </tr>
                                                 <tr>
-                                            <th class="w-20">Phase IA QA Review Complete By</th>
+                                            <th class="w-20">Phase IA QA/CQA Review Complete By</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->cause_i_completed_by)
@@ -2824,7 +2824,7 @@
                                                 </div>
                                             </td>
 
-                                            <th class="w-20">Phase IA QA Review Complete On</th>
+                                            <th class="w-20">Phase IA QA/CQA Review Complete On</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->cause_i_completed_on)
@@ -2995,7 +2995,7 @@
 
 
                                                 <tr>
-                                            <th class="w-20">Phase IB QA Review Complete By</th>
+                                            <th class="w-20">Phase IB QA/CQA Review Complete By</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->Phase_IB_QA_Review_Complete_12_by)
@@ -3006,7 +3006,7 @@
                                                 </div>
                                             </td>
 
-                                            <th class="w-20">Phase IB QA Review Complete On</th>
+                                            <th class="w-20">Phase IB QA/CQA Review Complete On</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->Phase_IB_QA_Review_Complete_12_on)
@@ -3184,7 +3184,7 @@
 
 
                                             <tr>
-                                            <th class="w-20">Phase II A QA Review Complete By</th>
+                                            <th class="w-20">Phase II A QA/CQA Review Complete By</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->Phase_II_A_QA_Review_Complete_by)
@@ -3195,7 +3195,7 @@
                                                 </div>
                                             </td>
 
-                                            <th class="w-20">Phase II A QA Review Complete On</th>
+                                            <th class="w-20">Phase II A QA/CQA Review Complete On</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->Phase_II_A_QA_Review_Complete_on)
@@ -3375,11 +3375,46 @@
                                             </td>
                                             </tr>
 
+                                            <tr>
+                                            <th class="w-20">QA Head Approval By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_HOD_Review_Complete_by)
+                                                        {{ strip_tags($data->Phase_II_B_HOD_Review_Complete_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">QA Head Approval On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_HOD_Review_Complete_on)
+                                                        {{ strip_tags($data->Phase_II_B_HOD_Review_Complete_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_HOD_Review_Complete_comment)
+                                                        {{ strip_tags($data->Phase_II_B_HOD_Review_Complete_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
 
 
                                             
                                             <tr>
-                                            <th class="w-20">Phase II B QA Review Complete By</th>
+                                            <th class="w-20">Phase II B QA/CQA Review Complete By</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->Phase_II_B_QA_ReviewComplete_by)
@@ -3390,7 +3425,7 @@
                                                 </div>
                                             </td>
 
-                                            <th class="w-20">Phase II B QA Review Complete On</th>
+                                            <th class="w-20">Phase II B QA/CQA Review Complete On</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->Phase_II_B_QA_ReviewComplete_on)

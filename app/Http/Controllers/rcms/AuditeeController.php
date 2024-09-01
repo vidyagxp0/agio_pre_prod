@@ -282,12 +282,12 @@ class AuditeeController extends Controller
         }
         //dd($data4);
         $data4->save();
-        if (!empty($internalAudit->date)) {
+        if (!empty($internalAudit->intiation_date)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Date of Initiator';
             $history->previous = "Null";
-            $history->current = $internalAudit->date;
+            $history->current = Helpers::getdateFormat($internalAudit->intiation_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -317,7 +317,23 @@ class AuditeeController extends Controller
          
             $history->save();
         }
-
+        if (!empty($internalAudit->record)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/EA/" . Helpers::year($internalAudit->created_at) . "/" . str_pad($internalAudit->record, 4, '0', STR_PAD_LEFT);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
         if (!empty($internalAudit->Initiator_Group)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
@@ -335,7 +351,44 @@ class AuditeeController extends Controller
          
             $history->save();
         }
-
+        if(!empty($internalAudit->division_code))
+        {
+          
+    
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Site/Location Code';
+            $history->previous = "Null";
+            $history->current = $internalAudit->division_code;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+         
+            $history->save();
+        }
+        if (!empty($internalAudit->initiator)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = $internalAudit->initiator;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
         if (!empty($internalAudit->short_description)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
@@ -604,7 +657,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Lead Auditor';
             $history->previous = "Null";
-            $history->current = $internalAudit->lead_auditor;
+            $history->current = Helpers::getInitiatorName($internalAudit->lead_auditor);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -622,7 +675,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Audit Team';
             $history->previous = "Null";
-            $history->current = $internalAudit->Audit_team;
+            $history->current = Helpers::getInitiatorName($internalAudit->Audit_team);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -640,7 +693,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Auditee';
             $history->previous = "Null";
-            $history->current = $internalAudit->Auditee;
+            $history->current = Helpers::getInitiatorName($internalAudit->Auditee);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -842,7 +895,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->Reference_Recores1)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Reference Recores';
+            $history->activity_type = 'Reference Records';
             $history->previous = "Null";
             $history->current = $internalAudit->Reference_Recores1;
             $history->comment = "NA";
@@ -968,7 +1021,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->myfile)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Inv Attachment';
+            $history->activity_type =  'Audit Attachments';
             $history->previous = "Null";
             $history->current = $internalAudit->myfile;
             $history->comment = "NA";
@@ -1006,7 +1059,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = $internalAudit->due_date;
+            $history->current = Helpers::getdateFormat($internalAudit->due_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1862,8 +1915,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Lead Auditor';
-            $history->previous = $lastDocument->lead_auditor;
-            $history->current = $internalAudit->lead_auditor;
+            $history->previous = Helpers::getInitiatorName($lastDocument->lead_auditor);
+            $history->current = Helpers::getInitiatorName($internalAudit->lead_auditor);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1884,8 +1937,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Audit Team';
-            $history->previous = $lastDocument->Audit_team;
-            $history->current = $internalAudit->Audit_team;
+            $history->previous =Helpers::getInitiatorName($lastDocument->Audit_team);
+            $history->current = Helpers::getInitiatorName($internalAudit->Audit_team);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1906,8 +1959,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Auditee';
-            $history->previous = $lastDocument->Auditee;
-            $history->current = $internalAudit->Auditee;
+            $history->previous = Helpers::getInitiatorName($lastDocument->Auditee);
+            $history->current = Helpers::getInitiatorName($internalAudit->Auditee);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2586,7 +2639,7 @@ class AuditeeController extends Controller
                         $history->previous = "Not Applicable";
                         $history->action  = "More Information Required";
                         $history->comment = $request->comment;
-                        $history->action  = "More Info Required";
+                        // $history->action  = "More Info Required";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

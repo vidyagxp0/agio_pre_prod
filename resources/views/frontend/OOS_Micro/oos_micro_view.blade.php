@@ -386,7 +386,7 @@
                 <!-- closure_summary -->
                 @include('frontend.OOS_Micro.comps_micro.closure_summary')
                  <!-- oos_extension -->
-                @include('frontend.OOS_Micro.comps_micro.oos_extension') 
+                {{-- @include('frontend.OOS_Micro.comps_micro.oos_extension')  --}}
                 <!-- Signature  -->
                 @include('frontend.OOS_Micro.comps_micro.signature')
         </div>

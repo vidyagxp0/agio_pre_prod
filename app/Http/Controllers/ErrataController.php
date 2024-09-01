@@ -227,6 +227,23 @@ class ErrataController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+          if (!empty($data->otherFieldsUser)) {
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Others';
+            $history->previous = "Null";
+            $history->current = $data->otherFieldsUser;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
 
         if (!empty($data->Observation_on_Page_No)) {
             $history = new ErrataAuditTrail();
@@ -1314,6 +1331,25 @@ class ErrataController extends Controller
             $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
             $history->save();
         }
+        if($lastData->otherFieldsUser !=$data->otherFieldsUser || !empty($request->otherFieldsUser_comment)) {
+            $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
+                            ->where('activity_type', 'Others')
+                            ->exists();
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Others';
+            $history->previous =  $lastData->otherFieldsUser;
+            $history->current = $data->otherFieldsUser;
+            $history->comment = $request->otherFieldsUser_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastData->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastData->status;
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
     if($lastData->Observation_on_Page_No !=$data->Observation_on_Page_No || !empty($request->Observation_on_Page_No_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
                             ->where('activity_type', 'Observation on Page No')
@@ -1614,7 +1650,7 @@ class ErrataController extends Controller
     public function auditTrial($id)
  
        {
-        $audit = ErrataAuditTrail::where('errata_id', $id)->orderByDESC('id')->paginate(200);
+        $audit = ErrataAuditTrail::where('errata_id', $id)->orderByDESC('id')->paginate(5); 
         // dd($audit);
         $today = Carbon::now()->format('d-m-y');
         $document = errata::where('id', $id)->first();
