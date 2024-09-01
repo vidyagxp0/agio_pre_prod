@@ -456,14 +456,17 @@ Designee Approval</div>
                         <div class="cctab">
                             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm7')" style="display: none" id="riskAssessmentButton">Risk Assessment</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Initial HOD Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
+                       
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Initial HOD Review</button>
+                      
                             <button class="cctablinks" onclick="openCity(event, 'CCForm13')" style="display: {{ $data->hod_person == Auth::user()->id ? 'inline' : 'none' }}">HOD Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Review</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm17')">QA/CQA Designee Approval</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CFT</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA Final Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm15')">RA</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm17')">QA/CQA Designee Approval</button>
+                           
                             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Initial Update</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final review</button>
@@ -766,7 +769,7 @@ Designee Approval</div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Risk Assessment Required">Risk Assessment Required? </label>
-                                                    <select name="risk_assessment_required" id="risk_assessment_required">
+                                                    <select name="risk_assessment_required" id="risk_assessment_required" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
                                                         <option @if ($data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
@@ -801,7 +804,7 @@ Designee Approval</div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="hod_person">HOD Person</label>
-                                                    <select name="hod_person" id="hod_person" >
+                                                    <select name="hod_person" id="hod_person" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >
                                                         <option value="">Select HOD Persion</option>
                                                         @if($users)
                                                             @foreach($users as $user)
@@ -839,7 +842,7 @@ Designee Approval</div>
                                              <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="change_related_to">Change Related To</label>
-                                                    <select name="severity" id="change_related_to">
+                                                    <select name="severity" id="change_related_to"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
                                                         <option value="facility" {{ old('severity', $data->severity ?? '') == 'facility' ? 'selected' : '' }}>Facility</option>
@@ -1153,7 +1156,7 @@ Designee Approval</div>
                                         {{-- <div class="group-input">
                                             <label for="qa-eval-attach">HOD Assessment Attachments</label>
                                             <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="hod_assessment_attach">
+                                                <div class="file-attachment-list" id="hod_assessment_attach_9">
                                                     <!-- @if ($Cft->hod_assessment_attach) -->
                                                         @foreach (json_decode(hod_assessment_attach) as $file)
                                                             <h6 type="button" class="file-container text-dark"
@@ -1174,7 +1177,7 @@ Designee Approval</div>
                                                     <div>Add</div>
                                                     <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         type="file" id="myfile" name="hod_assessment_attach[]"
-                                                        oninput="addMultipleFiles(this, 'hod_assessment_attach')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                        oninput="addMultipleFiles(this, 'hod_assessment_attach_9')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                                 </div>
                                             </div>
 
@@ -1191,7 +1194,7 @@ Designee Approval</div>
                                                 <div class="group-input">
                                                     <label for="qa head">HOD Assessment Attachments</label>
                                                     <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="HOD_attachment">
+                                                    <div class="file-attachment-list" id="HOD_attachment_2">
     @if (!empty($cc_cfts->hod_assessment_attachment))
         @foreach (json_decode($cc_cfts->hod_assessment_attachment) as $file)
             <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
@@ -1210,7 +1213,7 @@ Designee Approval</div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input type="file" id="myfile" name="hod_assessment_attachment[]"
-                                                                oninput="addMultipleFiles(this, 'hod_assessment_attachment')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                                oninput="addMultipleFiles(this, 'HOD_attachment_2')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -7967,7 +7970,7 @@ Designee Approval</div>
                                                     @if($data->stage==5) <span class="text-danger">*</span>@endif
                                                     </label>
                                                     <select name="RA_data_person" class="RA_data_person"
-                                                        id="RA_data_person">
+                                                        id="RA_data_person" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $cc_cfts->RA_data_person) selected @endif>
@@ -7982,7 +7985,7 @@ Designee Approval</div>
                                                     <label for="RA notification">QA/CQA Head Approval Person
                                                     @if($data->stage==5) <span class="text-danger">*</span>@endif
                                                     <select name="QA_CQA_person" class="RA_person"
-                                                        id="RA_person">
+                                                        id="RA_person" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $cc_cfts->QA_CQA_person) selected @endif>
@@ -7993,8 +7996,10 @@ Designee Approval</div>
                                             </div>
 
                                         <div class="group-input">
-                                            <label for="qa-eval-comments">QA Final Review Comments</label>
-                                            <textarea name="qa_final_comments" >{{ $cc_cfts->qa_final_comments }}</textarea>
+                                            <label for="qa-eval-comments">QA Final Review Comments
+                                                @if($data->stage==5) <span class="text-danger">*</span>@endif
+                                            </label>
+                                            <textarea name="qa_final_comments"{{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >{{ $cc_cfts->qa_final_comments }}</textarea>
                                         </div>
 
                                         @if ($data1->qa_final_attach)
@@ -8026,7 +8031,7 @@ Designee Approval</div>
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    <input {{$data->stage == 13 || $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         type="file" id="myfile" name="qa_final_attach[]"
                                                         oninput="addMultipleFiles(this, 'qa_final_attach')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                                 </div>
@@ -8069,8 +8074,8 @@ Designee Approval</div>
                                                             documents</small></div>
                                                     <div class="file-attachment-field">
                                                         <div disabled class="file-attachment-list" id="RA_attachment">
-                                                            @if ($data1->RA_attachment)
-                                                                @foreach (json_decode($data1->RA_attachment) as $file)
+                                                            @if ($cc_cfts->RA_attachment_second)
+                                                                @foreach (json_decode($cc_cfts->RA_attachment_second) as $file)
                                                                     <h6 type="button" class="file-container text-dark"
                                                                         style="background-color: rgb(243, 242, 240);">
                                                                         <b>{{ $file }}</b>
@@ -8085,9 +8090,9 @@ Designee Approval</div>
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file"
+                                                            <input {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} type="file"
                                                                 id="myfile"
-                                                                name="RA_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                                name="RA_attachment_second[]"{{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                                 oninput="addMultipleFiles(this, 'RA_attachment')" multiple>
                                                         </div>
                                                     </div>
@@ -8226,7 +8231,7 @@ Designee Approval</div>
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-comments">Initial Update Comments</label>
-                                            <textarea name="intial_update_comments">{{$cc_cfts->intial_update_comments}}</textarea>
+                                            <textarea name="intial_update_comments" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{$cc_cfts->intial_update_comments}}</textarea>
                                         </div>
 
                               
@@ -8282,7 +8287,7 @@ Designee Approval</div>
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-comments">HOD Final Review Comments</label>
-                                            <textarea name="hod_final_review_comment" >{{$cc_cfts->hod_final_review_comment}}</textarea>
+                                            <textarea name="hod_final_review_comment" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >{{$cc_cfts->hod_final_review_comment}}</textarea>
                                         </div>
 
                            

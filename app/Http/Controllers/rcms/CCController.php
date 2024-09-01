@@ -2456,6 +2456,29 @@ class CCController extends Controller
             }
             $Cft->hod_final_review_attach = json_encode($files);
         }
+        // if (!empty ($request->RA_attachments)) {
+        //     $files = [];
+        //     if ($request->hasfile('RA_attachments')) {
+        //         foreach ($request->file('RA_attachments') as $file) {
+        //             $name = $request->name . 'RA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $Cft->RA_attachments = json_encode($files);
+        // }
+
+        if (!empty ($request->RA_attachment_second)) {
+            $files = [];
+            if ($request->hasfile('RA_attachment_second')) {
+                foreach ($request->file('RA_attachment_second') as $file) {
+                    $name = $request->name . 'RA_attachment_second' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $cc_cfts->RA_attachment_second = json_encode($files);
+        }
         $cc_cfts->update();
         if (!empty ($request->qa_final_attach)) {
             $files = [];

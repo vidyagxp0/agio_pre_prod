@@ -130,16 +130,20 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')" style="display: none" id="riskAssessmentButton">Risk Assessment</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Initial HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
+              
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Initial HOD Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Assessment</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm16')">QA/CQA Designee Approval</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA Final Review</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm15')">RA</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm15')">RA</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm16')">QA/CQA Designee Approval</button>
+    
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button>
+            
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Initial Update</button>
+              
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm16')">HOD </button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Implementation Verification</button>
