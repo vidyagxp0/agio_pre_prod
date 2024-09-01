@@ -14,7 +14,6 @@ use App\Models\table_cc_impactassement;
 use App\Models\Docdetail;
 use App\Models\ChangeControlComment;
 use App\Models\CcCft;
-use App\Models\RiskManagement;
 
 use App\Models\Evaluation;
 use App\Models\Extension;
@@ -23,6 +22,7 @@ use App\Models\QaApprovalComments;
 use App\Models\Qareview;
 use App\Models\QMSDivision;
 use App\Models\RiskAssessment;
+use App\Models\RiskManagement;
 use App\Models\RcmDocHistory;
 use App\Models\RiskLevelKeywords;
 use App\Models\RoleGroup;
@@ -128,6 +128,7 @@ class CCController extends Controller
         $openState->severity_level1 = $request->severity_level1;
 
         $openState->parent_id = $request->parent_id;
+        $openState->due_date = $request->due_date;
         $openState->parent_type = $request->parent_type;
         $openState->intiation_date = $request->intiation_date;
         $openState->Initiator_Group = $request->Initiator_Group;
@@ -163,7 +164,7 @@ class CCController extends Controller
         $openState->Quality_Approver = $request->Quality_Approver;
         $openState->Quality_Approver_Person = $request->Quality_Approver_Person;
         $openState->bd_domestic = $request->bd_domestic;
-        $openState->Bd_Person = $request->Bd_Person;
+        // $openState->Bd_Person = $request->Bd_Person;
 
         $openState->cft_comments = $request->cft_comments;
         // $openState->cft_comments = $request->cft_comments;
@@ -2386,7 +2387,7 @@ class CCController extends Controller
         $data1  = ChangeControlComment::where('cc_id', $id)->first();
         // dd($data1);
         
-        $assessment = RiskManagement::where('cc_id', $id)->first();
+        // $assessment = RiskAssessment::where('cc_id', $id)->first();
         $approcomments = QaApprovalComments::where('cc_id', $id)->first();
         $closure = ChangeClosure::where('cc_id', $id)->first();
         $hod = User::get();
@@ -2415,7 +2416,7 @@ class CCController extends Controller
             'cc_cfts',
             'comments',
             'impactassement',
-            'assessment',
+            // 'assessment',
             'approcomments',
             'closure',
             "hod",
@@ -2631,7 +2632,7 @@ $Cft->update();
         $openState->Quality_Approver = $request->Quality_Approver;
         $openState->Quality_Approver_Person = $request->Quality_Approver_Person;
         $openState->bd_domestic = $request->bd_domestic;
-        $openState->Bd_Person = $request->Bd_Person;
+        // $openState->Bd_Person = $request->Bd_Person;
         // $openState->additional_attachments = json_encode($request->additional_attachments);
 
         // $openState->cft_comments = $request->cft_comments;
@@ -4558,8 +4559,7 @@ $Cft->update();
         $areCftAttachSame = $lastcomments->cft_attchament == $comments->cft_attchament;
         $comments->update();
 
-        $lastassessment = RiskManagement::where('cc_id', $id)->first();
-        $assessment = RiskManagement::where('cc_id', $id)->first();
+        $assessment = RiskAssessment::where('cc_id', $id)->first();
         $assessment->cc_id = $openState->id;
         $assessment->risk_identification = $request->risk_identification;
         $assessment->severity = $request->severity;
@@ -12179,7 +12179,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $evaluation = Evaluation::where('cc_id', $data->id)->first();
             $info = AdditionalInformation::where('cc_id', $data->id)->first();
             $comments = GroupComments::where('cc_id', $data->id)->first();
-            $assessment = RiskManagement::where('cc_id', $data->id)->first();
+            $assessment = RiskAssessment::where('cc_id', $data->id)->first();
             $approcomments = QaApprovalComments::where('cc_id', $data->id)->first();
             $closure = ChangeClosure::where('cc_id', $data->id)->first();
             $json_decode = Docdetail::where(['cc_id' => $data->id, 'identifier' =>'AffectedDocDetail'])->first();
