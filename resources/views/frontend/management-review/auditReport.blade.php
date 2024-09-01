@@ -168,7 +168,7 @@
                     <strong> Management Review No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($doc->division_id) }}/ MM
+                    {{ Helpers::getDivisionName($doc->division_id) }}/ MR
                     /{{ Helpers::year($doc->created_at) }}/
                     {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
@@ -292,9 +292,13 @@
                             <td>
                                 <div><strong>Performed By :</strong>
                                     {{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}</div>
-                                <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d/m/Y H:i:s') : 'Not Applicable' }}
-                                </div>
+                                    {{-- <div style="margin-top: 5px;"> <strong>Performed On
+                                            :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d/m/Y H:i:s') : 'Not Applicable' }}
+                                    </div> --}}
+                                    <div style="margin-top: 5px;">
+                                        <strong>Performed On :</strong>
+                                        {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
+                                    </div>
                                 <div style="margin-top: 5px;"><strong>Comments :</strong>
                                     {{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
                             </td>
