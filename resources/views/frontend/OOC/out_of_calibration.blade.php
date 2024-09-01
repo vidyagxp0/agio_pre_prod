@@ -248,6 +248,25 @@ $users = DB::table('users')->get();
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
                                         <select name="Initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
+                                            <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
+                                            <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
+                                            <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
+                                            <option value="CQC" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
+                                            <option value="PSG" @if(old('Initiator_Group') =="PSG") selected @endif>Plasma Sourcing Group</option>
+                                            <option value="CS"  @if(old('Initiator_Group') == "CS") selected @endif>Central Stores</option>
+                                            <option value="ITG" @if(old('Initiator_Group') =="ITG") selected @endif>Information Technology Group</option>
+                                            <option value="MM"  @if(old('Initiator_Group') == "MM") selected @endif>Molecular Medicine</option>
+                                            <option value="CL"  @if(old('Initiator_Group') == "CL") selected @endif>Central Laboratory</option>
+
+                                            <option value="TT"  @if(old('Initiator_Group') == "TT") selected @endif>Tech team</option>
+                                            <option value="QA"  @if(old('Initiator_Group') == "QA") selected @endif> Quality Assurance</option>
+                                            <option value="QM"  @if(old('Initiator_Group') == "QM") selected @endif>Quality Management</option>
+                                            <option value="IA"  @if(old('Initiator_Group') == "IA") selected @endif>IT Administration</option>
+                                            <option value="ACC"  @if(old('Initiator_Group') == "ACC") selected @endif>Accounting</option>
+                                            <option value="LOG"  @if(old('Initiator_Group') == "LOG") selected @endif>Logistics</option>
+                                            <option value="SM"  @if(old('Initiator_Group') == "SM") selected @endif>Senior Management</option>
+                                            <option value="BA"  @if(old('Initiator_Group') == "BA") selected @endif>Business Administration</option>
+
                                         </select>
                                     </div>
                                 </div>
