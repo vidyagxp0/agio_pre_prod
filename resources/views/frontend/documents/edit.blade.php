@@ -1695,7 +1695,7 @@
 
                 <div id="doc-content" class="tabcontent">
                     <div class="orig-head">
-                        Standard Operating Procedure
+                    Document Information
                     </div>
                     <div class="input-fields">
                         <div class="row">
