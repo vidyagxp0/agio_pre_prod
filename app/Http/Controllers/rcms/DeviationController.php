@@ -6230,26 +6230,20 @@ class DeviationController extends Controller
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
              if ($deviation->stage == 2) {
-                  
-
-                  
-
+                
                     $deviation->stage = "1";
                     $deviation->status = "Opened";
-                    $deviation->qa_more_info_required_by = Auth::user()->name;
-                    $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                    $deviation->qa_more_info_required_by = 'Not Applicable';
+                    $deviation->qa_more_info_required_on = 'Not Applicable';
                     // $deviation->pending_Cancel_comment = $request->comment;
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                    $history->activity_type = 'More Information Required By, More Information Required On';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == ''){
-                        $history->previous = "";
-                    }else{
-                        $history->previous = $lastDocument->qa_more_info_required_by. ' ,' . $lastDocument->qa_more_info_required_on;
-                    }
+                    $history->previous = 'Not Applicable';
+                    $history->activity_type = 'Not Applicable';
+                
                     $history->action='More Information Required';
-                    $history->current = $deviation->qa_more_info_required_by. ',' . $deviation->qa_more_info_required_on;
+                    $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -6258,206 +6252,142 @@ class DeviationController extends Controller
                     $history->change_to =   "Opened";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
-                    {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
                     $history->save();
                     $deviation->update();
                     return back();
                 }
-           if ($deviation->stage == 3) {
-                  
-
-                  
-
+        if ($deviation->stage == 3) {
+                
                     $deviation->stage = "2";
                     $deviation->status = "HOD Review";
-                    $deviation->qa_more_info_required_by = Auth::user()->name;
-                    $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                    $deviation->qa_more_info_required_by = 'Not Applicable';
+                    $deviation->qa_more_info_required_on = 'Not Applicable';
                     // $deviation->pending_Cancel_comment = $request->comment;
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                    $history->activity_type = 'More Information Required By, More Information Required On';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == ''){
-                        $history->previous = "";
-                    }else{
-                        $history->previous = $lastDocument->qa_more_info_required_by. ' ,' . $lastDocument->qa_more_info_required_on;
-                    }
+                    $history->previous = 'Not Applicable';
+                    $history->activity_type = 'Not Applicable';
+                
                     $history->action='More Information Required';
-                    $history->current = $deviation->qa_more_info_required_by. ',' . $deviation->qa_more_info_required_on;
+                    $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "HOD Review";
+                    $history->change_to =   "Opened";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
-                    {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
                     $history->save();
                     $deviation->update();
                     return back();
                 }
-             if ($deviation->stage == 4) {
-                  
-
-                  
-
+           if ($deviation->stage == 4) {
+                
                     $deviation->stage = "3";
                     $deviation->status = "QA/CQA Initial Assessment";
-                    $deviation->qa_more_info_required_by = Auth::user()->name;
-                    $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                    $deviation->qa_more_info_required_by = 'Not Applicable';
+                    $deviation->qa_more_info_required_on = 'Not Applicable';
                     // $deviation->pending_Cancel_comment = $request->comment;
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                    $history->activity_type = 'More Information Required By, More Information Required On';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == ''){
-                        $history->previous = "";
-                    }else{
-                        $history->previous = $lastDocument->qa_more_info_required_by. ' ,' . $lastDocument->qa_more_info_required_on;
-                    }
+                    $history->previous = 'Not Applicable';
+                    $history->activity_type = 'Not Applicable';
+                
                     $history->action='More Information Required';
-                    $history->current = $deviation->qa_more_info_required_by. ',' . $deviation->qa_more_info_required_on;
+                    $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA/CQA Initial Assessment";
+                    $history->change_to =   "Opened";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
-                    {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
                     $history->save();
                     $deviation->update();
                     return back();
                 }
-                 if ($deviation->stage == 5) {
+               if ($deviation->stage == 5) {
                 
-
                     $deviation->stage = "4";
                     $deviation->status = "CFT Review";
-                    $deviation->qa_more_info_required_by = Auth::user()->name;
-                    $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                    $deviation->qa_more_info_required_by = 'Not Applicable';
+                    $deviation->qa_more_info_required_on = 'Not Applicable';
                     // $deviation->pending_Cancel_comment = $request->comment;
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                    $history->activity_type = 'More Information Required By, More Information Required On';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == ''){
-                        $history->previous = "";
-                    }else{
-                        $history->previous = $lastDocument->qa_more_info_required_by. ' ,' . $lastDocument->qa_more_info_required_on;
-                    }
+                    $history->previous = 'Not Applicable';
+                    $history->activity_type = 'Not Applicable';
+                
                     $history->action='More Information Required';
-                    $history->current = $deviation->qa_more_info_required_by. ',' . $deviation->qa_more_info_required_on;
+                    $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "CFT Review";
+                    $history->change_to =   "Opened";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
-                    {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
                     $history->save();
                     $deviation->update();
                     return back();
                 }
 
-                  if ($deviation->stage == 6) {
-                  
-
-                  
-
+                 if ($deviation->stage == 6) {
+                
                     $deviation->stage = "5";
                     $deviation->status = "QA/CQA Final Assessment";
-                    $deviation->qa_more_info_required_by = Auth::user()->name;
-                    $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                    $deviation->qa_more_info_required_by = 'Not Applicable';
+                    $deviation->qa_more_info_required_on = 'Not Applicable';
                     // $deviation->pending_Cancel_comment = $request->comment;
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                    $history->activity_type = 'More Information Required By, More Information Required On';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == ''){
-                        $history->previous = "";
-                    }else{
-                        $history->previous = $lastDocument->qa_more_info_required_by. ' ,' . $lastDocument->qa_more_info_required_on;
-                    }
+                    $history->previous = 'Not Applicable';
+                    $history->activity_type = 'Not Applicable';
+                
                     $history->action='More Information Required';
-                    $history->current = $deviation->qa_more_info_required_by. ',' . $deviation->qa_more_info_required_on;
+                    $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA/CQA Final Assessment";
+                    $history->change_to =   "Opened";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
-                    {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
                     $history->save();
                     $deviation->update();
                     return back();
                 }
-             if ($deviation->stage == 8) {
-                  
-
-                  
-
+            if ($deviation->stage == 8) {
+                
                     $deviation->stage = "7";
                     $deviation->status = "Pending Initiator Update";
-                    $deviation->qa_more_info_required_by = Auth::user()->name;
-                    $deviation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                    $deviation->qa_more_info_required_by = 'Not Applicable';
+                    $deviation->qa_more_info_required_on = 'Not Applicable';
                     // $deviation->pending_Cancel_comment = $request->comment;
 
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
-                    $history->activity_type = 'More Information Required By, More Information Required On';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == ''){
-                        $history->previous = "";
-                    }else{
-                        $history->previous = $lastDocument->qa_more_info_required_by. ' ,' . $lastDocument->qa_more_info_required_on;
-                    }
+                    $history->previous = 'Not Applicable';
+                    $history->activity_type = 'Not Applicable';
+                
                     $history->action='More Information Required';
-                    $history->current = $deviation->qa_more_info_required_by. ',' . $deviation->qa_more_info_required_on;
+                    $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Pending Initiator Update";
+                    $history->change_to =   "Opened";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
-                    if(is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_on == '')
-                    {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
                     $history->save();
                     $deviation->update();
                     return back();
