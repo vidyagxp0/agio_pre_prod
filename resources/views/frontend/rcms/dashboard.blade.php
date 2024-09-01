@@ -195,9 +195,6 @@
                             </div>
                             <div class="item-btn" onclick="window.print()">Print</div>
                         </div>
-
-
-
                         <div class="main-scope-table table-container">
                         <div class="main-scope-table table-container">
                             <table class="table table-bordered" id="auditTable">
@@ -223,6 +220,31 @@
 
                                     @endphp
                                     @foreach (collect($tables->data)->sortByDesc('date_open') as $datas)
+                                    @php
+                                        $userRoles = DB::table('user_roles')
+                                            ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $datas->division_id])
+                                            ->pluck('q_m_s_roles_id')
+                                            ->toArray();
+
+                                        $stagesToHide = [
+                                            'Closed-Cancelled', 
+                                            'Closed - Cancelled', 
+                                            'Closed - Done', 
+                                            'Closed Done', 
+                                            'Closed-Reject', 
+                                            'Closed - Rejected', 
+                                            'Closed – Effective', 
+                                            'Closed – Not Effective'
+                                        ];
+
+                                        // Check if the stage is in the stagesToHide array
+                                        $hideRecord = in_array($datas->stage, $stagesToHide);
+
+                                        // Check if the user has one of the allowed roles
+                                        $userHasAllowedRole = in_array(1, $userRoles);
+                                    @endphp
+
+                                    @if(!$hideRecord || $userHasAllowedRole)
                                         <tr>
                                             <td>
                                                 @if ($datas->type == 'Change-Control')
@@ -664,6 +686,7 @@
                                             </td>
 
                                         </tr>
+                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>
