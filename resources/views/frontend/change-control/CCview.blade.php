@@ -460,7 +460,7 @@ Designee Approval</div>
                        
                             <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Initial HOD Review</button>
                       
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm13')" style="display: {{ $data->hod_person == Auth::user()->id ? 'inline' : 'none' }}">HOD Review</button>
+                            {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')" style="display: {{ $data->hod_person == Auth::user()->id ? 'inline' : 'none' }}">HOD Review</button> --}}
                             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CFT</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA Final Review</button>
@@ -1294,7 +1294,7 @@ Designee Approval</div>
                                     </div>
                                 </div>
 
-                                <div id="CCForm13" class="inner-block cctabcontent">
+                                {{-- <div id="CCForm13" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -1436,7 +1436,16 @@ Designee Approval</div>
                                             </button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
+                                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                <script>
+                                    $(document).ready(function() {
+                                        // Event listener for the remove file button
+                                        $(document).on('click', '.remove-file', function() {
+                                            $(this).closest('.file-container').remove();
+                                        });
+                                    });
+                                </script>
 
                                 <div id="CCForm3" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
