@@ -292,7 +292,7 @@
                                             <div class="group-input">
                                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                                 <input disabled type="text" name="record_number"
-                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}"></div>
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}"></div>
                                         </div>
 
                                         <div class="col-lg-6">
