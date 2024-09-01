@@ -61,8 +61,8 @@
                                             <label for="document_type_id">Document Type</label>
                                             <select name="document_type_id" class="filterSelect">
                                                 <option value="">All</option>
-                                                @foreach ($documentTypes as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}
+                                                @foreach ( Helpers::getDocumentTypes() as $code => $name)
+                                                <option value="{{ $code }}"> {{ $name }}
                                                 </option>
                                                 @endforeach
                                             </select>

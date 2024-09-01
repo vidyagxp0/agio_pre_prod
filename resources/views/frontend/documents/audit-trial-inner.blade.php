@@ -48,7 +48,7 @@
                             <div class="list-item">
                                 <div class="head">Modified On</div>
                                 <div>:</div>
-                                <div>{{ $temp->created_at }}</div>
+                                <div>{{ \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y h:i A') }}</div>
                             </div>
                             @if($temp->comment)
                             <div class="list-item">
