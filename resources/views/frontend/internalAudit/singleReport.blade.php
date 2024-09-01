@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                    <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                    <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -176,7 +176,7 @@
                     <strong>Internal Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/IA{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/IA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -192,17 +192,17 @@
                     General Information
                 </div>
                 <table>
+                    <tr>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">@if($data->record){{ Helpers::divisionNameForQMS($data->division_id) }}/IA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                    </tr>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
                         <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Record Number</th>
-                        <td class="w-30">@if($data->record){{ $data->record }} @else Not Applicable @endif</td>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -555,6 +555,155 @@
                 </div>
             </div>
 
+                        @php
+                            $questions_packing = [
+                                "Is access to the facility restricted?",
+                                "Is the dispensing area cleaned as per SOP?",
+                                "Check the status label of area and equipment.",
+                                "Are all raw materials carry proper label?",
+                                "Standard operating procedure for dispensing of raw material is displayed?",
+                                "All the person involve in dispensing having proper gowning?",
+                                "Where you keep the materials after dispensing?",
+                                "Is there any log book for keeping the record of dispensing?",
+                                "Have you any standard practice to cross check the approved status of raw materials before dispensing?",
+                                "Are all balances calibrated which are to be use for dispensing?",
+                                "Is the pressure differential of RLAF is within acceptance limit? What is the limit? _______",
+                                "Is the pressure differential of the area is within acceptance limit? Check the pressure differential__________",
+                                "Is there any record for room temperature & relative humidity? Check the temperature _____°C & RH _____%"
+                            ];
+
+                            $questions_documentation = [
+                                "Is status labels displayed on all equipments?",
+                                "Is the dispensing area cleaned as per SOP?",
+                                "Check the status label of area and equipment.",
+                                "Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?",
+                                "Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?",
+                                "Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?",
+                                "Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance",
+                                "Are there written instructions describing how to use in-process data to control the process?",
+                                "Are all piece of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book",
+                                "Is equipment inspected immediately prior to use?",
+                                "Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?",
+                                "Has a written schedule been established and is it followed for cleaning of equipment?",
+                                "Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?",
+                                "Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for few equipments.",
+                                "Is equipment cleaned promptly after use?",
+                                "Is there proper storage of cleaned equipment so as to prevent contamination?",
+                                "Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?",
+                                "Is sewage, trash and other reuse disposed off in a safe and sanitary manner ( and with sufficient frequency)",
+                                "Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.",
+                                "Are all weighing and measuring performed by one qualified person and checked by a second person Check the weighing balance record.",
+                                "Are the sieves & screen kept in proper place with proper label?",
+                                "Is the pressure differential of every particular area are within limit?",
+                                "All the person working in granulation area having proper gowning?",
+                                "Is Inventory record of sieve, screen, rubber sleeve, FBD bag, etc. maintained?",
+                                "Check the FBD bags for three products, and their utilization records.",
+                                "Have you any SOP regarding Hold time of material during staging?",
+                                "Is there a written procedure specifying the frequency of inspection and replacement for air filters?",
+                                "Are written operating procedures available for each equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.",
+                                "Does each equipment have written instructions for maintenance that includes a schedule for maintenance?",
+                                "Does the process control address all issues to ensure identity, strength, quality and purity of product?",
+                                "Check the calibration labels for instrument calibration status.",
+                                "Temperature & RH record log book is available for each staging area.",
+                                "Check for area activity record.",
+                                "Check for equipment usage record.",
+                                "Check for general equipment details and accessory details.",
+                                "Check for man & material movement in the area.",
+                                "Air handling system qualification , cleaning details and PAO test reports.",
+                                "Check for purified water hose pipe status and water hold up.",
+                                "Check for the status labeling in the area and material randomly.",
+                                "Check the in-process equipments cleaning status & records.",
+                                "Are any unplanned process changes (process excursions) documented in the batch record?",
+                                "If the product is blended, are there blending parameters and/or homogeneity specifications?",
+                                "Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?",
+                                "Is there is an preventive maintenance program for all equipment and status of it."
+                                ];
+
+                                $questions_documentation_table = [
+                                "Do records have doer & checker signatures? Check the timings, date and yield etc. in the batch manufacturing record.",
+                                "Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.",
+                                "Is the batch record is on line up to the current stage of a process?",
+                                "In process carried out as per the written instruction describe in batch record?",
+                                "Is there any area cleaning record available?",
+                                "Current version of SOP’s is available in respective areas?",
+                                ];
+                        @endphp
+
+                                                
+                                <div class="inner-block">
+                                    <div class="content-table">
+                                        <!-- <div class="border-table"> -->
+                                            <div class="block-head">
+                                                Checklist - Tablet Dispensing & Granulation
+                                            </div>
+                                            <div>
+                                                @php
+                                                    $checklists = [
+                                                        [
+                                                            'title' => 'Checklist for Tablet Dispensing',
+                                                            'questions' => $questions_packing,
+                                                            'prefix' => 1
+                                                        ],
+                                                        [
+                                                            'title' => 'Checklist for INJECTION MANUFACTURING / FILTERATION / FILLING /VISUAL INSPECTION',
+                                                            'questions' => $questions_documentation,
+                                                            'prefix' => 2
+                                                        ],
+                                                        [
+                                                            'title' => 'Checklist for Documentation Table',
+                                                            'questions' => $questions_documentation_table,
+                                                            'prefix' => 3
+                                                        ]
+                                                    ];
+                                                @endphp
+
+                                                @foreach ($checklists as $checklist)
+                                                    <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                        {{ $checklist['title'] }}
+                                                    </div>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 5%;">Sr. No.</th>
+                                                                <th style="width: 40%;">Question</th>
+                                                                <th style="width: 20%;">Response</th>
+                                                                <th>Remarks</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($checklist['questions'] as $index => $question)
+                                                                @php
+                                                                    $response = $data->{"response_" . ($index + 1)};
+                                                                    $remark = $data->{"remark_" . ($index + 1)};
+                                                                @endphp
+
+                                                                <!-- Check if either response or remark is not empty -->
+                                                                @if($response || $remark)
+                                                                    <tr>
+                                                                        <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                        <td>{{ $question }}</td>
+                                                                        <td>
+                                                                            <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                                {{ $response }}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="vertical-align: middle;">
+                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                {{ $remark }}
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endif
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                @endforeach
+                                            </div>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                                           
+
 
 
             
@@ -566,60 +715,99 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Audit Schedule By</th>
+                        <th class="w-20">Schedule Audit By</th>
                         <td class="w-30">{{ $data->audit_schedule_by }}</td>
-                        <th class="w-20">Audit Schedule On</th>
+                        <th class="w-20">Schedule Audit On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_schedule_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->sheduled_audit_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_1_by }}</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_1_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->cancel_1_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Acknowledement by</th>
+                        <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
+                        <th class="w-20">Acknowledement On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->acknowledge_commnet }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Info Required by</th>
+                        <td class="w-30">{{ $data->more_info_2_by }}</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->more_info_2_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->more_info_2_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_2_by }}</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_2_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->cancel_2_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Issue Report By</th>
+                        <td class="w-30">{{ $data->audit_mgr_more_info_reqd_by }}</td>
+                        <th class="w-20">Issue Report On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->issue_report_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Info Required By
+                        </th>
+                        <td class="w-30">{{ $data->more_info_3_by }}</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->more_info_3_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->more_info_3_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancelled By</th>
                         <td class="w-30">{{ $data->cancelled_by }}</td>
                         <th class="w-20">Cancelled On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->cancel_3_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Audit preparation completed by</th>
-                        <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
-                        <th class="w-20">Audit preparation completed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Audit preparation completed by</th>
-                        <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
-                        <th class="w-20">Audit preparation completed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">More Information Required By</th>
-                        <td class="w-30">{{ $data->audit_mgr_more_info_reqd_by }}</td>
-                        <th class="w-20">More Information Required On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Audit Observation Submitted By</th>
+                        <th class="w-20">CAPA Plan Proposed By</th>
                         <td class="w-30">{{ $data->audit_observation_submitted_by }}</td>
-                        <th class="w-20">Supervisor Reviewed On(QA)</th>
+                        <th class="w-20">
+                            CAPA Plan Proposed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_observation_submitted_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->capa_plan_comment }}</td>
+                    
                     </tr>
                     <tr>
-                        <th class="w-20">Audit Lead More Info Reqd By
-                        </th>
-                        <td class="w-30">{{ $data->audit_lead_more_info_reqd_by }}</td>
-                        <th class="w-20">More Information Req. On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_lead_more_info_reqd_on) }}</td>
+                        <th class="w-20">No CAPAs Required By</th>
+                        <td class="w-30">{{ $data->no_capa_plan_by }}</td>
+                        <th class="w-20">
+                            No CAPAs Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->no_capa_plan_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->no_capa_plan_required_comment }}</td>
+                    
                     </tr>
                     <tr>
-                        <th class="w-20">Audit Response Completed By</th>
-                        <td class="w-30">{{ $data->audit_response_completed_by }}</td>
-                        <th class="w-20">QA Review Completed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_response_completed_on) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Response Feedback Verified By</th>
+                        <th class="w-20">Response Reviewed By</th>
                         <td class="w-30">{{ $data->response_feedback_verified_by }}</td>
                         <th class="w-20">
-                            Response Feedback Verified On</th>
+                            Response Reviewed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->response_feedback_verified_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->response_reviewd_comment }}</td>
+                    
                     </tr>
 
 

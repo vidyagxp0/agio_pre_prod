@@ -2,6 +2,7 @@
 @section('rcms_container')
     @php
         $users = DB::table('users')->select('id', 'name')->get();
+       
     @endphp
 
     <style>
@@ -66,31 +67,50 @@
     <script>
         $(document).ready(function() {
             let affectedDocumentDetailIndex = {{ $affetctedDocumnetGrid && is_array($affetctedDocumnetGrid) ? count($affetctedDocumnetGrid) : 1 }};
-            $('#addAffectedDoc').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
-                        ' <td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][afftectedDoc]"></td>' +
-                        ' <td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][documentName]"></td>' +
-                        '<td><input type="number" name="affectedDocuments[' + affectedDocumentDetailIndex + '][documentNumber]"></td>' +
-                        '<td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][versionNumber]"></td>' +
-                        ' <td><input type="date" name="affectedDocuments[' + affectedDocumentDetailIndex + '][implimentationDate]"></td>' +
-                        '<td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][newDocumentNumber]"></td>' +
-                        '<td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][newVersionNumber]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-
-                        '</tr>';
+    
+            // Function to generate table row
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][serial]" value="' + serialNumber + '"></td>' +
+                    '<td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][afftectedDoc]"></td>' +
+                    '<td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][documentName]"></td>' +
+                    '<td><input type="number" name="affectedDocuments[' + affectedDocumentDetailIndex + '][documentNumber]"></td>' +
+                    '<td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][versionNumber]"></td>' +
+                    '<td><input type="date" name="affectedDocuments[' + affectedDocumentDetailIndex + '][implimentationDate]"></td>' +
+                    '<td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][newDocumentNumber]"></td>' +
+                    '<td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][newVersionNumber]"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                     '</tr>';
-                    affectedDocumentDetailIndex++;
-                    return html;
-                }
-
+                affectedDocumentDetailIndex++;
+                return html;
+            }
+    
+            // Add row on button click
+            $('#addAffectedDoc').click(function(e) {
                 var tableBody = $('#afftectedDocTable tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
             });
+    
+            // Remove row on button click
+            $(document).on('click', '.removeRowBtn', function() {
+                $(this).closest('tr').remove();
+                updateTableIndexing();
+            });
+    
+            // Update the indexing of the table rows after adding/removing a row
+            function updateTableIndexing() {
+                $('#afftectedDocTable tbody tr').each(function(index, element) {
+                    $(element).find('input[name^="affectedDocuments["]').each(function() {
+                        var name = $(this).attr('name');
+                        var updatedName = name.replace(/\[\d+\]/, '[' + index + ']');
+                        $(this).attr('name', updatedName);
+                    });
+                    $(element).find('input[name$="[serial]"]').val(index + 1);
+                });
+            }
         });
     </script>
     <div id="rcms_form-head">
@@ -119,26 +139,71 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
+
                         @php
-                            $userRoles = DB::table('user_roles')
-                                ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
-                                ->get();
-                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                        @endphp
+                        $userRoles = DB::table('user_roles')
+                            ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
+                            ->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                        $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
+                        $cftUsers = DB::table('cc_cfts')
+                            ->where(['cc_id' => $data->id])
+                            ->first();
+
+                        // Define the column names
+                        $columns = [
+                            'Production_Table_Person',
+                            'Production_Injection_Person',
+                            'ResearchDevelopment_person',
+                            'Store_person',
+                            'Quality_Control_Person',
+                            'QualityAssurance_person',
+                            'RegulatoryAffair_person',
+                            'ProductionLiquid_person',
+                            'Microbiology_person',
+                            'Engineering_person',
+                            'ContractGiver_person',
+                            'Environment_Health_Safety_person',
+                            'Human_Resource_person',
+                            'CorporateQualityAssurance_person',
+                        ];
+
+                        // Initialize an array to store the values
+                        $valuesArray = [];
+
+                        // Iterate over the columns and retrieve the values
+                        foreach ($columns as $column) {
+                            $value = $cftUsers->$column;
+                            // Check if the value is not null and not equal to 0
+                            if ($value !== null && $value != 0) {
+                                $valuesArray[] = $value;
+                            }
+                        }
+                        $cftCompleteUser = DB::table('change_control_cft_responses')
+                            ->whereIn('status', ['In-progress', 'Completed'])
+                            ->where('cc_id', $data->id)
+                            ->where('cft_user_id', Auth::user()->id)
+                            ->whereNull('deleted_at')
+                            ->first();
+                        // dd($cftCompleteUser);
+                    @endphp
+
+
+                      
 
                         <!-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button>
                         <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button> -->
 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/audit-trial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Change Control', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>  --}}
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Change Control', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -148,7 +213,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 &&  Helpers::check_roles($data->division_id, 'Change Control', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -158,17 +223,31 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
+                        {{--  @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT Assessment Complete
                                 
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
-                            </button>
-                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            </button>  --}}
+
+                            @elseif(
+                                ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Change Control', 5)) ||
+                                in_array(Auth::user()->id, $valuesArray))
+                            <!-- @if (!$cftCompleteUser) -->
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                        CFT Assessment Complete
+                                        
+                                    </button>
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                        More Information Required
+                                    </button>
+                                                            <!--
+                                    @endif -->
+                            @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Change Control', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                RA Review Required
+                                RA Approval Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#opened-state-modal">
                                 Send to Initiator
@@ -185,21 +264,23 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval">
                                 QA/CQA Final Review Complete
                             </button>
-                        @elseif($data->stage == 6 && (in_array(18, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Change Control', 18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 RA Approval Complete
                             </button>
-                        @elseif($data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                        @elseif($data->stage == 7 && Helpers::check_roles($data->division_id, 'Change Control', 39))
+                            
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Approved
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval">
                                 Rejected
                             </button>
-                        @elseif ($data->stage == 9 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif ($data->stage == 9 && Helpers::check_roles($data->division_id, 'Change Control', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Initiator Updated Completed
                             </button>
@@ -210,7 +291,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-stage_8">
                                 Child
                             </button>
-                        @elseif ($data->stage == 10 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif ($data->stage == 10 && Helpers::check_roles($data->division_id, 'Change Control', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 HOD Final Review Complete
                             </button>
@@ -222,7 +303,7 @@
 
                            
 
-                        @elseif ($data->stage == 11 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif ($data->stage == 11 && Helpers::check_roles($data->division_id, 'Change Control', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Send For Final QA/CQA Head Approval
                             </button>
@@ -230,7 +311,7 @@
                                 More Information Required
                             </button>    
 
-                            @elseif ($data->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                            @elseif ($data->stage == 12 && Helpers::check_roles($data->division_id, 'Change Control', 39))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Closure Approved
                             </button>
@@ -238,7 +319,7 @@
                                 More Information Required
                             </button> 
                             
-                            @elseif ($data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                            @elseif ($data->stage == 13 && Helpers::check_roles($data->division_id, 'Change Control', 39))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child_effective_ness">
                                 Child
                             </button>
@@ -468,7 +549,6 @@ Designee Approval</div>
                                                 </div>
                                             </div> -->
 
-                                            
                                             <div class="col-md-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -479,41 +559,47 @@ Designee Approval</div>
                                                                 min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
                                                                 oninput="handleDateInput(this, 'due_date')" />
                                                         @else
-                                                            <input type="text" placeholder="Due Date" readonly>
+                                                            <input type="text" id="due_date" readonly placeholder="Due Date not available">
                                                         @endif
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            
                                             <script>
-                                                // Format the due date to DD-MM-YYYY
-                                                // Your input date
-                                                var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
-
-                                                // Create a Date object
-                                                var date = new Date(dueDate);
-
-                                                // Array of month names
-                                                var monthNames = [
-                                                    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                                                ];
-
-                                                // Extracting day, month, and year from the date
-                                                var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                                                var monthIndex = date.getMonth();
-                                                var year = date.getFullYear();
-
-                                                // Formatting the date in "dd-MMM-yyyy" format
-                                                var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
-
-                                                // Set the formatted due date value to the input field
-                                                document.getElementById('due_date').value = dueDateFormatted;
+                                                // Your input date variable
+                                                var dueDate = "{{ $data->due_date }}"; // Assuming $data->due_date is the variable you're passing
+                                            
+                                                // Check if the due date is not null or empty
+                                                if (dueDate) {
+                                                    // Create a Date object
+                                                    var date = new Date(dueDate);
+                                            
+                                                    // Array of month names
+                                                    var monthNames = [
+                                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                                    ];
+                                            
+                                                    // Extracting day, month, and year from the date
+                                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                                                    var monthIndex = date.getMonth();
+                                                    var year = date.getFullYear();
+                                            
+                                                    // Formatting the date in "dd-MMM-yyyy" format
+                                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+                                            
+                                                    // Set the formatted due date value to the input field
+                                                    document.getElementById('due_date').value = dueDateFormatted;
+                                                } else {
+                                                    // If dueDate is null or empty, display a message instead
+                                                    document.getElementById('due_date').value = 'Due Date not available';
+                                                }
                                             </script>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiation Department</label>
                                                     <select name="Initiator_Group" id="initiator_group">
+                                                        <option value="">-- Select --</option>
                                                         <option value="CQA"
                                                             @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
                                                         <option value="QA"
@@ -655,7 +741,7 @@ Designee Approval</div>
 
 
                                                     <input name="short_description" id="docname" type="text" maxlength="255" required type="text"
-                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} value="{{ $data->short_description }}">
+                                                        {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} value="{{ $data->short_description }}">
                                                 </div>
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
 
@@ -667,7 +753,7 @@ Designee Approval</div>
                                                     <div><small class="text-primary">Please select related
                                                             information</small></div>
                                                     <select name="initiated_through"
-                                                        onchange="otherController(this.value, 'others', 'initiated_through_req')">
+                                                        onchange="otherController(this.value, 'others', 'initiated_through_req')" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">Enter Your Selection Here</option>
                                                         <option @if ($data->initiated_through == 'recall') selected @endif
                                                             value="recall">Recall</option>
@@ -693,7 +779,7 @@ Designee Approval</div>
                                                 <div class="group-input" id="initiated_through_req">
                                                     <label for="initiated_through">Others<span
                                                             class="text-danger d-none">*</span></label>
-                                                    <textarea name="initiated_through_req">{{ $data->initiated_through_req }}</textarea>
+                                                    <textarea name="initiated_through_req"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->initiated_through_req }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -702,7 +788,7 @@ Designee Approval</div>
                                                     <div><small class="text-primary">Please select yes if it is has
                                                             recurred in past six months</small></div>
                                                     <select name="repeat"
-                                                        onchange="otherController(this.value, 'yes', 'repeat_nature')">
+                                                        onchange="otherController(this.value, 'yes', 'repeat_nature')"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">Enter Your Selection Here</option>
                                                         <option @if ($data->repeat == 'yes') selected @endif
                                                             value="yes">Yes</option>
@@ -717,14 +803,14 @@ Designee Approval</div>
                                                 <div class="group-input" id="repeat_nature">
                                                     <label for="repeat_nature">Repeat Nature<span
                                                             class="text-danger d-none">*</span></label>
-                                                    <textarea name="repeat_nature">{{ $data->repeat_nature }}</textarea>
+                                                    <textarea name="repeat_nature"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->repeat_nature }}</textarea>
                                                 </div>
                                             </div>
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="nature-change">Nature Of Change</label>
-                                                    <select name="doc_change">
+                                                    <select name="doc_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $data->doc_change == 'Temporary' ? 'selected' : '' }}
                                                             value="Temporary">Temporary
@@ -745,7 +831,7 @@ Designee Approval</div>
                                             <!-- <div class="col-md-6">
                                                 <div class="group-input">
                                                     <label for="div_code">Division Code</label>
-                                                    <select name="div_code">
+                                                    <select name="div_code" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option
                                                             {{ $data->Division_Code == 'Instrumental Lab' ? 'selected' : '' }}
@@ -814,7 +900,7 @@ Designee Approval</div>
 
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                                 type="file" id="myfile" name="in_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'in_attachment')" multiple>
                                                         </div>
@@ -844,7 +930,7 @@ Designee Approval</div>
                                             <div class="group-input">
                                                 <label for="risk_assessment_related_record">Related Records</label>
                                                 <select  multiple id="risk_assessment_related_record" name="risk_assessment_related_record[]" placeholder="Select Reference Records" 
-                                                        data-search="false" data-silent-initial-value-set="true">
+                                                        data-search="false" data-silent-initial-value-set="true"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                     @foreach ($preRiskAssessment as $prix)
                                                         <option value="{{ $prix->id }}"
                                                             {{ in_array($prix->id, explode(',', $data->risk_assessment_related_record)) ? 'selected' : '' }}>
@@ -866,7 +952,7 @@ Designee Approval</div>
                                                 <div class="group-input">
                                                     <label for="severity">Severity</label>
                                                     <select name="severity" id="analysisR"
-                                                        onchange='calculateRiskAnalysis(this)'>
+                                                        onchange='calculateRiskAnalysis(this)' {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $data->severity == '1' ? 'selected' : '' }}
                                                             value="1">Negligible</option>
@@ -885,7 +971,7 @@ Designee Approval</div>
                                                 <div class="group-input">
                                                     <label for="Occurance">Occurance</label>
                                                     <select name="Occurance" id="analysisP"
-                                                        onchange='calculateRiskAnalysis(this)'>
+                                                        onchange='calculateRiskAnalysis(this)'  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $data->Occurance == '5' ? 'selected' : '' }}
                                                             value="5">Extremely Unlikely</option>
@@ -904,7 +990,7 @@ Designee Approval</div>
                                                 <div class="group-input">
                                                     <label for="Detection">Detection</label>
                                                     <select name="Detection" id="analysisN"
-                                                        onchange='calculateRiskAnalysis(this)'>
+                                                        onchange='calculateRiskAnalysis(this)'  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $data->Detection == '4' ? 'selected' : '' }}
                                                             value="4">Impossible</option>
@@ -921,20 +1007,20 @@ Designee Approval</div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="RPN">RPN</label>
-                                                    <input type="text" name="RPN" id="analysisRPN"
+                                                    <input type="text" name="RPN"   {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} id="analysisRPN"
                                                         value="{{ $data->RPN }}">
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="risk-evaluation">Risk Evaluation</label>
-                                                    <textarea name="risk_evaluation">{{ $data->risk_evaluation }}</textarea>
+                                                    <textarea name="risk_evaluation"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->risk_evaluation }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="migration-action">Mitigation Action</label>
-                                                    <textarea name="migration_action">{{ $data->migration_action }}</textarea>
+                                                    <textarea name="migration_action"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->migration_action }}</textarea>
                                                 </div>
                                             </div>
 
@@ -969,7 +1055,7 @@ Designee Approval</div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="myfile" name="risk_assessment_atch[]"
-                                                            oninput="addMultipleFiles(this, 'risk_assessment_atch')" multiple>
+                                                            oninput="addMultipleFiles(this, 'risk_assessment_atch')"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} multiple>
                                                     </div>
                                                 </div>
 
@@ -1001,7 +1087,7 @@ Designee Approval</div>
                                                     <label for="current-practice">
                                                         Current Practice
                                                     </label>
-                                                    <textarea name="current_practice">{{ $docdetail->current_practice }}</textarea>
+                                                    <textarea name="current_practice"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->current_practice }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1009,7 +1095,7 @@ Designee Approval</div>
                                                     <label for="proposed_change">
                                                         Proposed Change
                                                     </label>
-                                                    <textarea name="proposed_change">{{ $docdetail->proposed_change }}</textarea>
+                                                    <textarea name="proposed_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->proposed_change }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1017,7 +1103,7 @@ Designee Approval</div>
                                                     <label for="reason_change">
                                                         Reason for Change
                                                     </label>
-                                                    <textarea name="reason_change">{{ $docdetail->reason_change }}</textarea>
+                                                    <textarea name="reason_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->reason_change }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1025,7 +1111,7 @@ Designee Approval</div>
                                                     <label for="other_comment">
                                                         Any Other Comments
                                                     </label>
-                                                    <textarea name="other_comment">{{ $docdetail->other_comment }}</textarea>
+                                                    <textarea name="other_comment"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->other_comment }}</textarea>
                                                 </div>
                                             </div>
                                             <!-- <div class="col-12">
@@ -1033,7 +1119,7 @@ Designee Approval</div>
                                                     <label for="supervisor_comment">
                                                         Supervisor Comments
                                                     </label>
-                                                    <textarea name="supervisor_comment">{{ $docdetail->supervisor_comment }}</textarea>
+                                                    <textarea name="supervisor_comment"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->supervisor_comment }}</textarea>
                                                 </div>
                                             </div> -->
                                         </div>
@@ -1057,14 +1143,14 @@ Designee Approval</div>
                                                         <label for="HOD Remarks">HOD Remarks</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4" required>{{ $data->HOD_Remarks }}</textarea>
+                                                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4" required  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->HOD_Remarks }}</textarea>
                                                     </div>
                                                 @else
                                                     <div class="group-input">
                                                         <label for="HOD Remarks">HOD Remarks</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea readonly class="tiny" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
+                                                        <textarea readonly class="tiny" name="HOD_Remarks" id="summernote-4"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->HOD_Remarks }}</textarea>
                                                     </div>
                                                 @endif
                                                 @error('HOD_Remarks')
@@ -1106,9 +1192,9 @@ Designee Approval</div>
                                                             <div class="add-btn">
                                                                 <div>Add</div>
                                                                 <input
-                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                                     type="file" id="HOD_attachment"
-                                                                    name="HOD_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                                    name="HOD_attachment[]"{{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                                     oninput="addMultipleFiles(this, 'HOD_attachment')" multiple>
                                                             </div>
                                                         </div>
@@ -1219,7 +1305,7 @@ Designee Approval</div>
                                                     <label for="Microbiology-Person">CFT Reviewer Person</label>
                                                     <select multiple name="cft_reviewer[]"
                                                         placeholder="Select CFT Reviewers" data-search="false"
-                                                        data-silent-initial-value-set="true" id="cft_reviewer">
+                                                        data-silent-initial-value-set="true" id="cft_reviewer"  {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <!-- <option value="">-- Select --</option> -->
                                                         @foreach ($cft as $data1)
                                                             @if (Helpers::checkUserRolesMicrobiology_Person($data1))
@@ -1239,7 +1325,7 @@ Designee Approval</div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="due_days"> Due Days </label>
-                                                    <input type="number" name="due_days" id="due_days" value="{{ $data->due_days }}" >
+                                                    <input type="number" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }} name="due_days" id="due_days" value="{{ $data->due_days }}" >
                                                 </div>
                                             </div>
 
@@ -1250,7 +1336,7 @@ Designee Approval</div>
                                                         seriousness, guiding priority for corrective actions. Ranging from
                                                         low to high, they ensure quality standards and mitigate critical
                                                         risks.</span>
-                                                    <select name="severity_level1">
+                                                    <select name="severity_level1" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data->severity_level1 == 'minor') selected @endif
                                                             value="minor">Minor</option>
@@ -1265,14 +1351,14 @@ Designee Approval</div>
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="qa_comments">QA Review Comments</label>
-                                                    <textarea name="qa_review_comments">{{ $review->qa_comments }}</textarea>
+                                                    <textarea name="qa_review_comments" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $review->qa_comments }}</textarea>
                                                 </div>
                                             </div>
 
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="related_records">Related Records</label>
-                                                    <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    <select{{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}
                                                         multiple id="related_records" name="related_records[]"
                                                         placeholder="Select Reference Records" data-search="false"
                                                         data-silent-initial-value-set="true">
@@ -1285,7 +1371,7 @@ Designee Approval</div>
                                                 </div>
                                             </div>
 
-                                            @if ($data->qa_head)
+                                         @if ($data->qa_head)
                                                 @foreach (json_decode($data->qa_head) as $file)
                                                     <input id="QaAttachmentFile-{{ $loop->index }}" type="hidden"
                                                         name="existinQAFile[{{ $loop->index }}]"
@@ -1297,8 +1383,8 @@ Designee Approval</div>
                                                     <label for="qa head">QA Attachments</label>
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="qa_head">
-                                                            @if ($review->qa_head)
-                                                                @foreach (json_decode($review->qa_head) as $file)
+                                                            @if ($data->qa_head)
+                                                                @foreach (json_decode($data->qa_head) as $file)
                                                                     <h6 type="button" class="file-container text-dark"
                                                                         style="background-color: rgb(243, 242, 240);">
                                                                         <b>{{ $file }}</b>
@@ -1318,11 +1404,13 @@ Designee Approval</div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input type="file" id="myfile" name="qa_head[]"
-                                                                oninput="addMultipleFiles(this, 'qa_head')" multiple>
+                                                                oninput="addMultipleFiles(this, 'qa_head')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>  
+
+
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
@@ -1335,6 +1423,8 @@ Designee Approval</div>
                                     </div>
                                 </div>
 
+
+                                
                                 <div id="CCForm11" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="row">
@@ -2484,7 +2574,7 @@ Designee Approval</div>
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 52,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -2791,7 +2881,7 @@ Designee Approval</div>
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 53,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -3112,7 +3202,7 @@ Designee Approval</div>
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 54,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -3420,7 +3510,7 @@ Designee Approval</div>
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 24,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -3724,7 +3814,7 @@ Designee Approval</div>
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 55,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -4030,7 +4120,7 @@ Designee Approval</div>
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 25,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -4337,7 +4427,7 @@ Designee Approval</div>
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 31,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -4491,7 +4581,7 @@ Designee Approval</div>
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 56,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -4948,7 +5038,7 @@ Designee Approval</div>
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
-                                                        'q_m_s_roles_id' => 22,
+                                                        'q_m_s_roles_id' => 57,
                                                         'q_m_s_divisions_id' => $data->division_id,
                                                     ])
                                                     ->get();
@@ -6307,7 +6397,7 @@ Designee Approval</div>
                                                     <label for="Review Required1"> Other's 1 Review Required? </label>
                                                     <select name="Other1_review" @if ($data->stage == 4) disabled @endif id="Other1_review"
                                                         value="{{ $data1->Other1_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other1_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other1_review == 'no') selected @endif value="no">
@@ -6334,7 +6424,7 @@ Designee Approval</div>
                                                             style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other1_person" @if ($data->stage == 4) disabled @endif id="Other1_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6352,6 +6442,7 @@ Designee Approval</div>
                                                             class="text-danger">*</span></label>
                                                     <select name="Other1_Department_person" @if ($data->stage == 4) disabled @endif
                                                         id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
+                                                           <option value="">-- Select --</option>
                                                             <option value="CQA" @if ($data1->Other1_Department_person == 'CQA') selected @endif>Corporate Quality Assurance</option>
                                                             <option value="QA" @if ($data1->Other1_Department_person == 'QA') selected @endif>Quality Assurance</option>
                                                             <option value="QC" @if ($data1->Other1_Department_person == 'QC') selected @endif>Quality Control</option>
@@ -6501,7 +6592,7 @@ Designee Approval</div>
                                                     <label for="review2"> Other's 2 Review Required ?</label>
                                                     <select name="Other2_review" @if ($data->stage == 4) disabled @endif id="Other2_review"
                                                         value="{{ $data1->Other2_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other2_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other2_review == 'no') selected @endif value="no">
@@ -6528,7 +6619,7 @@ Designee Approval</div>
                                                             style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other2_person" @if ($data->stage == 4) disabled @endif id="Other2_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6696,7 +6787,7 @@ Designee Approval</div>
                                                     <label for="review3"> Other's 3 Review Required ?</label>
                                                     <select name="Other3_review" @if ($data->stage == 4) disabled @endif id="Other3_review"
                                                         value="{{ $data1->Other3_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other3_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other3_review == 'no') selected @endif value="no">
@@ -6725,7 +6816,7 @@ Designee Approval</div>
                                                             style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other3_person" @if ($data->stage == 4) disabled @endif id="Other3_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -6892,7 +6983,7 @@ Designee Approval</div>
                                                     <label for="review4">Other's 4 Review Required ?</label>
                                                     <select name="Other4_review" @if ($data->stage == 4) disabled @endif id="Other4_review"
                                                         value="{{ $data1->Other4_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other4_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other4_review == 'no') selected @endif value="no">
@@ -6920,7 +7011,7 @@ Designee Approval</div>
                                                             style="display: {{ $data1->Other4_review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <select name="Other4_person" @if ($data->stage == 4) disabled @endif id="Other4_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other4_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7090,7 +7181,7 @@ Designee Approval</div>
                                                     <label for="review5">Other's 5 Review Required ?</label>
                                                     <select name="Other5_review" @if ($data->stage == 4) disabled @endif id="Other5_review"
                                                         value="{{ $data1->Other5_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other5_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other5_review == 'no') selected @endif value="no">
@@ -7118,7 +7209,7 @@ Designee Approval</div>
                                                             class="text-danger">*</span>
                                                     </label>
                                                     <select name="Other5_person" @if ($data->stage == 4) disabled @endif id="Other5_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7269,7 +7360,7 @@ Designee Approval</div>
                                                     <label for="Review Required1"> Other's 1 Review Required? </label>
                                                     <select disabled name="Other1_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_review" value="{{ $data1->Other1_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other1_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other1_review == 'no') selected @endif value="no">
@@ -7295,7 +7386,7 @@ Designee Approval</div>
                                                     <label for="Person1"> Other's 1 Person </label>
                                                     <select disabled name="Other1_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7311,7 +7402,7 @@ Designee Approval</div>
                                                     <select disabled
                                                         name="Other1_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other1_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other1_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other1_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7408,7 +7499,7 @@ Designee Approval</div>
                                                     <label for="review2"> Other's 2 Review Required ?</label>
                                                     <select disabled name="Other2_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_review" value="{{ $data1->Other2_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other2_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other2_review == 'no') selected @endif value="no">
@@ -7434,7 +7525,7 @@ Designee Approval</div>
                                                     <label for="Person2"> Other's 2 Person</label>
                                                     <select disabled name="Other2_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7449,7 +7540,7 @@ Designee Approval</div>
                                                     <select disabled
                                                         name="Other2_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other2_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other2_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other2_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other2_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7546,7 +7637,7 @@ Designee Approval</div>
                                                     <label for="review3"> Other's 3 Review Required ?</label>
                                                     <select disabled name="Other3_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_review" value="{{ $data1->Other3_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other3_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other3_review == 'no') selected @endif value="no">
@@ -7574,7 +7665,7 @@ Designee Approval</div>
                                                     <label for="Person3">Other's 3 Person</label>
                                                     <select disabled name="Other3_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7590,7 +7681,7 @@ Designee Approval</div>
                                                     <select disabled
                                                         name="Other3_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other3_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other3_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other3_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other3_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7684,7 +7775,7 @@ Designee Approval</div>
                                                     <label for="review4">Other's 4 Review Required ?</label>
                                                     <select disabled name="Other4_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_review" value="{{ $data1->Other4_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other4_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other4_review == 'no') selected @endif value="no">
@@ -7711,7 +7802,7 @@ Designee Approval</div>
                                                     <label for="Person4"> Other's 4 Person</label>
                                                     <select name="Other4_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other4_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7726,7 +7817,7 @@ Designee Approval</div>
                                                     <select disabled
                                                         name="Other4_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other4_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other4_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other4_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other4_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7824,7 +7915,7 @@ Designee Approval</div>
                                                     <label for="review5">Other's 5 Review Required ?</label>
                                                     <select disabled name="Other5_review"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_review" value="{{ $data1->Other5_review }}">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other5_review == 'yes') selected @endif value="yes">
                                                             Yes</option>
                                                         <option @if ($data1->Other5_review == 'no') selected @endif value="no">
@@ -7850,7 +7941,7 @@ Designee Approval</div>
                                                     <label for="Person5">Other's 5 Person</label>
                                                     <select disabled name="Other5_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
                                                                 value="{{ $user->id }}">{{ $user->name }}</option>
@@ -7865,7 +7956,7 @@ Designee Approval</div>
                                                     <select disabled
                                                         name="Other5_Department_person"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         id="Other5_Department_person">
-                                                        <option value="0">-- Select --</option>
+                                                        <option value="">-- Select --</option>
                                                         <option @if ($data1->Other5_Department_person == 'Production') selected @endif value="Production">Production</option>
                                                         <option @if ($data1->Other5_Department_person == 'Warehouse') selected @endif value="Warehouse"> Warehouse</option>
                                                         <option @if ($data1->Other5_Department_person == 'Quality_Control') selected @endif value="Quality_Control">Quality Control
@@ -7982,7 +8073,7 @@ Designee Approval</div>
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-comments">QA Evaluation Comments</label>
-                                            <textarea name="qa_eval_comments">{{ $evaluation->qa_eval_comments }}</textarea>
+                                            <textarea name="qa_eval_comments" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $evaluation->qa_eval_comments }}</textarea>
                                         </div>
 
                                         @if ($data1->Production_Injection_Attachment)
@@ -8016,7 +8107,7 @@ Designee Approval</div>
                                                     <div>Add</div>
                                                     <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         type="file" id="myfile" name="qa_eval_attach[]"
-                                                        oninput="addMultipleFiles(this, 'qa_eval_attach')" multiple>
+                                                        oninput="addMultipleFiles(this, 'qa_eval_attach')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                                 </div>
                                             </div>
 
@@ -8036,11 +8127,11 @@ Designee Approval</div>
                                     <div class="inner-block-content">
                                         <div class="group-input">
                                             <label for="qa-appro-comments">QA Approval Comments</label>
-                                            <textarea name="qa_appro_comments">{{ $approcomments->qa_appro_comments }}</textarea>
+                                            <textarea name="qa_appro_comments" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $approcomments->qa_appro_comments }}</textarea>
                                         </div>
                                         <div class="group-input">
                                             <label for="feedback">Training Feedback</label>
-                                            <textarea name="feedback">{{ $approcomments->feedback }}</textarea>
+                                            <textarea name="feedback" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $approcomments->feedback }}</textarea>
                                         </div>
 
                                         @if ($data1->Production_Injection_Attachment)
@@ -8073,7 +8164,7 @@ Designee Approval</div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input type="file" id="myfile" name="tran_attach[]"
-                                                        oninput="addMultipleFiles(this, 'tran_attach')" multiple>
+                                                        oninput="addMultipleFiles(this, 'tran_attach')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                                 </div>
                                             </div>
 
@@ -8092,10 +8183,11 @@ Designee Approval</div>
 
                                 <div id="CCForm9" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
+                                      
+                                      
                                         <div class="group-input">
                                             <label for="risk-assessment">
-                                                Affected Documents<button type="button" name="ann"
-                                                    id="addAffectedDoc">+</button>
+                                                Affected Documents<button type="button" name="ann" id="addAffectedDoc" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>+</button>
                                             </label>
                                             <table class="table table-bordered" id="afftectedDocTable">
                                                 <thead>
@@ -8112,47 +8204,48 @@ Designee Approval</div>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                        @if ($affetctedDocumnetGrid && is_array($affetctedDocumnetGrid))
-                                                            @foreach ($affetctedDocumnetGrid as $gridData)
-                                                            <tr>
-                                                                <td>
-                                                                    <input disabled type="text" name="affectedDocuments[{{ $loop->index }}][serial]"
-                                                                        value="{{ $loop->index + 1 }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input class="afftectedDoc" type="text" name="affectedDocuments[{{ $loop->index }}][afftectedDoc]"
-                                                                        value="{{ isset($gridData['afftectedDoc']) ? $gridData['afftectedDoc'] : '' }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input class="documentName" type="text" name="affectedDocuments[{{ $loop->index }}][documentName]"
-                                                                        value="{{ isset($gridData['documentName']) ? $gridData['documentName'] : '' }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input class="documentNumber" type="number" name="affectedDocuments[{{ $loop->index }}][documentNumber]"
-                                                                        value="{{ isset($gridData['documentNumber']) ? $gridData['documentNumber'] : '' }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input class="versionNumber" type="text" name="affectedDocuments[{{ $loop->index }}][versionNumber]"
-                                                                        value="{{ isset($gridData['versionNumber']) ? $gridData['versionNumber'] : '' }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input class="implimentationDate" type="date"
-                                                                        name="affectedDocuments[{{ $loop->index }}][implimentationDate]"
-                                                                        value="{{ isset($gridData['implimentationDate']) ? $gridData['implimentationDate'] : '' }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input class="newDocumentNumber" type="text"
-                                                                        name="affectedDocuments[{{ $loop->index }}][newDocumentNumber]"
-                                                                        value="{{ isset($gridData['newDocumentNumber']) ? $gridData['newDocumentNumber'] : '' }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input class="newVersionNumber" type="text" name="affectedDocuments[{{ $loop->index }}][newVersionNumber]"
-                                                                        value="{{ isset($gridData['newVersionNumber']) ? $gridData['newVersionNumber'] : '' }}">
-                                                                </td>
-                                                                <td><input type="text" class="Removebtn" name="Action[]" readonly></td>
-                                                            </tr>
+                                                    @if ($affetctedDocumnetGrid && is_array($affetctedDocumnetGrid))
+                                                        @foreach ($affetctedDocumnetGrid as $gridData)
+                                                        <tr>
+                                                            <td>
+                                                                <input disabled type="text" name="affectedDocuments[{{ $loop->index }}][serial]"
+                                                                    value="{{ $loop->index + 1 }}" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                            </td>
+                                                            <td>
+                                                                <input class="afftectedDoc" type="text" name="affectedDocuments[{{ $loop->index }}][afftectedDoc]"
+                                                                    value="{{ isset($gridData['afftectedDoc']) ? $gridData['afftectedDoc'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                            </td>
+                                                            <td>
+                                                                <input class="documentName" type="text" name="affectedDocuments[{{ $loop->index }}][documentName]"
+                                                                    value="{{ isset($gridData['documentName']) ? $gridData['documentName'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                            </td>
+                                                            <td>
+                                                                <input class="documentNumber" type="number" name="affectedDocuments[{{ $loop->index }}][documentNumber]"
+                                                                    value="{{ isset($gridData['documentNumber']) ? $gridData['documentNumber'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                            </td>
+                                                            <td>
+                                                                <input class="versionNumber" type="text" name="affectedDocuments[{{ $loop->index }}][versionNumber]"
+                                                                    value="{{ isset($gridData['versionNumber']) ? $gridData['versionNumber'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                            </td>
+                                                            <td>
+                                                                <input class="implimentationDate" type="date"
+                                                                    name="affectedDocuments[{{ $loop->index }}][implimentationDate]"
+                                                                    value="{{ isset($gridData['implimentationDate']) ? $gridData['implimentationDate'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                            </td>
+                                                            <td>
+                                                                <input class="newDocumentNumber" type="text"
+                                                                    name="affectedDocuments[{{ $loop->index }}][newDocumentNumber]"
+                                                                    value="{{ isset($gridData['newDocumentNumber']) ? $gridData['newDocumentNumber'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                            </td>
+                                                            <td>
+                                                                <input class="newVersionNumber" type="text" name="affectedDocuments[{{ $loop->index }}][newVersionNumber]"
+                                                                    value="{{ isset($gridData['newVersionNumber']) ? $gridData['newVersionNumber'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                            </td>
+                                                            <td><button type="button" class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>Remove</button></td>
+                                                        </tr>
                                                         @endforeach
-                                                        @else                                                        
+                                                    @else
+                                                        <tr>
                                                             <td><input type="text" name="affectedDocuments[0][serial]" value="1" readonly></td>
                                                             <td><input type="text" name="affectedDocuments[0][afftectedDoc]"></td>
                                                             <td><input type="text" name="affectedDocuments[0][documentName]"></td>
@@ -8161,14 +8254,17 @@ Designee Approval</div>
                                                             <td><input type="date" name="affectedDocuments[0][implimentationDate]"></td>
                                                             <td><input type="text" name="affectedDocuments[0][newDocumentNumber]"></td>
                                                             <td><input type="text" name="affectedDocuments[0][newVersionNumber]"></td>
-                                                            <td><input type="text" class="Action" name="" readonly></td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
                                                     @endif
                                                 </tbody>
                                             </table>
-                                </div>
+                                        </div>
+                                        
+                                        
                                 <div class="group-input">
                                     <label for="qa-closure-comments">QA Closure Comments</label>
-                                    <textarea name="qa_closure_comments">{{ $closure->qa_closure_comments }}</textarea>
+                                    <textarea name="qa_closure_comments" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $closure->qa_closure_comments }}</textarea>
                                 </div>
 
                                 @if ($closure->tran_attach)
@@ -8181,7 +8277,7 @@ Designee Approval</div>
                                 <div class="group-input">
                                     <label for="attach-list">List Of Attachments</label>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="tran_attach">
+                                        <div class="file-attachment-list" id="attach_list">
                                             @if ($closure->attach_list)
                                                 @foreach (json_decode($closure->attach_list) as $file)
                                                     <h6 type="button" class="file-container text-dark"
@@ -8200,8 +8296,8 @@ Designee Approval</div>
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="attach_list[]"
-                                                oninput="addMultipleFiles(this, 'attach_list')" multiple>
+                                            <input type="file"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}  id="myfile" name="attach_list[]"
+                                                oninput="addMultipleFiles(this, 'attach_list')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                         </div>
                                     </div>
                                 </div>
@@ -8212,7 +8308,7 @@ Designee Approval</div>
                                                     <div class="col-lg-6">
                                                         <div class="group-input">
                                                             <label for="effective-check">Effectivess Check Required?</label>
-                                                            <select name="effective_check">
+                                                            <select name="effective_check" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                                                 <option value="">-- Select --</option>
                                                                 <option {{ $closure->effective_check == 'yes' ? 'selected' : '' }}
                                                                     value="yes">Yes</option>
@@ -8229,14 +8325,14 @@ Designee Approval</div>
                                                                   <input type="text"  id="effective_check_date"  readonly value="{{ Helpers::getdateFormat($data->effective_check_date) }}"
                                                                    name="effective_check_date"  placeholder="DD-MMM-YYYY" />
                                                                   <input type="date" name="effective_check_date" value="{{ $data->effective_check_date }}"  class="hide-input"
-                                                                   oninput="handleDateInput(this, 'effective_check_date')"/>
+                                                                   oninput="handleDateInput(this, 'effective_check_date')"/ {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                                      </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="group-input">
                                                             <label for="Effectiveness_checker">Effectiveness Checker</label>
-                                                            <select name="Effectiveness_checker">
+                                                            <select name="Effectiveness_checker" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
                                                                 <option value="">Enter Your Selection Here</option>
                                                                 @foreach ($users as $datas)
     <option {{ $info->Effectiveness_checker == $datas->id ? 'selected' : '' }}
@@ -8249,7 +8345,7 @@ Designee Approval</div>
                                                     <div class="col-12">
                                                         <div class="group-input">
                                                             <label for="effective_check_plan">Effectiveness Check Plan</label>
-                                                            <textarea name="effective_check_plan">{{ $data->effective_check_plan }}</textarea>
+                                                            <textarea name="effective_check_plan" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->effective_check_plan }}</textarea>
                                                         </div>
                                                     </div> -->
                             <div class="col-12 sub-head">
@@ -8259,7 +8355,7 @@ Designee Approval</div>
                                 <div class="group-input">
                                     <label for="due_date_extension">Due Date Extension
                                         Justification</label>
-                                    <textarea name="due_date_extension"> {{ $due_date_extension }}</textarea>
+                                    <textarea name="due_date_extension" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}> {{ $due_date_extension }}</textarea>
                                 </div>
                             </div>
                     </div>
@@ -8281,9 +8377,7 @@ Designee Approval</div>
 
             <div id="CCForm10" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">
-                        Electronic Signatures
-                    </div>
+                   
                     <div class="row">
                         <div class="sub-head">Submission</div>
                         <div class="col-lg-3">
@@ -8305,27 +8399,27 @@ Designee Approval</div>
                             </div>
                         </div>
 
-                        <div class="sub-head">HOD Review Completed</div>
+                        <div class="sub-head">HOD Assessment Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="HOD Review Complete By">HOD Review Complete By :-</label>
+                                <label for="HOD Review Complete By">HOD Assessment Complete By :-</label>
                                 <div class="static">{{ $data->hod_review_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="HOD Review Complete On">HOD Review Complete On :-</label>
+                                <label for="HOD Review Complete On">HOD Assessment Complete On :-</label>
                                 <div class="static">{{ $data->hod_review_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style=" ">
-                                <label for="HOD Review Comments">HOD Review Comments :-</label>
+                                <label for="HOD Review Comments">HOD Assessment Complete By :-</label>
                                 <div class="">{{ $data->hod_review_comment }}</div>
                             </div>
                         </div>
 
-                        <div class="sub-head">Sent to Initiator (From HOD)</div>
+                        {{--  <div class="sub-head">Sent to Initiator (From HOD)</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="HOD Review Complete By">Initiator Complete By :-</label>
@@ -8343,30 +8437,30 @@ Designee Approval</div>
                                 <label for="HOD Review Comments">Initiator Comments :-</label>
                                 <div class="">{{ $data->hod_to_initiator_comment }}</div>
                             </div>
-                        </div>
+                        </div>  --}}
 
 
-                        <div class="sub-head">QA Initial Review Completed</div>
+                        <div class="sub-head">QA/CQA Initial Assessment Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Initial Review Complete By">QA Initial Review Complete By :-</label>
+                                <label for="QA Initial Review Complete By">QA/CQA Initial Assessment Complete By :-</label>
                                 <div class="static">{{ $data->QA_initial_review_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Initial Review Complete On">QA Initial Review Complete On :-</label>
+                                <label for="QA Initial Review Complete On">QA/CQA Initial Assessment Complete On :-</label>
                                 <div class="static">{{ $data->QA_initial_review_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                                <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
+                                <label for="QA Initial Review Comments">QA/CQA Initial Review Comments:-</label>
                                 <div class="">{{ $data->QA_initial_review_comment }}</div>
                             </div>
                         </div>
 
-                        <div class="sub-head">Sent to HOD (From QA Initial)</div>
+                        {{--  <div class="sub-head">Sent to HOD (From QA Initial)</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="HOD Review Complete By">HOD Complete By :-</label>
@@ -8384,50 +8478,30 @@ Designee Approval</div>
                                 <label for="HOD Review Comments">HOD Comments :-</label>
                                 <div class="">{{ $data->QA_initialTo_HOD_comment }}</div>
                             </div>
-                        </div>
-
-                        <div class="sub-head">Pending RA Review Complete</div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="CFT Review Complete By">Pending RA Review Complete By :-</label>
-                                <div class="static">{{ $data->pending_RA_review_by }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="CFT Review Complete On">Pending RA Review Complete On :-</label>
-                                <div class="static">{{ $data->pending_RA_review_on }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="CFT Review Comments">Pending RA Review Comments :-</label>
-                                <div class="">{{ $data->pending_RA_review_comment }}</div>
-                            </div>
-                        </div>
+                        </div>  --}}
 
                         <div class="sub-head">CFT Review Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="CFT Review Complete By">CFT Review Complete By :-</label>
-                                <div class="static">{{ $data->cft_review_by }}</div>
+                                <div class="static">{{ $data->pending_RA_review_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="CFT Review Complete On">CFT Review Complete On :-</label>
-                                <div class="static">{{ $data->cft_review_on }}</div>
+                                <div class="static">{{ $data->pending_RA_review_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                 <label for="CFT Review Comments">CFT Review Comments :-</label>
-                                <div class="">{{ $data->cft_review_comment }}</div>
+                                <div class="">{{ $data->pending_RA_review_comment }}</div>
                             </div>
                         </div>
 
 
-                        <div class="sub-head">Sent to QA Initial (From CFT)</div>
+                        {{--  <div class="sub-head">Sent to QA Initial (From CFT)</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="HOD Review Complete By">QA Initial Complete By :-</label>
@@ -8445,68 +8519,200 @@ Designee Approval</div>
                                 <label for="HOD Review Comments">QA Initial Comments :-</label>
                                 <div class="">{{ $data->cft_to_qaInitial_comment }}</div>
                             </div>
+                        </div>  --}}
+
+                        <div class="sub-head">RA Approval Required</div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CFT Review Complete By">RA Approval Required By :-</label>
+                                <div class="static">{{ $data->RA_review_required_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CFT Review Complete On">RA Approval Required On :-</label>
+                                <div class="static">{{ $data->RA_review_required_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <label for="CFT Review Comments">RA Approval Required Comments :-</label>
+                                <div class="">{{ $data->RA_review_required_comment }}</div>
+                            </div>
                         </div>
 
 
-                        <div class="sub-head"> QA Final Review Completed</div>
+
+
+                        <div class="sub-head">RA Approval Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
+                                <label for="CFT Review Complete By">RA Approval Complete By :-</label>
+                                <div class="static">{{ $data->RA_review_completed_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CFT Review Complete On">RA Approval Complete On :-</label>
+                                <div class="static">{{ $data->RA_review_completed_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <label for="CFT Review Comments"> RA Approval Comments :-</label>
+                                <div class="">{{ $data->RA_review_completed_comment }}</div>
+                            </div>
+                        </div>
+
+                   
+
+                        <div class="sub-head"> QA/CQA Final Review Completed</div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="QA Final Review Complete By"> QA/CQA Final Review Complete By :-</label>
                                 <div class="static">{{ $data->QA_final_review_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete On"> QA Final Review Complete On :-</label>
+                                <label for="QA Final Review Complete On"> QA/CQAFinal Review Complete On :-</label>
                                 <div class="static">{{ $data->QA_final_review_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
+                                <label for="QA Final Review Comments"> QA/CQA Final Review Comments :-</label>
                                 <div class="">{{ $data->QA_final_review_comment }}</div>
                             </div>
                         </div>
 
-                        <div class="sub-head">QA Head/Manager Designee Pre-Approval</div>
+
+
+                        <div class="sub-head"> Approved </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete By">QA Head/Manager Designee Pre-Approval Complete By :-</label>
-                                <div class="static">{{ $data->QA_preapproved_by }}</div>
+                                <label for="QA Final Review Complete By">  Approved  By :-</label>
+                                <div class="static">{{ $data->approved_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete On">QA Head/Manager Designee Pre-Approval Complete On :-</label>
-                                <div class="static">{{ $data->QA_preapproved_on }}</div>
+                                <label for="QA Final Review Complete On">  Approved  On :-</label>
+                                <div class="static">{{ $data->approved_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments">QA Head/Manager Designee Pre-Approval Comments :-</label>
-                                <div class="">{{ $data->QA_preapproved_comment }}</div>
+                                <label for="QA Final Review Comments"> Approved Comments :-</label>
+                                <div class="">{{ $data->approved_comment }}</div>
                             </div>
                         </div>
 
-                        <div class="sub-head">QA Head/Manager Designee Approval</div>
+
+                        @php
+                        $commnetData = DB::table('change_control_comments')->where('cc_id', $data->id)->first();
+                    @endphp
+                    
+                    <div class="sub-head">Initiator Updated Completed</div>
+                    
+                    <div class="col-lg-3">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete By">Initiator Updated Completed By :-</label>
+                            <div class="static">
+                                {{ isset($commnetData->initiator_update_complete_by) ? $commnetData->initiator_update_complete_by : '' }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete On">Initiator Updated Completed On :-</label>
+                            <div class="static">
+                                {{ isset($commnetData->initiator_update_complete_on) ? $commnetData->initiator_update_complete_on : '' }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="group-input" style="width:1620px; height:100px; padding:5px;">
+                            <label for="QA Final Review Comments">Initiator Updated Completed Comments :-</label>
+                            <div class="">
+                                {{ isset($commnetData->initiator_update_complete_comment) ? $commnetData->initiator_update_complete_comment : '' }}
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+                        <div class="sub-head">HOD Final Review Complete
+                        </div>
+                   <div class="col-lg-3">
+                       <div class="group-input">
+                           <label for="QA Final Review Complete By">  HOD Final Review Complete  By :-</label>
+                           <div class="static">{{ $data->closure_approved_by }}</div>
+                       </div>
+                   </div>
+                   <div class="col-lg-3">
+                       <div class="group-input">
+                           <label for="QA Final Review Complete On">  HOD Final Review Complete  On :-</label>
+                           <div class="static">{{ $data->closure_approved_on }}</div>
+                       </div>
+                   </div>
+                   <div class="col-lg-6">
+                       <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                           <label for="QA Final Review Comments"> HOD Final Review Complete Comments :-</label>
+                           <div class="">{{ $data->closure_approved_comment }}</div>
+                       </div>
+                   </div>
+
+
+                        <div class="sub-head">Send For Final QA/CQA Head Approval
+                            </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete By">QA Head/Manager Designee Approval Complete By :-</label>
-                                <div class="static">{{ $data->QA_head_approval_by }}</div>
+                                <label for="QA Final Review Complete By">Send For Final QA/CQA Head Approval By :-</label>
+                                <div class="static">{{ isset($commnetData->send_for_final_qa_head_approval) ? $commnetData->send_for_final_qa_head_approval: '' }}</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="QA Final Review Complete On">QA Head/Manager Designee Approval Complete On :-</label>
-                                <div class="static">{{ $data->QA_head_approval_on }}</div>
+                                <label for="QA Final Review Complete On">Send For Final QA/CQA Head Approval On :-</label>
+                                <div class="static">{{isset($commnetData->send_for_final_qa_head_approval_on) ?$commnetData->send_for_final_qa_head_approval_on :''}}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments">QA Head/Manager Designee Approval Comments :-</label>
-                                <div class="">{{ $data->QA_head_approval_comment }}</div>
+                                <label for="QA Final Review Comments">Send For Final QA/CQA Head Approval Comments :-</label>
+                                <div class="">{{ isset($commnetData->send_for_final_qa_head_approval_comment) ? $commnetData->send_for_final_qa_head_approval_comment :'' }}</div>
                             </div>
                         </div>
+
+
+                        <div class="sub-head">Closure Approved
+
+                        </div>
+                    <div class="col-lg-3">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete By">Closure Approved By :-</label>
+                            <div class="static">
+                                {{ isset($commnetData->closure_approved_by) ? $commnetData->closure_approved_by : '' }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete On">Closure Approved On :-</label>
+                            <div class="static">{{  isset($commnetData->closure_approved_on) ? $commnetData->closure_approved_on : ''}}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                            <label for="QA Final Review Comments">Closure Approved Comments :-</label>
+                            <div class="">{{ isset($commnetData->closure_approved_comment) ?$commnetData->closure_approved_comment :'' }}</div>
+                        </div>
+                    </div>
+
+                        
                     </div>
                     <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
@@ -9449,7 +9655,7 @@ Designee Approval</div>
         $(document).ready(function() {
             var disableInputs = {{ $data->stage }}; // Replace with your condition
 
-            if (disableInputs == 0 || disableInputs > 8) {
+            if (disableInputs == 0 || disableInputs > 13) {
                 // Disable all input fields within the form
                 $('#CCFormInput :input:not(select)').prop('disabled', true);
                 $('#CCFormInput select').prop('disabled', true);
@@ -9458,6 +9664,8 @@ Designee Approval</div>
             }
         });
     </script>
+
+  
     <script>
         const productSelect = document.getElementById('productSelect');
         const productTable = document.getElementById('productTable');

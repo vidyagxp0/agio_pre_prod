@@ -619,11 +619,20 @@
                                 <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Audit Schedule Start Date">Actual Start Date</label>
-                                <div class="calenderauditee">
+                                {{-- <div class="calenderauditee">
                                     <input type="text" 
                                         id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"  />
                                     <input class="hide-input" type="date"   name="start_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} id="start_date_checkdate" value="{{ $data->start_date }}"
                                         oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                </div> --}}
+                                <div class="calenderauditee">
+                                    <input type="text" id="start_date" name="start_date" readonly placeholder="DD-MM-YYYY"
+                                        value="{{ Helpers::getdateFormat($data->start_date) }}" />
+                                    <input type="date" id="start_date_name" name="start_date_name"
+                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                        value="{{ $data->start_date ? \Carbon\Carbon::parse($data->start_date)->format('Y-m-d') : '' }}"
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'start_date');updateEndDateMin();" />
                                 </div>
                             </div>
                         </div>
@@ -631,14 +640,71 @@
                             <div class="group-input input-date">
                                 <label for="Audit Schedule End Date">Actual End Date</label>
                                 {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --}}
-                                <div class="calenderauditee">
+                                {{-- <div class="calenderauditee">
                                     <input type="text" 
                                         id="end_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"  />
                                     <input class="hide-input" type="date"   name="end_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} id="end_date_checkdate" value="{{ $data->end_date }}"
                                         oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                </div> --}}
+                                <div class="calenderauditee">
+                                    <input type="text" id="end_date" name="end_date" readonly placeholder="DD-MM-YYYY"
+                                        value="{{ Helpers::getdateFormat($data->end_date) }}" />
+                                    <input type="date" id="end_date_name" name="end_date_name"
+                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                        value="{{ $data->end_date ? \Carbon\Carbon::parse($data->end_date)->format('Y-m-d') : '' }}"
+                                        class="hide-input" oninput="handleDateInput(this, 'end_date');" />
                                 </div>
                             </div>
                         </div>
+
+                        
+    <script>
+        function handleDateInput(inputElement, displayElementId) {
+            var displayElement = document.getElementById(displayElementId);
+            var dateValue = new Date(inputElement.value);
+            displayElement.value = dateValue.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+
+        function updateEndDateMin() {
+            var startDate = document.getElementById('start_date_name').value;
+            var endDateInput = document.getElementById('end_date_name');
+
+            if (startDate) {
+                // Set the minimum date to one day after the start date
+                var minEndDate = new Date(startDate);
+                minEndDate.setDate(minEndDate.getDate() + 1);
+
+                // Format the date to match the input type date format (yyyy-mm-dd)
+
+                var formattedMinEndDate = minEndDate.toISOString().split('T')[0];
+                endDateInput.setAttribute('min', formattedMinEndDate);
+
+                // Ensure the next audit date is after the last audit date
+                if (endDateInput.value && endDateInput.value <= startDate) {
+                    endDateInput.value = '';
+                    // alert("The next audit date must be after the last audit date.");
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updateEndDateMin(); // Initialize the end date min on page load
+
+            // Reapply the min attribute whenever the start date is changed
+            document.getElementById('start_date_name').addEventListener('input', function() {
+                updateEndDateMin();
+            });
+
+            // Validate the end date when it is changed
+            document.getElementById('end_date_name').addEventListener('input', function() {
+                updateEndDateMin();
+            });
+        });
+    </script>
                                 </div>
                                       <div class="col-12">
                                         <div class="group-input">
@@ -809,77 +875,60 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="submitted by">Submitted By</label>
-                                            <div class="static">{{ $data->submitted_by }}</div>
+                                            <div class="static">{{ $data->acknowledgement_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="submitted on">Submitted On</label>
-                                            <div class="Date">{{ $data->submitted_on }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="submitted on">Comment</label>
-                                            <div class="static">{{ $data->submitted_comment }}</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="cancelled by">Cancelled By</label>
-                                            <div class="static">{{ $data->cancelled_by }}</div> 
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="cancelled on">Cancelled On</label>
-                                            <div class="Date">{{ $data->cancelled_on }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="submitted on">Comment</label>
-                                            <div class="static">{{ $data->cancelled_comment }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="cancelled by">HOD Review Complete By</label>
-                                            <div class="static">{{ $data->work_completion_by }}</div> 
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="cancelled on">HOD Review Complete On</label>
-                                            <div class="Date">{{ $data->work_completion_on }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="submitted on">Comment</label>
-                                            <div class="static">{{ $data->work_completion_comment }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="cancelled by">Acknowledgement By</label>
-                                            <div class="static">{{ $data->acknowledgement_by }}</div> 
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="cancelled on">Acknowledgement On</label>
                                             <div class="Date">{{ $data->acknowledgement_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted on">Comment</label>
+                                            <label for="submitted on">Submitted Comment</label>
                                             <div class="static">{{ $data->acknowledgement_comment }}</div>
                                         </div>
                                     </div>
+
+                                  
                                     <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="cancelled by">Approved By</label>
+                                            <div class="static">{{ $data->work_completion_by }}</div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="cancelled on">Approved On</label>
+                                            <div class="Date">{{ $data->work_completion_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="submitted on">Approved Comment</label>
+                                            <div class="static">{{ $data->work_completion_comment }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="cancelled by">Acknowledge Complete By</label>
+                                            <div class="static">{{ $data->qa_varification_by }}</div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="cancelled on">Acknowledge Complete On</label>
+                                            <div class="Date">{{ $data->qa_varification_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="submitted on"> Acknowledge Complete Comment</label>
+                                            <div class="static">{{ $data->qa_varification_comment }}</div>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More information required By">More information required By</label>
                                             <div class="static">{{ $data->more_information_required_by }}</div> 
@@ -896,26 +945,43 @@
                                             <label for="submitted on">Comment</label>
                                             <div class="static">{{ $data->more_info_requ_comment }}</div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="completed by">Completed By</label>
+                                            <label for="completed by"> Verification Completed By</label>
                                             <div class="static">{{ $data->completed_by }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="completed on">Completed On</label>
+                                            <label for="completed on">Verification Completed On</label>
                                             <div class="Date">{{ $data->completed_on }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted on">Comment</label>
+                                            <label for="submitted on">Verification Comment</label>
                                             <div class="static">{{ $data->completed_comment }}</div>
                                         </div>
                                     </div>
-                                   
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="cancelled by">Cancelled By</label>
+                                            <div class="static">{{ $data->cancelled_by }}</div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="cancelled on">Cancelled On</label>
+                                            <div class="Date">{{ $data->cancelled_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="submitted on">Cancelled Comment</label>
+                                            <div class="static">{{ $data->cancelled_comment }}</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="button-block">
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>

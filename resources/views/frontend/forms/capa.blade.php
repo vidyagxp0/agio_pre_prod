@@ -421,12 +421,20 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="capa_attachment"></div>
+                                        {{-- <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="closure_attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="capa_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'capa_attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                                            </div>
+                                        </div> --}}
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="closure_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="hodfile" name="capa_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1111,14 +1119,14 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Plan Proposed By</label>
+                                    <label for="Plan Proposed By">Propose Plan By</label>
                                     <input type="hidden" name="plan_proposed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Plan Proposed On">Plan Proposed On</label>
+                                    <label for="Plan Proposed On">Propose Plan On</label>
                                     <input type="hidden" name="plan_proposed_on">
                                     <div class="static"></div>
                                 </div>
@@ -1151,7 +1159,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="more_info_required_by">
@@ -1164,7 +1172,7 @@
                                     <input type="hidden" name="more_info_required_on">
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                     
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -1180,7 +1188,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="qa_more_info_required_by">
@@ -1193,7 +1201,7 @@
                                     <input type="hidden" name="qa_more_info_required_on">
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Approved By">Approved By</label>
@@ -1209,7 +1217,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="app_more_info_required_by">
@@ -1222,7 +1230,7 @@
                                     <input type="hidden" name="app_more_info_required_on">
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Rejected By">Completed By</label>
@@ -1265,7 +1273,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="hod_more_info_required_by">
@@ -1278,7 +1286,7 @@
                                     <input type="hidden" name="hod_more_info_required_on">
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> QA/CQA Closure Review Completed By</label>
@@ -1293,7 +1301,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="closure_more_info_required_by">
@@ -1306,7 +1314,7 @@
                                     <input type="hidden" name="closure_qa_more_info_required_on">
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> QAH/CQA Approval Completed By</label>
@@ -1321,7 +1329,7 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="qah_more_info_required_by">
@@ -1336,7 +1344,7 @@
                                 </div>
                             </div>
                                  
-                        </div>
+                        </div> --}}
                         <div class="button-block">
                              <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button> 

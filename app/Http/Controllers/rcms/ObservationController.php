@@ -91,6 +91,8 @@ class ObservationController extends Controller
         $data->comments = $request->comments;
         $data->impact = $request->impact;
         $data->impact_analysis = $request->impact_analysis;
+        $data->severity_rate = $request->severity_rate;
+        // dd($request->severity_rate);
 
         $severity = [
             '1' => 'Negligible',
@@ -685,7 +687,7 @@ if(!empty($request->attach_files2)){
         $history->Observation_id = $data->id;
         $history->activity_type = 'Actual Start Date ';
         $history->previous = "Null";
-        $history->current = $data->actual_start_date;
+        $history->current = Helpers::getdateFormat($data->actual_start_date);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -701,7 +703,7 @@ if(!empty($request->attach_files2)){
         $history->Observation_id = $data->id;
         $history->activity_type = 'Actual End Date ';
         $history->previous = "Null";
-        $history->current = $data->actual_end_date;
+        $history->current = Helpers::getdateFormat($data->actual_end_date);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1427,7 +1429,7 @@ if(!empty($request->attach_files2)){
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Assign To2';
+            $history->activity_type = 'Assign To';
             $history->previous = $lastDocument->assign_to2;
             $history->current = $data->assign_to2;
             $history->comment = $request->assign_to2_comment;
@@ -1618,7 +1620,7 @@ if(!empty($request->attach_files2)){
             $history->Observation_id = $id;
             $history->activity_type = 'Actual Start Date ';
             $history->previous = $lastDocument->actual_start_date;
-            $history->current = $data->actual_start_date;
+            $history->current = Helpers::getdateFormat($data->actual_start_date);
             $history->comment = $request->actual_start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1638,8 +1640,8 @@ if(!empty($request->attach_files2)){
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Actual End Date ';
-            $history->previous = $lastDocument->actual_end_date;
-            $history->current = $data->actual_end_date;
+            $history->previous =  Helpers::getdateFormat($lastDocument->actual_end_date);
+            $history->current = Helpers::getdateFormat($data->actual_end_date);
             $history->comment = $request->actual_end_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2192,7 +2194,7 @@ if(!empty($request->attach_files2)){
         if ($request->revision == "Action-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $record = $record_number;
-            return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.forms.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
         }
         if ($request->revision == "RCA") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');

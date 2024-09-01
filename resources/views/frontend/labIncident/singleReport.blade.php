@@ -581,14 +581,12 @@
                     </table>
             </div>
 
-            <div class="block">
+            <!-- <div class="block">
                 <div class="block-head">
                     Attachments
                 </div>
                 <table>
                     <tr>
-                        <!-- <th class="w-20">Initial Attachment</th>
-                        <td class="w-80">@if($data->Initial_Attachment)<a href="{{ asset('upload/document/',$data->Initial_Attachment) }}">{{ $data->Initial_Attachment }}</a>@else Not Applicable @endif</td> -->
                         <th class="w-20">Attachment</th>
                         <td class="w-80">@if($data->Attachments)<a href="{{ asset('upload/document/',$data->Attachments) }}">{{ $data->Attachments }}</a>@else Not Applicable @endif</td>
                     </tr>
@@ -601,7 +599,7 @@
                     <tr>
                     </tr>
                 </table>
-            </div>
+            </div> -->
 
             
 
@@ -669,11 +667,11 @@
             <td class="w-30">@if($data->Supervisor_Review_Comments){{ $data->Supervisor_Review_Comments }}@else Not Applicable @endif</td>
                  
  </tr>
- <tr>
+ <!-- <tr>
                         <th>Incident Details Attachment</th>
                         <td class="w-80">@if($data->ccf_attachments)<a href="{{ asset('upload/document/',$data->ccf_attachments) }}">{{ $data->ccf_attachments }}</a>@else Not Applicable @endif</td>
 
- </tr>
+ </tr> -->
                 </table>
 
                 <div class="block">

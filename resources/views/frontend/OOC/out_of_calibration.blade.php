@@ -270,6 +270,13 @@ $users = DB::table('users')->get();
                                     </div>
                                 </div>
 
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
+                                    </div>
+                                </div>
+
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Description">Short Description <span class="text-danger">*</span></label>
@@ -299,13 +306,8 @@ $users = DB::table('users')->get();
 
 
 
+
                             
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Initiator Group Code">Initiator Group Code</label>
-                                    <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
-                                </div>
-                            </div>
                         
                             <script>
                                 document.getElementById('initiator_group').addEventListener('change', function() {
@@ -606,8 +608,7 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Delay Justification for Reporting">Delay Justification for Reporting</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Delay_Justification_for_Reporting" id="summernote-1">
-                                    </textarea>
+                                    <textarea class="summernote" name="Delay_Justification_for_Reporting" id="summernote-1"></textarea>
                                 </div>
                             </div>
 
@@ -1492,7 +1493,7 @@ $(document).ready(function() {
                         <div class="col-lg-4">
 
                             <div class="group-input">
-                                <label for="Initiator Group">HOD Primary Review Completed By: </label>
+                                <label for="Initiator Group">HOD Primary Review Complete By: </label>
                                 <div class="static"></div>
 
                             </div>
@@ -1501,7 +1502,7 @@ $(document).ready(function() {
                         <div class="col-lg-4 new-date-data-field">
 
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">HOD Primary Review Completed On</label>
+                                <label for="OOC Logged On">HOD Primary Review Complete On</label>
                                 <div class="static"></div>
                                 
                             </div>
@@ -1519,13 +1520,13 @@ $(document).ready(function() {
                         </div>
 
                         <div class="sub-head col-lg-12">
-                        CQA/QA Head Primary Review
+                        QA Head Primary Review
                         </div>
                         <div class="col-lg-4">
 
                             <div class="group-input">
 
-                                <label for="Initiator Group">CQA/QA Head Primary Review Complete By :</label>
+                                <label for="Initiator Group">QA Head Primary Review Complete By :</label>
                                 <div class="static"></div>
 
                             </div>
@@ -1533,7 +1534,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">CQA/QA Head Primary Review Complete On : </label>
+                                <label for="OOC Logged On">QA Head Primary Review Complete On : </label>
                                 <div class="static"></div>
 
 
@@ -1549,11 +1550,11 @@ $(document).ready(function() {
                             </div>
                         </div>
                         <div class="sub-head col-lg-12">
-                            Phase IA Investigation
+                           Under Phase IA Investigation
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase IA Investigation Complete By : </label>
+                                <label for="Initiator Group">Phase IA Investigation By : </label>
                                 <div class="static"></div>
 
 
@@ -1563,7 +1564,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Phase IA Investigation Complete On : </label>
+                                <label for="OOC Logged On">Phase IA Investigation On : </label>
                                 <div class="static"></div>
 
 
@@ -1587,7 +1588,7 @@ $(document).ready(function() {
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase IA HOD Primary Review Complete By : </label>
+                                <label for="Initiator Group">Phase IA HOD Review Complete By : </label>
                                 <div class="static"></div>
 
 
@@ -1597,7 +1598,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Phase IA HOD Primary Review Complete On : </label>
+                                <label for="OOC Logged On">Phase IA HOD Review Complete On : </label>
                                 <div class="static"></div>
 
 
@@ -1711,13 +1712,11 @@ $(document).ready(function() {
                             </div>
                         </div>
                         <div class="sub-head col-lg-12">
-                            Phase IB Investigation</div>
+                           Under Phase IB Investigation</div>
                       <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IB Investigation By : </label>
                                 <div class="static"></div>
-
-
                             </div>
                         </div>
 
@@ -1743,7 +1742,7 @@ $(document).ready(function() {
 
 
                         <div class="sub-head col-lg-12">
-                        Phase IB HOD Review Complete
+                        Phase IB HOD Prime Review
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
@@ -1810,11 +1809,11 @@ $(document).ready(function() {
                         </div>
 
                         <div class="sub-head col-lg-12">
-                        P-IB Assignable Cause Found
+                        Approved
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">P-IB Assignable Cause Found By : </label>
+                                <label for="Initiator Group">Approved By : </label>
                                 <div class="static"></div>
 
 
@@ -1824,7 +1823,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">P-IB Assignable Cause Found On : </label>
+                                <label for="OOC Logged On">Approved On : </label>
                                 <div class="static"></div>
 
 
@@ -1840,29 +1839,13 @@ $(document).ready(function() {
 
                             </div>
                         </div>
-
-
-
-                        
-
-                        
-                        
-
-                        
-                        
-                        
-                        
-                        
-
-                        
-                        
                         <div class="sub-head col-lg-12">
                             Cancel
                         </div>
                         <div class="col-lg-4">
 
                             <div class="group-input">
-                                <label for="Initiator Group">Cancelled By : </label>
+                                <label for="Initiator Group">Cancel By : </label>
                                 <div class="static"></div>
 
 
@@ -1871,7 +1854,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Cancelled On: </label>
+                                <label for="OOC Logged On">Cancel On: </label>
                                 <div class="static"></div>
 
 

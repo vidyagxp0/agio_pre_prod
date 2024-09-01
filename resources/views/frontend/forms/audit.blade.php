@@ -370,6 +370,7 @@
                       <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Audit Response & Closure</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                       <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
                       Granulation</button>
                      <button class="cctablinks" style="display:none;" id="button2" onclick="openCity(event, 'CCForm8')">Checklist - Tablet Compression</button>
@@ -418,7 +419,6 @@
                     <button class="cctablinks" style="display:none;" id="button18" onclick="openCity(event, 'CCForm24')">Checklist -LL / P2P
                     </button>
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
             <form id="auditform" action="{{ route('createInternalAudit') }}" method="post" enctype="multipart/form-data">
@@ -442,9 +442,11 @@
                                         <label for="RLS Record Number">
                                             <b>Record Number</b>
                                         </label>
-                                        <input disabled type="text" name="record_number"
+                                        <input disabled type="hidden" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/IA/{{ date('Y') }}/{{ $record_number }}">
-                                    </div>
+                                            <input disabled type="text"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/IA/{{ date('Y') }}/{{ $record_number }}">
+                                        </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -1622,6 +1624,131 @@ const virtualSelectInstance = VirtualSelect.init({
                             </div>
                         </div>
                     </div>
+
+                        <!-- Activity Log content -->
+                        <div id="CCForm6" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit Schedule On">Audit Schedule By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit Schedule On">Audit Schedule On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Cancelled By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled On">Cancelled On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit Preparation Completed On">Audit Preparation Completed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit Preparation Completed On">Audit Preparation Completed On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit Mgr.more Info Reqd By">Audit Mgr.more Info Reqd By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit Mgr.more Info Reqd On">Audit Mgr.more Info Reqd On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit Observation Submitted By">Audit Observation Submitted By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit Observation Submitted On">Audit Observation Submitted On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit Lead More Info Reqd By">Audit Lead More Info Reqd By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit Lead More Info Reqd On">Audit Lead More Info Reqd On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit Response Completed By">Audit Response Completed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit Response Completed On">Audit Response Completed On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Response Feedback Verified By">Response Feedback Verified By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Response Feedback Verified On">Response Feedback Verified On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for=" Rejected By">Rejected By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Rejected On">Rejected On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="submit">Submit</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Audit Response & Closure content -->
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -30290,129 +30417,7 @@ const virtualSelectInstance = VirtualSelect.init({
 
 
 
-                    <!-- Activity Log content -->
-                    <div id="CCForm6" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Schedule On">Audit Schedule By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Schedule On">Audit Schedule On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled By">Cancelled By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled On">Cancelled On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Preparation Completed On">Audit Preparation Completed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Preparation Completed On">Audit Preparation Completed On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd By">Audit Mgr.more Info Reqd By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd On">Audit Mgr.more Info Reqd On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Observation Submitted By">Audit Observation Submitted By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Observation Submitted On">Audit Observation Submitted On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Lead More Info Reqd By">Audit Lead More Info Reqd By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Lead More Info Reqd On">Audit Lead More Info Reqd On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Response Completed By">Audit Response Completed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Response Completed On">Audit Response Completed On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Response Feedback Verified By">Response Feedback Verified By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Response Feedback Verified On">Response Feedback Verified On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for=" Rejected By">Rejected By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Rejected On">Rejected On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit">Submit</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
+                
 
                 </div>
             </form>

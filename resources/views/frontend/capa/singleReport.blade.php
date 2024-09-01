@@ -198,11 +198,11 @@
                         <th class="w-20">Initiator</th>
                         <td class="w-80">{{ $data->originator }}</td>
                         <th class="w-20">Date of Initiation</th>
-                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-80">{{ Helpers::getdateFormat($data->intiation_date) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-80">@if($data->record){{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/CAPA/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} </td>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-80">@if($data->division_id){{ Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                     </tr>
@@ -656,37 +656,37 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-30">Plan Proposed By
+                        <th class="w-30">Propose Plan By
                         </th>
                         <td class="w-40">{{ $data->plan_proposed_by }}</td>
                         <th class="w-20">
-                            Plan Proposed On</th>
+                            Propose Plan On</th>
                         <td class="w-30">{{ $data->plan_proposed_on }}</td>
                         <th class="w-20">
                             Comment</th>
-                        <td class="w-30">{{ $data->plan_proposed_on_comment }}</td>
+                        <td class="w-30">{{ $data->comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Plan Approved By
+                        <th class="w-20">QA/CQA Review Completed By
                         </th>
-                        <td class="w-30">{{ $data->plan_approved_by }}</td>
+                        <td class="w-30">{{ $data->qa_review_completed_by }}</td>
                         <th class="w-20">
-                            Plan Approved On</th>
-                        <td class="w-30">{{ $data->Plan_approved_on }}</td>
+                            QA/CQA Review Completed On</th>
+                        <td class="w-30">{{ $data->qa_review_completed_on }}</td>
                         <th class="w-20">
                             Comment</th>
-                        <td class="w-30">{{ $data->plan_approved_on_comment }}</td>
+                        <td class="w-30">{{ $data->qa_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA More Info Required By
+                        <th class="w-20">HOD Review Completed By
                         </th>
-                        <td class="w-30">{{ $data->qa_more_info_required_by1 }}</td>
+                        <td class="w-30">{{ $data->hod_review_completed_by }}</td>
                         <th class="w-20">
-                            QA More Info Required On</th>
-                        <td class="w-30">{{ $data->qa_more_info_required_on1 }}</td>
+                            HOD Review Completed On</th>
+                        <td class="w-30">{{ $data->hod_review_completed_on }}</td>
                         <th class="w-20">
                             Comment</th>
-                        <td class="w-30">{{ $data->qa_more_info_required_on1_comment }}</td>
+                        <td class="w-30">{{ $data->hod_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancelled By
@@ -708,9 +708,9 @@
                         <td class="w-30">{{ $data->completed_on }}</td>
                         <th class="w-20">
                             Comment</th>
-                        <td class="w-30">{{ $data->plan_proposed_on_comment }}</td>
+                        <td class="w-30">{{ $data->comment }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">QA More Info Required By
                         </th>
                         <td class="w-30">{{ $data->qa_more_info_required_by }}</td>
@@ -720,7 +720,7 @@
                         <th class="w-20">
                             Comment</th>
                         <td class="w-30">{{ $data->qa_more_info_required_on_comment }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Approved By</th>
                         <td class="w-30">{{ $data->approved_by }}</td>
@@ -728,26 +728,44 @@
                         <td class="w-30">{{ $data->approved_on }}</td>
                         <th class="w-20">
                             Comment</th>
-                        <td class="w-30">{{ $data->approved_on_comment }}</td>
+                        <td class="w-30">{{ $data->approved_comment }}</td>
                     </tr>
 
                     <tr>
-                        <th class="w-20">Rejected By</th>
-                        <td class="w-30">{{ $data->rejected_by }}</td>
-                        <th class="w-20">Rejected On</th>
-                        <td class="w-30">{{ $data->rejected_on }}</td>
+                        <th class="w-20">Completed By</th>
+                        <td class="w-30">{{ $data->completed_by }}</td>
+                        <th class="w-20">Completed On</th>
+                        <td class="w-30">{{ $data->completed_on }}</td>
                         <th class="w-20">
                             Comment</th>
-                        <td class="w-30">{{ $data->rejected_on_comment }}</td>
+                        <td class="w-30">{{ $data->com_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">All Actions Completed By</th>
-                        <td class="w-30">{{ $data->all_actions_completed_by }}</td>
-                        <th class="w-20">All Actions Completed On</th>
-                        <td class="w-30">{{ $data->all_actions_completed_on }}</td>
+                        <th class="w-20">HOD Final Review Completed By</th>
+                        <td class="w-30">{{ $data->hod_final_review_completed_by }}</td>
+                        <th class="w-20">HOD Final Review Completed On</th>
+                        <td class="w-30">{{ $data->hod_final_review_completed_on }}</td>
                         <th class="w-20">
                             Comment</th>
-                        <td class="w-30">{{ $data->all_actions_completed_on_comment }}</td>
+                        <td class="w-30">{{ $data->final_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA/CQA Closure Review Completed By</th>
+                        <td class="w-30">{{ $data->qa_closure_review_completed_by }}</td>
+                        <th class="w-20">QA/CQA Closure Review Completed On</th>
+                        <td class="w-30">{{ $data->qa_closure_review_completed_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->qa_closure_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA/CQA Approval  Completed By</th>
+                        <td class="w-30">{{ $data->qah_approval_completed_by }}</td>
+                        <th class="w-20">QA/CQA Approval  Completed On</th>
+                        <td class="w-30">{{ $data->qah_approval_completed_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->qah_comment }}</td>
                     </tr>
 
                 </table>

@@ -237,10 +237,11 @@ Route::get('auditDetailsRoot/{id}', [RootCauseController::class, 'auditDetailsro
 
 // ====================================InternalauditController=======================
 Route::post('internalauditreject/{id}', [InternalauditController::class, 'RejectStateChange']);
+Route::post('nocapastate/{id}', [InternalauditController::class, 'noCapastate']);
 Route::post('InternalAuditCancel/{id}', [InternalauditController::class, 'InternalAuditCancel']);
 Route::post('InternalAuditChild/{id}', [InternalauditController::class, 'internal_audit_child'])->name('internal_audit_child');
 Route::post('multiple_child/{id}', [InternalauditController::class, 'multiple_child'])->name('multiple_child');
-
+Route::post('internalAuditReview/{id}', [InternalauditController::class, 'internalAuditReview'])->name('internalAuditReview');
 // external audit----------------------------
 
 Route::get('show/{id}', [AuditeeController::class, 'show'])->name('showExternalAudit');
@@ -564,7 +565,7 @@ Route::get('errataaudittrail/{id}', [ErrataController::class, 'AuditTrial'])->na
 Route::get('errataAuditInner/{id}', [ErrataController::class, 'auditDetailsErrata'])->name('errataauditdetails');
 Route::post('/errata/cancel/{id}', [ErrataController::class, 'erratacancelstage'])->name('errata.cancel');
 Route::get('errata_new', [ErrataController::class, 'index'])->name('errata_new');
-
+Route::get('/errata/{id}',[Erratacontroller::class,'audit_trail_filter'])->name('api.ERRATA.filter');
 // ----------------------Stages----------------------------------------
 
 // extensionchild========================

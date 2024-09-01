@@ -1765,19 +1765,19 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Rejected_By">Rejected By</label>
+                                                <label for="Rejected_By">More Information Required By</label>
                                                 <div class="static">{{ $data->rejected_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Rejected_On">Rejected On</label>
+                                                <label for="Rejected_On">More Information Required On</label>
                                                 <div class="static">{{ $data->rejected_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_On">Rejected Comment</label>
+                                                <label for="Submitted_On">More Information Required Comment</label>
                                                 <div class="static">{{ $data->reject_comment }}</div>
                                             </div>
                                         </div>

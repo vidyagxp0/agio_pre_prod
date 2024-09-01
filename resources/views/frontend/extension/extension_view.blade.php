@@ -31,7 +31,15 @@
         header {
             display: none;
         }
-       
+        .remove-file  {
+            color: white;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .remove-file :hover {
+            color: white;
+        }
         .progress-bars div {
             flex: 1 1 auto;
             border: 1px solid grey;
@@ -115,10 +123,94 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
                                 Approved
                              </button>
-                                @if($count == 2)
+                             @if(Helpers::getChildData($extensionNew->parent_id, 'LabIncident') == 3)
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                         Send for CQA
                                     </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Deviation') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOC') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOT') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Management Review') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'CAPA') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Action Item') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Resampling') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Observation') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'RCA') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Risk Assesment') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Management Review') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'External Audit') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Internal Audit') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Audit Program') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'CC') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'New Documnet') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Effectiveness Check') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOS Micro') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOS Chemical') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Market Complaint') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>
+                                    @elseif(Helpers::getChildData($extensionNew->parent_id, 'Failure Investigation') == 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                        Send for CQA
+                                    </button>   
                                 @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Reject
@@ -269,7 +361,7 @@
                                     var textlen = maxLength - $(this).val().length;
                                     $('#rchars').text(textlen);});
                             </script>
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">HOD review  </label>
                                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
@@ -286,8 +378,29 @@
                                         @endif
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
+
+
                             <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Assigned To">HOD reviewer </label>
+                                        <select id="choices-multiple-remove" class="choices-multiple-reviewe"
+                                            name="reviewers" placeholder="Select Reviewers"
+                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>
+                                            <option value="">-- Select --</option>
+                                            @if (!empty(Helpers::getHODDropdown()))
+                                                @foreach (Helpers::getHODDropdown() as $listHod)
+                                                    <option value="{{ $listHod['id'] }}"
+                                                        @if ($listHod['id'] == $extensionNew->reviewers) selected @endif>
+                                                        {{ $listHod['name'] }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+
+                            <!-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">QA approval </label>
                                     <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
@@ -304,7 +417,28 @@
                                         @endif
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
+
+                            <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Assigned To">QA approval </label>
+                                        <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
+                                            name="approvers" placeholder="Select Approvers"
+                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>
+                                            <option value="">-- Select --</option>
+
+                                            @if (!empty($users))
+                                                @foreach ($users as $lan)
+                                                    <option value="{{ $lan->id }}"
+                                                        @if ($lan->id == $extensionNew->approvers) selected @endif>
+                                                        {{ $lan->name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Actual Start Date">Current Due Date (Parent)</label>
@@ -328,6 +462,27 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    function updateProposedDueDateMin() {
+                                        var currentDueDateInput = document.querySelector('input[name="current_due_date"]');
+                                        var proposedDueDateInput = document.querySelector('input[name="proposed_due_date"]');
+                                        
+                                        if (currentDueDateInput && proposedDueDateInput) {
+                                            var currentDueDateValue = currentDueDateInput.value;
+                                            if (currentDueDateValue) {
+                                                proposedDueDateInput.setAttribute('min', currentDueDateValue);
+                                            } else {
+                                                proposedDueDateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+                                            }
+                                        }
+                                    }
+                                    updateProposedDueDateMin();
+                                    document.querySelector('input[name="current_due_date"]').addEventListener('change', updateProposedDueDateMin);
+                                });
+                            </script>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Short Description"> Description</label>
@@ -347,7 +502,7 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments"> Extension Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
@@ -372,13 +527,38 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="HOD_Attachments"
+                                            <input type="file" id="Extension_Attachments"
                                                 name="file_attachment_extension[]"
                                                 oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
+                            <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Attachment">Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="file_attachment_extension">
+                                                        @if ($extensionNew->file_attachment_extension)
+                                                        @foreach(json_decode($extensionNew->file_attachment_extension) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $extensionNew->stage == 0 || $extensionNew->stage == 7 || $extensionNew->stage == 8  ||  $extensionNew->stage == 9 ? "disabled" : "" }} type="file" id="myfile" name="file_attachment_extension[]"
+                                                            oninput="addMultipleFiles(this, 'file_attachment_extension')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                         </div>
                         <div class="button-block">
                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -519,40 +699,175 @@
              <div id="CCForm6" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Activated By">Initiated By</label>
+                                <label for="Activated By">Submit By</label>
                                 <div class="static">{{ $extensionNew->submit_by }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Activated On">Initiated On</label>
+                                <label for="Activated On">Submit On</label>
                                 <div class="static">{{ $extensionNew->submit_on }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="group-input">
-                                <label for=" Rejected By">Reviewed By</label>
+                                <label for="Activated On">Comment</label>
+                                <div class="static">{{ $extensionNew->submit_comment }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for=" Rejected By">Cancel By</label>
+                                <div class="static">{{ $extensionNew->reject_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Cancel On</label>
+                                <div class="static">{{ $extensionNew->reject_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Comment</label>
+                                <div class="static">{{ $extensionNew->reject_comment }}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for=" Rejected By">More Information Required By</label>
+                                <div class="static">{{ $extensionNew->more_info_review_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">More Information Required On</label>
+                                <div class="static">{{ $extensionNew->more_info_review_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Comment</label>
+                                <div class="static">{{ $extensionNew->more_info_review_comment }}</div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for=" Rejected By">Review By</label>
                                 <div class="static">{{ $extensionNew->submit_by_review }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Rejected On">Reviewed On</label>
+                                <label for="Rejected On">Review On</label>
                                 <div class="static">{{ $extensionNew->submit_on_review }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="group-input">
-                                <label for=" Rejected By">Approved By</label>
+                                <label for="Rejected On">Comment</label>
+                                <div class="static">{{ $extensionNew->submit_comment_review }}</div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for=" Rejected By">Reject By</label>
+                                <div class="static">{{ $extensionNew->submit_by_inapproved }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Reject On</label>
+                                <div class="static">{{ $extensionNew->submit_on_approved }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Comment</label>
+                                <div class="static">{{ $extensionNew->submit_commen_inapproved }}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for=" Rejected By">More Information Required By</label>
+                                <div class="static">{{ $extensionNew->more_info_inapproved_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">More Information Required On</label>
+                                <div class="static">{{ $extensionNew->more_info_inapproved_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Comment</label>
+                                <div class="static">{{ $extensionNew->more_info_inapproved_comment }}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for=" Rejected By">Send for CQA By</label>
+                                <div class="static">{{ $extensionNew->send_cqa_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Send for CQA On</label>
+                                <div class="static">{{ $extensionNew->send_cqa_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Comment</label>
+                                <div class="static">{{ $extensionNew->send_cqa_comment }}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for=" Rejected By"> Approved By</label>
                                 <div class="static">{{ $extensionNew->submit_by_approved }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Rejected On">Approved On</label>
+                                <label for="Rejected On"> Approved On</label>
                                 <div class="static">{{ $extensionNew->submit_on_approved }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Comment</label>
+                                <div class="static">{{ $extensionNew->submit_comment_approved }}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for=" Rejected By"> CQA Approval Complete By</label>
+                                <div class="static">{{ $extensionNew->cqa_approval_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On"> CQA Approval Complete On</label>
+                                <div class="static">{{ $extensionNew->cqa_approval_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Rejected On">Comment</label>
+                                <div class="static">{{ $extensionNew->cqa_approval_comment }}</div>
                             </div>
                         </div>
 
@@ -983,5 +1298,22 @@
                     currentStep--;
                 }
             }
+        </script>
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const removeButtons = document.querySelectorAll('.remove-file');
+
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const fileName = this.getAttribute('data-file-name');
+                        const fileContainer = this.closest('.file-container');
+
+                        // Hide the file container
+                        if (fileContainer) {
+                            fileContainer.style.display = 'none';
+                        }
+                    });
+                });
+            });
         </script>
 @endsection

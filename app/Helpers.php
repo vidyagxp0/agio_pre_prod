@@ -6,7 +6,10 @@ use App\Models\ActionItem;
 use App\Models\Division;
 use App\Models\extension_new;
 use App\Models\QMSDivision;
+use App\Models\QMSProcess;
 use App\Models\User;
+use App\Models\Deviation;
+use App\Models\LabIncident;
 use App\Models\OOS_micro;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -65,7 +68,7 @@ class Helpers
 
     public static function getdateFormat1($date)
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y');
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y H:i:s');
     }
 
     public static function isRevised($data)
@@ -79,7 +82,7 @@ class Helpers
     }}
 
     public static function isRiskAssessment($data)
-    {   
+    {
         if($data == 0 || $data  >= 7){
             return 'disabled';
         }else{
@@ -318,7 +321,7 @@ class Helpers
             case 'lab_incident':
                 $parent_record = LabIncident::find($id);
                 break;
-            
+
             default:
                 # code...
                 break;
@@ -448,10 +451,10 @@ class Helpers
                 break;
             case 'RA':
                 $full_department_name = "Regulatory Affairs";
-                break; 
+                break;
             case 'PV':
                 $full_department_name = "Pharmacovigilance";
-                break;         
+                break;
 
             default:
                 break;
@@ -486,7 +489,7 @@ class Helpers
             'RA' => 'Regulatory Affairs',
             'PV' => 'Pharmacovigilance',
         ];
-        
+
         return $departments;
     }
 
@@ -508,7 +511,7 @@ class Helpers
             'VMP' => 'Validation Master Plan',
             'QM' => 'Quality Manual',
         ];
-        
+
         return $document_types;
     }
 
@@ -801,17 +804,17 @@ class Helpers
 
     // SONALI SHARMA
     public static function isOOSChemical($data)
-    {   
+    {
         if($data == 0 || $data  >= 15){
             return 'disabled';
         }else{
             return  '';
         }
-         
+
     }
 
     public static function isOOSMicro($micro_data)
-    {   
+    {
         if($micro_data == 0 || $micro_data  >= 14){
             return 'disabled';
         }else{
@@ -824,7 +827,7 @@ class Helpers
         try {
             $format = $format ? $format : 'd-M-Y';
             $dateInstance = $date ? Carbon::parse($date) : Carbon::now();
-            
+
             if ($addDays) {
                 $dateInstance->addDays($addDays);
             } else {
@@ -852,7 +855,7 @@ class Helpers
 
     public static function getChemicalGridData($date)
     {
-        
+
     }
 
     public function getChecklistData(){
@@ -876,9 +879,9 @@ class Helpers
             '17' => 'Checklist - Formulation Research and Development',
             '18' => 'Checklist - LL / P2P',
         ];
-        
+
         return $checklists;
-        
+
     }
 
     public static function getInitiatorGroupData($shortName)
@@ -1008,4 +1011,180 @@ class Helpers
         return $checklist;
     }
 
+    public static function getChildData($id, $parent_type){
+        $count = 0;
+        if($parent_type == 'LabIncident')
+       {
+        $count = extension_new::where('parent_type', 'LabIncident')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Deviation')
+       {
+        $count = extension_new::where('parent_type', 'Deviation')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOC')
+       {
+        $count = extension_new::where('parent_type', 'OOC')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOT')
+       {
+        $count = extension_new::where('parent_type', 'OOT')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Management Review')
+       {
+        $count = extension_new::where('parent_type', 'Management Review')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'CAPA')
+       {
+        $count = extension_new::where('parent_type', 'CAPA')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Action Item')
+       {
+        $count = extension_new::where('parent_type', 'Action Item')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Resampling')
+       {
+        $count = extension_new::where('parent_type', 'Resampling')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Observation')
+       {
+        $count = extension_new::where('parent_type', 'Observation')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'RCA')
+       {
+        $count = extension_new::where('parent_type', 'RCA')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Risk Assesment')
+       {
+        $count = extension_new::where('parent_type', 'Risk Assesment')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Management Review')
+       {
+        $count = extension_new::where('parent_type', 'Management Review')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'External Audit')
+       {
+        $count = extension_new::where('parent_type', 'External Audit')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Internal Audit')
+       {
+        $count = extension_new::where('parent_type', 'Internal Audit')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Audit Program')
+       {
+        $count = extension_new::where('parent_type', 'Audit Program')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'CC')
+       {
+        $count = extension_new::where('parent_type', 'CC')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'New Documnet')
+       {
+        $count = extension_new::where('parent_type', 'New Documnet')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Effectiveness Check')
+       {
+        $count = extension_new::where('parent_type', 'Effectiveness Check')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOS Micro')
+       {
+        $count = extension_new::where('parent_type', 'OOS Micro')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOS Chemical')
+       {
+        $count = extension_new::where('parent_type', 'OOS Chemical')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Market Complaint')
+       {
+        $count = extension_new::where('parent_type', 'Market Complaint')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Failure Investigation')
+       {
+        $count = extension_new::where('parent_type', 'Failure Investigation')
+        ->where('parent_id', $id)
+        ->count();
+       }
+
+        return $count;
+    }
+
+    public static function check_roles($division_id, $process_name, $role_id, $user_id = null)
+    {
+
+        $process = QMSProcess::where([
+            'division_id' => $division_id,
+            'process_name' => $process_name
+        ])->first();
+
+        $roleExists = DB::table('user_roles')->where([
+            'user_id' => $user_id ? $user_id : Auth::user()->id,
+            'q_m_s_divisions_id' => $division_id,
+            'q_m_s_processes_id' => $process ? $process->id : 0,
+            'q_m_s_roles_id' => $role_id
+        ])->first();
+
+        return $roleExists ? true : false;
+    }
+
+
+    public static function getHODDropdown() {
+        $hodUserList = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->where('user_roles.q_m_s_roles_id', '4')
+            ->select('users.id', 'users.name')
+            ->distinct()
+            ->get();
+
+        $dropdown = [];
+        foreach ($hodUserList as $hodUser) {
+            $dropdown[] = ['id' => $hodUser->id, 'name' => $hodUser->name];
+        }
+
+        return $dropdown;
+    }
+
+
+
 }
+
