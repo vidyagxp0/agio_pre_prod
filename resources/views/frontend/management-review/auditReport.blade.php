@@ -200,7 +200,7 @@
             <table>
                 <thead>
                     <tr class="table_bg">
-                        <th>S.Nofxdgsd</th>
+                        <th>S.No</th>
                         <th>Flow Changed From</th>
                         <th>Flow Changed To</th>
                         <th>Data Field</th>

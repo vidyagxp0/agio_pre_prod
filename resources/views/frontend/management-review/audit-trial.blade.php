@@ -199,6 +199,9 @@
                             <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">
                                     Exit
                             </a> </button>
+                            <a href=""><button class="button_theme1" onclick="window.print();">
+                                Print
+                            </button></a>
                         </div>
                         {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button> --}}
@@ -285,7 +288,7 @@
                                         @if ($dataDemo->change_from)
                                             {{-- Check if the change_from is a date --}}
                                             @if (strtotime($dataDemo->change_from))
-                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d/m/Y') }}
+                                                {{ \Carbon\Carbon::parse($dataDemo->change_from)->format('d-M-Y') }}
                                             @else
                                                 {{ str_replace(',', ', ', $dataDemo->change_from) }}
                                             @endif
@@ -299,7 +302,7 @@
                                         @if (!empty(strip_tags($dataDemo->previous)))
                                             {{-- Check if the previous is a date --}}
                                             @if (strtotime($dataDemo->previous))
-                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d/m/Y') }}
+                                                {{ \Carbon\Carbon::parse($dataDemo->previous)->format('d-M-Y') }}
                                             @else
                                                 {!! $dataDemo->previous !!}
                                             @endif
@@ -316,14 +319,14 @@
                                     @if ($dataDemo->activity_type == 'Activity Log')
                                         <strong>Change To :</strong>
                                         @if (strtotime($dataDemo->change_to))
-                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d/m/Y') }}
+                                            {{ \Carbon\Carbon::parse($dataDemo->change_to)->format('d-M-Y') }}
                                         @else
                                             {!! str_replace(',', ', ', $dataDemo->change_to) ?: 'Not Applicable' !!}
                                         @endif
                                     @else
                                         <strong>Change To :</strong>
                                         @if (strtotime($dataDemo->current))
-                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d/m/Y') }}
+                                            {{ \Carbon\Carbon::parse($dataDemo->current)->format('d-M-Y') }}
                                         @else
                                             {!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
                                         @endif
@@ -346,7 +349,7 @@
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d/m/Y H:i:s') : 'Not Applicable' }}
+                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
@@ -357,6 +360,120 @@
                 </table>
             </div>
         </div>
+
+        @php 
+        $auditCollect = DB::table('audit_reviewers_details')
+                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
+                            ->latest()
+                            ->first();
+        @endphp
+        <div class="modal fade" id="auditViewers">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <style>
+                                    .validationClass {
+                                        margin-left: 100px
+                                    }
+                                </style>
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Audit Reviewers Details</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                @php
+                                    $reviewer = DB::table('audit_reviewers_details')
+                                        ->where(['doc_id' => $document->id, 'type' => 'Change Control'])
+                                        ->get();
+                                @endphp
+                                <!-- Customer grid view -->
+                                <div class="table-responsive" style="padding: 20px;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Review By</th>
+                                                <th>Review On</th>
+                                                <th>Comment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Check if reviewer array is empty or null -->
+                                            @if ($reviewer && count($reviewer) > 0)
+                                                <!-- Iterate over stored reviewer and display them -->
+                                                @foreach ($reviewer as $review)
+                                                    <tr>
+                                                        <td>{{ $review->reviewer_comment_by }}</td>
+                                                        <td>{{ $review->reviewer_comment_on }}</td>
+                                                        <td>{{ $review->reviewer_comment }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="9">No results available</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal fade" id="auditReviewer">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <style>
+                                    .validationClass {
+                                        margin-left: 100px
+                                    }
+                                </style>
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Audit Reviewers</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <!-- <form action="" method="POST"> -->
+                                    <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
+                                        @csrf
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <div class="group-input">
+                                                <label for="Reviewer commnet">Reviewer Comment <span id=""
+                                                        class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
+                                            </div>
+                                            <div class="group-input">
+                                                <label for="Reviewer Completed By">Reviewer Completed By</label>
+                                                <input disabled type="text" class="form-control"
+                                                    name="reviewer_completed_by" id="reviewer_completed_by"
+                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
+                                            </div>
+                                            <div class="group-input">
+                                                <label for="Reviewer Completed on">Reviewer Completed On</label>
+                                                <input disabled type="text" class="form-control"
+                                                    name="reviewer_completed_on" id="reviewer_completed_on"
+                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                            </div>
+                                            <input type="hidden" id="type" name="type" value="Change Control">
+                                        </div>
+                                        <div class="modal-footer">
+                                            {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
+                                            <button type="button" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+
         <!-- Pagination links -->
         <div style="float: inline-end; margin: 10px;">
             <style>
