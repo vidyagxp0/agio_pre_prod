@@ -1,12 +1,3 @@
-
-
-
-
-
-
-
-
-
 @extends('frontend.layout.main')
 @section('container')
     <div id="audit-trial">
@@ -248,10 +239,11 @@
 
             <body>
                 <div style="display: flex; justify-content: flex-end;">
-                    
+
                      <a class="text-white" href="{{ route('marketcomplaint.marketcomplaint_view',$document->id) }}"><button  class="button_theme1" style="margin-right: 10px"> Back  </button></a>
-                     
-                
+                     <button class="button_theme1" onclick="window.print();" style="margin-right: 10px"> Print </button>
+                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer"style="margin-right: 10px"> Review </button>
+
                      <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">Exit</button>
                 </a> </div>
                 <header>
@@ -264,7 +256,7 @@
                         </tr>
                     </table>
 
-                 
+
 
                     <table>
                         <div class="heading">
@@ -326,7 +318,7 @@
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change From :</strong>{!! $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' !!}
+                                        <strong>Change From :</strong>{!! $dataDemo->change_from ? $dataDemo->change_from : 'Null' !!}
                                     @else
                                         <strong>Change From :</strong>{!! $dataDemo->previous ? $dataDemo->previous : 'Null' !!}
                                     @endif
@@ -334,9 +326,9 @@
                                 <br>
                                 <div>
                                     @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change To :</strong>{!! $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' !!}
+                                        <strong>Change To :</strong>{!! $dataDemo->change_to ? $dataDemo->change_to : 'Null' !!}
                                     @else
-                                        <strong>Change To :</strong>{!! $dataDemo->current ? $dataDemo->current : 'Not Applicable' !!}
+                                        <strong>Change To :</strong>{!! $dataDemo->current ? $dataDemo->current : 'Null' !!}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">
@@ -468,4 +460,54 @@
 
         });
     </script>
+    {{-- <div class="modal fade" id="auditReviewer">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <style>
+                    .validationClass {
+                        margin-left: 100px
+                    }
+                </style>
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Audit Reviewers</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- <form action="" method="POST"> -->
+                    <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
+                        @csrf
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="group-input">
+                                <label for="Reviewer commnet">Reviewer Comment <span id=""
+                                        class="text-danger">*</span></label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                        does not require completion</small></div>
+                                <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="Reviewer Completed By">Reviewer Completed By</label>
+                                <input disabled type="text" class="form-control"
+                                    name="reviewer_completed_by" id="reviewer_completed_by"
+                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
+                            </div>
+                            <div class="group-input">
+                                <label for="Reviewer Completed on">Reviewer Completed On</label>
+                                <input disabled type="text" class="form-control"
+                                    name="reviewer_completed_on" id="reviewer_completed_on"
+                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                            </div>
+                            <input type="hidden" id="type" name="type" value="Deviation">
+                        </div>
+                        <div class="modal-footer">
+                            {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
+                            <button type="button" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
+            </div>
+        </div>
+    </div> --}}
 @endsection

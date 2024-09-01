@@ -22,8 +22,10 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator"> Record Number </label>
-                     <input disabled type="text" name="record_number"
-                      value="{{ Helpers::getDivisionName($data->division_id) }}/OOS Chemical/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}">
+                     {{-- <input disabled type="text" name="record_number"
+                      value="{{ Helpers::getDivisionName($data->division_id) }}/OOS Chemical/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}"> --}}
+                      <input disabled type="text" id="record" name="record"
+                      value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Chemical/{{ date('Y') }}/{{ $record_number }}">
                 </div>
             </div>
             <div class="col-lg-6">

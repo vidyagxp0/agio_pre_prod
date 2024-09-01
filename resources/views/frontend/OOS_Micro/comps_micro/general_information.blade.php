@@ -20,8 +20,10 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator"> Record Number </label>
-                    <input type="hidden"  id="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
-                    <input disabled type="text" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
+                    {{-- <input type="hidden"  id="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
+                    <input disabled type="text" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}"> --}}
+                    <input disabled type="text" id="record" name="record"
+                    value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
             </div>
             </div>
             <div class="col-lg-6">
@@ -347,7 +349,7 @@
                 <div class="group-input">
                     <label for="Sample Type">Sample Type</label>
                     <select name="sample_type_gi" {{Helpers::isOOSMicro($micro_data->stage)}}>
-                        <option value="">Enter Your Selection Here</option>
+                        <option value="0">Enter Your Selection Here</option>
                         <option value="raw-material" @if ($micro_data->sample_type_gi == 'raw-material') selected @endif>Raw Material</option>
                         <option value="packing-material" @if ($micro_data->sample_type_gi == 'packing-material') selected @endif>Packing Material</option>
                         <option value="finished-product" @if ($micro_data->sample_type_gi == 'finished-product') selected @endif>Finished Product</option>

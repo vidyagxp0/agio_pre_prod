@@ -35,15 +35,15 @@ class OOSController extends Controller
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
-        if ($division) {
-            $last_oos = OOS::where('division_id', $division->id)->latest()->first();
-            if ($last_oos) {
-                $record_number = $last_oos->record_number ? str_pad($last_oos->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+        // if ($division) {
+        //     $last_oos = OOS::where('division_id', $division->id)->latest()->first();
+        //     if ($last_oos) {
+        //         $record_number = $last_oos->record_number ? str_pad($last_oos->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
                 
-            } else {
-                $record_number = '0001';
-            }
-        }
+        //     } else {
+        //         $record_number = '0001';
+        //     }
+        // }
 
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -86,7 +86,7 @@ class OOSController extends Controller
         // dd($data);
         $old_records = OOS::select('id', 'division_id', 'record_number')->get();
         // $revised_date = Extension::where('parent_id', $id)->where('parent_type', "OOS Chemical")->value('revised_date');
-        $data->record_number = str_pad($data->record_number, 4, '0', STR_PAD_LEFT);
+        $record_number = str_pad($data->record_number, 4, '0', STR_PAD_LEFT);
         
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
@@ -102,7 +102,7 @@ class OOSController extends Controller
         $oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
         // dd($phase_two_invs);
         return view('frontend.OOS.oos_form_view', 
-        compact('data', 'old_records','revised_date','cft' , 'products_details','instrument_details','info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusions', 'oos_conclusion_reviews'));
+        compact('data', 'old_records','revised_date','cft' ,'record_number', 'products_details','instrument_details','info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusions', 'oos_conclusion_reviews'));
 
     }
 

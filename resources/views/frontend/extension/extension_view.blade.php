@@ -31,7 +31,15 @@
         header {
             display: none;
         }
-       
+        .remove-file  {
+            color: white;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .remove-file :hover {
+            color: white;
+        }
         .progress-bars div {
             flex: 1 1 auto;
             border: 1px solid grey;
@@ -353,7 +361,7 @@
                                     var textlen = maxLength - $(this).val().length;
                                     $('#rchars').text(textlen);});
                             </script>
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">HOD review  </label>
                                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
@@ -370,8 +378,29 @@
                                         @endif
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
+
+
                             <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Assigned To">HOD reviewer </label>
+                                        <select id="choices-multiple-remove" class="choices-multiple-reviewe"
+                                            name="reviewers" placeholder="Select Reviewers"
+                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>
+                                            <option value="">-- Select --</option>
+                                            @if (!empty(Helpers::getHODDropdown()))
+                                                @foreach (Helpers::getHODDropdown() as $listHod)
+                                                    <option value="{{ $listHod['id'] }}"
+                                                        @if ($listHod['id'] == $extensionNew->reviewers) selected @endif>
+                                                        {{ $listHod['name'] }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+
+                            <!-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">QA approval </label>
                                     <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
@@ -388,7 +417,28 @@
                                         @endif
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
+
+                            <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Assigned To">QA approval </label>
+                                        <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
+                                            name="approvers" placeholder="Select Approvers"
+                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}>
+                                            <option value="">-- Select --</option>
+
+                                            @if (!empty($users))
+                                                @foreach ($users as $lan)
+                                                    <option value="{{ $lan->id }}"
+                                                        @if ($lan->id == $extensionNew->approvers) selected @endif>
+                                                        {{ $lan->name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Actual Start Date">Current Due Date (Parent)</label>
@@ -412,6 +462,27 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    function updateProposedDueDateMin() {
+                                        var currentDueDateInput = document.querySelector('input[name="current_due_date"]');
+                                        var proposedDueDateInput = document.querySelector('input[name="proposed_due_date"]');
+                                        
+                                        if (currentDueDateInput && proposedDueDateInput) {
+                                            var currentDueDateValue = currentDueDateInput.value;
+                                            if (currentDueDateValue) {
+                                                proposedDueDateInput.setAttribute('min', currentDueDateValue);
+                                            } else {
+                                                proposedDueDateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+                                            }
+                                        }
+                                    }
+                                    updateProposedDueDateMin();
+                                    document.querySelector('input[name="current_due_date"]').addEventListener('change', updateProposedDueDateMin);
+                                });
+                            </script>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Short Description"> Description</label>
@@ -431,7 +502,7 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments"> Extension Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
@@ -456,13 +527,38 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="HOD_Attachments"
+                                            <input type="file" id="Extension_Attachments"
                                                 name="file_attachment_extension[]"
                                                 oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
+                            <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Attachment">Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="file_attachment_extension">
+                                                        @if ($extensionNew->file_attachment_extension)
+                                                        @foreach(json_decode($extensionNew->file_attachment_extension) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $extensionNew->stage == 0 || $extensionNew->stage == 7 || $extensionNew->stage == 8  ||  $extensionNew->stage == 9 ? "disabled" : "" }} type="file" id="myfile" name="file_attachment_extension[]"
+                                                            oninput="addMultipleFiles(this, 'file_attachment_extension')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                         </div>
                         <div class="button-block">
                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -1202,5 +1298,22 @@
                     currentStep--;
                 }
             }
+        </script>
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const removeButtons = document.querySelectorAll('.remove-file');
+
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const fileName = this.getAttribute('data-file-name');
+                        const fileContainer = this.closest('.file-container');
+
+                        // Hide the file container
+                        if (fileContainer) {
+                            fileContainer.style.display = 'none';
+                        }
+                    });
+                });
+            });
         </script>
 @endsection

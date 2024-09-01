@@ -153,7 +153,7 @@
             <table>
                 <tr>
                     <td class="w-70 head">
-                        Incident Audit Trial Report
+                        Incident Audit Trail Report
                     </td>
                     <td class="w-30">
                         <div class="logo">
@@ -173,7 +173,7 @@
                         {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                     </td>
                     <td class="w-30">
-                        <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                        <strong>Record No:</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                     </td>
                 </tr>
             </table>

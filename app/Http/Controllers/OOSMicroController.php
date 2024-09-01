@@ -31,8 +31,8 @@ class OOSMicroController extends Controller
         $cft = [];
         $old_records = OOS_micro::select('id', 'division_id', 'record')->get();
         
-        $record = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
         
         // if ($division) {
@@ -178,12 +178,12 @@ class OOSMicroController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if (!empty($OOSmicro->initiation_date)) {
+        if (!empty($OOSmicro->intiation_date)) {
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
             $history->activity_type = 'Initiation Date';
             $history->previous = "Null";
-            $history->current = $OOSmicro->initiation_date;
+            $history->current = $OOSmicro->intiation_date;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -194,12 +194,12 @@ class OOSMicroController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if (!empty($OOSmicro->Record)) {
+        if (!empty($OOSmicro->record)) {
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
-            $history->current = $OOSmicro->Record;
+            $history->current = $OOSmicro->record;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -263,7 +263,7 @@ class OOSMicroController extends Controller
         if (!empty($request->initiator_group_gi)) {
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
-            $history->activity_type = 'Initiator Group';
+            $history->activity_type = 'Initiation Department';
             $history->previous = "Null";
             $history->current = $request->initiator_group_gi;
             $history->comment = "NA";
@@ -279,7 +279,7 @@ class OOSMicroController extends Controller
         if(!empty($request->initiator_group_code_gi)){
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
-            $history->activity_type = 'Initiator Group Code';
+            $history->activity_type = 'Initiation Department Group Code';
             $history->previous = "Null";
             $history->current = $request->initiator_group_code_gi;
             $history->comment = "NA";
@@ -310,12 +310,63 @@ class OOSMicroController extends Controller
             $history->save();
 
         }
+        if(!empty($request->if_others_gi)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->activity_type = 'If Others';
+            $history->previous = "Null";
+            $history->current = $request->if_others_gi;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $request->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+
+        }
         if(!empty($request->is_repeat_gi)){
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
             $history->activity_type = 'Is Repeat ?';
             $history->previous = "Null";
             $history->current = $request->is_repeat_gi;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $request->status;
+             $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+
+        } 
+        if(!empty($request->reference_system_document_gi)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->activity_type = 'Reference System Document';
+            $history->previous = "Null";
+            $history->current = $request->reference_system_document_gi;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $request->status;
+             $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+
+        } 
+        if(!empty($request->reference_document_gi)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->activity_type = 'Reference Document';
+            $history->previous = "Null";
+            $history->current = $request->reference_document_gi;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -364,7 +415,7 @@ class OOSMicroController extends Controller
         if(!empty($request->deviation_occured_on_gi)){
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
-            $history->activity_type = 'Deviation Occured On';
+            $history->activity_type = 'OOS occurred On';
             $history->previous = "Null";
             $history->current = $request->deviation_occured_on_gi;
             $history->comment = "NA";
@@ -378,6 +429,119 @@ class OOSMicroController extends Controller
             $history->save();
 
         }
+        if(!empty($request->oos_observed_on)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->activity_type = 'OOS Observed On';
+            $history->previous = "Null";
+            $history->current = $request->oos_observed_on;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $request->status;
+             $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+
+        }
+        if(!empty($request->delay_justification)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->activity_type = 'Delay Justification';
+            $history->previous = "Null";
+            $history->current = $request->delay_justification;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $request->status;
+             $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+
+        }
+        if(!empty($request->oos_reported_date)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->activity_type = 'OOS Reported On';
+            $history->previous = "Null";
+            $history->current = $request->oos_reported_date;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $request->status;
+             $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+
+        }
+        if(!empty($request->immediate_action)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->activity_type = 'Immediate action';
+            $history->previous = "Null";
+            $history->current = $request->immediate_action;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $request->status;
+             $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+
+        }
+        // if(!empty($request->initial_attachment_gi)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->activity_type = 'Initial Attachment';
+        //     $history->previous = "Null";
+        //     $history->current = $request->initial_attachment_gi;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $request->status;
+        //      $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+
+        // }
+        if (!empty($request->initial_attachment_gi)) {
+            // Convert the array to a comma-separated string
+            $attachmentString = is_array($request->initial_attachment_gi) 
+                ? implode(', ', $request->initial_attachment_gi) 
+                : (string)$request->initial_attachment_gi;
+        
+            // Initialize the history object
+            $history = new OOSmicroAuditTrail();
+        
+            // Populate history object with data
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->activity_type = 'Initial Attachment';
+            $history->previous = "Null";
+            $history->current = $attachmentString; // Store as a string
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $request->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+        
+            // Save history to the database
+            $history->save();
+        }
+        
+      
         if (!empty($request->source_document_type_gi)) {
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
@@ -477,6 +641,57 @@ class OOSMicroController extends Controller
             $history->current = $OOSmicro->Comments_plidata;
             $history->save();
         }
+        if (!empty($request->comments_pli)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "'Initiation";
+            $history->action_name = 'Create';
+            $history->activity_type = 'Comments';
+            $history->current = $OOSmicro->comments_pli;
+            $history->save();
+        }
+        if (!empty($request->field_alert_required_pli)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "'Initiation";
+            $history->action_name = 'Create';
+            $history->activity_type = 'Field Alert Required';
+            $history->current = $OOSmicro->field_alert_required_pli;
+            $history->save();
+        }
+        // if (!empty($request->field_alert_ref_no_pli)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "'Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Field Alert Ref.No.';
+        //     $history->current = $OOSmicro->field_alert_ref_no_pli;
+        //     $history->save();
+        // }
         if (!empty($request->justify_if_no_field_alert_pli)){
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
@@ -494,6 +709,74 @@ class OOSMicroController extends Controller
             $history->current = $OOSmicro->justify_if_no_field_alert_pli;
             $history->save();
         }
+        if (!empty($request->verification_analysis_required_pli)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "'Initiation";
+            $history->action_name = 'Create';
+            $history->activity_type = 'Verification Analysis Required';
+            $history->current = $OOSmicro->verification_analysis_required_pli;
+            $history->save();
+        }
+        // if (!empty($request->verification_analysis_ref_pli)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "'Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Verification Analysis Ref.';
+        //     $history->current = $OOSmicro->verification_analysis_ref_pli;
+        //     $history->save();
+        // }
+        if (!empty($request->analyst_interview_req_pli)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "'Initiation";
+            $history->action_name = 'Create';
+            $history->activity_type = 'Analyst Interview Req.';
+            $history->current = $OOSmicro->analyst_interview_req_pli;
+            $history->save();
+        }
+        // if (!empty($request->analyst_interview_ref_pli)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "'Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Analyst Interview Ref.';
+        //     $history->current = $OOSmicro->analyst_interview_ref_pli;
+        //     $history->save();
+        // }
         if (!empty($request->justify_if_no_analyst_int_pli)){
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
@@ -509,6 +792,23 @@ class OOSMicroController extends Controller
             $history->action_name = 'Create';
             $history->activity_type = 'Justify if no Analyst Int';
             $history->current = $request->justify_if_no_analyst_int_pli;
+            $history->save();
+        }
+        if (!empty($request->phase_i_investigation_required_pli)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "'Initiation";
+            $history->action_name = 'Create';
+            $history->activity_type = 'Phase I Investigation Required';
+            $history->current = $request->phase_i_investigation_required_pli;
             $history->save();
         }
         if (!empty($request->phase_i_investigation_pli)){
@@ -528,6 +828,40 @@ class OOSMicroController extends Controller
             $history->current = $request->phase_i_investigation_pli;
             $history->save();
         }
+        // if (!empty($request->phase_i_investigation_ref_pli)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Phase I Investigation Ref.';
+        //     $history->current = $request->phase_i_investigation_ref_pli;
+        //     $history->save();
+        // }
+        // if (!empty($request->file_attachments_pli)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'File Attachments';
+        //     $history->current = $request->file_attachments_pli;
+        //     $history->save();
+        // }
         
         // TapIV
         if (!empty($request->summary_of_prelim_investiga_plic)){
@@ -594,11 +928,28 @@ class OOSMicroController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-            $history->activity_type = 'OOS Category Others';
+            $history->activity_type = 'Root Cause Details';
             $history->current = $request->root_cause_details_plic;
             $history->save();
         }
-        if (!empty($request->oos_category_others_plic)){
+        // if (!empty($request->oos_category_others_plic)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Root Cause Details';
+        //     $history->current = $request->oos_category_others_plic;
+        //     $history->save();
+        // }
+        if (!empty($request->oos_category_root_cause_plic)){
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
             $history->previous = "Null";
@@ -611,8 +962,59 @@ class OOSMicroController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-            $history->activity_type = 'Root Cause Details';
-            $history->current = $request->oos_category_others_plic;
+            $history->activity_type = 'OOS Category-Root Cause Ident.';
+            $history->current = $request->oos_category_root_cause_plic;
+            $history->save();
+        }
+        if (!empty($request->recommended_actions_required_plic)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->activity_type = 'Recommended Actions Required?';
+            $history->current = $request->recommended_actions_required_plic;
+            $history->save();
+        }
+        // if (!empty($request->recommended_actions_reference_plic)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Recommended Actions Reference';
+        //     $history->current = $request->recommended_actions_reference_plic;
+        //     $history->save();
+        // }
+        if (!empty($request->supporting_attachment_plic)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->activity_type = 'Supporting Attachment';
+            $history->current = $request->supporting_attachment_plic;
             $history->save();
         }
         if (!empty($request->oos_category_others_plic)){
@@ -718,7 +1120,1249 @@ class OOSMicroController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+        if (!empty($request->qa_approver_comments_piii)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->activity_type = 'QA Approver Comments';
+            $history->current = $request->qa_approver_comments_piii;
+            $history->save();
+        }
+        if (!empty($request->manufact_invest_required_piii)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->activity_type = 'Manufact. Invest. Required?';
+            $history->current = $request->manufact_invest_required_piii;
+            $history->save();
+        }
+        if (!empty($request->reason_manufacturing_pii)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->activity_type = 'Reason for manufacturing';
+            $history->current = $request->reason_manufacturing_pii;
+            $history->save();
+        }
+        if (!empty($request->manufacturing_multi_select)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->activity_type = 'Manufacturing Invest. Type';
+            $history->current = $request->manufacturing_multi_select;
+            $history->save();
+        }
+        // if (!empty($request->manufacturing_invst_ref_piii)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Manufacturing Invst. Ref.';
+        //     $history->current = $request->manufacturing_invst_ref_piii;
+        //     $history->save();
+        // }
+        if (!empty($request->re_sampling_required_piii)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->activity_type = 'Re-sampling Required?';
+            $history->current = $request->re_sampling_required_piii;
+            $history->save();
+        }
+        if (!empty($request->audit_comments_piii)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->activity_type = 'Audit Comments';
+            $history->current = $request->audit_comments_piii;
+            $history->save();
+        }
+        // if (!empty($request->re_sampling_ref_no_piii)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation"; 
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Re-sampling Ref. No';
+        //     $history->current = $request->re_sampling_ref_no_piii;
+        //     $history->save();
+        // }
+        if (!empty($request->hypo_exp_required_piii)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Hypo/Exp.Required';
+            $history->current = $request->hypo_exp_required_piii;
+            $history->save();
+        }
        
+        // if (!empty($request->hypo_exp_reference_piii)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation"; 
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Hypo/Exp. Reference';
+        //     $history->current = $request->hypo_exp_reference_piii;
+        //     $history->save();
+        // }
+        if (!empty($request->summary_of_exp_hyp_piiqcr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Summary of Exp./Hyp.';
+            $history->current = $request->summary_of_exp_hyp_piiqcr;
+            $history->save();
+        }
+        if (!empty($request->summary_mfg_investigation_piiqcr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Summary Mfg.Investigation';
+            $history->current = $request->summary_mfg_investigation_piiqcr;
+            $history->save();
+        }
+        if (!empty($request->root_casue_identified_piiqcr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Root Cause Identified';
+            $history->current = $request->root_casue_identified_piiqcr;
+            $history->save();
+        }
+        if (!empty($request->oos_category_reason_identified_piiqcr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'OOS Category-Reason Identified';
+            $history->current = $request->oos_category_reason_identified_piiqcr;
+            $history->save();
+        }
+        if (!empty($request->others_oos_category_piiqcr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Others (OOS category)';
+            $history->current = $request->others_oos_category_piiqcr;
+            $history->save();
+        }
+        if (!empty($request->oos_details_obvious_error)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Details of Obvious Error';
+            $history->current = $request->oos_details_obvious_error;
+            $history->save();
+        }
+        if (!empty($request->details_of_root_cause_piiqcr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Details of Root Cause';
+            $history->current = $request->details_of_root_cause_piiqcr;
+            $history->save();
+        }
+        if (!empty($request->impact_assessment_piiqcr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Impact Assessment';
+            $history->current = $request->impact_assessment_piiqcr;
+            $history->save();
+        }
+        if (!empty($request->recommended_action_required_piiqcr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Recommended Action Required?';
+            $history->current = $request->recommended_action_required_piiqcr;
+            $history->save();
+        }
+        // if (!empty($request->recommended_action_reference_piiqcr)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation"; 
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Recommended Action Reference';
+        //     $history->current = $request->recommended_action_reference_piiqcr;
+        //     $history->save();
+        // }
+        if (!empty($request->investi_required_piiqcr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Invest.Required';
+            $history->current = $request->investi_required_piiqcr;
+            $history->save();
+        }
+        // if (!empty($request->invest_ref_piiqcr)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation"; 
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Invest ref.';
+        //     $history->current = $request->invest_ref_piiqcr;
+        //     $history->save();
+        // }
+        if (!empty($request->review_comment_atp)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Review Comment';
+            $history->current = $request->review_comment_atp;
+            $history->save();
+        }
+        if (!empty($request->additional_test_proposal_atp)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Additional Test Proposal';
+            $history->current = $request->additional_test_proposal_atp;
+            $history->save();
+        }
+        // if (!empty($request->additional_test_reference_atp)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation"; 
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Additional Test Reference';
+        //     $history->current = $request->additional_test_reference_atp;
+        //     $history->save();
+        // }
+        
+        if (!empty($request->any_other_actions_required_atp)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Any Other Actions Required';
+            $history->current = $request->any_other_actions_required_atp;
+            $history->save();
+        }
+        // if (!empty($request->action_task_reference_atp)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation"; 
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Action Task Reference';
+        //     $history->current = $request->action_task_reference_atp;
+        //     $history->save();
+        // }
+        if (!empty($request->conclusion_comments_oosc)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Conclusion Comments';
+            $history->current = $request->conclusion_comments_oosc;
+            $history->save();
+        }
+        if (!empty($request->specification_limit_oosc)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Specification Limit';
+            $history->current = $request->specification_limit_oosc;
+            $history->save();
+        }
+        if (!empty($request->results_to_be_reported_oosc)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Results to be Reported';
+            $history->current = $request->results_to_be_reported_oosc;
+            $history->save();
+        }
+        if (!empty($request->final_reportable_results_oosc)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Final Reportable Results';
+            $history->current = $request->final_reportable_results_oosc;
+            $history->save();
+        }
+        if (!empty($request->justifi_for_averaging_results_oosc)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Justifi. for Averaging Results';
+            $history->current = $request->justifi_for_averaging_results_oosc;
+            $history->save();
+        }
+        if (!empty($request->oos_stands_oosc)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'OOS Stands';
+            $history->current = $request->oos_stands_oosc;
+            $history->save();
+        }
+        if (!empty($request->capa_req_oosc)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'CAPA Req.';
+            $history->current = $request->capa_req_oosc;
+            $history->save();
+        }
+        // if (!empty($request->capa_ref_no_oosc)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation"; 
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'CAPA Ref No.';
+        //     $history->current = $request->capa_ref_no_oosc;
+        //     $history->save();
+        // }
+        if (!empty($request->justify_if_capa_not_required_oosc)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Justify if CAPA not required';
+            $history->current = $request->justify_if_capa_not_required_oosc;
+            $history->save();
+        }
+        if (!empty($request->action_plan_req_oosc)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Action Plan Req.';
+            $history->current = $request->action_plan_req_oosc;
+            $history->save();
+        }
+        // if (!empty($request->action_plan_ref_oosc)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation"; 
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Action Plan Ref.';
+        //     $history->current = $request->action_plan_ref_oosc;
+        //     $history->save();
+        // }
+        if (!empty($request->justification_for_delay_oosc)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Justification for Delay';
+            $history->current = $request->justification_for_delay_oosc;
+            $history->save();
+        }
+        if (!empty($request->conclusion_review_comments_ocr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Conclusion Review Comments';
+            $history->current = $request->conclusion_review_comments_ocr;
+            $history->save();
+        }
+        if (!empty($request->action_taken_on_affec_batch_ocr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Action Taken on Affec.batch';
+            $history->current = $request->action_taken_on_affec_batch_ocr;
+            $history->save();
+        }
+        if (!empty($request->capa_req_ocr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'CAPA Req.?';
+            $history->current = $request->capa_req_ocr;
+            $history->save();
+        }
+        // if (!empty($request->capa_refer_ocr)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation"; 
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'CAPA Refer.';
+        //     $history->current = $request->capa_refer_ocr;
+        //     $history->save();
+        // }
+        if (!empty($request->required_action_plan_ocr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Required Action Plan?';
+            $history->current = $request->required_action_plan_ocr;
+            $history->save();
+        }
+         if (!empty($request->required_action_task_ocr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Required Action Task?';
+            $history->current = $request->required_action_task_ocr;
+            $history->save();
+        }
+        // if (!empty($request->action_task_reference_ocr)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation"; 
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Action Task Reference';
+        //     $history->current = $request->action_task_reference_ocr;
+        //     $history->save();
+        // }
+        if (!empty($request->risk_assessment_req_ocr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Risk Assessment Req?';
+            $history->current = $request->risk_assessment_req_ocr;
+            $history->save();
+        }
+        // if (!empty($request->risk_assessment_ref_ocr)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation"; 
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Risk Assessment Ref.';
+        //     $history->current = $request->risk_assessment_ref_ocr;
+        //     $history->save();
+        // }
+        if (!empty($request->justify_if_no_risk_assessment_ocr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Justify if no risk Assessment';
+            $history->current = $request->justify_if_no_risk_assessment_ocr;
+            $history->save();
+        }
+        if (!empty($request->qa_approver_ocr)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'CQ Approver';
+            $history->current = $request->qa_approver_ocr;
+            $history->save();
+        }
+        if (!empty($request->capa_required_OOS_CQ)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'CAPA required?';
+            $history->current = $request->capa_required_OOS_CQ;
+            $history->save();
+        }
+        if (!empty($request->ref_action_plan_OOS_CQ)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Ref Action Plan';
+            $history->current = $request->ref_action_plan_OOS_CQ;
+            $history->save();
+        }
+        if (!empty($request->reference_of_capa_OOS_CQ)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Reference of CAPA';
+            $history->current = $request->reference_of_capa_OOS_CQ;
+            $history->save();
+        }
+        if (!empty($request->cq_review_comments_OOS_CQ)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'CQ Review Comments';
+            $history->current = $request->cq_review_comments_OOS_CQ;
+            $history->save();
+        }
+        if (!empty($request->action_plan_requirement_OOS_CQ)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Action plan requirement?';
+            $history->current = $request->action_plan_requirement_OOS_CQ;
+            $history->save();
+        }
+        if (!empty($request->oos_category_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'OOS Category';
+            $history->current = $request->oos_category_BI;
+            $history->save();
+        }
+        if (!empty($request->others_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Others';
+            $history->current = $request->others_BI;
+            $history->save();
+        }
+        if (!empty($request->material_batch_release_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Material/Batch Release';
+            $history->current = $request->material_batch_release_BI;
+            $history->save();
+        }
+        if (!empty($request->other_action_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Other Action (Specify)';
+            $history->current = $request->other_action_BI;
+            $history->save();
+        }
+        // if (!empty($request->field_alert_reference_BI)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation"; 
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Field Alert Reference';
+        //     $history->current = $request->field_alert_reference_BI;
+        //     $history->save();
+        // }
+        if (!empty($request->other_parameter_result_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Other Parameters Results';
+            $history->current = $request->other_parameter_result_BI;
+            $history->save();
+        }
+        if (!empty($request->trend_of_previous_batches_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Trend of Previous Batches';
+            $history->current = $request->trend_of_previous_batches_BI;
+            $history->save();
+        }
+        if (!empty($request->stability_data_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Stability Data';
+            $history->current = $request->stability_data_BI;
+            $history->save();
+        }
+        if (!empty($request->process_validation_data_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Process Validation Data';
+            $history->current = $request->process_validation_data_BI;
+            $history->save();
+        }
+        if (!empty($request->method_validation_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Method Validation';
+            $history->current = $request->method_validation_BI;
+            $history->save();
+        }
+        if (!empty($request->any_market_complaints_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Any Market Complaints';
+            $history->current = $request->any_market_complaints_BI;
+            $history->save();
+        }
+        if (!empty($request->statistical_evaluation_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Statistical Evaluation';
+            $history->current = $request->statistical_evaluation_BI;
+            $history->save();
+        }
+        if (!empty($request->risk_analysis_for_disposition_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Risk Analysis for Disposition';
+            $history->current = $request->risk_analysis_for_disposition_BI;
+            $history->save();
+        }
+        if (!empty($request->conclusion_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Conclusion';
+            $history->current = $request->conclusion_BI;
+            $history->save();
+        }
+        if (!empty($request->phase_III_inves_required_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Phase-III Inves.Required?';
+            $history->current = $request->phase_III_inves_required_BI;
+            $history->save();
+        }
+        // if (!empty($request->phase_III_inves_reference_BI)){
+        //     $history = new OOSmicroAuditTrail();
+        //     $history->OOS_micro_id = $OOSmicro->id;
+        //     $history->previous = "Null";
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $OOSmicro->status;
+        //     $history->stage = $OOSmicro->stage;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation"; 
+        //     $history->action_name = 'Create';
+        //     $history->activity_type = 'Phase-III Inves.Reference';
+        //     $history->current = $request->phase_III_inves_reference_BI;
+        //     $history->save();
+        // }
+        if (!empty($request->justify_for_delay_BI)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Justify for Delay in Activity';
+            $history->current = $request->justify_for_delay_BI;
+            $history->save();
+        }
+        if (!empty($request->reopen_request)){
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->previous = "Null";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $OOSmicro->status;
+            $history->stage = $OOSmicro->stage;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation"; 
+            $history->action_name = 'Create';
+            $history->activity_type = 'Other Action (Specify)';
+            $history->current = $request->reopen_request;
+            $history->save();
+        }
         // =============== Audit trail close  ==========================//
 
         toastr()->success("Record is created Successfully");
@@ -801,17 +2445,22 @@ class OOSMicroController extends Controller
         'initiation_date' => 'Initiation Date',
         'due_date' => 'Due Date',
         'severity_level_gi' => 'Severity Level',
-        'initiator_group_gi' => 'Initiator Group',
-        'initiator_group_code_gi' => 'Initiator Group Code',
+        'initiator_group_gi' => 'Initiation Department',
+        'initiator_group_code_gi' => 'Initiation Department Group Code',
         'initiated_through_gi' => 'Initiated Through',
         'if_others_gi' => 'If Others',
         'is_repeat_gi' => 'Is Repeat',
         'repeat_nature_gi' => 'Repeat Nature',
         'nature_of_change_gi' => 'Nature of Change',
         'reference_system_document_gi' => 'Reference System Document',
+        'reference_document_gi' => 'Reference Document',
         'deviation_occured_on_gi' => 'Deviation Occurred On',
         'source_document_type_gi' => 'Source Document Type',
         'sample_type_gi' => 'Sample Type',
+        'oos_observed_on' => 'OOS Observed On',
+        'delay_justification' => 'Delay Justification',
+        'oos_reported_date' => 'OOS Reported On',
+        'immediate_action' => 'Immediate action',
         'product_material_name_gi' => 'Product/Material Name',
         'market_gi' => 'Market',
         'customer_gi' => 'Customer'
@@ -849,12 +2498,16 @@ class OOSMicroController extends Controller
 $Preliminary_Lab_Investigation = [
 'comments_pli' => 'Comments',
 'field_alert_required_pli' => 'Field Alert Required',
+// 'field_alert_ref_no_pli' => 'Field Alert Ref.No.',
 'justify_if_no_field_alert_pli' => 'Justify if no Field Alert',
 'verification_analysis_required_pli' => 'Verification Analysis Required',
+// 'verification_analysis_ref_pli'  => 'Verification Analysis Ref.',
+// 'analyst_interview_ref_pli' => 'Analyst Interview Ref.',
 'analyst_interview_req_pli' => 'Analyst Interview Req.',
 'justify_if_no_analyst_int_pli' => 'Justify if no Analyst Int.',
 'phase_i_investigation_required_pli' => 'Phase I Investigation Required',
 'phase_i_investigation_pli' => 'Phase I Investigation ',
+// 'phase_i_investigation_ref_pli' => 'Phase I Investigation Ref.',
 ];
 foreach ($Preliminary_Lab_Investigation as $key => $value){
 
@@ -888,7 +2541,9 @@ $Preliminary_Lab_Investigation_Conclusion = [
 'root_cause_details_plic' => 'Root Cause Details',
 'oos_category_root_cause_plic' => 'OOS Category-Root Cause Ident.',
 'recommended_actions_required_plic' => 'Recommended Actions Required?',
+// 'recommended_actions_reference_plic' => 'Recommended Actions Reference',
 'capa_required_plic' => 'CAPA Required',
+'reference_capa_no_plic' => 'Reference CAPA No.',
 'delay_justification_for_pi_plic' => 'Delay Justification for P.I.',
 ];
 foreach($Preliminary_Lab_Investigation_Conclusion as $key => $value){
@@ -948,6 +2603,8 @@ if($lastDocument->$key != $request->$key){
 $Phase_II_Investigation = [
 'qa_approver_comments_piii' => 'QA Approver Comments',
 'manufact_invest_required_piii' => 'Manufact. Invest. Required?',
+'reason_manufacturing_pii' => 'Reason for manufacturing',
+'manufacturing_multi_select' => 'Manufacturing Invest. Type',
 // 'manufacturing_invest_type_piii' => 'Manufacturing Invest. Type',
 // 'manufacturing_invst_ref_piii' => 'Manufacturing Invst. Ref.',
 're_sampling_required_piii' => 'Re-sampling Required?',
@@ -988,6 +2645,7 @@ $Phase_II_QC_Review = [
 'root_casue_identified_piiqcr' => 'Root Cause Identified',
 'oos_category_reason_identified_piiqcr' => 'OOS Category-Reason Identified',
 'others_oos_category_piiqcr' => 'Others (OOS category)',
+'oos_details_obvious_error' => 'Details of Obvious Error',
 'details_of_root_cause_piiqcr' => 'Details of Root Cause',
 'impact_assessment_piiqcr' =>'Impact Assessment',
 'recommended_action_required_piiqcr' => 'Recommended Action Required?',
