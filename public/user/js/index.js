@@ -21,7 +21,15 @@ function addMultipleFiles(input, block_id) {
             e.preventDefault();
             window.open(viewLink.href,'_blank');
         });
+
+        let removeLink = document.createElement("a");
+        removeLink.className = 'remove-file';
+        removeLink.textContent = "<Remove>";
+        removeLink.addEventListener('click', function() {
+            div.remove(); // Remove the parent div when remove link is clicked
+        })
         div.appendChild(viewLink);
+        div.appendChild(removeLink);
         block.appendChild(div);
     }
 }
