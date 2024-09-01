@@ -2571,7 +2571,10 @@ $Cft->update();
         // $openState->train_comments = $request->train_comments;
 
         $openState->Microbiology = $request->Microbiology;
-        $openState->cft_reviewer = implode(',', $request->cft_reviewer);
+        // $openState->cft_reviewer = implode(',', $request->cft_reviewer);
+        $reviewers = is_array($request->cft_reviewer) ? $request->cft_reviewer : explode(',', $request->cft_reviewer);
+        $openState->cft_reviewer = implode(',', $reviewers);
+
 
         $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;

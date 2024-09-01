@@ -7938,9 +7938,9 @@ Designee Approval</div>
                                 <div id="CCForm14" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="row">
-                                        <div class="sub-head">
-                                            QA Final Review
-                                        </div>
+                                            <div class="sub-head">
+                                                QA Final Review
+                                            </div>
 
                                         <div class="col-lg-6">
                                                 <div class="group-input">
@@ -8014,6 +8014,7 @@ Designee Approval</div>
                                             </div>
 
                                         </div>
+                                    </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
                                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8024,6 +8025,7 @@ Designee Approval</div>
                                         </div>
                                     </div>
                                 </div> 
+                            <!-- </div> -->
                             
 
                                 <div id="CCForm15" class="inner-block cctabcontent">
@@ -8083,7 +8085,7 @@ Designee Approval</div>
                                             </button>
                                         </div>
                                     </div>
-                                </div>    
+                                <!-- </div>     -->
 
                                 <div id="CCForm4" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -8131,6 +8133,7 @@ Designee Approval</div>
                                             </div>
 
                                         </div>
+                                    </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
                                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8139,7 +8142,6 @@ Designee Approval</div>
                                                 <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
                                             </button>
                                         </div>
-                                    </div>
                                 </div>                                
 
                                 <div id="CCForm17" class="inner-block cctabcontent">
