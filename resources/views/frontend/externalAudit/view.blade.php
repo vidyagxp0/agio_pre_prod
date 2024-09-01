@@ -383,7 +383,7 @@ function addMultipleFiles(input, block_id) {
                                                 <input type="hidden" name="record_number">
                                                 {{-- <div class="static">QMS-EMEA/IA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}</div> --}}
                                                 <input disabled type="text"
-                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/EA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/EA/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">

@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 @forelse ($marketcomplaint as $marketlog)
 @php
 
@@ -8,7 +11,11 @@ $productDetails= $marketlog->product_details;
 
 <tr>
     <td>{{ $loop->parent->index + 1 }}</td>
-    <td>{{ $marketlog->intiation_date }}</td>
+    @if($marketlog->intiation_date)
+    <td>{{ Carbon::createFromFormat('Y-m-d', $marketlog->intiation_date)->format('d-M-Y') }}</td> 
+    @else
+        NA
+    @endif
     <td>{{ $marketlog->division ? $marketlog->division->name : '-' }}/MC/{{ date('Y') }}/{{ str_pad($marketlog->record, 4, '0', STR_PAD_LEFT) }}</td>
     <td>{{ $marketlog->description_gi }}</td>
     <td>{{ $marketlog->initiator ? $marketlog->initiator->name : '-' }}</td>
@@ -20,8 +27,8 @@ $productDetails= $marketlog->product_details;
     <td>{{$data['info_expiry_date']}}<td>
     {{-- <td>{{ $marketlog->details_of_nature_market_complaint_gi }}</td> --}}
     <td>{{ $marketlog->categorization_of_complaint_gi }}</td>
-    <td>{{ $marketlog->complaint_reported_on_gi }}</td>
-    <td>{{ $marketlog->due_date_gi }}</td>
+    <td>{{ $marketlog->complaint_reported_on_gi->format('d-M-Y') }}</td>
+    <td>{{ $marketlog->due_date_gi->format('d-M-Y') }}</td>
     <td>{{ $marketlog->closed_done_on }}</td>
     <td>{{ $marketlog->status }}</td>
 </tr>

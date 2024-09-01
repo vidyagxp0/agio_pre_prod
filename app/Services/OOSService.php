@@ -91,14 +91,78 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $oos->status;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'Short Description';
             $history->current = $request->description_gi;
             $history->save();
 
                 if(!empty($request->description_gi)){
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $oos->id;
+                    $history->previous = "Null";
+                    $history->comment = "Not Applicable";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $oos->status;
+                    $history->change_to =   "Opened";
+                    $history->change_from = "Initiation";
+                    $history->action_name = 'Create';
+                    $history->activity_type = 'Short Description';
+                    $history->current = $request->description_gi;
+                    $history->save();
                 }
+               
+                if (!empty($request->initiator)){
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $oos->id;
+                    $history->previous = "Null";
+                    $history->comment = "Not Applicable";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $oos->status;
+                    $history->change_to =   "Opened";
+                    $history->change_from = "Initiation";
+                    $history->action_name = 'Create';
+                    $history->activity_type = 'Initiator';
+                    $history->current = $request->initiator;
+                    $history->save();
+                }
+                if (!empty($request->record_number)){
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $oos->id;
+                    $history->previous = "Null";
+                    $history->comment = "Not Applicable";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $oos->status;
+                    $history->change_to =   "Opened";
+                    $history->change_from = "Initiation";
+                    $history->action_name = 'Create';
+                    $history->activity_type = 'Record Number';
+                    $history->current = $request->record_number;
+                    $history->save();
+                }
+                if (!empty($request->due_date)){
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $oos->id;
+                    $history->previous = "Null";
+                    $history->comment = "Not Applicable";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $oos->status;
+                    $history->change_to =   "Opened";
+                    $history->change_from = "Initiation";
+                    $history->action_name = 'Create';
+                    $history->activity_type = 'Due Date';
+                    $history->current = $request->due_date;
+                    $history->save();
+                }
+
                 if (!empty($request->initiator_Group)){
                     $history = new OosAuditTrial();
                     $history->oos_id = $oos->id;
@@ -109,9 +173,9 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
-                    $history->activity_type = 'initiator Group';
+                    $history->activity_type = 'Initiation department Group';
                     $history->current = $request->initiator_Group;
                     $history->save();
                 }
@@ -125,9 +189,9 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
-                    $history->activity_type = 'Initiator Group Code';
+                    $history->activity_type = 'Initiation department Code';
                     $history->current = $request->initiator_group_code;
                     $history->save();
                 }
@@ -141,7 +205,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'If Others';
                     $history->current = $request->if_others_gi;
@@ -157,7 +221,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Is Repeat';
                     $history->current = $request->is_repeat_gi;
@@ -173,7 +237,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Nature Of Change';
                     $history->current = $request->nature_of_change_gi;
@@ -189,7 +253,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Deviation Occured On';
                     $history->current = $request->deviation_occured_on_gi;
@@ -205,7 +269,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Source Document Type';
                     $history->current = $request->source_document_type_gi;
@@ -221,7 +285,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Reference System Document';
                     $history->current = $request->reference_system_document_gi;
@@ -237,7 +301,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Reference Document';
                     $history->current = $request->reference_document;
@@ -253,7 +317,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Sample Type';
                     $history->current = $request->sample_type_gi;
@@ -269,7 +333,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Product / Material Name';
                     $history->current = $request->product_material_name_gi;
@@ -285,7 +349,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Market';
                     $history->current = $request->market_gi;
@@ -301,7 +365,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Customer';
                     $history->current = $oos->customer_gi;
@@ -318,7 +382,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Comments Plidata';
                     $history->current = $oos->Comments_plidata;
@@ -334,7 +398,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Justify If No Field Alert Pli';
                     $history->current = $oos->justify_if_no_field_alert_pli;
@@ -350,7 +414,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Justify if no Analyst Int';
                     $history->current = $request->justify_if_no_analyst_int_pli;
@@ -366,7 +430,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Phase I Investigation';
                     $history->current = $request->phase_i_investigation_pli;
@@ -382,7 +446,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Phase I Investigation Ref';
                     $history->current = $request->phase_i_investigation_ref_pli;
@@ -399,7 +463,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Summary of Preliminary Investigation';
                     $history->current = $request->summary_of_prelim_investiga_plic;
@@ -415,7 +479,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Root Cause Identified';
                     $history->current = $request->root_cause_identified_plic;
@@ -431,7 +495,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'OOS Category-Root Cause Ident';
                     $history->current = $request->oos_category_root_cause_ident_plic;
@@ -447,7 +511,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'OOS Category Others';
                     $history->current = $request->root_cause_details_plic;
@@ -463,7 +527,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Root Cause Details';
                     $history->current = $request->oos_category_others_plic;
@@ -479,7 +543,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'OOS Category-Root Cause Ident';
                     $history->current = $request->oos_category_others_plic;
@@ -495,7 +559,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'CAPA Required';
                     $history->current = $request->capa_required_plic;
@@ -511,7 +575,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Reference CAPA No';
                     $history->current = $request->reference_capa_no_plic;
@@ -527,7 +591,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Delay Justification for Preliminary Investigation';
                     $history->current = $request->delay_justification_for_pi_plic;
@@ -544,7 +608,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Review Comments';
                     $history->current = $request->review_comments_plir;
@@ -560,7 +624,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Phase II Inv. Required';
                     $history->current = $request->phase_ii_inv_required_plir;
@@ -577,7 +641,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'QA Approver Comments';
                     $history->current = $request->qa_approver_comments_piii;
@@ -593,7 +657,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Manufact. Invest. Required?';
                     $history->current = $request->qa_approver_comments_piii;
@@ -608,7 +672,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = ' Manufacturing Invest. Type';
                     $history->current = $request->manufact_invest_required_piii;
@@ -624,7 +688,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'manufacturing_invest_type_piii';
                     $history->current = $request->manufacturing_invest_type_piii;
@@ -638,7 +702,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Audit Comments';
                     $history->current = $request->audit_comments_piii;
@@ -654,7 +718,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Hypo/Exp. Required';
                     $history->current = $request->hypo_exp_required_piii;
@@ -670,7 +734,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Hypo/Exp. Reference';
                     $history->current = $request->hypo_exp_reference_piii;
@@ -687,7 +751,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Summary of Exp./Hyp.';
                     $history->current = $request->summary_of_exp_hyp_piiqcr;
@@ -703,7 +767,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Summary Mfg. Investigation';
                     $history->current = $request->summary_mfg_investigation_piiqcr;
@@ -719,7 +783,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Root Casue Identified';
                     $history->current = $request->root_casue_identified_piiqcr;
@@ -735,7 +799,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'OOS Category-Reason identified';
                     $history->current = $request->oos_category_reason_identified_piiqcr;
@@ -752,7 +816,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Others (OOS category)';
                     $history->current = $request->others_oos_category_piiqcr;
@@ -768,7 +832,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Details of Root Cause';
                     $history->current = $request->details_of_root_cause_piiqcr;
@@ -784,7 +848,7 @@ class OOSService
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
-                    $history->change_from = "Initiator";
+                    $history->change_from = "Initiation";
                     $history->action_name = 'Create';
                     $history->activity_type = 'Impact Assessment.';
                     $history->current = $request->impact_assessment_piiqcr;

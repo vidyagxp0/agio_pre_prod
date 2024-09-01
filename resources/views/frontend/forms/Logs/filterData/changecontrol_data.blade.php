@@ -1,9 +1,17 @@
+@php
+    use Carbon\Carbon;
+@endphp
+
 @forelse ($ccontrol as $control)
         
 <tr>
 
     <td>{{$loop->index+1}}</td>
-    <td>{{$control->intiation_date}}</td>
+    @if($control->intiation_date)
+    <td>{{ Carbon::createFromFormat('Y-m-d', $control->intiation_date)->format('d-M-Y') }}</td> 
+    @else
+        NA
+    @endif
     <td>{{ $control->division ? $control->division->name : '-' }}/CC/{{ date('Y') }}/{{ str_pad($control->record, 4, '0', STR_PAD_LEFT) }}</td>
     <td>{{ $control->division ? $control->division->name : '-' }}</td>
     <td>{{$control->Initiator_Group}}</td>
